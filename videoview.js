@@ -1691,6 +1691,7 @@ var Videoview = {
         showEditReply: function(event) {
             hide('mv_reply_fakebox');
             show('mv_reply_box');
+            Videoview.updateComposer();
             //prevent flashing of placeholder
             hide(geByClass1('input_back_wrap', ge('mv_reply_box')));
             ge('mv_comment')
@@ -3603,6 +3604,9 @@ var Videoview = {
                 Videoview.hideEditReply();
                 return;
             }
+            if (mvcur.minimized || !isVisible(ge('mv_reply_box'))) {
+                return;
+            }
             var comp = data(ge('mv_comment'), 'composer');
             if (comp) {
                 Composer.reset(comp);
@@ -3655,6 +3659,9 @@ var Videoview = {
                         Videoview.sendComment(false, stNum);
                     }
                 });
+                setTimeout(function() {
+                    hide(geByClass1('input_back_wrap', ge('mv_reply_box')));
+                }, 0);
             });
             if (!cur.options) cur.options = {};
             if (!cur.options.share) cur.options.share = mvcur.mvMediaShare;
