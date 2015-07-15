@@ -568,7 +568,7 @@ print_user_change_address = '�� ������ �������� 
 print_user_no_address = '%s �� ����� ��������� ������. �������� ����� ������� ������ ��� �������, � ������� ���� �������� ����� ���� <b>vk.com/cafe</b>.';
 // section = 69; version = 20;
 
-chronicle_landing_title = '������ ����� ��������';
+chronicle_landing_title = '����� ��������������';
 // section = 70; version = 1;
 
 
