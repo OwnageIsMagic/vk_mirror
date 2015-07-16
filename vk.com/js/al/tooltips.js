@@ -6,7 +6,24 @@ var tooltips = {
             return;
         }
         if (!el.tt) return;
+        el.tt.shown = false;
         if (el.ttimer) clearTimeout(el.ttimer);
+        if (isFunction(options.text)) {
+            var tt_text = geByClass1('tt_text', el.tt.container);
+            if (tt_text) {
+                tt_text.innerHTML = options.text();
+            }
+        }
+        var newClasses = options.className || '';
+        if (newClasses != el.customClasses) {
+            each(el.customClasses.split(' '), function(i, className) {
+                if (className != '') {
+                    removeClass(el.tt.container, className);
+                }
+            });
+            addClass(el.tt.container, newClasses);
+            el.customClasses = newClasses;
+        }
 
         var opts = extend(el.tt.opts ? clone(el.tt.opts) : {}, options || {});
         if (!el.tt.el) {
@@ -51,10 +68,14 @@ var tooltips = {
             container.style.opacity = 0;
             show(container);
             container.firstChild.className = 'toup' + (opts.toup ? 1 : '');
+            var shift = opts.shift;
+            if (isFunction(shift)) {
+                shift = shift();
+            }
             var st = fix ? 0 : (bodyNode.scrollTop || htmlNode.scrollTop || 0),
                 ttsize = getSize(container),
-                needDown = (xy[1] - ttsize[1] - opts.shift[1]) < st,
-                needUp = (xy[1] + elsize[1] + ttsize[1] + opts.shift[2] - lastWindowHeight) > st;
+                needDown = (xy[1] - ttsize[1] - shift[1]) < st,
+                needUp = (xy[1] + elsize[1] + ttsize[1] + shift[2] - lastWindowHeight) > st;
             if (browser.msie7) {
                 setStyle(container, {
                     width: ttsize[0]
@@ -74,9 +95,9 @@ var tooltips = {
                 container.firstChild.className = 'toup' + (toup ? 1 : '') + (needLeft ? ' toleft' : '');
                 ttsize = getSize(container);
             }
-            var newtop = xy[1] + (toup ? -(ttsize[1] + opts.shift[1]) : (elsize[1] + opts.shift[2]));
+            var newtop = xy[1] + (toup ? -(ttsize[1] + shift[1]) : (elsize[1] + shift[2]));
             var starttop = newtop + intval(opts.slide) * (toup ? -1 : 1);
-            var newleft = xy[0] + (asrtl ? (opts.shift[0] + elsize[0] - ttsize[0]) : (toup ? -opts.shift[0] : -(opts.shift[3] || opts.shift[0])));
+            var newleft = xy[0] + (asrtl ? (shift[0] + elsize[0] - ttsize[0]) : (toup ? -shift[0] : -(shift[3] || shift[0])));
             if (needLeft) {
                 newleft -= ttsize[0] - 39;
             }
@@ -107,11 +128,15 @@ var tooltips = {
             }, opts.showsp !== undefined ? opts.showsp : 200, function() {
                 el.tt && el.tt.showing && (el.tt.showing = false);
                 if (opts.onShowEnd) opts.onShowEnd();
+                el.tt && (el.tt.shown = true);
             });
             if (opts.onShowStart) opts.onShowStart(el.tt);
         }, opts.showdt || 0);
     },
     hide: function(el, options) {
+        if (el.tt) {
+            el.tt.shown = false;
+        }
         if ((options || {})
             .fasthide) {
             clearTimeout(el.hidetimer);
@@ -180,7 +205,11 @@ var tooltips = {
             var ttsize = getSize(container);
             var needLeft = (opts.black && lastWindowWidth && lastWindowWidth - (xy[0] + ttsize[0]) < 1);
             var toup = hasClass(container.firstChild, 'toup1');
-            var newleft = xy[0] + (asrtl ? (opts.shift[0] + elsize[0] - ttsize[0]) : (toup ? -opts.shift[0] : -(opts.shift[3] || opts.shift[0])));
+            var shift = opts.shift;
+            if (isFunction(shift)) {
+                shift = shift();
+            }
+            var newleft = xy[0] + (asrtl ? (shift[0] + elsize[0] - ttsize[0]) : (toup ? -shift[0] : -(shift[3] || shift[0])));
             if (needLeft) {
                 newleft -= ttsize[0] - 39;
             }
@@ -231,6 +260,7 @@ var tooltips = {
             shift: (options.black ? [11, 3, 3] : [2, 3, 3]), // [leftShift, toupTopShift, notToupTopShift]
             toup: true
         }, options);
+        el.customClasses = (opts.className || '');
         if (!el.tthide) {
             el.tthide = tooltips.hide.pbind(el);
             if (!options.nohide) addEvent(el, 'mouseout', el.tthide);
@@ -276,7 +306,7 @@ var tooltips = {
             }
             opts.content = '<div class="tt_text">' + opts.text + '</div>';
         }
-        var cls = (opts.black ? 'ttb ' : 'tt ') + (opts.className || '');
+        var cls = (opts.black ? 'ttb ' : 'tt ') + el.customClasses;
         if (el.tt && el.tt.el) {
             var cont = el.tt.container;
             if (el.tt.onClean) el.tt.onClean();
