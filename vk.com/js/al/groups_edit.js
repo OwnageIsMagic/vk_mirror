@@ -1744,6 +1744,7 @@ var GroupsEdit = {
         return url.match(/^(https?:\/\/)?([^\/]+)(\/|$)/)[2];
     },
     addLinkBox: function(title, url) {
+        title = trim(clean(title));
         var img = cur.lnkImages[0];
         cur.lnk = url;
         cur.lnkOwnerId = cur.lnkPhotoId = false;
@@ -1759,7 +1760,7 @@ var GroupsEdit = {
             '" id="group_al_thumb_img" />\
 </div>\
 <div class="group_al_info fl_l">\
-  <input type="text" class="text" id="group_al_title" value="' + trim(title) +
+  <input type="text" class="text" id="group_al_title" value="' + title +
             '" onkeypress="if (event.keyCode == 10 || event.keyCode == 13) GroupsEdit.doAddLink()" placeholder="' + getLang('group_link_add_title') +
             '" />\
   <div class="group_al_position">' + GroupsEdit.getDomain(url) + '</div>\
