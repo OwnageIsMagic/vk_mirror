@@ -99,7 +99,7 @@ var Videoview = {
                 }
             },
             onVideoResolutionChanged: function(oid, vid, hash, resolution) {
-                if (mvcur.mvData) {
+                if (window.mvcur && mvcur.mvData) {
                     mvcur.mvData.resolution = resolution;
                 }
             },

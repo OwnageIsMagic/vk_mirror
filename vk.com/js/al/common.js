@@ -2367,6 +2367,7 @@ function updSideTopLink(resized) {
 window.__adsLoaded = vkNow();
 
 function __adsGetAjaxParams(ajaxParams, ajaxOptions) {
+    if (window.noAdsAtAll) return false;
     __adsGetAjaxParams = function() {
         return window.AdsLight && AdsLight.getAjaxParams.apply(AdsLight.getAjaxParams, arguments) || {
             al_ad: null
@@ -2379,6 +2380,7 @@ function __adsGetAjaxParams(ajaxParams, ajaxOptions) {
 }
 
 function __adsUpdate(force) {
+    if (window.noAdsAtAll) return false;
     __adsUpdate = function() {
         window.AdsLight && AdsLight.updateBlock.apply(AdsLight.updateBlock, arguments);
     };
@@ -2386,6 +2388,7 @@ function __adsUpdate(force) {
 }
 
 function __adsSet(adsHtml, adsSection, adsCanShow, adsShowed, adsParams) {
+    if (window.noAdsAtAll) return false;
     __adsSet = function() {
         window.AdsLight && AdsLight.setNewBlock.apply(AdsLight.setNewBlock, arguments);
     };
@@ -2393,6 +2396,7 @@ function __adsSet(adsHtml, adsSection, adsCanShow, adsShowed, adsParams) {
 }
 
 function __adsUpdateExternalStats(elem) {
+    if (window.noAdsAtAll) return false;
     __adsUpdateExternalStats = function() {
         window.AdsLight && AdsLight.updateExternalStats.apply(AdsLight.updateExternalStats, arguments);
     };

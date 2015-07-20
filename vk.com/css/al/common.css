@@ -2625,10 +2625,11 @@ div.audio td {
     position: relative;
 }
 
-#box_layer .video_box div {
-    position: relative;
-    z-index: 1011;
-}
+
+/*#box_layer .video_box div { // bad style
+  position: relative;
+  z-index: 1011;
+}*/
 
 #box_layer .video_box .background {
     position: absolute;

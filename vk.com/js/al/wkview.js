@@ -2248,7 +2248,7 @@ var WkView = {
                 var s = getSize(btn.tt.container);
                 return [(s[0] - btnW) / 2, 8, 8];
             },
-            showdt: 400,
+            showdt: 200,
             className: 'subscribe_post_tt'
         });
     },

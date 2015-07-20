@@ -2626,7 +2626,7 @@ var IM = {
                 } else {
                     preview = '<a target="_blank" href="' + data.href +
                         '" class="medadd_h medadd_h_doc inl_bl" onclick="if (cur.cancelClick) return (cur.cancelClick = false);">' + data.lang.profile_choose_doc + '</a>';
-                    postview = '<div class="medadd_c medadd_c_doc"><a target="_blank" href="' + data.href + '">' + data.title + '</a></div>';
+                    postview = '<div class="medadd_c medadd_c_doc"><a target="_blank" href="' + data.href + '" title="' + data.title + '">' + data.title + '</a></div>';
                     contIndex = 0;
                     cls = 'clear_fix';
                 }
@@ -7870,6 +7870,19 @@ var IM = {
             IM.scroll();
             if (cur.nu) re('im_unread_bar' + peer);
         }
+    },
+
+    openSnapsterLayer: function(e) {
+        if (checkEvent(e)) {
+            return;
+        }
+        showBox('/snapster.php', {
+            act: 'show'
+        }, {
+            containerClass: 'chronicle_layer',
+            dark: 1
+        });
+        return cancelEvent(e);
     }
 };
 
