@@ -22,6 +22,8 @@ FAQ = {
                     lang: cur.langsDD.val()
                 });
             }
+            extend(newLoc, FAQ.getSectionExtend());
+
             return nav.go(newLoc, evt, {
                 onFail: function(text) {
                     hide('new_tab');
@@ -50,6 +52,8 @@ FAQ = {
             }, {
                 act: name
             });
+            extend(newLoc, FAQ.getSectionExtend());
+
             if (cur.section == 'edit' && name == 'all' && cur.langsDD) {
                 extend(newLoc, {
                     lang: cur.langsDD.val()
@@ -57,6 +61,22 @@ FAQ = {
             }
             return nav.go(newLoc, evt);
         }
+    },
+
+    getSectionExtend: function() {
+        if (nav.objLoc.hasOwnProperty('section')) {
+            return {
+                section: nav.objLoc.section
+            };
+        } else {
+            var s = ge('current_section');
+            if (s) {
+                return {
+                    section: val(s)
+                };
+            }
+        }
+        return {};
     },
 
     switchSubTab: function(el, link, evt) {
@@ -230,21 +250,27 @@ FAQ = {
                 parent_id: (language ? cur.parentId : 0)
             };
 
-        if (cur.platformSelector) {
-            var platforms = cur.platformSelector.val();
-            if (!platforms) {
-                elfocus(cur.platformSelector.input);
-                return notaBene(cur.platformSelector.selector);
+        if (cur.sectionSelector) {
+            query.section = intval(cur.sectionSelector.val());
+
+            if (query.section == 0) {
+                var categories = cur.desktopCategorySelector.val();
+                query.categories = categories;
+            } else if (query.section == 31) {
+                var platforms = cur.platformSelector.val();
+                if (!platforms) {
+                    elfocus(cur.platformSelector.input);
+                    return notaBene(cur.platformSelector.selector);
+                }
+                query.platforms = platforms;
+
+                var categories = cur.categorySelector.val();
+                if (!categories) {
+                    elfocus(cur.categorySelector.input);
+                    return notaBene(cur.categorySelector.selector);
+                }
+                query.categories = categories;
             }
-            query.platforms = platforms;
-        }
-        if (cur.categorySelector) {
-            var categories = cur.categorySelector.val();
-            if (!categories) {
-                elfocus(cur.categorySelector.input);
-                return notaBene(cur.categorySelector.selector);
-            }
-            query.categories = categories;
         }
         ajax.post(nav.objLoc[0], query, {
             onFail: FAQ.showError,
