@@ -1135,6 +1135,8 @@ var Videoview = {
                 toggleClass(blockEl, 'video_plb_collapsed', isCollapsed);
 
                 toggleClass(ge('mv_box'), 'mv_plb_collapsed', isCollapsed);
+            } else {
+                removeClass(geByClass1('mv_data'), 'mv_wpl');
             }
         },
 
