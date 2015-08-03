@@ -835,6 +835,7 @@ AdsEdit.showCropPhotoBox = function(photoData) {
     ajaxParams.disclaimer_medical = viewParams.disclaimer_medical;
     ajaxParams.disclaimer_specialist = viewParams.disclaimer_specialist;
     ajaxParams.disclaimer_supplements = viewParams.disclaimer_supplements;
+    ajaxParams.age_restriction = viewParams.age_restriction;
 
     var showOptions = {
         params: {}
@@ -1499,6 +1500,10 @@ AdsViewEditor.prototype.init = function(options, editor, targetingEditor, params
         disclaimer_supplements: {
             value: 0
         },
+        age_restriction: {
+            value: 0,
+            data: []
+        },
         photo: {
             value: '',
             value_s: '',
@@ -1656,6 +1661,7 @@ AdsViewEditor.prototype.initPreview = function(paramName) {
     this.preview.disclaimers_photo = geByClass1('ads_ad_disclaimers_photo', this.preview.layout);
     this.preview.disclaimers_bottom = geByClass1('ads_ad_disclaimers_bottom', this.preview.layout);
     this.preview.disclaimers = geByClass1('ads_ad_disclaimers', this.preview.layout);
+    this.preview.age_restriction = geByClass1('ads_ad_age_restriction', this.preview.layout);
     this.preview.domain = geByClass1('ads_ad_domain', this.preview.layout);
     this.preview.domain_ver = geByClass1('ads_ad_domain_ver', this.preview.layout);
     this.preview.domain_out = geByClass1('ads_ad_domain_out', this.preview.layout);
@@ -2182,6 +2188,21 @@ AdsViewEditor.prototype.initUiParam = function(paramName) {
                 width: this.options.uiWidth,
                 onChange: function(state) {
                     this.onUiChange(paramName, state);
+                }.bind(this)
+            });
+            this.cur.destroy.push(function() {
+                this.params[paramName].ui.destroy();
+            }.bind(this));
+            break;
+        case 'age_restriction':
+            targetElem = ge(this.options.targetIdPrefix + paramName);
+            targetElem.removeAttribute('autocomplete');
+            this.params[paramName].ui = new Dropdown(targetElem, this.getUiParamData(paramName), {
+                selectedItem: this.params[paramName].value,
+                big: true,
+                width: this.options.uiWidth,
+                onChange: function(value) {
+                    this.onUiChange(paramName, value);
                 }.bind(this)
             });
             this.cur.destroy.push(function() {
@@ -3079,9 +3100,9 @@ AdsViewEditor.prototype.onParamUpdate = function(paramName, paramValue, forceDat
                 this.params.disclaimer_medical.may_be_any = inArray(this.params.format_type.value, [AdsEdit.ADS_AD_FORMAT_TYPE_TEXT_IMAGE, AdsEdit.ADS_AD_FORMAT_TYPE_BIG_IMAGE,
                     AdsEdit.ADS_AD_FORMAT_TYPE_EXCLUSIVE, AdsEdit.ADS_AD_FORMAT_TYPE_PROMOTION_COMMUNITY, AdsEdit.ADS_AD_FORMAT_TYPE_GROUPS_ONLY
                 ]);
-                this.params.disclaimer_medical.hidden = (!this.params.disclaimer_medical.may_be_any || !this.params.disclaimer_medical.allow)
-                this.params.disclaimer_specialist.hidden = (!this.params.disclaimer_medical.may_be_any || !this.params.disclaimer_specialist.allow)
-                this.params.disclaimer_supplements.hidden = (!this.params.disclaimer_medical.may_be_any || !this.params.disclaimer_supplements.allow)
+                this.params.disclaimer_medical.hidden = (!this.params.disclaimer_medical.may_be_any || !this.params.disclaimer_medical.allow);
+                this.params.disclaimer_specialist.hidden = (!this.params.disclaimer_medical.may_be_any || !this.params.disclaimer_specialist.allow);
+                this.params.disclaimer_supplements.hidden = (!this.params.disclaimer_medical.may_be_any || !this.params.disclaimer_supplements.allow);
                 this.params.stats_url.hidden = !(this.params.format_type.value == AdsEdit.ADS_AD_FORMAT_TYPE_EXCLUSIVE && this.params.stats_url.allow_exclusive || this.params.format_type
                     .value == AdsEdit.ADS_AD_FORMAT_TYPE_PROMOTED_POST && this.params.stats_url.allow_promoted_post);
                 this.params.views_limit_flag.hidden = (this.params.cost_type.value != AdsEdit.ADS_AD_COST_TYPE_VIEWS || this.params.format_type.value == AdsEdit.ADS_AD_FORMAT_TYPE_EXCLUSIVE &&
@@ -3143,6 +3164,7 @@ AdsViewEditor.prototype.onParamUpdate = function(paramName, paramValue, forceDat
                 this.updateUiParamVisibility('disclaimer_medical');
                 this.updateUiParamVisibility('disclaimer_specialist');
                 this.updateUiParamVisibility('disclaimer_supplements');
+                this.updateUiParamVisibility('age_restriction');
                 this.updateUiParamVisibility('stats_url');
                 this.updateUiParamVisibility('views_limit_flag');
                 this.updateUiParamVisibility('views_limit_exact');
@@ -3153,6 +3175,7 @@ AdsViewEditor.prototype.onParamUpdate = function(paramName, paramValue, forceDat
                 this.updatePreview('community_join');
                 this.updatePreview('app_rating');
                 this.updatePreview('mobile_app_bottom');
+                this.updatePreview('age_restriction');
                 this.updatePhotoData();
                 this.updatePhotoData('i');
 
@@ -3366,6 +3389,11 @@ AdsViewEditor.prototype.onParamUpdate = function(paramName, paramValue, forceDat
                 this.updateUiParamData('views_places');
                 this.updatePreview('disclaimer_supplements');
                 this.updatePreview('disclaimers');
+                break;
+            case 'age_restriction':
+                this.updateUiParam('age_restriction');
+                this.updatePreview('age_restriction');
+                this.updatePreview('domain');
                 break;
             case 'cost_per_click':
                 this.params.cost_per_click.edited = true;
@@ -4695,11 +4723,24 @@ AdsViewEditor.prototype.updatePreview = function(previewParamName) {
         case 'disclaimer_supplements':
             toggle(this.preview[previewParamName], !!(this.params.disclaimer_supplements.value));
             break;
+        case 'age_restriction':
+            var isMobile = (this.params.format_type.value == AdsEdit.ADS_AD_FORMAT_TYPE_MOBILE);
+            if (isMobile) {
+                hide(this.preview[previewParamName]);
+            } else {
+                this.preview[previewParamName].innerHTML = this.getAgeRestrictionText(this.params.age_restriction.value);
+                toggle(this.preview[previewParamName], !!(this.params.age_restriction.value));
+            }
+            break;
         case 'disclaimers':
             toggle(this.preview.disclaimers, !!(this.params.disclaimer_medical.value) || !!(this.params.disclaimer_specialist.value) || !!(this.params.disclaimer_supplements.value));
             break;
         case 'domain':
             var domainValue = this.getPreviewDomain();
+            var isMobile = (this.params.format_type.value == AdsEdit.ADS_AD_FORMAT_TYPE_MOBILE);
+            if (isMobile && this.params.age_restriction.value) {
+                domainValue += ' ' + this.getAgeRestrictionText(this.params.age_restriction.value);
+            }
             this.preview[previewParamName].innerHTML = domainValue;
             toggle(this.preview[previewParamName], !!(domainValue));
             break;
@@ -4789,6 +4830,16 @@ AdsViewEditor.prototype.ignoreSpellingMessage = function(section, hash) {
         ge('ads_param_description')
             .focus();
     }
+}
+
+AdsViewEditor.prototype.getAgeRestrictionText = function(ageRestriction) {
+    var ageRestrictionData = this.params.age_restriction.data;
+    for (var i in ageRestrictionData) {
+        if (ageRestrictionData[i][0] == ageRestriction) {
+            return ageRestrictionData[i][1];
+        }
+    }
+    return '';
 }
 
 //

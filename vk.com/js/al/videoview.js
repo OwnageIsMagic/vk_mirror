@@ -330,6 +330,11 @@ var Videoview = {
             onShare: function(actionType) {
                 Videoview.share();
                 Videoview.sendPlayerStats(2, actionType);
+            },
+
+            onSubscribe: function(gid, hash, isSubscribe, actionType) {
+                Videoview.subscribeToAuthor(null, null, gid, hash, isSubscribe, null, true);
+                Videoview.sendPlayerStats(isSubscribe ? 9 : 10, actionType);
             }
         },
 
@@ -456,7 +461,7 @@ var Videoview = {
             st.events = [];
         },
 
-        subscribeToAuthor: function(btn, event, gid, hash, isSubscribe, isClosed) {
+        subscribeToAuthor: function(btn, event, gid, hash, isSubscribe, isClosed, noPlayerUpdate) {
             if (!hash) return;
 
             function _leaveGroup() {
@@ -469,6 +474,10 @@ var Videoview = {
                     unsubscribe: intval(!isSubscribe),
                     from: 'videoview'
                 });
+                if (!noPlayerUpdate) {
+                    var player = Videoview.getPlayerObject();
+                    player && player.onSubscribed && player.onSubscribed();
+                }
             }
 
             if (!isSubscribe && isClosed) {

@@ -1076,6 +1076,33 @@ a.ads_ad_box2:hover {
     padding-top: 3px;
 }
 
+.ads_ad_age_restriction {
+    color: #777;
+    font-size: 9px;
+    padding: 2px 3px;
+    border-radius: 30px;
+    display: inline-block;
+    margin-top: 5px;
+    line-height: 10px;
+}
+
+.ads_ad_age_restriction.groups_only,
+.ads_ad_age_restriction.apps_only {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    background-color: rgba(50, 50, 50, 0.4);
+    border: none;
+    margin: 0;
+    text-shadow: 1px 1px rgba(0, 0, 0, 0.2);
+    color: #fff;
+}
+
+.ads_ad_age_restriction.inline {
+    margin-top: 0;
+    margin-left: 2px;
+}
+
 
 /* Ad extra */
 
