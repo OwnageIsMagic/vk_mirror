@@ -4587,11 +4587,11 @@ var IM = {
     onKey: function(e) {
         var inputActive = (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || hasClass(e.target, 'im_editable') || e.target.getAttribute('contenteditable'));
 
-        if (e.keyCode > 47 && e.keyCode < 58) { // 0 - 9 keys for tab switching
+        if (e.keyCode > 47 && e.keyCode < 58 && !e.altKey) { // 0 - 9 keys for tab switching
             var num = e.keyCode - 49,
                 i = 0;
             e = e.originalEvent || e;
-            if (browser.safari ? e.ctrlKey : (browser.mac ? (e.metaKey || e.ctrlKey) : (e.altKey || e.metaKey || e.ctrlKey))) {
+            if (browser.safari ? e.ctrlKey : e.metaKey || e.ctrlKey) {
                 if (num == -1) num = 9;
                 each(ge('im_tabs')
                     .childNodes,
@@ -7248,7 +7248,9 @@ var IM = {
         }
     },
     notify: function(peer_id, msg) {
-        if (!cur.notify_on) {
+        if (!cur.notify_on ||
+            (window.curNotifier && !curNotifier.is_server) ||
+            !document.hidden) {
             return;
         }
         var peer, peer_photo, peer_name, title = IM.goodTitle(msg[2], peer_id) && msg[2] || '';
