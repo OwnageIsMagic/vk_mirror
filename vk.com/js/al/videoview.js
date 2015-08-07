@@ -3638,7 +3638,7 @@ var Videoview = {
             }
             cur.mvYourComment = yc;
             cur.destroy.push(function(c) {
-                var field = c.pvYourComment && geByTag1('textarea', c.pvYourComment),
+                var field = c.mvYourComment && geByTag1('textarea', c.mvYourComment),
                     comp = field && data(field, 'composer');
                 if (comp) {
                     Composer.reset(comp);
@@ -3652,7 +3652,7 @@ var Videoview = {
                     noResult: getLang('profile_mention_not_found')
                 },
                 wddClass: 'mv_composer_dd',
-                width: getSize(domPN(cur.pvYourComment))[0],
+                width: getSize(domPN(cur.mvYourComment))[0],
                 media: {
                     lnk: domFC(ge('mv_add_media')),
                     preview: ge('mv_media_preview'),

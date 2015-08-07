@@ -459,6 +459,8 @@ var WriteBox = {
                     act: 'banned_him',
                     action: 'mail',
                     mid: cur.mbBannedHim
+                }, {
+                    dark: 1
                 })
                 .onContinue = WriteBox.send.pbind(true);
             return;

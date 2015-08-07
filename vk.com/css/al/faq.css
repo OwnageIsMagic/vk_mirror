@@ -458,7 +458,8 @@ h4.faq_question .faq_info {
     font-weight: bold;
 }
 
-.faq_platform_dd {
+.faq_platform_dd,
+.faq_category_dd {
     margin-left: 10px;
 }
 
