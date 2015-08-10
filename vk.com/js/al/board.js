@@ -294,7 +294,7 @@ var Board = {
         if (count >= 10 && window.Emoji) {
             return setTimeout(Emoji.focus.pbind(cur.addField), 0);
         }
-        var insert = replaceEntities(cur.names[mid].replace('{post_id}', 'post' + post)),
+        var insert = cur.names[mid].replace('{post_id}', 'post' + post),
             pos;
         insert = insert.replace(/ $/, '&nbsp;');
         if (!window.Emoji) return false;
