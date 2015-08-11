@@ -3686,6 +3686,7 @@ var ajax = {
             delete boldq.ads_showed;
             delete boldq.captcha_sid;
             delete boldq.captcha_key;
+            delete boldq._smt;
             cacheKey = url + '#' + ajx2q(boldq);
         }
         var hideBoxes = function() {
