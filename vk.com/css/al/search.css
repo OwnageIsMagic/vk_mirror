@@ -215,6 +215,22 @@ table.search_table {
     padding-top: 3px;
 }
 
+#search_filters.fixed {
+    -webkit-transform: scale(1);
+}
+
+@media (min-width: 791px) {
+    #search_filters.fixed {
+        left: 50%;
+    }
+}
+
+@media (max-width: 790px) {
+    #search_filters.fixed {
+        left: 396px;
+    }
+}
+
 #search_filters input.text {
     width: 140px;
     padding-left: 5px;
