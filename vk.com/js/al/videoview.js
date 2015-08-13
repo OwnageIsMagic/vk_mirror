@@ -171,6 +171,15 @@ var Videoview = {
                     }
                 }
 
+                var playerViewType;
+                if (cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline) {
+                    playerViewType = 'inline';
+                } else if (window.mvcur && window.mvcur.options && window.mvcur.options.playlistId) {
+                    playerViewType = 'layer_with_playlist';
+                } else {
+                    playerViewType = 'layer';
+                }
+
                 var firstRequest = ajax.post('al_video.php', {
                     act: 'video_view_started',
                     oid: oid,
@@ -178,7 +187,9 @@ var Videoview = {
                     hash: hash,
                     quality: (window.mvcur ? mvcur.mvData.resolution : 0),
                     module: m,
-                    videocat: videocat
+                    videocat: videocat,
+                    inline: -1,
+                    player_view_type: playerViewType
                 }, {
                     onDone: function(t) {}
                 });
@@ -333,7 +344,8 @@ var Videoview = {
             },
 
             onSubscribe: function(gid, hash, isSubscribe, actionType) {
-                Videoview.subscribeToAuthor(null, null, gid, hash, isSubscribe, null, true);
+                var isClosedCommunity = mvcur && mvcur.mvData ? mvcur.mvData.isClosed : false;
+                Videoview.subscribeToAuthor(null, null, gid, hash, isSubscribe, isClosedCommunity, true, 'player');
                 Videoview.sendPlayerStats(isSubscribe ? 9 : 10, actionType);
             }
         },
@@ -464,7 +476,7 @@ var Videoview = {
             st.events = [];
         },
 
-        subscribeToAuthor: function(btn, event, gid, hash, isSubscribe, isClosed, noPlayerUpdate) {
+        subscribeToAuthor: function(btn, event, gid, hash, isSubscribe, isClosed, noPlayerUpdate, from) {
             if (!hash) return;
 
             function _leaveGroup() {
@@ -475,7 +487,7 @@ var Videoview = {
                     gid: gid,
                     hash: hash,
                     unsubscribe: intval(!isSubscribe),
-                    from: 'videoview'
+                    from: from
                 });
 
                 var mv = false;
@@ -507,6 +519,7 @@ var Videoview = {
                     box.hide();
                     _leaveGroup();
                 }, getLang('box_no'));
+                Videoview.playerNextTimerUpdate();
             } else {
                 _leaveGroup();
             }
@@ -1011,6 +1024,7 @@ var Videoview = {
                 } else {
                     var showControls = '';
                     //var controlsClass = 'mv_controls_shown';
+                    var hasPlbClass = window.Videocat && options.playlistId ? 'mv_has_plb' : '';
                 }
 
 
@@ -1023,9 +1037,9 @@ var Videoview = {
                 }
 
                 // '+' - fix for buggy firefox
-                mvLayer.innerHTML =
-                    '\
-<div class="mv_cont"> \
+                mvLayer.innerHTML = '\
+<div class="mv_cont ' + hasPlbClass +
+                    '"> \
 <div class="no_select" id="mv_left_nav" onmouseover="Videoview.activate(this, mvcur.mvLeft)" onmouseout="Videoview.deactivate(this, mvcur.mvLeft)" onmousedown="Videoview.show(false, mvcur.mvIndex - 1 + vk.rtl * 2, event); mvcur.mvClicked = true;" onselectstart="return cancelEvent(event);"></div> \
 <div class="no_select" id="mv_right_nav" onmouseover="Videoview.activate(this, mvcur.mvRight)" onmouseout="Videoview.deactivate(this, mvcur.mvRight)" onmousedown="Videoview.show(false, mvcur.mvIndex + 1 - vk.rtl * 2, event); mvcur.mvClicked = true;" onselectstart="return cancelEvent(event);"></div> \
 <div class="no_select" id="mv_right_controls" style="display: none;" onselectstart="return cancelEvent(event);"> \
@@ -1045,7 +1059,7 @@ var Videoview = {
   <div id="mv_top_controls"> \
     <div onclick="return Videoview.hide(false, true, event, true);" class="mv_top_button"><div class="mv_small_close_icon"></div></div> \
     <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize"><div class="mv_minimize_icon"></div></div> \
-    <div onclick="return Videoview.togglePlaylistsBlock(true);" class="mv_top_button mv_top_pl_toggle" id="mv_top_pl_toggle"><div class="mv_pl_toggle_icon"></div></div> \
+    <div onclick="return Videoview.togglePlaylistsBlock(true, false, true);" class="mv_top_button mv_top_pl_toggle" id="mv_top_pl_toggle"><div class="mv_pl_toggle_icon"></div></div> \
   </div> \
   <div class="mv_playlist_controls" id="mv_pl_next" onclick="return Videocat.nextVideo()"> \
     <div class="mv_playlist_controls_icon"></div> \
@@ -3951,7 +3965,7 @@ var Videoview = {
             return plbWrapEl && hasClass(plbWrapEl, 'video_plb_collapsed');
         },
 
-        togglePlaylistsBlock: function(doShow, noAnim) {
+        togglePlaylistsBlock: function(doShow, noAnim, userAction) {
             doShow = !!doShow;
 
             toggleClass(ge('mv_box'), 'mv_plb_collapsed', !doShow);
@@ -4038,6 +4052,13 @@ var Videoview = {
 
             var sb = data(playlistBlockEl, 'sb');
             sb && sb.update();
+
+            if (userAction) {
+                ajax.post('/al_video.php', {
+                    act: 'a_videoview_stat',
+                    action: doShow ? 'show_playlist_block' : 'hide_playlist_block'
+                });
+            }
 
             return false;
         },
@@ -4400,7 +4421,8 @@ var Videoview = {
             }
             if (!mv) return;
             var isSubscribe = !mv.subscribed;
-            Videoview.subscribeToAuthor(null, null, mv.oid, mv.subscribeHash, isSubscribe);
+            var isClosed = mv.isClosed;
+            Videoview.subscribeToAuthor(null, null, mv.oid, mv.subscribeHash, isSubscribe, isClosed, false, 'external_player');
             Videoview.sendPlayerStats(isSubscribe ? 9 : 10, 4);
         },
 
