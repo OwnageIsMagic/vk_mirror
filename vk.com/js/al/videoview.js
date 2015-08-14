@@ -422,7 +422,7 @@ var Videoview = {
         },
 
         getPlayerObjectEl: function() {
-            return ge('video_player') || ge('html5_player') || null;
+            return ge('video_player') || ge('html5_player') || geByClass1('extra_player') || null;
         },
 
         playerOnAdded: function() {
@@ -1155,7 +1155,6 @@ var Videoview = {
                     var mvplBlockEl = Videocat.buildPlaylistBlock(options.playlistId);
                     if (mvplBlockEl) {
                         Videoview.togglePlaylistBlockStateClasses();
-
                         Videoview.updatePlaylistBoxPosition();
                         Videocat.setPlaylistCurrentVideo(videoRaw, cur._plbWasVisible);
                     }
@@ -3609,6 +3608,7 @@ var Videoview = {
                 hide(plBlockEl);
                 removeClass(geByClass1('mv_data'), 'mv_wpl');
             }
+            removeClass(ge('mv_box'), 'mv_plb_collapsed');
 
             Videoview.updateExternalVideoFinishBlock();
 
@@ -3992,15 +3992,15 @@ var Videoview = {
                 !noAnim && addClass(mvContentEl, MV_TRANSITION_CLS);
 
                 setStyle(playerEl, {
-                    width: newWidth,
-                    height: newHeight
+                    //width: newWidth,
+                    //height: newHeight
                 });
 
                 if (!isFlash) {
                     !noAnim && addClass(wrapEl, MV_TRANSITION_CLS);
                     setStyle(wrapEl, {
-                        width: newWidth,
-                        height: newHeight
+                        //  width: newWidth,
+                        //  height: newHeight
                     });
                 }
 
@@ -4008,8 +4008,8 @@ var Videoview = {
             }
 
             function setPlayerDimensions() {
-                playerEl.setAttribute('width', newWidth);
-                playerEl.setAttribute('height', newHeight);
+                //playerEl.setAttribute('width', newWidth);
+                //playerEl.setAttribute('height', newHeight);
             }
 
             var mvDataEl = geByClass1('mv_data');
@@ -4044,7 +4044,7 @@ var Videoview = {
                     toggle(playlistBlockEl, doShow);
 
                     var playerObject = Videoview.getPlayerObject();
-                    playerObject.onResize && playerObject.onResize();
+                    playerObject && playerObject.onResize && playerObject.onResize();
                 }, 150); // animation length
             }
 

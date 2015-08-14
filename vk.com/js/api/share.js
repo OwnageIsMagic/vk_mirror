@@ -76,7 +76,7 @@ if (!VK.Share) {
                     index + ');" onmousedown="VK.Share.change(2, ' + index + ');" onmouseup="VK.Share.change(1, ' + index +
                     ');" style="position: relative; width: auto; cursor: pointer; border: 0px;"><tr style="line-height: normal;">' +
                     td1 + a +
-                    ' style="border: none;background: #5F83AA;-webkit-border-radius: 2px 0px 0px 2px;-moz-border-radius: 2px 0px 0px 2px;border-radius: 2px 0px 0px 2px;display:block;text-decoration: none;padding: 3px 3px 3px 6px;color: #FFFFFF;font-family: tahoma, arial;height: 15px;line-height:15px;font-size: 10px;text-shadow: none;">' +
+                    ' style="border: none;box-sizing: content-box;background: #5F83AA;-webkit-border-radius: 2px 0px 0px 2px;-moz-border-radius: 2px 0px 0px 2px;border-radius: 2px 0px 0px 2px;display:block;text-decoration: none;padding: 3px 3px 3px 6px;color: #FFFFFF;font-family: tahoma, arial;height: 15px;line-height:15px;font-size: 10px;text-shadow: none;">' +
                     but.text + '<div class="float:right"></div>' + a2 + td2 +
                     td1 + a +
                     ' style="border: none;background: #5F83AA;-webkit-border-radius: 0px 2px 2px 0px;-moz-border-radius: 0px 2px 2px 0px;border-radius: 0px 2px 2px 0px;display:block; padding: 3px;' +
@@ -87,7 +87,7 @@ if (!VK.Share) {
                         '"><div style="background: url(\'//vk.com/images/icons/share_logo' + is2x +
                         '.png\') 0px -24px no-repeat; background-size: 16px 31px; width: 4px; height: 7px;position: absolute; margin: 7px 0px 0px 4px;z-index:100;"></div><div id="vkshare_cnt' +
                         index +
-                        '" style="border: 1px solid #bbbfc4;background: #FFFFFF;height: 15px;line-height: 15px;5px; padding: 2px 4px;min-width: 12px;margin-left: 7px;border-radius: 2px;-webkit-border-radius: 2px;-moz-border-radius:2px;text-align: center; color: #666c73;font-size: 10px;z-index:99;">' +
+                        '" style="border: 1px solid #bbbfc4;background: #FFFFFF;height: 15px;line-height: 15px;5px; padding: 2px 4px;min-width: 12px;margin-left: 7px;border-radius: 2px;-webkit-border-radius: 2px;-moz-border-radius:2px;text-align: center; color: #666c73;font-size: 10px;z-index:99;box-sizing: content-box;">' +
                         gen.count + '</div>' + a2 + td2 : '') +
                     '</tr></table>';
             } else if (but.type == 'link') {
