@@ -2637,7 +2637,10 @@ var Photoview = {
                 FullscreenPV.startSlide();
                 FullscreenPV.showControls(true);
             }
-            if (e.target && (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName == 'DIV' && e.target.contentEditable)) {
+            if (
+                Emoji && Emoji.shown ||
+                e.target && (e.target.tagName == 'INPUT' || e.target.tagName == 'TEXTAREA' || e.target.tagName == 'DIV' && e.target.contentEditable)
+            ) {
                 return true;
             }
             if (e.keyCode == KEY.ESC) {

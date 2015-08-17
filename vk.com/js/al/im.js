@@ -4650,11 +4650,12 @@ var IM = {
             } else if (!layers.visible) {
                 IM.activateTab(-1);
             }
-        } else if (e.keyCode == KEY.ENTER) {
-            if (!Emoji.emojiEnter(cur.emojiId[cur.peer], e)) {
-                return false;
-            }
         }
+        /* else if (e.keyCode == KEY.ENTER) {
+              if (!Emoji.emojiEnter(cur.emojiId[cur.peer], e)) {
+                return false;
+              }
+            }*/
         return true;
     },
     activateTab: function(peer, from, msgId) {

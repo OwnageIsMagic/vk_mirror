@@ -2734,13 +2734,17 @@ Tickets = {
         });
     },
 
+    getSearchQuery: function() {
+        var input = ge('tickets_title') || ge('faq_search_form__title');
+        return input ? input.value : '';
+    },
+
     switchToPayForm: function(event) {
         lockButton('tickets_create_pay');
         return nav.go({
             0: nav.objLoc[0],
             act: 'new_pay',
-            title: ge('tickets_title')
-                .value
+            title: Tickets.getSearchQuery()
         }, event);
     },
 
@@ -2749,8 +2753,7 @@ Tickets = {
         return nav.go({
             0: nav.objLoc[0],
             act: 'new_ads',
-            title: ge('tickets_title')
-                .value
+            title: Tickets.getSearchQuery()
         }, event);
     },
 
@@ -2759,8 +2762,7 @@ Tickets = {
         return nav.go({
             0: nav.objLoc[0],
             act: 'new_name',
-            title: ge('tickets_title')
-                .value
+            title: Tickets.getSearchQuery()
         }, event);
     },
 
@@ -2769,8 +2771,7 @@ Tickets = {
         return nav.go({
             0: nav.objLoc[0],
             act: 'new_api',
-            title: ge('tickets_title')
-                .value
+            title: Tickets.getSearchQuery()
         }, event);
     },
 
@@ -2779,8 +2780,7 @@ Tickets = {
         return nav.go({
             0: nav.objLoc[0],
             act: 'new_mobile',
-            title: ge('tickets_title')
-                .value
+            title: Tickets.getSearchQuery()
         }, event);
     },
 
@@ -3657,21 +3657,24 @@ Tickets = {
         cur.faqTimeout = setTimeout((function() {
                 var origStr = obj.value,
                     str = trim(origStr),
-                    words = str.split(' '),
-                    textInput = ge('tickets_redesign_text');
+                    words = str.split(' ');
 
-                if (str == cur.searchStr && (words.length < 4 || words.length == 4 && origStr[origStr.length - 1] != ' ')) {
+                if (str == cur.listSearchStr && (words.length < 4 || words.length == 4 && origStr[origStr.length - 1] != ' ')) {
                     return;
                 }
+                if (str.length > 0 && str.length < 3) {
+                    return;
+                }
+
                 if (str) {
                     addClass(ge('tickets_search_reset'), 'shown');
                 } else {
                     removeClass(ge('tickets_search_reset'), 'shown');
                 }
-                cur.searchStr = str;
+                cur.listSearchStr = str;
                 clearTimeout(cur.searchFAQTimeout);
                 cur.searchFAQTimeout = setTimeout((function() {
-                        Tickets.listSearch(cur.searchStr);
+                        Tickets.listSearch(cur.listSearchStr);
                     })
                     .bind(this), 300);
 
@@ -3696,7 +3699,7 @@ Tickets = {
 
         ajax.post(nav.objLoc[0], query, {
             cache: 1,
-            onDone: function(content, showButton) {
+            onDone: function(content, showButton, altButtonId) {
                 var qlist = ge('help_table_questions_l'),
                     updateLoc = true;
                 removeClass(ge('faq_search_form'), 'loading');
@@ -3714,6 +3717,7 @@ Tickets = {
                     Tickets.listOpenFAQs();
                     Tickets.listSetTitle(getLang(val ? 'support_list_search_result_title' : 'support_list_popular_questions'));
                     Tickets.listToggleUnusefulButton(showButton);
+                    Tickets.listShowAltButton(altButtonId);
                     if (val == '') {
                         addClass(ge('help_table_category_top'), 'help_table_categories__a_sel');
                     }
@@ -3729,6 +3733,12 @@ Tickets = {
                     }
                     nav.setLoc(obj);
                 }
+
+                if (val != '' && ge('faq_search_form__title')
+                    .tt) {
+                    ge('faq_search_form__title')
+                        .tt.hide();
+                }
             },
             onFail: function() {
                 removeClass(ge('tickets_search'), 'loading');
@@ -3736,6 +3746,10 @@ Tickets = {
         });
     },
     listToggleQuestion: function(e) {
+        var b = e.which || e.button;
+        if (b != 1) {
+            return;
+        }
         var question = e.target.parentNode;
         var ans = geByClass1('help_table_question__ans', question);
 
@@ -3753,6 +3767,15 @@ Tickets = {
     listToggleUnusefulButton: function(v) {
         toggle(ge('help_table_questions_btn'), v);
     },
+    listShowAltButton: function(altButtonId) {
+        each(geByClass('secondary', ge('help_table_questions_btn')), function(i, e) {
+            if (altButtonId == '' || e.id != altButtonId) {
+                hide(e);
+            } else {
+                show(e);
+            }
+        });
+    },
     goToForm: function() {
         var titleInput = ge('faq_search_form__title'),
             title = '';
@@ -3762,20 +3785,18 @@ Tickets = {
         nav.go(nav.objLoc[0] + '?act=new' + (title ? '&title=' + encodeURIComponent(title) : ''));
         return false;
     },
-    goToList: function(category_id, question_id, evt) {
+    goToList: function(categoryId, questionId, evt) {
         if (evt !== null) {
             var b = evt.which || evt.button;
-            if (b != 1) {
-                return;
-            }
+            if (b != 1) return;
         }
 
-        var e = Tickets.listSelectCategory(category_id, true);
+        var e = Tickets.listSelectCategory(categoryId, true);
         var query = {
             act: 'load_faq_list'
         };
-        if (category_id != 'top') {
-            query['c'] = category_id;
+        if (categoryId != 'top') {
+            query['c'] = categoryId;
         }
 
         ajax.post(nav.objLoc[0], query, {
@@ -3793,28 +3814,36 @@ Tickets = {
                     act: 'faqs'
                 };
                 obj[0] = nav.objLoc[0];
-                if (category_id != 'top') {
-                    obj['c'] = category_id;
+                if (categoryId != 'top') {
+                    obj['c'] = categoryId;
                 }
-                if (question_id) {
-                    obj['id'] = question_id;
+                if (questionId) {
+                    obj['id'] = questionId;
                 }
                 nav.setLoc(obj);
 
                 ge('help_table_questions_l')
                     .innerHTML = content;
-                var question = null;
-                if (question_id) {
-                    question = ge('help_table_question_' + question_id);
-                }
-                if (question) {
-                    scrollToY(getXY(question)[1]);
-                    addClass(question, 'help_table_question_visible');
-                    show(geByClass1('help_table_question__ans', question));
-                }
+                Tickets.listScrollToQuestion(questionId);
             }
         });
         return false;
+    },
+    listScrollToQuestion: function(questionId) {
+        var question = null;
+        if (questionId) {
+            question = ge('help_table_question_' + questionId);
+        }
+        if (question) {
+            scrollToY(getXY(question)[1]);
+            if (!hasClass(question, 'help_table_question_visible')) {
+                addClass(question, 'help_table_question_visible');
+            }
+            var ans = geByClass1('help_table_question__ans', question);
+            if (!isVisible(ans)) {
+                show(ans);
+            }
+        }
     },
     listClearSearchInput: function() {
         ge('faq_search_form__title')
@@ -3835,13 +3864,13 @@ Tickets = {
             removeClass(el, 'shown');
         }
     },
-    listSelectCategory: function(category_id, add_loading) {
+    listSelectCategory: function(categoryId, add_loading) {
         each(geByClass('help_table_categories__a_sel', ge('help_table_categories')), function(i, v) {
-            if ('help_table_category_' + category_id != v.id) {
+            if ('help_table_category_' + categoryId != v.id) {
                 removeClass(v, 'help_table_categories__a_sel');
             }
         });
-        var e = ge('help_table_category_' + category_id);
+        var e = ge('help_table_category_' + categoryId);
         addClass(e, 'help_table_categories__a_sel');
         if (add_loading) {
             addClass(e, 'loading');
