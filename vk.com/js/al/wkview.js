@@ -2001,14 +2001,18 @@ var WkView = {
             part: 1
         }, {
             onDone: function(options, rows) {
+                if (!ge('wk_history_rows')) {
+                    return;
+                }
                 extend(wkcur, options);
                 ge('wk_history_rows')
                     .appendChild(cf(rows));
                 setTimeout(WkView.historyOnScroll, 500);
 
-                toggle('wk_history_more_link', wkcur.offset < wkcur.count);
-                toggle('wk_history_empty', wkcur.offset >= wkcur.count && !domFC(ge('wk_history_rows')));
-                toggleClass('wk_history_more', 'wk_history_more_loading', wkcur.offset < wkcur.count && !domFC(ge('wk_history_rows')));
+                var hasMore = wkcur.offset < wkcur.count && rows;
+                toggle('wk_history_more_link', hasMore);
+                toggle('wk_history_empty', !hasMore && !domFC(ge('wk_history_rows')));
+                toggleClass('wk_history_more', 'wk_history_more_loading', hasMore && !domFC(ge('wk_history_rows')));
                 wkcur.loadingHistory = false;
             },
             onFail: function() {

@@ -3705,16 +3705,14 @@ Tickets = {
                 removeClass(ge('faq_search_form'), 'loading');
 
                 if (content == '') {
-                    if (nav.objLoc['act'] == 'home' || qlist.innerHTML != '') {
-                        updateLoc = false;
-                    } else {
+                    if (cur.listPrevSearchStr.indexOf(val) == -1 || cur.listPrevSearchStr == '') {
                         Tickets.listShowNotFound(val);
+                    } else {
+                        updateLoc = false;
                     }
                 } else {
                     Tickets.listHideNotFound();
                     qlist.innerHTML = content;
-                    Tickets.listDiselectCategory();
-                    Tickets.listOpenFAQs();
                     Tickets.listSetTitle(getLang(val ? 'support_list_search_result_title' : 'support_list_popular_questions'));
                     Tickets.listToggleUnusefulButton(showButton);
                     Tickets.listShowAltButton(altButtonId);
@@ -3723,7 +3721,10 @@ Tickets = {
                     }
                 }
 
+                Tickets.listOpenFAQs();
+
                 if (updateLoc) {
+                    Tickets.listDiselectCategory();
                     var obj = {
                         act: 'faqs'
                     };
@@ -3733,6 +3734,7 @@ Tickets = {
                     }
                     nav.setLoc(obj);
                 }
+                cur.listPrevSearchStr = val;
 
                 if (val != '' && ge('faq_search_form__title')
                     .tt) {
@@ -3846,8 +3848,7 @@ Tickets = {
         }
     },
     listClearSearchInput: function() {
-        ge('faq_search_form__title')
-            .value = '';
+        val('faq_search_form__title', '');
         removeClass(ge('tickets_search_reset'), 'shown');
     },
     listClearSearch: function(el, event) {
