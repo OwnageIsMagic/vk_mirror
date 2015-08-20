@@ -1933,12 +1933,12 @@ var IM = {
         }
         delete tab.firstUnr;
         if (tab.unread - tab.q_new_cnt <= 0) return;
-
         for (var i in unr) {
             if (unr[i] > 0 && !q_new[i]) {
                 arr.push(i);
                 if (tab.inUpto < i) tab.inUpto = i;
                 --tab.unread;
+                removeClass(ge('mess' + i), 'im_new_msg');
             }
         }
         if (!arr.length) {
@@ -2564,7 +2564,7 @@ var IM = {
         return false;
     },
     onNewMsgOver: function(peer, msg_id) {
-        if (!cur.tabs[peer].markingRead) {
+        if (!cur.tabs[peer].markingRead && !document.hidden) {
             var suspWrap = ge('im_susp_wrap' + msg_id);
             if (suspWrap && !hasClass(suspWrap, 'im_msg_susp_wrap_done')) {
                 return false;
@@ -6281,10 +6281,6 @@ var IM = {
         if (peer <= 2e9) return;
 
         var tab = cur.tabs[peer];
-        if (tab && tab.data && tab.data.kicked) {
-            return;
-        }
-
         return !showBox('al_im.php', {
             act: 'a_show_members_box',
             chat: peer - 2e9

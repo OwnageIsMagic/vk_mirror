@@ -1,7 +1,7 @@
 Tickets = {
 
     switchTab: function(name, evt) {
-        if (evt.button) return true;
+        if (checkEvent(evt)) return true;
         var oldTab = false;
         var wide_tabs = ge('tickets_page_tabs');
         if (wide_tabs) {
@@ -3748,9 +3748,8 @@ Tickets = {
         });
     },
     listToggleQuestion: function(e) {
-        var b = e.which || e.button;
-        if (b != 1) {
-            return;
+        if (checkEvent(e)) {
+            return true;
         }
         var question = e.target.parentNode;
         var ans = geByClass1('help_table_question__ans', question);
@@ -3788,9 +3787,8 @@ Tickets = {
         return false;
     },
     goToList: function(categoryId, questionId, evt) {
-        if (evt !== null) {
-            var b = evt.which || evt.button;
-            if (b != 1) return;
+        if (evt !== null && checkEvent(evt)) {
+            return true;
         }
 
         var e = Tickets.listSelectCategory(categoryId, true);

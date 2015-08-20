@@ -69,6 +69,13 @@ var Videoview = {
                     });
                 }
             },
+            onSuggestionClick: function(vid) {
+                Videoview.sendPlayerStats(11, 0);
+                showVideo(vid, '', {
+                    autoplay: 1,
+                    module: Videoview.getVideoModule(vid)
+                });
+            },
             onOpenInPopup: function(videoRaw, listId, timeString) {
                 Videoview.sendPlayerStats(8, 0);
                 showVideo(videoRaw, listId, {
@@ -417,6 +424,10 @@ var Videoview = {
                 .slice(0, 3);
         },
 
+        getSuggestionsData: function() {
+            return mvcur && mvcur.mvData && mvcur.mvData.playerSuggestions;
+        },
+
         getPlayerObject: function() {
             return ge('video_player') || window.html5video || null;
         },
@@ -503,9 +514,10 @@ var Videoview = {
                     player && player.onSubscribed && player.onSubscribed();
                 }
 
-                var finishSubscribeBtn = geByClass1('mv_finish_subscribe_btn', 'mv_external_finish');
+                var finishSubscribeBtn = ge('mv_finish_subscribe_btn');
                 if (finishSubscribeBtn) {
                     finishSubscribeBtn.innerHTML = isSubscribe ? getLang('video_view_subscribed_msg') : getLang('video_view_subscribe_to_author');
+                    toggleClass('mv_finish_subscribe', 'mv_finish_subscribed', isSubscribe);
                 }
             }
 
@@ -4273,11 +4285,13 @@ var Videoview = {
                 '\
 <div class="mv_external_finish" id="mv_external_finish">\
   <div class="mv_finish_header">\
-    <div class="mv_finish_subscribe fl_r">\
-      <button class="mv_finish_subscribe_btn fl_l" onclick="Videoview.onExternalVideoSubscribe()">' +
-                (isSubscribed ? getLang('video_view_subscribed_msg') : getLang('video_view_subscribe_to_author')) + '</button>\
+    <div id="mv_finish_subscribe" class="fl_r mv_finish_subscribe ' +
+                (isSubscribed ? 'mv_finish_subscribed' : '') +
+                '">\
+      <button id="mv_finish_subscribe_btn" class="mv_finish_subscribe_btn fl_l" onclick="Videoview.onExternalVideoSubscribe()">' + (isSubscribed ?
+                    getLang('video_view_subscribed_msg') : getLang('video_view_subscribe_to_author')) + '</button>\
       <a href="' + mv.authorHref +
-                '" target="_blank" class="fl_l"><img class="mv_finish_author_img" src="' + mv.authorPhoto + '"></a>\
+                '" target="_blank" class="fl_r"><img class="mv_finish_author_img" src="' + mv.authorPhoto + '"></a>\
     </div>\
     <div class="mv_finish_title">' + mv.title +
                 '</div>\

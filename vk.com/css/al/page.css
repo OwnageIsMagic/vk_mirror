@@ -2575,7 +2575,7 @@ span.post_video_duration {
 
 .add_media_rows {
     position: static;
-    margin: 0px -20px;
+    margin: 0px 2px;
 }
 
 .add_media_items {
@@ -2599,7 +2599,7 @@ span.post_video_duration {
 .add_media_pointer {
     background: transparent;
     height: 20px;
-    width: 60px;
+    margin: auto;
 }
 
 .add_media_pointer_icon,
@@ -2607,8 +2607,8 @@ span.post_video_duration {
     width: 15px;
     height: 9px;
     background-position: -8px -44px;
-    position: absolute;
-    margin: -1px 0px 0px 34px;
+    position: static;
+    margin: -1px auto 0 auto;
 }
 
 .add_media_pointer_hover .add_media_pointer_icon {

@@ -104,6 +104,9 @@ FAQ = {
                 case 'tiles':
                     parent = ge('faq_tiles_editor');
                     break;
+                case 'sort':
+                    parent = ge('faq_sort_editor');
+                    break;
             }
             msg = parent.insertBefore(ce('div', {
                 id: 'faq_msg',
@@ -627,10 +630,6 @@ FAQ = {
         var question = ge('faq_tiles_editor_tile_question' + questionId);
         if (question) {
             FAQ.tilesQuestionRemove(questionId);
-            /*existingQuestion.style.backgroundColor = '#FEE';
-            existingQuestion.style.color = '#a00';
-            animate(existingQuestion, {backgroundColor: '#FFF', color: "#000" }, 2000);
-            return;*/
         }
 
         var question = ce('div', {
@@ -662,6 +661,57 @@ FAQ = {
         });
     },
 
+    saveQuestionsSort: function(btn, language, category, hash, byRate) {
+        var query = {
+                act: 'save_sort',
+                lang: language,
+                category: category,
+                hash: hash
+            },
+            ids = [];
+        if (!byRate) {
+            each(geByClass('faq_sort_editor_question', ge('faq_sort_editor__questions')), function(i, q) {
+                ids.push(q.id.replace('faq', ''));
+            });
+        }
+
+        query['ids'] = ids.join(',');
+
+        ajax.post(nav.objLoc[0], query, {
+            showProgress: function() {
+                addClass(btn, 'flat_btn_lock');
+            },
+            hideProgress: function() {
+                removeClass(btn, 'flat_btn_lock');
+            }
+        });
+    },
+    sortQuestionsReorder: function(q) {
+        var pos = q.getAttribute("position"),
+            prevPos = FAQ.sortQuestionsGetPosition(q);
+        if (pos != prevPos) {
+            addClass(q, 'faq_sort_editor_question_moved');
+        } else {
+            removeClass(q, 'faq_sort_editor_question_moved');
+        }
+
+        each(geByClass('faq_sort_editor_question_moved', ge('faq_sort_editor_question')), function(i, q) {
+            var pos = q.getAttribute("position"),
+                prevPos = FAQ.sortQuestionsGetPosition(q);
+            if (pos == prevPos) {
+                removeClass(q, 'faq_sort_editor_question_moved');
+            }
+        });
+    },
+    sortQuestionsGetPosition: function(q) {
+        var i = 0,
+            c = q;
+        while (c) {
+            i++;
+            c = c.previousSibling;
+        }
+        return Math.floor(i / 2) - 1;
+    },
     _eof: 1
 };
 try {
