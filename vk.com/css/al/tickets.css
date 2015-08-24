@@ -2727,15 +2727,19 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     padding: 12px 0;
 }
 
-.help_tile_urgent {
+.help_tile_alert {
     background: #eff1f3;
     font-size: 11px;
     margin: 3px 16px 12px;
-    padding: 14px 17px 11px 60px;
+    padding: 14px 17px 11px;
     position: relative;
 }
 
-.help_tile_urgent:before {
+.help_tile_alert_urgent {
+    padding-left: 60px;
+}
+
+.help_tile_alert_urgent:before {
     background: url(/images/faq_new_alert.png) no-repeat top left;
     background-size: 31px 26px;
     content: "";
@@ -2746,14 +2750,14 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     top: 16px;
 }
 
-.help_tile_urgent__title {
+.help_tile_alert__title {
     color: #45688e;
     font-size: 12px;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
 }
 
-.help_tile_urgent__text {
+.help_tile_alert__text {
     line-height: 1.5;
 }
 
@@ -2859,7 +2863,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 
 .help_table_not_found {
     display: none;
-    padding-top: 124px;
+    padding: 124px 0;
     text-align: center;
 }
 
