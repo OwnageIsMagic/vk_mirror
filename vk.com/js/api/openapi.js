@@ -1259,6 +1259,10 @@ if (!VK.Widgets) {
                 width: options.width || 500
             },
             iframe, rpc, cursorBack;
+        if (options.preview) {
+            params.preview = 1;
+            delete options['preview'];
+        }
         return VK.Widgets._constructor('widget_post.php', objId, options, params, {
             showBox: function(url, props) {
                 var box = VK.Util.Box((options.base_domain || VK._protocol + '//vk.com') + '/' + url, [], {

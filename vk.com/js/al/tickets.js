@@ -2645,13 +2645,14 @@ Tickets = {
         return false;
     },
 
-    rateFAQ: function(id, val, hash, evt) {
+    rateFAQ: function(id, val, hash, fromNew) {
         if (!vk.id) return false;
         ajax.post(nav.objLoc[0], {
             act: 'faq_rate',
             faq_id: id,
             val: val,
-            hash: hash
+            hash: hash,
+            from_new: fromNew
         });
         ajax.post(nav.objLoc[0], {
             act: 'faq_clicked',
@@ -2665,9 +2666,6 @@ Tickets = {
             show('tickets_faq_useful' + id);
         } else {
             show('tickets_faq_unuseful' + id);
-        }
-        if (evt) {
-            evt.stopPropagation();
         }
         return false;
     },
@@ -3697,6 +3695,7 @@ Tickets = {
             q: val
         };
 
+        clearTimeout(cur.searchFAQStatTimeout);
         ajax.post(nav.objLoc[0], query, {
             cache: 1,
             onDone: function(content, showButton, altButtonId, saveSearchHash) {
@@ -3743,7 +3742,6 @@ Tickets = {
                 }
 
                 if (saveSearchHash) {
-                    clearTimeout(cur.searchFAQStatTimeout);
                     var objLoc0 = nav.objLoc[0];
                     cur.searchFAQStatTimeout = setTimeout(function() {
                         ajax.post(objLoc0, {
