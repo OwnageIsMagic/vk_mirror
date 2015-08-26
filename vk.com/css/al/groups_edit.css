@@ -2107,6 +2107,10 @@ a.group_ad_post_link.deleted:hover {
     border-bottom: none;
 }
 
+.is_2x .group_activity_row_wrap .group_activity_delete_row {
+    background-image: url(/images/pics/statusx_op_2x.gif);
+}
+
 .group_activity_row_empty {
     padding: 85px 130px;
     font-size: 12px;

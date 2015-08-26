@@ -7035,6 +7035,10 @@ div.medadd_c_linkprg {
     line-height: 15px;
 }
 
+.medadd_c_linkimg_big .medadd_c_linkmicrodata {
+    padding: 0 5px 3px 15px;
+}
+
 .medadd_c_linkimg_big .medadd_c_linkhead {
     padding: 10px 15px 6px 15px;
     display: block;
