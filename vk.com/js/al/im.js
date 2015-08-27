@@ -7848,12 +7848,13 @@ var IM = {
         }
     },
 
-    openSnapsterLayer: function(e) {
+    openSnapsterLayer: function(e, from) {
         if (checkEvent(e)) {
             return;
         }
         showBox('/snapster.php', {
-            act: 'show'
+            act: 'show',
+            from: from || ''
         }, {
             containerClass: 'chronicle_layer',
             dark: 1

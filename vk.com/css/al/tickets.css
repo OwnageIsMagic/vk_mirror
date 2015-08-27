@@ -2723,13 +2723,11 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 
 .help_tiles {
     border-top: 1px solid #dae1e8;
-    font-size: 0;
     padding: 12px 0;
 }
 
 .help_tile_alert {
     background: #eff1f3;
-    font-size: 11px;
     margin: 3px 16px 12px;
     padding: 14px 17px 11px;
     position: relative;
@@ -2752,7 +2750,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 
 .help_tile_alert__title {
     color: #45688e;
-    font-size: 12px;
+    font-size: 1.1em;
     font-weight: bold;
     margin-bottom: 5px;
 }
@@ -2766,7 +2764,6 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     display: inline-block;
-    font-size: 11px;
     padding: 12px 16px 14px 22px;
     vertical-align: top;
     width: 50%;
@@ -2775,7 +2772,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 .help_tile__title {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    font-size: 15px;
+    font-size: 1.37em;
     font-weight: normal;
     line-height: 1;
     margin: 0 0 11px;
@@ -2847,7 +2844,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 .help_table_questions__title {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    font-size: 15px;
+    font-size: 1.37em;
     font-weight: normal;
     line-height: 1;
     margin: 0 0 8px;
@@ -2869,7 +2866,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 
 .help_table_not_found__text {
     color: #777;
-    font-size: 12px;
+    font-size: 1.1em;
     line-height: 1.5;
 }
 
@@ -2969,7 +2966,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     -webkit-transition: background-color 100ms ease-in-out;
     transition: background-color 100ms ease-in-out;
     background: #e1e6eb;
-    color: #6b7b8c;
+    color: #45688E;
     padding-left: 28px;
     position: relative;
 }
@@ -2993,7 +2990,6 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 
 .help_table_question_act_ok:hover {
     background-color: #d8dee5;
-    color: #607282;
     text-decoration: none;
 }
 

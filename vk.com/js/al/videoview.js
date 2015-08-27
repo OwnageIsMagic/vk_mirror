@@ -105,6 +105,15 @@ var Videoview = {
                     cur._vadStatTimer = setTimeout(Videoview.sendVideoAdStat.bind(Videoview, oid, vid, hash), 1000);
                 }
             },
+            onVideoAdShown: function(oid, vid, type, event) {
+                ajax.post('al_video.php', {
+                    act: 'ad_event',
+                    oid: oid,
+                    vid: vid,
+                    type: type,
+                    event: event
+                });
+            },
             onVideoResolutionChanged: function(oid, vid, hash, resolution) {
                 if (window.mvcur && mvcur.mvData) {
                     mvcur.mvData.resolution = resolution;
