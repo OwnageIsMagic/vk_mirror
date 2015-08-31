@@ -1446,6 +1446,8 @@ var GroupsEdit = {
         var st = scrollGetY();
         var lnk = ge(cur.moreLink);
 
+        debugLog(ch, st, lnk);
+
         if (!isVisible(lnk)) return;
         if (st + ch > lnk.offsetTop) {
             cur.showMore();
@@ -2223,12 +2225,8 @@ var GroupsEdit = {
                 ttEl.tt.hide();
             }
     },
-    saveObsceneEdit: function(el) {
-        cur.obscene.words = val(el)
-            .replace(/\&nbsp\;/ig, ' ');
-    },
     saveObsceneWords: function() {
-        var words = cur.obscene.words,
+        var words = val('group_edit_obscene_stopwords'),
             btn = ge('group_save');
         var params = {
             gid: cur.gid,

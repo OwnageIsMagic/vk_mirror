@@ -3194,7 +3194,8 @@ span#im_important_count {
     margin-top: 11px;
 }
 
-.im_stickerpack_author {
+.im_stickerpack_author,
+.im_stickerpack_author a {
     color: #9fa2aa;
 }
 
