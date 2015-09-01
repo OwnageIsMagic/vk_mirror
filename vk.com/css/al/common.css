@@ -3889,7 +3889,7 @@ th.piechart_col_header_second {
     bottom: 0px;
     display: none;
     text-align: center;
-    z-index: 790;
+    z-index: 1500;
     background: #EDF1F5;
 }
 

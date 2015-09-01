@@ -184,6 +184,18 @@ if (!window.Emoji) {
             }
         },
 
+        correctCaret: function(txt) {
+            if (browser.chrome) {
+                var top = getCaretPixelPos(txt)
+                    .top;
+                var txtBox = txt.getBoundingClientRect();
+                var relativeTop = top - txtBox.top;
+                if (relativeTop < 0 || relativeTop > txtBox.height) {
+                    txt.scrollTop += relativeTop - txtBox.height + 20;
+                }
+            }
+        },
+
         onEditablePaste: function(txt, opts, optId) {
             var range = (browser.chrome || browser.safari || (browser.msie && browser.version > 10)) ? Emoji.getRange() : false;
             if (range) {
@@ -196,12 +208,15 @@ if (!window.Emoji) {
             setTimeout(function() {
                 if (range) {
                     re(textarea);
+                    var scroll = txt.scrollTop;
                     txt.focus();
+                    txt.scrollTop = scroll;
                     Emoji.setRange(range);
                     var text = val(textarea);
                     if (text) {
                         Emoji.insertHTML(clean(text)
                             .replace(/\n/g, '<br/>'));
+                        setTimeout(Emoji.correctCaret.pbind(txt), 5);
                     }
                 }
                 Emoji.cleanCont(txt);

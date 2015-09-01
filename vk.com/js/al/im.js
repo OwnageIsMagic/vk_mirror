@@ -2454,10 +2454,12 @@ var IM = {
             });
 
             addEvent(txt, 'paste', function(event) {
-                var blob, items = (event.clipboardData || event.originalEvent.clipboardData)
-                    .items;
-
-                if (!items) return;
+                var blob, items = (event.clipboardData || event.originalEvent.clipboardData);
+                if (!items) {
+                    return;
+                } else {
+                    items = items.items;
+                }
 
                 for (var i = 0; i < items.length; i++) {
                     if (items[i].type.indexOf("image") == 0) {
@@ -2529,6 +2531,9 @@ var IM = {
                 val(txt, draftv);
             }
         }
+        setTimeout(function() {
+            txt.scrollTop = txt.scrollHeight;
+        }, 10);
         IM.checkEditable(cur.emojiId[peer], txt);
         if ((draft.medias || [])
             .length && !(cur.imPeerMedias[peer] || [])
@@ -6232,9 +6237,11 @@ var IM = {
                     notaBene(inp);
                     return;
                 }
-                IM.updateChat(peer, true, {
-                    new_title: topicVal
-                });
+                if (topicVal !== cur.tabs[peer].data.title) {
+                    IM.updateChat(peer, true, {
+                        new_title: topicVal
+                    });
+                }
                 box.hide();
             },
             box = showFastBox({

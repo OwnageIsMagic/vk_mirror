@@ -563,6 +563,44 @@ FAQ = {
         return false;
     },
 
+    updateSearchString: function(event, inp) {
+        cur.prevSearch = cur.prevSearch || '';
+
+        var val = inp.value.trim();
+
+        if (cur.prevSearch.trim() == val && val) {
+            return;
+        }
+
+        clearTimeout(cur.searchTimeout);
+        cur.searchTimeout = setTimeout(function() {
+            cur.prevSearch = val;
+            FAQ.updateSearch(val);
+        }, 350);
+    },
+
+    updateSearch: function(val) {
+        var loc = nav.objLoc;
+        if (val) {
+            loc['q'] = val;
+        } else {
+            delete loc['q'];
+        }
+        nav.setLoc(loc);
+
+        var query = extend({}, loc);
+        query['act'] = 'load_list';
+        delete query[0];
+
+        ajax.post(nav.objLoc[0], query, {
+            onDone: function(content) {
+                var c = se(content),
+                    old = ge('faq_list');
+                old.parentNode.replaceChild(c, old);
+            }
+        });
+    },
+
     saveTilesTop: function(button, language, hash) {
         var query = {
             act: 'save_tiles',
