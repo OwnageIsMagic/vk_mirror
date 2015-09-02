@@ -3735,6 +3735,10 @@ button#apps_sms_send_btn {
     background-size: 627px 235px;
 }
 
+#apps_collection63_wrap {
+    background-image: url(/images/apps/apps_firstseptember2015_bkg.png);
+}
+
 .apps_genres_tt {
     padding: 10px;
     white-space: nowrap;

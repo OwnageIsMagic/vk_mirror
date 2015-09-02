@@ -185,7 +185,7 @@ if (!window.Emoji) {
         },
 
         correctCaret: function(txt) {
-            if (browser.chrome) {
+            if (!browser.msie) {
                 var top = getCaretPixelPos(txt)
                     .top;
                 var txtBox = txt.getBoundingClientRect();
