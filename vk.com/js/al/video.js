@@ -1868,7 +1868,7 @@ var Video = {
     },
     clearSearch: function() {
         cur.selection = false;
-        cur.vSearch.setValue('');
+        cur.vSearch && cur.vSearch.setValue('');
     },
     generateList: function(section) {
         if (!section) return;

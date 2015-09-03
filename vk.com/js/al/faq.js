@@ -253,7 +253,10 @@ FAQ = {
                 id_mask: trim(val('faq_id_mask')),
                 cdn: trim(val('faq_cdn')),
                 language: language,
-                parent_id: (language ? cur.parentId : 0)
+                parent_id: (language ? cur.parentId : 0),
+                about_phone: cur.aboutPhoneFAQ.val(),
+                about_profile: cur.aboutProfileFAQ.val(),
+                about_group: cur.aboutGroupFAQ.val()
             };
 
         if (cur.sectionSelector) {

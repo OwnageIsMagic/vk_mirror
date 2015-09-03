@@ -1340,6 +1340,7 @@ Tickets = {
             personal: cur.ownTemplate.val(),
             mobile: isChecked('mobile_template'),
             desktop: isChecked('desktop_template'),
+            by_default: isChecked('default_template'),
             hash: cur.hashes.template_hash
         };
         if (tid) query.template_id = tid;

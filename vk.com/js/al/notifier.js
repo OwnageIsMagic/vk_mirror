@@ -6646,12 +6646,9 @@ var DesktopNotifications = {
         .requestPermission(f);
     },
     createNotification: function(photo, title, text) {
-        if (window.statlogsValueEvent && Math.round(rand(0, 100)) === 1) {
-            statlogsValueEvent('browser_notification', 0);
-        }
         var notification;
         if (window.webkitNotifications) {
-            return webkitNotifications.createNotification(photo, title, text);
+            notification = webkitNotifications.createNotification(photo, title, text);
         } else {
             notification = new Notification(title, {
                 icon: photo,
@@ -6661,8 +6658,11 @@ var DesktopNotifications = {
                 this.close();
             };
             notification.show = function() {};
-            return notification;
         }
+        if (Math.random() < 0.01) {
+            statlogsValueEvent('browser_notification', 0);
+        }
+        return notification;
     }
 };
 
