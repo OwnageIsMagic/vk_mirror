@@ -505,7 +505,6 @@
         return this.ne;
     };
 
-
     var Marker = vkMaps.Marker = function(point) {
         this.api = null;
         this.location = point;
@@ -671,6 +670,33 @@
     };
 })();
 
+function YCustomZoomControl(offices) {
+    this.onAddToMap = function(map, position) {
+        this.container = YMaps.jQuery(
+            "<div class=\"ymap_zoom_wrap\"><div class=\"ymap_zoom_btn\" id=\"ymap_zoom_wrap_p\" data-z=\"1\">+</div><div class=\"ymap_zoom_btn\" id=\"ymap_zoom_wrap_m\" data-z=\"-1\">-</div></div>"
+        );
+        this.map = map;
+        this.position = position || new YMaps.ControlPosition(YMaps.ControlPosition.TOP_LEFT, new YMaps.Size(10, 10));
+
+        this.container.css({
+            position: "absolute",
+            zIndex: YMaps.ZIndex.CONTROL,
+        });
+
+        this.container.find('.ymap_zoom_btn')
+            .bind('click', function() {
+                map.zoomBy(parseInt(this.getAttribute('data-z')), {
+                    smooth: true
+                });
+            });
+
+        this.position.apply(this.container);
+        this.container.appendTo(this.map.getContainer());
+    }
+
+    this.onRemoveFromMap = function() {};
+}
+
 vkMaps.register('yandex', {
     VKMap: {
         init: function(element, api) {
@@ -681,11 +707,27 @@ vkMaps.register('yandex', {
                                 .getY(),
                                 lon = mouseEvent.getCoordPoint()
                                 .getX();
-                            this.click.fire({
-                                'location': new vkMaps.LatLonPoint(lat, lon)
+                            var _this = this;
+                            clearTimeout(this._curClickTO);
+                            this._curClickTO = setTimeout(function() {
+                                console.log('fire');
+                                _this.click.fire({
+                                    'location': new vkMaps.LatLonPoint(lat, lon)
+                                });
+                            }, 250);
+                        })
+                        .bind(this));
+
+                    YMaps.Events.observe(yandexMap, yandexMap.Events.DblClick, (function(map, mouseEvent) {
+                            clearTimeout(this._curClickTO);
+                            var map = this.getMap();
+                            map.setZoom(map.getZoom() + 1, {
+                                position: mouseEvent.getCoordPoint(),
+                                smooth: true
                             });
                         })
                         .bind(this));
+
                     YMaps.Events.observe(yandexMap, yandexMap.Events.SmoothZoomEnd, (function(map) {
                             this.changeZoom.fire();
                         })
@@ -753,11 +795,10 @@ vkMaps.register('yandex', {
         },
         addLargeControls: function() {
             var map = this.maps[this.api];
-            this.controls.unshift(new YMaps.Zoom({
-                noTips: true
-            }));
+            //this.controls.unshift(new YMaps.Zoom({noTips: true}));
             this.addControlsArgs.zoom = 'large';
             map.addControl(this.controls[0]);
+            map.addControl(new YCustomZoomControl());
         },
         addMapTypeControls: function() {
             var me = this,
@@ -2072,6 +2113,8 @@ vkMaps.register('mapbox', {
                     position: 'topright'
                 },
                 onAdd: function(map) {
+                    var div = geByClass1('places_map_type', map.getContainer());
+                    if (div) return div;
                     div = ce('div', {
                             className: 'places_map_type'
                         }, {
@@ -2079,7 +2122,7 @@ vkMaps.register('mapbox', {
                             padding: 0,
                             margin: 10
                         }),
-                        addEvent(div, 'click dblclick', function(e) {
+                        addEvent(div, 'click dblclick mousedown', function(e) {
                             return cancelEvent(e);
                         });
                     input = ce('input', {
