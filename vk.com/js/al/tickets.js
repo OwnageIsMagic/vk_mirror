@@ -3992,6 +3992,11 @@ Tickets = {
         ge('help_table_not_found__query')
             .innerHTML = query;
     },
+    listClearCache: function() {
+        var obj = nav.objLoc;
+        obj['cc'] = 1;
+        nav.go(obj);
+    },
     _eof: 1
 };
 try {

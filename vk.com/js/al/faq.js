@@ -753,6 +753,19 @@ FAQ = {
         }
         return Math.floor(i / 2) - 1;
     },
+    showHistory: function(id, faq_id, hash) {
+        return !showBox(nav.objLoc[0], {
+            act: 'show_history',
+            id: id,
+            faq_id: faq_id,
+            hash: hash
+        }, {
+            params: {
+                bodyStyle: 'padding: 0px',
+                width: 550
+            }
+        });
+    },
     _eof: 1
 };
 try {

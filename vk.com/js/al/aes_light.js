@@ -699,7 +699,6 @@
             }
             if (!vk__adsLight.yaDirectLoaded) {
                 if (vk__adsLight.yaDirectLoadTries > 3) { // ya.d did not load within 1 second
-                    debugLog('[YaD] Ya load timeout');
                     AdsLight.onYaDirectRenderUnsuccessful();
                 } else {
                     AdsLight.initYaDirect();
@@ -713,6 +712,10 @@
             return;
         } else {
             vk__adsLight.yaDirectAdActive = false;
+        }
+        if (adsHtml.slice(0, '<!--criteo'.length) === '<!--criteo') {
+            AdsLight.tryRenderCriteo();
+            return;
         }
         vk__adsLight.adsCanShow = ((adsCanShow || adsCanShow === '0') ? 1 : -vkNow());
         vk__adsLight.adsShowed = adsShowed;
@@ -1534,7 +1537,6 @@
         var yaContainerId = 'yandex_ad_R-132169-1';
         var yaContainer;
         if (!ge(yaContainerId)) {
-            debugLog('[YaD] creating container');
             yaContainer = ce('div', {
                 id: yaContainerId
             });
@@ -1544,13 +1546,13 @@
         yaContainer = ge(yaContainerId);
 
         Ya.Context.AdvManager.render({
-            blockId: "R-132169-1", // ������������� ����� ��� ��� - ������ ���� ��� ����.
-            renderTo: yaContainerId, // ������������� ����������, ����� ���������� �� ������������ �� ������ � ������ - ������� ������ ����������� � ��� �� ���������.
+            blockId: "R-132169-1",
+            renderTo: yaContainerId,
             async: true,
-            onRender: function() { // callback �������, ������� ����������, ����� ������ ���������. �� ���� � ���� ������� ���� �������� ������� � ���������� ������ ���� �� �����.
+            onRender: function() {
                 AdsLight.onYaDirectRenderSuccessful(yaContainer);
             }
-        }, function() { // ������/fallback, ������� ���������, ���� ������ �� ��������� CPM-�����, ������������ � ����������.
+        }, function() {
             AdsLight.onYaDirectRenderUnsuccessful();
         });
         if (Math.random() < 0.001) {
@@ -1563,7 +1565,6 @@
     }
 
     AdsLight.onYaDirectRenderSuccessful = function(adsContainer) {
-        debugLog('[YaD] render successful');
         if (vk__adsLight.yaCloseLink) {
             var wrapper = se(
                 '<div id="ya_direct" style="display:none;" onmouseover="leftBlockOver(\'ya_direct\');" onmouseout="leftBlockOut(\'ya_direct\');"><div id="left_hideya_direct" class="left_hide_button" onmouseover="leftBlockOver(this);" onmouseout="leftBlockOut(this);" onclick="leftAdBlockClose(\'ya_direct\', \'' +
@@ -1581,13 +1582,76 @@
     }
 
     AdsLight.onYaDirectRenderUnsuccessful = function() {
-        debugLog('[YaD] unsuccessful');
         vk__adsLight.yaDirectAdActive = false;
         var oldAdsParams = vk__adsLight.adsParams;
         vk__adsLight.adsParams = vk__adsLight.adsParams || {};
         vk__adsLight.adsParams.ya_failed = 1;
         AdsLight.updateBlock('force_hard', 2);
         vk__adsLight.adsParams = oldAdsParams;
+    }
+
+    AdsLight.tryRenderCriteo = function() {
+        var iframeId = 'criteo-iframe';
+        var iframe = ge(iframeId);
+        if (iframe) {
+            animate(iframe, {
+                opacity: 0
+            }, 200, function() {
+                re(iframe);
+                AdsLight.tryRenderCriteo();
+            });
+            return;
+        }
+
+        iframe = ce('iframe', {
+            "id": iframeId,
+            "frameBorder": "0",
+            "marginWidth": "0",
+            "marginHeight": "0",
+            "height": "0",
+            "width": "118",
+            "scrolling": "no"
+        }, {
+            opacity: 0
+        });
+
+        iframe.onload = function() {
+            if (iframe.contentDocument.body.scrollHeight > 400) { // content loaded
+                iframe.height = 600;
+                animate(iframe, {
+                    opacity: 1
+                }, 200);
+
+                if (Math.random() < 0.05) {
+                    ajax.post('/ads_light.php?act=mlet&mt=745', {}, {
+                        onFail: function() {
+                            return true;
+                        }
+                    });
+                }
+            } else {
+                re(iframe);
+
+                if (Math.random() < 0.05) {
+                    ajax.post('/ads_light.php?act=mlet&mt=746', {}, {
+                        onFail: function() {
+                            return true;
+                        }
+                    });
+                }
+            }
+        };
+        iframe.src = '/ads_light.php?act=criteo';
+        ge('left_ads')
+            .appendChild(iframe);
+
+        if (Math.random() < 0.05) {
+            ajax.post('/ads_light.php?act=mlet&mt=747', {}, {
+                onFail: function() {
+                    return true;
+                }
+            });
+        }
     }
 
     AdsLight.init();
