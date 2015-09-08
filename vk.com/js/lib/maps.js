@@ -1043,12 +1043,14 @@ vkMaps.register('yandex', {
             var me = this;
         },
         geocode: function(address) {
-            var VKMap_geocoder = this;
+            var VKMap_geocoder = this,
+                s = 1;
             if (!address.hasOwnProperty('address') || address.address === null || address.address === '') {
                 address.address = [address.street, address.locality, address.region, address.country].join(', ');
             }
             if (address.lat && address.lon) {
-                address.address = new YMaps.GeoPoint(address.lon, address.lat)
+                address.address = new YMaps.GeoPoint(address.lon, address.lat);
+                s = 0;
             }
             var geocoder = new YMaps.Geocoder(address.address, {
                 results: 1
@@ -1062,6 +1064,10 @@ vkMaps.register('yandex', {
             });
             YMaps.Events.observe(geocoder, geocoder.Events.Fault, function(error) {
                 VKMap_geocoder.error_callback(error.message);
+            });
+            ajax.post('al_places.php', {
+                act: 'a_save_geocoder_act',
+                s: s
             });
         },
         geocode_callback: function(response) {
@@ -1461,12 +1467,14 @@ vkMaps.register('yandex2', {
             var me = this;
         },
         geocode: function(address) {
-            var VKMap_geocoder = this;
+            var VKMap_geocoder = this,
+                s = 1;
             if (!address.hasOwnProperty('address') || address.address === null || address.address === '') {
                 address.address = [address.street, address.locality, address.region, address.country].join(', ');
             }
             if (address.lat && address.lon) {
-                address.address = new YMaps.GeoPoint(address.lon, address.lat)
+                address.address = new YMaps.GeoPoint(address.lon, address.lat);
+                s = 0;
             }
             var geocoder = new YMaps.Geocoder(address.address, {
                 results: 1
@@ -1480,6 +1488,10 @@ vkMaps.register('yandex2', {
             });
             YMaps.Events.observe(geocoder, geocoder.Events.Fault, function(error) {
                 VKMap_geocoder.error_callback(error.message);
+            });
+            ajax.post('al_places.php', {
+                act: 'a_save_geocoder_act',
+                s: s
             });
         },
         geocode_callback: function(response) {
