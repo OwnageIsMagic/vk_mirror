@@ -256,7 +256,8 @@ FAQ = {
                 parent_id: (language ? cur.parentId : 0),
                 about_phone: cur.aboutPhoneFAQ.val(),
                 about_profile: cur.aboutProfileFAQ.val(),
-                about_group: cur.aboutGroupFAQ.val()
+                about_group: cur.aboutGroupFAQ.val(),
+                about_email: cur.aboutEmailFAQ.val()
             };
 
         if (cur.sectionSelector) {
