@@ -9472,6 +9472,7 @@ function statDurationsLoadImage() {
         var resourceList = window.performance.getEntriesByType('resource');
         if (!resourceList) return false;
         var countImg = {};
+        var slowServers = {};
         for (var i = 0; i < resourceList.length; i++) {
             if (resourceList[i] && resourceList[i].initiatorType == 'img') {
                 if (resourceList[i].duration < 100) {
@@ -9488,11 +9489,23 @@ function statDurationsLoadImage() {
                     countImg['2000-5000'] = (countImg['2000-5000'] || 0) + 1;
                 } else {
                     countImg['>5000'] = (countImg['>5000'] || 0) + 1;
+                    if (resourceList[i]['name'] && resourceList[i]['name'].indexOf('pp.vk.me') > 0) {
+                        var slowImgSrc = '';
+                        slowImgSrc = resourceList[i]['name'];
+                        slowImgSrc = slowImgSrc.substr(slowImgSrc.indexOf('pp.vk.me') + 9);
+                        if (slowImgSrc.indexOf('/') > 0) {
+                            slowImgSrc = slowImgSrc.substr(0, slowImgSrc.indexOf('/'));
+                            slowServers[slowImgSrc] = (slowServers[slowImgSrc] || 0) + 1;
+                        }
+                    }
                 }
             }
         }
         for (var key in countImg) {
             statlogsValueEvent('img_load', countImg[key], key);
+        }
+        for (var key in slowServers) {
+            statlogsValueEvent('img_slow', slowServers[key], key);
         }
         window.clientStatsInited = true;
     }
