@@ -670,6 +670,54 @@
     };
 })();
 
+function YGeocoderResponseToJson(response) {
+    var resp = {
+        street: '',
+        locality: '',
+        region: '',
+        country: ''
+    };
+    var locLev;
+    if ((locLev = response.AddressDetails.Country)) {
+        resp.country = locLev.CountryName;
+        if (locLev.AdministrativeArea) {
+            locLev = locLev.AdministrativeArea;
+        }
+        resp.region = locLev.AdministrativeAreaName;
+        if (locLev.Locality) {
+            locLev = locLev.Locality;
+        }
+        resp.locality = locLev.LocalityName;
+        if (locLev.Thoroughfare) {
+            locLev = locLev.Thoroughfare;
+        }
+        resp.street = locLev.ThoroughfareName;
+    }
+    var ypoint = response.getGeoPoint();
+    ybounds = response.getBounds(),
+        ltop = ybounds.getLeftTop(),
+        rbottom = ybounds.getRightBottom();
+    resp.pointLat = ypoint.getLat();
+    resp.pointLng = ypoint.getLng();
+    resp.boundTop = ltop.getLat();
+    resp.boundLeft = ltop.getLng();
+    resp.boundBottom = rbottom.getLat();
+    resp.boundRight = rbottom.getLng();
+    return resp;
+}
+
+function YGeocoderResponseFromJson(resp) {
+    resp.point = new vkMaps.LatLonPoint(resp.pointLat, resp.pointLng);
+    resp.bounds = new vkMaps.BoundingBox(resp.boundTop, resp.boundLeft, resp.boundBottom, resp.boundRight);
+    delete resp['pointLat'];
+    delete resp['pointLng'];
+    delete resp['boundTop'];
+    delete resp['boundLeft'];
+    delete resp['boundBottom'];
+    delete resp['boundRight'];
+    return resp;
+}
+
 function YCustomZoomControl(offices) {
     this.onAddToMap = function(map, position) {
         this.container = YMaps.jQuery(
@@ -1056,8 +1104,24 @@ vkMaps.register('yandex', {
                 results: 1
             });
             YMaps.Events.observe(geocoder, geocoder.Events.Load, function(response) {
-                if (response.found > 0) {
-                    VKMap_geocoder.geocode_callback(response.get(0));
+                var res = response.found > 0 ? response.get(0) : null;
+                if (!s) {
+                    var q = {
+                        act: 'a_save_geocoder_coords',
+                        lat: address.lat,
+                        lon: address.lon
+                    };
+                    if (res) {
+                        q.kind = res.kind;
+                        q.precision = res.precision;
+                        q.text = res.text;
+                        q = extend(q, YGeocoderResponseToJson(res));
+                    }
+                    ajax.post('al_places.php', q);
+                }
+
+                if (res) {
+                    VKMap_geocoder.geocode_callback(res);
                 } else {
                     VKMap_geocoder.error_callback(response);
                 }
@@ -1065,10 +1129,17 @@ vkMaps.register('yandex', {
             YMaps.Events.observe(geocoder, geocoder.Events.Fault, function(error) {
                 VKMap_geocoder.error_callback(error.message);
             });
-            ajax.post('al_places.php', {
+            var q = {
                 act: 'a_save_geocoder_act',
                 s: s
-            });
+            };
+            if (s) {
+                q.addr = address.address;
+            } else {
+                q.lat = address.lat;
+                q.lon = address.lon;
+            }
+            ajax.post('al_places.php', q);
         },
         geocode_callback: function(response) {
             var return_location = {
@@ -1480,8 +1551,25 @@ vkMaps.register('yandex2', {
                 results: 1
             });
             YMaps.Events.observe(geocoder, geocoder.Events.Load, function(response) {
-                if (response.found > 0) {
-                    VKMap_geocoder.geocode_callback(response.get(0));
+                var res = response.found > 0 ? response.get(0) : null;
+
+                if (!s) {
+                    var q = {
+                        act: 'a_save_geocoder_coords',
+                        lat: address.lat,
+                        lon: address.lon
+                    };
+                    if (res) {
+                        q.kind = res.kind;
+                        q.precision = res.precision;
+                        q.text = res.text;
+                        q = extend(q, YGeocoderResponseToJson(res));
+                    }
+                    ajax.post('al_places.php', q);
+                }
+
+                if (res) {
+                    VKMap_geocoder.geocode_callback(res);
                 } else {
                     VKMap_geocoder.error_callback(response);
                 }
@@ -1489,10 +1577,17 @@ vkMaps.register('yandex2', {
             YMaps.Events.observe(geocoder, geocoder.Events.Fault, function(error) {
                 VKMap_geocoder.error_callback(error.message);
             });
-            ajax.post('al_places.php', {
+            var q = {
                 act: 'a_save_geocoder_act',
                 s: s
-            });
+            };
+            if (s) {
+                q.addr = address.address;
+            } else {
+                q.lat = address.lat;
+                q.lon = address.lon;
+            }
+            ajax.post('al_places.php', q);
         },
         geocode_callback: function(response) {
             var return_location = {
