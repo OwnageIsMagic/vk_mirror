@@ -106,6 +106,24 @@ var WallEdit = {
             noResult: getLang('profile_mention_not_found')
         };
 
+        var emojiInit = function() {
+            var txt = ge('wpe_text');
+            return Emoji.init(txt, {
+                ttDiff: -48,
+                rPointer: true,
+                controlsCont: txt.parentNode,
+                shouldFocus: true,
+                onSend: function() {
+                    WallEdit.savePost();
+                },
+                noEnterSend: true,
+                noStickers: true,
+                checkEditable: function() {
+                    Wall.checkPostLen.pbind(txt, 'wpe_warn', Emoji.val(txt));
+                }
+            });
+        }
+
         if (opts.noatt) {
             setTimeout(function() {
                 addClass('wpe_media_preview', 'med_no_attach');
@@ -115,6 +133,8 @@ var WallEdit = {
                     lang: mentionsLang
                 });
                 Emoji.editableFocus('wpe_text');
+
+                cur.weEmoji = emojiInit();
             }, 0);
             return;
         }
@@ -181,20 +201,7 @@ var WallEdit = {
                 }
             }
 
-            cur.weEmoji = Emoji.init(txt, {
-                ttDiff: -48,
-                rPointer: true,
-                controlsCont: txt.parentNode,
-                shouldFocus: true,
-                onSend: function() {
-                    WallEdit.savePost();
-                },
-                noEnterSend: true,
-                noStickers: true,
-                checkEditable: function() {
-                    Wall.checkPostLen.pbind(txt, 'wpe_warn', Emoji.val(txt));
-                }
-            });
+            cur.weEmoji = emojiInit();
         }, 0);
     },
     emojiShowTT: function(obj, ev) {

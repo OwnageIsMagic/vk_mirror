@@ -295,6 +295,7 @@ if (!window.Emoji) {
             if (!editable) {
                 return false;
             }
+            editable = ge(editable);
             editable.focus();
             if (editable.phonfocus) {
                 editable.phonfocus();

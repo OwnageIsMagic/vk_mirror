@@ -567,6 +567,11 @@ a.ads_edit_link_go:hover {
     cursor: pointer;
 }
 
+.info_msg.promoted_post_union_warning_msg {
+    background-color: white;
+    margin-bottom: 20px;
+}
+
 
 /* ------------------ */
 

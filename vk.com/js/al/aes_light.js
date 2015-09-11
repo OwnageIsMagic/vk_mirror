@@ -1601,7 +1601,7 @@
                 AdsLight.tryRenderCriteo();
             });
             if (Math.random() < 0.05) {
-                ajax.post('/ads_light.php?act=mlet&mt=748', {}, {
+                ajax.post('/wkview.php?act=mlet&mt=748', {}, {
                     onFail: function() {
                         return true;
                     }
@@ -1610,7 +1610,7 @@
             return;
         }
         if (Math.random() < 0.05) {
-            ajax.post('/ads_light.php?act=mlet&mt=749', {}, {
+            ajax.post('/wkview.php?act=mlet&mt=749', {}, {
                 onFail: function() {
                     return true;
                 }
@@ -1637,7 +1637,7 @@
                 }, 200);
 
                 if (Math.random() < 0.05) {
-                    ajax.post('/ads_light.php?act=mlet&mt=745', {}, {
+                    ajax.post('/wkview.php?act=mlet&mt=745', {}, {
                         onFail: function() {
                             return true;
                         }
@@ -1647,7 +1647,7 @@
                 re(iframe);
 
                 if (Math.random() < 0.05) {
-                    ajax.post('/ads_light.php?act=mlet&mt=746', {}, {
+                    ajax.post('/wkview.php?act=mlet&mt=746', {}, {
                         onFail: function() {
                             return true;
                         }
@@ -1660,7 +1660,7 @@
             .appendChild(iframe);
 
         if (Math.random() < 0.05) {
-            ajax.post('/ads_light.php?act=mlet&mt=747', {}, {
+            ajax.post('/wkview.php?act=mlet&mt=747', {}, {
                 onFail: function() {
                     return true;
                 }

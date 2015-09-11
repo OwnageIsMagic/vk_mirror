@@ -374,6 +374,10 @@ var Videoview = {
                 } else if (cur.module == 'video' && cur.vSection == 'search') {
                     m = Video.getSearchModule(videoId);
                 }
+
+                if (Video.isInVideosList()) {
+                    m = cur.oid < 0 ? 'community_videos' : 'profile_videos';
+                }
             }
 
             if (m == 'feed' && window.Videocat && Videocat.getCurrentPlaylistId() == 'feed_block') {

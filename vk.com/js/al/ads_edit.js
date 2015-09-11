@@ -469,6 +469,25 @@ AdsEdit.saveAd = function() {
             );
             return
         }
+        if (result && result.promoted_post_confirmed) {
+            var confirmBox = showFastBox({
+                    title: getLang('ads_save_ad_promoted_post_confirmation_box_title'),
+                    dark: true
+                },
+                result.promoted_post_confirmation_body,
+                getLang('ads_save'),
+                function() {
+                    cur.viewEditor.confirmPromotedPost();
+                    confirmBox.hide();
+                    AdsEdit.saveAd();
+                },
+                getLang('box_cancel'),
+                function() {
+                    confirmBox.hide();
+                }
+            );
+            return
+        }
         if (result && 'error_msg' in result) {
             AdsEdit.showError(result.error_msg, result.error_section);
             return;
@@ -1579,6 +1598,9 @@ AdsViewEditor.prototype.init = function(options, editor, targetingEditor, params
         campaign_name: {
             value: '',
             value_normal: ''
+        },
+        promoted_post_need_confirmation: {
+            value: 0
         }
     }
 
@@ -3319,6 +3341,7 @@ AdsViewEditor.prototype.onParamUpdate = function(paramName, paramValue, forceDat
                 this.params.link_domain.disabled = (!this.params.link_type.cancelling || !this.params.link_domain.needed);
                 this.params.link_domain.is_ok = false;
                 this.params.link_domain_confirm.value = 0;
+                this.params.promoted_post_need_confirmation.value = 0;
                 this.updateUiParam('link_domain');
                 this.updateUiParam('_link_type');
                 this.updateUiParam('_link_url');
@@ -4267,6 +4290,10 @@ AdsViewEditor.prototype.isLinkDomainLinkEqual = function(linkType1, linkType2, l
 
 AdsViewEditor.prototype.confirmLinkDomain = function() {
     this.params.link_domain_confirm.value = 1;
+}
+
+AdsViewEditor.prototype.confirmPromotedPost = function() {
+    this.params.promoted_post_need_confirmation.value = 0;
 }
 
 AdsViewEditor.prototype.completeLink = function() {
