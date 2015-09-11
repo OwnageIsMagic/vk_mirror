@@ -161,6 +161,9 @@ var WkView = {
         } else {
             params['id'] = wkcur.pid;
         }
+        if (wkcur.from) {
+            params['from'] = wkcur.from;
+        }
         ajax.post('wkview.php', params, {
             stat: ['pages.js', 'wysiwyg.js', 'wysiwyg.css'],
             onDone: function(content, js, info, options) {
@@ -185,6 +188,9 @@ var WkView = {
         if (wkcur.lSTL) {
             WkView.stlOnScroll(resize);
         }
+        if (wkcur.layerGlance && !resize) {
+            WkView.updateSize(true);
+        }
 
         switch (wkcur.type) {
             case 'wall':
@@ -195,6 +201,12 @@ var WkView = {
 
             case 'history':
                 return WkView.historyOnScroll(resize);
+
+            case 'market':
+                if (window.Market) {
+                    return Market.updateCommentsOnScroll(resize);
+                }
+                break;
         }
 
         var y = wkLayerWrap.scrollTop;
@@ -311,6 +323,12 @@ var WkView = {
               return false;
             }*/
         }
+        if (wkcur.type == 'page_new') {
+            params.page_new = 1;
+        }
+        if (wkcur.from) {
+            params.from = wkcur.from;
+        }
         if (autosave && wkcur.lockAutoSave) {
             return false;
         }
@@ -324,7 +342,11 @@ var WkView = {
                     saveEl.innerHTML = text;
                     show(saveEl);
                 }
-                if (data) {
+                if (wkcur.from == 'market' && data) {
+                    ge('group_edit_market_wiki')
+                        .innerHTML = data.html;
+                    eval(data.js);
+                } else if (data) {
                     if (data.nid) {
                         wkcur.nid = data.nid;
                     }
@@ -486,6 +508,10 @@ var WkView = {
         var colorClass = wkcur.layerLight ? 'wk_light' : 'wk_dark';
 
         addClass(wkLayerWrap, colorClass);
+        if (wkcur.layerGlance) {
+            addEvent(wkLayerWrap, 'scroll', WkView.onScroll);
+            addClass(wkLayerWrap, 'wk_glance');
+        }
         addClass(layerBG, colorClass);
 
         var content = html,
@@ -599,7 +625,7 @@ var WkView = {
             removeClass(wkcur.wkBox, 'wk_overflow_hidden');
         }
 
-        if (wkcur.canEdit && !wkcur.toStatus && wkcur.type != 'wall') {
+        if (wkcur.canEdit && !wkcur.toStatus && wkcur.type != 'wall' && wkcur.type != 'page_new') {
             addClass(wkcur.wkBox, 'wk_view_edit_link');
         } else {
             removeClass(wkcur.wkBox, 'wk_view_edit_link');
@@ -855,12 +881,18 @@ var WkView = {
         }
         var size = getSize(wkcur.wkBox),
             width = size[0],
-            height = size[1];
+            height = size[1],
+            arrowBgW = getSize(wkcur.wkLeftArrowBg)[0],
+            arrowBgW0 = arrowBgW - (wkcur.layerGlance ? 20 : 0),
+            arrowW = getSize(wkcur.wkLeftArrow)[0];
         wkcur.wkLeftNav.style.width = Math.floor((lastWindowWidth - sbw - width - 2) / 2) + 'px';
         wkcur.wkRightNav.style.left = Math.floor((lastWindowWidth - sbw + width + 2) / 2) + 'px';
         wkcur.wkRightNav.style.width = Math.floor((lastWindowWidth - sbw - width - 2) / 2) + 'px';
         if (wkcur.wkClose) {
             wkcur.wkClose.style.left = (lastWindowWidth - sbw - 2 - 37) + 'px';
+        }
+        if (wkcur.layerGlance) {
+            wkcur.wkRight.style.left = Math.floor((lastWindowWidth - sbw + width + 2) / 2) + 10 + 'px';
         }
 
         var arrowActions = WkView.getNextWkRaws();
@@ -871,10 +903,10 @@ var WkView = {
                 show(wkcur.wkLeftArrowBg);
 
                 setStyle(wkcur.wkLeftArrowBg, {
-                    left: (lastWindowWidth - sbw - width) / 2 - 90
+                    left: (lastWindowWidth - sbw - width) / 2 - arrowBgW
                 });
                 setStyle(wkcur.wkLeftArrow, {
-                    left: (lastWindowWidth - sbw - width) / 2 - 52,
+                    left: (lastWindowWidth - sbw - width) / 2 - arrowBgW0 + (arrowBgW0 - arrowW) / 2,
                     top: arrowTop
                 });
             } else {
@@ -888,7 +920,7 @@ var WkView = {
                     left: (lastWindowWidth - sbw - width) / 2 + width
                 });
                 setStyle(wkcur.wkRightArrow, {
-                    left: (lastWindowWidth - sbw - width) / 2 + width + 36,
+                    left: (lastWindowWidth - sbw - width) / 2 + width + (arrowBgW0 - arrowW) / 2,
                     top: arrowTop
                 });
             } else {
@@ -964,7 +996,7 @@ var WkView = {
         });
     },
 
-    updateSize: function() {
+    updateSize: function(scroll) {
         var size = getSize(wkcur.wkCont);
 
         var docEl = document.documentElement,
@@ -974,8 +1006,18 @@ var WkView = {
             paddingBottom = wkLayer.offsetHeight - size[1] + top + 90;
 
         wkcur.wkCont.style.top = top + 'px';
-        wkcur.wkLeftArrowBg.style.paddingTop = wkcur.wkRightArrowBg.style.paddingTop = paddingTop + 'px';
+        if (wkcur.layerGlance) {
+            paddingTop = Math.max(paddingTop - wkLayerWrap.scrollTop, 10);
+            wkcur.wkRight.style.top = paddingTop + 'px';
+            wkcur.wkRightArrowBg.style.top = paddingTop + 'px';
+        } else {
+            wkcur.wkRightArrowBg.style.paddingTop = paddingTop + 'px';
+        }
+        wkcur.wkLeftArrowBg.style.paddingTop = paddingTop + 'px';
         wkcur.wkLeftArrowBg.style.paddingBottom = wkcur.wkRightArrowBg.style.paddingBottom = paddingBottom + 'px';
+        if (scroll) {
+            return;
+        }
 
         onBodyResize();
         WkView.onResize();
@@ -2074,12 +2116,19 @@ var WkView = {
                 preloadWkRaw = actions[next ? 1 : 0];
 
             if (preloadWkRaw) {
+                var page = {
+                    w: preloadWkRaw
+                };
+                if (preloadWkRaw && preloadWkRaw.substr(-6) == '/query') {
+                    var loc = clone(nav.objLoc);
+                    delete loc[0];
+                    delete loc.w;
+                    page.query = JSON.stringify(loc);
+                }
                 ajax.post('wkview.php', extend({
                     act: 'show',
                     loc: nav.objLoc[0]
-                }, {
-                    w: preloadWkRaw
-                }), {
+                }, page), {
                     cache: 1
                 });
             }

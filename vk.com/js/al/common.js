@@ -7989,6 +7989,12 @@ function showWiki(page, edit, e, opts) {
     if (nav.objLoc.claim) {
         page.claim = nav.objLoc.claim;
     }
+    if (page.w && page.w.substr(-6) == '/query') {
+        var loc = clone(nav.objLoc);
+        delete loc[0];
+        delete loc.w;
+        page.query = JSON.stringify(loc);
+    }
     if (opts.preload) {
         extend(params, opts.preload);
     }
@@ -9466,7 +9472,7 @@ function aquireLock(name, fn, noretry) {
 }
 
 function statDurationsLoadImage() {
-    if (Math.random() < 0.0001 && window.performance && window.performance.getEntriesByType) {
+    if (Math.random() < 0.001 && window.performance && window.performance.getEntriesByType) {
         if (window.clientStatsInited) return false;
 
         var resourceList = window.performance.getEntriesByType('resource');

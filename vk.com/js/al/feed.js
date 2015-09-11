@@ -2418,7 +2418,7 @@ var Feed = {
         triggerEvent(ge('post_delete' + post_raw), 'mouseout');
         cur.feedEntriesHTML[post_raw] = ge('post' + post_raw)
             .innerHTML;
-        var matches = post_raw.match(/(\-?\d+)_(photo|video|topic|note|)(\d+)/);
+        var matches = post_raw.match(/(\-?\d+)_(photo|video|topic|note|market|)(\d+)/);
         if (!matches) return;
         ajax.post('al_feed.php', {
             act: 'unsubscribe',
@@ -2427,7 +2427,8 @@ var Feed = {
                 photo: 21,
                 video: 22,
                 topic: 20,
-                note: 23
+                note: 23,
+                market: 25
             }[matches[2]],
             owner_id: matches[1],
             place_id: matches[3],
@@ -2441,7 +2442,7 @@ var Feed = {
         });
     },
     subscribe: function(post_raw, hash) {
-        var matches = post_raw.match(/(\-?\d+)_(photo|video|topic|note|)(\d+)/);
+        var matches = post_raw.match(/(\-?\d+)_(photo|video|topic|note|market|)(\d+)/);
         if (!matches) return;
         ajax.post('al_feed.php', {
             act: 'subscribe',
@@ -2450,7 +2451,8 @@ var Feed = {
                 photo: 21,
                 video: 22,
                 topic: 20,
-                note: 23
+                note: 23,
+                market: 25
             }[matches[2]],
             owner_id: matches[1],
             place_id: matches[3],
