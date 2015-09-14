@@ -5116,6 +5116,7 @@ var nav = {
             objLoc = loc;
         }
         statDurationsLoadImage();
+        statNavigationTiming();
         var _a = window.audioPlayer,
             aid = currentAudioId();
         if (_a && aid && (_a.gpDisabled || !ge('gp')) && !opts.back) _a.stop();
@@ -9480,6 +9481,48 @@ function aquireLock(name, fn, noretry) {
     }
 }
 
+function statNavigationTiming() {
+    if (window.clientStatsInitedNT) return false;
+    if (Math.random() < 0.0001 && window.performance && performance.timing) {
+
+        var perTiming = {};
+        if (performance.timing.redirectStart && performance.timing.redirectEnd) {
+            perTiming['redirect'] = performance.timing.redirectEnd - performance.timing.redirectStart;
+        }
+        if (performance.timing.domainLookupStart && performance.timing.domainLookupEnd) {
+            perTiming['domainLookup'] = performance.timing.domainLookupEnd - performance.timing.domainLookupStart;
+        }
+        if (performance.timing.connectStart && performance.timing.connectEnd) {
+            perTiming['connect'] = performance.timing.connectEnd - performance.timing.connectStart;
+            if (performance.timing.secureConnectionStart) {
+                perTiming['secureConnection'] = performance.timing.connectEnd - performance.timing.secureConnectionStart;
+            }
+        }
+        if (performance.timing.requestStart && performance.timing.responseStart) {
+            perTiming['request'] = performance.timing.responseStart - performance.timing.requestStart;
+            if (performance.timing.responseEnd) {
+                perTiming['response'] = performance.timing.responseEnd - performance.timing.responseStart;
+            }
+        }
+        if (performance.timing.unloadEventStart && performance.timing.unloadEventEnd) {
+            perTiming['unloadEvent'] = performance.timing.unloadEventEnd - performance.timing.unloadEventStart;
+        }
+        if (performance.timing.domLoading && performance.timing.domComplete) {
+            perTiming['processing'] = performance.timing.domComplete - performance.timing.domLoading;
+        }
+        if (performance.timing.domContentLoadedEventStart && performance.timing.domContentLoadedEventEnd) {
+            perTiming['domContentLoadedEvent'] = performance.timing.domContentLoadedEventEnd - performance.timing.domContentLoadedEventStart;
+        }
+        if (performance.timing.loadEventStart && performance.timing.loadEventEnd) {
+            perTiming['loadEvent'] = performance.timing.loadEventEnd - performance.timing.loadEventStart;
+        }
+        for (var key in perTiming) {
+            statlogsValueEvent('navigation_timing', perTiming[key], key);
+        }
+        window.clientStatsInitedNT = true;
+    }
+}
+
 function statDurationsLoadImage() {
     if (Math.random() < 0.001 && window.performance && window.performance.getEntriesByType) {
         if (window.clientStatsInited) return false;
@@ -9494,7 +9537,7 @@ function statDurationsLoadImage() {
                     countImg['<100'] = (countImg['<100'] || 0) + 1;
                 } else if (resourceList[i].duration < 250) {
                     countImg['100-250'] = (countImg['100-250'] || 0) + 1;
-                } else if (resourceList[i].duration < 5000) {
+                } else if (resourceList[i].duration < 500) {
                     countImg['250-500'] = (countImg['250-500'] || 0) + 1;
                 } else if (resourceList[i].duration < 1000) {
                     countImg['500-1000'] = (countImg['500-1000'] || 0) + 1;
