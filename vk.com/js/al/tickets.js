@@ -3840,7 +3840,7 @@ Tickets = {
         return false;
     },
     listToggleUnusefulButton: function(v) {
-        toggle(ge('help_table_questions_btn'), v);
+        toggle(ge('tickets_unuseful'), v);
     },
     listShowAltButton: function(altButtonId) {
         each(geByClass('secondary', ge('help_table_questions_btn')), function(i, e) {
