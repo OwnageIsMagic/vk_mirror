@@ -17,12 +17,6 @@ var Fave = {
         toggle('fave_notes_tab_wrap', section == 'likes_posts' || section == 'likes_notes');
         checkbox('fave_notes_tab', section == 'likes_notes');
 
-        if (section == 'faces') {
-            show('fave_faces_other');
-        } else {
-            hide('fave_faces_other');
-        }
-
         var doSwitch = function(section) {
             Fave.hideCurrentSection();
             cur.section = section;
@@ -32,9 +26,6 @@ var Fave = {
                 act: 'a_set_default',
                 section: section
             });
-            if (cur.section == 'faces') {
-                Fave.facesOther(true);
-            }
         };
 
         if (!cur.preloaded) {
@@ -219,7 +210,7 @@ var Fave = {
             act: 'preload',
             section: cur.section
         }, {
-            onDone: function(data, usersHtml, userRows, linksHtml, photosHtml, videosHtml, postsHtml, notesHtml, facesHtml) {
+            onDone: function(data, usersHtml, userRows, linksHtml, photosHtml, videosHtml, postsHtml, notesHtml, marketHtml) {
                 var page = ge('content');
                 if (cur.section != 'users') {
                     page.appendChild(ce('div', {
@@ -271,9 +262,9 @@ var Fave = {
                     }));
                 }
 
-                if (cur.section != 'faces') {
+                if (cur.section != 'likes_market') {
                     page.appendChild(ce('div', {
-                        innerHTML: facesHtml
+                        innerHTML: marketHtml
                     }));
                 }
 
@@ -313,8 +304,6 @@ var Fave = {
             cur.faveData[module + 'Offset'] = 0;
         }
         var offset = intval(cur.faveData[module + 'Offset']) + intval(cur.faveData[module + 'PerPage']);
-
-        if (cur.section == 'faces') return;
 
         ajax.post('al_fave.php', {
             act: 'load',
@@ -597,10 +586,6 @@ var Fave = {
         if (newSection === false) return;
 
         if (!isEmpty(changed) || newSection === undefined || newSection == cur.section) {
-            if (cur.section == 'faces') {
-                Fave.facesOther();
-                return false;
-            }
             return;
         }
         Fave.switchTab(newSection || 'likes_photo');
@@ -652,39 +637,6 @@ var Fave = {
                 }, 200, hid.pbind(icon));
             }
         }, 0);
-    },
-    facesOther: function(noshow) {
-        var other = ge('fave_faces_more');
-        var cont = ge('fave_face_cont');
-        if (!noshow) {
-            if (other.firstChild) {
-                cont.innerHTML = '';
-                cont.appendChild(other.firstChild);
-            } else {
-                var needShow = 1;
-                lockButton(ge('faces_other_btn'));
-            }
-        }
-
-        if (other.childNodes.length < 5) {
-            ajax.post('fave', {
-                act: 'preload_faces'
-            }, {
-                onDone: function(rows) {
-                    for (var i in rows) {
-                        other.appendChild(ce('div', {
-                            innerHTML: rows[i]
-                        }));
-                    }
-                    cur.faveNeedFaces = false;
-                    if (needShow) {
-                        Fave.facesOther();
-                        unlockButton(ge('faces_other_btn'));
-                    }
-                }
-            });
-            cur.faveNeedFaces = 1;
-        }
     },
 
     removeTip: function(el) {

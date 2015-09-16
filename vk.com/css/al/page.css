@@ -2272,6 +2272,24 @@ a.reply_parent_link,
     height: 60px;
 }
 
+.wall_module .page_media_market .page_media_link_desc_wrap {
+    width: 225px;
+}
+
+.wall_module .page_media_market .page_media_link_title {
+    overflow: hidden;
+    -o-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+}
+
+.wall_module .page_media_market .page_media_link_desc {
+    word-wrap: break-word;
+}
+
+.wide_wall_module .page_media_market .page_media_link_desc_wrap {
+    width: 400px;
+}
+
 .wall_module .page_media_link_thumb_shadow {
     position: absolute;
     left: 0;

@@ -865,13 +865,14 @@ var AppsEdit = {
         });
     },
 
-    certUploadBox: function(obj) {
+    certUploadBox: function(obj, type) {
         var push = (Privacy.getValue('push') || '')
             .split('_');
         showBox('editapp', {
             act: 'select_cert',
             aid: cur.aid,
-            push: push[2]
+            push: push[2],
+            cert_type: type
         }, {
             params: {
                 dark: 1,
