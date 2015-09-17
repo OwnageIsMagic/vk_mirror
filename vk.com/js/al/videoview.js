@@ -404,12 +404,7 @@ var Videoview = {
         },
 
         removeVideo: function() {
-            var mv = false;
-            if (window.mvcur && mvcur.mvData) {
-                mv = mvcur.mvData;
-            } else if (cur.mvOpts) {
-                mv = cur.mvOpts;
-            }
+            var mv = Videoview.getMvData();
 
             if (mv && mv.deleteFromAllAlbumsHash) {
                 ajax.post('/al_video.php', {
@@ -438,7 +433,12 @@ var Videoview = {
         },
 
         getSuggestionsData: function() {
-            return mvcur && mvcur.mvData && mvcur.mvData.playerSuggestions;
+            var mvData = Videoview.getMvData();
+            return mvData && mvData.playerSuggestions;
+        },
+
+        getMvData: function() {
+            return cur.mvOpts || window.mvcur && mvcur.mvData;
         },
 
         getPlayerObject: function() {
@@ -514,12 +514,7 @@ var Videoview = {
                     from: from
                 });
 
-                var mv = false;
-                if (window.mvcur && mvcur.mvData) {
-                    mv = mvcur.mvData;
-                } else if (cur.mvData) {
-                    mv = cur.mvData;
-                }
+                var mv = Videoview.getMvData();
                 mv.subscribed = isSubscribe;
 
                 if (!noPlayerUpdate) {
@@ -614,7 +609,7 @@ var Videoview = {
         },
 
         setAddButtonStateAdded: function() {
-            if (window.mvcur) {
+            if (window.mvcur && mvcur.mvShown) {
                 mvcur.mvData.published = true;
                 triggerEvent('mv_add_button', 'setAdded');
             }
@@ -2071,12 +2066,7 @@ var Videoview = {
         likeUpdate: function(my, count, title, nott) {
             count = intval(count);
 
-            var mv = false;
-            if (window.mvcur && mvcur.mvData) {
-                mv = mvcur.mvData;
-            } else if (cur.mvData) {
-                mv = cur.mvData;
-            }
+            var mv = Videoview.getMvData();
 
             var likeType = (window.mvcur && mvcur.statusVideo) ? 'wall' : 'video';
 
@@ -2166,7 +2156,7 @@ var Videoview = {
         },
 
         _isCurrentVideoPublished: function() {
-            return (window.mvcur && mvcur.mvData && mvcur.mvData.published) || cur._videoPublished;
+            return cur.mvOpts ? cur._videoPublished : (window.mvcur && mvcur.mvData && mvcur.mvData.published);
         },
 
         addSmall: function(videoRaw, hash, gid, accessHash) {
@@ -2241,9 +2231,8 @@ var Videoview = {
 
         share: function(videoRaw, obj, actionType) {
             if (!vk.id) return;
-            var mvData = window.mvcur ? mvcur.mvData : false;
-            if (!mvData && cur.mvOpts) {
-                mvData = cur.mvOpts;
+            var mvData = Videoview.getMvData();
+            if (mvData && !mvData.addedVideo) {
                 mvData.addedVideo = mvData.videoRaw;
             }
             if (mvData || videoRaw) {
@@ -2259,12 +2248,7 @@ var Videoview = {
         like: function(btn, noPlayerUpdate) {
             if (!vk.id) return;
 
-            var mvData = false;
-            if (window.mvcur && mvcur.mvData) {
-                mvData = mvcur.mvData;
-            } else if (cur.mvOpts) {
-                mvData = cur.mvOpts;
-            }
+            var mvData = Videoview.getMvData();
 
             if (!mvData) {
                 return;
@@ -4440,12 +4424,7 @@ var Videoview = {
         },
 
         onExternalVideoSubscribe: function() {
-            var mv = false;
-            if (window.mvcur && mvcur.mvData) {
-                mv = mvcur.mvData;
-            } else if (cur.mvData) {
-                mv = cur.mvData;
-            }
+            var mv = Videoview.getMvData();
             if (!mv) return;
             var isSubscribe = !mv.subscribed;
             var isClosed = mv.isClosed;
