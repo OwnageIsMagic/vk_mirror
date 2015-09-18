@@ -4805,7 +4805,6 @@ var IM = {
             removeClass(tabEl, 'im_tab_selected');
             addClass(tabEl, 'im_tab');
         }
-
         if (!IM.r(peer)) {
             geByClass('im_tabx', cur.tabs[peer].elem)[0].style.backgroundColor = '';
             var tabEl = 'im_tab' + peer;
@@ -5128,6 +5127,8 @@ var IM = {
         } else {
             if (peer < -2e9) {
                 var peerLink = '/im?sel=e' + (-peer - 2e9);
+            } else if (peer < 0) {
+                var peerLink = '/club' + Math.abs(peer);
             } else {
                 var peerLink = '/id' + peer;
             }
