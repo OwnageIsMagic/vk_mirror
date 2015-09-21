@@ -489,6 +489,7 @@
 .pv_can_edit,
 .pv_cant_edit {
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pv_can_edit:hover {
