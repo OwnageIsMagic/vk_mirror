@@ -67,6 +67,7 @@ if (!window.Emoji) {
                                     return false;
                                 }
                                 if (!noEnter || (e.ctrlKey || browser.mac && e.metaKey)) {
+                                    Emoji.ttClick(optId, geByClass1('emoji_smile', opts.controlsCont), true);
                                     opts.onSend();
                                     return cancelEvent(e);
                                 }
@@ -101,16 +102,16 @@ if (!window.Emoji) {
                         }
                         if (e.keyCode == KEY.TAB && !(e.ctrlKey || browser.mac && e.metaKey)) {
                             if (Emoji.shown) {
-                                Emoji.editableFocus(txt, false, true);
+                                Emoji.editableFocus(txt, false, true, void(0), true);
                                 Emoji.ttClick(optId, geByClass1('emoji_smile', opts.controlsCont), true);
                             } else {
-                                Emoji.ttClick(optId, geByClass1('emoji_smile', opts.controlsCont), false, true);
+                                Emoji.ttClick(optId, geByClass1('emoji_smile', opts.controlsCont), false, true, void(0), true);
                             }
                             return cancelEvent(e);
                         }
                         if (e.keyCode == KEY.ESC) {
                             if (Emoji.shown) {
-                                Emoji.editableFocus(txt, false, true);
+                                Emoji.editableFocus(txt, false, true, void(0), true);
                                 Emoji.ttClick(optId, geByClass1('emoji_smile', opts.controlsCont), true);
                                 return cancelEvent(e);
                             }
@@ -185,14 +186,10 @@ if (!window.Emoji) {
         },
 
         correctCaret: function(txt) {
-            if (!browser.msie) {
-                var top = getCaretPixelPos(txt)
-                    .top;
-                var txtBox = txt.getBoundingClientRect();
-                var relativeTop = top - txtBox.top;
-                if (relativeTop < 0 || relativeTop > txtBox.height) {
-                    txt.scrollTop += relativeTop - txtBox.height + 20;
-                }
+            var bottom = getCaretBoundingRect(txt)
+                .bottom;
+            if (bottom < 0 || bottom > txt.offsetHeight) {
+                txt.scrollTop += bottom - txt.offsetHeight;
             }
         },
 
@@ -216,10 +213,10 @@ if (!window.Emoji) {
                     if (text) {
                         Emoji.insertHTML(clean(text)
                             .replace(/\n/g, '<br/>'));
-                        setTimeout(Emoji.correctCaret.pbind(txt), 5);
                     }
                 }
                 Emoji.cleanCont(txt);
+                setTimeout(Emoji.correctCaret.pbind(txt), 5);
             }, 0);
         },
 
@@ -291,8 +288,8 @@ if (!window.Emoji) {
             delete Emoji.opts[optId];
         },
 
-        editableFocus: function(editable, obj, after, noCollapse) {
-            if (!editable) {
+        editableFocus: function(editable, obj, after, noCollapse, noForce) {
+            if (!editable || (noForce && document.activeElement === editable)) {
                 return false;
             }
             editable = ge(editable);
@@ -571,8 +568,14 @@ if (!window.Emoji) {
         },
 
         emojiEnter: function(optId, e) {
-            var opts = Emoji.opts[optId];
-            if (opts.emojiFocused && opts.emojiOvered) {
+            var opts = Emoji.opts[optId],
+                ctrlSend = (opts.ctrlSend ? opts.ctrlSend() : opts.noEnterSend) || (cur.ctrl_submit && !opts.noCtrlSend);
+            if (
+                opts.emojiFocused &&
+                opts.emojiOvered &&
+                opts.openedByTabKey &&
+                (ctrlSend ? !(e.ctrlKey || browser.mac && e.metaKey) : !e.shiftKey)
+            ) {
                 if (opts.curTab === 0) {
                     var img = geByTag1('img', opts.emojiOvered);
                     Emoji.addEmoji(optId, Emoji.getCode(img), opts.emojiOvered);
@@ -645,6 +648,7 @@ if (!window.Emoji) {
                     }
                 }
                 if (editable.check) editable.check();
+                setTimeout(Emoji.correctCaret.pbind(editable), 5);
             } else {
                 var textArea = opts.txt;
                 var val = textArea.value;
@@ -759,7 +763,7 @@ if (!window.Emoji) {
             }
         },
 
-        ttClick: function(optId, obj, needHide, needShow, ev) {
+        ttClick: function(optId, obj, needHide, needShow, ev, tabKey) {
             var opts = Emoji.opts[optId];
             if (!opts) {
                 return;
@@ -875,6 +879,7 @@ if (!window.Emoji) {
                     opts.onHide();
                 }
             } else {
+                opts.openedByTabKey = !!tabKey;
                 show(tt);
                 var toParams = {
                     opacity: 1
@@ -912,6 +917,9 @@ if (!window.Emoji) {
                 addClass(obj, 'emoji_smile_on');
                 if (opts.emojiScroll && opts.emojiExpanded) {
                     opts.emojiScroll.update(false, true);
+                    if (browser.msie && opts.curTab === 0 && opts.emojiOvered) {
+                        Emoji.scrollToListEl(optId, opts.emojiOvered);
+                    }
                 }
                 if (opts.onShow) {
                     opts.onShow();
@@ -1087,10 +1095,9 @@ if (!window.Emoji) {
                 objY = getXY(obj)[1],
                 objH = getSize(obj)[1],
                 list = geByClass1('emoji_list', tt),
-                firstSmile = geByClass1('emoji_smile_cont', list),
-                smileH = firstSmile && getSize(firstSmile)[1] || 26,
+                smileH = Emoji.opts[optId].emojiSmileHeigh,
                 headSpace = headH,
-                rowsCnt = 9,
+                rowsCnt = Emoji.opts[optId].emojiRowsCount,
                 offsetH = 9,
                 listPadding = 8;
 
@@ -1114,6 +1121,8 @@ if (!window.Emoji) {
                 rowsCnt--;
                 ttH -= smileH;
             }
+            Emoji.opts[optId].emojiRowsCount = rowsCnt;
+            Emoji.opts[optId].emojiSmileHeigh = smileH;
             setStyle(list, {
                 height: rowsCnt * smileH + listPadding
             });
@@ -1151,6 +1160,10 @@ if (!window.Emoji) {
             } else {
                 setStyle(tt, 'left', '');
             }
+            var list = geByClass1('emoji_list', tt),
+                firstSmile = geByClass1('emoji_smile_cont', list);
+            Emoji.opts[optId].emojiSmileHeigh = firstSmile && getSize(firstSmile)[1] || 26;
+            Emoji.opts[optId].emojiRowsCount = 9;
             var topShift = (opts.topShift || -Emoji.ttMarginTop(optId, obj, tt));
             setStyle(tt, {
                 marginTop: -topShift
@@ -1230,19 +1243,20 @@ if (!window.Emoji) {
         emojiMove: function(e) {
             var optId = Emoji.shownId;
             var opts = Emoji.opts[optId];
-            if (Emoji.shown && opts.emojiFocused) {
-                var el = opts.emojiOvered;
+            if (Emoji.shown && opts.emojiFocused && opts.openedByTabKey) {
+                var el = null;
                 switch (e.keyCode) {
                     case KEY.LEFT:
-                        el = el.previousSibling;
+                        el = opts.emojiOvered.previousSibling;
                         cancelEvent(e);
                         break;
                     case KEY.RIGHT:
-                        el = el.nextSibling;
+                        el = opts.emojiOvered.nextSibling;
                         cancelEvent(e);
                         break;
                     case KEY.UP:
                         var i = 11;
+                        el = opts.emojiOvered;
                         while (el.previousSibling && --i > 0) {
                             el = el.previousSibling;
                         }
@@ -1253,6 +1267,7 @@ if (!window.Emoji) {
                         break;
                     case KEY.DOWN:
                         var i = 11;
+                        el = opts.emojiOvered;
                         while (el.nextSibling && --i > 0) {
                             el = el.nextSibling;
                         }
@@ -1262,33 +1277,41 @@ if (!window.Emoji) {
                         }
                         break;
                     case KEY.ENTER:
-                        return Emoji.emojiEnter(optId, e);
-                        cancelEvent(e);
+                        if (!Emoji.emojiEnter(optId, e)) {
+                            cancelEvent(e);
+                            return false;
+                        }
                         break;
                     default:
                         return true;
                 }
                 if (el) {
-                    var diff = el.offsetTop - cur.emojiList.scrollTop;
-                    if (diff > 210) {
-                        animate(cur.emojiList, {
-                            scrollTop: cur.emojiList.scrollTop + (diff - 210)
-                        }, 80, function() {
-                            opts.emojiScroll.update(true, true)
-                        });
-                    } else if (diff < 0) {
-                        animate(cur.emojiList, {
-                            scrollTop: cur.emojiList.scrollTop + diff
-                        }, 80, function() {
-                            opts.emojiScroll.update(true, true)
-                        });
-                    }
+                    Emoji.scrollToListEl(optId, el);
                     Emoji.preventMouseOver = true;
                     Emoji.emojiOver(optId, el);
+                    return false;
                 }
-                return false;
             }
             return true;
+        },
+
+        scrollToListEl: function(optId, el) {
+            if (!cur.emojiList.contains(el)) return;
+            var opts = Emoji.opts[optId],
+                diff = el.offsetTop - cur.emojiList.scrollTop;
+            if (diff >= opts.emojiSmileHeigh * opts.emojiRowsCount) {
+                animate(cur.emojiList, {
+                    scrollTop: cur.emojiList.scrollTop + (diff - opts.emojiSmileHeigh * (opts.emojiRowsCount - 1))
+                }, 80, function() {
+                    opts.emojiScroll.update(true, true)
+                });
+            } else if (diff < 0) {
+                animate(cur.emojiList, {
+                    scrollTop: cur.emojiList.scrollTop + diff
+                }, 80, function() {
+                    opts.emojiScroll.update(true, true)
+                });
+            }
         },
 
         anim: function(el, to) {

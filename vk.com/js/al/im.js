@@ -1252,13 +1252,21 @@ var IM = {
             lockButton(ge('im_send'));
             cur.sendOnUploadDone = true;
             cur.sendOnUploadTrigger = true;
+            cur.sendOnUploadTriggerTimeout = setTimeout(IM.send.pbind(btn, ev, sendPeer), 3000);
             return;
         } else {
             delete cur.sendOnUploadDone;
+            if (cur.sendOnUploadTriggerTimeout) {
+                clearTimeout(cur.sendOnUploadTriggerTimeout);
+                cur.sendOnUploadTriggerTimeout = null;
+            }
             if (cur.sendOnUploadTrigger) {
                 unlockButton(ge('im_send'));
                 cur.sendOnUploadTrigger = false;
             }
+            setStyle(bodyNode, {
+                cursor: 'default'
+            });
         }
 
         if (cur.editable) {
@@ -1316,7 +1324,6 @@ var IM = {
             i = 1;
 
         if (sendMedia) {
-            var msgUrls = extractUrls(msg, true);
             var msgShares = 0;
             var lastShareUrl = '';
             each(sendMedia, function(k, v) {
@@ -1327,7 +1334,7 @@ var IM = {
                     }
                 }
             });
-            var allowShares = (msgUrls.length == 1) && (msgShares == 1) && (msgUrls[0].url == lastShareUrl);
+            var allowShares = (msgShares == 1);
             each(sendMedia, function(k, v) {
                 if ((v[0] == 'share') && !allowShares) {
                     return;
@@ -2715,28 +2722,31 @@ var IM = {
 
             case 'share':
                 var microdata_preview = '';
-                if (data.preview_product_price) {
-                    microdata_preview += '<span class="microdata_price">' + data.preview_product_price + '</span>';
-                }
-                if (data.preview_product_rating) {
-                    microdata_preview += data.preview_product_rating;
-                }
-                if (microdata_preview) {
-                    microdata_preview = '<div class="im_preview_share_microdata">' + microdata_preview + '</div>';
+                if (data.microdata_preview_html) {
+                    microdata_preview = '<div class="im_preview_share_microdata">' + data.microdata_preview_html + '</div>';
                 }
                 var title = trim(data.title);
                 var description = trim(data.description);
-                var title_len_limit = 28;
-                if (title.length > title_len_limit) {
-                    title = title.slice(0, title_len_limit) + '..';
-                }
+
                 if (!title.length || !description.length) {
                     IM.onUploadDone();
                     return false;
                 }
 
-                //        preview = '<a class="medadd_h medadd_h_share"> ' + title + '</a>';
-                //        postview = microdata_preview+'<div class="im_preview_share_domain">' + data.domain + '</div>';
+                var msgShares = 0;
+                each(curPeerMedia, function(k, v) {
+                    if (v[0] == 'share') {
+                        msgShares++;
+                    }
+                });
+                if (msgShares) { // only one share is allowed
+                    IM.onUploadDone();
+                    return false;
+                }
+
+                preview = '<a class="medadd_h medadd_h_share"> ' + title + '</a>';
+                postview = microdata_preview + '<div class="im_preview_share_domain">' + data.domain + '</div>';
+
                 contIndex = 4;
                 cls = '';
                 break;
@@ -2761,6 +2771,7 @@ var IM = {
                     lnkId: cur.imMedia.lnkId,
                     ind: ind
                 }));
+                shortCurrency();
                 (cont = conts[contIndex])
                 .appendChild(mediaEl);
             }
@@ -3437,10 +3448,15 @@ var IM = {
                 showdt: 700,
                 hidedt: 700,
                 onCreate: function() {
+                    var val = cur.ctrl_submit ? 1 : 0;
                     radioBtns.im_submit = {
                         els: Array.prototype.slice.apply(geByClass('radiobtn', ge('im_submit_hint_opts'))),
-                        val: cur.ctrl_submit ? 1 : 0
+                        val: val
                     };
+                    if (!hasClass(radioBtns.im_submit.els[val], "on")) {
+                        addClass(radioBtns.im_submit.els[val], "on");
+                        removeClass(radioBtns.im_submit.els[val ^ 1], "on");
+                    }
                 }
             });
         };
