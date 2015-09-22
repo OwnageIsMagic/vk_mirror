@@ -11,7 +11,8 @@ var Videoview = {
             },
             fullscreen: function(value) {
                 Videoview.isFS = value;
-                Video.updatePlaylistBoxPosition();
+                Videoview.updatePlaylistBoxPosition();
+                Videoview.updateExternalVideoFinishBlock();
             },
             incViewCounter: function(oid, vid, hash, currRes, maxRes, player, type) {
                 if (!player) {
@@ -415,13 +416,18 @@ var Videoview = {
                     hash: mv.deleteFromAllAlbumsHash
                 }, {});
 
-                each(mv.playlists, function(i, pl) {
-                    pl.added = false;
-                });
+                if (mv.playlists) {
+                    each(mv.playlists, function(i, pl) {
+                        pl.added = false;
+                    });
+                }
 
                 if (window.mvcur) {
                     Videoview.initAddButton();
                 }
+
+                mv.added = false;
+                removeClass(geByClass1('mv_finish_add', 'mv_external_finish'), 'selected');
             }
         },
 
@@ -442,7 +448,7 @@ var Videoview = {
         },
 
         getPlayerObject: function() {
-            return ge('video_player') || window.html5video || null;
+            return ge('video_yt') && window.VideoYoutube || ge('video_player') || window.html5video || null;
         },
 
         getPlayerObjectEl: function() {
@@ -697,9 +703,9 @@ var Videoview = {
                     Videoview.playerOnAdded();
                 }
 
-                toggleClass(geByClass1('mv_finish_add', 'mv_external_finish'), 'selected', added);
-
                 isAddedState = added;
+                var mv = Videoview.getMvData();
+                mv.added = added;
             }
 
             function onClick(event) {
@@ -982,6 +988,7 @@ var Videoview = {
                 removeEvent(document, 'keydown', Videoview.onKeyDown);
                 removeEvent(mvLayerWrap, 'click', Videoview.onClick);
                 addEvent(window, 'resize', Videoview.onResize);
+                addEvent(document, 'webkitfullscreenchange mozfullscreenchange fullscreenchange', Videoview.onFullscreenChange);
                 addEvent(document, 'keydown', Videoview.onKeyDown);
                 addEvent(mvLayerWrap, 'click', Videoview.onClick);
                 boxQueue.hideAll();
@@ -1200,7 +1207,7 @@ var Videoview = {
                 toggleClass(geByClass1('mv_data'), 'mv_wpl', !isCollapsed && !isMinimized);
                 toggleClass(blockEl, 'video_plb_collapsed', isCollapsed);
 
-                toggleClass(ge('mv_box'), 'mv_plb_collapsed', isCollapsed);
+                toggleClass(ge('mv_box'), 'mv_plb_collapsed', isCollapsed && !isMinimized);
             } else {
                 removeClass(geByClass1('mv_data'), 'mv_wpl');
             }
@@ -1332,8 +1339,13 @@ var Videoview = {
 
             mvcur.mvShown = mvcur.mvClicked = false;
             removeEvent(window, 'resize', Videoview.onResize);
+            removeEvent(document, 'webkitfullscreenchange mozfullscreenchange fullscreenchange', Videoview.onFullscreenChange);
             removeEvent(document, 'keydown', Videoview.onKeyDown);
             removeEvent(mvLayerWrap, 'click', Videoview.onClick);
+
+            if (ge('video_yt') && window.VideoYoutube) {
+                VideoYoutube.destroy();
+            }
 
             mvcur.mvContent.innerHTML = '';
             mvcur.changeCanvasSize = false;
@@ -1468,6 +1480,11 @@ var Videoview = {
                 Videoview.updatePlaylistBoxPosition();
             }, 10);
 
+            Videoview.updateExternalVideoFinishBlock();
+        },
+
+        onFullscreenChange: function() {
+            Videoview.updatePlaylistBoxPosition();
             Videoview.updateExternalVideoFinishBlock();
         },
 
@@ -2174,6 +2191,9 @@ var Videoview = {
                 }
                 hide('video_add_action_link');
                 addClass(ge('mv_like_line'), 'video_added');
+                addClass(geByClass1('mv_finish_add', 'mv_external_finish'), 'selected');
+                var mv = Videoview.getMvData();
+                mv.added = true;
             }
         },
 
@@ -3491,6 +3511,9 @@ var Videoview = {
             if (ge('html5_player') && window.html5video) {
                 html5video.onResize();
             }
+            if (ge('video_yt') && window.VideoYoutube) {
+                VideoYoutube.onResize();
+            }
 
             Videoview.updateExternalVideoFinishBlock();
 
@@ -3558,6 +3581,7 @@ var Videoview = {
             }
 
             removeEvent(window, 'resize', Videoview.onResize);
+            removeEvent(document, 'webkitfullscreenchange mozfullscreenchange fullscreenchange', Videoview.onFullscreenChange);
             removeEvent(document, 'keydown', Videoview.onKeyDown);
 
             addEvent(window, 'resize', Videoview.minResize);
@@ -3597,6 +3621,9 @@ var Videoview = {
 
             if (ge('html5_player') && window.html5video) {
                 setTimeout(html5video.onResize, 10);
+            }
+            if (ge('video_yt') && window.VideoYoutube) {
+                setTimeout(VideoYoutube.onResize, 10);
             }
 
             var popLayer = layerQueue.count();
@@ -3643,6 +3670,9 @@ var Videoview = {
                 Videoview.setStyle('mvPlayerParent', mvcur.mvPlayer.parentNode, style);
                 if (ge('html5_player') && window.html5video) {
                     html5video.onResize()
+                }
+                if (ge('video_yt') && window.VideoYoutube) {
+                    VideoYoutube.onResize();
                 }
             }
         },
@@ -3810,6 +3840,7 @@ var Videoview = {
             Videoview.updateSize();
 
             addEvent(window, 'resize', Videoview.onResize);
+            addEvent(document, 'webkitfullscreenchange mozfullscreenchange fullscreenchange', Videoview.onFullscreenChange);
             addEvent(document, 'keydown', Videoview.onKeyDown);
             removeEvent(window, 'resize', Videoview.minResize);
 
@@ -3839,6 +3870,9 @@ var Videoview = {
 
             if (ge('html5_player') && window.html5video) {
                 setTimeout(html5video.onResize, 0);
+            }
+            if (ge('video_yt') && window.VideoYoutube) {
+                VideoYoutube.onResize();
             }
 
             return false;
@@ -4261,26 +4295,83 @@ var Videoview = {
             });
         },
 
-        onExternalVideoEnded: function(noTimerStart) {
-            var container = geByClass1('video', ge('mv_content'));
+        onExternalVideoEnded: function(container) {
+            container = container || domPN(ge('video_player'));
             var containerSize = getSize(container);
             var nextVideo = (Videoview.getNextVideosData() || [])[0];
             var supportsCanvas = !!window.CanvasRenderingContext2D;
+            var mv = Videoview.getMvData();
 
-            if (!container || containerSize[0] < 400 || containerSize[1] < 300 || !mvcur.mvData || !nextVideo) return;
+            if (!container || !mv || ge('mv_external_finish')) return;
 
-            var mv = mvcur.mvData;
             var isLiked = mv.liked;
-            var isAdded = false;
-            var canAdd = vk.id != mv.oid;
+            var isAdded = mv.added;
+            var canAdd = mv.can_add;
             var isSubscribed = mv.subscribed;
 
-            each(mv.playlists, function() {
-                if (this.added) {
-                    isAdded = true;
-                    return false;
+
+            var nextBlockHtml = '';
+            if (nextVideo && containerSize[0] >= 400 && containerSize[1] >= 300) {
+                nextBlockHtml = '\
+<div id="mv_finish_next" class="mv_finish_next" onclick="Videoview.onExternalVideoNext(true)">\
+  <div class="mv_finish_next_caption">' +
+                    getLang('video_player_next_title') + '</div>\
+  <div class="mv_finish_next_thumb" style="background-image: url(' + nextVideo.thumb +
+                    ')"></div>\
+  <div class="mv_finish_next_timer">\
+    <canvas class="mv_finish_next_timer_canvas" width="100" height="100"></canvas>\
+    <div class="mv_finish_next_timer_play mv_finish_icon"></div>\
+  </div>\
+  <div class="mv_finish_next_info">\
+    <div class="mv_finish_next_title">' +
+                    nextVideo.title + '</div>\
+    <div class="mv_finish_next_views">' + nextVideo.views +
+                    '</div>\
+  </div>\
+  <div class="mv_finish_next_cancel mv_finish_icon" onclick="Videoview.onExternalVideoNextCancel(event)"></div>\
+</div>\
+    ';
+            }
+
+            var suggestionsData = Videoview.getSuggestionsData();
+            var suggestionsCallback = 'onSuggestionClick';
+            if (!suggestionsData || !suggestionsData.length) {
+                suggestionsData = Videoview.getNextVideosData();
+                suggestionsCallback = 'onVideoNext';
+            }
+
+            var suggestionsBlockHtml = '';
+            if (suggestionsData && suggestionsData.length && containerSize[0] >= 580 && containerSize[1] >= 300) {
+                suggestionsBlockHtml = '<div id="mv_finish_suggestions" class="mv_finish_suggestions ' + (nextBlockHtml ? 'hidden' : '') + '">';
+
+                each(suggestionsData, function(i, item) {
+                    suggestionsBlockHtml += '\
+<a class="mv_finish_suggestions_item" onclick="videoCallback([\'' + suggestionsCallback + '\', \'' + item.vid +
+                        '\']); return false;" href="//vk.com/video' + item.vid + '" title="' + item.title +
+                        '">\
+  <div class="mv_finish_suggestions_item_thumb" style="background-image: url(' + item.thumb +
+                        ')"></div>\
+  <div class="mv_finish_suggestions_item_title">' + item.title + '</div>\
+  <div class="mv_finish_suggestions_item_views">' + item.views +
+                        '</div>\
+</a>\
+      ';
+                });
+
+                suggestionsBlockHtml += '</div>';
+            }
+
+            var extendedActions = false;
+            var minActions = false;
+            if (!nextBlockHtml && !suggestionsBlockHtml) {
+                if (containerSize[0] > 250 && containerSize[1] > 200) {
+                    extendedActions = true;
+                } else {
+                    minActions = true;
                 }
-            });
+            }
+
+            var isMinimized = window.mvcur && mvcur.minimized;
 
             var finishBlock = se(
                 '\
@@ -4292,39 +4383,39 @@ var Videoview = {
       <button id="mv_finish_subscribe_btn" class="mv_finish_subscribe_btn fl_l" onclick="Videoview.onExternalVideoSubscribe()">' + (isSubscribed ?
                     getLang('video_view_subscribed_msg') : getLang('video_view_subscribe_to_author')) + '</button>\
       <a href="' + mv.authorHref +
-                '" target="_blank" class="fl_r"><img class="mv_finish_author_img" src="' + mv.authorPhoto + '"></a>\
+                '" target="_blank" class="fl_r"><img class="mv_finish_author_img" src="' + mv.authorPhoto +
+                '"></a>\
     </div>\
-    <div class="mv_finish_title">' + mv.title +
+    <div id="mv_finish_title" class="mv_finish_title" style="' + (isMinimized ? 'display:none' : '') + '">' + mv.title +
                 '</div>\
   </div>\
-  <div class="mv_finish_actions">\
-    <div class="mv_finish_like ' + (isLiked ? 'selected' : '') +
-                '" onclick="Videoview.onExternalVideoLike()"><div class="mv_finish_like_icon mv_finish_icon"></div><div class="mv_finish_liked_icon mv_finish_icon"></div></div>\
-    <div class="mv_finish_share" onclick="Videoview.onExternalVideoShare()"><div class="mv_finish_share_icon mv_finish_icon"></div></div>\
-    <div class="mv_finish_add ' +
-                (isAdded ? 'selected' : '') +
-                '" onclick="Videoview.onExternalVideoAdd()"><div class="mv_finish_add_icon mv_finish_icon"></div><div class="mv_finish_added_icon mv_finish_icon"></div></div>\
-  </div>\
-  <div class="mv_finish_next" onclick="Videoview.onExternalVideoNext(true)">\
-    <div class="mv_finish_next_caption">' +
-                getLang('video_player_next_title') + '</div>\
-    <div class="mv_finish_next_thumb" style="background-image: url(' + nextVideo.thumb +
-                ')"></div>\
-    <div class="mv_finish_next_timer">\
-      <canvas class="mv_finish_next_timer_canvas" width="100" height="100"></canvas>\
-      <div class="mv_finish_next_timer_play mv_finish_icon"></div>\
-    </div>\
-    <div class="mv_finish_next_info">\
-      <div class="mv_finish_next_title">' +
-                nextVideo.title + '</div>\
-      <div class="mv_finish_next_views">' + nextVideo.views +
+  <div id="mv_finish_actions" class="mv_finish_actions ' + (extendedActions ? 'mv_finish_actions_extended' : '') + ' ' + (!canAdd ?
+                    'mv_finish_actions_cant_add' : '') + ' ' + (minActions ? 'mv_finish_actions_no_content' : '') + '">\
+    <div class="mv_finish_like ' + (isLiked ?
+                    'selected' : '') +
+                '" onclick="Videoview.onExternalVideoLike()">\
+      <div class="mv_finish_like_icon mv_finish_icon"></div>\
+      <div class="mv_finish_liked_icon mv_finish_icon"></div>\
+      <div class="mv_finish_like_text">' +
+                getLang('video_i_like') +
                 '</div>\
     </div>\
-    <div class="mv_finish_next_cancel mv_finish_icon" onclick="Videoview.onExternalVideoNextCancel(event)"></div>\
+    <div class="mv_finish_share" onclick="Videoview.onExternalVideoShare()">\
+      <div class="mv_finish_share_icon mv_finish_icon"></div>\
+      <div class="mv_finish_share_text">' +
+                getLang('video_share_with_friends') + '</div>\
+    </div>\
+    <div class="mv_finish_add ' + (isAdded ? 'selected' : '') +
+                '" onclick="Videoview.onExternalVideoAdd()">\
+      <div class="mv_finish_add_icon mv_finish_icon"></div>\
+      <div class="mv_finish_added_icon mv_finish_icon"></div>\
+    </div>\
   </div>\
+  ' +
+                nextBlockHtml + '\
+  ' + suggestionsBlockHtml + '\
 </div>\
-  '
-            );
+  ');
 
             if (!mv.canSubscribe) {
                 re(geByClass1('mv_finish_subscribe', finishBlock));
@@ -4334,13 +4425,9 @@ var Videoview = {
                 re(geByClass1('mv_finish_actions', finishBlock));
             }
 
-            if (!canAdd) {
-                re(geByClass1('mv_finish_add', finishBlock));
-            }
-
             container.appendChild(finishBlock);
 
-            if (supportsCanvas) {
+            if (supportsCanvas && nextVideo && nextBlockHtml) {
                 mvcur.nextTimer = {
                     ctx: geByClass1('mv_finish_next_timer_canvas', finishBlock)
                         .getContext('2d'),
@@ -4361,14 +4448,14 @@ var Videoview = {
                 mvcur.nextTimer.ctx.lineCap = 'round';
                 mvcur.nextTimer.ctx.strokeStyle = '#fff';
 
-                if (!mvcur.nextTimerStopped && !noTimerStart) {
+                if (!mvcur.nextTimerStopped) {
                     mvcur.nextTimer.nextTimerStart();
                 }
             }
         },
 
         onExternalVideoTimer: function() {
-            if (!mvcur || !mvcur.nextTimer || !mvcur.nextTimer.ctx || !mvcur.nextTimer.started) return;
+            if (!window.mvcur || !mvcur.nextTimer || !mvcur.nextTimer.ctx || !mvcur.nextTimer.started) return;
 
             var progress = Math.min(1, Math.max(0, (new Date()
                 .getTime() - mvcur.nextTimer.started) / 10000));
@@ -4392,41 +4479,41 @@ var Videoview = {
             Videocat.nextVideo();
             Videoview.sendPlayerStats(clickedByUser ? 6 : 5, 4);
         },
-
         onExternalVideoNextCancel: function(event) {
             event && event.stopPropagation();
             clearTimeout(mvcur.nextTimer.timeout);
             mvcur.nextTimer = null;
-            re('mv_external_finish');
-        },
-
-        onExternalVideoLike: function() {
-            Videoview.like();
-            Videoview.sendPlayerStats(1, 4);
-        },
-
-        onExternalVideoShare: function() {
-            mvcur.nextTimer && mvcur.nextTimer.nextTimerReset && mvcur.nextTimer.nextTimerReset();
-            Videoview.sendVideo();
-            Videoview.sendPlayerStats(2, 4);
-        },
-
-        onExternalVideoAdd: function() {
-            var isAdded = false;
-            each(mvcur.mvData.playlists, function() {
-                if (this.added) {
-                    isAdded = true;
-                    return false;
-                }
-            });
-            if (isAdded) {
-                Videoview.removeVideo();
+            if (ge('video_yt_controls')) {
+                re('mv_finish_next');
+                removeClass('mv_finish_suggestions', 'hidden');
             } else {
-                Videoview.addSmall();
+                re('mv_external_finish');
             }
-            Videoview.sendPlayerStats(3, 4);
         },
-
+        onExternalVideoLike: function() {
+            videoCallback(['onLike', 4]);
+            var player = Videoview.getPlayerObject();
+            player.onLiked && player.onLiked();
+        },
+        onExternalVideoShare: function() {
+            window.mvcur && mvcur.nextTimer && mvcur.nextTimer.nextTimerReset && mvcur.nextTimer.nextTimerReset();
+            if (Videoview.isFS) {
+                var player = Videoview.getPlayerObject();
+                player && player.toggleFullscreen && player.toggleFullscreen();
+            }
+            videoCallback(['onShare', 4]);
+        },
+        onExternalVideoAdd: function() {
+            var mv = Videoview.getMvData();
+            if (!mv) return;
+            if (mv.added) {
+                videoCallback(['onRemove']);
+            } else {
+                videoCallback(['onAdd', mv.videoRaw, mv.add_hash, 4]);
+            }
+            var player = Videoview.getPlayerObject();
+            player.onAdded && player.onAdded();
+        },
         onExternalVideoSubscribe: function() {
             var mv = Videoview.getMvData();
             if (!mv) return;
@@ -4439,10 +4526,31 @@ var Videoview = {
         updateExternalVideoFinishBlock: function() {
             var finishBlock = ge('mv_external_finish');
             if (!finishBlock) return;
+
             var containerSize = getSize(finishBlock);
-            if (containerSize[0] < 400 || containerSize[1] < 300) {
+            if (
+                isVisible('mv_finish_next') && (containerSize[0] < 400 || containerSize[1] < 300) ||
+                isVisible('mv_finish_suggestions') && (containerSize[0] < 580 || containerSize[1] < 300) ||
+                hasClass('mv_finish_actions', 'mv_finish_actions_extended') && (containerSize[0] < 250 || containerSize[1] < 200)
+            ) {
+                if (mvcur.nextTimer) {
+                    Videoview.onExternalVideoNextCancel();
+                }
+                re('mv_finish_next');
+                re('mv_finish_suggestions');
+                removeClass('mv_finish_actions', 'mv_finish_actions_extended');
+                addClass('mv_finish_actions', 'mv_finish_actions_no_content');
+            }
+
+            toggle('mv_finish_title', !(window.mvcur && mvcur.minimized));
+            toggleClass('mv_finish_subscribe', 'mv_finish_subscribe_min', containerSize[0] < 500);
+        },
+
+        removeExternalVideoFinishBlock: function() {
+            if (window.mvcur && mvcur.nextTimer) {
                 Videoview.onExternalVideoNextCancel();
             }
+            re('mv_external_finish');
         },
 
         _eof: 1
