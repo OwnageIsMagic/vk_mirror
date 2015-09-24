@@ -692,7 +692,7 @@
         if (typeof(adsSection) === 'string') {
             vk__adsLight.adsSection = adsSection;
         }
-        if (adsHtml.slice(0, '<!--ya_direct'.length) === '<!--ya_direct') {
+        if (adsHtml && (adsHtml.slice(0, '<!--ya_direct'.length) === '<!--ya_direct')) {
             var parts = adsHtml.split(';', 3);
             if (parts && parts[1]) {
                 vk__adsLight.yaCloseLink = parts[1];
@@ -713,11 +713,11 @@
         } else {
             vk__adsLight.yaDirectAdActive = false;
         }
-        if (adsHtml.slice(0, '<!--criteo'.length) === '<!--criteo') {
+        if (adsHtml && (adsHtml.slice(0, '<!--criteo'.length) === '<!--criteo')) {
             AdsLight.tryRenderCriteo();
             return;
         }
-        if (adsHtml.slice(0, '<!--target'.length) === '<!--target') {
+        if (adsHtml && (adsHtml.slice(0, '<!--target'.length) === '<!--target')) {
             var parts = adsHtml.split(';', 3);
             AdsLight.tryRenderTarget(parts[1]);
             return;
@@ -1687,28 +1687,38 @@
 
         function ajax(url, succ, err) {
             clearTimeout(errorTimeout);
-            errorTimeout = setTimeout(err, TIMEOUT_TIME);
+            errorTimeout = setTimeout(function() {
+                err({
+                    "reason": "timeout"
+                });
+            }, TIMEOUT_TIME);
             window[callback] = function(e) {
                 clearTimeout(errorTimeout);
-                try {
-                    var containerElem = ge(container_id);
-                    var isContainerVisible = (containerElem && isVisible(containerElem) || vk.ad_preview);
-                    if (!containerElem) {
-                        var sideBarElem = ge('side_bar');
-                        if (!sideBarElem) {
-                            AdsLight.resizeBlockWrap([0, 0], false, false, true);
-                            return;
+                if (e && e[0] && e[0].html) {
+                    try {
+                        var containerElem = ge(container_id);
+                        var isContainerVisible = (containerElem && isVisible(containerElem) || vk.ad_preview);
+                        if (!containerElem) {
+                            var sideBarElem = ge('side_bar');
+                            if (!sideBarElem) {
+                                AdsLight.resizeBlockWrap([0, 0], false, false, true);
+                                return;
+                            }
+                            containerElem = sideBarElem.appendChild(ce('div', {
+                                id: 'left_ads'
+                            }, {
+                                display: isContainerVisible ? 'block' : 'none'
+                            }));
                         }
-                        containerElem = sideBarElem.appendChild(ce('div', {
-                            id: 'left_ads'
-                        }, {
-                            display: isContainerVisible ? 'block' : 'none'
-                        }));
-                    }
 
-                    AdsLight.showNewBlock(containerElem, e[0].html, isContainerVisible);
-                } catch (E) {}
-                succ(e);
+                        AdsLight.showNewBlock(containerElem, e[0].html, isContainerVisible);
+                    } catch (E) {}
+                    succ(e);
+                } else {
+                    err({
+                        "reason": "no-ads"
+                    });
+                }
             }
             var script = document.createElement('script');
             script.src = url;
@@ -1726,11 +1736,8 @@
             return age;
         }
 
-        if (params && params.sex) prms.g = (3 - params.sex);
-        if (params && params.bdate) prms.a = getAge(params.bdate.split('.')
-            .reverse()
-            .join('/'));
         if (params && params.test_id) prms.test_id = params.test_id;
+        if (params && params.vk_id) prms.vk_id = params.vk_id;
 
         var param_id;
         for (param_id in prms) {
@@ -1753,6 +1760,9 @@
         if (test_group_id) {
             params.test_id = test_group_id;
         }
+        if (vk && vk.id) {
+            params.vk_id = vk.id;
+        }
 
         AdsLight.getRBAds('left_ads', function() { // ok
             if (Math.random() < 0.05) {
@@ -1762,9 +1772,9 @@
                     }
                 });
             }
-        }, function() { // fail
+        }, function(data) { // fail
             if (Math.random() < 0.05) {
-                ajax.post('/wkview.php?act=mlet&mt=755', {}, {
+                ajax.post('/wkview.php?act=mlet&mt=755', data, {
                     onFail: function() {
                         return true;
                     }
