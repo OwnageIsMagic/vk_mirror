@@ -2069,6 +2069,18 @@ if (!window.Emoji) {
             return cancelEvent(ev);
         },
 
+        showStickerTT: function(el) {
+            var text = el.getAttribute('data-title');
+            if (!text) return;
+            showTooltip(el, {
+                text: text,
+                slide: 15,
+                shift: [74 - getSize(el)[0] / 2, 120, 5],
+                className: 'sticker_hint_tt',
+                hasover: 1
+            });
+        },
+
         __eof: 1
     }
 }

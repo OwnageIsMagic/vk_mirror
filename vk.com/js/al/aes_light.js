@@ -1749,6 +1749,11 @@
             });
         }
 
+        var params = {};
+        if (test_group_id) {
+            params.test_id = test_group_id;
+        }
+
         AdsLight.getRBAds('left_ads', function() { // ok
             if (Math.random() < 0.05) {
                 ajax.post('/wkview.php?act=mlet&mt=754', {}, {
@@ -1771,9 +1776,7 @@
             vk__adsLight.adsParams.target_failed = 1;
             AdsLight.updateBlock('force_hard', 2);
             vk__adsLight.adsParams = oldAdsParams;
-        }, {
-            test_id: test_group_id
-        });
+        }, params);
     }
 
     AdsLight.init();
