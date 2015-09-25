@@ -439,10 +439,10 @@ mail_delete = '�������';
 mail_deleteall1 = '������� ��� ���������';
 mail_delete_all_spam = '������� ��� ���������, ���������� ����?';
 mail_error = '������';
-mail_im_get_invitation_link = '�������� �����������';
+mail_im_get_invitation_link = '������ �� ������';
 mail_im_joined_chat_from_invitation = ['', '{from} ������������� � ������', '{from} �������������� � ������'];
 mail_marked_as_spam = '��������� �������� ��� ���� � �������.';
-// section = 22; version = 241;
+// section = 22; version = 242;
 
 matches_close = '�������';
 matches_closed = '�������';

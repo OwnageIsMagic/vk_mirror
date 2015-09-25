@@ -1343,6 +1343,10 @@ var Videoview = {
             removeEvent(document, 'keydown', Videoview.onKeyDown);
             removeEvent(mvLayerWrap, 'click', Videoview.onClick);
 
+            if (ge('html5_player') && window.html5video) {
+                html5video.destroy();
+            }
+
             if (ge('video_yt') && window.VideoYoutube) {
                 VideoYoutube.destroy();
             }
