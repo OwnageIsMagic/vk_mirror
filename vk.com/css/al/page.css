@@ -6982,7 +6982,7 @@ div.create_poll_cb,
 
 .page_fronly {
     margin-left: 4px;
-    background: url(/images/profile_icons.gif?13) no-repeat;
+    background: url(/images/profile_icons.png?14) no-repeat;
     background-position: 0px -163px;
     width: 8px;
     height: 11px;
@@ -7051,6 +7051,10 @@ div.create_poll_cb,
     vertical-align: bottom;
 }
 
+.medadd_h_market {
+    background-position: 0 -376px;
+}
+
 .medadd_h,
 .medadd_c {
     padding-left: 15px;
@@ -7107,6 +7111,30 @@ div.medadd_c_pollcb {
 
 .medadd_c_timer .selector_container td.selector {
     padding: 2px 0 1px 2px;
+}
+
+.medadd_c_market .medadd_c_market_thumb {
+    margin-right: 10px;
+    width: 41px;
+}
+
+.medadd_c_market .medadd_c_market_title {
+    display: block;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 300px;
+    font-weight: bold;
+}
+
+.medadd_c_market .medadd_c_market_price {
+    padding-top: 5px;
+    color: #888;
+}
+
+.medadd_c_market .page_media_x_wrap {
+    margin-top: 4px;
 }
 
 div.medadd_c_poll,

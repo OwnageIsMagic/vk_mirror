@@ -377,7 +377,7 @@ var Videoview = {
                 }
 
                 if (Video.isInVideosList()) {
-                    m = cur.oid < 0 ? 'community_videos' : 'profile_videos';
+                    m = cur.oid < 0 ? 'community_videos' : (cur.oid == vk.id ? 'profile_own_videos' : 'profile_videos');
                 }
             }
 
