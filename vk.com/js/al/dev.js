@@ -95,10 +95,40 @@ var Dev = {
         }
         onBodyResize(true);
     },
+    diselectLeftNav: function() {
+        var selNode = geByClass1('nav_selected', 'dev_left_nav');
+        if (!selNode) {
+            return;
+        }
+        removeClass(selNode, 'nav_selected');
+        var id = selNode.id.replace('dev_mlist_', ''),
+            submenu = ge('dev_mlist_submenu_' + id);
+        if (submenu) {
+            hide(submenu);
+        } else {
+            hide(selNode.parentNode);
+        }
+    },
+    setLeftNav: function(sel) {
+        if (sel == 'null') {
+            Dev.diselectLeftNav();
+            return;
+        }
 
+        var p = ge('dev_mlist_' + sel);
+        if (p) {
+            var submenu = ge('dev_mlist_submenu_' + sel);
+            if (submenu) {
+                show(submenu);
+            } else {
+                addClass(p, 'nav_selected');
+                show(p.parentNode);
+            }
+        }
+    },
     animLeftNav: function(oldSel, newSel) {
         var leftNav = ge('dev_left_nav');
-        if (!leftNav) return;
+        if (!leftNav || !newSel) return;
 
         var mark = ge('dev_left_nav_mark'),
             fromY = oldSel && oldSel.offsetTop || 0,
@@ -109,7 +139,7 @@ var Dev = {
             hide(oldSubMenu);
             show(newSubMenu);
         }
-        if (oldSel && newSel) {
+        if (oldSel) {
             toY = newSel.offsetTop || 0;
             duration = (toY != fromY) ? intval(30 * Math.log(Math.abs(toY - fromY) / 5)) : 0;
             setStyle(mark, {
@@ -245,8 +275,8 @@ var Dev = {
             }
         }
 
-        removeClass(curSel, 'nav_selected');
         if (newSel) {
+            removeClass(curSel, 'nav_selected');
             addClass(newSel, 'nav_selected');
         } else {
             cur.noSelFound = true;
@@ -281,7 +311,7 @@ var Dev = {
             pageOpts.ver = opts.ver;
         }
         ajax.post('/dev/' + page, pageOpts, {
-            onDone: function(title, text, acts, top_section, edit_sections, isPage, opts, js, bodyClass) {
+            onDone: function(title, text, acts, top_section, edit_sections, isPage, opts, js, bodyClass, parent_section) {
                 window.tooltips && tooltips.hideAll();
                 ge('dev_header_name')
                     .innerHTML = title;
@@ -302,6 +332,7 @@ var Dev = {
                 }
                 delete pageOpts.preload;
                 delete cur.verDD;
+                Dev.setLeftNav(parent_section);
                 nav.setLoc('dev/' + page + nav.toStr(pageOpts));
                 toggle('dev_method_narrow', !isPage && pageOpts.act !== 'history');
                 Dev.initPage(opts);
