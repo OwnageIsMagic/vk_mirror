@@ -2269,7 +2269,11 @@ var Videoview = {
                     object: 'video' + (mvData.addedVideo || videoRaw),
                     action_type: actionType
                 }, {
-                    onDone: Videoview.playerNextTimerUpdate
+                    onDone: function() {
+                        if (window.mvcur && mvcur.mvShown) {
+                            Videoview.playerNextTimerUpdate();
+                        }
+                    }
                 });
             }
             return false;
@@ -3662,7 +3666,7 @@ var Videoview = {
         },
 
         enabledResize: function() {
-            return (browser.safari || browser.chrome || browser.mozilla | browser.opera) && !browser['safari_mobile'];
+            return (browser.safari || browser.chrome || browser.mozilla || browser.opera) && !browser['safari_mobile'];
         },
 
         minimizePlayer: function() {
