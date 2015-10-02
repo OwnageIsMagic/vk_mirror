@@ -755,6 +755,31 @@ FAQ = {
         }
         return Math.floor(i / 2) - 1;
     },
+    saveDictionary: function(btn, lang, hash) {
+        hide('faq_dictionary__submit_note');
+        ajax.post(nav.objLoc[0], {
+            act: 'dictionary_save',
+            lang: lang,
+            hash: hash,
+            beginning_words: val('faq_dictionary__beginning_words'),
+            middle_words: val('faq_dictionary__middle_words')
+        }, {
+            onDone: function(beginningWords, middleWords) {
+                val('faq_dictionary__beginning_words', beginningWords);
+                val('faq_dictionary__middle_words', middleWords);
+                show('faq_dictionary__submit_note');
+                setTimeout(function() {
+                    fadeOut('faq_dictionary__submit_note', 500);
+                }, 3000);
+            },
+            showProgress: function() {
+                addClass(btn, 'processing');
+            },
+            hideProgress: function() {
+                removeClass(btn, 'processing');
+            }
+        });
+    },
     showHistory: function(id, faq_id, hash) {
         return !showBox(nav.objLoc[0], {
             act: 'show_history',

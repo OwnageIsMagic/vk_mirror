@@ -1359,9 +1359,9 @@ var Video = {
         nav.setLoc(nav.objLoc);
     },
     changeUrl: function() {
-        if (cur.timeouts && cur.timeouts.changeUrl) {
-            clearTimeout(cur.timeouts.changeUrl);
-        }
+        cur.timeouts = cur.timeouts || {};
+
+        clearTimeout(cur.timeouts.changeUrl);
         cur.timeouts.changeUrl = setTimeout(Video.doChangeUrl, 2000);
     },
     changeSummary: function() {
@@ -1515,7 +1515,7 @@ var Video = {
             ext: cur.vExt,
             order: cur.vOrder
         }, {
-            onDone: (function(count, data) {
+            onDone: (function(count, data, playlists) {
                     removeClass(cur.videoSearch, 'v_loading');
                     removeClass(cur.more, 'load_more');
                     data = eval('(' + data + ')');
@@ -1568,6 +1568,17 @@ var Video = {
                     }
                     searchData.offset += data.length;
                     this.changeSummary();
+
+                    re('video_featured_playlists');
+                    if (playlists && playlists[1] > 0) {
+                        var featuredPlaylists = '<div id="video_featured_playlists" style="margin-bottom: 20px;">' + trim(playlists[0]) + '</div>';
+                        var beforeEl = ge('video_search_summary');
+                        if (!isVisible(beforeEl)) {
+                            beforeEl = ge('video_local_search_summary');
+                        }
+                        domPN(beforeEl)
+                            .insertBefore(se(featuredPlaylists), beforeEl);
+                    }
                 })
                 .bind(this),
             cache: 1
