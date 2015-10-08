@@ -246,7 +246,7 @@ var VideoYoutube = {
     setQuality: function(res, btn) {
         VideoYoutube.cur.player.setPlaybackQuality(res);
         each(ge('video_yt_quality_dropdown')
-            .childNodes,
+            .children,
             function(i, item) {
                 if (item instanceof HTMLElement) {
                     removeClass(item, 'selected');
@@ -503,7 +503,8 @@ var VideoYoutube = {
         var tip = ge('video_yt_tip');
 
         ge('video_yt_tip_text')
-            .textContent = text;
+            .innerHTML = text.replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
 
         var containerSize = getSize('video_yt');
         var controlsHeight = 36;
@@ -585,11 +586,12 @@ var VideoYoutube = {
         var controlsToHide = [ge('video_yt_quality_td'), ge('video_yt_time_td')];
         var controlsContainer = ge('video_yt_controls');
         var controlsTable = ge('video_yt_controls_table');
+        var containerWidth = getSize(container)[0];
 
         show.apply(null, controlsToHide);
 
         each(controlsToHide, function(i, item) {
-            if (getSize(controlsTable)[0] > getSize(controlsContainer)[0]) {
+            if (getSize(controlsTable)[0] > containerWidth) {
                 hide(item);
             } else {
                 return false;

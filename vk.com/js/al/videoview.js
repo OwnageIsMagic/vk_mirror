@@ -88,7 +88,7 @@ var Videoview = {
                 });
             },
 
-            onVideoAdEvent: function(oid, vid, hash, eventId, adType, errorStr) {
+            onVideoAdEvent: function(oid, vid, hash, eventId, adType, errorStr, plType) {
                 if (hash) {
                     cur._vadStatQueue = cur._vadStatQueue || {};
                     cur._vadStatQueue[oid + '_' + vid] = cur._vadStatQueue[oid + '_' + vid] || {
@@ -101,6 +101,7 @@ var Videoview = {
                     cs.type = adType;
                     cs.events.push(eventId);
                     cs.err = errorStr;
+                    cs.pl_type = plType;
 
                     clearTimeout(cur._vadStatTimer);
                     cur._vadStatTimer = setTimeout(Videoview.sendVideoAdStat.bind(Videoview, oid, vid, hash), 1000);
@@ -500,7 +501,8 @@ var Videoview = {
                 hash: hash,
                 oid: oid,
                 vid: vid,
-                err: st.err
+                err: st.err,
+                pl_type: st.pl_type
             });
 
             st.events = [];

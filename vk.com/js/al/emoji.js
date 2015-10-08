@@ -122,7 +122,7 @@ if (!window.Emoji) {
                     }
 
                     if (e.type == 'paste') {
-                        Emoji.onEditablePaste(txt, opts, optId);
+                        Emoji.onEditablePaste(txt, opts, optId, e);
                         if (opts.checkEditable) {
                             setTimeout(opts.checkEditable.pbind(optId, txt), 0);
                         }
@@ -193,31 +193,63 @@ if (!window.Emoji) {
             }
         },
 
-        onEditablePaste: function(txt, opts, optId) {
-            var range = (browser.chrome || browser.safari || (browser.msie && browser.version > 10)) ? Emoji.getRange() : false;
-            if (range) {
-                var textarea = ce('TEXTAREA', {
-                    className: 'emoji_tmp_textarea'
-                });
-                txt.parentNode.appendChild(textarea);
-                textarea.focus();
+        insertWithBr: function(range, text) {
+            if (text) {
+                Emoji.insertHTML(clean(text)
+                    .replace(/\n/g, '<br/>'));
             }
+        },
+
+        focusTrick: function(txt, insert, finalize, range, cont) {
+            if (!cont) {
+                cont = txt;
+            }
+            var textarea = ce('TEXTAREA', {
+                className: 'emoji_tmp_textarea'
+            });
+            txt.parentNode.appendChild(textarea);
+            textarea.focus();
             setTimeout(function() {
-                if (range) {
-                    re(textarea);
-                    var scroll = txt.scrollTop;
-                    txt.focus();
-                    txt.scrollTop = scroll;
-                    Emoji.setRange(range);
-                    var text = val(textarea);
-                    if (text) {
-                        Emoji.insertHTML(clean(text)
-                            .replace(/\n/g, '<br/>'));
-                    }
-                }
-                Emoji.cleanCont(txt);
-                setTimeout(Emoji.correctCaret.pbind(txt), 5);
+                var scroll = cont.scrollTop;
+                re(textarea);
+                txt.focus();
+                cont.scrollTop = scroll;
+                Emoji.setRange(range);
+                insert(val(textarea));
+                finalize(txt);
             }, 0);
+        },
+
+        finalizeInsert: function(txt) {
+            Emoji.cleanCont(txt);
+            setTimeout(Emoji.correctCaret.pbind(txt), 10);
+        },
+
+        getClipboard: function(e) {
+            if (e.clipboardData) {
+                return e.clipboardData.getData("text");
+            } else if (window.clipboardData) {
+                return window.clipboardData.getData("Text")
+            } else {
+                return false;
+            }
+        },
+
+        onEditablePaste: function(txt, opts, optId, e, onlyFocus) {
+            var range = false;
+
+            if (txt.getAttribute('contenteditable') === 'true') {
+                range = Emoji.getRange();
+            }
+
+            var text = this.getClipboard(e);
+            if (text && range && !onlyFocus) {
+                this.insertWithBr(range, text);
+                setTimeout(this.finalizeInsert.bind(this, txt), 0);
+                return cancelEvent(e);
+            } else if (range) {
+                this.focusTrick(txt, this.insertWithBr.pbind(range), this.finalizeInsert.bind(this, txt), range);
+            }
         },
 
         cleanCont: function(cont) {
@@ -363,7 +395,7 @@ if (!window.Emoji) {
 
         editableVal: function(cont, opts) {
             if (!cont) return '';
-            if (cont.tagName == 'TEXTAREA') return val(cont);
+            if (cont.tagName == 'TEXTAREA') return clean(val(cont));
             var el = cont.firstChild;
             var v = '';
             var contTag = new RegExp('^(DIV|P|LI|OL|TR|TD|BLOCKQUOTE)$');
@@ -471,7 +503,7 @@ if (!window.Emoji) {
         },
 
         codeToChr: function(code) {
-            var len = code.length / 4;
+            var len = Math.round(code.length / 4);
             var chr = '';
             var i = 0;
             while (len--) {
@@ -586,7 +618,7 @@ if (!window.Emoji) {
         },
 
         insertHTML: function(html) {
-            if (browser.msie /* && browser.version < 10*/ ) {
+            if (browser.msie && parseInt(browser.version) < 12) {
                 if (document.selection) {
                     var r = document.selection.createRange();
                     if (r.pasteHTML) {
@@ -601,7 +633,9 @@ if (!window.Emoji) {
                     r.collapse(false);
                 }
             } else {
-                document.execCommand('insertHTML', false, html);
+                if (html) {
+                    document.execCommand('insertHTML', false, html);
+                }
             }
         },
 
