@@ -371,6 +371,7 @@ var Pads = {
     },
     show: function(id, ev) {
         if (checkEvent(ev) === true || browser.msie6 || vk.isBanned) return;
+        window.Apps && Apps.notifications.frameHide();
         if (_pads.shown == id && ev !== true) {
             Pads.hide();
             return cancelEvent(ev);
@@ -689,6 +690,9 @@ var Pads = {
             Pads.init(_pads.shown);
             return;
         }
+        var apps = {},
+            nid = null,
+            aid = null;
         for (var el = domFC(c); el; el = domFC(c)) {
             ++_pads.cur.offset;
             if (ge(el.id)) {
@@ -708,14 +712,23 @@ var Pads = {
             if (hasClass(el, 'pad_msg_new')) {
                 ids.push(el.id.replace('pad_msg', ''));
             } else if (hasClass(el, 'pad_ap_new')) {
-                ids.push(el.id.replace(/pad_apn_\d+_/, ''));
+                aid = el.getAttribute('data-app-id');
+                if (!apps[aid]) apps[aid] = {};
+                if (el.id.substr(4, 3) === 'apn') {
+                    nid = el.id.replace(/pad_apn_\d+_/, '');
+                    apps[aid][nid] = 1;
+                } else {
+                    nid = el.id.replace(/pad_apr_/, '');
+                    apps[aid][nid] = 0;
+                }
+                ids.push(nid);
             }
         }
         Pads.updateHeight();
         if (_pads.shown == 'msg') {
             Pads.msgMark(ids);
         } else if (_pads.shown == 'ap') {
-            Pads.apMark(ids);
+            Pads.apMark(ids, apps);
         }
     },
     more: function(ev) {
@@ -947,13 +960,25 @@ var Pads = {
                     i = Math.min(3, l - 1);
                 wh = ch[i].offsetTop + ch[i].offsetHeight - (l > 4 ? 1 : 0);
 
-                var ids = [];
+                var ids = [],
+                    aid = null,
+                    nid = null,
+                    apps = {};
                 for (var i = domFC(el); i; i = domNS(i)) {
                     if (hasClass(i, 'pad_ap_new')) {
-                        ids.push(i.id.replace(/pad_apn_\d+_/, ''));
+                        aid = i.getAttribute('data-app-id');
+                        if (!apps[aid]) apps[aid] = {};
+                        if (i.id.substr(4, 3) === 'apn') {
+                            nid = i.id.replace(/pad_apn_\d+_/, '');
+                            apps[aid][nid] = 1;
+                        } else {
+                            nid = i.id.replace(/pad_apr_/, '');
+                            apps[aid][nid] = 0;
+                        }
+                        ids.push(nid);
                     }
                 }
-                Pads.apMark(ids);
+                Pads.apMark(ids, apps);
                 break;
         }
         _pads.height = _pads.wrap.offsetHeight;
@@ -1692,7 +1717,7 @@ var Pads = {
         });
     },
 
-    apMark: function(ids) {
+    apMark: function(ids, apps) {
         if (!ids.length) return;
         ajax.post('al_apps.php', {
             act: 'a_mark',
@@ -1700,8 +1725,12 @@ var Pads = {
             notif_ids: ids.join(','),
             hash: _pads.hash
         }, {
-            onDone: function(res, cnt) {
-                handlePageCount('ap', cnt);
+            onDone: function(res, count_all) {
+                handlePageCount('ap', count_all);
+                if (window.Apps) {
+                    Apps.notifications.dropCache();
+                    Apps.notifications.setQueueAction('frameRead', apps);
+                }
             }
         });
     },
@@ -1712,7 +1741,6 @@ var Pads = {
                 delete(_pads.cur.processed[nid]);
             }
         } else if (_pads.cur.processed[nid] > 0 && vk.counts.ap >= _pads.cur.savedcnts[nid]) {
-            Pads.decr('ap');
             for (var i in _pads.cur.savedcnts) {
                 --_pads.cur.savedcnts[i];
             }
@@ -1720,6 +1748,7 @@ var Pads = {
         delete(_pads.cur.savedcnts[nid]);
         var el = ge('pad_ap' + nid),
             btns = geByClass1('pad_ap_btns', el) || geByClass1('pad_ap_result', el);
+        if (!fail && hasClass(el, 'pad_ap_inv')) Pads.decr('ap');
         domPN(btns)
             .replaceChild(ce('div', {
                 innerHTML: text,
@@ -1759,6 +1788,7 @@ var Pads = {
         }, {
             onDone: function() {
                 Pads.decr('ap', true);
+                window.Apps && Apps.notifications.setQueueAction('frameRead');
             }
         });
     },

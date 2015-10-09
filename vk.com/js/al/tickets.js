@@ -3812,11 +3812,17 @@ Tickets = {
                 if (content == '') {
                     var valAdded = (val.indexOf(cur.listPrevSearchStr) != -1 || !cur.listPrevSearchStr),
                         valRemoved = (cur.listPrevSearchStr.indexOf(val) != -1);
+                    cur.listSearchFailCount++;
                     if (!valAdded && !valRemoved || Tickets.listNotFoundVisible()) {
-                        cur.listSearchFailCount++;
                         Tickets.listShowNotFound(val);
                     } else {
                         updateLoc = false;
+                        if (cur.listSearchFailCount >= 5) {
+                            var b = ge('tickets_unuseful');
+                            if (!isVisible(b)) {
+                                slideDown(b, 250);
+                            }
+                        }
                     }
                 } else {
                     Tickets.listHideNotFound();
