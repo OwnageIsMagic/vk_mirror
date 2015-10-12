@@ -2747,7 +2747,7 @@ Tickets = {
             var b = ge('tickets_faq_unuseful' + id),
                 btns = geByClass1('help_table_question_rated_additional__btns', b);
             show(b, geByClass1('help_table_question_rated_additional', b));
-            hide(btns, geByClass1('help_table_question__rated_final', b));
+            hide(btns, geByClass1('help_table_question__rated_final', b), geByClass1('help_table_question__rated_no_perm', b));
             slideDown(btns, 200);
         }
         return false;
@@ -2763,10 +2763,14 @@ Tickets = {
         });
         hide(geByClass1('help_table_question_rated_additional', b));
         show(geByClass1('help_table_question__rated_final', b));
-        if (additional_id == 2 && cur.askQuestion.permission) {
-            Tickets.tryAskQuestion(function() {
-                Tickets.goToForm(id);
-            });
+        if (additional_id == 2) {
+            if (cur.askQuestion.permission) {
+                Tickets.tryAskQuestion(function() {
+                    Tickets.goToForm(id);
+                });
+            } else {
+                show(geByClass1('help_table_question__rated_no_perm', b));
+            }
         }
     },
     cancelRateFAQ: function(id, val, hash, evt) {
