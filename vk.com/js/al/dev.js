@@ -208,7 +208,7 @@ var Dev = {
     },
 
     scrollCheck: function() {
-        var nav = ge('dev_left_nav');
+        var nav = geByClass1('dev_left_nav_wrap');
         if (!nav) return false;
 
         var wh = window.lastWindowHeight || 0,
