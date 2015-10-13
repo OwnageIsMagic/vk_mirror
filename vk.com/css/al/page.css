@@ -7124,7 +7124,7 @@ div.medadd_c_pollcb {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 300px;
+    max-width: 280px;
     font-weight: bold;
 }
 
@@ -7135,6 +7135,10 @@ div.medadd_c_pollcb {
 
 .medadd_c_market .page_media_x_wrap {
     margin-top: 4px;
+}
+
+#im_docs_preview .medadd_c_market .im_media_x {
+    margin-top: 3px;
 }
 
 div.medadd_c_poll,
