@@ -319,8 +319,7 @@ var WriteBox = {
         var draft = ls.get('im_draft' + vk.id + '_' + peer);
         if (cur.mbForceAttach && cur.mbForceAttach[0] == 'market') {
             draft = {
-                txt: getLang('mail_market_tmpl')
-                    .replace(/&#33;/g, '!')
+                txt: unclean(getLang('mail_market_tmpl'))
                     .replace(/<br>/g, "\n"),
                 medias: [cur.mbForceAttach]
             };

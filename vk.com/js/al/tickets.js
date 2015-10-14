@@ -39,6 +39,9 @@ Tickets = {
             if (cur.fromTopLink) {
                 link += '&from=top';
             }
+            if (cur.fromSearch) {
+                link += '&from=s';
+            }
             return nav.go(link, evt, {
                 onFail: function(text) {
                     hide('new_tab');
@@ -3821,12 +3824,8 @@ Tickets = {
                         Tickets.listShowNotFound(val);
                     } else {
                         updateLoc = false;
-                        if (cur.listSearchFailCount >= 5) {
-                            var b = ge('tickets_unuseful');
-                            if (!isVisible(b)) {
-                                slideDown(b, 250);
-                            }
-                        }
+                        toggle('tickets_unuseful', query.trim()
+                            .indexOf(' ') != -1);
                     }
                 } else {
                     Tickets.listHideNotFound();
@@ -4093,17 +4092,14 @@ Tickets = {
         addClass('help_table_questions', 'help_table_questions_not_found');
         ge('help_table_not_found__query')
             .innerHTML = query;
-        var b = ge('help_table_not_found__btn');
-        if (cur.listSearchFailCount >= 5 && !isVisible(b)) {
-            slideDown(b, 250);
-        }
+        toggle('help_table_not_found__btn', query.trim()
+            .indexOf(' ') != -1);
     },
     listClearCache: function() {
         var obj = nav.objLoc;
         obj['cc'] = 1;
         nav.go(obj);
     },
-
     subscribeToTag: function(tag, hash) {
         ajax.post(nav.objLoc[0], {
             act: 'subscribe_to_tag',
@@ -4130,7 +4126,6 @@ Tickets = {
             }
         })
     },
-
     _eof: 1
 };
 try {
