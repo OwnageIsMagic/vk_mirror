@@ -33,14 +33,8 @@ Tickets = {
             if (!wide_tabs) {
                 link = link.firstChild;
             }
-            if (cur.fromNotFound) {
-                link += '&from=n';
-            }
             if (cur.fromTopLink) {
                 link += '&from=top';
-            }
-            if (cur.fromSearch) {
-                link += '&from=s';
             }
             return nav.go(link, evt, {
                 onFail: function(text) {
@@ -3819,13 +3813,13 @@ Tickets = {
                 if (content == '') {
                     var valAdded = (val.indexOf(cur.listPrevSearchStr) != -1 || !cur.listPrevSearchStr),
                         valRemoved = (cur.listPrevSearchStr.indexOf(val) != -1);
-                    cur.listSearchFailCount++;
-                    if (!valAdded && !valRemoved || Tickets.listNotFoundVisible()) {
+                    if (!valAdded && !valRemoved || Tickets.listNotFoundVisible() || !cur.listPrevSearchStr) {
                         Tickets.listShowNotFound(val);
                     } else {
                         updateLoc = false;
-                        toggle('tickets_unuseful', query.trim()
-                            .indexOf(' ') != -1);
+                        toggle('tickets_unuseful', val.trim()
+                            .indexOf(' ') != -1 && geByClass('help_table_question', 'help_table_questions_l')
+                            .length > 1);
                     }
                 } else {
                     Tickets.listHideNotFound();
@@ -3911,7 +3905,7 @@ Tickets = {
             }
         });
     },
-    goToForm: function(from_faq_id) {
+    goToForm: function(from_faq_id, from) {
         var urlParams = '';
         if (from_faq_id) {
             urlParams += '&faq=' + from_faq_id;
@@ -3923,6 +3917,9 @@ Tickets = {
                 if (title) {
                     urlParams += '&title=' + encodeURIComponent(title);
                 }
+            }
+            if (from) {
+                urlParams += '&from=' + from;
             }
         }
         nav.go(nav.objLoc[0] + '?act=new' + urlParams);
@@ -4092,8 +4089,11 @@ Tickets = {
         addClass('help_table_questions', 'help_table_questions_not_found');
         ge('help_table_not_found__query')
             .innerHTML = query;
-        toggle('help_table_not_found__btn', query.trim()
-            .indexOf(' ') != -1);
+        var btn = ge('help_table_not_found__btn');
+        if (!isVisible(btn) && query.trim()
+            .indexOf(' ') != -1) {
+            show(btn);
+        }
     },
     listClearCache: function() {
         var obj = nav.objLoc;

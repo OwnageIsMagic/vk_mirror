@@ -2976,6 +2976,16 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     margin-right: 0.5em;
 }
 
+.help_table_not_found_text__a {
+    color: #999;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.help_table_not_found_text__a:hover {
+    text-decoration: none;
+}
+
 .help_table_not_found__query {
     font-weight: bold;
 }
