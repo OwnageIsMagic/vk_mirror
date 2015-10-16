@@ -3790,7 +3790,7 @@ Tickets = {
             .bind(this), 10);
     },
 
-    listSearch: function(val) {
+    listSearch: function(v) {
 
         addClass(ge('faq_search_form'), 'loading');
         setStyle(ge('tickets_search_reset'), {
@@ -3799,7 +3799,7 @@ Tickets = {
 
         var query = {
             act: 'load_faq_list',
-            q: val
+            q: v
         };
 
         clearTimeout(cur.searchFAQStatTimeout);
@@ -3811,23 +3811,32 @@ Tickets = {
                 removeClass(ge('faq_search_form'), 'loading');
 
                 if (content == '') {
-                    var valAdded = (val.indexOf(cur.listPrevSearchStr) != -1 || !cur.listPrevSearchStr),
-                        valRemoved = (cur.listPrevSearchStr.indexOf(val) != -1);
-                    if (!valAdded && !valRemoved || Tickets.listNotFoundVisible() || !cur.listPrevSearchStr) {
-                        Tickets.listShowNotFound(val);
+                    var valAdded = (v.indexOf(cur.listPrevSearchStr) != -1 || !cur.listPrevSearchStr),
+                        valRemoved = (cur.listPrevSearchStr.indexOf(v) != -1);
+                    if (!valAdded && !valRemoved || Tickets.listNotFoundVisible() || cur.listPrevSearchStr.length < 4) {
+                        Tickets.listShowNotFound(v);
                     } else {
                         updateLoc = false;
-                        toggle('tickets_unuseful', val.trim()
+                        toggle('tickets_unuseful', v.trim()
                             .indexOf(' ') != -1 && geByClass('help_table_question', 'help_table_questions_l')
                             .length > 1);
+                        var repl = ge('help_table_not_found_replaced');
+                        if (!isVisible(repl)) {
+                            show(repl);
+                            ge('help_table_not_found_replaced__prev_query')
+                                .innerHTML = cur.listPrevSearchStr;
+                        }
+                        ge('help_table_not_found_replaced__query')
+                            .innerHTML = v;
                     }
                 } else {
+                    hide('help_table_not_found_replaced');
                     Tickets.listHideNotFound();
                     qlist.innerHTML = content;
-                    Tickets.listSetTitle(getLang(val ? 'support_list_search_result_title' : 'support_list_popular_questions'));
+                    Tickets.listSetTitle(getLang(v ? 'support_list_search_result_title' : 'support_list_popular_questions'));
                     Tickets.listToggleUnusefulButton(showButton);
                     Tickets.listShowAltButton(altButtonId);
-                    if (val == '') {
+                    if (v == '') {
                         addClass(ge('help_table_category_top'), 'help_table_categories__a_sel');
                     }
                 }
@@ -3835,21 +3844,21 @@ Tickets = {
                 Tickets.listOpenFAQs();
 
                 if (updateLoc) {
-                    if (val) {
+                    if (v) {
                         Tickets.listDiselectCategory();
                     }
                     var obj = {
                         act: 'faqs'
                     };
                     obj[0] = nav.objLoc[0];
-                    if (val) {
-                        obj['q'] = val;
+                    if (v) {
+                        obj['q'] = v;
                     }
                     nav.setLoc(obj);
                 }
-                cur.listPrevSearchStr = val;
+                cur.listPrevSearchStr = v;
 
-                if (val != '' && ge('faq_search_form__title')
+                if (v != '' && ge('faq_search_form__title')
                     .tt) {
                     ge('faq_search_form__title')
                         .tt.hide();
@@ -3941,6 +3950,7 @@ Tickets = {
         ajax.post(nav.objLoc[0], query, {
             cache: 1,
             onDone: function(content, showButton, altButtonId, saveSearchHash, clickedData) {
+                hide('help_table_not_found_replaced');
                 Tickets.listHideNotFound();
                 Tickets.listToggleUnusefulButton(showButton);
                 Tickets.listClearSearchInput();
