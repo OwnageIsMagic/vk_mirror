@@ -3805,10 +3805,11 @@ Tickets = {
         clearTimeout(cur.searchFAQStatTimeout);
         ajax.post(nav.objLoc[0], query, {
             cache: 1,
-            onDone: function(content, showButton, altButtonId, saveSearchHash, clickedData) {
+            onDone: function(content, showButton, altButtonId, saveSearchHash, clickedData, showNote) {
                 var qlist = ge('help_table_questions_l'),
                     updateLoc = true;
                 removeClass(ge('faq_search_form'), 'loading');
+                toggle('help_table_too_simple_query', showNote);
 
                 if (content == '') {
                     var valAdded = (v.indexOf(cur.listPrevSearchStr) != -1 || !cur.listPrevSearchStr),
@@ -3949,8 +3950,8 @@ Tickets = {
 
         ajax.post(nav.objLoc[0], query, {
             cache: 1,
-            onDone: function(content, showButton, altButtonId, saveSearchHash, clickedData) {
-                hide('help_table_not_found_replaced');
+            onDone: function(content, showButton, altButtonId, saveSearchHash, clickedData, showNote) {
+                hide('help_table_not_found_replaced', 'help_table_too_simple_query');
                 Tickets.listHideNotFound();
                 Tickets.listToggleUnusefulButton(showButton);
                 Tickets.listClearSearchInput();

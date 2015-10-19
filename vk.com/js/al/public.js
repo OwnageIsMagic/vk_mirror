@@ -727,12 +727,18 @@ window['public'] = window.Public = {
                 automore: 1
             }));
         }
-
+        each(geByClass('_group_send_msg'), function(i, el) {
+            addEvent(el, 'click', Public.sendMessage.bind(this));
+        });
         this.createLike(ge('subscribe_button'), {
             onClick: function() {},
             align: 'center',
             checked: options.liked
         });
+    },
+
+    sendMessage: function(e) {
+        showWriteMessageBox(e, cur.oid);
     },
 
     toggleRss: function(obj, gid, hash, ev) {

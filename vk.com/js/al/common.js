@@ -5882,14 +5882,20 @@ function placeholderSetup(id, opts) {
     el.getValue = function() {
         return o.editable ? el.innerHTML : el.value;
     }
-    el.setValue = function(v) {
-        if (o.editable) {
-            el.innerHTML = v;
-        } else {
-            el.value = v;
+
+    el.setPlaceholder = function(ph) {
+            geByClass1('input_back_content', b1)
+                .textContent = ph;
+        },
+
+        el.setValue = function(v) {
+            if (o.editable) {
+                el.innerHTML = v;
+            } else {
+                el.value = v;
+            }
+            __phCheck(el, o);
         }
-        __phCheck(el, o);
-    }
     el.phevents = true;
     el.phonsize = function() {};
 
@@ -7766,6 +7772,7 @@ function showPhoto(photoId, listId, options, ev) {
 
     ajax.post('al_photos.php', extend({
         act: 'show',
+        gid: cur.gid,
         photo: photoId,
         list: listId,
         module: cur.module || ''
@@ -8011,6 +8018,11 @@ function pauseLastInlineVideo() {
 function showWiki(page, edit, e, opts) {
     if (checkEvent(e)) return true;
     var opts = opts || {};
+
+    if (cur.gid !== 0) {
+        page.gid = cur.gid;
+    }
+
     if (window.wkcur && wkcur.shown && wkcur.wkRaw == page.w && page.w && !page.reply) {
         WkView.restoreLayer(opts);
         return cancelEvent(e);
@@ -9617,6 +9629,14 @@ function statlogsValueEvent(statName, value, key1, key2, key3) {
             uniqueId: uniqueId
         }), 0.01)
     });
+}
+
+function onLoaded(fn) {
+    if (vk.loaded) {
+        fn();
+    } else {
+        addEvent(window, 'load', fn);
+    }
 }
 
 

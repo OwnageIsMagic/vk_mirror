@@ -896,7 +896,6 @@ var Privacy = {
         } else {
             hide(cur.privHelper);
         }
-
         return cancelEvent(ev);
     },
     getValue: function(key) {

@@ -22,6 +22,18 @@ var Groups = {
         if (ge('privacy_edit_voting_action')) {
             cur.onPrivacyChanged = Groups.votingAction;
         }
+
+        cur.nav.push(function(changed) {
+            if (changed[0]) {
+                clearTimeout(Groups.keyTO);
+            }
+        });
+        if (opts.cntKey) {
+            Groups.subscribe(opts.cntKey);
+        }
+
+        addEvent(geByClass1('_group_send_msg'), 'click', Groups.sendMessage.bind(this));
+
         if (opts.age_disclaimer) {
             var accepted = false;
             var onClose = function() {
@@ -69,6 +81,7 @@ var Groups = {
             var buttons = geByClass1('box_controls', domPN(box.bodyNode));
             addClass(buttons, 'group_age_disclaimer_box');
             replaceClass(domFC(buttons), 'fl_r', 'fl_l');
+
 
             disableButton(box.proceedButton, 1);
         }
@@ -127,6 +140,10 @@ var Groups = {
             progress: pr
         });
     },
+    subscribe: function(key) {
+        Notifier.addKey(key, Groups.updates);
+        Groups.keyTO = setTimeout(Groups.subscribe, 30000);
+    },
     votingAction: function(key) {
         ge('privacy_edit_voting_action')
             .innerHTML = getLang('voting_settings');
@@ -177,6 +194,11 @@ var Groups = {
     actionsDropdown: function(el) {
         show('group_actions_wrap');
     },
+
+    sendMessage: function(e) {
+        showWriteMessageBox(e, cur.oid);
+    },
+
     actionsDropdownHide: function(force) {
         if (force === 1) return hide('group_actions_wrap');
         clearTimeout(cur.actDdHide);
@@ -268,6 +290,33 @@ var Groups = {
                 width: 467,
                 dark: 1
             }
+        });
+    },
+
+    updateCnt: function(cnt) {
+        cnt = parseInt(cnt);
+        var cntEl = geByClass1('_group_message_cnt');
+        cntEl.textContent = "+" + cnt;
+
+        if (cnt === 0) {
+            addClass(cntEl.parentNode, "hidden");
+        } else {
+            removeClass(cntEl.parentNode, "hidden");
+        }
+    },
+
+    updates: function(key, up) {
+        each(up.events, function(k, ev) {
+            var up = ev.split('<!>');
+
+            var type = up[1];
+
+            switch (type) {
+                case "update_cnt":
+                    Groups.updateCnt(up[4]);
+                    break;
+            }
+
         });
     },
 

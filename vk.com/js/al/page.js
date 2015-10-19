@@ -5798,8 +5798,7 @@ function initCustomMedia(lnk, types, opts) {
             }
             var test = '';
             var spec_style = (/mac/.test(_ua) && browser.mozilla) ? {
-                height: 19,
-                paddingTop: 3
+                height: 19
             } : {};
 
             var moreNode = false;
@@ -5810,7 +5809,6 @@ function initCustomMedia(lnk, types, opts) {
             mediaMenu.moreWrap = false;
 
             each(types, function(i, v) { // [id, name, bg-position, onclick, href, bg-url, customStyle]
-
                 var attrs = {
                         innerHTML: '<nobr>' + v[1].replace(/\s/g, '&nbsp;') + '</nobr>',
                         className: 'add_media_type_' + menuId + '_' + v[0] + ' add_media_item'
@@ -5867,6 +5865,7 @@ function initCustomMedia(lnk, types, opts) {
                 if (v[4]) {
                     attrs.href = v[4];
                 }
+
                 row = (moreNode ? moreNode : itemsNode)
                     .appendChild(ce('a', attrs, style));
                 if (v[3]) {

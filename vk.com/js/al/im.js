@@ -1,12 +1,18 @@
 if (!window._iconAdd) window._iconAdd = (window.devicePixelRatio >= 2 ? '_2x' : '');
 if (!window._la) window._la = 0;
 var IM = {
+
+    FOLDER_UNRESPOND: 2,
+    FOLDER_IMPORTANT: 1,
+
     updateCounts: function(cnts) {
         if (!cnts || !cnts.length) {
             return;
         }
-
-        handlePageCount('msg', cnts[0]);
+        if (!cur.gid) {
+            handlePageCount('msg', cnts[0]);
+        }
+        var tabs = ge('im_filter_out_groups');
         if (cur.unr && cur.nu) {
             var s = ge('im_sum');
             if (cnts[0] > 0) {
@@ -14,8 +20,16 @@ var IM = {
             } else {
                 IM.switchUnr(0, 0);
             }
+            if (tabs && cnts[0] <= 0 && cur.gid) {
+                IM.gfilter('all', geByClass1('_tab_gfilter_all', tabs))
+            }
             toggleClass(s, 'unshown', (cnts[0] <= 0));
             toggleClass(domNS(s), 'unshown', (cnts[0] <= 0));
+        }
+
+        if (tabs && cnts[0] <= 0 && cur.gid) {
+            hide(geByClass1('_tab_gfilter_unread', tabs)
+                .parentNode);
         }
 
         if (cnts.length > 1) {
@@ -26,6 +40,93 @@ var IM = {
             toggle('im_spam_link', cnts[2]);
         }
     },
+
+    switchImportance: function(el, value, peerId) {
+        if (cur.peer === peerId) {
+            toggleClass(geByClass1('_add_to_fav'), 'im_dialog_fav_active', value);
+        }
+        if (el) {
+            toggleClass(el.parentNode, 'dialogs_star_wrap_active', value)
+            toggleClass(ge('im_dialog' + peerId), 'dialogs_row_important', value);
+        }
+    },
+
+    gfilter: function(type, el) {
+        switch (type) {
+            case 'all':
+                cur.unr = 0;
+                type = undefined;
+                break;
+
+            case 'unread':
+                cur.unr = 1;
+                type = undefined;
+                break;
+
+            default:
+                cur.unr = 0;
+                break;
+        }
+        cur.gfilter = type;
+        IM.updateDialogs(true);
+        IM.updateLoc();
+        var sel = geByClass1('summary_tab_sel', 'im_filter_out_groups');
+        removeClass(sel, 'summary_tab_sel');
+        addClass(sel, 'summary_tab');
+
+        removeClass(el.parentNode, 'summary_tab');
+        addClass(el.parentNode, 'summary_tab_sel');
+    },
+
+    markImportant: function(peerId, el, value) {
+        if (!el) {
+            return;
+        }
+        value ^= 1;
+        IM.switchImportance(geByClass1('_dialogs_star', el), value, peerId);
+        el.setAttribute('data-important', value);
+        if (cur.tabs[peerId]) {
+            if (value) {
+                cur.tabs[peerId].folders = cur.tabs[peerId].folders | value;
+            } else {
+                cur.tabs[peerId].folders = cur.tabs[peerId].folders & (0xF ^ IM.FOLDER_IMPORTANT);
+            }
+        }
+        return value;
+    },
+
+    starDialogD: function(el, peer) {
+        this.starDialog(peer);
+        setTimeout(function() {
+            triggerEvent(el, 'mouseout');
+        });
+    },
+
+
+    starDialog: function(peerId) {
+        var imNode = ge('im_dialog' + peerId);
+        var value;
+        if (cur.tabs[peerId]) {
+            value = cur.tabs[peerId].folders & IM.FOLDER_IMPORTANT;
+        } else {
+            value = parseInt(imNode.getAttribute('data-important'));
+        }
+        value = IM.markImportant(peerId, imNode, value);
+        ajax.post('al_im.php', {
+            act: 'a_dialog_star',
+            peer: peerId,
+            gid: cur.gid,
+            val: value
+        }, {
+            onDone: function(val, res) {
+                if (!res) {
+                    IM.markImportant(peerId, imNode, val);
+                }
+            }.pbind(value)
+        });
+        return value;
+    },
+
     updateUnreadMsgs: function() {
         cur.unreadMsgs = 0;
         var peer, unread;
@@ -37,6 +138,10 @@ var IM = {
                 val('im_unread' + peer, '');
             }
             cur.unreadMsgs += unread;
+        }
+        if (cur.unreadMsgs && cur.gid) {
+            show(geByClass1('_tab_gfilter_unread')
+                .parentNode)
         }
         val('im_unread_count', cur.unreadMsgs ? '+' + cur.unreadMsgs : '');
         toggleClass(ge('tab_conversation'), 'count', IM.r() && cur.unreadMsgs);
@@ -86,9 +191,16 @@ var IM = {
         return (n[0] < 10 ? '0' : '') + n[0] + (n[1] < 10 ? '0' : '') + n[1] + n[2];
     },
     updateLoc: function(ret, msgId) {
+        if (cur.peer != cur.prev_peer &&
+            !IM.r(cur.prev_peer) &&
+            cur.gid &&
+            cur.prev_peer) {
+            IM.lockRelease(cur.prev_peer);
+        }
+
         var peers = [],
             newLoc = {
-                '0': 'im'
+                '0': cur.gid === 0 ? 'im' : nav.objLoc[0]
             };
         if (cur.peer == -2) {
             newLoc.q = IM.fullQ();
@@ -99,6 +211,7 @@ var IM = {
                 newLoc.sel = IM.peerToId(cur.peer);
             }
         }
+
         var curLoc = nav.strLoc;
         for (var i in cur.tabs) {
             if (cur.peer == i) continue;
@@ -110,6 +223,11 @@ var IM = {
         if (msgId > 0 && ge('mess' + msgId)) {
             newLoc.msgid = msgId;
         }
+
+        if (cur.gfilter) {
+            newLoc.folder = cur.gfilter;
+        }
+
         if (ret) {
             return nav.toStr(newLoc);
         }
@@ -283,6 +401,21 @@ var IM = {
         }
     },
 
+    updateAdminName: function(msgid, admin) {
+        ajax.post('al_im.php', {
+            act: 'a_get_admin',
+            admin: admin,
+            gid: cur.gid
+        }, {
+            onDone: function(msg, admin, name) {
+                var row = ge('mess' + msg);
+                var lnk = geByClass1('im_date_link', row);
+                lnk.textContent = name + " " + cur.lang.mail_by_who + " " + lnk.textContent;
+                cur.admins[admin] = name;
+            }.pbind(msgid, admin)
+        });
+    },
+
     getTable: function(peer) {
         return ge('im_log' + peer);
     },
@@ -298,7 +431,23 @@ var IM = {
             peer_data = cur.tabs[peer_id].data,
             actual_peer = kludges.from || false,
             susp = (status == 4 && !out),
-            willMark = IM.needMark(peer_id);
+            willMark = IM.needMark(peer_id),
+            aname, aid, whois = '';
+
+        if (cur.gid && kludges['from_admin']) {
+            if (after_id == -1) {
+                aname = cur.lang.mail_groups_by_you;
+            } else {
+                aid = intval(kludges['from_admin']);
+                aname = aid === vk.id ? cur.lang.mail_groups_by_you : cur.admins[aid];
+            }
+            if (aname) {
+                whois = aname + " " + cur.lang.mail_by_who + " ";
+            } else {
+                IM.updateAdminName(msg_id, aid);
+            }
+        }
+
         if (!delayed && !wasRow && msg_id > 0) {
             ++cur.tabs[peer_id].msg_count;
             if (!out && status > 1) {
@@ -510,8 +659,12 @@ var IM = {
         }
 
         var msgInfo = srvMsg ? true : IM.getMsgInfo(msg_id, kludges);
-        if (index && hist.rows[index - 1].getAttribute('data-from') == fromId && (date - intval(hist.rows[index - 1].getAttribute('data-date')) < 300) && !hasClass(hist.rows[
-                index - 1], 'im_chat_event') && !msgInfo) {
+        if (index &&
+            hist.rows[index - 1].getAttribute('data-from') == fromId &&
+            (date - intval(hist.rows[index - 1].getAttribute('data-date')) < 300) &&
+            !hasClass(hist.rows[index - 1], 'im_chat_event') &&
+            (!cur.gid || !kludges['from_admin'] || cur.last_admin == kludges['from_admin']) &&
+            !msgInfo) {
             classNames.push('im_add_row');
         }
         if (index < hist.rows.length && hist.rows[index].getAttribute('data-from') == fromId && (intval(hist.rows[index].getAttribute('data-date')) - date < 300)) {
@@ -523,6 +676,10 @@ var IM = {
             if (maxIndex > hist.rows.length) {
                 index = maxIndex = hist.rows.length;
             }
+        }
+
+        if (kludges['from_admin'] && after_id != -1) {
+            cur.last_admin = kludges['from_admin'];
         }
 
         var row = hist.insertRow(index),
@@ -593,8 +750,8 @@ var IM = {
             });
 
             var dateLink = msg_id > 0 ? '<a class="im_important_toggler" onclick="return IM.toggleImportant(' + msg_id +
-                ');" onmouseover="IM.showImportantTT(this);"></a><a class="im_date_link" href="/mail?act=show&id=' + msg_id + '">' + full_date + '</a>' : '<span>' +
-                full_date + '</span>';
+                ');" onmouseover="IM.showImportantTT(this);"></a><a class="im_date_link" href="/mail?act=show&id=' + msg_id + '">' + whois + full_date + '</a>' :
+                '<span class="im_date_link">' + whois + full_date + '</span>';
             extend(row.insertCell(3), {
                 className: 'im_log_date',
                 innerHTML: dateLink
@@ -607,6 +764,7 @@ var IM = {
                 addEvent(row, 'mouseover', IM.onNewMsgOver.pbind(peer_id, msg_id));
             }
         }
+
 
         hide('im_none' + peer_id);
         show('im_log' + peer_id);
@@ -644,7 +802,7 @@ var IM = {
             peer_data = cur.tabs[peer_id].data,
             actual_peer = msg[3].match(/<\*>from:(\d+)/);
 
-        if (!cur.notify_msg && peer_id < 2e9) {
+        if (!cur.notify_msg && peer_id < 2e9 || cur.gid !== 0) {
             Notifier.playSound({
                 author_id: msg[4]
             });
@@ -707,7 +865,8 @@ var IM = {
     loadMedia: function(msg_id, peer_id) {
         ajax.post('al_im.php', {
             act: 'a_get_media',
-            id: msg_id
+            id: msg_id,
+            gid: cur.gid
         }, {
             onDone: function(content, msgInfo, opts) {
                 if (msgInfo) {
@@ -827,6 +986,7 @@ var IM = {
             offset: offset,
             toend: toend,
             rev: (more < 0) ? 1 : 0,
+            gid: cur.gid,
             whole: more == 2 ? 1 : 0
         }, {
             showProgress: addClass.pbind(moreEl, 'im_more_loading'),
@@ -923,7 +1083,8 @@ var IM = {
                     act: 'a_flush_history',
                     hash: hash,
                     id: peer,
-                    from: 'im'
+                    from: 'im',
+                    gid: cur.gid
                 }, {
                     onDone: function(res, text) {
                         cur.flushing_peer = false;
@@ -978,7 +1139,8 @@ var IM = {
         ajax.post('al_im.php', {
             act: 'a_delete_dialog',
             peer: peer,
-            hash: hash
+            hash: hash,
+            gid: cur.gid
         }, {
             onDone: function(result, hash) {
                 if (result) {
@@ -987,6 +1149,10 @@ var IM = {
                     cur.deletedDialogs[peer] = el;
                     el.parentNode.replaceChild(newEl, el);
                     val(geByClass1('dialogs_msg_body', newEl, 'div'), result);
+
+                    if (cur.gid) {
+                        IM.closeTab(peer);
+                    }
                 } else {
                     IM.deleteHistory(peer, hash);
                 }
@@ -997,19 +1163,33 @@ var IM = {
         ajax.post('al_im.php', {
             act: 'a_spam_dialog',
             peer: peer,
-            hash: hash
+            hash: hash,
+            gid: cur.gid
         }, {
             onDone: function(result) {
                 val(geByClass1('dialogs_msg_body', ge('im_deleted_dialog' + peer), 'div'), result);
             }
         });
     },
+
+    blackList: function(peer, hash, el, value) {
+        showBox('al_groups.php', {
+            act: 'bl_edit',
+            name: '/id' + peer,
+            gid: cur.gid
+        }, {
+            stat: ['page.css', 'ui_controls.js', 'ui_controls.css'],
+            dark: 1
+        });
+    },
+
     restoreDialog: function(peer, hash, spam) {
         ajax.post('al_im.php', {
             act: 'a_restore_dialog',
             peer: peer,
             hash: hash,
-            spam: spam
+            spam: spam,
+            gid: cur.gid
         }, {
             onDone: function(result) {
                 var el = ge('im_deleted_dialog' + peer);
@@ -1317,7 +1497,8 @@ var IM = {
                 msg: msg,
                 title: title,
                 ts: cur.ts,
-                guid: guid
+                guid: guid,
+                gid: cur.gid
             },
             media = [],
             kludges = {},
@@ -1378,6 +1559,7 @@ var IM = {
 
         ajax.post('al_im.php', params, {
             onDone: function(response) {
+
                 if (cur.textSendCut) {
                     setTimeout(IM.send.pbind(false, false, cur.peer), 0);
                 }
@@ -1392,13 +1574,10 @@ var IM = {
                     IM.toEnd();
                     return;
                 }
-
                 var msg_row = ge('mess' + msg_id),
                     new_msg_id = response.msg_id;
-                if (!msg_row || peer == vk.id) return;
-
+                if (!msg_row || (peer == vk.id && !cur.gid)) return;
                 ++peerTab.msg_count;
-
                 var i = peerTab.new_msgs.length;
                 while (i--) {
                     if (peerTab.new_msgs[i] == msg_id) {
@@ -1406,6 +1585,7 @@ var IM = {
                         break;
                     }
                 }
+
 
                 msg_row.cells[3].innerHTML = '<a class="im_important_toggler" onclick="return IM.toggleImportant(' + new_msg_id +
                     ');" onmouseover="IM.showImportantTT(this);"></a><a class="im_date_link" href="/mail?act=show&id=' + new_msg_id + '">' + IM.mkdate(response
@@ -1487,6 +1667,10 @@ var IM = {
         }
         if (peerTab.data) {
             kludges.from = cur.id;
+        }
+
+        if (cur.gid) {
+            kludges.from_admin = vk.id.toString();
         }
 
         IM.addPeerMsg(peer, msg_id, rowTitle, rowMsg, kludges);
@@ -1692,11 +1876,12 @@ var IM = {
                 upd = IM.updateDialog.pbind(peer, lastMsg);
             tab.lupd = lastMsg[0];
             if (lastMsg[2] || dlg) { // out
-                upd(lastMsg[2] ? 0 : intval(dlg.getAttribute('data-unread')));
+                upd(lastMsg[2] ? 0 : intval(dlg.getAttribute('data-unread')), false, tab.folders);
             } else {
                 ajax.post('al_im.php', {
                     act: 'a_dialog_unread',
-                    peer: peer
+                    peer: peer,
+                    gid: cur.gid
                 }, {
                     onDone: upd
                 });
@@ -1712,11 +1897,14 @@ var IM = {
         }
         return '+' + ur;
     },
-    updateDialog: function(peer, lastMsg, unreadCnt, cnts) {
+    updateDialog: function(peer, lastMsg, unreadCnt, cnts, folders) {
         var tab = cur.tabs[peer];
         if (!tab || tab.loading || tab.lupd != lastMsg[0]) return;
 
         if (cnts) IM.updateCounts(cnts);
+        if (!IM.isImportantDialog(folders)) {
+            return;
+        }
 
         var repls = {
                 msg_id: lastMsg[0],
@@ -1843,10 +2031,19 @@ var IM = {
         repls.inline_author = inlineAuthor;
         re('im_dialog' + peer);
         if (cur.nu && cur.unr && unreadCnt <= 0) {
-            if (vk.counts.msg <= 0) IM.switchUnr(0, 0);
+            if (vk.counts.msg <= 0 && !cur.gid) IM.switchUnr(0, 0);
             return;
         }
 
+        if (folders & IM.FOLDER_IMPORTANT) {
+            repls.is_important = 'dialogs_row_important';
+            repls.is_star = 'dialogs_star_wrap_active';
+            repls.is_important_val = 1;
+        } else {
+            repls.is_important_val = 0;
+            repls.is_important = '';
+            repls.is_star = '';
+        }
         var dRow = se(rs(cur.drow_template, repls)),
             cont = ge('im_dialogs'),
             insBefore = cont && cont.firstChild;
@@ -1878,7 +2075,8 @@ var IM = {
 
         cur.keyReq = ajax.post('al_im.php', {
             act: 'a_get_key',
-            uid: cur.id
+            uid: cur.id,
+            gid: cur.gid
         }, {
             onDone: function(key, frame, url, cnts) {
                 key = trim(key);
@@ -1965,7 +2163,8 @@ var IM = {
                 act: 'a_mark_read',
                 peer: peer,
                 ids: arr,
-                hash: tab.hash
+                hash: tab.hash,
+                gid: cur.gid
             }, {
                 onDone: function() {
                     for (var i in arr) {
@@ -2036,7 +2235,7 @@ var IM = {
                 removeClass(geByClass1('dialogs_msg_body', dialogs_row), 'dialogs_new_msg');
             } else if (cur.unr) {
                 re(dialogs_row);
-                if (vk.counts.msg <= 0) IM.switchUnr(0, 0);
+                if (vk.counts.msg <= 0 && !cur.gid) IM.switchUnr(0, 0);
             } else {
                 removeClass(dialogs_row, 'dialogs_new_msg');
                 addClass(ge('dialogs_unread' + peer), 'unshown');
@@ -2061,6 +2260,30 @@ var IM = {
             }
         }
     },
+
+    addUnrespondTab: function(peer) {
+        var tab = geByClass1('_tab_gfilter_unrespond');
+        if (tab) {
+            show(tab.parentNode);
+        }
+
+        if (cur.tabs[peer]) {
+            cur.tabs[peer].folders &= ~IM.FOLDER_UNRESPOND;
+        }
+
+        if (IM.r(cur.peer)) {
+            return;
+        }
+
+        if (cur.peer === peer) {
+            var last = cur.actions_types.slice(-1)[0];
+            if (last[0] !== 'mark_answered') {
+                cur.actions_types.push(IM.actionEndConversation());
+                cur.actionsMenu.setItems(cur.actions_types);
+            }
+        }
+    },
+
     checked: function(response) {
         var failed = response.failed;
         if (failed == 1 || cur.ts >= response.ts + 256 || cur.failedCheck) {
@@ -2108,6 +2331,18 @@ var IM = {
                     }
                     continue;
                 }
+
+                if (code === 10 && flags & IM.FOLDER_UNRESPOND) { // folder changed to unresponded for group interface
+                    IM.addUnrespondTab(update[1]);
+                }
+
+                if ((code === 12 || code === 10) && flags & IM.FOLDER_IMPORTANT) {
+                    if (code === 12 && cur.gfilter === 'important') { // if marked important and we are on important tab, show this dialog
+                        IM.updateDialogs();
+                    }
+                    IM.markImportant(update[1], ge('im_dialog' + update[1]), code === 12 ? 0 : 1);
+                }
+
                 if (code == 80) {
                     IM.updateCounts([msg_id]); // new unread dialogs count
                 }
@@ -2341,7 +2576,8 @@ var IM = {
             act: 'a_mark_read',
             peer: peer,
             ids: unread,
-            hash: curTab.hash
+            hash: curTab.hash,
+            gid: cur.gid
         }, {
             onDone: function(res, cnts) {
                 curTab.markingRead = false;
@@ -2402,6 +2638,7 @@ var IM = {
             cur.emojiId[peer] = Emoji.init(txt, {
                 ttDiff: 93,
                 rPointer: true,
+                noStickers: cur.gid ? true : false,
                 controlsCont: ge('im_peer_controls'),
                 shouldFocus: peer == cur.peer,
                 onSend: IM.send,
@@ -2587,6 +2824,17 @@ var IM = {
         }
         return false;
     },
+
+    shortSearch: function(ev) {
+        if (ev.keyCode == KEY.RETURN) {
+            IM.updateTopNav();
+            ge('im_filter')
+                .value = ev.target.value;
+            IM.searchMessages();
+            ev.target.value = "";
+        }
+    },
+
     onNewMsgOver: function(peer, msg_id) {
         if (!cur.tabs[peer].markingRead && !document.hidden) {
             var suspWrap = ge('im_susp_wrap' + msg_id);
@@ -2948,7 +3196,7 @@ var IM = {
     onMyTyping: function(peer) {
         peer = intval(peer);
         var tab = cur.tabs[peer];
-        if (peer <= 0 || !tab) return;
+        if (peer <= -2e9 || !tab) return;
         var ts = vkNow();
         if (cur.myTypingEvents[peer] && ts - cur.myTypingEvents[peer] < 5000) {
             return;
@@ -2957,7 +3205,8 @@ var IM = {
         ajax.post('al_im.php', {
             act: 'a_typing',
             peer: peer,
-            hash: tab.hash
+            hash: tab.hash,
+            gid: cur.gid
         });
     },
     onTyping: function(peer, mid) {
@@ -3222,6 +3471,10 @@ var IM = {
         IM.scrollAppended();
     },
 
+    shouldActivateSmallSearch: function(force) {
+        return cur.gid !== 0 && (!cur.searchQ && !cur.qDay || cur.peer !== -2);
+    },
+
     attachedCount: function(loaded) {
         var previewEl = ge('im_media_preview'),
             dpreviewEl = ge('im_media_dpreview'),
@@ -3271,6 +3524,17 @@ var IM = {
             removeClass(cur.imEl.controls, 'im_to_end_controls');
         }
     },
+    starTT: function(el) {
+        showTooltip(el, {
+            text: function(el) {
+                var value = intval(el.parentNode.parentNode.getAttribute('data-important'));
+                return value ? cur.lang.mail_im_unmark_important : cur.lang.mail_im_mark_important;
+            }.bind(this, el),
+            black: 1,
+            shift: [14, 4, 0]
+        });
+    },
+
     // from: 1 - initial, -1 - more new messages loaded, by q_offset (down-scroll)
     updatePeer: function(peer, msgs, all_shown, from) {
         if (!cur.tabs[peer]) {
@@ -3369,11 +3633,18 @@ var IM = {
                 id: 'transport_frame',
                 src: options.transport_frame
             }));
+        if (options.mutex_key) {
+            IM.subscribeLocks(options.mutex_key);
+        }
 
         removeEvent(document, 'mousemove mousedown keydown', IM.updLA);
         addEvent(document, 'mousemove mousedown keydown', IM.updLA);
         if (options.emoji_stickers) {
             window.emojiStickers = options.emoji_stickers;
+        }
+        var search = geByClass1('_filter_search');
+        if (search) {
+            addEvent(search, 'keypress keydown', IM.shortSearch);
         }
 
         extend(cur, options, {
@@ -3385,6 +3656,7 @@ var IM = {
             errorTimeout: 1,
             filterTO: 0,
             titleTO: 0,
+            txtsblock: {},
             wasFocused: 0,
             lastDialogsY: 0,
             lastDialogsPeer: 0,
@@ -3542,6 +3814,31 @@ var IM = {
         addEvent(window, 'focus', IM.onWindowFocus);
         addEvent(window, 'blur', IM.onWindowBlur);
 
+        var addToFav = geByClass1('_add_to_fav');
+
+        addEvent(addToFav, 'click', function(e) {
+            var value = IM.starDialog(cur.peer);
+            cancelEvent(e);
+            setTimeout(function() {
+                triggerEvent(this, 'mouseout');
+            }.bind(this))
+        });
+
+        addEvent(addToFav, 'mouseover', function(e) {
+            showTooltip(this, {
+                text: function() {
+                    var value = 0;
+                    if (cur.tabs[cur.peer]) {
+                        value = cur.tabs[cur.peer].folders & IM.FOLDER_IMPORTANT;
+                    }
+                    return value ? cur.lang.mail_im_unmark_important : cur.lang.mail_im_mark_important;
+                },
+                black: 1,
+                center: true,
+                shift: [0, 0, 5, 0]
+            });
+        });
+
         for (var i in cur.tabs) {
             cur.tabs[i].elem = ge('im_tab' + i);
             IM.initTabEvents(i);
@@ -3615,17 +3912,28 @@ var IM = {
 
         IM.initEvents();
         IM.initInts();
-        IM.updateTopNav();
+        IM.updateTopNav(IM.shouldActivateSmallSearch());
 
         if (window.devicePixelRatio >= 2) {
             var customMenuOpts = {
                 bgsprite: '/images/icons/im_actions_iconset2_2x.png?9',
-                bgSize: '20px 344px'
+                bgSize: '20px 363px'
             };
         } else {
             var customMenuOpts = {
                 bgsprite: '/images/icons/im_actions_iconset2.png?9'
             };
+        }
+
+        // ugly hack to align actions, but redesign soon
+        if (browser.mozilla && cur.gid === 0) {
+            customMenuOpts.leftOffset = 47;
+        } else {
+            customMenuOpts.leftOffset = 55;
+        }
+
+        if (browser.mozilla) {
+            customMenuOpts.topOffset = 1;
         }
         cur.actionsMenu = initCustomMedia('chat_actions', [], customMenuOpts);
         if (!IM.r()) {
@@ -3720,6 +4028,9 @@ var IM = {
         cur.imMedia.attachedCount = IM.attachedCount;
 
         cur.nav.push(function(changed, old, n, opts) {
+            if (cur.gid && changed[0] && !IM.r(cur.peer)) {
+                IM.lockRelease(cur.peer);
+            }
             if (changed[0] !== undefined || n.act) return;
             if (n.sel && !IM.r(n.sel)) {
                 cur.multi_appoint = false;
@@ -3769,6 +4080,10 @@ var IM = {
             removeEvent(window, 'blur', IM.onWindowBlur);
             removeEvent(window, 'DOMMouseScroll mousewheel', IM.onWheel);
             removeEvent(document, 'DOMMouseScroll', IM.onWheel);
+            var search = geByClass1('_filter_search');
+            if (search) {
+                removeEvent(search, 'keypress keydown', IM.shortSearch);
+            }
             if (cur.fixedScroll) {
                 each(geByClass('top_info_wrap', ge('page_wrap')), function() {
                     show(this);
@@ -3855,6 +4170,14 @@ var IM = {
             IM.markPeer(cur.peer);
         }
         Notifier.addRecvClbk('im', 0, IM.lcRecv, true);
+        each(geByClass('_im_disabled_txt'), function() {
+            var peerId = this.getAttribute('data-peer');
+            var tab = cur.tabs[peerId];
+            var txt = IM.getTxt(peerId);
+            if (tab.block) {
+                IM.toggleInput(tab.block[0], txt, peerId, tab.block[2]);
+            }
+        });
     },
     lcRecv: function(data) {
         if (isEmpty(data)) return;
@@ -3936,7 +4259,7 @@ var IM = {
     onWindowFocus: function() {
         IM.updLA();
         if (!__afterFocus) return; // opera fix
-        if (cur.id != vk.id) {
+        if (cur.id != vk.id && (-2e9 > cur.id)) {
             nav.reload({
                 force: true
             });
@@ -3959,7 +4282,7 @@ var IM = {
                 }
             });
             if (!hasDel) IM.updateDialogs();
-        } else if (!IM.r() && IM.restoreDraft(peer)) {
+        } else if (!IM.r() && !cur.txtsblock[peer] && IM.restoreDraft(peer)) {
             IM.restorePeerMedia(peer);
         } else if (cur.peer == -3) {
             IM.restoreWriteDraft();
@@ -4088,6 +4411,68 @@ var IM = {
             }, 0);
         }
     },
+
+    subscribeLocks: function(key) {
+        Notifier.addKey(key, IM.checkLocks);
+        setTimeout(IM.subscribeLocks.pbind(key), 30000);
+    },
+
+    checkLocks: function(key, upd) {
+        var evs = upd.events;
+        if (!evs) {
+            return;
+        }
+        each(evs, function(key, val) {
+            var msg = val.split('<!>');
+            msg = {
+                type: msg[0],
+                action: parseInt(msg[1]),
+                resource: msg[2],
+                peer: msg[3],
+                whoid: msg[4],
+                name: msg[5]
+            };
+            if (msg.type === 'mutex') {
+                IM.processLock(msg);
+            }
+        });
+    },
+
+    processLock: function(msg) {
+        if (cur.tabs[msg.peer]) {
+            var notBlock = msg.action || msg.whoid == vk.id;
+            cur.tabs[msg.peer].block = [notBlock, msg.whoid];
+            var txt = IM.getTxt(msg.peer);
+            if (txt) {
+                IM.toggleInput(notBlock, txt, msg.peer, msg.name);
+            }
+        }
+    },
+
+    lockRelease: function(peer) {
+        ajax.post('al_im.php', {
+            act: 'a_block_release',
+            gid: cur.gid,
+            peer: peer
+        }, {
+            onDone: function(result) {
+                if (cur.tabs[peer] && result) {
+                    cur.tabs[peer].block = [true];
+                    cur.txtsblock[peer] = false;
+                }
+            }
+        });
+    },
+
+    lockResult: function(peer, block) {
+        IM.processLock({
+            action: block[0],
+            whoid: block[1],
+            peer: peer,
+            name: block[2]
+        });
+    },
+
     addPeer: function(mid, events, dont_activate, getText, msgId) {
         if (IM.r(mid) || cur.tabs === undefined) {
             return;
@@ -4112,6 +4497,15 @@ var IM = {
             cur.lastDialogsPeer = mid;
         }
         if (cur.tabs[mid] && !events) {
+            if (cur.gid && !dont_activate) {
+                ajax.post('al_im.php', {
+                    act: 'a_block',
+                    peer: mid,
+                    gid: cur.gid
+                }, {
+                    onDone: IM.lockResult.pbind(mid)
+                });
+            }
             if (getText) {
                 IM.getTextForPeer(mid);
             }
@@ -4123,12 +4517,12 @@ var IM = {
         }
         var activate = !events && !dont_activate;
         var start = vkNow();
-        var doAdd = function(mid, tab, name, photo, hash, sex, data, _t) {
+        var doAdd = function(mid, tab, name, photo, hash, sex, data, block, folders, href, _t) {
             if (cur.debug) debugLog('fetched in ', vkNow() - start);
             var r = ge('im_dialog' + mid);
             if (r) removeClass(r, 'dialogs_row_over');
             var wasBottom = cur.bottom;
-            IM.addTab(mid, tab, name, photo, hash, sex, data);
+            IM.addTab(mid, tab, name, photo, hash, sex, data, block, href);
             IM.updateScroll();
             if (getText) {
                 IM.getTextForPeer(mid);
@@ -4140,7 +4534,9 @@ var IM = {
                     inUpto: _t.inUpto,
                     outUpto: _t.outUpto,
                     unr: _t.unr,
-                    unread: _t.unread
+                    unread: _t.unread,
+                    block: block,
+                    folders: folders
                 });
             }
             if (events) {
@@ -4158,10 +4554,10 @@ var IM = {
             }
             if (!cur.prev_peer && cur.peer != mid) {
                 cur.prev_peer = mid;
-                IM.updateTopNav();
+                IM.updateTopNav(IM.shouldActivateSmallSearch());
             }
         }
-        if (cur.friends[mid + '_']) {
+        if (cur.friends[mid + '_'] && cur.gid === 0) {
             var mem = cur.friends[mid + '_'];
             doAdd(mid, mem[1], mem[3], mem[2], mem[4], mem[5]);
         } else {
@@ -4182,12 +4578,16 @@ var IM = {
             var loadingTimeout = false;
             ajax.post('al_im.php', {
                 act: 'a_start',
-                peer: mid
+                peer: mid,
+                gid: cur.gid
             }, {
                 onDone: function(res) {
                     var _t = cur.tabs[mid];
                     delete cur.tabs[mid];
-                    doAdd(mid, res.tab, res.name, res.photo, res.hash, res.sex, res.data, _t);
+
+                    if (IM.isImportantDialog(res.folders)) {
+                        doAdd(mid, res.tab, res.name, res.photo, res.hash, res.sex, res.data, res.block, res.folders, res.href, _t);
+                    }
                 },
                 onFail: function() {
                     delete cur.tabs[mid];
@@ -4216,6 +4616,10 @@ var IM = {
                 }
             });
         }
+    },
+
+    isImportantDialog: function(folders) {
+        return !cur.gid || cur.gfilter != 'important' || folders & IM.FOLDER_IMPORTANT;
     },
 
     initTabEvents: function(tabEl) {
@@ -4247,10 +4651,16 @@ var IM = {
         });
     },
 
+    toCommunity: function(gid) {
+        nav.go('/club' + gid);
+    },
+
     closeTab: function(peer) {
         if (cur.peer == peer) {
             if (cur.prev_peer && cur.prev_peer != peer && cur.tabs[cur.prev_peer]) {
                 IM.activateTab(cur.prev_peer);
+            } else if (cur.gid) {
+                IM.activateTab(-1);
             } else {
                 var sibling = ge('im_tab' + peer)
                     .previousSibling;
@@ -4278,12 +4688,12 @@ var IM = {
             cur.prev_peer = 0;
         }
         IM.updateUnreadMsgs();
-        IM.updateTopNav();
+        IM.updateTopNav(IM.shouldActivateSmallSearch());
         IM.updateScroll();
         IM.updateLoc();
     },
 
-    updateTopNav: function() {
+    updateTopNav: function(noUpdateFilters) {
         var cl = 'active_link',
             p = cur.peer;
 
@@ -4312,7 +4722,7 @@ var IM = {
                 break;
             }
         }
-        if (!IM.r(top_peer) && ge('im_tab' + top_peer)) {
+        if (!IM.r(top_peer) && cur.tabs[top_peer]) {
             var conversationEl = ge('tab_conversation');
             show(conversationEl);
             ge(conversationEl)
@@ -4332,8 +4742,9 @@ var IM = {
         } else {
             setStyle('tab_conversation', 'display', '');
         }
-        val('im_write', getLang(p || cur.multi ? 'mail_show_flist' : 'mail_im_write_multi'));
-        toggle('im_filter_out', p != -4 && IM.r() || !!cur.qPeerShown);
+        val('im_write', getLang(p || cur.multi ? (cur.gid == 0 ? 'mail_show_flist' : 'mail_back_community') : 'mail_im_write_multi'));
+        toggle('im_filter_out', p != -4 && IM.r() && !noUpdateFilters || !!cur.qPeerShown);
+        toggle('im_filter_out_groups', p != -4 && IM.r() && noUpdateFilters || !!cur.qPeerShown);
         toggle('im_write_btn', p != -2 && !cur.qPeerShown);
         toggle('im_search_cancel', (p == -2) || !!cur.qPeerShown);
         val('im_search_cancel', getLang(cur.qPeer ? ((cur.qPeer > 2e9) ? 'mail_back_to_conv' : 'mail_back_to_dialog') : 'global_cancel'));
@@ -4346,7 +4757,14 @@ var IM = {
         toggle('im_write', p != 0 || !cur.multi && !cur.multi_appoint);
         toggle('im_top_multi', p > 2e9 && cur.tabs[p].data.top_controls);
         toggle('im_important_btn', p == -1 && intval(val('im_important_count')));
-        showBackLink(p != -1 ? 'im?sel=-1' : false, getLang('mail_im_back_to_dialogs'), 1);
+        if (p !== -1) {
+            var url = cur.gid === 0 ? 'im?sel=-1' : 'gim' + cur.gid + '?sel=-1';
+            showBackLink(url, getLang(cur.gid ? 'mail_im_back_to_dialogs_groups' : 'mail_im_back_to_dialogs'), 1);
+        } else if (p === -1 && cur.gid !== 0) {
+            showBackLink('club' + cur.gid, cur.gname, 1);
+        } else {
+            showBackLink(false);
+        }
         cur._noUpLink = (p > 0 || p < -2e9);
     },
     resetStyles: function() {
@@ -4740,6 +5158,9 @@ var IM = {
     },
     activateTab: function(peer, from, msgId) {
         // from 1 - click, 2 - create multichat with current peer, 3 - from back
+        if (cur.gid !== 0 && !geByClass1('_peer_tab' + peer) && cur.tabs[peer]) {
+            IM.rewriteGroupTab(peer, cur.tabs[peer].tab_text, cur.tabs[peer].photo, cur.tabs[peer].href);
+        }
         var txtFocus = cur.editable ? "Emoji.editableFocus(ge('im_editable' + cur.peer), false, true)" : "elfocus('im_txt' + cur.peer)";
         if (!IM.r(peer)) {
             if (cur.uiNotifications[peer]) {
@@ -4823,7 +5244,6 @@ var IM = {
         } else if (old_peer == -5) {
             cur.lastImportantScroll = scrollGetY(true);
         }
-
         if (!IM.r(old_peer)) {
             geByClass('im_tabx', cur.tabs[old_peer].elem)[0].style.backgroundColor = '';
             var tabEl = 'im_tab' + old_peer;
@@ -4897,10 +5317,12 @@ var IM = {
         show(cur.imEl.rows.appendChild(newRowsEl)); // chrome performance bug workaround
 
         IM.applyPeer();
-        IM.updateTopNav();
+        IM.updateTopNav(IM.shouldActivateSmallSearch());
         IM.updateUnreadMsgs();
         IM.updateLoc();
-
+        if (cur.gid) {
+            IM.switchImportance(false, cur.tabs[peer] && cur.tabs[peer].folders & IM.FOLDER_IMPORTANT, peer);
+        }
         if (!IM.r(peer)) {
             if (!cur.tabs[peer].history || msgId) {
                 if (msgId > 0 && ge('mess' + msgId) || msgId < 0 && ge('im_unread_bar' + peer)) {
@@ -4981,18 +5403,63 @@ var IM = {
         } else {
             IM.scrollOn(IM.r(peer) && peer != -2 && peer != -4 && peer != -5);
         }
-
         IM.updLA();
 
         var _a = window.audioPlayer,
             aid = currentAudioId();
         if (_a && aid && _a.showCurrentTrack) _a.showCurrentTrack();
 
+        if (cur.tabs[peer] && cur.tabs[peer].block && cur.gid) {
+            var txt = IM.getTxt(peer);
+            IM.toggleInput(cur.tabs[peer].block[0], txt, peer, cur.tabs[peer].block[2]);
+        }
+
         if (peer > 0 || peer == -3) {
             IM.checkEditable(cur.emojiId[peer], ge('im_editable' + peer));
             Emoji.reappendEmoji(cur.emojiId[cur.peer]);
         }
+
+
     },
+
+    toggleInput: function(result, txt, peer, name) {
+        return;
+        if (!cur.txtsblock) {
+            cur.txtsblock = {};
+        }
+        if (!result) {
+            addClass(txt.parentNode, 'im_editable_txt_disabled');
+            txt.setAttribute('contenteditable', 'false');
+            setTimeout(function() {
+                if (name) {
+                    var placeholder = cur.lang['mail_community_answering'].replace('{username}', name);
+                    txt.setPlaceholder(placeholder);
+                    IM.saveWriteDraft();
+                    Emoji.val(txt, "");
+                    txt.focus();
+                    txt.blur();
+                }
+            }, 100);
+            if (!cur.txtsblock[peer]) {
+                addEvent(txt, 'focus', cancelEvent);
+                addEvent(txt.parentNode, 'focus keypress keydown keyup paste', cancelEvent, false, false, true);
+            }
+            cur.txtsblock[peer] = true;
+        } else if (result) {
+            removeClass(txt.parentNode, 'im_editable_txt_disabled');
+            txt.setAttribute('contenteditable', 'true');
+            if (cur.txtsblock[peer]) {
+                removeEvent(txt, 'focus', cancelEvent);
+                removeEvent(txt.parentNode, 'focus keypress keydown keyup paste', cancelEvent, true);
+            }
+            cur.txtsblock[peer] = false;
+            setTimeout(function() {
+                txt.setPlaceholder(cur.lang.mail_im_enter_msg);
+                IM.restoreDraft(peer);
+            }, 100);
+        }
+    },
+
     restorePeerMedia: function(peer) {
         var conts = [
                 ge('im_docs_preview'),
@@ -5115,7 +5582,7 @@ var IM = {
         } else if (user.msg_count) {
             acts['clear'] = getLang('mail_im_delete_all_history');
         }
-        if (peer > 0 && peer < 2e9 && cur.friends[peer + '_']) {
+        if (peer > 0 && peer < 2e9 && cur.friends[peer + '_'] && !cur.gid) {
             acts['chat'] = getLang('mail_im_create_chat_with');
         }
 
@@ -5126,6 +5593,7 @@ var IM = {
                 acts['mute'] = getLang('mail_im_mute');
             }
         }
+
 
         if (peer > 2e9) {
             val('im_peer_holders', user_data.members_grid);
@@ -5193,6 +5661,12 @@ var IM = {
                 types.push([v, acts[v], '3px ' + bgpos[v] + 'px', IM.onActionMenu.pbind(v), false, false]);
             }
         });
+        if (cur.gid && !(cur.tabs[peer].folders & IM.FOLDER_UNRESPOND)) {
+            types.push(IM.actionEndConversation());
+        }
+
+        cur.actions_types = types;
+
         cur.actionsMenu.setOptions(opts);
         cur.actionsMenu.setItems(types);
 
@@ -5207,17 +5681,61 @@ var IM = {
         IM.updateTyping(true);
     },
 
-    addTab: function(mid, tab_text, name, photo, hash, sex, data) {
+    actionEndConversation: function() {
+        return ['mark_answered', cur.lang.mail_end_conversation, '4px -340px', IM.markAnswered, false, false];
+    },
+
+    markAnswered: function() {
+        var peer = cur.peer;
+        ajax.post('al_im.php', {
+            act: 'a_mark_answered',
+            peer: peer,
+            gid: cur.gid
+        });
+
+        if (cur.tabs[peer]) {
+            cur.tabs[peer].folders |= IM.FOLDER_UNRESPOND;
+        }
+
+        showDoneBox(cur.lang.mail_marked_as_answered, {
+            out: 1000
+        });
+        IM.activateTab(-1);
+    },
+
+    rewriteGroupTab: function(mid, pname, photo, href) {
+        pname = pname.replace(/\s+/g, '&nbsp;');
+        var tab = se(rs(cur.group_tab_tpl, {
+            peer_id: mid,
+            peer_name: pname,
+            photo: photo,
+            href: href
+        }))
+        var cont = geByClass1('_a_group_tab');
+        cont.innerHTML = '';
+        return cont.appendChild(tab);
+    },
+
+    addTab: function(mid, tab_text, name, photo, hash, sex, data, block, href) {
+        var text, tab, elem;
         var muted = inArray(mid, cur.mutedPeers) ? 'muted' : '';
-        var tab = se(rs(cur.tab_template, {
+        var pname = tab_text.replace(/\s+/g, '&nbsp;');
+        tab = se(rs(cur.tab_template, {
                 peer_id: mid,
-                peer_name: tab_text.replace(/\s+/g, '&nbsp;'),
+                peer_name: pname,
                 muted: muted
             })),
-            txtWrap = se(rs(cur.txt_template, {
+            elem = ge('im_tabs')
+            .appendChild(tab);
+        if (cur.gid !== 0) {
+            IM.rewriteGroupTab(mid, pname, photo, href);
+        }
+        txtWrap = se(rs(cur.txt_template, {
                 peer_id: mid
             })),
             txt = geByTag1('textarea', txtWrap);
+        ge('im_texts')
+            .appendChild(txtWrap);
         cur.tabs[mid] = {
             name: name,
             tab_text: tab_text,
@@ -5228,6 +5746,7 @@ var IM = {
             all_shown: 0,
             unr: {},
             msg_count: 0,
+            href: href,
             q_offset: 0,
             q_new: {},
             q_new_cnt: 0,
@@ -5238,17 +5757,14 @@ var IM = {
             auto: 1,
             sent: 0,
             new_msgs: [],
-            elem: ge('im_tabs')
-                .appendChild(tab),
+            elem: elem,
             data: data || false,
-            delayed: []
+            delayed: [],
+            block: block
         };
-        ge('im_texts')
-            .appendChild(txtWrap);
 
         IM.initTabEvents(mid);
-
-        var text = [
+        text = [
             '<a href="/write', mid, '?hist=1&offset=-1" target="_blank" class="im_more" id="im_more', mid, '" onclick="return IM.loadHistory(', mid,
             ', 1)" style="display: block;"><div class="im_more_text">', getLang('mail_im_more_history'), '</div><div class="im_more_progress">&nbsp;</div></a>',
             '<table cellspacing="0" cellpadding="0" id="im_log', mid, '" class="im_log_t"><tbody></tbody></table>',
@@ -5338,10 +5854,13 @@ var IM = {
         ajax.post('al_im.php', {
             act: 'a_get_dialogs',
             offset: 0,
-            unread: cur.unr
+            unread: cur.unr,
+            gid: cur.gid,
+            type: cur.gfilter
         }, {
             onDone: function(options, rows, next_rows) {
                 hide('im_progress');
+                show('im_dialogs_summary');
                 if (options.summary) {
                     val('im_dialogs_summary', options.summary);
                     show('im_dialogs_summary');
@@ -5350,10 +5869,12 @@ var IM = {
                 }
                 if (rows) {
                     var dlgs = ge('im_dialogs'),
-                        moreEl = ge('im_more_dialogs'),
+                        moreEl = ge('im_more_dialogs') || cur.moreEl,
                         noneEl = ge('im_rows_none');
                     dlgs.innerHTML = rows;
-                    dlgs.appendChild(moreEl);
+                    if (moreEl) {
+                        dlgs.appendChild(moreEl);
+                    }
                     dlgs.insertBefore(noneEl, domFC(dlgs));
                     if (next_rows) {
                         dlgs.appendChild(ce('div', {
@@ -5371,14 +5892,43 @@ var IM = {
                     }
                     hide(noneEl);
                     IM.onScroll();
+
+                    if (cur.gid) {
+                        IM.updateScroll();
+                    }
                 } else {
+                    if (cur.gid) {
+                        hide('im_dialogs_summary');
+                        if (cur.gfilter == 'unrespond') {
+                            IM.gfilter('all', geByClass1('_tab_gfilter_all'));
+                            return;
+                        }
+                        if (cur.unr) {
+                            IM.updateCounts(options.cnts);
+                            return;
+                        }
+                        cur.moreEl = ge('im_more_dialogs');
+                    }
+
                     var dlgs = ge('im_dialogs'),
                         noneEl = ge('im_rows_none');
+
+                    if (cur.gid) {
+                        toggle('im_rows_none_all', cur.gfilter !== 'important');
+                        toggle('im_rows_none_imp', cur.gfilter === 'important');
+                    }
+
                     dlgs.innerHTML = '';
                     dlgs.appendChild(noneEl);
                     show(noneEl);
                     IM.updateScroll();
                 }
+
+                if (options.folders && options.folders.unrespond == 0) {
+                    hide(geByClass1('_tab_gfilter_unrespond')
+                        .parentNode);
+                }
+
                 IM.updateCounts(options.cnts);
                 cur.deletedDialogs = {};
                 IM.updateMutedPeers(options.mutedPeers);
@@ -5943,7 +6493,7 @@ var IM = {
 
     selectDialog: function(mid, e) {
         if (checkEvent(e)) {
-            var wnd = window.open('/im?sel=' + IM.peerToId(mid), '_blank');
+            var wnd = window.open('/im?sel=' + IM.peerToId(mid) + (cur.gid ? "&gid=" + cur.gid : ''), '_blank');
             try {
                 wnd.blur();
                 window.focus();
@@ -6375,7 +6925,8 @@ var IM = {
         delete cur.lastSearchScroll;
         ajax.post('al_im.php', {
             act: 'a_search',
-            q: IM.fullQ()
+            q: IM.fullQ(),
+            gid: cur.gid
         }, {
             onDone: function(rows, nextOffset, ttip) {
                 IM.calendarUpdTip(ttip);
@@ -6411,7 +6962,8 @@ var IM = {
         ajax.post('al_im.php', {
             act: 'a_search',
             q: IM.fullQ(),
-            offset: cur.searchOffset
+            offset: cur.searchOffset,
+            gid: cur.gid
         }, {
             showProgress: addClass.pbind('im_more-2', 'im_more_loading'),
             hideProgress: removeClass.pbind('im_more-2', 'im_more_loading'),
@@ -6553,7 +7105,8 @@ var IM = {
         cur.spamLoading = true;
 
         ajax.post('al_im.php', {
-            act: 'a_spam'
+            act: 'a_spam',
+            gid: cur.gid
         }, {
             onDone: function(rows, nextOffset) {
                 cur.spamLoading = false;
@@ -6577,7 +7130,8 @@ var IM = {
         cur.spamLoading = true;
         ajax.post('al_im.php', {
             act: 'a_spam',
-            offset: cur.spamOffset
+            offset: cur.spamOffset,
+            gid: cur.gid
         }, {
             showProgress: addClass.pbind('im_more-4', 'im_more_loading'),
             hideProgress: removeClass.pbind('im_more-4', 'im_more_loading'),
@@ -6635,7 +7189,9 @@ var IM = {
             ajax.post('al_im.php', {
                 act: 'a_get_dialogs',
                 offset: offset,
-                unread: cur.unr
+                unread: cur.unr,
+                gid: cur.gid,
+                type: cur.gfilter
             }, {
                 onDone: function(options, rows) {
                     extend(cur.dialogs_members, JSON.parse(options.dialogs_members));
@@ -6790,7 +7346,8 @@ var IM = {
             ids: selMsgs,
             val: isImportant ? 0 : 1,
             from: 'im',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(selMsgs, cnts) {
                 var msgs = cur.tabs[cur.peer].msgs;
@@ -6862,7 +7419,8 @@ var IM = {
             ids: [msg_id],
             val: isImportant ? 0 : 1,
             from: 'im',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(selMsgs, cnts) {
                 var msgs = cur.tabs[cur.peer].msgs;
@@ -6890,7 +7448,8 @@ var IM = {
             ids: [msg_id],
             val: notImportant ? 1 : 0,
             from: 'im',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(selMsgs, cnts) {
                 each(selMsgs, function(k, msg_id) {
@@ -6936,7 +7495,8 @@ var IM = {
             msgs_ids: cur.selMsgs.join(','),
             mark: act,
             from: 'im',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(res, restore, actions) {
                 each(cur.selMsgs, function(k, msg_id) {
@@ -7020,7 +7580,8 @@ var IM = {
                 .replace(/s/g, ''),
             mark: act,
             from: 'im',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(res, restore, cnts) {
                 each(cur.selSpam, function(k, msg_id) {
@@ -7102,7 +7663,8 @@ var IM = {
                 ajax.post('/al_mail.php', {
                     act: 'a_flush_spam',
                     hash: cur.spamFlushhash,
-                    from: 'im'
+                    from: 'im',
+                    gid: cur.gid
                 }, {
                     onDone: function(res, text, cnts) {
                         box.hide();
@@ -7128,7 +7690,8 @@ var IM = {
             act: 'a_show_forward_box',
             id: msg_id,
             ref_id: ref_id,
-            hash: hash
+            hash: hash,
+            gid: cur.gid
         }, {
             dark: 1
         });
@@ -7138,7 +7701,8 @@ var IM = {
             if (v && v[0] == 'mail') {
                 showBox('al_im.php', {
                     act: 'a_show_forward_box',
-                    will_fwd: v[1]
+                    will_fwd: v[1],
+                    gid: cur.gid
                 }, {
                     dark: 1
                 });
@@ -7185,7 +7749,8 @@ var IM = {
             act: 'a_restore',
             id: msg_id,
             from: 'im',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(res, actions) {
                 show(mBody);
@@ -7208,7 +7773,8 @@ var IM = {
             act: 'a_restore_spam',
             id: msg_id,
             from: 'imspam',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(res, cnts) {
                 IM.updateCounts(cnts);
@@ -7254,7 +7820,8 @@ var IM = {
             act: 'a_restore_spam',
             id: msg_id,
             from: 'im',
-            hash: cur.mark_hash
+            hash: cur.mark_hash,
+            gid: cur.gid
         }, {
             onDone: function(res, actions) {
                 show(mBody);
@@ -7500,6 +8067,7 @@ var IM = {
         var txt = IM.getNewTxt();
         cur.emojiId[cur.peer] = Emoji.init(txt, {
             ttDiff: -49,
+            noStickers: cur.gid ? true : false,
             controlsCont: ge('imw_emoji_wrap'),
             shouldFocus: true,
             onSend: IM.sendNewMsg,
@@ -7991,6 +8559,7 @@ ImUpload = {
         if (!submitBox || !textsWrap) {
             return;
         }
+
         textsWrap.insertBefore(cur.uploadWrap = ce('div', {
             className: 'im_upload_wrap fl_r',
             innerHTML: '<div id="im_upload" class="im_upload"' + tt + '></div>'
@@ -8001,7 +8570,6 @@ ImUpload = {
             innerHTML: '<div class="im_upload_dropbox_inner noselect"><span class="im_upload_drop_label">' + getLang('mail_drop_photos_here') +
                 '</span><span class="im_upload_release_label">' + getLang('mail_release_photos_here') + '</span></div>'
         }), submitBox.firstChild);
-
         cur.imUploadInd = Upload.init('im_upload', data.url, data.params, {
             file_name: 'photo',
             file_size_limit: 1024 * 1024 * 25, // 25Mb
