@@ -701,10 +701,11 @@ var IM = {
                 user = [user.link, user.photo, user.name];
             } else {
                 if (out) {
-                    user = ['/id' + cur.id, cur.photo, cur.name]
+                    var link = cur.author_link || '/id' + cur.id;
+                    user = [link, cur.photo, cur.name]
                 } else {
-                    var link = '/id' + fromId,
-                        photo = cur.tabs[peer_id].photo,
+                    var link = cur.tabs[peer_id].href || '/id' + fromId;
+                    var photo = cur.tabs[peer_id].photo,
                         name = cur.tabs[peer_id].name;
                     if (fromId < -2e9) {
                         if (peer_id > 2e9) {
@@ -1999,7 +2000,6 @@ var IM = {
             }
             inlineAuthor = '<img class="dialogs_inline_author fl_l" src="' + (lastMsg[2] ? cur.photo : tab.data.members[kludges.from].photo) + '" width="32" height="32"/>';
         }
-
         var muted = inArray(peer, cur.mutedPeers) ? '<b class="dialogs_push_muted"></b>' : '';
         if (peer < 2e9) {
             repls.photo = '<a href="/id' + peer +
@@ -2261,26 +2261,28 @@ var IM = {
         }
     },
 
-    addUnrespondTab: function(peer) {
+    toggleUnrespondTab: function(peer, val) {
         var tab = geByClass1('_tab_gfilter_unrespond');
         if (tab) {
-            show(tab.parentNode);
+            val && show(tab.parentNode);
         }
 
         if (cur.tabs[peer]) {
-            cur.tabs[peer].folders &= ~IM.FOLDER_UNRESPOND;
-        }
-
-        if (IM.r(cur.peer)) {
-            return;
-        }
-
-        if (cur.peer === peer) {
-            var last = cur.actions_types.slice(-1)[0];
-            if (last[0] !== 'mark_answered') {
-                cur.actions_types.push(IM.actionEndConversation());
-                cur.actionsMenu.setItems(cur.actions_types);
+            if (val) {
+                cur.tabs[peer].folders &= ~IM.FOLDER_UNRESPOND;
+            } else {
+                cur.tabs[peer].folders |= IM.FOLDER_UNRESPOND;
             }
+        }
+
+        if (cur.peer === peer || cur.prev_peer === peer) {
+            var first = cur.actions_types[0];
+            if (first[0] !== 'mark_answered' && val) {
+                cur.actions_types.unshift(IM.actionEndConversation());
+            } else if (first[0] === 'mark_answered' && !val) {
+                cur.actions_types.shift();
+            }
+            cur.actionsMenu.setItems(cur.actions_types);
         }
     },
 
@@ -2332,8 +2334,8 @@ var IM = {
                     continue;
                 }
 
-                if (code === 10 && flags & IM.FOLDER_UNRESPOND) { // folder changed to unresponded for group interface
-                    IM.addUnrespondTab(update[1]);
+                if ((code === 10 || code === 12) && flags & IM.FOLDER_UNRESPOND) { // folder changed to unresponded for group interface
+                    IM.toggleUnrespondTab(update[1], code === 10);
                 }
 
                 if ((code === 12 || code === 10) && flags & IM.FOLDER_IMPORTANT) {
@@ -4180,7 +4182,7 @@ var IM = {
             var peerId = this.getAttribute('data-peer');
             var tab = cur.tabs[peerId];
             var txt = IM.getTxt(peerId);
-            if (tab.block) {
+            if (tab.block && cur.gid) {
                 IM.toggleInput(tab.block[0], txt, peerId, tab.block[2]);
             }
         });
@@ -4445,7 +4447,7 @@ var IM = {
     },
 
     processLock: function(msg) {
-        if (cur.tabs[msg.peer]) {
+        if (cur.tabs[msg.peer] && cur.gid) {
             var notBlock = msg.action || msg.whoid == vk.id;
             cur.tabs[msg.peer].block = [notBlock, msg.whoid];
             var txt = IM.getTxt(msg.peer);
@@ -4655,10 +4657,6 @@ var IM = {
         addEvent(xEl, 'mouseout', function() {
             removeClass(this, 'im_tabx_over');
         });
-    },
-
-    toCommunity: function(gid) {
-        nav.go('/club' + gid);
     },
 
     closeTab: function(peer) {
@@ -5428,8 +5426,14 @@ var IM = {
 
     },
 
+    preventFocus: function(e) {
+        setTimeout(function() {
+            e.target.blur()
+        }, 50);
+        return cancelEvent(e);
+    },
+
     toggleInput: function(result, txt, peer, name) {
-        return;
         if (!cur.txtsblock) {
             cur.txtsblock = {};
         }
@@ -5447,7 +5451,7 @@ var IM = {
                 }
             }, 100);
             if (!cur.txtsblock[peer]) {
-                addEvent(txt, 'focus', cancelEvent);
+                addEvent(txt, 'focus', IM.preventFocus);
                 addEvent(txt.parentNode, 'focus keypress keydown keyup paste', cancelEvent, false, false, true);
             }
             cur.txtsblock[peer] = true;
@@ -5455,7 +5459,7 @@ var IM = {
             removeClass(txt.parentNode, 'im_editable_txt_disabled');
             txt.setAttribute('contenteditable', 'true');
             if (cur.txtsblock[peer]) {
-                removeEvent(txt, 'focus', cancelEvent);
+                removeEvent(txt, 'focus', IM.preventFocus);
                 removeEvent(txt.parentNode, 'focus keypress keydown keyup paste', cancelEvent, true);
             }
             cur.txtsblock[peer] = false;
@@ -5659,7 +5663,11 @@ var IM = {
         opts.hideItem = -1;
         opts.hideLabel = '';
         if (user.msg_count) {
-            acts['photos'] = getLang('mail_im_show_media_history');
+            acts['photos'] = cur.gid ? getLang('mail_im_show_media_history_group') : getLang('mail_im_show_media_history');
+        }
+
+        if (cur.gid && !(cur.tabs[peer].folders & IM.FOLDER_UNRESPOND)) {
+            types.push(IM.actionEndConversation());
         }
 
         each(['chat', 'invite', 'topic', 'avatar', 'photos', 'search', 'history', 'mute', 'unmute', 'clear', 'leave', 'return'], function(k, v) {
@@ -5667,9 +5675,6 @@ var IM = {
                 types.push([v, acts[v], '3px ' + bgpos[v] + 'px', IM.onActionMenu.pbind(v), false, false]);
             }
         });
-        if (cur.gid && !(cur.tabs[peer].folders & IM.FOLDER_UNRESPOND)) {
-            types.push(IM.actionEndConversation());
-        }
 
         cur.actions_types = types;
 
