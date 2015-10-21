@@ -4027,7 +4027,8 @@ var IM = {
         cur.imMedia = initAddMedia('im_add_media_link', 'im_media_preview', mediaTypes, {
             mail: 1,
             onCheckURLDone: IM.onUploadDone,
-            toId: cur.gid ? -cur.gid : undefined
+            toId: cur.gid ? -cur.gid : undefined,
+            blockPersonal: cur.gid ? 1 : 0
         });
         val('im_media_preview', '');
 
@@ -4039,6 +4040,11 @@ var IM = {
             if (cur.gid && changed[0] && !IM.r(cur.peer)) {
                 IM.lockRelease(cur.peer);
             }
+
+            if (cur.gid && changed[0]) {
+                showBackLink(false);
+            }
+
             if (changed[0] !== undefined || n.act) return;
             if (n.sel && !IM.r(n.sel)) {
                 cur.multi_appoint = false;
@@ -4697,7 +4703,7 @@ var IM = {
         IM.updateLoc();
     },
 
-    updateTopNav: function(noUpdateFilters) {
+    updateTopNav: function(noUpdateFilters, noUpdateTop) {
         var cl = 'active_link',
             p = cur.peer;
 
@@ -4761,16 +4767,24 @@ var IM = {
         toggle('im_write', p != 0 || !cur.multi && !cur.multi_appoint);
         toggle('im_top_multi', p > 2e9 && cur.tabs[p].data.top_controls);
         toggle('im_important_btn', p == -1 && intval(val('im_important_count')));
+
+        if (!noUpdateTop) {
+            IM.updateTopLink(p);
+        }
+    },
+
+    updateTopLink: function(p) {
         if (p !== -1) {
-            var url = cur.gid === 0 ? 'im?sel=-1' : 'gim' + cur.gid + '?sel=-1';
+            var url = !cur.gid ? 'im?sel=-1' : 'gim' + cur.gid + '?sel=-1';
             showBackLink(url, getLang(cur.gid ? 'mail_im_back_to_dialogs_groups' : 'mail_im_back_to_dialogs'), 1);
-        } else if (p === -1 && cur.gid !== 0) {
+        } else if (p === -1 && cur.gid) {
             showBackLink('club' + cur.gid, cur.gname, 1);
         } else {
             showBackLink(false);
         }
         cur._noUpLink = (p > 0 || p < -2e9);
     },
+
     resetStyles: function() {
         cur.imEl.head.style.left = ge('side_bar')
             .style.left =
@@ -5321,7 +5335,10 @@ var IM = {
         show(cur.imEl.rows.appendChild(newRowsEl)); // chrome performance bug workaround
 
         IM.applyPeer();
-        IM.updateTopNav(IM.shouldActivateSmallSearch());
+        IM.updateTopNav(IM.shouldActivateSmallSearch(), true);
+        setTimeout(function() {
+            IM.updateTopLink(cur.peer);
+        }, 0);
         IM.updateUnreadMsgs();
         IM.updateLoc();
         if (cur.gid) {

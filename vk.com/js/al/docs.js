@@ -384,7 +384,11 @@ var Docs = {
             if (cur.section != 'all' || cur.searchStr) {
                 summary = langNumeric(searchCount, cur.lang['docs_X_docs'], true);
             } else {
-                summary = langNumeric(searchCount, cur.lang['docs_you_have_X_docs'], true);
+                if (cur.oid && cur.oid < 0) {
+                    summary = langNumeric(searchCount, cur.lang['docs_community_has_X_docs'], true);
+                } else {
+                    summary = langNumeric(searchCount, cur.lang['docs_you_have_X_docs'], true);
+                }
             }
         }
 

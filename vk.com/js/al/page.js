@@ -5973,7 +5973,8 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
             toId = opts.toId || cur.postTo,
             params = {
                 to_id: toId,
-                scrollbar_width: sbWidth()
+                scrollbar_width: sbWidth(),
+                blockPersonal: opts.blockPersonal
             };
         params.mail_add = opts.mail ? 1 : '';
         switch (v[0]) {
