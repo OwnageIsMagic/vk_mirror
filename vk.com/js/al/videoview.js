@@ -1057,7 +1057,7 @@ var Videoview = {
                 } else {
                     var showControls = '';
                     //var controlsClass = 'mv_controls_shown';
-                    var hasPlbClass = window.Videocat && options.playlistId ? 'mv_has_plb' : '';
+                    var hasPlbClass = Videoview.getPlaylistBlockEl() ? 'mv_has_plb' : '';
                 }
 
 
