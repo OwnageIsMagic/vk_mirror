@@ -143,7 +143,9 @@ var IM = {
             show(geByClass1('_tab_gfilter_unread')
                 .parentNode)
         }
-        val('im_unread_count', cur.unreadMsgs ? '+' + cur.unreadMsgs : '');
+        if (!cur.gid) {
+            val('im_unread_count', cur.unreadMsgs ? '+' + cur.unreadMsgs : '');
+        }
         toggleClass(ge('tab_conversation'), 'count', IM.r() && cur.unreadMsgs);
     },
     peerToId: function(peer) {
@@ -5479,11 +5481,13 @@ var IM = {
                 removeEvent(txt, 'focus', IM.preventFocus);
                 removeEvent(txt.parentNode, 'focus keypress keydown keyup paste', cancelEvent, true);
             }
+            if (cur.txtsblock[peer]) {
+                setTimeout(function() {
+                    txt.setPlaceholder(cur.lang.mail_im_enter_msg);
+                    IM.restoreDraft(peer);
+                }, 100);
+            }
             cur.txtsblock[peer] = false;
-            setTimeout(function() {
-                txt.setPlaceholder(cur.lang.mail_im_enter_msg);
-                IM.restoreDraft(peer);
-            }, 100);
         }
     },
 
@@ -5755,7 +5759,7 @@ var IM = {
             })),
             elem = ge('im_tabs')
             .appendChild(tab);
-        if (cur.gid !== 0) {
+        if (cur.gid && IM.r(cur.peer)) {
             IM.rewriteGroupTab(mid, pname, photo, href);
         }
         txtWrap = se(rs(cur.txt_template, {

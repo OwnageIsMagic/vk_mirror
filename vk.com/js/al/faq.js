@@ -789,7 +789,7 @@ FAQ = {
         }, {
             params: {
                 bodyStyle: 'padding: 0px',
-                width: 550
+                width: 590
             }
         });
     },
