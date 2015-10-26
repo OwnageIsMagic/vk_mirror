@@ -131,6 +131,7 @@ FAQ = {
                     parent = ge('faq_list');
                     break;
                 case 'new':
+                case 'edit':
                     parent = ge('faq_msg_p');
                     show('faq_msg_p');
                     break;
@@ -262,8 +263,6 @@ FAQ = {
 
         if (cur.sectionSelector) {
             query.section = intval(cur.sectionSelector.val());
-            query.action_id = intval(cur.actionButtonSelector.val());
-
             if (query.section == 0) {
                 var categories = cur.desktopCategorySelector.val();
                 query.categories = categories;
@@ -284,6 +283,26 @@ FAQ = {
                 query.categories = categories;
             }
         }
+        if (cur.actionButtonSelector) {
+            query.action_id = intval(cur.actionButtonSelector.val());
+            if (query.action_id != 0) {
+                query.action_label = ge('faq_action_btn_label')
+                    .value.trim();
+            }
+            if (query.action_id == 7) {
+                if (!query.action_label) {
+                    elfocus('faq_action_btn_label');
+                    return notaBene('faq_action_btn_label');
+                }
+                query.action_url = ge('faq_action_btn_url')
+                    .value.trim();
+                if (!query.action_url) {
+                    elfocus('faq_action_btn_url');
+                    return notaBene('faq_action_btn_url');
+                }
+            }
+        }
+
         ajax.post(nav.objLoc[0], query, {
             onFail: FAQ.showError,
             showProgress: lockButton.pbind(ge('faq_send')),
