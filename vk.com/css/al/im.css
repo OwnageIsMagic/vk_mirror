@@ -524,6 +524,10 @@ img.dialogs_inline_chatter_half {
     width: 11px;
 }
 
+.dialogs_blocked_box .dialogs_typing_box {
+    display: none !important;
+}
+
 .dialogs_typing_box {
     color: #66819F;
     position: absolute;
@@ -538,6 +542,15 @@ img.dialogs_inline_chatter_half {
     height: 11px;
     display: inline-block;
     margin-right: 8px;
+}
+
+.dialogs_block_box {
+    color: #999999;
+    position: absolute;
+    top: 50%;
+    margin-left: 8px;
+    margin-top: -7px;
+    opacity: 0.0;
 }
 
 #im_more_dialogs,
