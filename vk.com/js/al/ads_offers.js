@@ -1201,7 +1201,8 @@ var Offers = {
                 ge('offers_param_cost_currency')
                     .innerHTML = paramValue ? getLang('votes_flex', paramValue) : '';
                 ge('offers_param_price')
-                    .innerHTML = paramValue ? getLang('ads_offers_price_with_nds', rub) : '&ndash;';
+                    .innerHTML = paramValue ? (cur.options.isNonResident ? getLang('ads_offers_price_without_nds', rub) : getLang('ads_offers_price_with_nds', rub)) :
+                    '&ndash;';
                 ge('offers_param_price_notice')
                     .innerHTML = cur.options.priceNotices[paramValue] ? cur.options.priceNotices[paramValue] : (cur.options.priceNotices[''] ? cur.options.priceNotices[''] :
                         '&nbsp;');

@@ -6158,7 +6158,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
             if (inArray(type, opts.disabledTypes || [])) {
                 return false;
             }
-            if (addMedia.attachCount() >= limit && data.upload_ind === undefined && type !== 'postpone') {
+            if (addMedia.attachCount() >= limit && data.upload_ind === undefined && type !== 'postpone' || geByClass1('medadd_c_market', docsEl)) {
                 if (multi) {
                     return false;
                 } else {
@@ -6384,6 +6384,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                     preview = '<div class="medadd_c_market fl_l"><a target="_blank" href="' + data.href + '"><img class="medadd_c_market_thumb fl_l" src="' + data.thumb +
                         '" /></a><div class="medadd_c_market_info fl_l"><a class="medadd_c_market_title" target="_blank" href="' + data.href + '">' + data.title +
                         '</a><div class="medadd_c_market_price">' + data.price + '</div></div>';
+                    hide(lnk);
                     break;
 
                 case 'postpone':
@@ -6656,6 +6657,10 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
 
                         case 'map':
                             show(geByClass1('add_media_type_' + lnkId + '_map', ge('add_media_menu_' + lnkId)));
+                            break;
+
+                        case 'market':
+                            show(lnk);
                             break;
 
                         case 'postpone':
