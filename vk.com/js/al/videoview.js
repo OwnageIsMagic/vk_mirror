@@ -123,6 +123,18 @@ var Videoview = {
             },
             onInitialized: function() {
                 Videoview.togglePlaylistsBlock(!Videoview.isPlaylistBlockCollapsed());
+                if (window.mvcur && mvcur.mvShown && mvcur.options.focusPlay) {
+                    if (document.visibilityState == 'visible') {
+                        // page is focused, play
+                        Videoview.togglePlay(true);
+                    } else if (document.visibilityState == 'hidden') {
+                        // wait for focus
+                        addEvent(window, 'focus', function focusHandler() {
+                            Videoview.togglePlay(true);
+                            removeEvent(window, 'focus', focusHandler);
+                        });
+                    }
+                }
             },
             onVideoPlayProgress: function(oid, vid, hash, time_progress, time_total) {
                 var rawId = oid + '_' + vid;
@@ -486,6 +498,17 @@ var Videoview = {
                 player && player[timerFunc] && player[timerFunc]();
                 mvcur.nextTimer && mvcur.nextTimer[timerFunc] && mvcur.nextTimer[timerFunc]();
             }, td);
+        },
+
+        togglePlay: function(playing) {
+            if (ge('video_yt') && window.VideoYoutube) {
+                VideoYoutube.togglePlay(true);
+            } else {
+                var player = ge('video_player');
+                if (player && player.playVideo) {
+                    player.playVideo(true);
+                }
+            }
         },
 
         sendVideoAdStat: function(oid, vid, hash) {

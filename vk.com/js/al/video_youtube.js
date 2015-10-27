@@ -313,6 +313,7 @@ var VideoYoutube = {
             var savedVolume = localStorage.getItem('video_volume');
             VideoYoutube.cur.player.setVolume(savedVolume || 60);
         }
+        videoCallback(['onInitialized']);
     },
 
     onStateChange: function(event) {
