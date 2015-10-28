@@ -1261,7 +1261,7 @@ var Apps = { // can be removed soon
                     });
                     addClass('apps_genres_tt_' + cur.searchType, SELECTED_CLS);
                 },
-                offset: [-4, 0],
+                offset: [0, -4],
                 elClassWhenTooltip: 'apps_tt_hover',
                 delay: 0
             });
