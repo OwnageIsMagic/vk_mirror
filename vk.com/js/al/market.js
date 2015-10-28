@@ -1098,7 +1098,7 @@ var Market = {
             act: 'write_box',
             to: id,
             hash: hash,
-            from: 'market'
+            from: 'market' + item_id
         }, {
             stat: ['writebox.js', 'writebox.css', 'wide_dd.css', 'page.css', 'emoji.js', 'notifier.css'],
             cache: 1

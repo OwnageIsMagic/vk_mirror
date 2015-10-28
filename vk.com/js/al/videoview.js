@@ -380,6 +380,23 @@ var Videoview = {
             }
         },
 
+        cleanUpStoredVSegs: function() {
+            if (!window.localStorage) return;
+
+            var now = vkNow();
+
+            for (var key in window.localStorage) {
+                if (key.indexOf('vsegs') === 0) {
+                    var value = localStorage.getItem(key);
+                    value = JSON.parse(value);
+
+                    if ((now - value.ts) > 1000 * 60 * 60 * 24 * 2) {
+                        localStorage.removeItem(key);
+                    }
+                }
+            }
+        },
+
         getVideoModule: function(videoId) {
             var m = cur.module;
             if (window.Video) {
@@ -1218,6 +1235,8 @@ var Videoview = {
                     Videocat.removePlaylistBlock();
                 }
             }
+
+            Videoview.cleanUpStoredVSegs();
 
             return false;
         },
