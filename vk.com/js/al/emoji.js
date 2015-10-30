@@ -825,7 +825,7 @@ if (!window.Emoji) {
                 }
                 var prevTab = ls.get('stickers_tab');
                 opts.curTab = cur.stickersTab = 0;
-                if (prevTab === -1) {
+                if (prevTab === -1 && !opts.noStickers) {
                     var recent = ls.get('recent_stickers');
                     if (recent) {
                         Emoji.stickers[-1] = recent;
