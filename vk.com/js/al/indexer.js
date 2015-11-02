@@ -11,8 +11,8 @@ function vkIndexer(list, prepareFunc, callback) {
     setTimeout(this.indexIteration.bind(this), 10);
 }
 
-vkIndexer.prototype.delimiter = new RegExp('[\\s\\-\\.,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\+\\\\]+', 'g');
-vkIndexer.prototype.trimmer = new RegExp('^[\\s\\-\\.,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\+\\\\]+|[\\s\\-,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\\\]+$', 'g');
+vkIndexer.prototype.delimiter = new RegExp('[\\s\\-\\.,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\+\\?\\\\]+', 'g');
+vkIndexer.prototype.trimmer = new RegExp('^[\\s\\-\\.,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\+\\?\\\\]+|[\\s\\-,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\\\]+$', 'g');
 
 vkIndexer.prototype.toTranslit = {
     1072: "a",
@@ -48,7 +48,7 @@ vkIndexer.prototype.toTranslit = {
     1105: "e",
     1098: "",
     1100: ""
-}
+};
 
 vkIndexer.prototype.toLocalCase = {
     'f': "a",
@@ -91,7 +91,7 @@ vkIndexer.prototype.toLocalCase = {
     'm': "",
     ']': "",
     '}': ""
-}
+};
 
 vkIndexer.prototype.toLocalTranslit = {
     1072: "f",
@@ -120,7 +120,7 @@ vkIndexer.prototype.toLocalTranslit = {
     1099: "s",
     1103: "z",
     1098: "m"
-}
+};
 
 vkIndexer.prototype.indexIteration = function() {
     var end = Math.min(this.iterEnd, this.iterCur + 200);
@@ -161,7 +161,7 @@ vkIndexer.prototype.strToPrefixes = function(val) {
         prefixes[key] = 1;
     }
     return prefixes;
-}
+};
 
 vkIndexer.prototype.strToSearchPrefixes = function(val) {
     var result = [];
@@ -198,7 +198,7 @@ vkIndexer.prototype.strToSearchPrefixes = function(val) {
         result.push(prefixes);
     }
     return result;
-}
+};
 
 vkIndexer.prototype.toIndexTree = function(key, obj) {
     var prnt = this.index;
@@ -211,7 +211,7 @@ vkIndexer.prototype.toIndexTree = function(key, obj) {
         }
     }
     prnt.push(obj);
-}
+};
 
 vkIndexer.prototype.remove = function(obj) {
     var item = this.prepareFunc(obj);
@@ -235,7 +235,7 @@ vkIndexer.prototype.remove = function(obj) {
             }
         }
     }
-}
+};
 
 vkIndexer.prototype.equals = function(obj1, obj2) {
     for (var i in obj1) {
@@ -243,12 +243,12 @@ vkIndexer.prototype.equals = function(obj1, obj2) {
             case 'object':
                 if (!this.equals(obj1[i], obj2[i])) {
                     return false
-                };
+                }
                 break;
             case 'function':
                 if (typeof(obj1[i]) == 'undefined' || (obj1[i].toString() != obj2[i].toString())) {
                     return false;
-                };
+                }
                 break;
             default:
                 if (obj1[i] != obj2[i]) {
@@ -262,7 +262,7 @@ vkIndexer.prototype.equals = function(obj1, obj2) {
         }
     }
     return true;
-}
+};
 
 vkIndexer.prototype.intersect = function(a, b) {
     var result = [];
@@ -277,7 +277,7 @@ vkIndexer.prototype.intersect = function(a, b) {
         }
     }
     return result;
-}
+};
 
 vkIndexer.prototype.add = function(obj) {
     var item = this.prepareFunc(obj);
@@ -310,12 +310,10 @@ vkIndexer.prototype.search = function(text) {
         if (val != last) {
             rows.push(last);
             last = val;
-        } else {
-            continue;
         }
     }
     return rows;
-}
+};
 
 vkIndexer.prototype.localSearch = function(prefixes, deep, prnt) {
     if (!prnt) {
@@ -344,7 +342,7 @@ vkIndexer.prototype.localSearch = function(prefixes, deep, prnt) {
         }
     }
     return result;
-}
+};
 
 try {
     stManager.done('indexer.js');
