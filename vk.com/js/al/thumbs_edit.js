@@ -45,6 +45,17 @@ var ThumbsEdit = {
                     }
                 };
                 break;
+            case 'market_album':
+                result.market_album = {
+                    owner_id: ids[0],
+                    aid: ids[1],
+                    title: media.title,
+                    msize: media.msize,
+                    thumb: {
+                        sizes: media.sizes
+                    }
+                };
+                break;
         }
         return result;
     },
@@ -66,6 +77,9 @@ var ThumbsEdit = {
                     break;
                 case 'album':
                     res.push(['album', arr[i].album.owner_id + '_' + arr[i].album.aid]);
+                    break;
+                case 'market_album':
+                    res.push(['market_album', arr[i].market_album.owner_id + '_' + arr[i].market_album.aid])
                     break;
             }
         }
@@ -99,7 +113,7 @@ var ThumbsEdit = {
         var atts = [];
 
         each(attachments, function(k, a) {
-            if (a.type == 'photo' || a.type == 'video' || a.type == 'album') atts[atts.length] = a;
+            if (a.type == 'photo' || a.type == 'video' || a.type == 'album' || a.type == 'market_album') atts[atts.length] = a;
         });
         _e.cache()[el.id] = {
             previews: atts,
@@ -132,7 +146,8 @@ var ThumbsEdit = {
         };
 
         var el = ce('div', {
-            className: 'thumb_wrap fl_l' + (thumb.lastColumn ? ' last_column' : '') + (thumb.lastRow ? ' last_row' : '')
+            className: 'thumb_wrap fl_l' + (thumb.lastColumn ? ' last_column' : '') + (thumb.lastRow ? ' last_row' : '') + (thumb.msize ?
+                ' thumb_market_album_wrap' : '') + (thumb.image.src.match('x_noalbum') ? ' thumb_no_cover' : '')
         }, style);
         var img = ce('img', {
             className: 'preview'
@@ -227,10 +242,17 @@ var ThumbsEdit = {
             }, {
                 width: style.width - 70
             }));
-            title.appendChild(ce('div', {
-                innerHTML: thumb.size,
-                className: 'album_size'
-            }));
+            if (thumb.msize) {
+                title.appendChild(ce('div', {
+                    innerHTML: thumb.msize,
+                    className: 'album_market_size'
+                }));
+            } else {
+                title.appendChild(ce('div', {
+                    innerHTML: thumb.size,
+                    className: 'album_size'
+                }));
+            }
             draggable.appendChild(title);
         }
 
@@ -857,7 +879,8 @@ var ThumbsEdit = {
             if (
                 (arr[i].type == 'photo' && arr[i].photo.id == attId) ||
                 (arr[i].type == 'video' && arr[i].video.id == attId) ||
-                (arr[i].type == 'album' && arr[i].album.id == attId)
+                (arr[i].type == 'album' && arr[i].album.id == attId) ||
+                (arr[i].type == 'market_album' && arr[i].market_album.id == attId)
             ) {
                 return ThumbsEdit.removeMedia(el, i);
             }
@@ -962,7 +985,8 @@ var ThumbsEdit = {
         };
     },
     compute: function(t, w, h, opt) {
-        t.id = t.vid ? 'video' + t.owner_id + '_' + t.vid : t.pid ? 'photo' + t.owner_id + '_' + t.pid : 'album' + t.owner_id + '_' + t.aid;
+        t.id = t.vid ? 'video' + t.owner_id + '_' + t.vid : t.pid ? 'photo' + t.owner_id + '_' + t.pid : t.msize ? 'market_album' + t.owner_id + '_' + t.aid : 'album' + t.owner_id +
+            '_' + t.aid;
 
         var res = {
             id: t.id,
@@ -980,6 +1004,12 @@ var ThumbsEdit = {
             extend(res, {
                 title: t.title,
                 size: t.size,
+                isAlbum: true
+            });
+        } else if (t.title && t.msize != undefined) {
+            extend(res, {
+                title: t.title,
+                msize: t.msize,
                 isAlbum: true
             });
         }
@@ -1036,7 +1066,7 @@ var ThumbsEdit = {
         var thumbs = [],
             result = [];
         each(attachments, function(k, a) {
-            if (a.type == 'photo' || a.type == 'video' || a.type == 'album') {
+            if (a.type == 'photo' || a.type == 'video' || a.type == 'album' || a.type == 'market_album') {
                 thumbs[thumbs.length] = a[a.type];
             }
             if (a.type == 'video') {
