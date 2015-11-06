@@ -7646,7 +7646,7 @@ function zNav(changed, opts, fin) {
                     });
                     listId = parts.join('/');
 
-                    if (playlistId) {
+                    if (playlistId && window.Videocat) {
                         playlistId = playlistId.substr('pl_'.length);
 
                         if (Videocat.initFullPlaylist(playlistId, zt[2]) || Videocat.isTop3Playlist(playlistId)) {
@@ -7847,6 +7847,18 @@ function showVideo(videoId, listId, options, ev) {
     var claim = nav.objLoc.claim;
 
     var stat = ['videoview.js', 'videoview.css', 'page.js', 'page.css'];
+
+    if (options.playlistId) {
+        stat.push('videocat.js', 'videocat.css');
+        options.addParams = extend({}, options.addParams, {
+            playlist_id: options.playlistId
+        });
+        if (!window.Videocat || !Videocat.initFullPlaylist(options.playlistId, videoId)) {
+            options.addParams = extend({}, options.addParams, {
+                load_playlist: 1
+            });
+        }
+    }
 
     var hub = new callHub(function() {
         if (!options.hidden) {

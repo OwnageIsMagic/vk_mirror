@@ -395,6 +395,14 @@ var Page = {
                     return 'c';
                 case 'profile':
                     return 'p';
+                case 'feed_search':
+                    return 's';
+                case 'feed_news_recent':
+                    return 'r';
+                case 'feed_news_top':
+                    return 't';
+                case 'feed_other':
+                    return 'o';
                 default:
                     return '';
             }
