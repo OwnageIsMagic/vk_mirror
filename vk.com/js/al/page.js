@@ -399,6 +399,8 @@ var Page = {
                     return 's';
                 case 'feed_news_recent':
                     return 'r';
+                case 'feed_news':
+                    return 'r';
                 case 'feed_news_top':
                     return 't';
                 case 'feed_other':
