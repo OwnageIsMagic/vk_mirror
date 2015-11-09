@@ -214,6 +214,12 @@
     margin-top: 2px;
 }
 
+.im_rows_group_wrap #im_progress {
+    margin-left: 5px;
+    margin-top: 1px;
+    position: absolute;
+}
+
 #im_to_end_wrap {
     display: none;
     width: 627px;
@@ -3709,4 +3715,9 @@ span#im_important_count {
     width: 10px;
     height: 10px;
     background: url(/images/icons/wall_more_arrows.gif) no-repeat 4px 0;
+}
+
+.im_group_average_summary {
+    color: #AAAAAA;
+    font-weight: normal;
 }
