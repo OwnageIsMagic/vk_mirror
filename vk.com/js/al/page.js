@@ -7301,7 +7301,8 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                             uploadTooltip + ' onclick="Page.ownerPhoto(\'' + data.media + '\');"></div>' +
                             '  </div>' +
                             '  <div class="medadd_c_linkimg_controls_btn_group clear_fix fl_r">' +
-                            '    <div class="medadd_c_linkimg_controls_btn" id="medadd_ctrl_remove" ' + removeTooltip + ' onclick="cur.removeLinkImage(this)"></div>' +
+                            '    <div class="medadd_c_linkimg_controls_btn" id="medadd_ctrl_remove" ' + removeTooltip +
+                            ' onclick="tooltips.hide(this);cur.removeLinkImage(this)"></div>' +
                             '  </div>' +
                             '</div>';
 
