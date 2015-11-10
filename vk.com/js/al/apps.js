@@ -1526,6 +1526,7 @@ var Apps = { // can be removed soon
             p_options.push({
                 i: i,
                 l: item[0],
+                c: item[2] || '',
                 onClick: (function(item) {
                         eval(item[1]);
                         cur.adminMenu.hide();
