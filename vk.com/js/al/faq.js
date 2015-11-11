@@ -711,7 +711,7 @@ FAQ = {
             FAQ.updateSearch(val);
         }, 350);
     },
-    updateSearchDisabled: function() {
+    updateSearchCheckbox: function() {
         FAQ.updateSearch(ge('faq_content_search__text')
             .value.trim());
     },
@@ -726,6 +726,16 @@ FAQ = {
             loc['disabled'] = 1;
         } else {
             delete loc['disabled'];
+        }
+        if (cur.searchWithAction.val()) {
+            loc['with_action'] = 1;
+        } else {
+            delete loc['with_action'];
+        }
+        if (cur.searchWithExtraFields.val()) {
+            loc['with_ef'] = 1;
+        } else {
+            delete loc['with_ef'];
         }
         nav.setLoc(loc);
         var query = extend({}, loc);

@@ -519,11 +519,11 @@ var Videoview = {
 
         togglePlay: function(playing) {
             if (ge('video_yt') && window.VideoYoutube) {
-                VideoYoutube.togglePlay(true);
+                VideoYoutube.togglePlay(playing);
             } else {
                 var player = ge('video_player');
                 if (player && player.playVideo) {
-                    player.playVideo(true);
+                    player.playVideo(playing);
                 }
             }
         },

@@ -5120,6 +5120,16 @@ var nav = {
             }, opts));
         }
     },
+
+    link: function(loc, ev) {
+        if (checkEvent(ev) || cur.noAjaxNav) {
+            var loc = loc.replace(new RegExp('^(' + locProtocol + '//' + locHost + ')?/?', 'i'), '');
+            window.open(loc)
+        } else {
+            nav.go(loc);
+        }
+    },
+
     go: function(loc, ev, opts) {
         if (checkEvent(ev) || cur.noAjaxNav) return;
         opts = opts || {};

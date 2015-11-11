@@ -1115,7 +1115,9 @@ var Market = {
         return false;
     },
 
-    showItem: function(oid, id, from) {
+    showItem: function(oid, id, e, from) {
+        if (checkEvent(e)) return true;
+
         var _from = '';
         if (from) {
             _from = from;
