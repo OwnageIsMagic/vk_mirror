@@ -4492,6 +4492,13 @@ Tickets = {
             show(btn);
         }
     },
+    closeMobileNotice: function(hash) {
+        slideUp('tickets_mobile_notice', 200);
+        ajax.post(nav.objLoc[0], {
+            act: 'hide_mobile_notice',
+            hash: hash
+        });
+    },
     listClearCache: function() {
         var obj = nav.objLoc;
         obj['cc'] = 1;
