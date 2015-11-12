@@ -3510,6 +3510,9 @@ Tickets = {
                 break;
             case 'all':
                 params.act = 'all';
+                if (nav.objLoc['faq_id']) {
+                    params.faq_id = nav.objLoc['faq_id'];
+                }
                 var filtersVal = (window.radioBtns.filters || {})
                     .val;
                 params.good = filtersVal == 1 ? 1 : '';

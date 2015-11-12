@@ -150,7 +150,7 @@
 .places_set_current_position_tt:before {
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-right: 5px solid #bccad7;
+    border-right: 5px solid #BCCAD7;
     content: "";
     display: block;
     position: absolute;
@@ -164,7 +164,7 @@
 .places_set_current_position_tt:after {
     border-top: 5px solid transparent;
     border-bottom: 5px solid transparent;
-    border-right: 5px solid #ffffff;
+    border-right: 5px solid #fff;
     content: "";
     display: block;
     position: absolute;
@@ -187,12 +187,12 @@
     box-shadow: 0 1px 0 rgba(0, 0, 0, 0.07);
     height: 28px;
     width: 28px;
-    background-color: #ffffff;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#eeeeee));
-    background: -webkit-linear-gradient(top, #ffffff, #eeeeee);
-    background: -moz-linear-gradient(top, #ffffff, #eeeeee);
-    background: -ms-linear-gradient(top, #ffffff, #eeeeee);
-    background: -o-linear-gradient(top, #ffffff, #eeeeee);
+    background-color: #fff;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#eee));
+    background: -webkit-linear-gradient(top, #fff, #eee);
+    background: -moz-linear-gradient(top, #fff, #eee);
+    background: -ms-linear-gradient(top, #fff, #eee);
+    background: -o-linear-gradient(top, #fff, #eee);
     border: 1px solid #333;
     border: 1px solid rgba(51, 51, 51, 0.5);
     bottom: 28px;
@@ -202,12 +202,12 @@
 }
 
 #choose_map .move_to_button:hover {
-    background-color: #ffffff;
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#ffffff), to(#f6f5f4));
-    background: -webkit-linear-gradient(top, #ffffff, #f6f5f4);
-    background: -moz-linear-gradient(top, #ffffff, #f6f5f4);
-    background: -ms-linear-gradient(top, #ffffff, #f6f5f4);
-    background: -o-linear-gradient(top, #ffffff, #f6f5f4);
+    background-color: #fff;
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#fff), to(#f6f5f4));
+    background: -webkit-linear-gradient(top, #fff, #f6f5f4);
+    background: -moz-linear-gradient(top, #fff, #f6f5f4);
+    background: -ms-linear-gradient(top, #fff, #f6f5f4);
+    background: -o-linear-gradient(top, #fff, #f6f5f4);
 }
 
 #choose_map .move_to_button:active {

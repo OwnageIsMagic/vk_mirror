@@ -112,12 +112,12 @@ body.dev.is_rtl1 #page_wrap .checkbox div {
 }
 
 .is_rtl1 #search_darr {
-    background: #ffffff url("/images/darrRTL.gif") no-repeat right 4px;
+    background: #fff url("/images/darrRTL.gif") no-repeat right 4px;
 }
 
 .is_rtl1 #search_a_menu:hover #search_darr,
 .is_rtl1 #search_a_menu.hover #search_darr {
-    background: #ffffff url("/images/darrRTL.gif") no-repeat right -22px;
+    background: #fff url("/images/darrRTL.gif") no-repeat right -22px;
 }
 
 .is_rtl1 #quick_search div.s_photo {
@@ -378,7 +378,7 @@ body.dev.is_rtl1 #page_wrap .checkbox div {
 
 .is_rtl1 #page_header.p_head1 .right {
     width: 48px;
-    background: #4e729a url(/images/hat_vk_rtl.gif) 100% -1px;
+    background: #4E729A url(/images/hat_vk_rtl.gif) 100% -1px;
 }
 
 .is_rtl1 .wall_module .author {
@@ -701,7 +701,7 @@ body.dev.is_rtl1 .priv_h_arrow {
 
 .is_rtl1 .audio_search .s_search,
 .is_rtl1 #pad_audio_search input.pad_search {
-    background: #ffffff url(/images/magglassRTL.png) no-repeat 286px 6px;
+    background: #FFF url(/images/magglassRTL.png) no-repeat 286px 6px;
 }
 
 .is_rtl1 .audio_filter.loading,
@@ -1369,7 +1369,7 @@ body.dev.is_rtl1 .priv_h_arrow {
 
 .is_rtl1 #im_filter {
     padding: 5px 20px 4px 20px;
-    background: #ffffff url(/images/magglass.png) no-repeat 328px 6px;
+    background: #FFF url(/images/magglass.png) no-repeat 328px 6px;
 }
 
 .is_rtl1 .im_submit_tail_wrap {
@@ -1430,7 +1430,7 @@ body.dev.is_rtl1 .priv_h_arrow {
 }
 
 .is_rtl1 div.fc_clist_filter_wrap {
-    background: #ffffff url(/images/magglass.png) no-repeat 182px 7px;
+    background: #FFF url(/images/magglass.png) no-repeat 182px 7px;
     padding: 6px 22px 4px 4px;
 }
 
@@ -2446,7 +2446,7 @@ body.pads.is_rtl1 #side_bar a.left_row {
 
 .is_rtl1 #page_header.p_head1 .right {
     width: 48px;
-    background: #4e729a url(/images/hatf_vk_rtl.gif?1) 100% -1px;
+    background: #4E729A url(/images/hatf_vk_rtl.gif?1) 100% -1px;
 }
 
 .is_rtl1 #ts_input {

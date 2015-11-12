@@ -648,7 +648,7 @@ a#rotateleft_new {
 }
 
 a#rotateleft_new:hover {
-    background: #dae1e8 url(../images/photo_actions.gif?2) no-repeat 4px -81px;
+    background: #DAE1E8 url(../images/photo_actions.gif?2) no-repeat 4px -81px;
 }
 
 a#rotateright_new {
@@ -656,7 +656,7 @@ a#rotateright_new {
 }
 
 a#rotateright_new:hover {
-    background: #dae1e8 url(../images/photo_actions.gif?2) no-repeat 4px -27px;
+    background: #DAE1E8 url(../images/photo_actions.gif?2) no-repeat 4px -27px;
 }
 
 

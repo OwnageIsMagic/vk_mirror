@@ -9,7 +9,7 @@
 }
 
 #search_query {
-    background: #ffffff url(/images/magglass.png) no-repeat 5px 6px;
+    background: #FFF url(/images/magglass.png) no-repeat 5px 6px;
     padding: 5px 40px 6px 20px;
     width: 389px;
     outline: none;
@@ -371,7 +371,7 @@ table.search_table {
 }
 
 #results .three_col_row .actions .loading {
-    background: #ffffff url(/images/upload.gif) 50% 50% no-repeat;
+    background: #FFF url(/images/upload.gif) 50% 50% no-repeat;
     cursor: default;
     text-align: center;
     padding: 4px;
@@ -379,7 +379,7 @@ table.search_table {
 }
 
 #results.video_results .stats .loading {
-    background: #ffffff url(/images/upload.gif) 50% 50% no-repeat;
+    background: #FFF url(/images/upload.gif) 50% 50% no-repeat;
     cursor: default;
     text-align: center;
     padding: 0px 20px;
@@ -901,7 +901,7 @@ div.target .sponsored_header {
 }
 
 .audios_row .actions .loading {
-    background: #ffffff url(/images/upload.gif) 50% 50% no-repeat;
+    background: #FFF url(/images/upload.gif) 50% 50% no-repeat;
     cursor: default;
     text-align: center;
     padding: 4px;
@@ -930,7 +930,7 @@ div.target .sponsored_header {
 }
 
 .audios_row .repeat {
-    background: #ffffff url(/images/repeat.gif?1) no-repeat 0px 0px;
+    background: #FFF url(/images/repeat.gif?1) no-repeat 0px 0px;
     cursor: pointer;
     width: 15px;
     height: 15px;
