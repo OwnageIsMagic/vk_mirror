@@ -3334,7 +3334,6 @@ var Feed = {
                 } else {
                     val(cur.rowsCont, rows || '');
                 }
-                options.section = cur.section;
                 feed.applyOptions(options, 2);
                 js && eval(js);
 
@@ -3349,6 +3348,7 @@ var Feed = {
                 shortCurrency();
                 toggle('feed_recommends', cur.section == 'news' || cur.section == 'recommended' || cur.section == 'videos');
                 toggle('feed_info_bar', cur.section == 'may9');
+                Feed.searchToggleHotHashtags(cur.section == 'search');
 
                 var _a = window.audioPlayer,
                     aid = currentAudioId();

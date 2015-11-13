@@ -364,6 +364,8 @@ FAQ = {
                 }
                 query.categories = categories;
             }
+        } else if (ge('default_section')) {
+            query.section = val('default_section');
         }
         if (cur.actionButtonSelector) {
             query.action_id = intval(cur.actionButtonSelector.val());
