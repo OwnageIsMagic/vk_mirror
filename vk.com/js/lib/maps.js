@@ -1544,6 +1544,9 @@ vkMaps.register('yandex2', {
                     lat: address.lat,
                     lon: address.lon
                 };
+                if (cur.countryCode && cur.countryCode == 'UA') {
+                    q['country'] = cur.countryCode;
+                }
             } else {
                 var b = address.bounds,
                     lat = 0,

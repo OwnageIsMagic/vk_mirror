@@ -4097,7 +4097,12 @@ var IM = {
                 }
             }
 
-            if (changed[0] !== undefined || n.act) return;
+            if (changed[0] !== undefined || n.act) {
+                if (window.history && 'scrollRestoration' in history) {
+                    history.scrollRestoration = 'manual';
+                }
+                return;
+            };
             if (n.sel && !IM.r(n.sel)) {
                 cur.multi_appoint = false;
                 IM.selectPeer(IM.idToPeer(n.sel), n.msgid);
@@ -6070,7 +6075,18 @@ var IM = {
                     var dlgs = ge('im_dialogs'),
                         moreEl = ge('im_more_dialogs') || cur.moreEl,
                         noneEl = ge('im_rows_none');
+
+                    var st = bodyNode.scrollTop,
+                        stChanged = false;
+
                     dlgs.innerHTML = rows;
+
+                    if (stChanged = (bodyNode.scrollTop != st)) {
+                        setTimeout(function() {
+                            bodyNode.scrollTop = st;
+                        });
+                    }
+
                     if (moreEl) {
                         dlgs.appendChild(moreEl);
                     }
@@ -6090,7 +6106,7 @@ var IM = {
                         hide(moreEl);
                     }
                     hide(noneEl);
-                    IM.onScroll();
+                    stChanged && IM.onScroll();
 
                     if (cur.gid) {
                         IM.updateScroll();
