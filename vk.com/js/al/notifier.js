@@ -310,8 +310,10 @@ Notifier = {
             }
 
             var key = ls.get('im_m_comms_key');
-            key.ts = ev.ts;
-            ls.set('im_m_comms_key', key);
+            if (key) {
+                key.ts = ev.ts;
+                ls.set('im_m_comms_key', key);
+            }
 
 
             var evs = ev.events;
