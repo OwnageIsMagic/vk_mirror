@@ -534,7 +534,8 @@ var IM = {
             is_sticker = (kludges.attach1_type == 'sticker');
         if (is_sticker) {
             if (kludges.attach1_product_id) {
-                media_html = '<div class="im_sticker_row"><a onclick="return Emoji.clickSticker(' + intval(kludges.attach1_product_id) +
+                media_html = '<div class="im_sticker_row"><a onmouseover="return Emoji.stickerOver(' + intval(kludges.attach1) +
+                    ', this);" onclick="return Emoji.clickSticker(' + intval(kludges.attach1_product_id) +
                     ', this, event);"><img height="128" class="im_gift" src="/images/stickers/' + intval(kludges.attach1) + '/' + (window.devicePixelRatio >= 2 ? '256' :
                         '128') + '.png"/></a></div>';
             } else {
