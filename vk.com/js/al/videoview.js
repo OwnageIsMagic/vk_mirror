@@ -178,7 +178,16 @@ var Videoview = {
                     }
                 }
             },
-            onVideoStreamPlaying: function(vid, oid, hash) {
+            onVideoStreamPlaying: function(oid, vid, hash) {
+                if (oid + '_' + vid == cur.pinnedVideo) {
+                    var player = ge('video_player') || window.html5video;
+                    if (player && player.isTouchedByUser && player.isTouchedByUser()) {
+                        cur.pinnedVideoDestroyHandlers();
+                    } else {
+                        return;
+                    }
+                }
+
                 var _n = window.Notifier,
                     _a = window.audioPlayer;
                 if (_n) setTimeout(function() {
@@ -188,6 +197,7 @@ var Videoview = {
                     _a.pauseTrack();
                     _a.pausedByVideo = 1;
                 }
+
                 if (window.mvcur && mvcur.mvData && !vid && !oid) {
                     mvcur.mvData.randomNumber = Math.round(Math.random() * 1000000000);
                 }
@@ -256,6 +266,11 @@ var Videoview = {
                 }
             },
             onVideoPlayFinished: function() {
+                if (cur.pinnedVideoDestroy) {
+                    cur.pinnedVideoDestroy();
+                }
+
+                if (!(window.mvcur && mvcur.mvShown)) return;
                 mvcur.finished = true;
                 mvcur.mousemoved = true;
                 Videoview.moveCheck();
@@ -525,9 +540,11 @@ var Videoview = {
             if (ge('video_yt') && window.VideoYoutube) {
                 VideoYoutube.togglePlay(playing);
             } else {
-                var player = ge('video_player');
-                if (player && player.playVideo) {
-                    player.playVideo(playing);
+                var player = ge('video_player') || window.html5video;
+                if (player == window.html5video) {
+                    player.playVideo(playing, true);
+                } else if (player && player.playVideo) {
+                    player && player.playVideo(playing);
                 }
             }
         },

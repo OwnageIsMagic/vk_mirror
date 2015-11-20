@@ -1683,7 +1683,7 @@ if (!window.Emoji) {
             var tt_index = (cur.tooltips || [])
                 .length;
 
-            if (typeof(el.tt) !== 'undefined') {
+            if (isObject(el.tt) && el.firstChild.nodeName === 'IMG') {
                 return el.tt.show();
             }
 
