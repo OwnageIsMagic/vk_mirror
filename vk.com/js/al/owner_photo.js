@@ -71,7 +71,7 @@ var OwnerPhoto = {
                 break;
             case 'ERR_UPLOAD_FILE_NOT_UPLOADED':
                 msg = getLang('profile_oph_err_upload')
-                    .replace('{link}', '<a href="/support">')
+                    .replace('{link}', '<a href="/support?act=new&from=ph">')
                     .replace('{/link}', '</a>');
                 break;
             case 'ERR_UPLOAD_BAD_IMAGE_SIZE':
@@ -95,7 +95,7 @@ var OwnerPhoto = {
                 }
             default:
                 msg = getLang('profile_oph_err_unknown')
-                    .replace('{link}', '<a href="/support">')
+                    .replace('{link}', '<a href="/support?act=new&from=ph">')
                     .replace('{/link}', '</a>');
                 break;
         }
