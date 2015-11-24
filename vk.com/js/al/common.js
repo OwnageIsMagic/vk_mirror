@@ -9152,7 +9152,8 @@ function padAudioPlaylist() {
 
 var _postsSeen = {},
     _postsSaved = {},
-    _postsSaveTimer, _postsSendTimer, _postsCleanTimer, _postsSeenModules = {};
+    _postsSaveTimer, _postsSendTimer, _postsCleanTimer, _postsSeenModules = {},
+    _postsExtras = {};
 var ls = {
     checkVersion: function() {
         return (window.localStorage !== undefined && window.JSON !== undefined);
