@@ -2810,7 +2810,7 @@ var Videoview = {
                 }
             });
         },
-        claimed: function(claim_id, action) {
+        claimed: function(claim_id, action, status) {
             ge('claim_link')
                 .innerHTML = '<img src="/images/upload.gif" />';
 
@@ -2819,15 +2819,16 @@ var Videoview = {
                 type: 'video',
                 id: mvcur.mvData.vid,
                 owner_id: mvcur.mvData.oid,
-                claim_id: claim_id
+                claim_id: claim_id,
+                extra: status
             }, {
                 onDone: function() {
                     if (action == 'claim') {
                         ge('claim_link')
-                            .innerHTML = '<a onclick="return Videoview.claimed(' + claim_id + ', \'unclaim\');\">�������</a>';
+                            .innerHTML = '<a onclick="return Videoview.claimed(' + claim_id + ', \'unclaim\', \'' + status + '\');\">�������</a>';
                     } else {
                         ge('claim_link')
-                            .innerHTML = '<a onclick="return Videoview.claimed(' + claim_id + ', \'claim\');\">������</a>';
+                            .innerHTML = '<a onclick="return Videoview.claimed(' + claim_id + ', \'claim\', \'' + status + '\');\">������</a>';
                     }
                 }
             });
