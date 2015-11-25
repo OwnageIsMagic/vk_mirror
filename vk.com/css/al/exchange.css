@@ -93,7 +93,7 @@
 .exchange_table .grey {
     color: #666666;
     display: inline-block;
-    min-width: 40px;
+    min-width: 85px;
     margin-right: 5px;
 }
 
@@ -838,8 +838,7 @@ a.exchange_ad_post_link.deleted:hover {
 }
 
 #exchange_button_send {
-    display: block;
-    padding-top: 15px;
+    margin-top: 15px;
 }
 
 #exchange_requests_terms {
