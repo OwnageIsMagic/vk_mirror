@@ -1259,10 +1259,14 @@ Ads.createInlineStaticEdit = function(editElem, bindingId, params) {
     function getDays(month, year) {
         var ret = [],
             days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if (!year) year = (new Date())
+        var curMonth = (new Date())
+            .getMonth() + 1;
+        var curYear = (new Date())
             .getFullYear();
+        if (!month) month = curMonth;
+        if (!year) year = month >= curMonth ? curYear : curYear + 1;
         if (month == 2 && year % 4 == 0) {
-            days[2] = 29
+            days[2] = 29;
         }
         for (var i = 1, days = days[month]; i <= days; i++) {
             ret.push(i);
@@ -1306,7 +1310,7 @@ Ads.createInlineStaticEdit = function(editElem, bindingId, params) {
             case 'time':
                 uiTimeDay = new Dropdown(
                     geByClass('inline_time_day', this.contentTable)[0],
-                    getDays(1), {
+                    getDays(), {
                         width: 45,
                         height: 150,
                         selectedItem: 1
@@ -1353,6 +1357,7 @@ Ads.createInlineStaticEdit = function(editElem, bindingId, params) {
         switch (type) {
             case 'time':
                 if (defaultValue && defaultValue.day && defaultValue.month && defaultValue.year) {
+                    uiTimeDay.setData(getDays(defaultValue.month));
                     uiTimeDay.val(defaultValue.day);
                     uiTimeMonth.val(defaultValue.month);
                     uiTimeYear.val(defaultValue.year);
@@ -1683,9 +1688,14 @@ Ads.createInlineEdit = function(editElem, progressElem, unionType, unionId, valu
     function getDays(month) {
         var ret = [],
             days = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
-        if (month == 2 && (new Date())
-            .getFullYear() % 4 == 0) {
-            days[2] = 29
+        var curMonth = (new Date())
+            .getMonth() + 1;
+        var curYear = (new Date())
+            .getFullYear();
+        if (!month) month = curMonth;
+        var year = month >= curMonth ? curYear : curYear + 1;
+        if (month == 2 && year % 4 == 0) {
+            days[2] = 29;
         }
         for (var i = 1, days = days[month]; i <= days; i++) {
             ret.push(i);
@@ -1735,7 +1745,7 @@ Ads.createInlineEdit = function(editElem, progressElem, unionType, unionId, valu
         if (valueGeneralType == 'time') {
             uiTimeDay = new Dropdown(
                 geByClass('inline_time_day', this.contentTable)[0],
-                getDays(1), {
+                getDays(), {
                     width: 45,
                     height: 150,
                     selectedItem: 1
@@ -1780,6 +1790,7 @@ Ads.createInlineEdit = function(editElem, progressElem, unionType, unionId, valu
         }
 
         if (valueGeneralType == 'time') {
+            uiTimeDay.setData(getDays(defaultValue.month));
             uiTimeDay.val(defaultValue.day);
             uiTimeMonth.val(defaultValue.month);
             uiTimeHour.val(defaultValue.hour);
