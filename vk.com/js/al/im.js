@@ -4094,7 +4094,11 @@ var IM = {
             mail: 1,
             onCheckURLDone: IM.onUploadDone,
             toId: cur.gid ? -cur.gid : undefined,
-            blockPersonal: cur.gid ? 1 : 0
+            blockPersonal: cur.gid ? 1 : 0,
+            docParams: cur.gid ? {
+                imhash: cur.im_doc_hash,
+                from: "from_gim"
+            } : {}
         });
         val('im_media_preview', '');
 
@@ -5830,7 +5834,8 @@ var IM = {
                 }
                 hide(txt.previousSibling);
             }
-            val(geByClass1('im_tab3', ge('im_tab' + peer), 'div'), user.name + '<span id="im_unread' + peer + '">' + val('im_unread' + peer) + '</span>');
+            val(geByClass1('im_tab3', ge('im_tab' + peer), 'div'), '<span class="im_tab4">' + user.name + '</span>' + '<span id="im_unread' + peer + '">' + val('im_unread' +
+                peer) + '</span>');
         } else {
             if (peer < -2e9) {
                 var peerLink = '/im?sel=e' + (-peer - 2e9);

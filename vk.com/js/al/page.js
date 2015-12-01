@@ -6102,9 +6102,10 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 };
                 break;
             case 'doc':
-                handler = showBox.pbind('docs.php', extend(params, {
+                var dcparams = opts.docParams || {};
+                handler = showBox.pbind('docs.php', extend(params, extend({
                     act: 'a_choose_doc_box'
-                }), {
+                }, dcparams)), {
                     stat: ['docs.css']
                 });
                 break;

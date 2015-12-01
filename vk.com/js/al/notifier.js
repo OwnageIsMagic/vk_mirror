@@ -744,7 +744,7 @@ Notifier = {
 
     sendImProxy: function(data) {
         data.text = winToUtf(data.text);
-        if (!curNotifier.browser_shown[data.id] && !(Notifier.isActive() && cur.module === 'im')) {
+        if (!curNotifier.browser_shown[data.id]) {
             curNotifier.browser_shown[data.id] = true;
             Notifier.trySendBrowserNotification(data, true);
             setTimeout(function() {
@@ -802,7 +802,7 @@ Notifier = {
             message: 'who_is_active',
             msg: ev.author_id,
             onFail: function() {
-                if (Notifier.canNotifyUi()) {
+                if (Notifier.canNotifyUi() && cur.peer != ev.author_id) {
                     Notifier.sendBrowserNotification(ev);
                 } else if (!onlyBrowser) {
                     Notifier.lcSend('show_notification', ev);
@@ -825,9 +825,13 @@ Notifier = {
     proxyIm: function(ev) {
         if (this.isActive()) {
             this.playSound(ev);
-            return;
+            if (Notifier.canNotifyUi() &&
+                cur.peer != ev.author_id &&
+                Notifier.shouldPlaySound(ev)) {
+                Notifier.showEventUi(ev);
+            }
         }
-        if (!this.isActive() && curNotifier.is_server) {
+        if (curNotifier.is_server) {
             ev.onclick = 'IM.activateTab(' + ev.author_id + ');';
             this.sendImProxy(ev);
         } else if (!curNotifier.is_server) {
@@ -837,7 +841,12 @@ Notifier = {
 
     sendMailNotification: function(ev) {
         ev.onclick = 'FastChat.selectPeer(\'' + ev.author_id + '\');';
-        if (this.isActive()) {
+        if (this.isActive() && Notifier.canNotifyUi()) {
+            this.playSound(ev);
+            if (this.shouldPlaySound(ev) && cur.peer != ev.author_id) {
+                this.showEventUi(ev);
+            }
+        } else if (this.isActive()) {
             return this.sendSimpleNotification(ev);
         } else if (curNotifier.is_server) {
             this.trySendBrowserNotification(ev);
