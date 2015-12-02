@@ -4255,10 +4255,10 @@ Tickets = {
                         if (!isVisible(repl)) {
                             show(repl);
                             ge('help_table_not_found_replaced__prev_query')
-                                .innerHTML = cur.listPrevSearchStr;
+                                .innerHTML = clean(cur.listPrevSearchStr);
                         }
                         ge('help_table_not_found_replaced__query')
-                            .innerHTML = v;
+                            .innerHTML = clean(v);
                     }
                 } else {
                     hide('help_table_not_found_replaced');
@@ -4532,7 +4532,7 @@ Tickets = {
     listShowNotFound: function(query) {
         addClass('help_table_questions', 'help_table_questions_not_found');
         ge('help_table_not_found__query')
-            .innerHTML = query;
+            .innerHTML = clean(query);
         var btn = ge('help_table_not_found__btn');
         if (!isVisible(btn) && query.trim()
             .indexOf(' ') != -1) {
