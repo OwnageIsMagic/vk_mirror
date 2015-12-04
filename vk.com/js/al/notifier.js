@@ -240,6 +240,7 @@ Notifier = {
         if (window.curNotifier && curNotifier.connection_id) {
             return;
         }
+        Notifier.notificationsGc();
         curNotifier = extend({
             q_events: [],
             q_shown: [],
@@ -247,6 +248,7 @@ Notifier = {
             negotiations: {},
             currentIm: {},
             q_max: 3,
+            uiNotifications: [],
             q_idle_max: 5,
             browser_shown: {},
             done_events: {},
@@ -287,6 +289,24 @@ Notifier = {
                 return true;
             }
         })
+    },
+
+    notificationsGc: function() {
+        curNotifier.uiGcTo = setTimeout(function() {
+            var notes = curNotifier.uiNotifications;
+            var newNotes = [];
+            for (var i = 0; i < notes.length; i++) {
+                var note = notes[i];
+                if (vkNow() - note[1] > 10000) {
+                    note[0].close();
+                } else {
+                    newNotes.push(note);
+                }
+            }
+
+            curNotifier.uiNotifications = newNotes;
+            Notifier.notificationsGc();
+        }, 5000);
     },
 
     resetCommConnection: function(fails) {
@@ -336,6 +356,9 @@ Notifier = {
     destroy: function() {
         Notifier.hideAllEvents();
         curNotifier.idle_manager.stop();
+        if (curNotifier.uiGcTo) {
+            clearTimeout(curNotifier.uiGcTo);
+        }
         curNotifier = {};
         re('notifiers_wrap');
         re('queue_transport_wrap');
@@ -829,6 +852,7 @@ Notifier = {
                 cur.peer != ev.author_id &&
                 Notifier.shouldPlaySound(ev)) {
                 Notifier.showEventUi(ev);
+                return;
             }
         }
         if (curNotifier.is_server) {
@@ -1017,6 +1041,7 @@ Notifier = {
         }
 
         var notification = ev.uiNotification = DesktopNotifications.createNotification(ev.author_photo, title, text);
+        curNotifier.uiNotifications.push([notification, vkNow()]);
         notification.onclick = function(e) {
             window.focus();
             eval(ev.onclick);
