@@ -3539,6 +3539,10 @@ var Apps = { // can be removed soon
         }
 
         Apps.initFeaturedAutoScroll();
+
+        if (window.AdsLight) {
+            AdsLight.applyAds();
+        }
     },
 
     initFeaturedAutoScroll: function() {

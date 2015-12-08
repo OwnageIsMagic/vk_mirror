@@ -526,6 +526,8 @@ var Dev = {
         };
         var paramsFields = geByClass('dev_param_field', ge('dev_params_wrap'));
 
+        window.tooltips && tooltips.hideAll();
+
         var params = {
             act: 'a_run_method',
             method: cur.page,
