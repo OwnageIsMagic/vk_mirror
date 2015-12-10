@@ -37,6 +37,7 @@ global_edit = '�������������';
 global_error = '������';
 global_error_occured = '��������� ������';
 global_lang_box_title = '����� �����';
+global_last_notifitications = '��������� �����������';
 global_media_selector_more = '���';
 global_min = '��������';
 global_mobile_need_validation = '��� ����� �������� ���������� �������� ������ ��������. {link}��������� ����� �{/link}';
