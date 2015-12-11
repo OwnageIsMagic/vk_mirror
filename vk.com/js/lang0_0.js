@@ -46,6 +46,7 @@ global_money_amount_rub_from = ['', 'ï¿½ï¿½ %s ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ %s ï¿½ï
 global_money_amount_rub_text = ['', 'ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'];
 global_money_amount_votes_text = ['', 'ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'];
 global_month_label = 'ï¿½ï¿½ï¿½ï¿½ï¿½:';
+global_notify_show_all = 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½';
 global_not_activated_title = 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½';
 global_num_date_year_time = ['', '{num_day}.{month}.{short_year} {num_hour}:{minute}', 'ï¿½ï¿½ï¿½ï¿½ï¿½, {num_hour}:{minute}', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, {num_hour}:{minute}', 'ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, {num_hour}:{minute}'];
 global_n_votes = ['', '%s ï¿½ï¿½ï¿½ï¿½ï¿½', '%s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½', '%s ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½'];
