@@ -1547,14 +1547,6 @@ var Audio = {
         }, {
             duration: speed,
             onComplete: function() {
-                setStyle(anim.parentNode, {
-                    width: '15px'
-                });
-                setStyle(anim.parentNode.parentNode, !vk.rtl ? {
-                    paddingLeft: '2px'
-                } : {
-                    paddingRight: '2px'
-                });
                 setStyle(anim, !vk.rtl ? {
                     left: '-13px'
                 } : {
@@ -1668,6 +1660,7 @@ var Audio = {
         if (gid) query.gid = cur.gid || cur.oid < 0 && -cur.oid;
         if (__cur && __cur.curSection == 'recommendations') query.recommendation = 1;
         if (nav.objLoc.audio_id) query.recommendation_type = 'query';
+        if (nav.objLoc.album_id) query.recommendation_type = 'album';
         if ((cur.module == 'audio' || cur.module == 'feed') && nav.objLoc['q'] || cur.module == 'search' && nav.objLoc['c[q]']) query.search = 1;
 
         ajax.post(Audio.address, query, {
@@ -2189,18 +2182,24 @@ var Audio = {
         var __cur = opts.from_pad ? window._pads && _pads.cur : window.cur,
             from_pad = !!opts.from_pad,
             update = opts.update,
-            audioId = opts.audioId;
+            audioId = opts.audioId,
+            albumId = opts.albumId;
         if (__cur.loadingRecs) return;
         if (update) {
             delete __cur.recsOffset;
             delete __cur.recommendIds;
             delete __cur.recommendAudios;
+            delete __cur.recsAudioId;
+            delete __cur.recsAlbumId;
             delete __cur.preloadJSON;
         }
         if (audioId) {
             __cur.recsAudioId = audioId;
-        } else if (update === true) {
-            delete __cur.recsAudioId;
+        } else if (albumId) {
+            __cur.recsAlbumId = albumId;
+        }
+        if (update === true) {
+            cur.cancelClick = true;
         }
         each(geByClass('audio_filter', __cur.albumFilters), function(i, e) {
             removeClass(e, 'selected');
@@ -2216,7 +2215,7 @@ var Audio = {
         addClass(rec_filter, 'selected');
         removeClass(__cur.albumFiltered, 'selected');
         hide(__cur.searchFilters, __cur.popularFilters);
-        if (from_pad || __cur.oid == vk.id) {
+        if ((from_pad || __cur.oid == vk.id) && !__cur.recsAlbumId) {
             hide(__cur.audioFriends, __cur.searchInfoCont);
             Audio.hideAlbums({
                 from_pad: from_pad
@@ -2268,15 +2267,15 @@ var Audio = {
             delete __cur.noRecommendations;
             return;
         }
-        if (opts.tt) {
-            opts.tt.hide();
+        if (typeof opts.el !== 'undefined' && isObject(opts.el.tt)) {
+            opts.el.tt.destroy();
         }
         __cur.loadingRecs = true;
         __cur.lastAct = 'recommendations';
         var offset = __cur.recsOffset,
             query = {
                 act: 'get_recommendations',
-                id: __cur.id,
+                id: -__cur.gid || __cur.id,
                 offset: offset
             },
             needsUpdate = window.audioPlayer && audioPlayer.shuffle;
@@ -2293,8 +2292,21 @@ var Audio = {
             }
         }
         if (__cur.recsAudioId) {
-            query.audio_id = __cur.recsAudioId;
+            extend(query, {
+                audio_id: __cur.recsAudioId
+            });
+        } else {
+            delete nav.objLoc.audio_id;
         }
+
+        if (__cur.recsAlbumId) {
+            extend(query, {
+                album_id: __cur.recsAlbumId
+            });
+        } else {
+            delete nav.objLoc.album_id;
+        }
+
         ajax.post(Audio.address, query, {
             onDone: function(rows, preload, json, preload_json, options, ownersRows) {
                 delete __cur.loadingRecs;
@@ -2359,7 +2371,7 @@ var Audio = {
                     }
                 }
 
-                if (__cur.recsCount && !query.audio_id) {
+                if (__cur.recsCount) {
                     show(__cur.showMore);
                 } else {
                     hide(__cur.showMore);
@@ -2383,7 +2395,6 @@ var Audio = {
                     delete nav.objLoc.q;
                     delete nav.objLoc.owner;
                     delete nav.objLoc.friend;
-                    delete nav.objLoc.album_id;
                     delete nav.objLoc.club;
                     delete nav.objLoc.genre;
                     delete __cur._back;
@@ -2394,12 +2405,19 @@ var Audio = {
                         extend(nav.objLoc, {
                             audio_id: query.audio_id
                         });
-                    } else {
-                        delete nav.objLoc.audio_id;
+                    }
+                    if (query.album_id) {
+                        extend(nav.objLoc, {
+                            album_id: query.album_id
+                        });
                     }
                     nav.setLoc(nav.objLoc);
                 }
                 var _a = window.audioPlayer;
+                var aid = currentAudioId();
+                if (aid == audioId || rec_filter) {
+                    cur.cancelClick = false;
+                }
                 if (_a && _a.showCurrentTrack) _a.showCurrentTrack();
                 if (!from_pad) {
                     Audio.loadCurrentPlaylist();
@@ -2925,7 +2943,9 @@ var Audio = {
         }
 
         var el = ge('audio' + id),
-            aid = id.split('_')[1];
+            aid_info = id.split('_'),
+            aid = aid_info[1],
+            __cur = aid_info[2] && aid_info[2] == 'pad' ? window._pads : window.cur;
 
         if (el) {
             if (window.tooltips) {
@@ -2945,7 +2965,7 @@ var Audio = {
                 if (this.tt && this.tt.hide) this.tt.hide()
             });
 
-            el.innerHTML = rs(cur.recommendTpl, {
+            el.innerHTML = rs(__cur.recommendTpl, {
                 audio_id: id,
                 performer: performer,
                 query: q,
@@ -2962,9 +2982,10 @@ var Audio = {
         var params = {
             act: 'hide_recommendation',
             q: q,
-            hash: hash,
-            recommendation_type: nav.objLoc.audio_id ? 'query' : ''
+            hash: hash
         };
+        if (nav.objLoc.audio_id) params.recommendation_type = 'query';
+        if (nav.objLoc.album_id) params.recommendation_type = 'album';
 
         ajax.post(Audio.address, params);
         if (event) cancelEvent(event);
@@ -3005,6 +3026,8 @@ var Audio = {
             aid: aid,
             hash: cur.hashes.restore_recommend_hash
         };
+        if (nav.objLoc.audio_id) params.recommendation_type = 'query';
+        if (nav.objLoc.album_id) params.recommendation_type = 'album';
         ajax.post(Audio.address, params, {
             onDone: onDone,
             hideProgress: hideProgress
@@ -3033,6 +3056,15 @@ var Audio = {
             black: 1,
             shift: (sh ? sh : [12, 4, 0])
         });
+        if (window.tooltips && cur.tooltips) {
+            for (var i = 0; i < cur.tooltips.length; ++i) {
+                if (el !== cur.tooltips[i].el) {
+                    cur.tooltips[i].hide({
+                        fasthide: true
+                    });
+                }
+            }
+        }
     },
     rowInactive: function(el, light) {
         var opacity = light ? 0.6 : 0.4;
@@ -3846,9 +3878,9 @@ var Audio = {
                         delete cur.albums[aid];
                         Audio.generateAlbums();
                         if (cur.album_id == aid) {
+                            var albums_keys = Object.keys(cur.albums);
                             Audio.loadAlbum({
-                                album: 0,
-                                showAlbums: true
+                                album: albums_keys[albums_keys.length - 1]
                             });
                         }
                         Audio.updateAlbums();

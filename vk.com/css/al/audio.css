@@ -495,6 +495,10 @@
     overflow: hidden;
 }
 
+#audio.new .audio.over .title_wrap {
+    width: 305px;
+}
+
 #audio.new .audio .title_wrap b {
     max-width: 230px;
 }
@@ -536,7 +540,7 @@
 }
 
 #audio.new .audio_rec_wrap {
-    margin: 7px 7px 7px 0;
+    margin: 6px 6px 6px 0;
     padding: 4px;
     opacity: 0.4;
     filter: alpha(opacity=40);
@@ -551,7 +555,7 @@
     background: url(/images/icons/audio_icons.png?6) -202px -51px no-repeat;
     position: relative;
     width: 12px;
-    height: 12px;
+    height: 13px;
     margin: 0px;
     cursor: pointer;
     overflow: hidden;
@@ -564,7 +568,7 @@
 }
 
 #audio.new .audio.current .audio_rec {
-    background-position: -218px -51px;
+    background-position: -214px -51px;
 }
 
 #audio.new .audio_edit {
@@ -698,6 +702,7 @@
     display: block;
     color: #2B587A;
     max-width: 156px;
+    height: 26px;
     cursor: pointer;
     position: relative;
 }
@@ -715,17 +720,19 @@
     padding: 6px 24px 7px 11px;
 }
 
+.audio_albums .audio_filter.edit.over .label {
+    max-width: 92px;
+}
+
 .audio_filter div.icon_wrap_arrow {
     position: absolute;
     top: 0px;
     right: 0px;
     width: 26px;
     height: 26px;
-    /*  opacity: 0.7;
-  filter: alpha(opacity=70);*/
 }
 
-.audio_filter div.icon_wrap {
+.audio_filter .icon_wrap {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -734,6 +741,10 @@
     visibility: hidden;
     opacity: 0.7;
     filter: alpha(opacity=70);
+}
+
+.audio_filter .icon_wrap.recommend_wrap {
+    right: 26px;
 }
 
 .audio_filter.over div.icon_wrap {
@@ -753,7 +764,7 @@
     background: rgba(0, 0, 0, 0.1);
 }
 
-.audio_filter div.icon {
+.audio_filter .icon {
     position: absolute;
     top: 7px;
     right: 7px;
@@ -762,11 +773,7 @@
     height: 11px;
 }
 
-.audio_filter.selected div.icon {
-    background-position: -94px -52px;
-}
-
-.audio_filter div.icon.arrow {
+.audio_filter .icon.arrow {
     top: 8px;
     right: 8px;
     background-position: -234px -55px;
@@ -774,11 +781,11 @@
     height: 10px;
 }
 
-.audio_filter div.icon.arrow.up {
+.audio_filter .icon.arrow.up {
     background-position: -244px -55px;
 }
 
-.audio_filter div.icon.edit {
+.audio_filter .icon.edit {
     top: 7px;
     right: 7px;
     background-position: -135px -51px;
@@ -786,8 +793,24 @@
     height: 13px;
 }
 
-.audio_filter.selected div.icon.edit {
+.audio_filter .icon.recommend {
+    top: 7px;
+    right: 7px;
+    background-position: -202px -51px;
+    width: 12px;
+    height: 13px;
+}
+
+.audio_filter.selected .icon {
+    background-position: -94px -52px;
+}
+
+.audio_filter.selected .icon.edit {
     background-position: -150px -51px;
+}
+
+.audio_filter.selected .icon.recommend {
+    background-position: -214px -51px;
 }
 
 .audio_filter.drag_on div.icon_wrap {
