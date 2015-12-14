@@ -551,6 +551,16 @@ var Dev = {
                 params['param_' + i] = paramsAdd[i];
             }
         }
+
+        console.log(params);
+        var url_params = [];
+        for (var i in params) {
+            if (i.substr(0, 6) == 'param_') {
+                url_params.push('params[' + i.substr(6) + ']=' + encodeURIComponent(params[i]));
+            }
+        }
+        history.pushState({}, '', location.pathname + '?' + url_params.join('&'));
+
         var onResponse = function(code) {
             if (code) {
                 code = code.replace(/^<pre>(.*)<\/pre>$/, '$1');
@@ -741,12 +751,15 @@ var Dev = {
     },
 
     onMouseOutImageLink: function() {
+        cur.overedDevLink = null;
         window.tooltips && tooltips.hideAll();
     },
 
     onMouseOverImageLink: function(linkEl) {
         var img = new Image();
+        cur.overedDevLink = linkEl;
         img.onload = function() {
+            if (cur.overedDevLink != linkEl) return;
             Dev.showObjTooltip(linkEl, '<img align="center" src="' + linkEl.href + '"/> <div class="resolution"></div>', function(tooltip) {
                 var resEl = geByClass1('resolution', tooltip.container);
                 var imgEl = geByTag1('img', tooltip.container);
