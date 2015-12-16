@@ -4213,6 +4213,7 @@ var Videoview = {
             if (window.Videocat && !data(plBlockEl, 'sb')) {
                 var sb = new Scrollbar(geByClass1('video_plb_list'), {
                     prefix: 'mv_pl_',
+                    nokeys: true,
                     onInit: function() {
                         Videocat.setPlaylistCurrentVideo();
                     }
