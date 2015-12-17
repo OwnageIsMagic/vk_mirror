@@ -381,7 +381,6 @@ var AppsEdit = {
 
     adminTogglePlatform: function(app_id, platform, hash) {
         var el_node = geByClass1('app_admin_platform_toggle_item' + platform, cur.adminMenu.container);
-        console.log(el_node);
         var params = {
             act: 'a_toggle_platform_enabled',
             app_id: app_id,
@@ -1017,9 +1016,11 @@ var AppsEdit = {
         var el = geByClass1('apps_edit_editor', row);
         AppsEdit.switchEditFunc(id);
         AppsEdit.initEditor(el);
-        AppsEdit.initVersionDropdown(id);
+        //AppsEdit.initVersionDropdown(id);
         geByClass1('apps_edit_cont_name', row)
             .focus();
+
+        hide('apps_edit_ver_str' + id);
     },
 
     removeFunc: function(id) {
@@ -1057,6 +1058,23 @@ var AppsEdit = {
             }
         }
 
+        delete cur.funcsVersion[id];
+        delete cur.funcsVersions[id];
+        delete cur.funcsVersionsDD[id];
+    },
+
+    removeFuncVersion: function(id, v) {
+        var versions = cur.funcsVersions[id].versions;
+        for (var i = 0; i < versions.length; i++) {
+            if (versions[i][0] == v) {
+                var sliced = versions.slice(i + 1);
+                cur.funcsVersions[id].versions = versions.slice(0, i)
+                    .concat(sliced);
+                break;
+            }
+        }
+        AppsEdit.updateVersionsDD(id);
+        AppsEdit.putVersionCode(id, -1);
     },
 
     removeFuncBox: function(id) {
@@ -1065,10 +1083,19 @@ var AppsEdit = {
         var name = val(geByClass1('apps_edit_cont_name', removedRow));
         name = 'execute.' + name;
 
+        var version = cur.funcsVersion[id];
+
+        if (version > 0) {
+            var confirm_str = cur.lang.developers_func_remove_confirm.replace('{v}', version)
+                .replace('{name}', clean(name));
+        } else {
+            var confirm_str = cur.lang['developers_remove_func_confrim'].replace('%s', clean(name));
+        }
+
         var box = showFastBox({
             title: cur.lang['developers_remove_func'],
             dark: 1
-        }, cur.lang['developers_remove_func_confrim'].replace('%s', clean(name)), cur.lang['developers_do_remove'], function() {
+        }, confirm_str, cur.lang['developers_do_remove'], function() {
             cur.funcSaving = true;
             var func = cur.funcInfos[id];
 
@@ -1079,9 +1106,19 @@ var AppsEdit = {
                 old_name: func['name']
             };
 
+            if (cur.funcsVersion[id] > 0) {
+                params.act = 'a_remove_func_version';
+                params.v = version;
+                AppsEdit.removeFuncVersion(id, version);
+            }
+
             ajax.post('editapp', params, {
                 onDone: function(type, num, errText) {
-                    AppsEdit.removeFunc(id);
+                    if (version > 0) {
+                        AppsEdit.removeFuncVersion(id, version);
+                    } else {
+                        AppsEdit.removeFunc(id);
+                    }
                     cur.funcSaving = false;
                 },
                 onFail: function(type, field) {
@@ -1108,7 +1145,7 @@ var AppsEdit = {
         });
     },
 
-    saveFunc: function(btn, id) {
+    saveFunc: function(btn, id, ajaxLoader) {
         if (cur.funcSaving) return;
         cur.funcSaving = true;
         if (btn) {
@@ -1135,6 +1172,22 @@ var AppsEdit = {
             old_name: func['name']
         };
 
+        if (cur.funcsVersion[id] > 0) {
+            params['act'] = 'a_save_func_version';
+            params['func'] = func['name'];
+            params['v'] = cur.funcsVersion[id];
+
+            var versions = cur.funcsVersions[id].versions;
+            for (var i = 0; i < versions.length; i++) {
+                if (versions[i][0] == cur.funcsVersion[id]) {
+                    cur.funcsVersions[id].versions[i][1] = codeText;
+                    break;
+                }
+            }
+        } else {
+            cur.funcInfos[id].code = codeText;
+        }
+
         ajax.post('editapp', params, {
             onDone: function(type, errText) {
                 if (type == 'name') {
@@ -1146,15 +1199,28 @@ var AppsEdit = {
                         slideDown(err.parentNode, 150);
                     }
                     code.ace.focus();
+                } else if (type == 'limit') {
+                    showFastBox({
+                        title: cur.lang.box_error,
+                        dark: 1
+                    }, errText);
                 } else {
-                    func['name'] = nameText;
-                    func['code'] = codeText;
+                    if (!params.v || params.v == -1) {
+                        func['name'] = nameText;
+                        func['code'] = codeText;
+                    } else {
+                        if (params.v == cur.funcsVersions[id].disable_add) {
+                            delete cur.funcsVersions[id].disable_add;
+                        }
+                    }
                     var errEls = geByClass('apps_edit_err_info_cont', row);
                     for (var i in errEls) {
                         if (isVisible(errEls[i])) {
                             slideUp(errEls[i], 150);
                         }
                     }
+
+                    show('apps_edit_ver_str' + id);
 
                     var b = geByClass1('apps_edit_cancel_button', row);
                     fadeOut(b, 150, function() {
@@ -1170,7 +1236,12 @@ var AppsEdit = {
                 }
                 if (btn) {
                     unlockFlatButton(btn);
-                    cur.funcSaving = false;
+                }
+                delete cur.editedFuncs[id];
+                cur.funcSaving = false;
+                if (cur.funcsSaveCallbacks[id]) {
+                    cur.funcsSaveCallbacks[id]();
+                    delete cur.funcsSaveCallbacks[id];
                 }
             },
             onFail: function(type, num, field) {
@@ -1178,7 +1249,8 @@ var AppsEdit = {
                     unlockFlatButton(btn);
                     cur.funcSaving = false;
                 }
-            }
+            },
+            loader: ajaxLoader ? true : false
         })
     },
 
@@ -1198,7 +1270,7 @@ var AppsEdit = {
             return;
         }
 
-        if (name == func['name'] && func['code'] == code) {
+        if (name == func['name'] && func['code'] == code || cur.funcsVersion[id] > 0) {
             AppsEdit.switchEditFunc(id);
             return;
         }
@@ -1297,12 +1369,13 @@ var AppsEdit = {
         editor.resize();
     },
 
-    initEditor: function(el) {
+    initEditor: function(el, id) {
         var editor = ace.edit(el);
         el.ace = editor;
 
         editor.on('change', function() {
-            AppsEdit.updateExecuteParams(editor, el)
+            AppsEdit.updateExecuteParams(editor, el);
+            cur.editedFuncs[id] = 1;
         });
 
         var session = editor.getSession();
@@ -1406,7 +1479,23 @@ var AppsEdit = {
         this.adjustHeight(editor, el);
     },
 
-    switchEditFunc: function(id) {
+    switchEditFunc: function(id, e) {
+
+        if (e) {
+            var el = e.target;
+            cancelEvent(e);
+            while (el) {
+                if (hasClass(el, 'apps_edit_ver_dd')) {
+                    return;
+                }
+                el = el.parentNode;
+            }
+        }
+
+        if (cur.funcDDShown && id == cur.funcDDShown) {
+            return;
+        }
+
         if (cur.currentFunc) {
             var oldRow = ge('func_row_' + cur.currentFunc);
             if (oldRow) {
@@ -1418,6 +1507,32 @@ var AppsEdit = {
                 var oldContent = geByClass1('apps_edit_content', oldRow);
                 slideUp(oldContent, 150);
             }
+        }
+        if (!cur.initedFunctions[id]) {
+            AppsEdit.initEditor(geByClass('apps_edit_editor', ge('func_row_' + id))[0], id);
+            AppsEdit.initVersionDropdown(id);
+            cur.initedFunctions[id] = 1;
+            AppsEdit.loadFuncVersions(id);
+
+            cur.funcsVersionsDD[id] = new Dropdown(ge('funcs_versions_dd' + id), [], {
+                width: 200,
+                big: 1,
+                autocomplete: true,
+                multiselect: false,
+                placeholder: cur.lang.developers_search_version,
+                onChange: function(val) {
+                    if (!val) {
+                        return;
+                    }
+                    AppsEdit.putVersionCode(id, val);
+                },
+                onBlur: function() {
+                    hide('apps_edit_ver_dd' + id, 'apps_edit_add_version' + id);
+                    setTimeout(function() {
+                        cur.funcDDShown = false;
+                    }, 1000);
+                }
+            });
         }
         if (cur.currentFunc == id) {
             cur.currentFunc = null;
@@ -1433,6 +1548,119 @@ var AppsEdit = {
             var el = geByClass1('apps_edit_editor', ge('func_row_' + id));
             AppsEdit.adjustHeight(el.ace, el);
         });
+    },
+
+    loadFuncVersions: function(id) {
+        var func = cur.funcInfos[id];
+        ajax.post('al_apps_edit.php', {
+            act: 'a_get_func_versions',
+            func: func['name'],
+            aid: cur.aid
+        }, {
+            onDone: function(d) {
+                if (!d) {
+                    d = {
+                        last_v: 1,
+                        versions: [
+                            [-1, -1]
+                        ]
+                    }
+                }
+                cur.funcsVersions[id] = {
+                    last_v: d.last_v,
+                    versions: d.versions
+                };
+                AppsEdit.updateVersionsDD(id);
+                cur.funcsVersionsDD[id].val(-1);
+                removeClass('apps_edit_ver_str' + id, 'apps_edit_ver_str_hidden');
+            }
+        });
+    },
+
+    addFuncVersion: function(id, force) {
+
+        if (!force && cur.funcsSaveCallbacks[id] || cur.funcsVersions[id].disable_add) {
+            return;
+        }
+
+        if (cur.editedFuncs[id]) {
+
+            function onBoxClos(btn) {
+                box.hide();
+                if (!hasClass(btn, 'secondary')) {
+                    cur.funcsSaveCallbacks[id] = function() {
+                        delete cur.editedFuncs[id];
+                        AppsEdit.addFuncVersion(id, 1);
+                    };
+                    AppsEdit.saveFunc(false, id, 1);
+                } else {
+                    delete cur.editedFuncs[id];
+                    AppsEdit.addFuncVersion(id, 1);
+                }
+            }
+
+            var box = new MessageBox({
+                    title: getLang('global_warning'),
+                    dark: 1
+                })
+                .content(cur.lang.developers_confirmation_sh_func)
+                .addButton(getLang('box_no'), onBoxClos, 'gray')
+                .addButton(getLang('box_yes'), onBoxClos)
+                .show();
+            return;
+        }
+
+        cur.funcsVersions[id].last_v++;
+        var v = cur.funcsVersions[id].last_v;
+        cur.funcsVersions[id].versions.unshift([v, 'return "Hello World";']);
+
+        AppsEdit.updateVersionsDD(id);
+        AppsEdit.putVersionCode(id, v);
+
+        cur.funcsVersions[id].disable_add = v;
+    },
+
+    showVersionsDD: function(id) {
+        show('apps_edit_ver_dd' + id);
+        cur.funcsVersionsDD[id].focus();
+        cur.funcDDShown = id;
+
+        if (cur.funcsVersions[id] && !cur.funcsVersions[id].disable_add) {
+            show('apps_edit_add_version' + id);
+        }
+    },
+
+    updateVersionsDD: function(id) {
+        var versions = cur.funcsVersions[id].versions;
+
+        var options = [];
+        for (var i = 0; i < versions.length; i++) {
+            options.push([versions[i][0], cur.lang.developers_version_pref + ' ' + Math.abs(versions[i][0])]);
+        }
+        cur.funcsVersionsDD[id].select.clear();
+        cur.funcsVersionsDD[id].setData(options);
+
+    },
+
+    putVersionCode: function(id, v) {
+        if (v == -1) { // default
+            var code = cur.funcInfos[id].code;
+        } else {
+            var versions = cur.funcsVersions[id].versions;
+            for (var i = 0; i < versions.length; i++) {
+                if (versions[i][0] == v) {
+                    var code = versions[i][1];
+                    break;
+                }
+            }
+        }
+        cur.funcsVersion[id] = parseInt(v);
+        var editor = geByClass('apps_edit_editor', ge('func_row_' + id))[0].ace;
+        editor.setValue(code);
+
+        ge('apps_edit_ver_str' + id)
+            .innerHTML = cur.lang.developers_version_pref + ' ' + Math.abs(v);
+        cur.funcsVersionsDD[id].val(v);
     },
 
     switchEditActivity: function(id, duration) {
