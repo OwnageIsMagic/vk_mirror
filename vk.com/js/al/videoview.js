@@ -3142,6 +3142,10 @@ var Videoview = {
                 }
             }
 
+            if (!mvcur.mvData.uploaded) {
+                Videoview.recache();
+            }
+
             addEvent(ge('mv_comment'), 'blur focus', function(ev) {
                 mvcur.commentingInProgress = (ev.type == 'focus');
                 Videoview.playerNextTimerUpdate();
