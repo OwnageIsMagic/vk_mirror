@@ -156,7 +156,7 @@ Religion = '�������������:';
 Remove_from_friends = '������ �� ������';
 rate_you_have_N_unused = ['', '� ��� <b>%s</b> ���������������� �����.', '� ��� <b>%s</b> ���������������� ������.', '� ��� <b>%s</b> ���������������� �������.'];
 Save = '���������';
-Secondary_education = '������� �����������';
+Secondary_education = '������� � �������������� �����������';
 Sex = '���:';
 Sex_fm = '�������';
 Sex_m = '�������';
@@ -216,7 +216,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 423;
+// section = 0; version = 424;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;
