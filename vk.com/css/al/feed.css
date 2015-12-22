@@ -2392,11 +2392,15 @@ a.feed_article_thumb {
     text-decoration: underline;
 }
 
-.feed_search_hashtags_wrap {
+.feed_search_top_hashtags_wrap {
     padding: 10px 10px 0;
 }
 
-.feed_search_hashtags_item {
+.feed_block_top_hashtags_wrap {
+    padding: 7px 0 2px;
+}
+
+.feed_top_hashtags_item {
     display: inline-block;
     float: left;
     padding: 3px 8px 4px;
@@ -2411,12 +2415,12 @@ a.feed_article_thumb {
     cursor: pointer;
 }
 
-.feed_search_hashtags_item:hover {
+.feed_top_hashtags_item:hover {
     background-color: #D5DDE6;
     text-decoration: none;
 }
 
-.feed_search_hashtags_item.feed_search_hashtags_item_active {
+.feed_top_hashtags_item.feed_top_hashtags_item_active {
     background-color: #597DA3;
     color: #fff;
 }
