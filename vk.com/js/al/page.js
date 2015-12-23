@@ -329,7 +329,7 @@ var Page = {
             var ch = false;
             for (i in posts) {
                 for (j in posts[i]) {
-                    if (j == 'module' || j == 'index') continue;
+                    if (j == 'module' || j == 'index' || j == 'q') continue;
                     var pdict = _postsExtras[j];
                     if (pdict && pdict.diff == -1) {
                         pdict.diff = now - pdict.start;
@@ -342,7 +342,7 @@ var Page = {
             }
         },
         postsSeen: function(posts) {
-            var i, j, ch, p, se, sa, module, index;
+            var i, j, ch, p, se, sa, module, query;
             if (!vk.id || !posts.length || vk.pd) return;
 
             if (!window._postsSeenModules) _postsSeenModules = {};
@@ -353,8 +353,9 @@ var Page = {
             for (i in posts) {
                 module = Page.getPostModuleCode(posts[i].module ? posts[i].module : '');
                 index = posts[i].index;
+                query = posts[i].q;
                 for (j in posts[i]) {
-                    if (j == 'module' || j == 'index') continue;
+                    if (j == 'module' || j == 'index' || j == 'q') continue;
 
                     _postsSeenModules[j] = module;
 
@@ -366,7 +367,8 @@ var Page = {
                     _postsExtras[j] = {
                         start: now,
                         diff: -1,
-                        index: index
+                        index: index,
+                        q: query
                     };
                 }
             }
@@ -397,7 +399,8 @@ var Page = {
                 if (_postsExtras[i]) {
                     extras[i] = {
                         diff: _postsExtras[i].diff,
-                        index: _postsExtras[i].index
+                        index: _postsExtras[i].index,
+                        q: _postsExtras[i].q
                     };
                     delete _postsExtras[i];
                 }
@@ -482,7 +485,12 @@ var Page = {
                     var full_id = i + '_' + j;
                     m = modules[full_id] || '';
                     var extra = extras[full_id];
-                    var extra_str = (extra && i != 'ad') ? (':' + extra.diff + ':' + extra.index) : '';
+                    var query_str = (m == 's' && extra.q) ? extra.q : '';
+                    query_str = query_str.replace(/[,;:]/g, '');
+                    if (query_str) {
+                        query_str = ':' + query_str;
+                    }
+                    var extra_str = (extra && i != 'ad') ? (':' + extra.diff + ':' + extra.index + query_str) : '';
                     r.push(m + ((seen[i][j] > 0) ? j : -j) + extra_str);
                 }
                 if (r.length) {
@@ -7203,7 +7211,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 var valid = true;
                 if (domain.match(/(^|\.|\/\/)(vkontakte\.ru|vk\.com)/)) {
                     valid = query.match(
-                        /(#photo|^\/(photo|video|album|page|audio|doc)|z=(album|photo|video)|w=(page|product))(-?\d+_)?\d+|\.(jpg|png|gif)$|market-?\d+\?section=album_\d+|^\/stickers\/.+$|^http:\/\/instagram\.com\/p\/.+/
+                        /(#photo|^\/(photo|video|album|page|audio|doc)|z=(album|photo|video)|w=(page|product))(-?\d+_)?\d+|\.(jpg|png|gif)$|market-?\d+\?section=album_\d+|^\/stickers\/.+$|^\/vk2016+$|^http:\/\/instagram\.com\/p\/.+/
                     ) ? true : false;
                 }
                 if (valid) {
