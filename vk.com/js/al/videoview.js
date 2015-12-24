@@ -506,7 +506,10 @@ var Videoview = {
 
         playerOnAdded: function() {
             var pl = Videoview.getPlayerObject();
-            pl && pl.onAdded && pl.onAdded();
+            try {
+                //todo: strange exception with no reason.
+                pl && pl.onAdded && pl.onAdded();
+            } catch (e) {}
         },
 
         playerOnLiked: function() {

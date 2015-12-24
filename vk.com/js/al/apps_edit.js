@@ -1422,10 +1422,6 @@ var AppsEdit = {
         session.on('tokenizerUpdate', function() {
             AppsEdit.updateExecuteParams(editor, el)
         });
-
-        setTimeout(function() {
-            AppsEdit.updateExecuteParams(editor, el);
-        }, 50);
     },
 
     getExecuteFields: function(row) {
@@ -1684,6 +1680,7 @@ var AppsEdit = {
         slideDown(newContent, 150, function() {
             var el = geByClass1('apps_edit_editor', ge('func_row_' + id));
             AppsEdit.adjustHeight(el.ace, el);
+            AppsEdit.updateExecuteParams(el.ace, el);
         });
     },
 
