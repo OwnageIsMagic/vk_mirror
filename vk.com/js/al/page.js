@@ -405,7 +405,7 @@ var Page = {
                     delete _postsExtras[i];
                 }
                 p = i.split('_');
-                if (p[0] !== 'ad') {
+                if (p[0] !== 'ad' && p[0] !== 'posthashtag') {
                     p[0] = intval(p[0]);
                     p[1] = intval(p[1]);
                 }
@@ -467,7 +467,7 @@ var Page = {
                 for (i in r) {
                     sn = r[i];
                     p = i.split('_');
-                    if (p[0] !== 'ad') {
+                    if (p[0] !== 'ad' && p[0] !== 'posthashtag') {
                         p[0] = intval(p[0]);
                         p[1] = intval(p[1]);
                     }
@@ -490,7 +490,7 @@ var Page = {
                     if (query_str) {
                         query_str = ':' + query_str;
                     }
-                    var extra_str = (extra && i != 'ad') ? (':' + extra.diff + ':' + extra.index + query_str) : '';
+                    var extra_str = (extra && i != 'ad' && i != 'posthashtag') ? (':' + extra.diff + ':' + extra.index + query_str) : '';
                     r.push(m + ((seen[i][j] > 0) ? j : -j) + extra_str);
                 }
                 if (r.length) {
@@ -1025,7 +1025,14 @@ var Page = {
                 }
             }, opts));
         },
-        showGif: function(obj, ev, doc, hash, addTxt, addHash) {
+        showGif: function(obj, ev, doc, hash, addTxt, addHash, post_full_id) {
+            if (post_full_id) {
+                var oid, post_id, ids;
+                ids = post_full_id.split('_');
+                oid = ids[0];
+                post_id = ids[1];
+                statlogsValueEvent('show_post_gif', 1, oid, post_id);
+            }
             if (ev.ctrlKey || ev.metaKey) {
                 return true;
             }
