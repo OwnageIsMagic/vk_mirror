@@ -1583,6 +1583,11 @@ var Feed = {
         feed.go(feed.getSectionParams(cur.section), loadCb);
     },
     switchSearch: function() {
+
+        if (cur.section == 'vk2016') {
+            re('feed_vk2016_hashtags');
+        }
+
         Feed.setSection('search', 4);
         Feed.searchToggleExtended(true);
         Feed.searchToggleHotHashtags(true);
