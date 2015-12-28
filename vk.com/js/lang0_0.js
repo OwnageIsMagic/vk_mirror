@@ -309,24 +309,38 @@ apps_done = '������';
 apps_dont_show = '������ �� ����������';
 apps_edit = '�������������';
 apps_editapp = '�������������';
+apps_games_of_group = '���� ������';
+apps_game_added_to_group = '���� ��������� � ������';
+apps_game_balance_minus_X_done = ['', '�� ��������� ������ ���� �� <b>%s</b> �����.', '�� ��������� ������ ���� �� <b>%s</b> ������.',
+    '�� ��������� ������ ���� �� <b>%s</b> �������.'
+];
+apps_game_balance_plus_X_done = ['', '�� ��������� ������ ���� �� <b>%s</b> �����.', '�� ��������� ������ ���� �� <b>%s</b> ������.',
+    '�� ��������� ������ ���� �� <b>%s</b> �������.'
+];
+apps_game_need_X_votes = ['', '���� ������ ��� ������ <b>%s</b> �����.', '���� ������ ��� ������ <b>%s</b> ������.', '���� ������ ��� ������ <b>%s</b> �������.'];
 apps_global_search_found = ['', '� ������ ������� %s ����������', '� ������ ������� %s ����������', '� ������ ������� %s ����������'];
 apps_last_notifications = '��������� ����������';
 apps_merchant_payment_title = '������ �������';
 apps_my_apps = '��� ����������';
+apps_my_games = '��� ����';
 apps_need_X_votes = ['', '���������� ������ ��� ������ <b>%s</b> �����.', '���������� ������ ��� ������ <b>%s</b> ������.', '���������� ������ ��� ������ <b>%s</b> �������.'];
 apps_noappsingroup2 = '� ������ �� ���������� �� ������ ����������.';
 apps_no_apps_found = '�� ������� {query} �� ������� �� ������ ����������.';
+apps_no_games_in_group = '� ������ �� ���������� �� ����� ����.';
 apps_no_notifications = '��� ����������';
 apps_of_group = '���������� ������';
 apps_remove = '������';
 apps_search_in_apps = '����� �� �����������';
 apps_show_more_apps = '�������� ������ ����������';
+apps_show_more_games = '�������� ������ ���';
 apps_X_apps_found = ['', '������� %s ����������', '������� %s ����������', '������� %s ����������'];
+apps_X_games_found = ['', '������� %s ����', '������� %s ����', '������� %s ���'];
 apps_youaddednoapps = '�� ��� �� ���������� �� ������ ����������.';
+apps_you_added_no_games = '�� ��� �� ���������� �� ����� ����.';
 apps_you_have_no_notifies = '� ��� ��� �� ������ ����������';
 app_comments_hidecomms = '������ �����������';
 app_comments_showcomms = '�������� �����������';
-// section = 4; version = 434;
+// section = 4; version = 444;
 
 video_add_to_public = '������� � ��������� ������';
 video_comment_placeholder = '��������������..';
