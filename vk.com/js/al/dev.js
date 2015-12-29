@@ -43,6 +43,11 @@ var Dev = {
         Dev.initPage(opts);
         Dev.initSuggestions();
         Dev.onResize();
+
+        if (opts.res && location.href.indexOf('params') != -1) {
+            ge('dev_req_run_btn')
+                .click();
+        }
     },
 
     initPage: function(opts) {
@@ -552,7 +557,6 @@ var Dev = {
             }
         }
 
-        console.log(params);
         var url_params = [];
         for (var i in params) {
             if (i.substr(0, 6) == 'param_') {
