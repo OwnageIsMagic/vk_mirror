@@ -29,6 +29,7 @@ global_charged_zone_continue = '����������';
 global_charged_zone_title = '��������������';
 global_close = '�������';
 global_continue = '����������';
+global_date = ['', '{day} {month} {year}', '�����', '�������', '������'];
 global_day_label = '����:';
 global_delete = '�������';
 global_done = '������';
