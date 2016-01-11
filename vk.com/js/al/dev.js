@@ -43,11 +43,6 @@ var Dev = {
         Dev.initPage(opts);
         Dev.initSuggestions();
         Dev.onResize();
-
-        if (opts.res && location.href.indexOf('params') != -1) {
-            ge('dev_req_run_btn')
-                .click();
-        }
     },
 
     initPage: function(opts) {
