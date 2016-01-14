@@ -284,6 +284,7 @@ audio_repeat_tooltip = '��������� ��� ������
 audio_search_enter_audio_name = '������� �������� ��� �����������';
 audio_search_not_found = '�� ������� {search} ������ �� �������.';
 audio_search_results = '���������� ������';
+audio_set_next_audio = '������������� ���������';
 audio_show_more_audios = '�������� ������ ������������';
 audio_show_recommendations = '�������� �������';
 audio_shuffle = '����������';
@@ -292,7 +293,7 @@ audio_title_search = '����� �� ������� {q}';
 audio_uploading_over = '�������� ���������';
 audio_upl_not_enabled_ingroup = '� ������ ������ ��������� �����������, ������� �������� ����������� ����������.';
 audio_user_no_recs = '� ������������ ��� ��� ������������.';
-// section = 3; version = 106;
+// section = 3; version = 107;
 
 apps_addapp = '�������� ����������';
 apps_addedtogroup = '���������� ��������� � ������';
