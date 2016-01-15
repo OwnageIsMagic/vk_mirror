@@ -1352,8 +1352,7 @@ var Feed = {
                 cur.feedTopHintEl = new ElementTooltip(feedTopLinkEl, {
                     showImmediate: true,
                     content: options.showSubsectionTopHint,
-                    offset: [4, 0],
-                    to: 'left',
+                    offset: [4, 2],
                     noHideOnMouseLeave: true,
                     onHide: function() {
                         setTimeout(function() {
