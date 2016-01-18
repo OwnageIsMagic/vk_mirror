@@ -1365,6 +1365,7 @@ var Feed = {
                     cur.feedTopHintEl.destroy();
                     delete cur.feedTopHintEl;
                     delete cur.closeFeedTopHint;
+                    statlogsValueEvent('newsfeed_tooltip_close', 1, 'usetop');
                 };
             });
         }
