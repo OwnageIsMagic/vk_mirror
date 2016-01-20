@@ -6994,7 +6994,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
 </div></div></div>' + (label ? '<div class="attach_label fl_l">' + label + '</div>' : '') +
                     '<div class="progress_x fl_l" onmouseover="animate(this, {opacity: 1}, 200); showTooltip(this, {text: \'' + getLang('dont_attach') +
                     '\', shift: [6, 3, 3]})" onmouseout="animate(this, {opacity: 0.6}, 200);" onclick="Upload.terminateUpload(' + i + ', \'' + (fileName || i) +
-                    '\');"></div>';
+                    '\', this);"></div>';
 
                 if (multi) {
                     progressEl.appendChild(ce('div', {

@@ -3222,7 +3222,7 @@ var IM = {
                 innerHTML: '<div class="fl_l">' + progress + '</div>' + (label ? '<div class="attach_label fl_l">' + label + '</div>' : '') +
                     '<div class="progress_x fl_l" style="margin-top: 0px;" onmouseover="animate(this, {opacity: 1}, 200); showTooltip(this, {text: \'' + getLang(
                         'dont_attach') + '\', shift: [6, 3, 3]})" onmouseout="animate(this, {opacity: 0.6}, 200);" onclick="Upload.terminateUpload(' + i + ', \'' +
-                    (fileName || i) + '\');"></div>',
+                    (fileName || i) + '\', this);"></div>',
                 className: 'clear_fix upload_' + i + '_progress'
             }, {
                 marginTop: '6px'
