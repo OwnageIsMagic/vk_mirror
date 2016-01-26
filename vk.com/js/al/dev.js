@@ -684,7 +684,7 @@ var Dev = {
                     if (id) {
                         el = '<a target=_blank href="/' + id + '" mention_id="' + id + '" onmouseover="mentionOver(this)">' + el + '</a>';
                     }
-                } else if (objName == 'date' || objName == 'created' || objName == 'updated') {
+                } else if (objName == 'date' || objName == 'created' || objName == 'updated' || objName == 'edited') {
                     el = '<span onmouseover="Dev.onMouseOverDate(this)" onmouseout="Dev.onMouseOut()" data-date="' + obj + '">' + el + '</span>';
                 }
 
