@@ -3363,9 +3363,13 @@ Tickets = {
         if (cur.tlmd && cur.showAll) {
             delete cur.showAll;
             query.show_all = 1;
+            if (cur.from_ads) {
+                query.from = 'ads';
+            }
         }
         ajax.post(nav.objLoc[0], query, {
             cache: 1,
+            hideProgress: removeClass.pbind('tickets_search', 'loading'),
             onDone: function(cont, button) {
                 var origStr = ge('tickets_title')
                     .value,
@@ -3408,10 +3412,6 @@ Tickets = {
                     }
                     nav.setLoc(nav.objLoc);
                 }
-                removeClass(ge('tickets_search'), 'loading');
-            },
-            onFail: function() {
-                removeClass(ge('tickets_search'), 'loading');
             }
         });
     },
