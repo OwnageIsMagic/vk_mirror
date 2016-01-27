@@ -520,6 +520,12 @@ var Dev = {
         });
     },
 
+    changeConsoleCheckBox: function(el) {
+        checkbox(el);
+        var v = hasClass(el, 'on') ? 1 : 0;
+        val(geByClass1('dev_param_checkbox_val', el), v);
+    },
+
     methodRun: function(hash, btn, paramsAdd) {
         var params = {
             hash: hash
@@ -535,7 +541,11 @@ var Dev = {
         };
         for (var i in paramsFields) {
             var el = paramsFields[i];
-            var v = val(el);
+            if (hasClass(el, 'dev_param_checkbox')) {
+                var v = hasClass(el, 'on') ? 1 : 0;
+            } else {
+                var v = val(el);
+            }
             if (v !== '') {
                 params['param_' + el.id.substr(10)] = v;
             }
