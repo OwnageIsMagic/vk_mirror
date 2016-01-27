@@ -409,7 +409,6 @@ var Exchange = {
                 }, data.message);
                 setTimeout(function() {
                     box.hide();
-                    elfocus('exchange_search_input');
                 }, 3000);
                 return true;
             },
