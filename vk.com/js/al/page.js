@@ -1044,6 +1044,7 @@ var Page = {
             var previewWidth = obj.getAttribute('data-width');
             var previewHeight = obj.getAttribute('data-height');
             var canPlayVideo = false;
+            var largeGif = hasClass(domPN(obj), 'page_gif_large');
             var el;
 
             if (postRaw) {
@@ -1082,6 +1083,9 @@ var Page = {
                 el = ce('img', {
                     src: el_src,
                     className: 'pages_gif_img'
+                }, {
+                    width: previewWidth ? previewWidth + 'px' : null,
+                    height: previewHeight ? previewHeight + 'px' : null
                 });
             }
 
@@ -1095,7 +1099,7 @@ var Page = {
             var imgCont = ce('a', {
                 href: obj.href,
                 className: 'page_gif_preview' + (cur.gifAdded[doc] ? ' page_gif_added' : ''),
-                innerHTML: '<div class="page_gif_loading progress_inv" style="display: block;"></div>' + acts + '</a>',
+                innerHTML: '<div class="page_gif_progress_icon" style="display:none;"></div>' + (largeGif ? '<div class="page_gif_label">gif</div>' : '') + acts,
                 onclick: cancelEvent
             }, {
                 background: canPlayVideo ? '' : (getStyle(domFC(obj), 'background') || '')
@@ -1110,9 +1114,13 @@ var Page = {
                 .insertBefore(imgCont, obj);
             hide(obj);
 
-            var loaded = function() {
+            var isLoaded = false;
+
+            var onLoaded = function() {
                 if (getSize(el)[0] || getSize(el)[1] || !cur.activeGif) {
                     clearInterval(loadingInterval);
+                    el.onload = el.onloadeddata = null;
+                    isLoaded = true;
 
                     if (!cur.activeGif) return;
                     hide(domFC(imgCont));
@@ -1124,11 +1132,21 @@ var Page = {
                 }
             };
 
-            if (canPlayVideo) {
-                el.onloadeddata = loaded;
+            if (ev) { // clicked by user
+                show(domFC(imgCont));
             } else {
-                var loadingInterval = setInterval(loaded, 10);
-                el.onload = loaded;
+                setTimeout(function() {
+                    if (!isLoaded) {
+                        show(domFC(imgCont));
+                    }
+                }, 300);
+            }
+
+            if (canPlayVideo) {
+                el.onloadeddata = onLoaded;
+            } else {
+                var loadingInterval = setInterval(onLoaded, 10);
+                el.onload = onLoaded;
             }
 
             domPN(obj)
