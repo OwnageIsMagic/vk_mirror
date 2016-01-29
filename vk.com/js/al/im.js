@@ -8901,8 +8901,11 @@ ImUpload = {
                     height: h
                 });
 
-                var type = e.dataTransfer.items[0].type.split('/');
+                if (browser.safari) {
+                    return;
+                }
 
+                var type = e.dataTransfer.items[0].type.split('/');
                 if (!type[1].match(/^(jpg|jpeg|png)$/i) && !ge('docs_choose_upload_area_wrap')) {
                     var dcparams = cur.gid ? {
                         imhash: cur.im_doc_hash,
