@@ -1649,7 +1649,7 @@ if (!window.Upload) {
                 delete Upload.dragTimer[i];
             }, 0);
             if (Upload.options[i].onDragEnter) {
-                Upload.options[i].onDragEnter();
+                Upload.options[i].onDragEnter(e);
             }
             show(Upload.dropbox[i]);
             cancelEvent(e);
