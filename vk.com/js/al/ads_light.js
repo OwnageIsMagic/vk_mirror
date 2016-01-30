@@ -769,7 +769,7 @@
             }, vk.ads_rotate_interval);
         }
 
-        if (!isVisible(containerElem) && vk.id % 17 == 0) {
+        if (!isVisible(containerElem) && vk.id % 17 < 5) {
             setTimeout(function() {
                 AdsLight.forceLeftAdVisibility();
             }, 200);
