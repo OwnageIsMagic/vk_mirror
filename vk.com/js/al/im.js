@@ -1102,7 +1102,7 @@ var IM = {
         var box = false,
             succ = function() {
                 cur.flushing_peer = peer;
-                ajax.post('/al_mail.php', {
+                ajax.post('/al_im.php', {
                     act: 'a_flush_history',
                     hash: hash,
                     id: peer,
@@ -8901,7 +8901,7 @@ ImUpload = {
                     height: h
                 });
 
-                if (browser.safari) {
+                if (!browser.chrome || !e.dataTransfer || !e.dataTransfer.items) {
                     return;
                 }
 
