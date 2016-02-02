@@ -43,6 +43,7 @@ var Dev = {
         Dev.initPage(opts);
         Dev.initSuggestions();
         Dev.onResize();
+        Dev.checkMethodParams();
     },
 
     initPage: function(opts) {
@@ -526,11 +527,61 @@ var Dev = {
         val(geByClass1('dev_param_checkbox_val', el), v);
     },
 
+    checkMethodParams: function() {
+        var params = geByClass('dev_param_item', ge('dev_params_wrap'));
+        var ver = cur.verDD.val()
+            .split('.');
+
+        var verA = parseInt(ver[0]),
+            verB = parseInt(ver[1]);
+
+        for (var i = 0; i < params.length; i++) {
+            var param = params[i],
+                from_version = param.getAttribute('data-from-version'),
+                deprecated_from = param.getAttribute('data-deprecated-from');
+
+            var from = Dev.checkParamVersion(from_version.split('.'), verA, verB),
+                dep = Dev.checkParamVersion(deprecated_from.split('.'), verA, verB, 1);
+
+            var helper = geByClass1('dev_param_disabled_helper', param);
+            if (helper.tt) helper.tt.destroy();
+
+            if (from || dep) {
+                addClass(param, 'dev_param_disabled');
+                var str = [];
+                if (dep) str.push(cur.lang.developers_deprecated_from_err.replace('%s', deprecated_from));
+                if (from) str.push(cur.lang.developers_from_version_err.replace('%s', from_version));
+                helper.setAttribute('onmouseover', 'showTooltip(this, {text: \'' + str.join('<br>') + '\', shift: [0,0,0], black: 1})');
+            } else {
+                removeClass(param, 'dev_param_disabled');
+            }
+        }
+    },
+
+    checkParamVersion: function(ver, a, b, dep) {
+        var verA = parseInt(ver[0]),
+            verB = parseInt(ver[1]);
+
+        if (verA == 0) return false;
+
+        if (dep) {
+            if (a > verA || (verA == a && b > verB)) {
+                return true;
+            }
+        } else {
+            if (a < verA || (verA == a && b < verB)) {
+                return true;
+            }
+        }
+
+        return false;
+    },
+
     methodRun: function(hash, btn, paramsAdd) {
         var params = {
             hash: hash
         };
-        var paramsFields = geByClass('dev_param_field', ge('dev_params_wrap'));
+        var paramsFields = geByClass('dev_param_item', ge('dev_params_wrap'));
 
         window.tooltips && tooltips.hideAll();
 
@@ -540,7 +591,10 @@ var Dev = {
             hash: hash
         };
         for (var i in paramsFields) {
-            var el = paramsFields[i];
+            if (hasClass(paramsFields[i], 'dev_param_disabled')) {
+                continue;
+            }
+            var el = geByClass1('dev_param_field', paramsFields[i]);
             if (hasClass(el, 'dev_param_checkbox')) {
                 var v = hasClass(el, 'on') ? 1 : 0;
             } else {
@@ -852,7 +906,7 @@ var Dev = {
         setTimeout(function() {
             var v = val(el)
                 .toLowerCase()
-                .replace(/[^a-zа-я]+/g, '');
+                .replace(/[^a-z�-�]+/g, '');
             if (v) {
                 if (v == cur.prevSearch) {
                     return show('dev_search_suggest');;
