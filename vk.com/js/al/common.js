@@ -529,6 +529,24 @@ function domPN(el) {
         .parentNode;
 }
 
+// Closest ansector matching given selector
+function domCA(el, selector) {
+    var matches = selector ?
+        (el.matches ||
+            el.matchesSelector ||
+            el.msMatchesSelector ||
+            el.mozMatchesSelector ||
+            el.webkitMatchesSelector ||
+            el.oMatchesSelector) :
+        function() {
+            return true;
+        };
+    do {
+        el = domPN(el);
+    } while (el && !matches.call(el, selector));
+    return el;
+}
+
 function isAncestor(el, ancestor) {
     var current = ge(el);
     ancestor = ge(ancestor);
@@ -3367,7 +3385,7 @@ var stManager = {
                 var p = '/js/';
                 if (stTypes.fromLib[f]) {
                     p += 'lib/';
-                } else if (!/^lang\d/i.test(f) && !stTypes.fromRoot[f]) {
+                } else if (!/^lang\d/i.test(f) && !stTypes.fromRoot[f] && f.indexOf('/') == -1) {
                     p += 'al/';
                 }
                 StaticFiles[f].t = 'js';
@@ -3382,7 +3400,7 @@ var stManager = {
                     }));
                 }
             } else if (f.indexOf('.css') != -1) {
-                var p = '/css/' + (stTypes.fromRoot[f] ? '' : 'al/');
+                var p = '/css/' + ((stTypes.fromRoot[f] || f.indexOf('/') != -1) ? '' : 'al/');
                 headNode.appendChild(ce('link', {
                     type: 'text/css',
                     rel: 'stylesheet',
