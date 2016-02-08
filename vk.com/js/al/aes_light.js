@@ -688,38 +688,113 @@
         }
     }
 
+    AdsLight.sendExperimentStat = function(statsCodeBase, stat_type) {
+        if (Math.random() >= 0.05) {
+            return;
+        }
+
+        var statCode;
+        switch (stat_type) {
+            case 'try':
+                {
+                    statCode = statsCodeBase + 1;
+                }
+                break;
+            case 'success':
+                {
+                    statCode = statsCodeBase + 2;
+                }
+                break;
+            case 'fail':
+                {
+                    statCode = statsCodeBase + 3;
+                }
+                break;
+
+            default:
+                {
+                    return;
+                }
+                break;
+        }
+
+        ajax.post('/wkview.php?act=mlet&mt=' + statCode, {}, {
+            onFail: function() {
+                return true;
+            }
+        });
+    }
+
+    AdsLight.tryExperiment = function(lineup) {
+        for (var experimentIndex in lineup) {
+            var parts = lineup[experimentIndex].split(':');
+            var experimentName = parts[0];
+            var statsCodeBase = parseInt(parts[1]);
+            var experimentParams = parts.slice(2);
+
+            vk__adsLight.yaDirectAdActive = false;
+            switch (experimentName) {
+                case 'ya_direct':
+                    {
+                        vk__adsLight.yaCloseLink = experimentParams[0];
+
+                        if (!vk__adsLight.yaDirectLoaded) {
+                            if (vk__adsLight.yaDirectLoadTries > 3) { // ya.d did not load within 1 second
+                                continue;
+                            } else {
+                                AdsLight.initYaDirect();
+                                setTimeout(function() {
+                                    AdsLight.tryExperiment(lineup);
+                                }, 300);
+                            }
+                            return;
+                        }
+                        AdsLight.tryRenderYaDirect(experimentParams[1], statsCodeBase, lineup.slice(experimentIndex + 1));
+                        return true;
+                    }
+                    break;
+
+                case 'criteo':
+                    {
+                        AdsLight.tryRenderCriteo(statsCodeBase, lineup.slice(experimentIndex + 1));
+                        return true;
+                    }
+                    break;
+
+                case 'rb':
+                    {
+                        AdsLight.tryRenderTarget(experimentParams[0], statsCodeBase, lineup.slice(experimentIndex + 1));
+                        return true;
+                    }
+                    break;
+
+                case 'vk':
+                    {
+                        AdsLight.sendExperimentStat(statsCodeBase, 'try');
+
+                        var oldAdsParams = vk__adsLight.adsParams;
+                        vk__adsLight.adsParams = vk__adsLight.adsParams || {};
+                        vk__adsLight.adsParams.ignore_experiments = 1;
+                        AdsLight.updateBlock('force_hard', 2);
+                        vk__adsLight.adsParams = oldAdsParams;
+
+                        return true;
+                    }
+                    break;
+            }
+        }
+
+        return false;
+    }
+
     AdsLight.setNewBlock = function(adsHtml, adsSection, adsCanShow, adsShowed, adsParams) {
         if (typeof(adsSection) === 'string') {
             vk__adsLight.adsSection = adsSection;
         }
-        if (adsHtml && (adsHtml.slice(0, '<!--ya_direct'.length) === '<!--ya_direct')) {
-            var parts = adsHtml.split(';', 3);
-            if (parts && parts[1]) {
-                vk__adsLight.yaCloseLink = parts[1];
-            }
-            if (!vk__adsLight.yaDirectLoaded) {
-                if (vk__adsLight.yaDirectLoadTries > 3) { // ya.d did not load within 1 second
-                    AdsLight.onYaDirectRenderUnsuccessful();
-                } else {
-                    AdsLight.initYaDirect();
-                    setTimeout(function() {
-                        AdsLight.setNewBlock(adsHtml, adsSection, adsCanShow, adsShowed, adsParams);
-                    }, 300);
-                }
-                return;
-            }
-            AdsLight.tryRenderYaDirect();
-            return;
-        } else {
-            vk__adsLight.yaDirectAdActive = false;
-        }
-        if (adsHtml && (adsHtml.slice(0, '<!--criteo'.length) === '<!--criteo')) {
-            AdsLight.tryRenderCriteo();
-            return;
-        }
-        if (adsHtml && (adsHtml.slice(0, '<!--target'.length) === '<!--target')) {
-            var parts = adsHtml.split(';', 3);
-            AdsLight.tryRenderTarget(parts[1]);
+        var adsExperimentMarker = '<!--ads_experiment';
+        if (adsHtml && (adsHtml.slice(0, adsExperimentMarker.length) === adsExperimentMarker)) {
+            var parts = adsHtml.split(';');
+            AdsLight.tryExperiment(parts.slice(1, -1));
             return;
         }
         vk__adsLight.adsCanShow = ((adsCanShow || adsCanShow === '0') ? 1 : -vkNow());
@@ -1552,11 +1627,11 @@
         })(window, window.document, "yandexContextAsyncCallbacks");
     }
 
-    AdsLight.tryRenderYaDirect = function() {
+    AdsLight.tryRenderYaDirect = function(blockId, statsCodeBase, nextLineup) {
         if (!vk__adsLight.yaDirectLoaded) {
             return;
         }
-        var yaContainerId = 'yandex_ad_R-132169-1';
+        var yaContainerId = 'yandex_ad_' + blockId;
         var yaContainer;
         if (!ge(yaContainerId)) {
             yaContainer = ce('div', {
@@ -1568,22 +1643,19 @@
         yaContainer = ge(yaContainerId);
 
         Ya.Context.AdvManager.render({
-            blockId: "R-132169-1",
+            blockId: blockId,
             renderTo: yaContainerId,
             async: true,
             onRender: function() {
+                AdsLight.sendExperimentStat(statsCodeBase, 'success');
                 AdsLight.onYaDirectRenderSuccessful(yaContainer);
             }
         }, function() {
-            AdsLight.onYaDirectRenderUnsuccessful();
+            AdsLight.sendExperimentStat(statsCodeBase, 'fail');
+            AdsLight.onYaDirectRenderUnsuccessful(nextLineup);
         });
-        if (Math.random() < 0.001) {
-            ajax.post('/ads_light.php?act=mlet&mt=744', {}, {
-                onFail: function() {
-                    return true;
-                }
-            });
-        }
+
+        AdsLight.sendExperimentStat(statsCodeBase, 'try');
     }
 
     AdsLight.onYaDirectRenderSuccessful = function(adsContainer) {
@@ -1596,23 +1668,15 @@
         }
         AdsLight.showNewBlock(ge('left_ads'), adsContainer, true);
         vk__adsLight.yaDirectAdActive = true;
-        ajax.post('/ads_light.php?act=mlet&mt=741', {}, {
-            onFail: function() {
-                return true;
-            }
-        });
     }
 
-    AdsLight.onYaDirectRenderUnsuccessful = function() {
+    AdsLight.onYaDirectRenderUnsuccessful = function(nextLineup) {
         vk__adsLight.yaDirectAdActive = false;
-        var oldAdsParams = vk__adsLight.adsParams;
-        vk__adsLight.adsParams = vk__adsLight.adsParams || {};
-        vk__adsLight.adsParams.ya_failed = 1;
-        AdsLight.updateBlock('force_hard', 2);
-        vk__adsLight.adsParams = oldAdsParams;
+
+        AdsLight.tryExperiment(nextLineup);
     }
 
-    AdsLight.tryRenderCriteo = function() {
+    AdsLight.tryRenderCriteo = function(statsCodeBase, nextLineup) {
         var iframeId = 'criteo-iframe';
         var iframe = ge(iframeId);
         if (iframe) {
@@ -1620,24 +1684,11 @@
                 opacity: 0
             }, 200, function() {
                 re(iframe);
-                AdsLight.tryRenderCriteo();
+                AdsLight.tryRenderCriteo(nextLineup);
             });
-            if (Math.random() < 0.05) {
-                ajax.post('/wkview.php?act=mlet&mt=748', {}, {
-                    onFail: function() {
-                        return true;
-                    }
-                });
-            }
             return;
         }
-        if (Math.random() < 0.05) {
-            ajax.post('/wkview.php?act=mlet&mt=749', {}, {
-                onFail: function() {
-                    return true;
-                }
-            });
-        }
+        AdsLight.sendExperimentStat(statsCodeBase, 'try');
 
         iframe = ce('iframe', {
             "id": iframeId,
@@ -1653,41 +1704,20 @@
 
         iframe.onload = function() {
             if (iframe.contentDocument.body.scrollHeight > 400) { // content loaded
+                AdsLight.sendExperimentStat(statsCodeBase, 'success');
                 iframe.height = 600;
                 animate(iframe, {
                     opacity: 1
                 }, 200);
-
-                if (Math.random() < 0.05) {
-                    ajax.post('/wkview.php?act=mlet&mt=745', {}, {
-                        onFail: function() {
-                            return true;
-                        }
-                    });
-                }
-            } else {
+            } else { // failed
+                AdsLight.sendExperimentStat(statsCodeBase, 'fail');
                 re(iframe);
-
-                if (Math.random() < 0.05) {
-                    ajax.post('/wkview.php?act=mlet&mt=746', {}, {
-                        onFail: function() {
-                            return true;
-                        }
-                    });
-                }
+                AdsLight.tryExperiment(nextLineup);
             }
         };
         iframe.src = '/ads_light.php?act=criteo';
         ge('left_ads')
             .appendChild(iframe);
-
-        if (Math.random() < 0.05) {
-            ajax.post('/wkview.php?act=mlet&mt=747', {}, {
-                onFail: function() {
-                    return true;
-                }
-            });
-        }
     }
 
     AdsLight.getRBAds = function(container_id, onsuccess, onfail, params) {
@@ -1761,15 +1791,7 @@
         ajax(url, onsuccess, onfail);
     }
 
-    AdsLight.tryRenderTarget = function(test_group_id) {
-        if (Math.random() < 0.05) {
-            ajax.post('/wkview.php?act=mlet&mt=756', {}, {
-                onFail: function() {
-                    return true;
-                }
-            });
-        }
-
+    AdsLight.tryRenderTarget = function(test_group_id, statsCodeBase, nextLineup) {
         var params = {};
         if (test_group_id) {
             params.test_id = test_group_id;
@@ -1778,32 +1800,19 @@
             params.vk_id = vk.id;
         }
 
-        AdsLight.getRBAds('left_ads', function() { // ok
-            if (Math.random() < 0.05) {
-                ajax.post('/wkview.php?act=mlet&mt=754', {}, {
-                    onFail: function() {
-                        return true;
-                    }
-                });
-            }
-            if (window.RB && window.RB.doCheck) {
-                window.RB.doCheck();
-            }
-        }, function(data) { // fail
-            if (Math.random() < 0.05) {
-                ajax.post('/wkview.php?act=mlet&mt=755', data, {
-                    onFail: function() {
-                        return true;
-                    }
-                });
-            }
+        AdsLight.sendExperimentStat(statsCodeBase, 'try');
 
-            var oldAdsParams = vk__adsLight.adsParams;
-            vk__adsLight.adsParams = vk__adsLight.adsParams || {};
-            vk__adsLight.adsParams.target_failed = 1;
-            AdsLight.updateBlock('force_hard', 2);
-            vk__adsLight.adsParams = oldAdsParams;
-        }, params);
+        stManager.add(['mrtarg.js', 'mrtarg.css'], function() {
+            AdsLight.getRBAds('left_ads', function() { // ok
+                AdsLight.sendExperimentStat(statsCodeBase, 'success');
+                if (window.RB && window.RB.doCheck) {
+                    window.RB.doCheck();
+                }
+            }, function(data) { // fail
+                AdsLight.sendExperimentStat(statsCodeBase, 'fail');
+                AdsLight.tryExperiment(nextLineup);
+            }, params);
+        });
     }
 
     AdsLight.init();
