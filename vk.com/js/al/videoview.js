@@ -32,6 +32,8 @@ var Videoview = {
                 }, {
                     onDone: function(t) {}
                 });
+
+                cur.vViewsPerSearch++;
             },
             rotateVideo: function(oid, vid, angle, hash) {
                 ajax.post('al_video.php', {
@@ -1259,9 +1261,18 @@ var Videoview = {
 
             if (window.Videocat) {
                 if (options.playlistId && !mvcur.minimized) {
+                    var playlistId = options.playlistId.toString();
+                    var plNeedExtend = false;
+                    if (playlistId.indexOf('wall_') == 0 && Videocat.lists[playlistId] && cur.wallVideos && cur.wallVideos[playlistId]) {
+                        var aList = Videocat.lists[playlistId].list;
+                        var bList = cur.wallVideos[playlistId].list;
+                        Videocat.lists[playlistId].list = Videocat.mergeLists(aList, bList);
+                        plNeedExtend = true;
+                    }
+
                     cur._plbWasVisible = !!Videoview.getPlaylistBlockEl();
 
-                    var mvplBlockEl = Videocat.buildPlaylistBlock(options.playlistId);
+                    var mvplBlockEl = Videocat.buildPlaylistBlock(playlistId, plNeedExtend);
                     if (mvplBlockEl) {
                         Videoview.togglePlaylistBlockStateClasses();
                         Videoview.updatePlaylistBoxPosition();
@@ -1279,6 +1290,7 @@ var Videoview = {
 
         togglePlaylistBlockStateClasses: function() {
             var blockEl = Videoview.getPlaylistBlockEl();
+            toggleClass(mvcur.mvCont, 'mv_has_plb', !!blockEl);
             if (blockEl) {
                 var isCollapsed = Videoview.isPlaylistBlockCollapsed();
                 var isMinimized = window.mvcur && mvcur.minimized;
@@ -2965,9 +2977,14 @@ var Videoview = {
             var plNeedExtend = false;
             if (opt.pl_list && Object.keys) {
                 var plList = JSON.parse(opt.pl_list);
+                var plFullId = Object.keys(plList)[0];
+
+                if (/^wall/.test(plFullId) && cur.wallVideos && cur.wallVideos[plFullId]) {
+                    plList[plFullId].list = Videocat.mergeLists(cur.wallVideos[plFullId].list, plList[plFullId].list);
+                }
+
                 Videocat.addList(plList);
 
-                var plFullId = Object.keys(plList)[0];
                 if (plFullId.split('_')[1] == -2 && Videocat.getCurrentPlaylistId()
                     .indexOf('s_') == 0 && plList[plFullId].list.length > 4) {
                     var currPlaylist = Videocat.getCurrentPlaylist();
@@ -2987,6 +3004,9 @@ var Videoview = {
                 } else {
                     mvcur.needPlaylistRebuildId = plFullId;
                 }
+            } else if (mvcur.options.playlistId && !Videocat.lists[mvcur.options.playlistId] && cur.wallVideos) {
+                Videocat.addList(cur.wallVideos);
+                mvcur.needPlaylistRebuildId = mvcur.options.playlistId;
             }
 
             if (!mvcur.mvContent) {
@@ -3044,18 +3064,21 @@ var Videoview = {
                 window.checkRBoxes && checkRBoxes();
             };
 
-            var mvplBlockEl = Videoview.getPlaylistBlockEl();
-            if (mvplBlockEl && !mvcur.minimized) {
+            if (Videoview.getPlaylistBlockEl() && !mvcur.minimized && !mvcur.needPlaylistRebuildId) {
                 Videocat.setPlaylistCurrentVideo(mvcur.videoRaw, cur._plbWasVisible);
                 cur._plbWasVisible = false;
 
                 Videoview.togglePlaylistsBlock(!Videoview.isPlaylistBlockCollapsed(), true);
             }
 
-            if (mvcur.needPlaylistRebuildId) {
-                Videocat.buildPlaylistBlock(mvcur.needPlaylistRebuildId, plNeedExtend);
-                Videocat.setPlaylistCurrentVideo(mvcur.videoRaw, true);
-                mvcur.needPlaylistRebuildId = false;
+            if (mvcur.needPlaylistRebuildId && window.Videocat) {
+                if (Videocat.lists && Videocat.lists[mvcur.needPlaylistRebuildId]) {
+                    Videocat.buildPlaylistBlock(mvcur.needPlaylistRebuildId, plNeedExtend);
+                    mvcur.needPlaylistRebuildId = false;
+                    setTimeout(function() {
+                        Videocat.setPlaylistCurrentVideo(mvcur.videoRaw, false);
+                    }, 0);
+                }
             }
 
             Videoview.togglePlaylistBlockStateClasses();
