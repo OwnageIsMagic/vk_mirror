@@ -115,8 +115,10 @@ var Video = {
 
                 if (n.section !== 'search') {
                     cur.vViewsPerSearch = null;
+                    cur.vSearchHadAdult = false;
                 } else {
                     cur.vViewsPerSearch = 0;
+                    cur.vSearchHadAdult = cur.adult;
                 }
 
                 if (window.mvcur) {
@@ -1362,6 +1364,7 @@ var Video = {
         // Publish stats of previous search
         if (typeof nav.objLoc['q'] !== 'undefined') {
             Video.logViewsPerSearch();
+            cur.vSearchHadAdult = cur.adult;
         }
         if (trim(cur.vStr) && cur.vStr != '""') {
             nav.objLoc['q'] = cur.vStr;
@@ -3170,7 +3173,7 @@ var Video = {
     },
 
     logViewsPerSearch: function() {
-        if (cur.vSearchFieldHasLostFocus) {
+        if (cur.vSearchFieldHasLostFocus && !cur.vSearchHadAdult) {
             if (typeof(cur.vViewsPerSearch) !== 'undefined' && cur.vViewsPerSearch !== null) {
                 console.log('register views per search: ', cur.vViewsPerSearch);
                 ajax.post('al_video.php', {
