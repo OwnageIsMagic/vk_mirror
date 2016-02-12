@@ -3107,7 +3107,7 @@ var Photoview = {
                 addClass(icon, 'no_likes');
             }
         },
-        like: function() {
+        like: function(fromHH) {
             if (!vk.id) return;
             var listId = cur.pvListId,
                 index = cur.pvIndex,
@@ -3117,7 +3117,8 @@ var Photoview = {
                 act: 'a_do_' + (my ? '' : 'un') + 'like',
                 object: 'photo' + ph.id,
                 hash: ph.hash,
-                from: 'photo_viewer'
+                from: 'photo_viewer',
+                hh: intval(fromHH)
             }, {
                 onDone: function(count, title) {
                     if (cur.pvListId == listId && cur.pvIndex == index) {
@@ -4362,7 +4363,7 @@ var Photoview = {
             if (ev.button == 2) return;
             var liked = Photoview.hhLiked(obj);
 
-            Photoview.like();
+            Photoview.like(true);
             liked && Photoview.likeOut();
 
             Photoview.hhOver(obj);

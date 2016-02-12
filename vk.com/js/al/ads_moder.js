@@ -443,67 +443,57 @@ AdsModer.saveDomainComment = function(new_status, reload) {
 }
 
 AdsModer.openNoteEditBox = function(ajaxParams, noteText, noteTextParams, boxTitle, editActionText, isEdit, isOtherUser) {
-    function onBoxHide() {
-        delete cur.noteEditBox;
-        delete cur.noteEditAjaxParams;
-    }
-
-    cur.noteEditAjaxParams = ajaxParams;
 
     var boxHtml = '<div class="ads_note_edit_wrap"><div><textarea id="ads_note_edit" ' + noteTextParams + '>' + noteText + '</textarea></div></div>';
 
-    cur.noteEditBox = showFastBox({
+    var noteEditBox = showFastBox({
         title: boxTitle,
-        width: 400,
-        onHide: onBoxHide
+        width: 400
     }, boxHtml);
-    cur.noteEditBox.removeButtons();
+    noteEditBox.removeButtons();
     if (isOtherUser) {
-        cur.noteEditBox.addButton(getLang('box_cancel'), false, 'yes');
+        noteEditBox.addButton(getLang('box_cancel'), false, 'yes');
     } else {
-        cur.noteEditBox.addButton(getLang('box_cancel'), false, 'no');
-        cur.noteEditBox.addButton(editActionText, AdsModer.saveNote.pbind(false), 'yes');
+        noteEditBox.addButton(getLang('box_cancel'), false, 'no');
+        noteEditBox.addButton(editActionText, AdsModer.saveNote.pbind(noteEditBox, ajaxParams, false), 'yes');
     }
     if (isEdit) {
-        cur.noteEditBox.setControlsText('<a href="#" onclick="AdsModer.saveNote(true); return false;">�������</a>');
+        noteEditBox.setControlsText('<a href="#" id="ads_note_edit_delete_link">�������</a>');
+        addEvent(ge('ads_note_edit_delete_link'), 'click', AdsModer.saveNote.rpbind(false, noteEditBox, ajaxParams, true));
     }
 }
 
-AdsModer.saveNote = function(isDelete) {
+AdsModer.saveNote = function(noteEditBox, ajaxParams, isDelete) {
     if (!Ads.lock('save_note', onLock, onUnlock)) {
         return;
     }
 
-    var ajaxParams = {};
-    ajaxParams = extend({}, ajaxParams, cur.noteEditAjaxParams);
-    ajaxParams.note_text = (isDelete ? '' : ge('ads_note_edit')
-        .value);
+    var isOk = false;
+
+    ajaxParams.note_text = (isDelete ? '' : val('ads_note_edit'));
     ajax.post('/adsmoder?act=a_edit_notes', ajaxParams, {
         onDone: onComplete,
-        onFail: onComplete
+        onFail: onComplete.rpbind(true)
     });
 
     function onComplete(response) {
+        isOk = (response && response.ok);
         Ads.unlock('save_note');
-        if (response && response.ok) {
+        if (isOk) {
             nav.reload();
         } else {
-            showFastBox({
-                title: '������',
-                onHide: function() {
-                    nav.reload();
-                }
-            }, '������');
+            showFastBox(getLang('ads_error_box_title'), getLang('ads_error_text'));
         }
-        return true;
     }
 
     function onLock() {
-        cur.noteEditBox.showProgress();
+        noteEditBox.showProgress();
     }
 
     function onUnlock() {
-        cur.noteEditBox.hide();
+        if (!isOk) {
+            noteEditBox.hideProgress();
+        }
     }
 }
 
@@ -1303,34 +1293,43 @@ AdsModer.openDisableOfficeBox = function(ajaxParams, isCompany) {
     cur.lang.ads_disable_office_confirm_message =
         '�� ������� ��� ������ ������� ��������� �������?<br><br>����� �������� �������� ��������� ������ � ����������, �� ����� �������� �������� ����� ����������.';
     cur.lang.ads_disable_office_company_confirm_message = '������ ����� �������� �������� �������� �������� ������ ���������� ����� � ����� ��������.';
-    var message = getLang('ads_disable_office_confirm_message');
+    cur.lang.ads_disable_office_reason_label = '������� ������� �������� ��������:';
+
+    var boxHtml = '';
+    boxHtml += getLang('ads_disable_office_confirm_message')
     if (isCompany) {
-        message += '<br><br>' + getLang('ads_disable_office_company_confirm_message');
+        boxHtml += '<br><br>' + getLang('ads_disable_office_company_confirm_message');
     }
-    var messageBox = showFastBox(getLang('ads_disable_office_box_title'), message, getLang('ads_disable_office_box_button'), function() {
-        AdsModer.disableOffice(ajaxParams, messageBox);
+    boxHtml += '<br><br>' + getLang('ads_disable_office_reason_label');
+    boxHtml += '<div class="ads_note_edit_wrap"><div><textarea id="ads_note_edit"></textarea></div></div>';
+
+    var box = showFastBox(getLang('ads_disable_office_box_title'), boxHtml, getLang('ads_disable_office_box_button'), function() {
+        AdsModer.disableOffice(box, ajaxParams);
     }, getLang('box_cancel'));
 }
 
-AdsModer.disableOffice = function(ajaxParams, box) {
+AdsModer.disableOffice = function(box, ajaxParams) {
     if (!Ads.lock('disableOffice', onLock, onUnlock)) {
         return;
     }
 
+    var isOk = false;
+
+    ajaxParams.text = val('ads_note_edit');
+
     ajax.post('/adsmoder?act=a_disable_office', ajaxParams, {
         onDone: onComplete,
-        onFail: onComplete
+        onFail: onComplete.rpbind(true)
     });
 
     function onComplete(response) {
+        isOk = (response && response.ok);
         Ads.unlock('disableOffice');
-        if (response && response.redirect) {
+        if (isOk) {
             nav.reload();
         } else {
-            box.hide();
-            showFastBox(getLang('ads_error_box_title'), getLang('ads_error_text'));
+            showFastBox(getLang('ads_error_box_title'), response && response.error ? response.error : getLang('ads_error_text'));
         }
-        return true;
     }
 
     function onLock() {
@@ -1338,7 +1337,9 @@ AdsModer.disableOffice = function(ajaxParams, box) {
     }
 
     function onUnlock() {
-        box.hideProgress();
+        if (!isOk) {
+            box.hideProgress();
+        }
     }
 }
 

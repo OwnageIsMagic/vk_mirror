@@ -774,13 +774,29 @@ Function.prototype.pbind = function() {
     args.unshift(window);
     return this.bind.apply(this, args);
 };
+Function.prototype.rpbind = function() {
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift(window);
+    return this.rbind.apply(this, args);
+}
 Function.prototype.bind = function() {
-    var func = this,
-        args = Array.prototype.slice.call(arguments);
+    var func = this;
+    var args = Array.prototype.slice.call(arguments);
     var obj = args.shift();
     return function() {
         var curArgs = Array.prototype.slice.call(arguments);
         return func.apply(obj, args.concat(curArgs));
+    }
+}
+Function.prototype.rbind = function() {
+    var func = this;
+    var args = Array.prototype.slice.call(arguments);
+    var obj = args.shift();
+    var result = args.shift();
+    return function() {
+        var curArgs = Array.prototype.slice.call(arguments);
+        func.apply(obj, args.concat(curArgs));
+        return result;
     }
 }
 
