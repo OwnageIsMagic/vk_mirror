@@ -1639,6 +1639,14 @@
             });
             var leftAdsContainer = ge('left_ads');
             leftAdsContainer.appendChild(yaContainer);
+        } else {
+            animate(ge(yaContainerId), {
+                opacity: 0
+            }, 200, function() {
+                re(yaContainerId);
+                AdsLight.tryRenderYaDirect(blockId, statsCodeBase, nextLineup);
+            });
+            return;
         }
         yaContainer = ge(yaContainerId);
 

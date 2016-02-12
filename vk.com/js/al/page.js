@@ -1041,11 +1041,13 @@ var Page = {
             var addHash = obj.getAttribute('data-add-hash');
             var shareTxt = obj.getAttribute('data-share-txt') || '';
             var postRaw = obj.getAttribute('data-post');
+            var replyRaw = obj.getAttribute('data-reply');
             var hasPreview = obj.getAttribute('data-preview');
             var previewWidth = obj.getAttribute('data-width');
             var previewHeight = obj.getAttribute('data-height');
             var canPlayVideo = false;
             var largeGif = hasClass(domPN(obj), 'page_gif_large');
+            var isAutoplay = !ev;
             var el;
 
             if (postRaw) {
@@ -1157,6 +1159,11 @@ var Page = {
 
             domPN(obj)
                 .setAttribute('data-playing', 1);
+
+            var statsMode = isAutoplay ? 'autoplay' : 'manual';
+            var statsModule = cur.module || 'other';
+            var statsFrom = postRaw ? 'post' : (replyRaw ? 'reply' : '');
+            statlogsValueEvent('gif_show', statsMode, statsModule, statsFrom);
 
             return cancelEvent(ev);
         },
