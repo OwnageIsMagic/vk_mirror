@@ -4405,6 +4405,9 @@ var Wall = {
         if (window.mvcur && mvcur.mvShown) {
             Videoview.updatePlaylistBoxPosition();
         }
+        if (cur.gifAutoplayScrollHandler) {
+            cur.gifAutoplayScrollHandler();
+        }
     },
     getAbsDate: function(ts, cur) {
         cur = cur || window.cur;
