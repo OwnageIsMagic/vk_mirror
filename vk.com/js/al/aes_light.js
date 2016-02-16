@@ -587,12 +587,6 @@
                 clearTimeout(timeoutTimer);
                 intervalTimer = setInterval(checkRequest, isWebLoad ? 100 : 200);
                 timeoutTimer = setTimeout(checkRequest.pbind(true), 5000 + 50);
-            } else {
-                ajax.post('/ads_light.php?act=mlet&mt=742', {}, {
-                    onFail: function() {
-                        return true;
-                    }
-                });
             }
 
             lastRequestWindowsIds[currentRequestWindowId] = (lastRequestWindowsIds[currentRequestWindowId] ? lastRequestWindowsIds[currentRequestWindowId] + 1 : 1);
@@ -675,11 +669,6 @@
         });
 
         function onFailed() {
-            ajax.post('/ads_light.php?act=mlet&mt=743', {}, {
-                onFail: function() {
-                    return true;
-                }
-            });
             onComplete();
         }
 
@@ -774,7 +763,7 @@
 
                         var oldAdsParams = vk__adsLight.adsParams;
                         vk__adsLight.adsParams = vk__adsLight.adsParams || {};
-                        vk__adsLight.adsParams.ignore_experiments = 1;
+                        vk__adsLight.adsParams.ignore_experiments = statsCodeBase;
                         AdsLight.updateBlock('force_hard', 2);
                         vk__adsLight.adsParams = oldAdsParams;
 

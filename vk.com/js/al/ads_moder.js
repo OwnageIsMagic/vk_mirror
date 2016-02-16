@@ -427,8 +427,8 @@ AdsModer.saveDomainComment = function(new_status, reload) {
             }
         },
         onFail: function() {
-            showFastBox('������', '������');
             Ads.unlock('save_domain_comment');
+            showFastBox('������', '������');
             return true;
         }
     });

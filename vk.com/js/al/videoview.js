@@ -32,18 +32,18 @@ var Videoview = {
                     module: module
                 };
                 // clear porn searchers from stats
-                if (!cur.adult) {
-                    if (typeof(cur.vSearchPos) !== 'undefined' && cur.vSearchPos !== null) {
-                        params.search_pos = cur.vSearchPos;
-                        if (cur.vSearchPos < Video.SIGNIFICANT_POSITIONS) {
-                            if (typeof(cur.vSearchPositionViews[cur.vSearchPos]) == 'undefined') {
-                                cur.vSearchPositionViews[cur.vSearchPos] = 0;
-                            }
-                            cur.vSearchPositionViews[cur.vSearchPos]++;
+                // if (!cur.adult) {
+                if (typeof(cur.vSearchPos) !== 'undefined' && cur.vSearchPos !== null) {
+                    params.search_pos = cur.vSearchPos;
+                    if (cur.vSearchPos < Video.SIGNIFICANT_POSITIONS) {
+                        if (typeof(cur.vSearchPositionViews[cur.vSearchPos]) == 'undefined') {
+                            cur.vSearchPositionViews[cur.vSearchPos] = 0;
                         }
+                        cur.vSearchPositionViews[cur.vSearchPos]++;
                     }
-                    cur.vViewsPerSearch++;
                 }
+                cur.vViewsPerSearch++;
+                // }
 
                 ajax.post('al_video.php', params, {
                     onDone: function(t) {}
@@ -376,11 +376,11 @@ var Videoview = {
                     };
 
                     // clear porn searchers from stats
-                    if (!cur.adult) {
-                        if (typeof(cur.vSearchPos) !== 'undefined' && cur.vSearchPos !== null) {
-                            params.search_pos = cur.vSearchPos;
-                        }
+                    // if (!cur.adult) {
+                    if (typeof(cur.vSearchPos) !== 'undefined' && cur.vSearchPos !== null) {
+                        params.search_pos = cur.vSearchPos;
                     }
+                    // }
 
                     ajax.post('/al_video.php', params, {
                         onDone: function(prevSegments, prevSegmentsSig) {
