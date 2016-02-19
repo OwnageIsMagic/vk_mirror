@@ -682,6 +682,19 @@ Claims = {
         });
     },
 
+    videoHashesUnban: function(btn, videoId, sourceVideoId, claimId, localClaimId, relevance, hash) {
+        Claims._videoHashesHideRow(btn);
+        ajax.post('/claims', {
+            act: 'a_claim_video_unban',
+            video: videoId,
+            hash: hash,
+            source_video: sourceVideoId,
+            claim_id: claimId,
+            local_claim_id: localClaimId,
+            relevance: relevance
+        });
+    },
+
     _eof: 1
 };
 try {

@@ -35,12 +35,12 @@ var Videoview = {
                 // if (!cur.adult) {
                 if (typeof(cur.vSearchPos) !== 'undefined' && cur.vSearchPos !== null) {
                     params.search_pos = cur.vSearchPos;
-                    if (cur.vSearchPos < Video.SIGNIFICANT_POSITIONS) {
-                        if (typeof(cur.vSearchPositionViews[cur.vSearchPos]) == 'undefined') {
-                            cur.vSearchPositionViews[cur.vSearchPos] = 0;
-                        }
-                        cur.vSearchPositionViews[cur.vSearchPos]++;
+                    if (typeof(cur.vSearchPositionStats[cur.vSearchPos]) == 'undefined') {
+                        cur.vSearchPositionStats[cur.vSearchPos] = {
+                            'viewStarted': 0
+                        };
                     }
+                    cur.vSearchPositionStats[cur.vSearchPos].viewStarted++;
                 }
                 cur.vViewsPerSearch++;
                 // }
@@ -48,6 +48,7 @@ var Videoview = {
                 ajax.post('al_video.php', params, {
                     onDone: function(t) {}
                 });
+
             },
             rotateVideo: function(oid, vid, angle, hash) {
                 ajax.post('al_video.php', {
@@ -86,12 +87,42 @@ var Videoview = {
                     });
                 }
             },
-            onSuggestionClick: function(vid) {
-                Videoview.sendPlayerStats(11, 0);
-                showVideo(vid, '', {
-                    autoplay: 1,
-                    module: Videoview.getVideoModule(vid)
+            setSuggestions: function(videos_ids) {
+                ajax.post('/al_video.php', {
+                    act: 'fetch_player_suggestions',
+                    videos: videos_ids
+                }, {
+                    onDone: function(videos) {
+                        if (!videos || !window.mvcur || !mvcur.mvData) return;
+                        mvcur.mvData.playerSuggestions = videos;
+                    }
                 });
+            },
+            onSuggestionsShown: function(qid) {
+                Videoview.sendPlayerStats(qid ? 14 : 12, 0);
+                if (qid) {
+                    vkImage()
+                        .src = '//go.imgsmail.ru/vk?pxn=vs&qid=' + qid;
+                }
+            },
+            onSuggestionClick: function(videoRaw, qid, pos, t) {
+                Videoview.sendPlayerStats(qid ? 13 : 11, 0);
+                showVideo(videoRaw, '', {
+                    autoplay: 1,
+                    module: Videoview.getVideoModule(videoRaw),
+                    addParams: {
+                        suggestions_qid: qid
+                    }
+                });
+
+                if (qid) {
+                    vkImage()
+                        .src = '//go.imgsmail.ru/vk?pxn=vic&qid=' + qid + '&vid=' + videoRaw + '&p=' + pos + '&t=' + t;
+                }
+            },
+            onSuggestionQuarterWatched: function(qid, videoRaw, t) {
+                vkImage()
+                    .src = '//go.imgsmail.ru/vk?pxn=vt25&qid=' + qid + '&vid=' + videoRaw + '&t=' + t;
             },
             onOpenInPopup: function(videoRaw, listId, timeString) {
                 Videoview.sendPlayerStats(8, 0);
@@ -1539,7 +1570,9 @@ var Videoview = {
             var dx = Math.abs(e.pageX - intval(mvcur.mvOldX));
             var dy = Math.abs(e.pageY - intval(mvcur.mvOldY));
             if (dx > 3 || dy > 3) {
-                if (vkNow() - intval(mvcur.mvOldT) > 300) {
+                if (mvcur.minOnBgClick && e.pageX < getXY('mv_box')[0]) {
+                    Videoview.minimize();
+                } else if (vkNow() - intval(mvcur.mvOldT) > 300) {
                     if (mvcur.mvTagger) {
                         Videoview.stopTag();
                     } else {
@@ -2995,6 +3028,7 @@ var Videoview = {
             mvcur.mvMediaTypes = opt.media;
             mvcur.mvMediaShare = opt.share;
             mvcur.mvReplyNames = opt.names || {};
+            mvcur.minOnBgClick = opt.minOnBgClick;
 
             var playlistId = mvcur.options.playlistId;
             var plNeedExtend = false;
@@ -3507,8 +3541,8 @@ var Videoview = {
                     h: intval(mvLayerWrap.style.height)
                 },
                 player: {
-                    w: intval(mvcur.mvPlayer.style.width),
-                    h: intval(mvcur.mvPlayer.style.height)
+                    w: intval(mvcur.mvPlayer && mvcur.mvPlayer.style.width),
+                    h: intval(mvcur.mvPlayer && mvcur.mvPlayer.style.height)
                 }
             });
         },
@@ -3531,7 +3565,7 @@ var Videoview = {
             });
 
             mvcur.resizeDiff = 0;
-            mvcur.mvPlayerCont = mvcur.mvPlayer.parentNode;
+            mvcur.mvPlayerCont = mvcur.mvPlayer ? domPN(mvcur.mvPlayer) : ge('video_box_wrap' + mvcur.videoRaw);
 
             if (!mask || mask & 16) {
                 var act = Videoview.onMinMove;
@@ -3805,7 +3839,7 @@ var Videoview = {
         },
 
         minimizePlayer: function() {
-            mvcur.mvPlayer = ge('video_player') || ge('extra_player') || ge('html5_player');
+            mvcur.mvPlayer = ge('video_player') || ge('extra_player') || ge('html5_player') || ge('video_box_wrap' + mvcur.videoRaw);
             if (mvcur.mvPlayer) {
                 var style = {
                     width: mvcur.minSize.player.w + 'px',
@@ -4169,7 +4203,9 @@ var Videoview = {
             var wrapEl = domPN(playerEl);
             var mvContentEl = ge('mv_content');
 
-            if (!playerEl || !playlistBlockEl || Videoview.isPlaylistBlockCollapsed() == !doShow) return;
+            if (!playlistBlockEl || Videoview.isPlaylistBlockCollapsed() == !doShow) {
+                return;
+            }
 
             addClass(ge('mv_top_pl_toggle'), 'mv_btn_move_transition');
 
