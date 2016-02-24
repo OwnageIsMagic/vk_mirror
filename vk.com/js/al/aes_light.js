@@ -699,6 +699,11 @@
                     statCode = statsCodeBase + 3;
                 }
                 break;
+            case 'noresult':
+                {
+                    statCode = statsCodeBase + 7;
+                }
+                break;
 
             default:
                 {
@@ -716,6 +721,7 @@
 
     AdsLight.tryExperiment = function(lineup) {
         for (var experimentIndex in lineup) {
+            experimentIndex = parseInt(experimentIndex);
             var parts = lineup[experimentIndex].split(':');
             var experimentName = parts[0];
             var statsCodeBase = parseInt(parts[1]);
@@ -833,7 +839,7 @@
             }, vk.ads_rotate_interval);
         }
 
-        if (!isVisible(containerElem)) {
+        if (!isVisible(containerElem) && vk.id % 17 < 16) {
             setTimeout(function() {
                 AdsLight.forceLeftAdVisibility();
             }, 200);
@@ -848,10 +854,16 @@
     AdsLight.forceLeftAdVisibility = function() {
         var elem = ge('left_ads');
         if (elem) {
+            var nest = geByClass1('ads_ads_box', elem);
             elem.style.setProperty('visibility', 'visible', 'important');
             elem.style.setProperty('display', 'block', 'important');
+            if (nest) {
+                nest.style.setProperty('visibility', 'visible', 'important');
+                nest.style.setProperty('display', 'block', 'important');
+            }
         }
     }
+
 
     AdsLight.showNewBlock = function(containerElem, adsHtml, isContainerVisible) {
         if (!isContainerVisible || browserLight.msie6 || browserLight.msie7) {
@@ -1793,19 +1805,25 @@
         if (test_group_id) {
             params.test_id = test_group_id;
         }
-        if (vk && vk.id) {
+        if (window.vk && vk.id) {
             params.vk_id = vk.id;
         }
 
         AdsLight.sendExperimentStat(statsCodeBase, 'try');
 
+        var targetNoResultTimeout = setTimeout(function() {
+            // no result after 5 seconds, this is suspicious
+            AdsLight.sendExperimentStat(statsCodeBase, 'noresult');
+        }, 5000);
         stManager.add(['mrtarg.js', 'mrtarg.css'], function() {
             AdsLight.getRBAds('left_ads', function() { // ok
+                clearTimeout(targetNoResultTimeout);
                 AdsLight.sendExperimentStat(statsCodeBase, 'success');
                 if (window.RB && window.RB.doCheck) {
                     window.RB.doCheck();
                 }
             }, function(data) { // fail
+                clearTimeout(targetNoResultTimeout);
                 AdsLight.sendExperimentStat(statsCodeBase, 'fail');
                 AdsLight.tryExperiment(nextLineup);
             }, params);
