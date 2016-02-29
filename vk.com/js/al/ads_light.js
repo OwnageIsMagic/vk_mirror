@@ -721,7 +721,7 @@
 
     AdsLight.tryExperiment = function(lineup) {
         for (var experimentIndex in lineup) {
-            experimentIndex = parseInt(experimentIndex);
+            experimentIndex = intval(experimentIndex);
             var parts = lineup[experimentIndex].split(':');
             var experimentName = parts[0];
             var statsCodeBase = parseInt(parts[1]);
