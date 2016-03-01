@@ -45,7 +45,8 @@ var Video = {
             vSearchLastActionTime: new Date()
                 .getTime(),
             vSearchLastSeenEl: null,
-            vSearchLastSeenIdx: -1
+            vSearchLastSeenIdx: -1,
+            vSearchTotalViewedTime: 0
         });
 
         cur.ownerPlaylistsHtml = cur.albumsSummaryEl ? cur.albumsSummaryEl.innerHTML : '';
@@ -3232,6 +3233,7 @@ var Video = {
                     act: 'a_search_query_stat',
                     query: query,
                     count: cur.vViewsPerSearch,
+                    total_viewed_time: cur.vSearchTotalViewedTime,
                     scrolled_until: lastSeen,
                     position_stats: positionStats
                 });
@@ -3240,6 +3242,7 @@ var Video = {
             cur.vSearchFieldHasLostFocus = false;
             cur.vSearchLastSeenEl = null;
             cur.vSearchLastSeenIdx = -1;
+            cur.vSearchTotalViewedTime = 0;
             for (var i = 0; i < cur.vSearchPositionStats.length; i++) {
                 if (cur.vSearchPositionStats[i]) {
                     cur.vSearchPositionStats[i].clicked = 0;

@@ -437,6 +437,13 @@ var Videoview = {
                             }
                         }
                     });
+
+                    if (cur.module === 'video' && cur.vSection === 'search') {
+                        if (!cur.vSearchTotalViewedTime) {
+                            cur.vSearchTotalViewedTime = 0;
+                        }
+                        cur.vSearchTotalViewedTime += mvcur.mvData.vsegsSize;
+                    }
                 }
             },
 
