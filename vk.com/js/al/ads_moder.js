@@ -737,6 +737,10 @@ AdsModer.premoderationProcessRequestsMassCheck = function(action, requestKey) {
         return false;
     }
 
+    allRequestsKeys = allRequestsKeys.filter(function(elem, pos, arr) {
+        return arr.indexOf(elem) == pos;
+    });
+
     var confirmTitle = ((action === 'approve') ? '�������� ���������' : '�������� ����������');
     var confirmText = '������� ���������� �� ������� ��������: ' + allRequestsKeys.length;
     var processAllText = ((action === 'approve') ? '�������� ���' : '��������� ���');
