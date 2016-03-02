@@ -1147,7 +1147,7 @@ if (!window.Upload) {
         },
 
         supportsChunkedUpload: function() {
-            return !!Blob && !!(Blob.prototype.webkitSlice || Blob.prototype.mozSlice || Blob.prototype.slice);
+            return !!Blob && !!(Blob.prototype.webkitSlice || Blob.prototype.mozSlice || Blob.prototype.slice) && !!FileReader;
         },
 
         uploadFileChunked: function(uplId, file, url) {
@@ -1184,28 +1184,61 @@ if (!window.Upload) {
             };
             curUpload.abort = _abortAllChunks.bind(null, curUpload);
 
-            curUpload.storageKey = ['upload', vk.id, encodeURIComponent(curUpload.fileName), curUpload.fileSize].join('_');
             curUpload.chunksNum = Math.ceil(curUpload.fileSize / curUpload.state.chunkSize);
             curUpload.chunksLeft = curUpload.chunksNum;
 
-            options.uploading = true;
-            options.chunkedUpload = curUpload;
+            _computeFilePartsChecksum(file, function(hash) {
+                curUpload.storageKey = ['upload', vk.id, hash, curUpload.fileSize].join('_');
+                options.uploading = true;
+                options.chunkedUpload = curUpload;
 
-            var savedState = ls.get(curUpload.storageKey);
-            if (savedState) {
-                if (Date.now() - savedState.started < CHUNKS_EXPIRE_TIME) {
-                    curUpload.state = savedState;
-                    url = savedState.url;
-                } else {
-                    ls.remove(curUpload.storageKey);
+                var savedState = ls.get(curUpload.storageKey);
+                if (savedState) {
+                    if (Date.now() - savedState.started < CHUNKS_EXPIRE_TIME) {
+                        curUpload.state = savedState;
+                        url = savedState.url;
+                    } else {
+                        ls.remove(curUpload.storageKey);
+                    }
                 }
+
+                try {
+                    console.log('%c Warning: if devtools is logging network requests it may cause high memory usage during file upload',
+                        'font-size:16px;color:orange;');
+                } catch (e) {}
+
+                _startUpload();
+            });
+
+            function _computeFilePartsChecksum(file, callback) {
+                var chunkSize = 1024 * 1024;
+                var middleChunkPointer = Math.floor(file.size / 2) - chunkSize / 2;
+
+                var chunks = [
+                    file.slice(0, chunkSize),
+                    file.slice(middleChunkPointer, middleChunkPointer + chunkSize),
+                    file.slice(file.size - chunkSize, file.size)
+                ];
+
+                (function tick(hash) {
+                    var chunk = chunks.shift();
+                    if (!chunk) {
+                        callback(hash);
+                        return;
+                    }
+
+                    var reader = new FileReader();
+                    reader.addEventListener('loadend', function(e) {
+                        var data = new Uint8Array(e.target.result);
+                        var cs = Fletcher32();
+                        cs.append(data);
+                        hash += cs.result()
+                            .toString(16);
+                        tick(hash);
+                    });
+                    reader.readAsArrayBuffer(chunk);
+                })('');
             }
-
-            try {
-                console.log('%c Warning: if devtools is logging network requests it may cause high memory usage during file upload', 'font-size:16px;color:orange;');
-            } catch (e) {}
-
-            _startUpload();
 
             function _startUpload() {
                 curUpload.pointer = 0;
@@ -1372,7 +1405,7 @@ if (!window.Upload) {
         uploadFile: function(uplId, file, url) {
             var options = this.options[uplId];
 
-            if (options.chunked && Upload.supportsChunkedUpload()) {
+            if (options.chunked && Upload.supportsChunkedUpload() && file.size > 4 * 1024 * 1024) {
                 Upload.uploadFileChunked.apply(Upload, arguments);
                 return;
             }
@@ -1747,6 +1780,39 @@ if (!window.Upload) {
         _eof: 1
     };
 
+}
+
+function Fletcher32() {
+    // Optimized algorithm taken from https://en.wikipedia.org/wiki/Fletcher%27s_checksum#Optimizations
+    var _sum1 = 0xffff;
+    var _sum2 = 0xffff;
+
+    return {
+        append: append,
+        result: result
+    };
+
+    function append(data) {
+        // data should be an array of 16-bit numbers
+        var words = data.length;
+        var dataIndex = 0;
+        while (words) {
+            var tlen = words > 359 ? 359 : words;
+            words -= tlen;
+            do {
+                _sum2 += _sum1 += data[dataIndex++];
+            } while (--tlen);
+
+            _sum1 = ((_sum1 & 0xffff) >>> 0) + (_sum1 >>> 16);
+            _sum2 = ((_sum2 & 0xffff) >>> 0) + (_sum2 >>> 16);
+        }
+    }
+
+    function result() {
+        _sum1 = ((_sum1 & 0xffff) >>> 0) + (_sum1 >>> 16);
+        _sum2 = ((_sum2 & 0xffff) >>> 0) + (_sum2 >>> 16);
+        return ((_sum2 << 16) >>> 0 | _sum1) >>> 0;
+    }
 }
 
 try {
