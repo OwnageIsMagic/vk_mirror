@@ -3854,7 +3854,10 @@ span#im_important_count {
 }
 
 .im_community_message_info_cancel {
-    margin-left: 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin: 0px;
 }
 
 .im_community_message_info_actions {

@@ -702,12 +702,12 @@ AdsModer.premoderationProcessRequest = function(action, requestKey, requestKeyMo
 AdsModer.premoderationProcessRequestsMassCheck = function(action, requestKey) {
 
     var requestsKeys = [],
+        needMultipleClearence = false,
         allRequestsKeys;
-    if (cur.multipleRequestsIds.length) {
+
+    if (cur.multipleRequestsIds.length && (cur.multipleRequestsIds.indexOf(requestKey) != -1)) {
         requestsKeys = cur.multipleRequestsIds;
-        if (cur.multipleRequestsIds.indexOf(requestKey) == -1) {
-            requestsKeys = requestsKeys.concat(requestKey);
-        }
+        needMultipleClearence = true;
     } else {
         requestsKeys = requestsKeys.concat(requestKey);
     }
@@ -753,11 +753,13 @@ AdsModer.premoderationProcessRequestsMassCheck = function(action, requestKey) {
         title: confirmTitle,
         hideButtons: true
     }, cur.massBoxHtml);
-    processAll();
+    processAll(needMultipleClearence);
     return true;
 
-    function processAll() {
-        cleanMultipleChoices();
+    function processAll(cleanMultipleRequests) {
+        if (cleanMultipleRequests) {
+            cleanMultipleChoices();
+        }
         cleanChecksums();
         AdsModer.premoderationProcessRequestsMass(action, requestKey, allRequestsKeys, box);
     }
