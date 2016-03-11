@@ -3248,6 +3248,7 @@ var Video = {
                     cur.vSearchPositionStats[i].clicked = 0;
                     cur.vSearchPositionStats[i].viewStarted = 0;
                     cur.vSearchPositionStats[i].viewedParts = 0;
+                    cur.vSearchPositionStats[i].viewedSeconds = 0;
                 }
             }
         }
@@ -3264,7 +3265,7 @@ var Video = {
     serializeSearchStat: function(stat) {
         stat = stat || {};
 
-        var fields = ['oid', 'vid', 'clicked', 'viewStarted', 'viewedParts'];
+        var fields = ['oid', 'vid', 'clicked', 'viewStarted', 'viewedParts', 'viewedSeconds'];
         var res = '';
 
         for (var i = 0; i < fields.length; i++) {

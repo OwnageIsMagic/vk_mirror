@@ -496,7 +496,7 @@
 
     AdsLight.canUpdate = function(forAjax) {
 
-        var containerElem = ge('left_ads');
+        var containerElem = ge('ads_left');
 
         var initialAjax = (forAjax && __adsLoaded === false);
 
@@ -812,7 +812,7 @@
 
         __adsLoaded = vkNow();
 
-        var containerElem = ge('left_ads');
+        var containerElem = ge('ads_left');
         var isContainerVisible = (containerElem && isVisible(containerElem) || vk.ad_preview);
         if (!containerElem) {
             var sideBarElem = ge('side_bar');
@@ -821,7 +821,7 @@
                 return;
             }
             containerElem = sideBarElem.appendChild(ce('div', {
-                id: 'left_ads'
+                id: 'ads_left'
             }, {
                 display: isContainerVisible ? 'block' : 'none'
             }));
@@ -852,7 +852,7 @@
     }
 
     AdsLight.forceLeftAdVisibility = function() {
-        var elem = ge('left_ads');
+        var elem = ge('ads_left');
         if (elem) {
             var nest = geByClass1('ads_ads_box', elem);
             elem.style.setProperty('visibility', 'visible', 'important');
@@ -1138,7 +1138,7 @@
     }
 
     AdsLight.isVisibleBlockWrap = function(forceLocal) {
-        var containerElem = ge('left_ads');
+        var containerElem = ge('ads_left');
         var containerRect = containerElem.getBoundingClientRect();
         var coords = [];
         if (containerRect.right && containerRect.bottom) {
@@ -1638,7 +1638,7 @@
             yaContainer = ce('div', {
                 id: yaContainerId
             });
-            var leftAdsContainer = ge('left_ads');
+            var leftAdsContainer = ge('ads_left');
             leftAdsContainer.appendChild(yaContainer);
         } else {
             animate(ge(yaContainerId), {
@@ -1675,7 +1675,7 @@
             wrapper.appendChild(adsContainer);
             adsContainer = wrapper;
         }
-        AdsLight.showNewBlock(ge('left_ads'), adsContainer, true);
+        AdsLight.showNewBlock(ge('ads_left'), adsContainer, true);
         vk__adsLight.yaDirectAdActive = true;
     }
 
@@ -1725,7 +1725,7 @@
             }
         };
         iframe.src = '/ads_light.php?act=criteo';
-        ge('left_ads')
+        ge('ads_left')
             .appendChild(iframe);
     }
 
@@ -1758,7 +1758,7 @@
                                 return;
                             }
                             containerElem = sideBarElem.appendChild(ce('div', {
-                                id: 'left_ads'
+                                id: 'ads_left'
                             }, {
                                 display: isContainerVisible ? 'block' : 'none'
                             }));
@@ -1816,7 +1816,7 @@
             AdsLight.sendExperimentStat(statsCodeBase, 'noresult');
         }, 5000);
         stManager.add(['mrtarg.js', 'mrtarg.css'], function() {
-            AdsLight.getRBAds('left_ads', function() { // ok
+            AdsLight.getRBAds('ads_left', function() { // ok
                 clearTimeout(targetNoResultTimeout);
                 AdsLight.sendExperimentStat(statsCodeBase, 'success');
                 if (window.RB && window.RB.doCheck) {

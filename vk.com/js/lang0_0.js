@@ -296,7 +296,7 @@ audio_title_search = '����� �� ������� {q}';
 audio_uploading_over = '�������� ���������';
 audio_upl_not_enabled_ingroup = '� ������ ������ ��������� �����������, ������� �������� ����������� ����������.';
 audio_user_no_recs = '� ������������ ��� ��� ������������.';
-// section = 3; version = 110;
+// section = 3; version = 112;
 
 apps_addapp = '�������� ����������';
 apps_addedtogroup = '���������� ��������� � ������';
