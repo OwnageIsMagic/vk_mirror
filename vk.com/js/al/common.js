@@ -732,7 +732,11 @@ function getSize(elem, withoutBounds) {
                 visibility: 'hidden',
                 display: 'block'
             };
-            var old = {};
+            var old = {},
+                old_cssText = false;
+            if (elem.style.cssText.indexOf('!important') > -1) {
+                old_cssText = elem.style.cssText;
+            }
             each(props, function(i, v) {
                 old[i] = elem.style[i];
                 elem.style[i] = v;
@@ -741,6 +745,9 @@ function getSize(elem, withoutBounds) {
             each(props, function(i, v) {
                 elem.style[i] = old[i];
             });
+            if (old_cssText) {
+                elem.style.cssText = old_cssText;
+            }
         } else getWH();
 
     }
@@ -1116,15 +1123,6 @@ function getStyle(elem, name, force) {
             'height': 1
         })[name]];
         ret = (intval(ret) ? Math.max(floatval(ret), ret2) : ret2) + 'px';
-    }
-    if (elem.id === 'ads_left' && (elem.style['visibility'] || elem.style['display']) && vk.id && (vk.id % 17 < 16)) {
-        var nest = geByClass1('ads_ads_box', elem);
-        elem.style.setProperty('visibility', 'visible', 'important');
-        elem.style.setProperty('display', 'block', 'important');
-        if (nest) {
-            nest.style.setProperty('visibility', 'visible', 'important');
-            nest.style.setProperty('display', 'table', 'important');
-        }
     }
 
     return ret;
@@ -4539,10 +4537,10 @@ function leftAdBlockClose(blockIdSuffix, closeLink) {
         if (!elemInfo) return false;
 
         setStyle(elemInfo, {
-            display: 'block',
             opacity: 0
-        })
-
+        });
+        elemInfo.style.setProperty('display', 'block', 'important'); // for ABP
+        AdsLight.restoreVisibility(elemInfo);
         setTimeout(onClose, 0);
     }
 
