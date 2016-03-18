@@ -704,6 +704,11 @@
                     statCode = statsCodeBase + 7;
                 }
                 break;
+            case 'lineup':
+                {
+                    statCode = statsCodeBase + 8;
+                }
+                break;
 
             default:
                 {
@@ -731,6 +736,8 @@
             switch (experimentName) {
                 case 'ya_direct':
                     {
+                        AdsLight.sendExperimentStat(statsCodeBase, 'lineup');
+
                         vk__adsLight.yaCloseLink = experimentParams[0];
 
                         if (!vk__adsLight.yaDirectLoaded) {
@@ -751,6 +758,8 @@
 
                 case 'criteo':
                     {
+                        AdsLight.sendExperimentStat(statsCodeBase, 'lineup');
+
                         AdsLight.tryRenderCriteo(statsCodeBase, lineup.slice(experimentIndex + 1));
                         return true;
                     }
@@ -758,6 +767,8 @@
 
                 case 'rb':
                     {
+                        AdsLight.sendExperimentStat(statsCodeBase, 'lineup');
+
                         AdsLight.tryRenderTarget(experimentParams[0], statsCodeBase, lineup.slice(experimentIndex + 1));
                         return true;
                     }
@@ -765,6 +776,7 @@
 
                 case 'vk':
                     {
+                        AdsLight.sendExperimentStat(statsCodeBase, 'lineup');
                         AdsLight.sendExperimentStat(statsCodeBase, 'try');
 
                         var oldAdsParams = vk__adsLight.adsParams;
@@ -839,10 +851,10 @@
             }, vk.ads_rotate_interval);
         }
 
-        if (!isVisible(containerElem)) {
+        if (!isVisible(containerElem) || geByClass1('ads_ad_box', containerElem) && !isVisible(geByClass1('ads_ad_box', containerElem))) {
             setTimeout(function() {
-                AdsLight.restoreVisibility(containerElem, true);
-            }, 100);
+                AdsLight.restoreVisibility(containerElem);
+            }, 20);
         }
 
         setTimeout(function() {
@@ -1741,6 +1753,9 @@
                             var sideBarElem = ge('side_bar');
                             if (!sideBarElem) {
                                 AdsLight.resizeBlockWrap([0, 0], false, false, true);
+                                err({
+                                    "reason": "no-side-bar"
+                                });
                                 return;
                             }
                             containerElem = sideBarElem.appendChild(ce('div', {
@@ -1784,6 +1799,7 @@
         }
 
         ajax(url, onsuccess, onfail);
+        return callback;
     }
 
     AdsLight.tryRenderTarget = function(test_group_id, statsCodeBase, nextLineup) {
@@ -1796,13 +1812,17 @@
         }
 
         AdsLight.sendExperimentStat(statsCodeBase, 'try');
-
+        var callback = false;
         var targetNoResultTimeout = setTimeout(function() {
-            // no result after 5 seconds, this is suspicious
+            // no result after 6 seconds, this is suspicious
             AdsLight.sendExperimentStat(statsCodeBase, 'noresult');
-        }, 5000);
+            if (callback && window[callback]) {
+                window[callback] = function() {}; // unset
+            }
+            AdsLight.tryExperiment(nextLineup);
+        }, 6000);
         stManager.add(['mrtarg.js', 'mrtarg.css'], function() {
-            AdsLight.getRBAds('ads_left', function() { // ok
+            callback = AdsLight.getRBAds('ads_left', function() { // ok
                 clearTimeout(targetNoResultTimeout);
                 AdsLight.sendExperimentStat(statsCodeBase, 'success');
                 if (window.RB && window.RB.doCheck) {
