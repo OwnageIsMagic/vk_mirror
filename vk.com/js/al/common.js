@@ -2431,31 +2431,39 @@ function __adsUpdate(force) {
 }
 
 function __adsSet(adsHtml, adsSection, adsCanShow, adsShowed, adsParams) {
-    if (window.noAdsAtAll) return false;
-    __adsSet = function() {
-        var argumentAdsHtml = '';
-        if (arguments && arguments[0]) {
-            argumentAdsHtml = arguments[0];
-        }
-        if (argumentAdsHtml.slice(0, '<!--criteo'.length) === '<!--criteo') {
-            if (Math.random() < 0.05) {
-                if (window.AdsLight && AdsLight.setNewBlock) {
-                    ajax.post('/wkview.php?act=mlet&mt=750', {}, {
-                        onFail: function() {
-                            return true;
-                        }
-                    });
-                } else {
-                    ajax.post('/wkview.php?act=mlet&mt=751', {}, {
-                        onFail: function() {
-                            return true;
-                        }
-                    });
+    var adsExperimentMarker = '<!--ads_experiment';
+    if (adsHtml && (adsHtml.slice(0, adsExperimentMarker.length) === adsExperimentMarker)) {
+        if (Math.random() < 0.01) {
+            ajax.post('/wkview.php?act=mlet&mt=9003', {}, {
+                onFail: function() {
+                    return true;
                 }
+            });
+        }
+    }
+    if (Math.random() < 0.01) {
+        ajax.post('/wkview.php?act=mlet&mt=9000', {}, {
+            onFail: function() {
+                return true;
             }
+        });
+    }
+
+    if (window.noAdsAtAll) {
+        return false;
+    }
+
+    __adsSet = function() {
+        if (Math.random() < 0.01) {
+            ajax.post('/wkview.php?act=mlet&mt=9002', {}, {
+                onFail: function() {
+                    return true;
+                }
+            });
         }
         window.AdsLight && AdsLight.setNewBlock.apply(AdsLight.setNewBlock, arguments);
     };
+
     stManager.add(['aes_light.js'], __adsSet.pbind(adsHtml, adsSection, adsCanShow, adsShowed, adsParams));
 }
 
