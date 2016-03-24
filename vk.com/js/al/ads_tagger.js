@@ -37,7 +37,8 @@ function adsPhotoTagger(elem, options) {
         iconParams = [];
     img.src = elem.src;
 
-    var tagframe, tagimg, tagfaded, taghandles = {};
+    var tagframe, tagimg, tagfaded, taghandles = {},
+        tagzones = {};
     var width = 0,
         height = 0,
         rect = {}
@@ -66,6 +67,19 @@ function adsPhotoTagger(elem, options) {
                 this.style.top = (addY + r.top + ((a == 'n') ? 0 : r.height) - 5) + 'px';
             }
         });
+        each(tagzones, function(i) {
+            var defgap = options.safeZones[i],
+                gap;
+            if (i == 'top' || i == 'bottom') {
+                gap = (defgap / defh) * r.height;
+            } else {
+                gap = (defgap / defw) * r.width;
+            }
+            this.style.left = (addX + r.left + (i == 'right' ? (r.width - gap) : 0)) + 'px';
+            this.style.top = (addY + r.top + (i == 'bottom' ? (r.height - gap) : 0)) + 'px';
+            this.style.width = ((i == 'left' || i == 'right') ? gap : r.width) + 'px';
+            this.style.height = ((i == 'top' || i == 'bottom') ? gap : r.height) + 'px';
+        });
         if (!noUpdate) {
             for (var i in icons) {
                 if (!icons[i]) continue;
@@ -74,18 +88,15 @@ function adsPhotoTagger(elem, options) {
                     iconh = iconParams[i].height;
                 var bbox = icon.parentNode,
                     ratio = r.width / r.height,
-                    boxw = mmin(iconw, intval(iconh * ratio)),
-                    boxh = mmin(iconh, intval(boxw / ratio));
-
-                bbox.style.width = boxw + 'px';
-                bbox.style.height = boxh + 'px';
-                bbox.style.marginRight = mceil((iconw - boxw) / 2.0) + 'px';
-                bbox.style.marginLeft = mfloor((iconw - boxw) / 2.0) + 'px';
+                    boxw = mmax(iconw, intval(iconh * ratio)),
+                    boxh = mmax(iconh, intval(boxw / ratio)),
+                    rcenterx = (r.left + r.width / 2),
+                    rcentery = (r.top + r.height / 2);
 
                 icon.style.width = mceil(width * boxw / r.width) + 'px';
                 icon.style.height = mceil(height * boxh / r.height) + 'px';
-                icon.style.marginLeft = -mfloor(r.left * boxw / r.width) + 'px';
-                icon.style.marginTop = -mfloor(r.top * boxh / r.height) + 'px';
+                icon.style.marginLeft = -mfloor(rcenterx * boxw / r.width - iconw / 2) + 'px';
+                icon.style.marginTop = -mfloor(rcentery * boxh / r.height - iconh / 2) + 'px';
             }
         }
     }
@@ -124,7 +135,7 @@ function adsPhotoTagger(elem, options) {
         startRect = extend({}, rect);
         var cur = false;
 
-        if (e.target == tagimg) {
+        if (e.target == tagimg || hasClass(e.target, 'tag_frame_zone')) {
             action = 1;
         } else if (e.target == tagfaded || e.target == elem) {
             action = 2;
@@ -418,6 +429,9 @@ function adsPhotoTagger(elem, options) {
         each(taghandles, function() {
             fadeTo(this, 200, 0.3);
         });
+        each(tagzones, function() {
+            show(this);
+        });
         hide(bg);
         action = 0;
         removeEvent(bodyNode, 'mousemove', mouseMove);
@@ -512,6 +526,15 @@ function adsPhotoTagger(elem, options) {
             }));
         });
 
+        each(options.safeZones || {}, function(k) {
+            tagzones[k] = node.appendChild(ce('div', {
+                className: 'tag_frame_zone zone_' + k
+            }, {
+                zIndex: zstart + 45
+            }));
+            addEvent(tagzones[k], 'mousedown', mouseDown);
+        });
+
         addEvent(node, 'mousedown', mouseDown);
 
         if (options.crop) {
@@ -542,6 +565,9 @@ function adsPhotoTagger(elem, options) {
             each(taghandles, function() {
                 show(this);
             });
+            each(tagzones, function() {
+                show(this);
+            });
         } else {
             elem.style.cursor = 'crosshair';
             addEvent(elem, 'mousedown', mouseDown);
@@ -563,6 +589,9 @@ function adsPhotoTagger(elem, options) {
                 }
             }
             each(taghandles, function() {
+                cleanElems(this);
+            });
+            each(tagzones, function() {
                 cleanElems(this);
             });
             removeEvent(window, 'resize', resize);
