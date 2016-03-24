@@ -870,8 +870,7 @@ AdsEdit.showCropPhotoBox = function(photoData) {
         var adWidth = 118;
         switch (viewParams.format_type) {
             case AdsEdit.ADS_AD_FORMAT_TYPE_TEXT_IMAGE:
-                adWidth = 306;
-                break; // Redesign ad preview
+            case AdsEdit.ADS_AD_FORMAT_TYPE_BIG_IMAGE:
             case AdsEdit.ADS_AD_FORMAT_TYPE_EXCLUSIVE:
                 if (viewParams.link_type != AdsEdit.ADS_AD_LINK_TYPE_VIDEO) {
                     adWidth = 306; // Redesign ad preview

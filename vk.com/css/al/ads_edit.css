@@ -854,7 +854,7 @@ a.ads_edit_link_go:hover {
 /* ------------------- */
 
 .ads_edit_crop_photo_box .error {
-    margin-bottom: 8px;
+    margin-bottom: 15px;
 }
 
 .ads_edit_crop_photo_box .info_msg {
@@ -981,9 +981,10 @@ a.ads_edit_link_go:hover {
 }
 
 #ads_edit_crop_photo_new_preview .ads_ad_domain {
-    color: #42648B;
+    color: #939699;
     font-size: 12px;
     line-height: 15px;
+    padding-top: 1px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
@@ -995,7 +996,7 @@ a.ads_edit_link_go:hover {
 }
 
 #ads_edit_crop_photo_new_preview .ads_ad_disclaimer.ver {
-    padding-top: 4px;
+    padding-top: 3px;
 }
 
 #ads_edit_crop_new_preview_error_wrapper {
