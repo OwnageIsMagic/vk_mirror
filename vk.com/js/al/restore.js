@@ -402,7 +402,8 @@ var Restore = {
 
         var params = {
             act: 'a_request',
-            rv2: cur.options.rv2 || ''
+            rv2: cur.options.rv2 || '',
+            bad_phone: cur.wrongPhone ? 1 : 0
         };
 
         if (request_type == 4) {
@@ -458,7 +459,7 @@ var Restore = {
         }
 
         ajax.post('/al_restore.php', params, {
-            onDone: function(result, msg, input, login_error) {
+            onDone: function(result, msg, input, error_type) {
                 if (!result) {
                     return Restore.showMsgBox(msg, getLang('global_error'));
                 }
@@ -483,8 +484,10 @@ var Restore = {
                     ge('phone_confirm_code')
                         .focus();
                 } else {
-                    if (login_error) {
+                    if (error_type == 'login') {
                         msg += '<br>' + val('request_email_or_phone_need');
+                    } else if (error_type == 'phonenum') {
+                        cur.wrongPhone = true;
                     }
                     Restore.showResult(result, msg, input);
                 }
@@ -571,7 +574,8 @@ var Restore = {
             images: [],
             images_count: [0, 0],
             request_id: false,
-            request_hash: false
+            request_hash: false,
+            wrongPhone: false
         });
 
         var cmt = ge('comment'),
