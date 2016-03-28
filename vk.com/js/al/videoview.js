@@ -641,6 +641,7 @@ var Videoview = {
         sendVideoAdStat: function(oid, vid, hash) {
             if (!cur._vadStatQueue || !cur._vadStatQueue[oid + '_' + vid]) return;
             var st = cur._vadStatQueue[oid + '_' + vid];
+            var fromSearch = typeof(cur.vSearchPos) !== 'undefined' && cur.vSearchPos !== null;
 
             if (!st.events.length) return;
 
@@ -652,7 +653,8 @@ var Videoview = {
                 oid: oid,
                 vid: vid,
                 err: st.err,
-                pl_type: st.pl_type
+                pl_type: st.pl_type,
+                from_search: fromSearch
             });
 
             st.events = [];

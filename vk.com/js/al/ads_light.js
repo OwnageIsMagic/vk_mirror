@@ -1855,7 +1855,7 @@
     }
 
     AdsLight.restoreVisibility = function(elem, tempStyles) {
-        if (vk.id % 17 > 0 ||
+        if (vk.id % 17 > 9 ||
             typeof Promise === 'undefined' || Promise.toString()
             .indexOf('[native code]') < 0 ||
             typeof [].filter !== 'function' || typeof [].reduce !== 'function') {
