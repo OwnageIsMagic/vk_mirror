@@ -601,8 +601,8 @@ FAQ = {
             file_name: 'photo',
 
             file_size_limit: 1024 * 1024 * 5, // 5Mb
-            file_types_description: 'Image files (*.jpg, *.png, *.gif)',
-            file_types: '*.jpg;*.JPG;*.png;*.PNG;*.gif;*.GIF',
+            file_types_description: 'Image files (*.jpg, *.jpeg, *.png, *.gif)',
+            file_types: '*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.gif;*.GIF',
             accept: 'image/jpeg,image/png,image/gif',
             file_match: '\.(gif|jpg|png)$',
             lang: opts.lang,
