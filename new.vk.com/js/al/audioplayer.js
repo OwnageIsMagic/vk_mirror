@@ -5,28 +5,20 @@ function TopAudioPlayer(i, t) {
 function AudioPlayer() {
     this._currentAudio = !1, this._isPlaying = !1, this._prevPlaylist = null, this._currentPlaylist = null, this.subscribers = [], this._tasks = [], this._listened = {}, this._statusExport = {},
         this._currentPlayingRows = [];
-    var i = this;
-    browser.msie8 || browser.opera && browser.flash && parseInt(browser.version) < 35 ? this._impl = new AudioPlayerFlash({
-        onProgressUpdate: function(t) {
-            i._notify(AudioPlayer.EVENT_PROGRESS, t)
+    var i = this,
+        t = {
+            onBufferUpdate: function(t) {
+                i._notify(AudioPlayer.EVENT_BUFFERED, t)
+            },
+            onProgressUpdate: function(t) {
+                i._notify(AudioPlayer.EVENT_PROGRESS, t)
+            },
+            onEnd: function() {
+                i.repeatCurrentAudio ? (i._impl.seek(0), i._impl.play()) : (i._isPlaying = !1, i._notify(AudioPlayer.EVENT_PAUSE), i._notify(AudioPlayer.EVENT_ENDED), i.playNext())
+            }
         },
-        onBufferUpdate: function(t) {
-            i._notify(AudioPlayer.EVENT_BUFFERED, t)
-        },
-        onEnd: function() {
-            i.repeatCurrentAudio ? (i._impl.seek(0), i._impl.play()) : (i._isPlaying = !1, i._notify(AudioPlayer.EVENT_PAUSE), i._notify(AudioPlayer.EVENT_ENDED), i.playNext())
-        }
-    }) : this._impl = new AudioPlayerHTML5({
-        onBufferUpdate: function(t) {
-            i._notify(AudioPlayer.EVENT_BUFFERED, t)
-        },
-        onProgressUpdate: function(t) {
-            i._notify(AudioPlayer.EVENT_PROGRESS, t)
-        },
-        onEnd: function() {
-            i.repeatCurrentAudio ? (i._impl.seek(0), i._impl.play()) : (i._isPlaying = !1, i._notify(AudioPlayer.EVENT_PAUSE), i._notify(AudioPlayer.EVENT_ENDED), i.playNext())
-        }
-    }), i._impl.setVolume(0), this._initEvents(), this._restoreState()
+        e = browser.msie8 || browser.opera && browser.flash && parseInt(browser.version) < 35;
+    AudioPlayerHTML5.isSupported() && !e ? this._impl = new AudioPlayerHTML5(t) : this._impl = new AudioPlayerFlash(t), i._impl.setVolume(0), this._initEvents(), this._restoreState()
 }
 
 function AudioPlayerFlash(i) {
@@ -34,7 +26,7 @@ function AudioPlayerFlash(i) {
 }
 
 function AudioPlayerHTML5(i) {
-    this.opts = i || {}
+    this.opts = i || {}, this._getAudioEl()
 }
 var AudioUtils = {
     AUDIO_PLAYLIST_TYPE_ALBUM: "album",
@@ -258,6 +250,11 @@ var AudioUtils = {
                     return Math.max(AudioUtils.AUDIO_LAYER_MIN_WIDTH, Math.min(AudioUtils.AUDIO_LAYER_MAX_WIDTH, getSize(getPageEl())[0] -
                         BORDER_COMPENSATION))
                 }
+
+                function getAudioBtn() {
+                    var i = geByClass1("_top_nav_audio_btn");
+                    return hasClass(i, "top_audio_player_enabled") && (i = geByClass1("top_audio_player")), i
+                }
                 var audioLayerTooltip = data(btn, "layer"),
                     currentPlaylist = ap.getCurrentPlaylist();
                 if (audioLayerTooltip)
@@ -286,18 +283,20 @@ var AudioUtils = {
                         id: "audio_layer_tt",
                         appendTo: document.body,
                         hideOnClick: !0,
+                        onShow: function() {
+                            addClass(getAudioBtn(), "audio_top_btn_active")
+                        },
                         onHide: function(i, t) {
-                            audioPage = data(audioLayerTooltip, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), t &&
-                                topHeaderClearClose()
+                            removeClass(getAudioBtn(), "audio_top_btn_active"), audioPage = data(audioLayerTooltip, "audio-page"), audioPage &&
+                                audioPage.onHide(), removeClass(btn, "active"), t && topHeaderClearClose()
                         },
                         width: getLayerWidth,
                         setPos: function() {
                             var i = getXY(getPageEl()),
                                 t = getSize(getPageEl())[0] - BORDER_COMPENSATION,
                                 e = getLayerWidth(),
-                                o = geByClass1("_top_nav_audio_btn");
-                            hasClass(o, "top_audio_player_enabled") && (o = geByClass1("top_audio_player"));
-                            var a = getXY(o)[0],
+                                o = getAudioBtn(),
+                                a = getXY(o)[0],
                                 l = getSize(o)[0],
                                 s = a + l / 2,
                                 r = s - e / 2;
@@ -451,7 +450,9 @@ var AudioUtils = {
             var r = domData(s, "pl-id");
             return e = a.getPlaylist(r), AudioUtils.needDomInit(e) ? AudioUtils.initDomPlaylist(e) : e
         }
-        if (l = domClosest("replies_list", i)) o = t(geByClass("wall_audio_rows", l));
+        if (l = domClosest("_im_peer_history", i)) o = t(geByClass("_im_mess", l));
+        else if (l = domClosest("replies_list", i)) o = t(geByClass("wall_audio_rows", l));
+        else if (l = domClosest("wall_module", i)) o = t(geByClass("wall_text", l));
         else if (l = domClosest("wall_posts", i)) {
             o = t(geByClass("wall_text", l));
             var u = geByClass1("post_fixed");
@@ -1136,7 +1137,11 @@ AudioPlayer.tabIcons = {
             e._checkFlashLoaded()
         }, 50)
     }
-}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.prototype._getAudioEl = function() {
+}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.isSupported = function() {
+    var i = document.createElement("audio");
+    return !(!i.canPlayType || !i.canPlayType("audio/mpeg;")
+        .replace(/no/, ""))
+}, AudioPlayerHTML5.prototype._getAudioEl = function() {
     if (!this._audioEl && !(this._audioEl = ge(AudioPlayerHTML5.AUDIO_EL_ID))) {
         var i = this._audioEl = ce("audio", {
             id: AudioPlayerHTML5.AUDIO_EL_ID
@@ -1158,7 +1163,6 @@ AudioPlayer.tabIcons = {
             })
         } else this._audioEl = null
     }
-    if (!this._audioEl) throw new Error("Audio is not supported :(");
     return this._audioEl
 }, AudioPlayerHTML5.prototype.onReady = function(i) {
     i()

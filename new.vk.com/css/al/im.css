@@ -3568,7 +3568,7 @@ span#im_important_count {
     display: none!important
 }
 
-.im-page .im-page--history_empty-hist {
+.im-page .im-page--history_empty-hist .im-page--chat-body {
     color: #939699
 }
 
@@ -3577,8 +3577,9 @@ span#im_important_count {
     text-align: center
 }
 
+.im-page .im-page--history_empty-hist .im-page--lastact,
 .im-page .im-page--history_empty-hist .im-page--lastact-w {
-    display: none
+    display: none!important
 }
 
 .im-page .im-page--history_empty.im-page--history .im-page-history-w {
@@ -4044,7 +4045,10 @@ span#im_important_count {
 }
 
 .im-chat-input .im-chat-input--txt-wrap {
-    position: relative
+    position: relative;
+    margin-top: -15px;
+    cursor: text;
+    border-top: solid 15px transparent
 }
 
 .im-chat-input .im-chat-input--textarea {
@@ -4984,8 +4988,7 @@ span#im_important_count {
     width: 8px;
     height: 8px;
     margin-top: -10px;
-    background: #93adc8;
-    opacity: 0.65;
+    background: rgba(147, 173, 200, .9);
     margin-right: 1px
 }
 

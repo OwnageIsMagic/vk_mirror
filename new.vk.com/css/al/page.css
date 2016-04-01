@@ -1263,6 +1263,10 @@ div.wall_module .ext_video div {
     margin-bottom: -20px
 }
 
+#like_wall_preview.wall_module .wall_text .page_media_thumbed_link:last-child {
+    margin-bottom: 0
+}
+
 .wall_module .copy_quote .page_media_thumbed_link:last-child,
 .wall_module .post_btl .page_media_thumbed_link:last-child {
     margin-bottom: 5px
@@ -4932,6 +4936,10 @@ textarea.page_poll_export_code {
     width: 6px;
     margin-right: 3px;
     background: #fff
+}
+
+.page_gif_progress_icon .pr_bt:last-child {
+    margin-right: 0
 }
 
 .page_gif_actions {

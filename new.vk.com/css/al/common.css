@@ -5287,6 +5287,7 @@ button.ui_load_more_btn {
     pointer-events: none
 }
 
+.top_audio_player.audio_top_btn_active,
 .top_audio_player:hover {
     background-color: rgba(75, 109, 148, .65)
 }

@@ -2414,7 +2414,7 @@
     }
 
     function Q(e, t, n) {
-        return (0, st.isFullyLoadedTab)(n, e) && (n.tabs[e].imdraft = t, ls.set(p(e), t)), Promise.resolve(n)
+        return (0, st.isFullyLoadedTab)(n, e) && (n.tabs[e].imdraft = t, ls.set(p(e), clean(t))), Promise.resolve(n)
     }
 
     function K(e, t) {
@@ -4190,7 +4190,7 @@
     function u(e, t, n) {
         var r = (arguments.length <= 3 || void 0 === arguments[3] ? !0 : arguments[3], arguments.length <= 4 || void 0 === arguments[4] ? !0 : arguments[4]),
             i = e.tabs[t.peerId];
-        if (i.skipped > 0) return n;
+        if (geByClass1("_im_mess", n) || (n.innerHTML = ""), i.skipped > 0) return n;
         var o = "",
             l = "",
             u = ["_im_mess"],
@@ -5332,8 +5332,9 @@
             .tabHistoryNotChanged) {
             val(geByClass1("_im_page_peer_name", e), c.tab);
             var f = (0, L.strHistory)(c.history);
-            toggleClass(e, "im-page--history_empty-hist", !f), f || (f = getLang("mail_im_here_history")), val(d, f), (0, M.fixTableCellChildHeight)("_chat_body_wrap", e),
-                (0, M.fixSnippetsHeight)(d), k(t, r, e), !c.online && (0, M.isUserPeer)(n) ? l(t, e) : s(e)
+            toggleClass(e, "im-page--history_empty-hist", !f), f || (f = getLang("mail_im_here_history")), val(d, f), getAudioPlayer(function(e) {
+                return e.updateCurrentPlaying()
+            }), (0, M.fixTableCellChildHeight)("_chat_body_wrap", e), (0, M.fixSnippetsHeight)(d), k(t, r, e), !c.online && (0, M.isUserPeer)(n) ? l(t, e) : s(e)
         }(0, L.isSearchingInplace)(n, t.get()) ? a()
             .showSearch(t): a()
             .cancelSearch(t, !1), u.changePeer(n, t), t.get()
@@ -5604,7 +5605,7 @@
                 if (!(0, L.isSearchingInplace)(r.peerId, n.get()) && (0, M.isPeerActive)(r.peerId, n.get())) {
                     if (geByClass1("_im_mess_" + r.messageId, e)) return;
                     var a = b(t);
-                    (0, M.appendToHistory)(n.get(), r, c(e)), y(e), (r.local || a) && t.scrollBottom(0), o()
+                    (0, M.appendToHistory)(n.get(), r, c(e)), removeClass(e, "im-page--history_empty-hist"), y(e), (r.local || a) && t.scrollBottom(0), o()
                         .updateTyping(r, n), (0, x.toArray)(geByClass("_im_history_tooltip", e))
                         .forEach(hide)
                 }
@@ -6642,8 +6643,10 @@
         var Z = w.bind(null, W, t, X, j),
             $ = v.bind(null, t, e, n),
             J = u.bind(null, t);
-        return (0, N.addDelegateEvent)(e, "click", "_im_rc_emoji", Z), (0, N.addDelegateEvent)(e, "click", Q, $), (0, N.addDelegateEvent)(e, "click", "_im_will_fwd", L), (
-            0, N.addDelegateEvent)(bodyNode, "click", K, J), i(j, X, e, z, n, Z, b, $, L, o, M, J)
+        return addEvent(geByClass1("_im_text_wrap", e), "click", function() {
+                X !== document.activeElement && elfocus(X)
+            }), (0, N.addDelegateEvent)(e, "click", "_im_rc_emoji", Z), (0, N.addDelegateEvent)(e, "click", Q, $), (0, N.addDelegateEvent)(e, "click", "_im_will_fwd", L),
+            (0, N.addDelegateEvent)(bodyNode, "click", K, J), i(j, X, e, z, n, Z, b, $, L, o, M, J)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0

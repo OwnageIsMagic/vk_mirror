@@ -430,24 +430,12 @@
             var l = AdsLight.getBlockSize(e);
             return AdsLight.resizeBlockWrap(l, !1, !1, !0), void AdsLight.updateExternalStats(e)
         }
-        var h = getXY(e)[1],
-            _ = scrollGetY(),
-            c = !t,
-            v = h + 50 > _ + lastWindowHeight ? 0 : 200,
-            g = AdsLight.getBlockSize(e),
-            u = [0, 0],
-            p = e.appendChild("string" == typeof t ? ce("div", {
-                innerHTML: t
-            }, {
-                display: "none"
-            }) : t),
-            L = geByClass1("ads_ads_box3", p) || p;
-        AdsLight.restoreVisibility(p, {
-            display: "block",
-            position: "absolute",
-            top: "100000px"
-        });
-        for (var k = geByTag("img", p), w = [], m = 0, f = k.length; f > m; m++) {
+        for (var h = getXY(e)[1], _ = scrollGetY(), c = !t, v = h + 50 > _ + lastWindowHeight ? 0 : 200, g = AdsLight.getBlockSize(e), u = [0, 0], p = e.appendChild("string" ==
+                typeof t ? ce("div", {
+                    innerHTML: t
+                }, {
+                    display: "none"
+                }) : t), L = geByClass1("ads_ads_box3", p) || p, k = geByTag("img", p), w = [], m = 0, f = k.length; f > m; m++) {
             var A = vkImage();
             A.onload = a, A.onerror = a, A.src = k[m].src, w.push(A)
         }
@@ -851,8 +839,6 @@
                 clearTimeout(d), AdsLight.sendExperimentStat(t, "fail"), AdsLight.tryExperiment(s)
             }, i)
         })
-    }, AdsLight.restoreVisibility = function(e, t) {
-        return
     }, AdsLight.init()
 }();
 try {

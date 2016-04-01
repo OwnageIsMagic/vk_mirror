@@ -14,7 +14,8 @@ if (!window.Emoji) var Emoji = {
             if (i.editable = 1, setTimeout(function() {
                     placeholderInit(e, {
                         editable: 1,
-                        editableFocus: Emoji.editableFocus
+                        editableFocus: Emoji.editableFocus,
+                        global: i.global
                     }), i.shouldFocus && Emoji.editableFocus(e, !1, !0)
                 }, 0), browser.mozilla) try {
                 document.execCommand("enableObjectResizing", !1, !1), cur.destroy.push(function() {

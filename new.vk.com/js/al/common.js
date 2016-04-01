@@ -1876,7 +1876,7 @@ function leftAdBlockClose(e, t) {
             if (!o) return !1;
             setStyle(o, {
                 opacity: 0
-            }), o.style.setProperty("display", "block", "important"), AdsLight.restoreVisibility(o), setTimeout(n, 0)
+            }), o.style.setProperty("display", "block", "important"), setTimeout(n, 0)
         }
     }
 
@@ -2407,11 +2407,11 @@ function placeholderInit(e, t) {
                 .length)) && (a.phshown = !1, hide(l)), browser.opera_mobile || (addEvent(l, "focus click", function(e) {
                 i.editableFocus ? (setTimeout(i.editableFocus.pbind(a), 0), a.phonfocus()) : (a.blur(), a.focus())
             }), addEvent(a, "focus" + (i.editable ? " click" : ""), a.phonfocus), addEvent(a, "keydown paste cut input", u)), addEvent(a, "blur", a.phonblur), a.check = u, a.phevents = !
-            0,
-            a.phonsize = function() {}, i.global || i.reload || (cur.__phinputs || (cur.__phinputs = [], cur.destroy.push(function() {
-                if (cur.__phinputs)
-                    for (var e = 0, t = cur.__phinputs.length; t > e; ++e) removeData(cur.__phinputs[e])
-            })), cur.__phinputs.push(a))
+            0, a.phonsize = function() {}, i.global || i.reload || (cur.__phinputs || (cur.__phinputs = [],
+                cur.destroy.push(function() {
+                    if (cur.__phinputs)
+                        for (var e = 0, t = cur.__phinputs.length; t > e; ++e) removeData(cur.__phinputs[e])
+                })), cur.__phinputs.push(a))
     }
 }
 
@@ -4301,7 +4301,8 @@ function audioShowActionTooltip(e) {
             shift: [15, 10, 0],
             needLeft: !0
         };
-        gpeByClass("top_notify_wrap", e) && (s.appendParentCls = "top_notify_wrap"), showTooltip(e, s)
+        gpeByClass("_im_peer_history", e) ? (s.appendParentCls = "_im_peer_history", s.shift = [15, -5, 0]) : gpeByClass("top_notify_wrap", e) && (s.appendParentCls =
+            "top_notify_wrap"), showTooltip(e, s)
     }
 }
 

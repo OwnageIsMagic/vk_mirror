@@ -813,7 +813,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(i) {
             o = AudioUtils.getPlaylistType(i);
         e = o == AudioUtils.AUDIO_ALBUM_ID_ALL ? AudioPlayer.getLang("audio_no_rec_load_msg") : o == AudioUtils.AUDIO_PLAYLIST_TYPE_SEARCH ? AudioPlayer.getLang(
                 "audio_no_audios_found")
-            .replace("{query}", i.searchParams.q) : o == AudioUtils.AUDIO_PLAYLIST_TYPE_RECOMS ? 0 == AudioUtils.getPlaylistAlbumId(i) ? AudioPlayer.getLang(
+            .replace("{query}", clean(i.searchParams.q)) : o == AudioUtils.AUDIO_PLAYLIST_TYPE_RECOMS ? 0 == AudioUtils.getPlaylistAlbumId(i) ? AudioPlayer.getLang(
                 "audio_no_recs_found") : AudioPlayer.getLang("audio_no_audio_recs_found") : AudioPlayer.getLang("audio_album_no_recs"), val(t, e), this._updateAdditionalBlocksAndRightMenu(
                 i)
     }

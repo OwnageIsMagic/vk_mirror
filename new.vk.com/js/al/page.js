@@ -434,8 +434,8 @@ function initAddMedia(e, a, t, o) {
                     case "photos_list":
                         hide(this._addMediaLink), vkImage()
                             .src = l[1];
-                        var N = l[3].replace(/^{|}$/g, "");
-                        N && (N += ","), N += "queue:1", x = o.nocl ? "" : " onclick=\"return showPhoto('" + l[4] + "', '" + l[2] + "', " + N.replace(/"/g, "&quot;") +
+                        var E = l[3].replace(/^{|}$/g, "");
+                        E && (E += ","), E += "queue:1", x = o.nocl ? "" : " onclick=\"return showPhoto('" + l[4] + "', '" + l[2] + "', " + E.replace(/"/g, "&quot;") +
                             ');"', S = "<div" + x + ' class="fl_l page_preview_photo"><img class="page_preview_photo" src="' + l[1] + '" /></div>', L = T = g;
                         break;
                     case "photo":
@@ -447,12 +447,12 @@ function initAddMedia(e, a, t, o) {
                                 upload_ind: l.upload_ind || void 0
                             }), vkImage()
                             .src = l.thumb_m;
-                        var N = l.view_opts.replace(/^{|}$/g, "");
-                        if (N && (N += ","), N += "queue:1", i.phLists[t] = l.list, d) {
+                        var E = l.view_opts.replace(/^{|}$/g, "");
+                        if (E && (E += ","), E += "queue:1", i.phLists[t] = l.list, d) {
                             if (!l.editable) return !1;
-                            o.nocl || (l.editable.click = i.showPhoto.pbind(t, l.list, parseJSON("{" + N + "}")))
+                            o.nocl || (l.editable.click = i.showPhoto.pbind(t, l.list, parseJSON("{" + E + "}")))
                         }
-                        x = o.nocl ? "" : ' onclick="return cur.addMedia[' + i.lnkId + "].showPhoto('" + t + "', '" + l.list + "', {" + N.replace(/"/g, "&quot;") + '});"',
+                        x = o.nocl ? "" : ' onclick="return cur.addMedia[' + i.lnkId + "].showPhoto('" + t + "', '" + l.list + "', {" + E.replace(/"/g, "&quot;") + '});"',
                             S = "<div " + x + ' class="fl_l page_preview_photo' + (h ? " page_preview_ph_graff" : "") + '"><img class="page_preview_photo" src="' + l.thumb_m +
                             '" /></div>', T = 1, L = g;
                         break;
@@ -516,8 +516,8 @@ function initAddMedia(e, a, t, o) {
                         break;
                     case "page":
                         if (C.share || C.page || !l.lang) return !1;
-                        var E = l.media.split("_");
-                        S = '<a href="/page' + l.media + '" onclick="return showWiki({oid: ' + E[0] + ", id: " + E[1] +
+                        var N = l.media.split("_");
+                        S = '<a href="/page' + l.media + '" onclick="return showWiki({oid: ' + N[0] + ", id: " + N[1] +
                             '}, false, event, {queue: 1})" class="medadd_h medadd_h_page inl_bl">' + l.lang.profile_choose_page + "</a>", L = v;
                         break;
                     case "note":
@@ -540,9 +540,9 @@ function initAddMedia(e, a, t, o) {
                                 click: !1
                             })
                         }
-                        var E = t.split("_");
+                        var N = t.split("_");
                         vkImage()
-                            .src = l.thumb, x = o.nocl ? "" : ' href="/market' + E[0] + "?section=album_" + E[1] + '"';
+                            .src = l.thumb, x = o.nocl ? "" : ' href="/market' + N[0] + "?section=album_" + N[1] + '"';
                         var W = "fl_l page_preview_album wall_album_cover_wrap wall_market_album_cover" + (l.thumb ? "" : " page_album_nocover");
                         S = '<a class="' + W + '" ' + x + ">" + (l.thumb ? '<img class="wall_album_cover" src="' + l.thumb + '"/>' : "") +
                             '  <div class="wall_album_caption">    <div class="wall_album_title_wrap clear_fix">      <div class="wall_album_count fl_r">' + l.count +
@@ -1690,7 +1690,7 @@ var Page = {
                     checkEditable: function() {
                         var a = Emoji.editableVal(e),
                             t = 140;
-                        a.length > t && (Emoji.val(e, a.substr(0, t)), Emoji.editableFocus(e, !1, !0))
+                        a.length > t && (Emoji.val(e, clean(a.substr(0, t))), Emoji.editableFocus(e, !1, !0))
                     }
                 })
             }))
@@ -1878,8 +1878,8 @@ var Page = {
                 .setAttribute("data-playing", 1);
             var L = m ? "autoplay" : "manual",
                 M = cur.module || "other",
-                N = d ? "post" : c ? "reply" : "";
-            return statlogsValueEvent("gif_show", L, M, N), cancelEvent(a)
+                E = d ? "post" : c ? "reply" : "";
+            return statlogsValueEvent("gif_show", L, M, E), cancelEvent(a)
         },
         hideGif: function(e, a) {
             if (a && (a.ctrlKey || a.metaKey)) return !0;
@@ -2474,10 +2474,7 @@ var Page = {
                     controlsCont: domPN(a),
                     noStickers: !0,
                     onSend: Wall.sendPost,
-                    ctrlSend: function() {
-                        return Wall.customCur()
-                            .wallTpl.reply_multiline || Wall.composerListShown(a)
-                    },
+                    noEnterSend: !0,
                     checkEditable: Wall.postChanged
                 }), addClass(a, "submit_post_inited"), e && setTimeout(Wall.setDraft.pbind(e), 0)
             }))
@@ -3090,8 +3087,8 @@ var Page = {
                     start_id: val("start_reply" + e),
                     from: i && "wkview" || "",
                     hash: p
-                }), l.reverse && (c.rev = 1), u && isVisible(u.parentNode) && (c.from_group = isChecked(u)), browser.mobile ? Wall.hideEditReply(e) : (Emoji.editableFocus(s, !
-                    1, !0), Wall.cancelReplyTo(e, a)), ajax.post("al_wall.php", Wall.fixPostParams(c), {
+                }), l.reverse && (c.rev = 1), u && isVisible(u.parentNode) && (c.from_group = isChecked(u)),
+                browser.mobile ? Wall.hideEditReply(e) : (Emoji.editableFocus(s, !1, !0), Wall.cancelReplyTo(e, a)), ajax.post("al_wall.php", Wall.fixPostParams(c), {
                     onDone: function(a, t, o, i) {
                         return "full" == l.wallType ? FullWall.onReplySent.apply(window, arguments) : (l.wallMyReplied[e] = 0, re("reply_link" + e), hide("reply_warn" +
                             e), void Wall._repliesLoaded(e, !1, t, o, i))
@@ -3960,12 +3957,12 @@ var Page = {
                                             L = !1,
                                             M = n ? P.offsetHeight : _.offsetHeight;
                                         if (isVisible(P) && isVisible(T) && !isVisible("reply_link" + c)) {
-                                            var N = P.nextSibling,
-                                                E = geByClass("new_reply", P, "div")
+                                            var E = P.nextSibling,
+                                                N = geByClass("new_reply", P, "div")
                                                 .length + 1;
                                             if (n || r || o.wallMyOpened[c]) {
                                                 if (!r) {
-                                                    N && "replies_open" == N.className && re(N), L = !0;
+                                                    E && "replies_open" == E.className && re(E), L = !0;
                                                     var W = geByClass1("wr_header", P, "a"),
                                                         B = geByClass("reply", P, "div")
                                                         .length + 1,
@@ -3975,16 +3972,16 @@ var Page = {
                                                         className: "wr_header"
                                                     }), P.firstChild), Wall.updateRepliesHeader(c, W, B, A))
                                                 }
-                                            } else addClass(v, "new_reply"), N && "replies_open" == N.className || (N = ce("div", {
+                                            } else addClass(v, "new_reply"), E && "replies_open" == E.className || (E = ce("div", {
                                                     className: "replies_open",
                                                     onclick: Wall.openNewComments.pbind(c)
-                                                }), P.parentNode.insertBefore(N, P.nextSibling)), N.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, E)), N
-                                                .newCnt = E
+                                                }), P.parentNode.insertBefore(E, P.nextSibling)), E.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, N)), E
+                                                .newCnt = N
                                         } else re("reply_link" + c), show(T, P), L = !0;
                                         (e ? o.reverse : !1) && P.firstChild ? P.insertBefore(v, P.firstChild) : P.appendChild(v), L && nodeUpdated(v), n ? (o.count++,
                                             o.loaded++, WkView.wallUpdateReplies(), p = P.offsetHeight - M, u = getXY(v, d)[1]) : (r && (FullWall.repliesSummary(a[
                                             13]), o.pgOffset++, o.pgCount++, FullWall.repliesSummary(o.pgCount), Pagination.pageReady(!1), FullWall.onePostOnScroll(!
-                                            1, !1, !0)), p = _.offsetHeight - M, u = getXY(L ? v : N)[1], Wall.repliesSideSetup(c)), Wall.updateMentionsIndex();
+                                            1, !1, !0)), p = _.offsetHeight - M, u = getXY(L ? v : E)[1], Wall.repliesSideSetup(c)), Wall.updateMentionsIndex();
                                         break;
                                     case "del_reply":
                                         if (o.wallMyDeleted[c] || !_) break;
