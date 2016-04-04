@@ -892,6 +892,10 @@ div.gl_message {
     margin-bottom: 10px;
 }
 
+#group_like_module .group_send_msg a:hover {
+    text-decoration: none;
+}
+
 #group_like_module .group_send_msg .flat_button {
     padding-top: 7px;
     padding-bottom: 8px;
