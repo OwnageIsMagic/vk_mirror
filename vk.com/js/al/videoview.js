@@ -4586,7 +4586,7 @@ var Videoview = {
 
             var finishBlock = se(
                 '\
-<div class="mv_external_finish" id="mv_external_finish">\
+<div class="mv_external_finish" id="mv_external_finish" onclick="Videoview.onExternalVideoBgClick(this, event)">\
   <div class="mv_finish_header">\
     <div id="mv_finish_subscribe" class="fl_r mv_finish_subscribe ' +
                 (isSubscribed ? 'mv_finish_subscribed' : '') +
@@ -4698,6 +4698,11 @@ var Videoview = {
                 re('mv_finish_next');
                 removeClass('mv_finish_suggestions', 'hidden');
             } else {
+                re('mv_external_finish');
+            }
+        },
+        onExternalVideoBgClick: function(el, evt) {
+            if (evt.target === el) {
                 re('mv_external_finish');
             }
         },
