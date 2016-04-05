@@ -541,6 +541,10 @@ function clean(str) {
         .replace(/'/g, '&#039;');
 }
 
+function unclean(str) {
+    return replaceEntities(str.replace(/\t/g, "\n"));
+}
+
 /**
  *  Arrays, objects
  **/
