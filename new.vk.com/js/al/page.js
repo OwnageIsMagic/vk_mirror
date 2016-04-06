@@ -2617,7 +2617,8 @@ var Page = {
                     onDone: function(e, a) {
                         if (Wall.clearInput(), cur.postSent = !1, postponePost) return "feed" == i && showDoneBox(e, {
                             out: 3e3
-                        }), show("page_wall_postponed"), void Wall.showPostponed(geByClass1("ui_tab", "page_wall_postponed"), !1, e);
+                        }), show("page_wall_postponed"), Wall.showPostponed(geByClass1("ui_tab", "page_wall_postponed"), !1, e), void(ge(
+                            "wall_tabs") && removeClass(ge("wall_tabs"), "page_tabs_hidden"));
                         if (("full_own" == i || "full_all" == i) && cur.pgStart) {
                             var t = clone(nav.objLoc);
                             return delete t.offset, vk.id != cur.oid && delete t.own, nav.go(t)
@@ -2809,7 +2810,7 @@ var Page = {
         emojiOpts: {},
         getReplyName: function(e) {
             if (cur.pvShown && cur.pvReplyNames) return cur.pvReplyNames[e] || [];
-            if (window.mvcur && mvcur.mvShown) return mvcur.mvReplyNames[e] || [];
+            if (window.mvcur && mvcur.mvShown && !mvcur.minimized) return mvcur.mvReplyNames[e] || [];
             var a, t = {};
             return t = cur.wallLayer ? wkcur : cur, a = (t.options || {})
                 .reply_names, a = a || {}, a[e] || []
@@ -2875,9 +2876,8 @@ var Page = {
                     display: ""
                 }), cur.editing = e, window.Emoji && setTimeout(Emoji.editableFocus.pbind(o, !1, !0), 0), !data(o, "composer")) {
                 var c, p = [];
-                c = window.mvcur && mvcur.mvShown ? mvcur.mvMediaTypes : cur.wallLayer == e ? wkcur.options.rmedia_types : cur.options.rmedia_types, each(c || cur.options.media_types ||
-                    [],
-                    function() {
+                c = window.mvcur && mvcur.mvShown ? mvcur.mvMediaTypes : cur.wallLayer == e ? wkcur.options.rmedia_types : window.pvcur && cur.pvShown ? pvcur.rmedia_types :
+                    cur.options.rmedia_types, each(c || cur.options.media_types || [], function() {
                         inArray(this[0], ["photo", "video", "audio", "doc", "link", "page"]) && p.push(this)
                     });
                 var u;
@@ -2981,7 +2981,8 @@ var Page = {
                 l = trim(window.Emoji ? Emoji.editableVal(o) : ""),
                 s = Wall.replyNamesRE();
             return isArray(i) && window.Emoji && (l && i[1].indexOf(l) ? s && (l = l.replace(s, ""), Emoji.val(o, l)) : (l = "", Emoji.val(o, l)), Emoji.focus(o, !0)), val(
-                "reply_to" + e, ""), hide("reply_to_title" + e), window.mvcur && mvcur.post == e ? mvcur.mvReplyTo = !1 : t.reply_to = !1, stopEvent(a), !1
+                    "reply_to" + e, ""), hide("reply_to_title" + e), window.mvcur && mvcur.post == e ? mvcur.mvReplyTo = !1 : t.reply_to = !1, t.onReplyFormSizeUpdate &&
+                isFunction(t.onReplyFormSizeUpdate) && t.onReplyFormSizeUpdate(o), stopEvent(a), !1
         },
         replySubmitTooltip: function(e, a, t) {
             var o = e && window.cur.wallLayer == e ? wkcur : window.cur,
@@ -3087,8 +3088,8 @@ var Page = {
                     start_id: val("start_reply" + e),
                     from: i && "wkview" || "",
                     hash: p
-                }), l.reverse && (c.rev = 1), u && isVisible(u.parentNode) && (c.from_group = isChecked(u)),
-                browser.mobile ? Wall.hideEditReply(e) : (Emoji.editableFocus(s, !1, !0), Wall.cancelReplyTo(e, a)), ajax.post("al_wall.php", Wall.fixPostParams(c), {
+                }), l.reverse && (c.rev = 1), u && isVisible(u.parentNode) && (c.from_group = isChecked(u)), browser.mobile ? Wall.hideEditReply(e) : (Emoji.editableFocus(s, !
+                    1, !0), Wall.cancelReplyTo(e, a)), ajax.post("al_wall.php", Wall.fixPostParams(c), {
                     onDone: function(a, t, o, i) {
                         return "full" == l.wallType ? FullWall.onReplySent.apply(window, arguments) : (l.wallMyReplied[e] = 0, re("reply_link" + e), hide("reply_warn" +
                             e), void Wall._repliesLoaded(e, !1, t, o, i))
@@ -3435,9 +3436,10 @@ var Page = {
                     h = domByClass(p.container, "_content"),
                     g = domByClass(p.container, "_title");
                 i && g && val(g, i), p && (p.likeInvalidated = !0), _ && (_.value = o), animateCount(c, o), toggleClass(d, l ? "my_share" : "my_like", t), toggleClass(d, l ?
-                    "no_shares" : "no_likes", !o), toggleClass(h, "me_hidden", !t), o ? !p.el || isVisible(p.container) || i || tooltips.show(p.el, extend(u, {
-                    showdt: 0
-                })) : p.el && p.hide()
+                    "no_shares" : "no_likes", !o), toggleClass(h, "me_hidden", !t), o ? p.el && (i === !1 ? p.destroy && p.destroy() : isVisible(p.container) || i || i ===
+                    !1 || tooltips.show(p.el, extend(u, {
+                        showdt: 0
+                    }))) : p.el && p.hide()
             }
         },
         likeShareUpdate: function(e, a, t, o, i) {
@@ -3650,7 +3652,7 @@ var Page = {
                     .length - o,
                     l = i;
                 cur.options.fixed_post_id && cur.options.wall_oid < 0 && (l += 1), l >= e[cur.wallType] - o ? hide(t) : (show(t), t.onclick = Wall.showMore.pbind(i)),
-                    shortCurrency(), window.mvcur && mvcur.mvShown && Videoview.updatePlaylistBoxPosition(), cur.gifAutoplayScrollHandler && cur.gifAutoplayScrollHandler()
+                    shortCurrency(), cur.gifAutoplayScrollHandler && cur.gifAutoplayScrollHandler()
             }
         },
         getAbsDate: function(e, a) {
@@ -3994,67 +3996,71 @@ var Page = {
                                         break;
                                     case "like_post":
                                     case "like_reply":
+                                        if (e && c == window.cur.wallLayerLike) {
+                                            window.WkView && WkView.likeUpdate(hasClass(ge("wk_like_wrap"), "my_like"), a[3], !1);
+                                            break
+                                        }
+                                        if (!_) break;
                                         var I = "like_reply" == i ? c.replace("_", "_wall_reply") : c,
-                                            D = e && c == window.cur.wallLayerLike,
-                                            R = D ? ge("wk_like_count") : ge("like_count" + I),
-                                            U = D ? ge("wk_like_icon") : ge("like_icon" + I);
-                                        if (!_ && !R) break;
-                                        var H = U && U.parentNode,
-                                            F = (intval(val(R)), intval(a[3]));
-                                        animateCount(R, F), val("like_real_count_wall" + c, F), toggleClass(U, "no_likes", 0 >= F), H && H.tt && !isVisible(H.tt.container) &&
-                                            H.tt.destroy && H.tt.destroy(), setStyle(U, {
-                                                opacity: "",
-                                                visibility: ""
-                                            });
+                                            D = _ && domByClass(_, "_like_wrap"),
+                                            R = _ && domByClass(_, "_share_wrap");
+                                        wall.likeFullUpdate(D, I, {
+                                            like_my: D && hasClass(D, "my_like"),
+                                            like_num: a[3],
+                                            like_title: !1,
+                                            share_my: R && hasClass(R, "my_share"),
+                                            share_num: a[4],
+                                            share_title: !1
+                                        });
                                         break;
                                     case "vote_poll":
                                         if (!_) break;
                                         Wall.updatePollResults(c, a[3]);
                                         break;
                                     case "upd_ci":
-                                        var O = a[2],
-                                            V = ge("current_info"),
-                                            _ = V || ge("page_current_info"),
-                                            q = ' data-audio="' + a[4] + '"';
+                                        var U = a[2],
+                                            H = ge("current_info"),
+                                            _ = H || ge("page_current_info"),
+                                            F = ' data-audio="' + a[4] + '"';
                                         if (!_) break;
                                         switch (a[3]) {
                                             case "audio":
-                                                var z = geByClass1("current_audio_cnt");
-                                                z && z.tt && z.tt.hide();
-                                                var G = intval(a[5] || ""),
-                                                    Y = G ? "" : " hidden",
-                                                    K = q;
-                                                V || (K += " onmouseover=\"showTooltip(this, {forcetoup: true, text: '" + o.options.ciAudioTip +
+                                                var O = geByClass1("current_audio_cnt");
+                                                O && O.tt && O.tt.hide();
+                                                var V = intval(a[5] || ""),
+                                                    q = V ? "" : " hidden",
+                                                    z = F;
+                                                H || (z += " onmouseover=\"showTooltip(this, {forcetoup: true, text: '" + o.options.ciAudioTip +
                                                     "', black: 1, shift: [14, 5, 5]})\" onclick=\"Page.playCurrent(this, this.getAttribute('data-audio'), '" + o.options
-                                                    .ciAudioHash + "')\""), O = rs(o.options.ciAudioTpl, {
-                                                    text: O,
-                                                    attrs: K,
-                                                    count: G,
-                                                    cnt_class: Y
-                                                }), wall.updateOwnerStatus(O, _, a, V);
+                                                    .ciAudioHash + "')\""), U = rs(o.options.ciAudioTpl, {
+                                                    text: U,
+                                                    attrs: z,
+                                                    count: V,
+                                                    cnt_class: q
+                                                }), wall.updateOwnerStatus(U, _, a, H);
                                                 break;
                                             case "app":
-                                                var X = a[6] ? "[12, 5, 5]" : "[15, 5, 5]",
-                                                    $ = a[6] ? " current_app_icon" : "",
-                                                    K = V ? ' onclick="cur.ciApp = ' + a[4] + '"' : " onmouseover=\"showTooltip(this, {forcetoup: true, text: '" + o.options
-                                                    .ciAppTip + "', black: 1, shift: " + X + '})" href="' + a[5] + '?ref=14" onclick="return showApp(event, ' + a[4] +
+                                                var G = a[6] ? "[12, 5, 5]" : "[15, 5, 5]",
+                                                    Y = a[6] ? " current_app_icon" : "",
+                                                    z = H ? ' onclick="cur.ciApp = ' + a[4] + '"' : " onmouseover=\"showTooltip(this, {forcetoup: true, text: '" + o.options
+                                                    .ciAppTip + "', black: 1, shift: " + G + '})" href="' + a[5] + '?ref=14" onclick="return showApp(event, ' + a[4] +
                                                     ', 1, 14, cur.oid)"';
-                                                a[6] && (K += " style=\"background-image: url('" + a[6] + "')\""), O = '<a class="current_app' + $ + '"' + K + ">" + O +
-                                                    "</a>", wall.updateOwnerStatus(O, _, a, V);
+                                                a[6] && (z += " style=\"background-image: url('" + a[6] + "')\""), U = '<a class="current_app' + Y + '"' + z + ">" + U +
+                                                    "</a>", wall.updateOwnerStatus(U, _, a, H);
                                                 break;
                                             default:
                                                 stManager.add(["emoji.js"], function() {
-                                                    O = O ? '<span class="current_text">' + Emoji.emojiToHTML(O, !0) + "</span>" : O, wall.updateOwnerStatus(O,
-                                                        _, a, V)
+                                                    U = U ? '<span class="current_text">' + Emoji.emojiToHTML(U, !0) + "</span>" : U, wall.updateOwnerStatus(U,
+                                                        _, a, H)
                                                 })
                                         }
                                         break;
                                     case "upd_ci_cnt":
-                                        var V = ge("current_info"),
-                                            Q = intval(a[2]),
-                                            _ = V || ge("page_current_info"),
-                                            R = _ && geByClass1("current_audio_cnt", _);
-                                        R && (R.tt && R.tt.destroy(), toggleClass(R, "hidden", 0 == Q), animateCount(R, Q))
+                                        var H = ge("current_info"),
+                                            K = intval(a[2]),
+                                            _ = H || ge("page_current_info"),
+                                            X = _ && geByClass1("current_audio_cnt", _);
+                                        X && (X.tt && X.tt.destroy(), toggleClass(X, "hidden", 0 == K), animateCount(X, K))
                                 }
                                 p && (e ? 0 > u : l > u) && (l += p)
                             }
@@ -4226,7 +4232,8 @@ var Page = {
             }
         },
         likeIt: function(e, a, t, o) {
-            if (stopEvent(o), vk.id && !cur.viewAsBox) {
+            if (stopEvent(o), vk.id) {
+                if (cur.viewAsBox) return cur.viewAsBox(), cancelEvent(o);
                 var i = wall.parsePostId(a),
                     l = i.type,
                     s = i.id,
@@ -4299,6 +4306,7 @@ var Page = {
             }))
         },
         sharesOpen: function(e, a, t) {
+            if (cur.viewAsBox) return cur.viewAsBox(), cancelEvent(e);
             stopEvent(e);
             var o = wall.parsePostId(a),
                 i = o.type,

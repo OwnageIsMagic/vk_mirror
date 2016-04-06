@@ -10,8 +10,8 @@ var Settings = {
                 .firstChild; !hasClass(e, "active_link");) e = e.nextSibling;
         return e
     },
-    showMsg: function(e) {
-        e ? (showMsg("settings_result", e, "ok_msg", !0), show("settings_result")) : hide("settings_result"), scrollToTop(0)
+    showMsg: function(e, t) {
+        t || (t = ge("settings_result")), e ? (showMsg(t, e, "ok_msg", !0), show(t)) : hide(t), scrollToTop(0)
     },
     showError: function(e, t) {
         e = e || getLang("global_unknown_error");

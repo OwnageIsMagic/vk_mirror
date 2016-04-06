@@ -303,7 +303,7 @@ a.page_post_thumb_wrap:hover {
 
 .page_market_album_title_text {
     padding-bottom: 4px;
-    color: #1d1d1e;
+    color: #000;
     font-size: 16px;
     line-height: 21px
 }
@@ -508,7 +508,7 @@ a.page_poll_code {
     padding-top: 2px;
     text-align: right;
     float: right;
-    color: #3b4045;
+    color: #222;
     cursor: default
 }
 
@@ -594,6 +594,10 @@ a.page_poll_code {
     opacity: 1;
     -webkit-filter: none;
     filter: none
+}
+
+.page_docs_preview .page_preview_postpone_wrap .page_media_x_wrap {
+    margin: 0 4px
 }
 
 .medadd_c_link {

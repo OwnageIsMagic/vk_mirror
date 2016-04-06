@@ -2,23 +2,25 @@ var Photoview = {
         MIN_WIDTH: 600,
         MIN_HEIGHT: 450,
         SIDE_COLUMN_WIDTH: 350,
-        SIDE_MIN_GAP: 100,
-        VERTICAL_MIN_GAP: 40,
+        SIDE_MIN_GAP: 90,
+        VERTICAL_MIN_GAP: 30,
         BOTTOM_BAR_HEIGHT: 52,
         SIDE_NAV_PANELS_MAX_WIDTH: 120,
         SIDE_NAV_PANELS_MIN_WIDTH: 25,
         blank: "/images/blank.gif",
         blankf: function() {},
         cacheSize: 3,
-        allSizes: ["x", "y", "z"],
+        allSizes: ["x", "y", "z", "w"],
         genUrl: function(e, o) {
             return o.match(/\.[a-z]{3}$/i) || (o += ".jpg"), o.match(/https?:\/\//i) ? o : (e || "")
                 .replace(/\/[a-z0-9_:\.]*$/i, "") + "/" + o
         },
         genData: function(e, o) {
-            var t, r, a, i, p = "x" == o ? 3 : "y" == o ? 2 : "z" == o ? 1 : 0,
-                v = ["w", "z", "y", "x"].slice(p);
-            for (a = 0; 4 - p > a && (i = v[a], !(t = e[i + "_"])) && !(r = e[i + "_src"]); ++a);
+            for (var t, r, a = "x" == o ? 3 : "y" == o ? 2 : "z" == o ? 1 : 0, i = ["w", "z", "y", "x"].slice(a), p = 0; 4 - a > p; ++p) {
+                var v = i[p];
+                if (t = e[v + "_"]) break;
+                if (r = e[v + "_src"]) break
+            }
             return t || (t = [r]), {
                 src: Photoview.genUrl(e.base, t[0]),
                 width: t[2] && t[1],
@@ -516,9 +518,10 @@ var Photoview = {
                     if (i += '<div id="pv_place" class="pv_right_block">' + d + "</div>", i += s.tagName ? '<div id="pv_comments_place"></div>' : trim(s), cur.pvReplyForm &&
                         re(cur.pvReplyForm), cur.pvReplyForm = null, t || !o.actions.comm ? show(geByClass1("pv_closed_commments_placeholder")) : o.reply_form && (hide(
                                 geByClass1("pv_closed_commments_placeholder")), cur.pvReplyForm = se(o.reply_form), cur.pvNarrowColumn.appendChild(cur.pvReplyForm), cur.onReplyFormSizeUpdate =
-                            cur.onMediaAdded = Photoview.updateRightBlock), i +=
-                        '<div id="pv_rotate"><form method="POST" target="pv_rotate_frame" name="pv_rotate_form" id="pv_rotate_form"></form></div></div>', cur.pvNarrow.innerHTML =
-                        "", Photoview.updateRightBlock(), cur.pvNarrow.innerHTML = i, s.tagName) {
+                            cur.onMediaAdded = function() {
+                                cur.pvShown && Photoview.updateRightBlock()
+                            }), i += '<div id="pv_rotate"><form method="POST" target="pv_rotate_frame" name="pv_rotate_form" id="pv_rotate_form"></form></div></div>', cur.pvNarrow
+                        .innerHTML = "", Photoview.updateRightBlock(), cur.pvNarrow.innerHTML = i, s.tagName) {
                         each(geByClass("page_gif_loading", s), function() {
                             Page.hideGif(this, !1)
                         });
@@ -551,32 +554,37 @@ var Photoview = {
                     !a) {
                     var _ = [],
                         w = [];
-                    o.actions.spam && (_.push(["spam", getLang("photos_report"), "", "Photoview.showSpamActions()"]), _.push("sep"), w = cur.pvReasons), o.actions.edit && _.push(
-                        ["pe", getLang("photos_pv_act_photoeditor"), "Photoview.openEditor()"]), o.actions.rot && (_.push(["rotate_ccw", getLang("photos_pv_act_rotate_ccw"),
-                        "Photoview.rotatePhoto(-1)"
-                    ]), _.push(["rotate_cw", getLang("photos_pv_act_rotate_cw"), "Photoview.rotatePhoto(1)"]), _.push("sep")), o.actions.place && _.push(["place", getLang(
-                        "photos_edit_add_place"), "Photoview.editPlace()"]), o.actions.prof && _.push(["to_profile", getLang("photos_pv_act_to_avatar"),
-                        "showBox('al_page.php', {act: 'owner_photo_edit', photo: '" + o.id +
-                        "'}, {stat: ['owner_photo.css', 'owner_photo.js', 'tagger.css', 'tagger.js']})"
-                    ]), o.actions.move && o.actions.cover && _.push(["as_title", getLang("photos_album_to_cover"),
-                        "ajax.post('al_photos.php', {act: 'a_set_as_album_title', photo: '" + o.id + "', hash: '" + o.hash + "'}, {onDone: showDoneBox})"
-                    ]);
-                    var f = "";
-                    each(w, function(e, o) {
-                        f += '<div class="pv_more_act_item pv_more_spam_act_item" id="pv_more_spam_act_' + o[0] + '">' + o[1] + "</div>"
-                    }), f = f ? '<div class="pv_more_acts_hidden">' + f + "</div>" : "";
+                    if (o.actions.spam && (_.push(["spam", getLang("photos_report"), "", "Photoview.showSpamActions()"]), _.push("sep"), w = cur.pvReasons), o.actions.edit &&
+                        _.push(["pe", getLang("photos_pv_act_photoeditor"), "Photoview.openEditor()"]), o.actions.rot && (_.push(["rotate_ccw", getLang(
+                                "photos_pv_act_rotate_ccw"), "Photoview.rotatePhoto(-1)"]), _.push(["rotate_cw", getLang("photos_pv_act_rotate_cw"), "Photoview.rotatePhoto(1)"]),
+                            _.push("sep")), o.actions.place && _.push(["place", getLang("photos_edit_add_place"), "Photoview.editPlace()"]), o.actions.prof && _.push([
+                            "to_profile", getLang("photos_pv_act_to_avatar"), "showBox('al_page.php', {act: 'owner_photo_edit', photo: '" + o.id +
+                            "'}, {stat: ['owner_photo.css', 'owner_photo.js', 'tagger.css', 'tagger.js']})"
+                        ]), o.actions.move) {
+                        var f = o.id.split("_")[0];
+                        _.push(["move_to", getLang("photos_pv_act_move_to_album"), "showBox('al_photos.php', {act: 'a_move_to_album_box', photo_id: '" + o.id + "', owner_id: " +
+                            f + "}, {stat: ['page.js', 'page.css', 'wide_dd.js', 'wide_dd.css']})"
+                        ]), o.actions.cover && _.push(["as_title", getLang("photos_album_to_cover"), "ajax.post('al_photos.php', {act: 'a_set_as_album_title', photo: '" +
+                            o.id + "', hash: '" + o.hash + "'}, {onDone: showDoneBox})"
+                        ])
+                    }
                     var P = "";
+                    each(w, function(e, t) {
+                        var r = "Photoview.report('" + o.hash + "', '" + t[0] + "')";
+                        P += '<div onclick="' + r + '" class="pv_more_act_item pv_more_spam_act_item" id="pv_more_spam_act_' + t[0] + '">' + t[1] + "</div>"
+                    }), P = P ? '<div class="pv_more_acts_hidden">' + P + "</div>" : "";
+                    var b = "";
                     each(_, function(e, o) {
-                            P += "sep" == o ? '<div class="pv_more_act_item_sep"></div>' : '<div class="pv_more_act_item" onmouseover="' + (o[3] || "") + '" onclick="' + (
+                            b += "sep" == o ? '<div class="pv_more_act_item_sep"></div>' : '<div class="pv_more_act_item" onmouseover="' + (o[3] || "") + '" onclick="' + (
                                 o[2] || "") + '" id="pv_more_act_' + o[0] + '">' + o[1] + "</div>"
-                        }), P += '<a class="pv_more_act_item" id="pv_more_act_download" target="_blank" href="' + Photoview.genData(o, "w")
-                        .src + '">' + getLang("photos_pv_act_open_original") + "</a>", P = '<div class="pv_more_acts">' + P + "</div>", _.length && (_ = JSON.stringify(_), _ =
+                        }), b += '<a class="pv_more_act_item" id="pv_more_act_download" target="_blank" href="' + Photoview.genData(o, "w")
+                        .src + '">' + getLang("photos_pv_act_open_original") + "</a>", b = '<div class="pv_more_acts">' + b + "</div>", _.length && (_ = JSON.stringify(_), _ =
                             _.replace(/\"/g, "&quot;"), m.push('<a class="pv_actions_more" data-items="' + _ + '">' + getLang("photos_actions_more") + "</a>")), m = m.join(
                             '<span class="divider"></span>'), cur.pvBottomActions.innerHTML = m, cur.pvMoreActionsTooltip = new ElementTooltip(geByClass1("pv_actions_more"), {
                             id: "pv_more_acts_tt",
                             to: "down",
                             elClassWhenTooltip: "pv_more_shown",
-                            content: f + P,
+                            content: P + b,
                             offset: [0, -5]
                         })
                 }
@@ -680,14 +688,15 @@ var Photoview = {
             }, "photos" == o.substr(0, 6) ? e.all = 1 : "tag" == o.substr(0, 3) ? e.tag = intval(o.substr(3)) : "newtag" == o.substr(0, 6) && (e.newtag = intval(o.substr(
                 6))), -1 != o.indexOf("/rev") && (e.rev = 1)) : e = extend(nav.objLoc, {
                 z: "photo" + cur.pvCurPhoto.id + "/" + (cur.pvCurPhoto.list_override || o)
-            }), nav.strLoc != nav.toStr(e) && (cur.pvNoHistory || ++cur.pvHistoryLength, nav.setLoc(e), (cur.pvOptions || {})
+            }), nav.strLoc != nav.toStr(e) && (cur.pvNoHistory || ++cur.pvHistoryLength,
+                nav.setLoc(e), (cur.pvOptions || {})
                 .fromQueue && (cur.pvNoHistory = !0, cur.pvHistoryLength = 0)), cur.pvOptions && (cur.pvOptions.fromQueue = !1)
         },
         canFullscreen: function() {
             var e = browser,
                 o = floatval(browser.version);
             return !e.mobile && (document.fullscreenEnabled || document.msFullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled || e.safari &&
-                o > 5);
+                o > 5)
         },
         fullscreenOnLoad: function() {
             window.FullscreenPV && FullscreenPV.slide()
@@ -762,23 +771,9 @@ var Photoview = {
                 hash: e,
                 oid: t[0],
                 item_id: t[1]
-            }, {
-                onDone: function(e) {
-                    var o = ge("pv_report");
-                    o.parentNode.replaceChild(ce("div", {
-                        className: "pv_report_blocked",
-                        innerHTML: e
-                    }), o)
-                },
-                showProgress: function() {
-                    var e = ge("pv_report");
-                    addClass(e, "pv_report_blocked")
-                },
-                hideProgress: function() {
-                    var e = ge("mv_report");
-                    removeClass(e, "pv_report_blocked")
-                }
-            })
+            });
+            var r = ge("pv_more_act_spam");
+            val(r, getLang("global_report_sent")), re(geByClass1("pv_more_acts_hidden")), cur.pvMoreActionsTooltip.updatePosition(), cur.pvMoreActionsTooltip.show()
         },
         showShare: function() {
             clearTimeout(cur.hideShareTimer);
@@ -947,13 +942,7 @@ var Photoview = {
                     }); l.firstChild;) u.appendChild(l.firstChild);
                 u.qsorter && setTimeout(qsorter.added.pbind(u), 0), e.pvPreloaded = !1
             }
-            uiScrollBox.hide(), cur.pvPhoto.innerHTML = "", setStyle(cur.pvPhoto, {
-                width: null,
-                height: null
-            }), setStyle(cur.pvCont, {
-                width: null,
-                height: null
-            })
+            uiScrollBox.hide()
         },
         editPhoto: function() {},
         descTT: function(e) {
@@ -1126,16 +1115,16 @@ var Photoview = {
             toggleClass(cur.pvAsGroup, "on", !(!i.actions.asgr || !u || u.getAttribute("rid") !== r[0])), void 0 !== n.emojiId && window.Emoji ? Emoji.focus(n) : elfocus(n)
         },
         updateRightBlock: function() {
-            var e = getSize(geByClass1("pv_data"))[1];
-            setStyle(cur.pvNarrow, "height", e - (cur.pvReplyForm ? getSize(cur.pvReplyForm)[1] : 0));
-            var o = geByClass1("pv_no_commments_placeholder_wrap");
-            if (o && (isVisible(o.children[0]) || isVisible(o.children[1]))) {
-                var t = getSize(cur.pvNarrow)[1],
-                    r = getSize(o)[1],
+            var e = getSize(geByClass1("pv_data"))[1],
+                o = e - (cur.pvReplyForm ? getSize(cur.pvReplyForm)[1] : 0);
+            setStyle(cur.pvNarrow, "height", o);
+            var t = geByClass1("pv_no_commments_placeholder_wrap");
+            if (t && (isVisible(t.children[0]) || isVisible(t.children[1]))) {
+                var r = getSize(t)[1],
                     a = getSize("pv_comments_list")[1],
                     i = ge("pv_comments"),
-                    p = t - i.offsetTop - a;
-                setStyle(o, "margin-top", Math.max(0, p / 2 - r / 2))
+                    p = o - i.offsetTop - a;
+                setStyle(t, "margin-top", Math.max(0, p / 2 - r / 2))
             }
             cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.update(!0, !0)
         },
@@ -1314,13 +1303,14 @@ var Photoview = {
                 v = t - r - 2 * Photoview.VERTICAL_MIN_GAP;
             Photoview.calculateVeryBig();
             var n = cur.pvCurData || {
-                    width: a,
-                    height: i
-                },
-                s = n.width / n.height,
+                width: a,
+                height: i
+            };
+            n.width = n.width || a, n.height = n.height || i;
+            var s = n.width / n.height,
                 c = Math.min(p, n.width),
                 u = c / s;
-            u = Math.min(v, u), c = u * s;
+            u = Math.min(v, u), c = Math.ceil(u * s);
             var l = getXY(cur.pvBottomLeft)[0] + getSize(cur.pvBottomLeft)[0] > getXY(cur.pvBottomActions)[0] - 20;
             toggleClass(cur.pvBottomInfo, "pv_with_line_break", l), e && (cur.prevPhotoWidth = cur.prevPhotoHeight = 0);
             var d = cur.prevPhotoWidth = Math.max(c, a, cur.prevPhotoWidth || 0),
@@ -1347,13 +1337,11 @@ var Photoview = {
             setStyle(cur.pvCont, "width", w);
             var f = getXY(cur.pvBox),
                 P = f[0],
-                T = o - f[0] - getSize(cur.pvBox)[0];
-            setStyle(cur.pvNavPanels[1], "width", P), setStyle(cur.pvNavPanels[0], "width", T);
-            var b = 100 > P;
-            toggleClass(cur.pvNavPanels[0], "pv_nav_panel_icon_centered", b), toggleClass(cur.pvNavPanels[1], "pv_nav_panel_icon_centered", b), Photoview.updateRightBlock(),
-                Photoview.updateVerticalPosition(), f = getXY(cur.pvBox);
-            var C = Math.max(f[1] - bodyNode.scrollTop, .4 * t / 2);
-            setStyle(ge("pv_nav_close"), "height", C), cur.pvPhWidth = c, cur.pvPhHeight = u
+                b = o - f[0] - getSize(cur.pvBox)[0];
+            setStyle(cur.pvNavPanels[1], "width", P), setStyle(cur.pvNavPanels[0], "width", b);
+            var T = 100 > P;
+            toggleClass(cur.pvNavPanels[0], "pv_nav_panel_icon_centered", T), toggleClass(cur.pvNavPanels[1], "pv_nav_panel_icon_centered", T), Photoview.updateRightBlock(),
+                Photoview.updateVerticalPosition(), cur.pvPhWidth = c, cur.pvPhHeight = u
         },
         onResize: function() {
             lastWindowWidth,
@@ -1800,10 +1788,10 @@ var Photoview = {
                         pvCaptionLimit: a.captionlimit,
                         pvMaxTags: a.maxtags,
                         pvReasons: a.reasons,
-                        pvReplyNames: extend(cur.pvReplyNames || {}, a.names || {}),
-                        pvMediaTypes: a.media
+                        pvReplyNames: extend(cur.pvReplyNames || {}, a.names || {})
                     }), window.pvcur = extend(window.pvcur || {}, {
-                        wallTpl: a.wallTpl
+                        wallTpl: a.wallTpl,
+                        rmedia_types: a.rmedia_types
                     }), cur.options || (cur.options = {}), cur.options.share || (cur.options.share = a.share), val(cur.pvAsGroup, "<div></div>" + getLang(
                         "wall_reply_as_group")), val("pv_comment_header", getLang("photos_yourcomment")), val(domFC(ge("pv_add_media")), getLang("global_add_media"))), o =
                     Photoview.realCount(e, o), t = Photoview.realOffset(e, t, 1), cur.pvData || (cur.pvData = {}), cur.pvCommsLikes || (cur.pvCommsLikes = {}), cur.pvData[e])

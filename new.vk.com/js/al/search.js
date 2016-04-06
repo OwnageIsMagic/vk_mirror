@@ -78,7 +78,8 @@ var slide_show = function(e) {
                     uf: 1
                 })), void 0 !== cur.useRec && (e.rec = cur.useRec, delete cur.useRec), e.edit = nav.objLoc.edit, e.sign = nav.objLoc.sign, e.all = nav.objLoc.all, e.change = 1,
                 cur.searchLoc && (e.search_loc = cur.searchLoc), void 0 !== cur.topType && (e.type = cur.topType, delete cur.topType), window.iSearch && iSearch.select && (
-                    iSearch.select.hide(), delete cur.setISearch), cur.loadingMedia || uiSearch.showProgress("search_query"), cur.searchReq = ajax.post("al_search.php", e, {
+                    iSearch.select.hide(), delete cur.setISearch), cur.loadingMedia || (uiSearch.showProgress("search_query"), ge("search_query")
+                    .ignoreFixed = "statuses" == e["c[section]"]), cur.searchReq = ajax.post("al_search.php", e, {
                     onDone: function(t, r, o) {
                         var c = e.uf && ge("results_wrap") ? ge("results_wrap") : ge("results"),
                             i = ge("friends_filters_block") ? ge("friends_filters_block") : ge("filter_form");
@@ -296,29 +297,30 @@ var slide_show = function(e) {
                 "header");
             var t = ge("search_query");
             iSearch.destroy(), vk.id && iSearch.init(t), t.focus(), "search" == nav.objLoc[0] && (extend(cur, {
-                oid: e.user_id,
-                module: "search"
-            }), cur.nav.push(function(e, s, t) {
-                if (void 0 !== e[0] || cur.searchLoc && void 0 !== e.act) return clearTimeout(cur.setLocTO), void(nav.strLoc != cur.loc && cur.loc && hab.setLoc(
-                    cur.loc));
-                if (cur.searchLoc) {
-                    var r = !1;
-                    for (var o in t)
-                        if ("c[" == o.substr(0, 2)) {
-                            r = !0;
-                            break
-                        }
-                    if (cur.onLocationChange && cur.onLocationChange(r), !r) return !0
-                }
-                var c = clone(t);
-                delete c[0];
-                var i = c["c[section]"] || c.section || "quick";
-                return ge("search_menu") && uiRightMenu && uiRightMenu.switchMenu(geByClass1("search_menu_" + i, "search_menu")), searcher.setSection(i), searcher.sendSearchReq(
-                    c, !0), !1
-            })), cur.options || (cur.options = {
-                reply_names: {}
-            }), extend(cur.options, e), searcher.applyOptions(e), window.scrollTop = bodyNode.scrollTop = pageNode.scrollTop = htmlNode.scrollTop = 0, addEvent(window,
-                "scroll", searcher.scrollCheck), addEvent(window, "resize", searcher.onResize), setTimeout(searcher.scrollCheck, 50), setTimeout(checkPageBlocks, 200);
+                    oid: e.user_id,
+                    module: "search"
+                }), cur.nav.push(function(e, s, t) {
+                    if (void 0 !== e[0] || cur.searchLoc && void 0 !== e.act) return clearTimeout(cur.setLocTO), void(nav.strLoc != cur.loc && cur.loc && hab.setLoc(
+                        cur.loc));
+                    if (cur.searchLoc) {
+                        var r = !1;
+                        for (var o in t)
+                            if ("c[" == o.substr(0, 2)) {
+                                r = !0;
+                                break
+                            }
+                        if (cur.onLocationChange && cur.onLocationChange(r), !r) return !0
+                    }
+                    var c = clone(t);
+                    delete c[0];
+                    var i = c["c[section]"] || c.section || "quick";
+                    return ge("search_menu") && uiRightMenu && uiRightMenu.switchMenu(geByClass1("search_menu_" + i, "search_menu")), searcher.setSection(i), searcher.sendSearchReq(
+                        c, !0), !1
+                })), cur.options || (cur.options = {
+                    reply_names: {}
+                }), extend(cur.options, e), searcher.applyOptions(e), t.ignoreFixed = "statuses" == cur.section, window.scrollTop = bodyNode.scrollTop = pageNode.scrollTop =
+                htmlNode.scrollTop = 0, addEvent(window, "scroll", searcher.scrollCheck), addEvent(window, "resize", searcher.onResize), setTimeout(searcher.scrollCheck, 50),
+                setTimeout(checkPageBlocks, 200);
             var r = window.audioPlayer;
             r && r.showCurrentTrack && r.showCurrentTrack(), cur._back = {
                 text: getLang("search_back_to"),

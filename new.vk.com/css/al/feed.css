@@ -216,7 +216,10 @@
     text-align: center;
     padding: 8px 0 0;
     font-size: 12px;
-    line-height: 15px
+    line-height: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .feed_topics_list {
@@ -545,7 +548,7 @@
 }
 
 .feedback_row .page_post_sized_thumbs {
-    clear: both
+    overflow: hidden
 }
 
 .feedback_row_clickable:not(.feedback_row_touched) {
@@ -700,6 +703,14 @@
 
 .feedback_content .feedback_text .wall_signed {
     margin-top: 3px
+}
+
+.feedback_content .feedback_text .page_album_photos {
+    margin-left: 3px
+}
+
+.feedback_content .feedback_text .page_album_under_row {
+    padding-top: 3px
 }
 
 .feedback_group_photo {
@@ -1141,7 +1152,7 @@
     line-height: 38px;
     padding: 0 20px;
     background: #fafbfc;
-    color: #1d1d1e;
+    color: #000;
     outline: none
 }
 

@@ -77,7 +77,7 @@
 }
 
 a.ui_box_header_link {
-    color: #1d1d1e
+    color: #000
 }
 
 .ui_tab,
@@ -111,7 +111,7 @@ a.ui_box_header_link {
 .ui_tab_sel,
 .ui_tabs .ui_tab_sel,
 .ui_tabs_box .ui_tab_sel {
-    color: #1d1d1e
+    color: #000
 }
 
 .ui_tab_sel,
@@ -415,7 +415,7 @@ a.ui_box_header_link {
 }
 
 .ui_tabs_box .ui_tab_sel .ui_tab_count {
-    color: #1d1d1e
+    color: #000
 }
 
 .ui_crumb {
@@ -493,7 +493,7 @@ a.ui_crumb {
 
 .ui_rmenu_item_sel,
 .ui_rmenu_item_sel:hover {
-    color: #1d1d1e;
+    color: #000;
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -524,7 +524,7 @@ a.ui_crumb {
 
 .ui_rmenu_subitem.ui_rmenu_item_sel,
 .ui_rmenu_subitem.ui_rmenu_item_sel:hover {
-    color: #1d1d1e;
+    color: #000;
     padding-left: 26px
 }
 
@@ -695,7 +695,7 @@ input.ui_search_field {
     padding-left: 28px;
     border-left: 20px solid transparent;
     background-position: 0;
-    color: #1d1d1e
+    color: #000
 }
 
 input.ui_search_field::-webkit-input-placeholder {
@@ -913,7 +913,7 @@ a.ui_search_custom_link {
     -o-transition: opacity 100ms linear, top 100ms linear, visibility 100ms linear;
     transition: opacity 100ms linear, top 100ms linear, visibility 100ms linear;
     pointer-events: none;
-    color: #1d1d1e;
+    color: #000;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -945,7 +945,7 @@ a.ui_search_custom_link {
 }
 
 .ui_search_fltr b {
-    color: #1d1d1e
+    color: #000
 }
 
 .ui_search_fltr_control.shown {
@@ -971,7 +971,7 @@ a.ui_search_custom_link {
 
 .ui_search_fltr_label {
     cursor: default;
-    color: #3b4045;
+    color: #222;
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -1676,7 +1676,7 @@ a.ui_search_custom_link {
     line-height: 40px;
     font-size: 12px;
     letter-spacing: 0;
-    color: #1d1d1e
+    color: #000
 }
 
 .right_list_header:hover {
@@ -2025,7 +2025,7 @@ a.ui_search_custom_link {
 }
 
 .ui_suggester_results_list ul li {
-    color: #1d1d1e;
+    color: #000;
     padding: 5px 0 7px 48px;
     cursor: pointer;
     overflow: hidden;
@@ -2039,7 +2039,7 @@ a.ui_search_custom_link {
 .ui_suggester_results_list ul li.active,
 .ui_suggester_results_list ul li:hover {
     background: #e7edf2;
-    color: #1d1d1e
+    color: #000
 }
 
 .ui_suggester_results_list ul li em {

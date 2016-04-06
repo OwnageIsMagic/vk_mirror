@@ -2971,6 +2971,12 @@ span#im_important_count {
     filter: alpha(opacity=55)
 }
 
+.scroll_fix_wrap:hover .popup_box_container:hover .im_stickers_layer_close:hover {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
 .im_stickers_layer_close:after {
     display: block;
     content: ' ';
@@ -3142,7 +3148,7 @@ span#im_important_count {
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #3b4045
+    color: #222
 }
 
 .im_sticker_bl_name,
@@ -3187,7 +3193,7 @@ span#im_important_count {
 
 .im_stickers_my_tip {
     background: #f7f8fa;
-    color: #3b4045;
+    color: #222;
     text-align: center;
     padding: 15px 10px
 }
@@ -3242,7 +3248,7 @@ span#im_important_count {
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #3b4045;
+    color: #222;
     padding: 5px 0 0
 }
 
@@ -3299,7 +3305,7 @@ span#im_important_count {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 15px;
-    color: #3b4045;
+    color: #222;
     padding-bottom: 2px
 }
 
@@ -3391,7 +3397,8 @@ span#im_important_count {
     margin-left: 93px;
     color: #939699;
     position: absolute;
-    font-size: 12px
+    font-size: 12px;
+    margin-top: 12px
 }
 
 .im-page .im-page--lastact-w {
@@ -3405,6 +3412,7 @@ span#im_important_count {
 .im-page .im-page--typing {
     margin-left: 47px;
     display: none;
+    margin-top: 12px;
     position: absolute
 }
 
@@ -3551,12 +3559,21 @@ span#im_important_count {
     display: none
 }
 
+.im-page .im-page--history_search-empty .im-page--chat-body-wrap-inner {
+    height: 100%
+}
+
 .im-page .im-page--history_search .im-chat-input {
     border: none
 }
 
 .im-page .im-page--history_search .im-chat-input * {
     display: none
+}
+
+.im-page .im-page--history_search .im-page--chat-body-wrap-inner {
+    top: 0;
+    bottom: auto
 }
 
 .im-page .im-page--history_search .im-chat-input {
@@ -3712,7 +3729,7 @@ span#im_important_count {
 
 .im-page .im-page--header-chat {
     box-sizing: border-box;
-    padding: 16px;
+    padding: 16px 20px;
     width: 100%;
     position: relative;
     z-index: 101;
@@ -3722,13 +3739,18 @@ span#im_important_count {
 
 .im-page .im-page--chat-body {
     display: table-row;
-    width: 100%
+    height: 100%;
+    width: 100%;
+    position: relative
 }
 
-.im-page .im-page--chat-body,
+.im-page .im-page--chat-photo {
+    cursor: pointer
+}
+
 .im-page .im-page--chat-body-wrap {
-    height: 100%;
-    position: relative
+    position: relative;
+    height: 100%
 }
 
 .im-page .im-page--chat-body-abs {
@@ -3741,7 +3763,7 @@ span#im_important_count {
 
 .im-page .im-page--chat-body-wrap-inner {
     overflow-y: hidden;
-    padding-top: 20px;
+    padding-top: 34px;
     overflow-x: hidden;
     max-height: 100%;
     box-sizing: border-box;
@@ -3751,7 +3773,7 @@ span#im_important_count {
 }
 
 .im-page .im-page--fixer {
-    min-height: 20px;
+    min-height: 34px;
     width: 100%
 }
 
@@ -3808,28 +3830,24 @@ span#im_important_count {
 }
 
 .im-page .im-page--stars {
-    width: 20px;
     display: block;
-    position: absolute;
-    top: 16px;
     color: #929eb0;
     font-size: 12px;
-    padding-top: 1px;
+    margin: 17px 25px 0 0;
     height: 15px;
+    position: relative;
     z-index: 10;
-    right: 20px;
-    padding-left: 19px;
     cursor: pointer
 }
 
 .im-page .im-page--stars i {
     opacity: 0.7;
     position: absolute;
-    left: 0;
+    left: -19px;
     width: 14px;
     height: 15px;
     display: block;
-    top: 0;
+    top: -1px;
     background: url(/images/icons/fav_mark.png) no-repeat
 }
 
@@ -3868,7 +3886,7 @@ span#im_important_count {
     cursor: pointer;
     margin-left: 15px;
     vertical-align: middle;
-    opacity: 1;
+    opacity: 0;
     margin-top: 1px
 }
 
@@ -3891,14 +3909,24 @@ span#im_important_count {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    color: #3b4045;
+    color: #222;
     vertical-align: middle;
-    margin-right: 3px
+    margin-right: 3px;
+    position: relative
+}
+
+.im-page .im-page--peer.im-page--peer_actions {
+    padding-right: 30px
+}
+
+.im-page .im-page--peer .im-deselect {
+    right: 10px
 }
 
 .im-page .im-page--members,
 .im-page .im-page--peer-online {
-    font-size: 12px;
+    font-size: 13px;
+    line-height: 1;
     color: #939699;
     vertical-align: middle;
     display: inline-block;
@@ -3940,7 +3968,8 @@ span#im_important_count {
 
 .im-page .im-page--members {
     cursor: pointer;
-    padding: 0
+    padding: 0;
+    margin: -2px 0 0
 }
 
 .im-page .im-page--members:hover {
@@ -4067,10 +4096,19 @@ span#im_important_count {
     z-index: 2
 }
 
-.im-chat-input .im-chat-input--textarea .multi_media_preview {
-    max-height: 350px;
+.im-chat-input .im-chat-input--textarea .im-chat-input--attaches {
     overflow-y: auto;
-    overflow-x: hidden
+    overflow-x: hidden;
+    max-height: 350px;
+    margin-bottom: 15px
+}
+
+.im-chat-input .im-chat-input--textarea .multi_media_preview {
+    margin-left: -15px;
+    margin-right: -15px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 0
 }
 
 .im-chat-input .im-chat-input--textarea .multi_media_preview .page_preview_audio_wrap .tt_black {
@@ -4130,7 +4168,7 @@ span#im_important_count {
 }
 
 .im-chat-input .im-chat-input--selector .ms_items_more_helper {
-    margin-right: -37px
+    margin-right: -22px
 }
 
 .im-chat-input.im-chat-input_shadowed {
@@ -4145,7 +4183,16 @@ span#im_important_count {
     left: 56px
 }
 
-.im-mess-stack .im-mess-stack--pname {
+.im-mess-stack .im-mess-stack--content .im-mess-stack--lnk {
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: top
+}
+
+.im-mess-stack .im-mess-stack--content .im-mess-stack--pname {
     display: block;
     z-index: 2;
     font-size: 12px;
@@ -4155,7 +4202,14 @@ span#im_important_count {
     color: #939699
 }
 
-.im-mess-stack .im-mess-stack--pname a {
+.im-mess-stack .im-mess-stack--content .im-mess-stack--pname b {
+    width: auto;
+    height: auto;
+    margin: 0;
+    background: none
+}
+
+.im-mess-stack .im-mess-stack--content .im-mess-stack--pname a {
     color: #4a6f97;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
@@ -4176,16 +4230,15 @@ span#im_important_count {
 .im-mess-stack .im-mess-stack--tools {
     position: absolute;
     right: 43px;
-    color: #939699;
+    color: hsla(210, 3%, 59%, .7);
     font-size: 12px;
     z-index: 2;
-    opacity: 0.7;
     line-height: 1.154;
     top: 10px
 }
 
 .im-mess-stack .im-mess-stack--tools a {
-    color: #939699
+    color: hsla(210, 3%, 59%, .7)
 }
 
 .im-mess-stack .im-mess-stack--mess .im-mess:first-child>.im-mess--text {
@@ -4285,7 +4338,7 @@ span#im_important_count {
 }
 
 .im-search {
-    padding-right: 20px;
+    padding-right: 11px;
     box-sizing: border-box;
     position: relative;
     z-index: 10
@@ -4298,7 +4351,7 @@ span#im_important_count {
 
 .im-search .cal_table .past_day.day,
 .im-search .cal_table .today.day {
-    color: #1d1d1e;
+    color: #000;
     pointer-events: all
 }
 
@@ -4813,7 +4866,7 @@ span#im_important_count {
 }
 
 .nim-dialog .nim-dialog--name .nim-dialog--name-w {
-    color: #3b4045;
+    color: #222;
     max-width: 70%;
     white-space: nowrap;
     display: block;
@@ -4838,9 +4891,13 @@ span#im_important_count {
     position: relative
 }
 
+.nim-dialog .nim-dialog--cw .tt_w.tt_black {
+    margin-left: -13px
+}
+
 .nim-dialog .nim-dialog--cw .tt_w.tt_black.tt_down:after,
 .nim-dialog .nim-dialog--cw .tt_w.tt_black.tt_up:after {
-    left: 43px
+    margin-left: 8px
 }
 
 .nim-dialog .nim-dialog--preview,
@@ -5065,16 +5122,16 @@ span#im_important_count {
     opacity: 1
 }
 
-.nim-dialog.nim-dialog_injected .nim-dialog--unread {
-    opacity: 0.5
-}
-
 .nim-dialog.nim-dialog_verified.nim-dialog_muted .nim-dialog--name-w {
     padding-right: 40px
 }
 
 .nim-dialog.nim-dialog_verified.nim-dialog_muted .nim-dialog--name-w:after {
     top: 4px
+}
+
+.nim-dialog.nim-dialog_verified.nim-dialog_selected .nim-dialog--verfifed {
+    background: url(/images/icons/verify_white.png) no-repeat 0 0
 }
 
 .nim-dialog.nim-dialog_verified .nim-dialog--name-w {
@@ -5613,7 +5670,7 @@ span#im_important_count {
 }
 
 .im-preloader.im-preloader_fixer {
-    margin-top: -20px
+    margin-top: -34px
 }
 
 .im-preloader.im-preloader_bottom,
@@ -5840,7 +5897,7 @@ span#im_important_count {
     z-index: 10;
     margin-top: -6px;
     margin-left: -1px;
-    right: 0
+    right: -5px
 }
 
 .im-dialog-select.im-dialog-select_rotated .im-dialog-select--btn {

@@ -186,7 +186,7 @@ body.dev .tdd_tag {
     margin: 3px 0 0 3px;
     height: 16px;
     line-height: 14px;
-    color: #3b4045
+    color: #222
 }
 
 body.dev .tdd_x_c {
@@ -264,7 +264,7 @@ body.dev .tt.tickets_side_tt .tt_text {
     border: 1px solid #bccad7;
     padding: 7px 12px 9px;
     font-size: 1.09em;
-    color: #2b2f33
+    color: #000
 }
 
 body.dev .tt.apps_edit_tt,
@@ -314,7 +314,7 @@ body.dev .priv_h_arrow img {
     border-radius: 2px;
     box-shadow: 0 1px 0 0 #e1e8ed, 0 0 0 1px #e9eef2;
     margin-top: 20px;
-    color: #2b2f33
+    color: #000
 }
 
 #dev_page_wrap2 {
@@ -411,7 +411,7 @@ body.dev input.dev_top_input~.placeholder .ph_content {
 
 body.dev input.dev_top_input:focus {
     background-color: #fff;
-    color: #1d1d1e
+    color: #000
 }
 
 .dev_wide_input_wrap {
@@ -613,7 +613,7 @@ input.dev_wide_input~.placeholder .ph_content,
 
 .dev_nav a.nav.nav_selected,
 .dev_nav a.nav.nav_selected:hover {
-    color: #2b2f33;
+    color: #000;
     background-color: #f5f7fa;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
@@ -638,7 +638,7 @@ input.dev_wide_input~.placeholder .ph_content,
 
 .dev_nav a.nav.submenu.nav_selected,
 .dev_nav a.nav.submenu.nav_selected:hover {
-    color: #2b2f33;
+    color: #000;
     font-size: 0.923em;
     padding-left: 32px;
     padding-right: 10px
@@ -1002,11 +1002,11 @@ input.dev_input_simular {
 }
 
 .dev_raquo_parents {
-    color: #2b2f33
+    color: #000
 }
 
 #dev_edit_name {
-    color: #2b2f33;
+    color: #000;
     font-size: 1.124em!important;
     width: 450px;
     padding: 0;
@@ -1143,7 +1143,7 @@ input.dev_input_simular {
 }
 
 .dev_part_desc {
-    color: #2b2f33
+    color: #000
 }
 
 .dev_result_obj {
@@ -1308,7 +1308,7 @@ input.dev_input_simular {
 
 .dev_info_header {
     display: block;
-    color: #2b2f33;
+    color: #000;
     font-size: 1.46em;
     margin-bottom: 9px
 }
@@ -1576,7 +1576,7 @@ input.dev_section_search {
 .dev_page_cont .wk_sub_header,
 .dev_page_cont .wk_sub_sub_header {
     border-bottom: none;
-    color: #2b2f33;
+    color: #000;
     text-align: start!important
 }
 
@@ -1828,7 +1828,7 @@ textarea.dev_poll_code {
 }
 
 body.dev a.dev_search_match_row {
-    color: #2b2f33;
+    color: #000;
     display: block;
     padding: 10px;
     margin: 0 -10px

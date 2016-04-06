@@ -221,7 +221,7 @@ a.groups_messages_block {
     display: block;
     font-size: 12px;
     padding: 13px 15px 15px;
-    color: #3b4045
+    color: #222
 }
 
 a.groups_messages_block:before {
@@ -746,4 +746,8 @@ a.groups_messages_block .ui_rmenu_count {
 
 .group_contact_labeled .dark {
     width: 100%
+}
+
+.group_send_msg a:hover {
+    text-decoration: none
 }

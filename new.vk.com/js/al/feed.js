@@ -32,11 +32,11 @@ var Feed = {
         })
     },
     update: function(e) {
-        if (!cur.feedUpdateLoading && !(cur.add_queue && window.Notifier && Notifier.addKey(cur.add_queue, feed.updated) && "news" != cur.section || "top" == cur.subsection ||
-                inArray(cur.section, ["search", "photos_search", "mentions", "articles", "articles_search", "likes"]))) {
+        if (console.log("update_function", cur, e), !cur.feedUpdateLoading && !(cur.add_queue && window.Notifier && Notifier.addKey(cur.add_queue, feed.updated) && "news" !=
+                cur.section || "top" == cur.subsection || inArray(cur.section, ["search", "photos_search", "mentions", "articles", "articles_search", "likes"]))) {
             var t = Math.random();
-            "news" != cur.section && "comments" != cur.section && t > .3 || "news" == cur.section && (e || t > .05) || (cur.feedUpdateLoading = !0, ajax.post(
-                "al_feed.php?au_" + cur.section, extend(feed.getSectionParams(cur.section), {
+            "news" != cur.section && "comments" != cur.section && t > .3 || "news" == cur.section && (e || t > .05) || (cur.feedUpdateLoading = !0, console.log("AND AJAX"),
+                ajax.post("al_feed.php?au_" + cur.section, extend(feed.getSectionParams(cur.section), {
                     timestamp: cur.timestamp,
                     posted: e ? 1 : "",
                     queue: cur.add_queue ? 1 : 0
@@ -219,24 +219,24 @@ var Feed = {
                         1 && removeClass(cur.feedEls.wrap, "feed_is_empty");
                     break;
                 case "edit_post":
-                    var P, B = ge("wpt" + r);
-                    if (!isVisible(i) || !B) break;
-                    var E = geByClass1("wall_post_more", B);
-                    E && (E = isVisible(domNS(E))), (P = t > getXY(B)[1]) && (c -= B.offsetHeight);
+                    var B, P = ge("wpt" + r);
+                    if (!isVisible(i) || !P) break;
+                    var E = geByClass1("wall_post_more", P);
+                    E && (E = isVisible(domNS(E))), (B = t > getXY(P)[1]) && (c -= P.offsetHeight);
                     var S = psr(rs(e[3], {
                             poll_hash: cur.wallTpl.poll_hash
                         })),
                         w = ge("post" + r);
-                    w && !isVisible(w.parentNode) && (S = wall.updatePostImages(S)), val(B, S), E && (E = geByClass1("wall_post_more", B), E && E.onclick()), ge(
-                        "post_poll_id" + r) && wall.updatePoll(r), P && (c += B.offsetHeight), nodeUpdated(B);
+                    w && !isVisible(w.parentNode) && (S = wall.updatePostImages(S)), val(P, S), E && (E = geByClass1("wall_post_more", P), E && E.onclick()), ge(
+                        "post_poll_id" + r) && wall.updatePoll(r), B && (c += P.offsetHeight), nodeUpdated(P);
                     break;
                 case "edit_reply":
                     var L = e[3],
-                        B = ge("wpt" + L);
-                    if (!isVisible("post" + L) || !B) break;
-                    var E = geByClass1("wall_reply_more", B);
-                    E && (E = isVisible(domNS(E))), updH = -B.offsetHeight, updY = getXY(B)[1], val(B, psr(e[4])), E && (E = geByClass1("wall_reply_more", B), E && E.onclick()),
-                        updH += B.offsetHeight, nodeUpdated(B);
+                        P = ge("wpt" + L);
+                    if (!isVisible("post" + L) || !P) break;
+                    var E = geByClass1("wall_reply_more", P);
+                    E && (E = isVisible(domNS(E))), updH = -P.offsetHeight, updY = getXY(P)[1], val(P, psr(e[4])), E && (E = geByClass1("wall_reply_more", P), E && E.onclick()),
+                        updH += P.offsetHeight, nodeUpdated(P);
                     break;
                 case "post_parsed_link":
                     if (!i) break;
@@ -296,17 +296,22 @@ var Feed = {
                     break;
                 case "like_post":
                 case "like_reply":
+                    if (layer && r == window.cur.wallLayerLike) {
+                        window.WkView && WkView.likeUpdate(hasClass(ge("wk_like_wrap"), "my_like"), e[3], !1);
+                        break
+                    }
+                    if (!i) break;
                     var O = "like_reply" == o ? r.replace("_", "_wall_reply") : r,
-                        X = ge("like_count" + O),
-                        G = ge("like_icon" + O);
-                    if (!i && !X) break;
-                    var W = G && G.parentNode,
-                        z = (intval(val(X)), intval(e[3]));
-                    animateCount(X, z), val("like_real_count_wall" + r, z), toggleClass(G, "no_likes", 0 >= z), W && W.tt && !isVisible(W.tt.container) && W && W.tt && W.tt
-                        .destroy(), setStyle(G, {
-                            opacity: "",
-                            visibility: ""
-                        });
+                        X = i && domByClass(i, "_like_wrap"),
+                        W = i && domByClass(i, "_share_wrap");
+                    wall.likeFullUpdate(X, O, {
+                        like_my: X && hasClass(X, "my_like"),
+                        like_num: e[3],
+                        like_title: !1,
+                        share_my: W && hasClass(W, "my_share"),
+                        share_num: e[4],
+                        share_title: !1
+                    });
                     break;
                 case "vote_poll":
                     if (!ge("post_poll" + r)) break;
@@ -1033,14 +1038,13 @@ var Feed = {
                 no_reposts: ge("feed_list_reposts") && !isChecked("feed_list_reposts") ? 1 : 0,
                 hash: o.hash
             };
-        return e.length < t.length ? i.White = e.join(",") : i.Black = t.join(","),
-            ajax.post("al_feed.php", i, {
-                onDone: function(e, t) {
-                    r.hide(), feed.switchSection("photos" == cur.section ? "photos" : "news")
-                },
-                showProgress: lockButton.pbind(r.btns.ok[0]),
-                hideProgress: unlockButton.pbind(r.btns.ok[0])
-            }), !1
+        return e.length < t.length ? i.White = e.join(",") : i.Black = t.join(","), ajax.post("al_feed.php", i, {
+            onDone: function(e, t) {
+                r.hide(), feed.switchSection("photos" == cur.section ? "photos" : "news")
+            },
+            showProgress: lockButton.pbind(r.btns.ok[0]),
+            hideProgress: unlockButton.pbind(r.btns.ok[0])
+        }), !1
     },
     addList: function() {
         return feed.editList(-1)

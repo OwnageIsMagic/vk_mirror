@@ -205,7 +205,7 @@ td.apps_edit_wide {
 div.apps_edit_header {
     padding: 20px 0px 6px 175px;
     font-weight: 700;
-    color: #2b2f33
+    color: #222
 }
 
 div.apps_edit_header.no_padd {
@@ -215,7 +215,7 @@ div.apps_edit_header.no_padd {
 td.apps_edit_header {
     padding: 20px 5px 6px;
     font-weight: 700;
-    color: #2b2f33
+    color: #222
 }
 
 .apps_edit_create {
@@ -278,7 +278,7 @@ td.apps_edit_header {
 
 .app_stat_head {
     border-bottom: 1px solid #dae1e8;
-    color: #2b2f33;
+    color: #222;
     font-weight: 700;
     margin: 0 0 20px;
     padding: 20px 0 2px
@@ -1087,7 +1087,7 @@ td.apps_edit_label {
     border-bottom: 1px solid #eef0f3;
     border-radius: 2px 2px 0 0;
     outline: none;
-    color: #1d1d1e;
+    color: #000;
     padding: 0 30px;
     position: relative
 }
@@ -1135,7 +1135,7 @@ td.apps_edit_label {
 }
 
 .dev .app_edit_block_header .app_edit_dev_header.app_header_sel {
-    color: #2b2f33;
+    color: #222;
     border-bottom: 2px solid #6286ae;
     margin-bottom: -1px;
     height: 53px
@@ -1243,7 +1243,7 @@ td.apps_edit_info_save {
     border-top: 1px solid #eef0f3;
     margin: 20px -30px 5px;
     padding: 26px 30px 0px;
-    color: #2b2f33;
+    color: #222;
     font-weight: 700
 }
 
@@ -2127,7 +2127,7 @@ div.apps_edit_dd .selector_container td.selector_dropdown {
 }
 
 .apps_edit_thumb_header {
-    color: #2b2f33;
+    color: #222;
     font-weight: 700
 }
 
@@ -2545,7 +2545,7 @@ input.execute_field_input {
 }
 
 .apps_edit_stat_graph_wrap .summary {
-    color: #2b2f33;
+    color: #222;
     padding: 3px 30px 4px
 }
 

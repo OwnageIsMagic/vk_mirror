@@ -1377,7 +1377,8 @@ a.ads_ad_box2:hover {
 
 .ads_ad_box.redesign .ads_ad_photo_box {
     border-radius: 2px;
-    height: 85px
+    height: 85px;
+    position: relative
 }
 
 .ads_ad_box.redesign .ads_ad_photo_box.ver {
@@ -1394,13 +1395,19 @@ a.ads_ad_box2:hover {
     max-height: 145px
 }
 
+.ads_ad_box.redesign .ads_ad_photo_box>img {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%)
+}
+
 .ads_ad_box.redesign .ads_ad_photo_box .ads_ad_photo {
     width: 145px;
-    max-width: 145px;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    margin: auto
+    max-width: 145px
 }
 
 .ads_ad_box.redesign .ads_ad_photo_box .ads_ad_age_restriction {
@@ -1468,7 +1475,7 @@ a.ads_ad_box2:hover {
 }
 
 .ads_ad_box.redesign .ads_ad_description {
-    color: #1d1d1e;
+    color: #000;
     line-height: 15px;
     padding-top: 3px
 }

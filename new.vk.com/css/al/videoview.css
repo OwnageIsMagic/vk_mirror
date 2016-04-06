@@ -140,7 +140,7 @@ body.mobfixed #mv_layer_wrap {
     font-size: 17px;
     line-height: 23px;
     white-space: nowrap;
-    color: #1d1d1e
+    color: #000
 }
 
 .mv_title_panel {
@@ -169,6 +169,7 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_author_img {
+    position: relative;
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -1243,10 +1244,14 @@ embed#video_player {
     margin-top: 10px
 }
 
-#mv_info_line {
+#mv_service_btns_wrap {
+    position: relative
+}
+
+#mv_service_btns {
     position: absolute;
+    top: 2px;
     right: 2px;
-    margin-top: 2px;
     background: #fff;
     font-size: 11px;
     opacity: 0.3;
@@ -1255,10 +1260,14 @@ embed#video_player {
     transition: opacity 200ms ease-in-out
 }
 
-#mv_info_line:hover {
+#mv_service_btns:hover {
     opacity: 1;
     -webkit-filter: none;
     filter: none
+}
+
+#mv_service_btns .mv_service_btn {
+    padding: 0 3px
 }
 
 .mv_edit_box_fluid_input {

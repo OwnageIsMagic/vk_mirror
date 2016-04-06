@@ -178,7 +178,7 @@
 }
 
 .photos_container_pretty_grid {
-    padding: 0 20px 18px
+    padding: 18px 20px
 }
 
 .photos_container_pretty_grid .photos_morebtn_wrap {
@@ -375,6 +375,10 @@
     box-sizing: border-box
 }
 
+.photos_photos_review {
+    padding-top: 18px
+}
+
 .photos_album_page,
 .photos_tag_page {
     font-size: 12px
@@ -385,7 +389,7 @@
     display: inline-block;
     vertical-align: top;
     border: none;
-    margin: 2px 2px 3px 3px
+    margin: 2px 3px 3px 2px
 }
 
 .photos_album_page .photos_row:first-child,
@@ -411,7 +415,8 @@
 
 #photos_box_edit_data,
 .photos_edit_album {
-    box-sizing: border-box
+    box-sizing: border-box;
+    padding: 20px 30px
 }
 
 #photos_box_edit_data .photos_edit_input,
@@ -571,7 +576,7 @@
 .photos_edit_selection_header {
     background-color: #fafbfc;
     padding: 13px 20px;
-    color: #3b4045;
+    color: #222;
     border-top: 1px solid #eef0f3;
     border-bottom: 1px solid #eef0f3;
     white-space: nowrap;
@@ -696,7 +701,7 @@
     top: 0;
     left: 0;
     z-index: 1;
-    color: #1d1d1e;
+    color: #000;
     display: none;
     font-size: 12px;
     padding: 7px 9px;
@@ -723,7 +728,7 @@
 }
 
 .photos_container_edit_grid .photos_photo_edit_row_desc_placeholder.photos_edit_has_desc {
-    color: #1d1d1e
+    color: #000
 }
 
 .photos_container_edit_grid .photos_deleted .photos_photo_edit_row_actions,
@@ -802,6 +807,28 @@
 
 .photos_container_edit_grid .photos_photo_edit_row_progress .round_spinner {
     margin: 63.5px auto
+}
+
+.photos_cancel_move {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    box-sizing: border-box;
+    text-align: center;
+    line-height: 1.3em;
+    background-color: hsla(0, 0%, 100%, .95)
+}
+
+.photos_cancel_move .video_restore_label {
+    padding: 0 10px
+}
+
+.photos_cancel_move a {
+    text-align: center;
+    display: block;
+    margin-top: 60px
 }
 
 .photos_edit_actions {

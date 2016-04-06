@@ -452,7 +452,8 @@ var AudioUtils = {
         }
         if (l = domClosest("_im_peer_history", i)) o = t(geByClass("_im_mess", l));
         else if (l = domClosest("replies_list", i)) o = t(geByClass("wall_audio_rows", l));
-        else if (l = domClosest("wall_module", i)) o = t(geByClass("wall_text", l));
+        else if (l = domClosest("_bt_rows", i)) o = t(geByClass("_wall_audio_rows", l));
+        else if (l = domClosest("_feed_rows", i)) o = t(geByClass("wall_text", l));
         else if (l = domClosest("wall_posts", i)) {
             o = t(geByClass("wall_text", l));
             var u = geByClass1("post_fixed");
@@ -898,8 +899,8 @@ AudioPlayer.tabIcons = {
             break;
         case AudioPlayer.EVENT_PROGRESS:
             var a = this._impl.getCurrentProgress();
-            ls.set(AudioPlayer.LS_PREFIX + AudioPlayer.LS_PROGRESS, a), this._listenedTime = this._listenedTime || 0, this._listenedTime += a - (this._prevProgress || 0),
-                this._prevProgress = a;
+            ls.set(AudioPlayer.LS_PREFIX + AudioPlayer.LS_PROGRESS, a),
+                this._listenedTime = this._listenedTime || 0, this._listenedTime += a - (this._prevProgress || 0), this._prevProgress = a;
             var l = o[AudioUtils.AUDIO_ITEM_INDEX_DURATION],
                 s = o[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + o[AudioUtils.AUDIO_ITEM_INDEX_ID];
             !this._listened[s] && this._listenedTime * l > AudioPlayer.LISTEN_TIME && (this._sendPlayback(), this._listened[s] = !0);

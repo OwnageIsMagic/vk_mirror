@@ -1087,7 +1087,7 @@ if (!window.Emoji) var Emoji = {
                 var s = cur.tabbedStickersBox;
                 if (s && s.tbUpdate)
                     for (var r in s.tbUpdate) s.tbUpdate[r] = 1;
-                var a = cur.emojiId[cur.peer];
+                var a = cur.emojiId && cur.emojiId[cur.peer];
                 if (a) {
                     var n = geByClass1("emoji_tab_" + e, Emoji.opts[a].tt);
                     n && Emoji.tabSwitch(n, e, a)
@@ -1171,11 +1171,12 @@ if (!window.Emoji) var Emoji = {
         }) : window.emojiStickers = e;
         for (var o in Emoji.opts) {
             var t = Emoji.opts[o];
-            if (t.noStickers) return !1;
-            var s = "";
-            s += Emoji.getTabsCode(window.emojiStickers, o);
-            var r = ge("emoji_tabs_cont_" + o);
-            r && (r.innerHTML = s), Emoji.checkEmojiSlider(t)
+            if (!t.noStickers) {
+                var s = "";
+                s += Emoji.getTabsCode(window.emojiStickers, o);
+                var r = ge("emoji_tabs_cont_" + o);
+                r && (r.innerHTML = s), Emoji.checkEmojiSlider(t)
+            }
         }
     },
     checkEmojiSlider: function(e) {

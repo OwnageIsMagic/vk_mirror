@@ -2364,6 +2364,10 @@ function placeholderSetup(e, t) {
     }
 }
 
+function isInputActive() {
+    return document.activeElement && (attr(document.activeElement, "contenteditable") || "INPUT" === document.activeElement.tagName || "textarea" === document.activeElement.tagName)
+}
+
 function placeholderInit(e, t) {
     function o(e, t, o, n) {
         t = t || {};
@@ -2405,13 +2409,13 @@ function placeholderInit(e, t) {
                 cur.__focused = a.focused = !1, u(!1, !0)
             }, a.phshown = !0, (a.value || i.editable && ((void 0 !== a.textContent ? a.textContent : a.innerText) || geByTag("img", a)
                 .length)) && (a.phshown = !1, hide(l)), browser.opera_mobile || (addEvent(l, "focus click", function(e) {
-                i.editableFocus ? (setTimeout(i.editableFocus.pbind(a), 0), a.phonfocus()) : (a.blur(), a.focus())
+                i.editableFocus ? (setTimeout(i.editableFocus.pbind(a), 0), a.phonfocus()) : (a.blur(),
+                    a.focus())
             }), addEvent(a, "focus" + (i.editable ? " click" : ""), a.phonfocus), addEvent(a, "keydown paste cut input", u)), addEvent(a, "blur", a.phonblur), a.check = u, a.phevents = !
-            0, a.phonsize = function() {}, i.global || i.reload || (cur.__phinputs || (cur.__phinputs = [],
-                cur.destroy.push(function() {
-                    if (cur.__phinputs)
-                        for (var e = 0, t = cur.__phinputs.length; t > e; ++e) removeData(cur.__phinputs[e])
-                })), cur.__phinputs.push(a))
+            0, a.phonsize = function() {}, i.global || i.reload || (cur.__phinputs || (cur.__phinputs = [], cur.destroy.push(function() {
+                if (cur.__phinputs)
+                    for (var e = 0, t = cur.__phinputs.length; t > e; ++e) removeData(cur.__phinputs[e])
+            })), cur.__phinputs.push(a))
     }
 }
 
@@ -2632,10 +2636,21 @@ function showBox(e, t, o, n) {
     var r = new MessageBox(i),
         s = {
             onDone: function(o, n, s, l) {
-                a.onDone && a.onDone(r), r.isVisible() && (show(boxLayerBG), addClass(bodyNode, "layers_shown"), r.setOptions({
-                    title: o,
-                    hideButtons: i.hideButtons || !1
-                }), a.showProgress ? r.show() : show(r.bodyNode), r.content(n), r.evalBox(s, e, t), a.onDone && a.onDone(r, l))
+                if (a.onDone && a.onDone(r), r.isVisible()) try {
+                    show(boxLayerBG), addClass(bodyNode, "layers_shown"), r.setOptions({
+                        title: o,
+                        hideButtons: i.hideButtons || !1
+                    }), a.showProgress ? r.show() : show(r.bodyNode), r.content(n), r.evalBox(s, e, t)
+                } catch (c) {
+                    topError(c, {
+                        dt: 15,
+                        type: 103,
+                        url: e,
+                        query: ajx2q(t),
+                        answer: Array.prototype.slice.call(arguments)
+                            .join("<!>")
+                    }), r.isVisible() && r.hide()
+                }
             },
             onFail: function(e) {
                 return r.failed = !0, setTimeout(r.hide, 0), isFunction(a.onFail) ? a.onFail(e) : void 0
@@ -3567,7 +3582,8 @@ function pauseLastInlineVideo() {
 function showWiki(e, t, o, n) {
     if (checkEvent(o)) return !0;
     var n = n || {};
-    if (0 !== cur.gid && (e.gid = cur.gid), window.wkcur && wkcur.shown && wkcur.wkRaw == e.w && e.w && !e.reply) return WkView.restoreLayer(n), cancelEvent(o);
+    if (0 !== cur.gid && (e.gid = cur.gid), window.wkcur && wkcur.shown && wkcur.wkRaw == e.w && e.w && !e.reply) return WkView.restoreLayer(n),
+        cancelEvent(o);
     (window.wkcur && wkcur.hideTitle || e.hide_title) && (n.hide_title = e.hide_title = 1);
     var a = n.stat || ["wkview.js", "wkview.css", "wk.css", "wk.js"];
     t && a.push("wk_editor.js", "wk_editor.css");
@@ -4379,28 +4395,29 @@ function getShortDate(e, t, o, n) {
 }
 
 function getShortDateOrTime(e, t, o, n) {
-    return isToday(new Date(1e3 * e)) ? langDate(1e3 * e, "{hour}:{minute} {am_pm}", t, [], !o) : getShortDate(e, t, o, n)
+    return isToday(new Date(1e3 * e)) ? langDate(1e3 * e, "{hour}:{minute} {am_pm}", 1e3 * t, [], !o) : getShortDate(e, 1e3 * t, o, n)
 }
 
 function langWordNumeric(e, t, o) {
     return isArray(t) && e < t.length ? t[e] : langNumeric(e, o)
 }
 
-function getDateText(e) {
-    var t = "",
-        o = parseInt(Date.now() / 1e3) - e;
-    if (5 > o) t = getLang("global_just_now");
-    else if (60 > o) {
-        var n = o;
-        t = langWordNumeric(n, getLang("global_word_secs_ago", "raw"), getLang("global_secs_ago", "raw"))
-    } else if (3600 > o) {
-        var a = intval(o / 60);
-        t = langWordNumeric(a, getLang("global_word_mins_ago", "raw"), getLang("global_mins_ago", "raw"))
-    } else if (14400 > o) {
-        var i = intval(o / 3600);
-        t = langWordNumeric(i, getLang("global_word_hours_ago", "raw"), getLang("global_hours_ago", "raw"))
-    } else t = getSmDate(e);
-    return t
+function getDateText(e, t) {
+    var o = "";
+    e += t;
+    var n = parseInt(Date.now() / 1e3) - e;
+    if (5 > n) o = getLang("global_just_now");
+    else if (60 > n) {
+        var a = n;
+        o = langWordNumeric(a, getLang("global_word_secs_ago", "raw"), getLang("global_secs_ago", "raw"))
+    } else if (3600 > n) {
+        var i = intval(n / 60);
+        o = langWordNumeric(i, getLang("global_word_mins_ago", "raw"), getLang("global_mins_ago", "raw"))
+    } else if (14400 > n) {
+        var r = intval(n / 3600);
+        o = langWordNumeric(r, getLang("global_word_hours_ago", "raw"), getLang("global_hours_ago", "raw"))
+    } else o = getSmDate(e);
+    return o
 }
 
 function getSmDate(e, t, o) {
@@ -5818,9 +5835,10 @@ vk.time && !browser.opera_mobile && setTimeout(function() {
     }
     vk.dt = n, getCookie("remixdt") != vk.dt && setCookie("remixdt", vk.dt, 365);
     var c = intval(getCookie("remixrt"));
-    window.devicePixelRatio >= 2 && (!browser.iphone || getCookie("remixme")) ? 1 & c || (setCookie("remixrt", 1 | c, 365), window._retinaInit = function() {
-        stManager.add(["retina.css"]), addClass(document.body, "is_2x")
-    }, window._initedCheck && window._retinaInit()) : 1 & c && setCookie("remixrt", 1 ^ c, 365)
+    window.devicePixelRatio >= 2 && (!browser.iphone || getCookie("remixme")) ? 1 & c || (setCookie("remixrt", 1 | c, 365),
+        window._retinaInit = function() {
+            stManager.add(["retina.css"]), addClass(document.body, "is_2x")
+        }, window._initedCheck && window._retinaInit()) : 1 & c && setCookie("remixrt", 1 ^ c, 365)
 }, 0);
 var _message_box_guid = 0,
     _message_boxes = [],
@@ -6041,9 +6059,7 @@ TopSearch = {
             t = ge("ts_wrap"),
             o = ge("ts_cont_wrap");
         return Chat.init(), e ? (addEvent(e, "focus", function() {
-            TopSearch.deselect(), trim(val(this)) && addClass(o.firstChild, "active"), TopSearch.toggleInput(!0), topHeaderClose(function() {
-                TopSearch.clear(), TopSearch.toggleInput(!1)
-            })
+            TopSearch.deselect(), trim(val(this)) && addClass(o.firstChild, "active"), TopSearch.toggleInput(!0)
         }), addEvent(e, "keydown", function(n) {
             switch (n.keyCode) {
                 case KEY.DOWN:
@@ -6059,8 +6075,9 @@ TopSearch = {
                     }
                     cancelEvent(n);
                     break;
+                case KEY.TAB:
                 case KEY.ESC:
-                    TopSearch.clear(), TopSearch.toggleInput(!1)
+                    TopSearch.clear(), TopSearch.toggleInput(!1), topHeaderClearClose()
             }
         }), addEvent(e, "keyup", function(e) {
             switch (e.keyCode) {
@@ -6078,7 +6095,7 @@ TopSearch = {
                 TopSearch.prepareRows(trim(val(e)))
             }, 10)
         }), addEvent(document, "mousedown", function(t) {
-            e.blur(), TopSearch.toggleInput(!1), domClosest("audio_layout", t.target) || domClosest("layer_wrap", t.target) || topHeaderClose()
+            e.blur(), domClosest("audio_layout", t.target) || domClosest("layer_wrap", t.target) || topHeaderClose()
         }), void(this.inited = !0)) : !1
     },
     clear: function() {
@@ -6135,7 +6152,11 @@ TopSearch = {
         }
     },
     toggleInput: function(e) {
-        toggle("ts_cont_wrap", e)
+        e = !!e;
+        var t = ge("ts_cont_wrap");
+        isVisible(t) != e && (toggle("ts_cont_wrap", e), e && topHeaderClose(function() {
+            TopSearch.clear(), TopSearch.toggleInput(!1)
+        }))
     },
     getList: function(e) {
         switch (e) {

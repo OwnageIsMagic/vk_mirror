@@ -33,7 +33,7 @@
     font-size: 12px;
     letter-spacing: 0;
     outline: none;
-    color: #1d1d1e
+    color: #000
 }
 
 .module_header .header_top:hover {
@@ -600,7 +600,8 @@
 
 .counts_module {
     text-align: center;
-    border-top: 1px solid #eef0f3
+    border-top: 1px solid #eef0f3;
+    max-height: 69px
 }
 
 .counts_module:first-child {
@@ -615,11 +616,13 @@
 .page_counter .count {
     font-size: 19px;
     color: #4a6f97;
-    padding-bottom: 3px
+    padding-bottom: 3px;
+    line-height: 21px
 }
 
 .page_counter .label {
-    color: #7c7f82
+    color: #7c7f82;
+    line-height: 15px
 }
 
 .page_counter:hover {

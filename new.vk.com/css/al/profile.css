@@ -95,16 +95,6 @@
     background: #f0f2f5
 }
 
-.profile_more_icon {
-    display: inline-block;
-    width: 18px;
-    height: 8px;
-    margin: 0 6px;
-    background: url(/images/icons/menu_icon.png?2) no-repeat 0 -255px;
-    opacity: 0.6;
-    filter: alpha(opacity=60)
-}
-
 .profile_more_info_link {
     display: block;
     padding-left: 165px;
@@ -117,12 +107,6 @@
 .profile_more_info_link:hover {
     background-color: #f0f2f5;
     text-decoration: none
-}
-
-.profile_more_info_link:hover .profile_more_icon {
-    opacity: 1;
-    -webkit-filter: none;
-    filter: none
 }
 
 .profile_info_block {
@@ -168,7 +152,7 @@
 }
 
 .profile_warning_row {
-    color: #1d1d1e
+    color: #000
 }
 
 .profile_warning_row:hover {
@@ -922,7 +906,7 @@
 }
 
 .gift_tt_header {
-    color: #3b4045;
+    color: #222;
     font-size: 13px;
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;

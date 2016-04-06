@@ -157,7 +157,7 @@
 
 body {
     background: #f0f2f5;
-    color: #1d1d1e;
+    color: #000;
     margin: 0;
     padding: 0;
     direction: ltr;
@@ -765,7 +765,7 @@ input.text,
 input.text~.placeholder .ph_input,
 textarea,
 textarea~.placeholder .ph_input {
-    color: #1d1d1e;
+    color: #000;
     padding: 3px 5px;
     margin: 0;
     border: 1px solid #d3d9de
@@ -834,7 +834,7 @@ textarea.disabled {
 
 h1 {
     font-size: 18px;
-    color: #3b4045;
+    color: #222;
     margin: 20px 0 5px
 }
 
@@ -887,7 +887,7 @@ h4 span,
 }
 
 .subheader {
-    color: #3b4045;
+    color: #222;
     font-weight: 600;
     margin: 18px 0 12px
 }
@@ -1252,14 +1252,14 @@ div#utils {
     width: 46px;
     position: relative;
     display: inline-block;
+    color: #000;
     opacity: 1;
     -o-transition: opacity 100ms linear;
     transition: opacity 100ms linear
 }
 
-.top_nav_btn,
 .top_nav_btn b {
-    color: #1d1d1e
+    color: #000
 }
 
 .top_nav_btn a b {
@@ -2005,7 +2005,9 @@ a.ad_box_new:hover {
 #side_bar .left_label {
     height: 28px;
     line-height: 28px;
-    font-size: 12px
+    font-size: 12px;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 #side_bar ol {
@@ -2223,12 +2225,16 @@ a:hover .left_count_persist .left_void {
     margin: 0 0 15px
 }
 
+.listing .listing {
+    padding-left: 30px
+}
+
 ul.listing li {
     padding: 1px 0
 }
 
 ul.listing li span {
-    color: #1d1d1e
+    color: #000
 }
 
 ul.listing .l {
@@ -2566,12 +2572,12 @@ body.no_stl #stl_bg {
 
 .box_title_wrap.box_grey {
     background-color: #f2f4f7;
-    color: #1d1d1e;
+    color: #000;
     border-bottom: 1px solid #e7eaf0
 }
 
 .box_title_wrap.box_grey .box_title {
-    color: #1d1d1e
+    color: #000
 }
 
 .box_title_wrap.box_grey .box_x_button {
@@ -2617,7 +2623,7 @@ body.no_stl #stl_bg {
 
 .box_grey .box_title .back {
     background-image: url(/images/icons/box_gray_back.png);
-    color: #1d1d1e
+    color: #000
 }
 
 .box_grey .box_title .back:hover {
@@ -2638,7 +2644,7 @@ body.no_stl #stl_bg {
 .box_grey .box_title .tab_link,
 .box_grey .box_title .toggle,
 .box_grey .box_title .toggle a {
-    color: #1d1d1e
+    color: #000
 }
 
 .box_title .divider:before:hover,
@@ -4223,7 +4229,7 @@ input.text.ts_input~.placeholder .ph_content {
 
 input.text.ts_input:focus {
     background-color: #fff;
-    color: #1d1d1e
+    color: #000
 }
 
 .ts_wrap .input_back_content {
@@ -4383,6 +4389,13 @@ em.highlight {
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
+}
+
+.tt_black .mem_special {
+    color: inherit;
+    font-weight: inherit;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
 .summary_tab_sel .summary_tab3 .mem_special {
@@ -4667,7 +4680,7 @@ em.highlight {
     border-radius: 2px 2px 0 0;
     font-size: 16px;
     outline: none;
-    color: #1d1d1e
+    color: #000
 }
 
 .page_block_header.unshown {
@@ -4686,7 +4699,7 @@ em.highlight {
     padding: 0 20px;
     font-size: 14px;
     outline: none;
-    color: #1d1d1e
+    color: #000
 }
 
 .page_block_sub_header.unshown {
@@ -4751,7 +4764,7 @@ a.page_block_header:hover .header_side_link {
     overflow: hidden;
     padding: 15px 20px;
     outline: none;
-    color: #1d1d1e;
+    color: #000;
     text-align: center
 }
 
@@ -5287,9 +5300,12 @@ button.ui_load_more_btn {
     pointer-events: none
 }
 
-.top_audio_player.audio_top_btn_active,
 .top_audio_player:hover {
     background-color: rgba(75, 109, 148, .65)
+}
+
+.top_audio_player.audio_top_btn_active {
+    background-color: #4b6d94
 }
 
 .top_audio_player.top_audio_player_enabled {

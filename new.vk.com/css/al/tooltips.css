@@ -6,7 +6,7 @@
     z-index: 1501;
     cursor: default;
     font-size: 12px;
-    color: #3b4045;
+    color: #222;
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
     position: relative;
@@ -303,7 +303,7 @@
     background: #fff;
     border: 1px solid #c5d0db;
     padding: 7px 12px 9px;
-    color: #3b4045
+    color: #222
 }
 
 .board_tt .toup .top_pointer,
@@ -413,7 +413,7 @@
 
 .wall_tt {
     font-size: 1em;
-    color: #1d1d1e
+    color: #000
 }
 
 .wall_tt .ui_actions_menu_wrap {

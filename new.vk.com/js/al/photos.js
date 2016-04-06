@@ -58,20 +58,20 @@ var photos = {
     },
     selectEditPhoto: function(o, e) {
         var t = gpeByClass("photos_photo_edit_row", e),
-            r = toggleClass(t, "photos_edit_selected");
+            a = toggleClass(t, "photos_edit_selected");
         if (o.shiftKey && cur.photoEditPrevSelectedRowEl && cur.photoEditPrevSelectedRowEl != t)
-            for (var a = gpeByClass("photos_edit_photos_container", e), i = domFC(a), s = 0; 2 > s && i;)(i == cur.photoEditPrevSelectedRowEl || i == t) && s++, s &&
-                toggleClass(i, "photos_edit_selected", r), i = domNS(i);
+            for (var r = gpeByClass("photos_edit_photos_container", e), i = domFC(r), s = 0; 2 > s && i;)(i == cur.photoEditPrevSelectedRowEl || i == t) && s++, s &&
+                toggleClass(i, "photos_edit_selected", a), i = domNS(i);
         return cur.photoEditPrevSelectedRowEl = t, photos._editUpdateSelectedCounter(), !1
     },
     MAX_DESC_INPUT_HEIGHT: 600,
     startEditPhotoDescription: function(o, e) {
-        function t(o, e, t, r) {
-            var a = clean(val(t))
+        function t(o, e, t, a) {
+            var r = clean(val(t))
                 .split("\n")
                 .join("</br>") + "&nbsp;",
                 i = ce("div", {
-                    innerHTML: a,
+                    innerHTML: r,
                     className: "photos_photo_edit_row_desc_input"
                 }, {
                     width: getSize(e)[0],
@@ -85,13 +85,13 @@ var photos = {
             }), re(i)
         }
         photos.stopEditPhotoDescription();
-        var r = gpeByClass("photos_edit_photos_container", e),
-            a = hasClass(e, "photos_photo_edit_row") ? e : gpeByClass("photos_photo_edit_row", e),
-            i = geByClass1("photos_photo_edit_row_desc_cont", a),
-            s = geByClass1("photos_photo_edit_row_desc_placeholder", a),
-            n = geByClass1("photos_photo_edit_row_desc_input", a);
+        var a = gpeByClass("photos_edit_photos_container", e),
+            r = hasClass(e, "photos_photo_edit_row") ? e : gpeByClass("photos_photo_edit_row", e),
+            i = geByClass1("photos_photo_edit_row_desc_cont", r),
+            s = geByClass1("photos_photo_edit_row_desc_placeholder", r),
+            n = geByClass1("photos_photo_edit_row_desc_input", r);
         val(n, n.getAttribute("data-orig-desc")), t(i, s, n), show(n), addEvent(document, "click", photos.stopEditPhotoDescription), removeEvent(n, "input"), addEvent(n,
-            "input", t.pbind(i, s, n)), n.select(), addClass(r, "photos_desc_editing"), addClass(a, "photos_row_desc_editing"), o && cancelEvent(o)
+            "input", t.pbind(i, s, n)), n.select(), addClass(a, "photos_desc_editing"), addClass(r, "photos_row_desc_editing"), o && cancelEvent(o)
     },
     onEditPhotoDescriptionKeyPress: function(o) {
         switch (o.keyCode) {
@@ -111,23 +111,23 @@ var photos = {
             each(geByClass("photos_row_desc_editing"), function() {
                 t = this, removeClass(t, "photos_row_desc_editing");
                 var o = geByClass1("photos_photo_edit_row_desc_placeholder", t),
-                    r = geByClass1("photos_photo_edit_row_desc_input", t),
-                    a = t.getAttribute("data-id"),
+                    a = geByClass1("photos_photo_edit_row_desc_input", t),
+                    r = t.getAttribute("data-id"),
                     i = t.getAttribute("data-edit-hash"),
                     s = "";
-                if (e) s = r.getAttribute("data-orig-desc");
+                if (e) s = a.getAttribute("data-orig-desc");
                 else {
-                    s = trim(val(r));
-                    var n = r.getAttribute("data-orig-desc");
+                    s = trim(val(a));
+                    var n = a.getAttribute("data-orig-desc");
                     s != n && ajax.post("al_photos.php", {
                         act: "save_desc",
-                        photo: a,
+                        photo: r,
                         hash: i,
                         text: s,
                         edit: 1
-                    }, {}), r.setAttribute("data-orig-desc", s), o.titleSet = !1
+                    }, {}), a.setAttribute("data-orig-desc", s), o.titleSet = !1
                 }
-                val(o, clean(s) || getLang("photos_add_description_placeholder")), toggleClass(o, "photos_edit_has_desc", !!s), hide(r)
+                val(o, clean(s) || getLang("photos_add_description_placeholder")), toggleClass(o, "photos_edit_has_desc", !!s), hide(a)
             }), removeClass(gpeByClass("photos_edit_photos_container", t), "photos_desc_editing")
         }
     },
@@ -142,12 +142,12 @@ var photos = {
             var o = scrollGetY() + photos.headerHeight,
                 e = !1,
                 t = !1,
-                r = getSize(cur.periods[0])[1];
-            for (var a in cur.periods) {
-                var i = getXY(cur.periods[a])[1];
+                a = getSize(cur.periods[0])[1];
+            for (var r in cur.periods) {
+                var i = getXY(cur.periods[r])[1];
                 if (i >= o) break;
-                e = cur.periods[a];
-                var s = intval(a) + 1;
+                e = cur.periods[r];
+                var s = intval(r) + 1;
                 t = cur.periods[s] ? getXY(cur.periods[s])[1] - o : !1
             }
             if (e) {
@@ -173,7 +173,7 @@ var photos = {
                     }
                     cur.fixedPeriodEl = e
                 }
-                var d = t !== !1 ? t - r : 0;
+                var d = t !== !1 ? t - a : 0;
                 d >= 0 && (d = 0), cur.fixedPeriodTop !== d && (setStyle(cur.fixedPeriod, {
                     top: d + "px"
                 }), cur.fixedPeriodTop = d)
@@ -185,11 +185,11 @@ var photos = {
             var o = document.documentElement,
                 e = window.innerHeight || o.clientHeight || bodyNode.clientHeight,
                 t = scrollGetY(),
-                r = ge("ui_photos_load_more"),
-                a = ge("ui_albums_load_more"),
+                a = ge("ui_photos_load_more"),
+                r = ge("ui_albums_load_more"),
                 i = ge("ui_tagged_load_more"),
                 s = .8 * e;
-            isVisible(r) && r.offsetTop - (t + e) < s && photos.load(), isVisible(a) && cur.showAllAlbums && a.offsetTop - (t + e) < s && photos.load(photos.LOAD_TYPE_ALBUMS),
+            isVisible(a) && a.offsetTop - (t + e) < s && photos.load(), isVisible(r) && cur.showAllAlbums && r.offsetTop - (t + e) < s && photos.load(photos.LOAD_TYPE_ALBUMS),
                 isVisible(i) && cur.showAllTagged && i.offsetTop - (t + e) < s && photos.load(photos.LOAD_TYPE_TAGGED), cur.fixPeriods && photos.fixPeriod(), photos.updateEditHeaderPos()
         }
     },
@@ -202,39 +202,39 @@ var photos = {
     recache: function(o, e) {
         if (cur.loading) return cur.loading = 1, void setTimeout(photos.recache.pbind(o, e), 100);
         for (var t = cur.offset; ajaxCache["/" + nav.objLoc[0] + "#act=" + nav.objLoc.act + "&offset=" + t + "&part=1"]; t += 20) {
-            var r = ajaxCache["/" + nav.objLoc[0] + "#act=" + nav.objLoc.act + "&offset=" + t + "&part=1"];
-            r[0] += e, ajaxCache["/" + nav.objLoc[0] + "#act=" + nav.objLoc.act + "&offset=" + (t + e) + "&part=1"] = r, delete ajaxCache["/" + nav.objLoc[0] + "#act=" +
+            var a = ajaxCache["/" + nav.objLoc[0] + "#act=" + nav.objLoc.act + "&offset=" + t + "&part=1"];
+            a[0] += e, ajaxCache["/" + nav.objLoc[0] + "#act=" + nav.objLoc.act + "&offset=" + (t + e) + "&part=1"] = a, delete ajaxCache["/" + nav.objLoc[0] + "#act=" +
                 nav.objLoc.act + "&offset=" + t + "&part=1"]
         }
         cur.offset += e
     },
-    loaded: function(o, e, t, r) {
-        r || (cur.loading = 0);
-        var a, i, s, n, d, c;
-        switch (r = r || photos.LOAD_TYPE_PHOTOS) {
+    loaded: function(o, e, t, a) {
+        a || (cur.loading = 0);
+        var r, i, s, n, d, l;
+        switch (a = a || photos.LOAD_TYPE_PHOTOS) {
             case photos.LOAD_TYPE_TAGGED:
                 cur.taggedOffset = o, s = cur.moreFromTagged, d = cur.moreTaggedOpts, n = cur.taggedOffset;
                 break;
             case photos.LOAD_TYPE_ALBUMS:
-                cur.albumsOffset = o, s = cur.moreFromAlbums, d = cur.moreAlbumsOpts, n = cur.albumsOffset, c = cur.albumsCount;
+                cur.albumsOffset = o, s = cur.moreFromAlbums, d = cur.moreAlbumsOpts, n = cur.albumsOffset, l = cur.albumsCount;
                 break;
             default:
-                cur.offset = o, s = cur.moreFrom, d = cur.moreOpts, n = cur.offset, c = cur.count
+                cur.offset = o, s = cur.moreFrom, d = cur.moreOpts, n = cur.offset, l = cur.count
         }
-        a = ge("photos_container_" + r), i = ge("ui_" + r + "_load_more");
-        for (var l = ce("div", {
+        r = ge("photos_container_" + a), i = ge("ui_" + a + "_load_more");
+        for (var c = ce("div", {
                 innerHTML: trim(e)
-            }); l.firstChild;) {
-            if (hasClass(l.firstChild, "photos_period_delimiter")) {
-                var h = l.firstChild.getAttribute("data-year");
+            }); c.firstChild;) {
+            if (hasClass(c.firstChild, "photos_period_delimiter")) {
+                var h = c.firstChild.getAttribute("data-year");
                 if (geByClass1("photos_period_delimiter_" + h)) {
-                    re(l.firstChild);
+                    re(c.firstChild);
                     continue
                 }
             }
-            cur.photoEditSelectedAll && addClass(l.firstChild, "photos_edit_selected"), a.appendChild(l.firstChild)
+            cur.photoEditSelectedAll && addClass(c.firstChild, "photos_edit_selected"), r.appendChild(c.firstChild)
         }
-        return t && extend(cur.privacy, t), r == photos.LOAD_TYPE_PHOTOS && photos.updatePeriods(), o >= c || !e ? void hide(i) : void(r != photos.LOAD_TYPE_PHOTOS && (cur
+        return t && extend(cur.privacy, t), a == photos.LOAD_TYPE_PHOTOS && photos.updatePeriods(), o >= l || !e ? void hide(i) : void(a != photos.LOAD_TYPE_PHOTOS && (cur
             .loading = 1, ajax.post(s, extend({
                 offset: n,
                 part: 1
@@ -249,23 +249,23 @@ var photos = {
             })))
     },
     load: function(o) {
-        var e, t, r, a;
+        var e, t, a, r;
         switch (o = o || photos.LOAD_TYPE_PHOTOS) {
             case photos.LOAD_TYPE_PHOTOS:
-                e = ge("ui_photos_load_more"), t = cur.moreFrom, r = cur.moreOpts, a = cur.offset;
+                e = ge("ui_photos_load_more"), t = cur.moreFrom, a = cur.moreOpts, r = cur.offset;
                 break;
             case photos.LOAD_TYPE_TAGGED:
-                e = ge("ui_tagged_load_more"), t = cur.moreFromTagged, r = cur.moreTaggedOpts, a = cur.taggedOffset;
+                e = ge("ui_tagged_load_more"), t = cur.moreFromTagged, a = cur.moreTaggedOpts, r = cur.taggedOffset;
                 break;
             case photos.LOAD_TYPE_ALBUMS:
-                e = ge("ui_albums_load_more"), t = cur.moreFromAlbums, r = cur.moreAlbumsOpts, a = cur.albumsOffset
+                e = ge("ui_albums_load_more"), t = cur.moreFromAlbums, a = cur.moreAlbumsOpts, r = cur.albumsOffset
         }
         if (t && isVisible(e) && !isButtonLocked(e)) {
             if (cur.loading) return void(cur.loading = 2);
-            o == photos.LOAD_TYPE_PHOTOS && r && (cur.loading = 1), ajax.post(t, extend({
-                offset: a,
+            o == photos.LOAD_TYPE_PHOTOS && a && (cur.loading = 1), ajax.post(t, extend({
+                offset: r,
                 part: 1
-            }, r || {}), {
+            }, a || {}), {
                 onDone: photos.loaded,
                 onFail: function() {
                     return cur.loading = 0, !0
@@ -291,29 +291,29 @@ var photos = {
         this.load(o)
     },
     reorderAlbums: function(o, e, t) {
-        var r = o.id.replace("album", ""),
-            a = (e && e.id || "")
+        var a = o.id.replace("album", ""),
+            r = (e && e.id || "")
             .replace("album", ""),
             i = (t && t.id || "")
             .replace("album", "");
         ajax.post("al_photos.php", {
             act: "reorder_albums",
-            album: r,
-            before: a,
+            album: a,
+            before: r,
             after: i,
             hash: cur.reorderHash
         })
     },
     reorderPhotos: function(o, e, t) {
-        var r = "edit" == nav.objLoc.act ? "photo_edit_row_" : "photo_row_",
-            a = o.id.replace(r, ""),
+        var a = "edit" == nav.objLoc.act ? "photo_edit_row_" : "photo_row_",
+            r = o.id.replace(a, ""),
             i = (e && e.id || "")
-            .replace(r, ""),
+            .replace(a, ""),
             s = (t && t.id || "")
-            .replace(r, "");
+            .replace(a, "");
         ajax.post("al_photos.php", {
             act: "reorder_photos",
-            photo: a,
+            photo: r,
             before: i,
             after: s,
             rev: nav.objLoc.rev,
@@ -327,22 +327,22 @@ var photos = {
         }
         var t = o.match(/^album(\d+)/);
         if (t) {
-            var r = ge("album" + vk.id + "_" + t[1]);
-            if (r) {
-                if (r.helper) {
-                    var a = getSize(r);
-                    if (a[0] != r.w || a[1] != r.h) {
-                        setStyle(r.helper, {
-                            width: a[0],
-                            height: a[1] - ge("photos_container")
+            var a = ge("album" + vk.id + "_" + t[1]);
+            if (a) {
+                if (a.helper) {
+                    var r = getSize(a);
+                    if (r[0] != a.w || r[1] != a.h) {
+                        setStyle(a.helper, {
+                            width: r[0],
+                            height: r[1] - ge("photos_container")
                                 .sorter.dh
-                        }), extend(r, {
-                            x: r.x - r.w / 2 + a[0] / 2,
-                            w: a[0],
-                            y: r.y - r.h / 2 + a[1] / 2,
-                            h: a[1]
+                        }), extend(a, {
+                            x: a.x - a.w / 2 + r[0] / 2,
+                            w: r[0],
+                            y: a.y - a.h / 2 + r[1] / 2,
+                            h: r[1]
                         });
-                        for (var i = r.nextSibling; i && i.nextSibling; i = i.nextSibling.nextSibling) setStyle(i.nextSibling, {
+                        for (var i = a.nextSibling; i && i.nextSibling; i = i.nextSibling.nextSibling) setStyle(i.nextSibling, {
                             left: i.offsetLeft,
                             top: i.offsetTop
                         })
@@ -375,7 +375,7 @@ var photos = {
     },
     showSaved: function(o, e) {
         var t = ge(o),
-            r = function() {
+            a = function() {
                 setTimeout(animate.pbind(t, {
                     backgroundColor: e,
                     borderLeftColor: "#D8DFEA",
@@ -390,7 +390,7 @@ var photos = {
             borderRightColor: "#4C96D4",
             borderTopColor: "#4C96D4",
             borderBottomColor: "#4C96D4"
-        }, 200, r) : (show(t), r())
+        }, 200, a) : (show(t), a())
     },
     saveAlbum: function(o) {
         var e = {
@@ -433,10 +433,10 @@ var photos = {
                 act: "save_photos",
                 album: cur.album,
                 hash: cur.albumhash
-            }, e = ge("photos_container"), t = 0, r = e.firstChild; r; r = r.nextSibling)
-            if (r.firstChild && isVisible(r.firstChild)) {
-                var a = r.id.replace("photo_edit_row", "");
-                o["photo_id" + t] = a, o["photo_desc" + t] = ge("photo_caption" + a)
+            }, e = ge("photos_container"), t = 0, a = e.firstChild; a; a = a.nextSibling)
+            if (a.firstChild && isVisible(a.firstChild)) {
+                var r = a.id.replace("photo_edit_row", "");
+                o["photo_id" + t] = r, o["photo_desc" + t] = ge("photo_caption" + r)
                     .value, ++t
             }
         ajax.post("al_photos.php", o, {
@@ -460,12 +460,12 @@ var photos = {
             e.push(this.getAttribute("data-id"))
         });
         var t = intval(photos._editGetSelectedCount() > e.length),
-            r = cur.album.split("_");
+            a = cur.album.split("_");
         showBox("/al_photos.php", {
             act: "delete_selected_box",
             photo_ids: t ? "" : e.join(","),
-            owner_id: r[0],
-            album_id: r[1],
+            owner_id: a[0],
+            album_id: a[1],
             all: t
         }, {
             onDone: function() {
@@ -476,13 +476,13 @@ var photos = {
                     photos.doEditBatchProcess({
                         act: "a_delete_photos",
                         hash: o,
-                        owner_id: r[0],
-                        album_id: r[1]
-                    }, cur.editDeletePhotosArray, ge("photos_del_box_progress_wrap"), "photos_del_selected_title_progress", function(o, e, r, a,
+                        owner_id: a[0],
+                        album_id: a[1]
+                    }, cur.editDeletePhotosArray, ge("photos_del_box_progress_wrap"), "photos_del_selected_title_progress", function(o, e, a, r,
                         i) {
                         val(t, getLang("photos_del_selected_box_text_progress")
-                            .replace("{count}", a)
-                            .replace("{total}", i)), cur.count = Math.max(cur.count - o, 0), each(r, function(o, e) {
+                            .replace("{count}", r)
+                            .replace("{total}", i)), cur.count = Math.max(cur.count - o, 0), each(a, function(o, e) {
                             re("photo_edit_row_" + e), cur.count = Math.max(cur.count, 0)
                         }), photos._editUpdateSelectedCounter()
                     }, function() {
@@ -500,21 +500,21 @@ var photos = {
             }
         })
     },
-    doEditBatchProcess: function(o, e, t, r, a, i) {
+    doEditBatchProcess: function(o, e, t, a, r, i) {
         function s(e) {
             if (!_.isVisible()) return i(u), void(document.title = p);
-            var t = n.slice(e * c, (e + 1) * c);
+            var t = n.slice(e * l, (e + 1) * l);
             ajax.post("/al_photos.php", extend({
                 photos: t.join(",")
             }, o), {
-                onDone: function(o, n) {
+                onDone: function(o, n, l) {
                     u += o, e++, setStyle(h, {
-                        width: 100 * e / l + "%"
+                        width: 100 * e / c + "%"
                     });
-                    var c = getLang(r)
+                    var _ = getLang(a)
                         .replace("{count}", u)
                         .replace("{total}", d);
-                    document.title = c, a(o, n, t, u, d), l > e ? s(e) : setTimeout(function() {
+                    document.title = _, r(o, n, t, u, d, l), c > e ? s(e) : setTimeout(function() {
                         document.title = p, i(u, n)
                     }, 200)
                 }
@@ -522,13 +522,13 @@ var photos = {
         }
         var n = e.split(","),
             d = n.length,
-            c = cur.editPhotosMaxChunkSize || 50,
-            l = Math.ceil(d / c),
+            l = cur.editPhotosMaxChunkSize || 50,
+            c = Math.ceil(d / l),
             h = geByClass1("photos_progress_bar", ge(t)) || geByClass1("ui_progress_bar", ge(t)),
             u = 0,
             p = document.title,
             _ = curBox();
-        a(0, !1, [], 0, d), s(0)
+        r(0, !1, [], 0, d), s(0)
     },
     _showProgressPanel: function(o) {
         var e = se('<div class="photo_delete_progress _photo_delete_progress"><div class="round_spinner"></div></div>');
@@ -538,53 +538,80 @@ var photos = {
         re(geByClass1("_photo_delete_progress", o))
     },
     deletePhoto: function(o, e, t) {
-        var r;
-        if ("" === o && t && (r = gpeByClass("photos_photo_edit_row", t), o = attr(r, "data-id"), e = attr(r, "data-edit-hash")), r = r || ge("photo_edit_row_" + o)) {
-            var a = photos._showProgressPanel(r);
-            addClass(r, "photos_deleted"), ajax.post("al_photos.php", {
+        var a;
+        if ("" === o && t && (a = gpeByClass("photos_photo_edit_row", t), o = attr(a, "data-id"), e = attr(a, "data-edit-hash")), a = a || ge("photo_edit_row_" + o)) {
+            var r = photos._showProgressPanel(a);
+            addClass(a, "photos_deleted"), ajax.post("al_photos.php", {
                 act: "delete_photo",
                 photo: o,
                 hash: e,
                 edit: 1
             }, {
                 onDone: function(o) {
-                    re(a), r.appendChild(se(o)), photos.recache(cur.offset, -1), cur.count -= 1, photos._editUpdateSelectedCounter(), cur.count < 2 && hide(
+                    re(r), a.appendChild(se(o)), photos.recache(cur.offset, -1), cur.count -= 1, photos._editUpdateSelectedCounter(), cur.count < 2 && hide(
                         "album_thumb_action"), ge("photos_go_to_album_cont") && !cur.count && hide("photos_go_to_album_cont"), cur.photoAddUpdate && cur.photoAddUpdate(
-                        r), cur.introTooltipHide && cur.introTooltipHide(!0)
+                        a), cur.introTooltipHide && cur.introTooltipHide(!0)
                 }
             })
         }
     },
     restorePhoto: function(o, e, t) {
-        var r = ge("photo_edit_row_" + e);
-        if (r && hasClass(r, "photos_deleted")) {
-            var a = photos._showProgressPanel(r);
-            re(geByClass1("photos_restore", r)), ajax.post("al_photos.php", {
+        var a = ge("photo_edit_row_" + e);
+        if (a && hasClass(a, "photos_deleted")) {
+            var r = photos._showProgressPanel(a);
+            re(geByClass1("photos_restore", a)), ajax.post("al_photos.php", {
                 act: "restore_photo",
                 photo: e,
                 hash: t,
                 edit: 1
             }, {
                 onDone: function() {
-                    re(a), removeClass(r, "photos_deleted"), photos.recache(cur.offset, 1), cur.count += 1, photos._editUpdateSelectedCounter(), cur.count > 1 &&
+                    re(r), removeClass(a, "photos_deleted"), photos.recache(cur.offset, 1), cur.count += 1, photos._editUpdateSelectedCounter(), cur.count > 1 &&
                         show("album_thumb_action"), ge("photos_go_to_album_cont") && cur.count && show("photos_go_to_album_cont"), cur.photoAddUpdate && cur.photoAddUpdate(
-                            r)
+                            a)
                 },
                 progress: "photo_restore_progress" + e
             })
         }
     },
+    toggleMoveToAlbumMode: function(o, e) {
+        var t = ge("photos_move_box_search"),
+            a = ge("pv_move_to_album_cont"),
+            r = ge("photos_box_edit_data"),
+            i = curBox(),
+            s = geByClass1("box_title", i.titleWrap);
+        return o ? (hide(t), hide(a), show(r), i.setOptions({
+                width: 500
+            }), val(s, getLang("photos_move_to_new_album_title") +
+                '<span class="divider">|</span><a onclick="return photos.toggleMoveToAlbumMode(false, event)" href="" class="toggle">' + getLang(
+                    "photos_move_to_another_album_toggle") + "</a>"), i.removeButtons()
+            .addButton(getLang("photos_create_album_and_move"), cur.saveNewAlbum)
+            .addButton(getLang("global_cancel"), i.hide, "no"), cur.onNewAlbumDone = function(o) {
+                curBox()
+                    .hide(), photos.movePhotosBox(cur.editPhotosArray.split(","), !1, function() {
+                        setTimeout(function() {
+                            var e = ge("album" + o);
+                            photos.doMovePhotos(!1, e)
+                        })
+                    })
+            }) : (show(t), show(a), hide(r), i.setOptions({
+                width: 795
+            }), val(s, getLang("photos_move_box_title") +
+                '<span class="divider">|</span><a onclick="return photos.toggleMoveToAlbumMode(true, event)" href="" class="toggle">' + getLang(
+                    "photos_move_to_new_album") + "</a>"), i.removeButtons()
+            .addButton(getLang("global_cancel"), i.hide)), cancelEvent(e)
+    },
     showMove: function(o, e, t) {
-        var r = cur.moveddc,
-            a = ge("photos_move_link" + o);
-        cur.privacyPhotoMove ? Privacy.show(a, t, "photos_move") : (cur.zIndexUpdated && (photos.hideMove(), cur.noZIndexUpdate = !0), ge("photo_edit_row" + o) && (cur.zIndexUpdated =
+        var a = cur.moveddc,
+            r = ge("photos_move_link" + o);
+        cur.privacyPhotoMove ? Privacy.show(r, t, "photos_move") : (cur.zIndexUpdated && (photos.hideMove(), cur.noZIndexUpdate = !0), ge("photo_edit_row" + o) && (cur.zIndexUpdated =
             o, setStyle(ge("photo_edit_row" + o), {
                 zIndex: 150
             })), photos.hideMove()), extend(cur, {
-            movelnk: a,
+            movelnk: r,
             moveph: o,
             movehash: e
-        }), cur.privacyPhotoMove || (a.parentNode.replaceChild(r, a), cur.movedd.focus(), cur.movedd.showDefaultList(), addEvent(document, "click", photos.hideMove))
+        }), cur.privacyPhotoMove || (r.parentNode.replaceChild(a, r), cur.movedd.focus(), cur.movedd.showDefaultList(), addEvent(document, "click", photos.hideMove))
     },
     hideMove: function() {
         if (cur.noZIndexUpdate) return void delete cur.noZIndexUpdate;
@@ -600,13 +627,13 @@ var photos = {
     },
     movePhoto: function(o, e, t) {
         o = intval(o);
-        var r = show.pbind("photo_return_progress" + e),
-            a = hide.pbind("photo_return_progress" + e);
+        var a = show.pbind("photo_return_progress" + e),
+            r = hide.pbind("photo_return_progress" + e);
         if (!e) {
             if (!o || o == cur.album.split("_")[1]) return photos.hideMove();
-            e = cur.moveph, t = cur.movehash, r = function() {
+            e = cur.moveph, t = cur.movehash, a = function() {
                 hide("photo_delete_link" + e), show("photo_edit_progress" + e)
-            }, a = function() {
+            }, r = function() {
                 hide("photo_edit_progress" + e), show("photo_delete_link" + e)
             }
         }
@@ -617,19 +644,19 @@ var photos = {
             hash: t
         }, {
             onDone: function(t) {
-                var r = ge("photo_edit_row" + e);
-                if (r && r.firstChild) {
+                var a = ge("photo_edit_row" + e);
+                if (a && a.firstChild) {
                     if (o == cur.album.split("_")[1]) {
-                        if (isVisible(r.firstChild)) return;
-                        r.removeChild(r.firstChild.nextSibling), show(r.firstChild), photos.recache(cur.offset, 1), ++cur.count, cur.count > 1 && show(
+                        if (isVisible(a.firstChild)) return;
+                        a.removeChild(a.firstChild.nextSibling), show(a.firstChild), photos.recache(cur.offset, 1), ++cur.count, cur.count > 1 && show(
                             "album_thumb_action")
                     } else {
-                        if (!isVisible(r.firstChild)) return;
-                        photos.hideMove(), hide(r.firstChild), r.appendChild(ce("div", {
+                        if (!isVisible(a.firstChild)) return;
+                        photos.hideMove(), hide(a.firstChild), a.appendChild(ce("div", {
                             innerHTML: t
                         })), photos.recache(cur.offset, -1), --cur.count, cur.count < 2 && hide("album_thumb_action")
                     }
-                    cur.photoAddUpdate && cur.photoAddUpdate(r), cur.introTooltipHide && cur.introTooltipHide(!0), ge("photos_go_to_album_cont") && toggle(
+                    cur.photoAddUpdate && cur.photoAddUpdate(a), cur.introTooltipHide && cur.introTooltipHide(!0), ge("photos_go_to_album_cont") && toggle(
                         "photos_go_to_album_cont", !!cur.count)
                 }
             },
@@ -641,8 +668,8 @@ var photos = {
                     }, o)
                     .hide, 2e3), !0) : void 0
             },
-            showProgress: r,
-            hideProgress: a
+            showProgress: a,
+            hideProgress: r
         })
     },
     updateThumbs: function(o, e) {
@@ -666,8 +693,8 @@ var photos = {
     saveDesc: function(o, e) {
         var t = ge("photo_caption" + o)
             .value,
-            r = cur.descs[o];
-        delete cur.descs[o], trim(t) != r && ajax.post("al_photos.php", {
+            a = cur.descs[o];
+        delete cur.descs[o], trim(t) != a && ajax.post("al_photos.php", {
             act: "save_desc",
             photo: o,
             hash: e,
@@ -726,20 +753,20 @@ var photos = {
                 innerHTML: '<iframe name="photo_frame_all"></iframe><form target="photo_frame_all" id="photo_form_all" method="POST" action="' + cur.url +
                     '" enctype="multipart/form-data"></form>    '
             })), form = ge("photo_form_all");
-            var r = extend(cur.fields, {
+            var a = extend(cur.fields, {
                 act: "do_add",
                 al: 1,
                 from_host: locHost,
                 ondone: "photos.filesDone",
                 onfail: "photos.filesFail"
             });
-            for (e in r) form.appendChild(ce("input", {
+            for (e in a) form.appendChild(ce("input", {
                 name: e,
-                value: r[e]
+                value: a[e]
             }));
             for (o = 0, e = 0; o < cur.files.length; ++o) {
-                var a = ge("photo_file" + o);
-                a.value && (a.name = "file" + e, form.appendChild(a), ++e)
+                var r = ge("photo_file" + o);
+                r.value && (r.name = "file" + e, form.appendChild(r), ++e)
             }
             form.submit()
         }
@@ -763,18 +790,18 @@ var photos = {
                 value: e[t]
             }));
             form.appendChild(this), form.submit();
-            var r = ge("photo_file_button" + o);
-            lockButton(r), setTimeout(function() {
-                    r.innerHTML = r.innerHTML
+            var a = ge("photo_file_button" + o);
+            lockButton(a), setTimeout(function() {
+                    a.innerHTML = a.innerHTML
                 }, 0), show("photo_cancel" + o), ge("photo_cancel" + o)
                 .innerHTML = getLang("global_cancel"), o == cur.files.length - 1 && photos.addFile()
         }
     },
     fileDone: function(o, e) {
         hide("photo_cancel" + o);
-        for (var t = "", r = o + 1; r < cur.files.length; ++r)
-            if (cur.files[r].id && !cur.files[r].deleting) {
-                t = cur.files[r].id;
+        for (var t = "", a = o + 1; a < cur.files.length; ++a)
+            if (cur.files[a].id && !cur.files[a].deleting) {
+                t = cur.files[a].id;
                 break
             }
         setTimeout(ajax.post.pbind("al_photos.php", extend({
@@ -824,25 +851,25 @@ var photos = {
                     cur.files[t].deleting = !1
                 }
             });
-            var r = ge("photo_edit_row" + o);
-            r.parentNode.insertBefore(photos.genFile(t, "photos.fileRestore('" + o + "', '" + e + "')", getLang("global_restore")), r), hide(r), photos.initFile(t), show(
+            var a = ge("photo_edit_row" + o);
+            a.parentNode.insertBefore(photos.genFile(t, "photos.fileRestore('" + o + "', '" + e + "')", getLang("global_restore")), a), hide(a), photos.initFile(t), show(
                 "photo_cancel" + t)
         }
     },
     fileRestore: function(o, e) {
-        for (var t = 0, r = ""; t < cur.files.length && cur.files[t].id != o;) ++t;
+        for (var t = 0, a = ""; t < cur.files.length && cur.files[t].id != o;) ++t;
         if (t != cur.files.length && cur.files[t].deleting && -1 !== cur.files[t].deleting) {
             if (cur.files[t].cont) return photos.fileCancel(t);
-            for (var a = t + 1; a < cur.files.length; ++a)
-                if (cur.files[a].id && !cur.files[a].deleting) {
-                    r = cur.files[a].id;
+            for (var r = t + 1; r < cur.files.length; ++r)
+                if (cur.files[r].id && !cur.files[r].deleting) {
+                    a = cur.files[r].id;
                     break
                 }
             cur.files[t].deleting = -1, ajax.post("al_photos.php", {
                 act: "restore_photo",
                 photo: o,
                 hash: e,
-                before: r,
+                before: a,
                 edit: 2
             }, {
                 onDone: function() {
@@ -925,10 +952,10 @@ var photos = {
     },
     thumbOver: function(o, e, t) {
         cur.hideTO && cur.hideTO[e] && clearTimeout(cur.hideTO[e]);
-        var r = geByClass1("description", o),
-            a = geByClass1("photo_album_title", o),
-            i = getSize(r)[1];
-        animate(a, {
+        var a = geByClass1("description", o),
+            r = geByClass1("photo_album_title", o),
+            i = getSize(a)[1];
+        animate(r, {
             marginTop: 163 - (i ? i + 7 : 0)
         }, {
             duration: 200,
@@ -939,14 +966,14 @@ var photos = {
         if (s && n) {
             if (s.over && !t) return void(s.over = 0);
             var d = t ? .6 : .5,
-                c = t ? 1 : .8;
+                l = t ? 1 : .8;
             t && (s.over = 1), animate(s, {
                 opacity: d
             }, {
                 duration: 200,
                 transition: Fx.Transitions.easeOutCirc
             }), animate(n, {
-                opacity: c
+                opacity: l
             }, {
                 duration: 200,
                 transition: Fx.Transitions.easeOutCirc
@@ -954,8 +981,8 @@ var photos = {
         }
     },
     thumbOut: function(o, e, t) {
-        var r = geByClass1("photo_album_info_back", o),
-            a = geByClass1("photo_album_info_cont", o),
+        var a = geByClass1("photo_album_info_back", o),
+            r = geByClass1("photo_album_info_cont", o),
             i = function() {
                 if (t) {
                     var e = (geByClass1("description", o), geByClass1("photo_album_title", o));
@@ -963,12 +990,12 @@ var photos = {
                         marginTop: 163
                     }, 200)
                 }
-                if (r && a) {
+                if (a && r) {
                     var i = t ? 0 : .5,
                         s = t ? 0 : .8;
-                    animate(r, {
+                    animate(a, {
                         opacity: i
-                    }, 200), animate(a, {
+                    }, 200), animate(r, {
                         opacity: s
                     }, 200)
                 }
@@ -988,58 +1015,80 @@ var photos = {
         })
     },
     addToAlbum: function() {
-        showBox("/al_photos.php", {
-            act: "move_photos_box",
-            photos: (cur.savedPhotos || [])
-                .join(",")
-        }, {
-            params: {
-                dark: 1
-            }
-        })
+        cur.isPhotoUpload = !0, photos.movePhotosBox(cur.savedPhotos || [], !1)
     },
-    movePhotosBox: function(o, e) {
-        "" === o && e && (o = gpeByClass("photos_photo_edit_row", e)
-            .getAttribute("data-id"));
-        var t = [];
-        o ? t.push(o) : each(geByClass("photos_edit_selected"), function() {
-            t.push(this.getAttribute("data-id"))
-        });
-        var r = intval(photos._editGetSelectedCount() > t.length),
-            a = cur.album.split("_");
+    movePhotosBox: function(o, e, t) {
+        var a = [],
+            r = !1;
+        isArray(o) ? a = o : ("" === o && e && (o = gpeByClass("photos_photo_edit_row", e)
+            .getAttribute("data-id")), o ? a.push(o) : each(geByClass("photos_edit_selected"), function() {
+            a.push(this.getAttribute("data-id"))
+        }), r = intval(photos._editGetSelectedCount() > a.length));
+        var i = cur.album ? cur.album.split("_") : [vk.id, -7];
         showBox("/al_photos.php", {
             act: "a_move_to_album_box",
-            photo_ids: r ? "" : t.join(","),
-            owner_id: a[0],
-            from_album_id: a[1],
+            photo_ids: r ? "" : a.join(","),
+            owner_id: i[0],
+            from_album_id: i[1],
             all: r
+        }, {
+            onDone: t
         })
     },
-    doMovePhotos: function(o, e, t, r, a, i) {
-        var s = geByClass1("photos_album_counter", e),
-            n = geByClass1("photos_album_thumb", e),
-            d = ge("pv_move_to_album_progress");
-        n.insertBefore(d, n.children[0]), show(d), addClass(e, "photos_in_progress"), addClass(gpeByClass("photos_container_albums", e), "photos_inactive"), photos.doEditBatchProcess({
-            act: "move_photos_2",
-            to_album_id: t,
+    cancelMove: function(o, e, t, a, r, i, s) {
+        var n = gpeByClass("photos_photo_edit_row", e);
+        re(geByClass1("photos_cancel_move", n)), photos._showProgressPanel(n), ajax.post("al_photos.php", {
+            act: "move_photos",
+            photos: t,
+            to_album_id: a,
             from_album_id: r,
-            owner_id: a,
-            hash: i
-        }, cur.editPhotosArray, ge("pv_move_to_album_progress"), "photos_move_in_progress_title", function(o, e, t) {
-            cur.count = Math.max(cur.count - o, 0), val(s, +val(s) + o), each(t, function(o, e) {
-                re("photo_edit_row_" + e), cur.count = Math.max(cur.count, 0)
-            }), photos._editUpdateSelectedCounter()
-        }, function(o, e) {
-            var r = curBox();
-            r && r.hide();
-            var i = langNumeric(o, cur.lang.photos_x_photos_moved_no_cancel);
-            if (i = i.replace("{album}", '<a href="/album' + a + "_" + t + '">' + clean(e) + "</a>"), showDoneBox(i), 0 == cur.count) nav.reload();
-            else {
-                var s = geByClass("photos_photo_edit_row")
-                    .length;
-                40 > s && photos.load()
+            hash: s,
+            owner_id: i
+        }, {
+            onDone: function() {
+                photos._hideProgressPanel(n), cur.count++, photos._editUpdateSelectedCounter()
             }
         }), cancelEvent(o)
+    },
+    doMovePhotos: function(o, e, t) {
+        var a = domClosest("_photos_album", e),
+            r = domData(a, "aid"),
+            i = domData(a, "from-aid"),
+            s = domData(a, "owner-id"),
+            n = domData(a, "move-hash"),
+            d = geByClass1("photos_album_counter", e),
+            l = geByClass1("photos_album_thumb", e),
+            c = ge("pv_move_to_album_progress");
+        l.insertBefore(c, l.children[0]), show(c), addClass(e, "photos_in_progress"), addClass(gpeByClass("photos_container_albums", e), "photos_inactive"), photos.doEditBatchProcess({
+            act: "move_photos",
+            to_album_id: r,
+            from_album_id: i,
+            owner_id: s,
+            hash: n
+        }, cur.editPhotosArray, ge("pv_move_to_album_progress"), "photos_move_in_progress_title", function(o, e, a, n, l, c) {
+            cur.count = Math.max(cur.count - o, 0), val(d, +val(d) + o), each(a, function(o, e) {
+                var a = ge("photo_edit_row_" + e);
+                if (!cur.isPhotoUpload)
+                    if (a && !t) {
+                        var n = "return photos.cancelMove(event, this, '" + e + "', " + i + ", " + r + ", " + s + ", '" + c + "')",
+                            d = se('<div class="photos_cancel_move"><a href="" onclick="' + n + '">' + getLang("global_cancel") + "</a></div>");
+                        a.appendChild(d)
+                    } else re(a);
+                cur.count = Math.max(cur.count, 0)
+            }), photos._editUpdateSelectedCounter()
+        }, function(o, e) {
+            var a = curBox();
+            a && a.hide();
+            var r = langNumeric(o, cur.lang.photos_x_photos_moved_no_cancel);
+            if (r = r.replace("{album}", e), showDoneBox(r), cur.pvShown && cur.pvCurPhoto && (cur.pvCurPhoto.album = e, geByClass1("pv_album_name")
+                    .innerHTML = e), t)
+                if (0 == cur.count) nav.reload();
+                else {
+                    var i = geByClass("photos_photo_edit_row")
+                        .length;
+                    40 > i && photos.load()
+                }
+        }), o && cancelEvent(o)
     },
     publishPhotos: function(o) {
         if (cur.savedPhotos) {
@@ -1101,7 +1150,7 @@ var photos = {
         var o = ["ajx=1"];
         for (var e in Upload.vars[cur.uplId]) o.push(e + "=" + Upload.vars[cur.uplId][e]);
         var t = Upload.uploadUrls[cur.uplId] + (Upload.uploadUrls[cur.uplId].match(/\?/) ? "&" : "?") + o.join("&"),
-            r = {
+            a = {
                 s_noCamera: getLang("profile_no_camera"),
                 s_noAccess: getLang("profile_no_camera_access"),
                 s_setAccess: getLang("profile_set_camera_access"),
@@ -1121,7 +1170,7 @@ var photos = {
                 getBtnsPos: "photos.updateCameraButtonsPos",
                 jpgQuality: "95"
             };
-        for (var a in r) r[a] = winToUtf(r[a]);
+        for (var r in a) a[r] = winToUtf(a[r]);
         var i = {
                 url: "/swf/CaptureImg.swf",
                 id: "flash_camera",
@@ -1135,7 +1184,7 @@ var photos = {
                 allownetworking: "true",
                 wmode: "transparent"
             };
-        return this.addWebcamPhotoControls = geByClass1("add_webcam_photo_controls"), hide("camera_button_no"), renderFlash("webcam_photo", i, o, r), !1
+        return this.addWebcamPhotoControls = geByClass1("add_webcam_photo_controls"), hide("camera_button_no"), renderFlash("webcam_photo", i, o, a), !1
     },
     cameraPhotoDone: function(o) {
         delete this.addWebcamPhotoControls, o = JSON.parse(o.replace(/\\"/g, '"')), ajax.post("al_photos.php", extend({
@@ -1155,14 +1204,14 @@ var photos = {
         setStyle(this.addWebcamPhotoControls, {
             visibility: "visible"
         });
-        var r = function(o, r) {
-            if (isVisible(r.parentNode)) {
-                var a = getXY(r),
-                    i = getSize(r);
-                e.push([a[0] - t[0], a[1] - t[1], i[0] + 2, i[1] + 2])
+        var a = function(o, a) {
+            if (isVisible(a.parentNode)) {
+                var r = getXY(a),
+                    i = getSize(a);
+                e.push([r[0] - t[0], r[1] - t[1], i[0] + 2, i[1] + 2])
             }
         };
-        each(geByTag("button", o), r), each(geByClass("button", o), r), 1 == e.length && e.push([999, 999, 1, 1]), ge("flash_camera")
+        each(geByTag("button", o), a), each(geByClass("button", o), a), 1 == e.length && e.push([999, 999, 1, 1]), ge("flash_camera")
             .setButtonsPos && ge("flash_camera")
             .setButtonsPos(e)
     },

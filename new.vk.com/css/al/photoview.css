@@ -1192,7 +1192,7 @@
 }
 
 #pv_tags span {
-    color: #1d1d1e;
+    color: #000;
     cursor: default;
     vertical-align: top;
     white-space: nowrap
@@ -1609,7 +1609,7 @@
 }
 
 .pv_nav_panel #pv_nav_close {
-    height: 170px;
+    height: 43%;
     z-index: 2
 }
 
@@ -1626,20 +1626,13 @@
 
 .pv_nav_panel .pv_nav_arrow {
     bottom: 0;
-    z-index: 1;
-    background-color: transparent;
-    -o-transition: background-color 150ms ease;
-    transition: background-color 150ms ease
+    z-index: 1
 }
 
 .pv_nav_panel .pv_nav_arrow div {
     height: 28px;
     width: 20px;
     position: absolute
-}
-
-.pv_nav_panel .pv_nav_arrow:hover {
-    background-color: rgba(0, 0, 0, .07)
 }
 
 .pv_nav_panel #pv_nav_right div {

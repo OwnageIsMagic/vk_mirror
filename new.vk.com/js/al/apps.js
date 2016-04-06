@@ -877,21 +877,22 @@ AppsSlider.prototype = {
                     return ""
                 }
             }), extend(cur, obj), cur.defaultCount = cur.shownApps, "notifications" === nav.objLoc.act && (delete nav.objLoc.act, nav.objLoc.tab = "notifications", nav
-                .setLoc(nav.objLoc)), this.setHistoryBackRules(), this.searchLoadFromAddressBar(), setTimeout(function() {
-                this.scrollCheckBinded = this.scrollCheck.bind(this), this.sliderInit(), this.feedInit(), this.notificationsInit(), cur.scrollToHeader && (
-                        setTimeout(this.scrollToHeader.bind(this), 100), delete cur.scrollToHeader), cur.scrollToTop && (scrollToTop(), delete cur.scrollToTop),
-                    this.startEvents(), cur.destroy.push(function(t) {
-                        setTimeout(function() {
-                            var e;
-                            t.fScrollbar && cur.fScrollbar != t.fScrollbar && (e = !1, globalHistory.forEach(function(i) {
-                                i.cur != t && i.cur.fScrollbar == t.fScrollbar && (e = !0)
-                            }), e || t.fScrollbar.destroy()), t.rNotScrollbar && cur.rNotScrollbar != t.rNotScrollbar && (e = !1, globalHistory.forEach(
-                                function(i) {
-                                    i.cur != t && i.cur.rNotScrollbar == t.rNotScrollbar && (e = !0)
-                                }), e || t.rNotScrollbar.destroy())
-                        }, 0)
-                    }.pbind(cur)), cur.destroy.push(this.stopEvents.bind(this)), cur.aSearch && uiSearch.scrollResize(cur.aSearch)
-            }.bind(this), 0), cur.silent_mode) {
+                .setLoc(nav.objLoc)), this.setHistoryBackRules(), this.searchLoadFromAddressBar(), cur.aSearch && uiSearch.startEvents(cur.aSearch), setTimeout(
+                function() {
+                    this.scrollCheckBinded = this.scrollCheck.bind(this), this.sliderInit(), this.feedInit(), this.notificationsInit(), cur.scrollToHeader && (
+                            setTimeout(this.scrollToHeader.bind(this), 100), delete cur.scrollToHeader), cur.scrollToTop && (scrollToTop(), delete cur.scrollToTop),
+                        this.startEvents(), cur.destroy.push(function(t) {
+                            setTimeout(function() {
+                                var e;
+                                t.fScrollbar && cur.fScrollbar != t.fScrollbar && (e = !1, globalHistory.forEach(function(i) {
+                                    i.cur != t && i.cur.fScrollbar == t.fScrollbar && (e = !0)
+                                }), e || t.fScrollbar.destroy()), t.rNotScrollbar && cur.rNotScrollbar != t.rNotScrollbar && (e = !1, globalHistory.forEach(
+                                    function(i) {
+                                        i.cur != t && i.cur.rNotScrollbar == t.rNotScrollbar && (e = !0)
+                                    }), e || t.rNotScrollbar.destroy())
+                            }, 0)
+                        }.pbind(cur)), cur.destroy.push(this.stopEvents.bind(this)), cur.aSearch && uiSearch.scrollResize(cur.aSearch)
+                }.bind(this), 0), cur.silent_mode) {
             cur.silent = !0, cur.preload && (cur.leavePreloadedHeader || delete cur.preload.header, cur.leavePreloadedBefore || delete cur.preload.before);
             var query = {
                     act: "load_apps_silent",
@@ -1165,7 +1166,7 @@ AppsSlider.prototype = {
                 var i = new Image;
                 i.onload = c, i.src = geByTag1("img", e)
                     .src, addEvent(e, "click", function() {
-                        cur.appSsSlider && cur.appSsSlider.requireIndex(t)
+                        cur.appSsSlider && cur.appSsSlider.requireIndex(t);
                     })
             }), cur.promoVideo) {
             var p = ge("apps_promo_video_thumb");
@@ -2040,13 +2041,20 @@ AppsSlider.prototype = {
             text: '<div class="apps_score_tt_cont"><b>'.concat(e, "</b>", i ? '<div class="apps_score_tt">' + i + "</div>" : "", "</div>")
         })
     },
-    ttCommon: function(t, e, i, s, o) {
-        return s && cancelEvent(s), i ? showTooltip(t, {
-            center: i,
-            shift: o || [0, 8, 8],
+    ttCommon: function(t, e, i) {
+        return i = extend({
+            parent: void 0,
+            center: void 0,
+            event: 0,
+            appendEl: void 0,
+            shift: void 0
+        }, i), 0 === i.event && (i.event = window.event), i.event && cancelEvent(i.event), i.appendEl && (i.appendEl = ge(i.appendEl)), i.center ? showTooltip(t, {
+            center: i.center,
+            shift: i.shift || [0, 8, 8],
             black: 1,
+            appendEl: i.appendEl,
             text: e
-        }) : showTitle(t, e, o)
+        }) : showTitle(t, e, i.shift, i)
     },
     ttHideAll: function() {
         window.tooltips && tooltips.hideAll()
@@ -2251,8 +2259,8 @@ AppsSlider.prototype = {
                     }), cur.fScrollbar && cur.fScrollbar.restore(), cur.rNotScrollbar && cur.rNotScrollbar.restore(), delete cur._back.swap, setTimeout(
                         function() {
                             var t = nav.objLoc && ge("notifications" == nav.objLoc.tab ? "apps-recent-notifications-tab" : "apps-recent-apps-tab");
-                            t && this.switchTabPrepared(t.getElementsByTagName("a")[0]), cur.aSearch && (cur.aSearch.value = cur.searchStr || "", uiSearch.scrollResize(
-                                cur.aSearch)), this.searchWriteToAddressBar(cur.searchStr)
+                            t && this.switchTabPrepared(t.getElementsByTagName("a")[0]), cur.aSearch && (uiSearch.startEvents(cur.aSearch), cur.aSearch.value =
+                                cur.searchStr || "", uiSearch.scrollResize(cur.aSearch)), this.searchWriteToAddressBar(cur.searchStr)
                         }.bind(this), 0), this.ttHideAll(), this.recentTabsUpdate(), this.startEvents(), cur.aTabs) {
                     var t = this.geTabBySection(this.isSection("list") ? cur.list + (cur.listId || "") : cur.section);
                     t && uiTabs.switchTab(t), uiTabs.hideProgress(cur.aTabs)

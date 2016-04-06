@@ -278,6 +278,10 @@
     filter: alpha(opacity=0)
 }
 
+.apps_notifications_wrap {
+    position: relative
+}
+
 .apps_notifications_wrap .apps_notifications_wrap_inner {
     padding: 0 31px 0 20px;
     overflow: hidden;
@@ -329,27 +333,22 @@
     content: ' ';
     display: block;
     position: absolute;
-    top: 0;
+    top: -1px;
     bottom: -1px;
     left: -20px;
     right: -31px;
     background: #f5f7fa;
     z-index: 0;
     pointer-events: none;
+    box-sizing: border-box;
     opacity: 0;
     filter: alpha(opacity=0);
-    border-top: inherit
+    border-top: 1px solid #eef0f3;
+    border-bottom: 1px solid #eef0f3
 }
 
 .apps_notification_row:first-child:before {
     border-top: 0
-}
-
-.apps_notification_row.apps_notification_row_new:not(.apps_notification_service)+.apps_notification_row:before {
-    opacity: 1;
-    -webkit-filter: none;
-    filter: none;
-    bottom: 100%
 }
 
 .apps_notification_row.apps_notification_row_new:not(.apps_notification_service):before {
@@ -361,6 +360,10 @@
 .box_body .apps_notification_row {
     padding: 20px 0 0;
     border-top: 0
+}
+
+.apps_notifications_wrap_inner>div:nth-last-of-type(2):before {
+    border-bottom: 0
 }
 
 .apps_notification_app_photo img,
@@ -1567,7 +1570,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
     overflow: hidden;
     text-overflow: ellipsis;
     font-size: 16px;
-    color: #1d1d1e
+    color: #000
 }
 
 .apps_options_bar.app_rating_disabled .apps_options_bar_left>div {
@@ -2368,7 +2371,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 
 .apps_win_instr_screens>div b {
     display: block;
-    color: #3b4045;
+    color: #222;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;

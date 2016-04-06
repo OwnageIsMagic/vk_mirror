@@ -59,6 +59,7 @@ global_rating_box_header = '�������';
 global_recommended_exceeded = ['', '������������� ����� �������� �� %s ����.', '������������� ����� �������� �� %s �����.', '������������� ����� �������� �� %s ������.'];
 global_recommended_lines = ['', '������������� ����� �������� �� %s ������.', '������������� ����� �������� �� %s ������.', '������������� ����� �������� �� %s �����.'];
 global_reply_to = '����� {user}';
+global_report_sent = '������ ����������';
 global_save = '���������';
 global_search_not_found = '�� ������� {search} ������ �� �������.';
 global_to_top = '������';
@@ -218,7 +219,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 424;
+// section = 0; version = 426;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;

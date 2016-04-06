@@ -3,12 +3,16 @@
 }
 
 .like_tt_share,
-.like_tt_share:before,
+.like_tt_share:before {
+    -o-transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease
+}
+
 .wall_copy_more,
 .wall_post_more,
 .wall_reply_more {
-    -o-transition: opacity 0.2s ease;
-    transition: opacity 0.2s ease
+    -o-transition: opacity 0.15s ease;
+    transition: opacity 0.15s ease
 }
 
 .group_info .short_text,
@@ -510,7 +514,8 @@ div.wall_module .ext_video div {
 .wall_reply_more:hover {
     opacity: 1;
     -webkit-filter: none;
-    filter: none
+    filter: none;
+    text-decoration: none
 }
 
 .wall_post_text {
@@ -1248,7 +1253,7 @@ div.wall_module .ext_video div {
 
 .wall_module a.page_media_thumbed_link {
     cursor: pointer;
-    color: #1d1d1e
+    color: #000
 }
 
 .wall_module a.page_media_thumbed_link:hover {
@@ -1469,7 +1474,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module div.page_media_link_desc {
-    color: #1d1d1e;
+    color: #000;
     padding-top: 2px;
     max-height: 4.3em;
     display: -webkit-box;
@@ -1495,7 +1500,7 @@ div.wall_module .ext_video div {
 }
 
 a.page_media_link_desc {
-    color: #1d1d1e;
+    color: #000;
     display: block
 }
 
@@ -1665,7 +1670,7 @@ a.page_media_link_desc {
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #1d1d1e
+    color: #000
 }
 
 .post_video_views_count {
@@ -5690,7 +5695,7 @@ button.wall_block_app_btn {
 }
 
 .wall_reasons_list {
-    color: #1d1d1e;
+    color: #000;
     padding-top: 11px;
     margin-bottom: -3px
 }
@@ -5986,7 +5991,7 @@ button.wall_block_app_btn {
     padding-left: 28px;
     border-left: 20px solid transparent;
     background-position: 0;
-    color: #3b4045
+    color: #222
 }
 
 .page_wall_search .wall_search::-webkit-input-placeholder {

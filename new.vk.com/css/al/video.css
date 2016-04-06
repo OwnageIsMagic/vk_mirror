@@ -808,7 +808,7 @@
 .video_empty_placeholder .search_text {
     display: inline-block;
     max-width: 200px;
-    color: #1d1d1e;
+    color: #000;
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -835,7 +835,7 @@
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    color: #1d1d1e
+    color: #000
 }
 
 #video_playlists_edit_box .pl_private {

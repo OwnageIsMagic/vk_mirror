@@ -138,12 +138,12 @@ var uiTabs = {
                 }), addClass(t, "ui_rmenu_sliding"))
             }
         },
-        go: function(t, e, i) {
+        go: function(t, e, i, s) {
             if (checkEvent(e)) return !0;
-            var s = gpeByClass("ui_rmenu", t);
-            return geByClass1("ui_rmenu_item_sel", s) == t ? !1 : (uiRightMenu.switchMenu(t), uiRightMenu.showProgress(t), i === !1 ? !1 : nav.go(i || t, e, {
+            var o = gpeByClass("ui_rmenu", t);
+            return geByClass1("ui_rmenu_item_sel", o) == t ? !1 : (uiRightMenu.switchMenu(t), uiRightMenu.showProgress(t), i === !1 ? !1 : nav.go(i || t, e, extend({
                 fromMenu: !0
-            }))
+            }, s || {})))
         },
         switchMenu: function(t) {
             var e = gpeByClass("ui_rmenu", t),
@@ -193,8 +193,8 @@ var uiTabs = {
         toggleSubmenu: function(t, e) {
             var i, s, o = gpeByClass("ui_rmenu", e);
             return "string" == typeof t ? s = geByClass1("_ui_rmenu_" + t + "_list", o) : (s = t, t = s.getAttribute("data-sublist-id")), i = geByClass1("_ui_rmenu_" + t +
-                "_toggle", o), s ? (hasClass(o, "_ui_rmenu_auto_expand") || uiRightMenu.hideSliding(o), i && toggleClass(i, "ui_rmenu_item_expanded", !isVisible(s)),
-                slideToggle(s, s && getSize(s)[1] ? 100 : 0), !1) : !1
+                "_toggle", o), s ? (void 0 !== e && uiRightMenu.hideSliding(o), i && toggleClass(i, "ui_rmenu_item_expanded", !isVisible(s)), slideToggle(s, s && getSize(s)[
+                1] ? 100 : 0), !1) : !1
         }
     },
     uiPageBlock = {
@@ -225,25 +225,39 @@ var uiTabs = {
         getFieldEl: function(t) {
             return t = ge(t), hasClass("_field", t) ? t : domByClass(uiSearch.getWrapEl(t), "_field")
         },
+        stopEvents: function(t) {
+            var e = data(t, "eventHandlers") || [];
+            each(e, function(t, e) {
+                e.stop()
+            })
+        },
+        startEvents: function(t) {
+            var e = data(t, "eventHandlers") || [];
+            each(e, function(t, e) {
+                e.stop(), e.start()
+            })
+        },
         init: function(el, options) {
             el = uiSearch.getFieldEl(el);
             var wrapEl = uiSearch.getWrapEl(el),
                 initJs = !options && domData(wrapEl, "init-js");
             if (!options) return void(initJs && (domData(wrapEl, "init-js", ""), eval("(function() {" + initJs + "})();")));
             if (!data(el, "inited")) {
-                if (data(el, "inited", 1), placeholderInit(el), data(el, "opts", options), addEvent(el, "keydown", uiSearch.onKeyDown.pbind(el)), addEvent(el,
-                        "paste cut input",
-                        function(t) {
-                            setTimeout(uiSearch.onChanged.pbind(el, !1, t), 0)
-                        }), addEvent(el, "blur", uiSearch.onBlurred.pbind(el)), options.onBlur && addEvent(el, "blur", options.onBlur), options.onFocus && addEvent(el, "focus",
+                if (data(el, "inited", 1), data(el, "eventHandlers", []), placeholderInit(el), data(el, "opts", options), addEvent(el, "keydown", uiSearch.onKeyDown.pbind(el)),
+                    addEvent(el, "paste cut input", function(t) {
+                        setTimeout(uiSearch.onChanged.pbind(el, !1, t), 0)
+                    }), addEvent(el, "blur", uiSearch.onBlurred.pbind(el)), options.onBlur && addEvent(el, "blur", options.onBlur), options.onFocus && addEvent(el, "focus",
                         options.onFocus), options.fixed) {
                     var scrollNode = isAncestor(el, boxLayerWrap) ? boxLayerWrap : window,
-                        onSearchScroll = uiSearch.scrollResize.pbind(el);
-                    addEvent(scrollNode, "scroll", onSearchScroll), cur.destroy.push(function() {
-                        removeEvent(scrollNode, "scroll", onSearchScroll)
-                    })
+                        onSearchScroll = uiSearch.scrollResize.pbind(el),
+                        eventHandler = {
+                            stop: removeEvent.pbind(scrollNode, "scroll", onSearchScroll),
+                            start: addEvent.pbind(scrollNode, "scroll", onSearchScroll)
+                        };
+                    data(el, "eventHandlers", (data(el, "eventHandlers") || [])
+                        .concat([eventHandler])), eventHandler.start()
                 }
-                uiSearch.initFilters(el, options)
+                cur.destroy.push(uiSearch.stopEvents.pbind(el)), uiSearch.initFilters(el, options)
             }
         },
         onKeyDown: function(t, e) {
@@ -292,7 +306,7 @@ var uiTabs = {
             removeClass(e, "ui_search_loading")
         },
         scrollResize: function(t) {
-            if (!browser.mobile) {
+            if (!browser.mobile && !t.ignoreFixed) {
                 t = uiSearch.getFieldEl(t);
                 var e, i = uiSearch.getWrapEl(t),
                     s = i && domPN(i),
@@ -328,25 +342,28 @@ var uiTabs = {
                     display: ""
                 }), 0))
             }
-            var s = uiSearch.getWrapEl(t),
-                o = geByClass1("ui_search_fltr_control", s);
-            addEvent(o, "click", function(t) {
-                (!hasClass(o, "shown") || hasClass(t.target, "ui_search_fltr_control")) && i(o)
-            }), addEvent(o, "mouseover", function() {
-                if (hasClass(o, "shown")) {
-                    var t = data(o, "hidetimer");
-                    t && (clearTimeout(t), data(o, "hidetimer", 0)), i(o, !0)
-                }
-            }), addEvent(o, "mouseout", function() {
-                var t = data(o, "hidetimer");
-                t || data(o, "hidetimer", setTimeout(function() {
-                    i(o, !1), data(o, "hidetimer", 0)
-                }, 200))
-            }), cur.destroy.push(function() {
-                removeEvent(o, "click mouseover mouseout")
-            });
-            var n = uiSearch._getTokensPane(t);
-            addEvent(n, "click", function(e) {
+            var s = uiSearch.getWrapEl(t);
+            link = geByClass1("ui_search_fltr_control", s), eventHandler = {
+                start: function() {
+                    addEvent(link, "click", function(t) {
+                        (!hasClass(link, "shown") || hasClass(t.target, "ui_search_fltr_control")) && i(link)
+                    }), addEvent(link, "mouseover", function() {
+                        if (hasClass(link, "shown")) {
+                            var t = data(link, "hidetimer");
+                            t && (clearTimeout(t), data(link, "hidetimer", 0)), i(link, !0)
+                        }
+                    }), addEvent(link, "mouseout", function() {
+                        var t = data(link, "hidetimer");
+                        t || data(link, "hidetimer", setTimeout(function() {
+                            i(link, !1), data(link, "hidetimer", 0)
+                        }, 200))
+                    })
+                },
+                stop: removeEvent.pbind(link, "click mouseover mouseout")
+            }, data(t, "eventHandlers", (data(t, "eventHandlers") || [])
+                .concat([eventHandler])), eventHandler.start();
+            var o = uiSearch._getTokensPane(t);
+            addEvent(o, "click", function(e) {
                 if (hasClass(e.target, "token_title") || hasClass(e.target, "token_del")) {
                     var i = gpeByClass("token", e.target),
                         s = i.getAttribute("data-id");
@@ -723,7 +740,9 @@ window.Scrollbar = window.Scrollbar || function() {
                         this.scrollbarSize !== i && (this.scrollbar.style.width = i + "px")) : (this.scrollHeight = i[1], i = Math.round(this.scrollHeight - this.options
                         .top - this.options.bottom), this.scrollbarSize !== i && (this.scrollbar.style.height = i + "px")), this.scrollbarSize = i), this.isHorizontal ?
                     (i = this.contWidth()) <= Math.round(this.scrollWidth) : (i = this.contHeight()) <= Math.round(this.scrollHeight)) return hide(this.inner, this.bottomShadowDiv,
-                    this.topShadowDiv), this.scrollbar.style.pointerEvents = "none", void(this.topShadow = this.bottomShadow = this.shown = !1);
+                    this.topShadowDiv), this.scrollbar.style.pointerEvents = "none", this.topShadow = this.bottomShadow = this.shown = !1, isFunction(this.options
+                    .more) && i - this.obj[this.scrollProp] < 2 * this[this.scrollDimensionProp] && this.options.more(this), void(this[this.scrollProp + "Last"] =
+                    this.obj[this.scrollProp]);
                 this.shown || (show(this.inner), this.scrollbar.style.pointerEvents = "", this.shown = !0);
                 var o = this.val();
                 isFunction(this.options.scrollChange) && this.options.scrollChange(o), this.lastProgress = Math.min(1, o / (i - (this.isHorizontal ? this.scrollWidth :
@@ -836,9 +855,9 @@ window.Scrollbar = window.Scrollbar || function() {
             var d = escapeRE(t),
                 p = parseLatin(t);
             null != p && (d = d + "|" + escapeRE(p));
-            var g = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
+            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var v = l.rsTpl ? l.rsTpl : function(t, e, i, s, o) {
+        var g = l.rsTpl ? l.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
                 r = t[1];
             if (e) {
@@ -856,7 +875,7 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                u.push(rs(n, v(this, t, l.invertedSelection, o, g)))
+                u.push(rs(n, g(this, t, l.invertedSelection, o, v)))
             }), e || u.length || u.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
                 .replace("{search}", t) : l.noSelMsg) + "</div>"), re(this.moreEl), u = u.join(" "), e ? this.olistEl.appendChild(cf(u)) : val(this.olistEl, u), c > e +
             r && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {
