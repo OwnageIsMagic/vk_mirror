@@ -167,13 +167,11 @@ var html5video = {
         show('menu_bk', 'menu_controls')
         html5video.updVol();
         ge('video_title')
-            .innerHTML = decodeURIComponent(html5video.vars.md_title || '')
-            .replace(/\+/g, ' ');
+            .innerHTML = clean(html5video.vars.md_title || '');
         ge('video_author')
-            .innerHTML = decodeURIComponent(html5video.vars.md_author || '')
-            .replace(/\+/g, ' ');
+            .innerHTML = clean(html5video.vars.md_author || '');
         ge('video_author')
-            .href = decodeURIComponent(html5video.vars.author_href || '')
+            .href = html5video.vars.author_href;
 
         html5video.initVideoLinks();
         html5video.addVideoListeners();
