@@ -1581,7 +1581,7 @@ var Video = {
             ext: cur.vExt,
             order: cur.vOrder
         }, {
-            onDone: (function(count, data, playlists) {
+            onDone: (function(count, data, playlists, realOffset) {
                     removeClass(cur.videoSearch, 'v_loading');
                     removeClass(cur.more, 'load_more');
                     data = eval('(' + data + ')');
@@ -1638,7 +1638,11 @@ var Video = {
                             Video.initSorter();
                         }
                     }
-                    searchData.offset += data.length;
+                    if (realOffset) {
+                        searchData.offset = realOffset;
+                    } else {
+                        searchData.offset += data.length;
+                    }
                     this.changeSummary();
 
                     re('video_featured_playlists');
