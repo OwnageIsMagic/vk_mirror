@@ -62,8 +62,8 @@ var html5video = {
         html5video.vars = vars;
         if (fixedWidth) {
             html5video.fixed_player_size = true;
-            html5video.fixedWidth = intval(fixedWidth);
-            html5video.fixedHeight = intval(fixedHeight);
+            html5video.fixedWidth = fixedWidth;
+            html5video.fixedHeight = fixedHeight;
         }
 
         ge(video_box_id)
@@ -167,9 +167,9 @@ var html5video = {
         show('menu_bk', 'menu_controls')
         html5video.updVol();
         ge('video_title')
-            .innerHTML = clean(html5video.vars.md_title || '');
+            .innerHTML = html5video.vars.md_title || '';
         ge('video_author')
-            .innerHTML = clean(html5video.vars.md_author || '');
+            .innerHTML = html5video.vars.md_author || '';
         ge('video_author')
             .href = html5video.vars.author_href;
 
