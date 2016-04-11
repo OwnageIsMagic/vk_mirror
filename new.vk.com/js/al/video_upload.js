@@ -1,5 +1,7 @@
 var VideoUpload = {
-    FILE_TYPES: "*.avi;*.AVI;*.mp4;*.MP4;*.3gp;*.3GP;*.mpeg;*.MPEG;*.mov;*.MOV;*.flv;*.FLV;*.wmv;*.WMV;*.mkv;*.MKV;*.webm;*.WEBM;*.vob;*.VOB;*.rm;*.RM;*.rmvb;*.RMVB;*.m4v;*.M4V;*.mpg;*.MPG;*.ogv;*.OGV;*.ts;*.TS;*.m2ts;*.M2TS;*.mts;*.MTS",
+    SUPPORTED_EXTENSIONS: "avi mp4 3gp mpeg mov flv wmv mkv webm vob rm rmvb m4v mpg ogv ts m2ts mts",
+    FILE_TYPES: "",
+    UPLOAD_ACCEPT: "",
     showBox: function(e) {
         return cur.uploadBanned ? (setTimeout(showFastBox({
                 title: getLang("video_no_upload_title"),
@@ -24,7 +26,13 @@ var VideoUpload = {
         }), !1) : nav.go("videos" + cur.oid + "?z=upload_video")
     },
     init: function() {
-        VideoUpload.startEvents()
+        VideoUpload.buildExtMasks(), VideoUpload.startEvents()
+    },
+    buildExtMasks: function() {
+        var e = VideoUpload.SUPPORTED_EXTENSIONS.split(" ");
+        VideoUpload.UPLOAD_ACCEPT = "." + e.join(",.");
+        for (var o = e.length, a = 0; o > a; ++a) e.push(e[a].toUpperCase());
+        VideoUpload.FILE_TYPES = "*." + e.join(";*.")
     },
     startEvents: function() {
         var e = browser.msie6 ? pageNode : window;
@@ -286,7 +294,7 @@ var VideoUpload = {
                     check_hash: uploadOpts.check_hash,
                     check_rhash: uploadOpts.check_rhash,
                     check_url: uploadOpts.check_url,
-                    accept: browser.safari ? "" : "video/*,.flv,.3gp,.mkv,.wmv,.vob,.rm,.rmvb,.ts,.m2ts,.mts"
+                    accept: browser.safari ? "" : "video/*," + VideoUpload.UPLOAD_ACCEPT
                 }))
             };
         if (cur.videoLastError) {

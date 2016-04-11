@@ -5326,8 +5326,7 @@
                 if (!a.last_act || Object.keys(a.typing || {})
                     .length > 0) return;
                 if (a.skipped > 0) return;
-                var i = getDateText(a.last_act[0], e.get()
-                        .timeshift),
+                var i = getDateText(a.last_act[0], 0),
                     o = geByClass1(x.LAST_ACT_CLASS, t),
                     s = langSex(a.sex, getLang("mail_last_activity_tip", "raw"))
                     .replace("{user}", a.name)
@@ -6271,7 +6270,7 @@
                         return n.attaches.filter(function(t) {
                                 return t.id === e.id && t.type === e.type
                             })
-                            .length;
+                            .length
                     })
                     .reduce(function(e, t) {
                         return e || t

@@ -4318,7 +4318,7 @@ function audioShowActionTooltip(e) {
             shift: [15, 10, 0],
             needLeft: !0
         };
-        gpeByClass("_im_stack_messages", e) ? (s.appendParentCls = "_im_mess_stack", s.shift = [13, 10, 0]) : gpeByClass("top_notify_wrap", e) && (s.appendParentCls =
+        gpeByClass("_im_mess_stack", e) ? (s.appendParentCls = "_im_mess_stack", s.shift = [13, 10, 0], s.noZIndex = !0) : gpeByClass("top_notify_wrap", e) && (s.appendParentCls =
             "top_notify_wrap"), showTooltip(e, s)
     }
 }

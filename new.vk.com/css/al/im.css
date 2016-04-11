@@ -4460,7 +4460,7 @@ span#im_important_count {
 }
 
 .im-mess .im-mess--text .post_media {
-    overflow: hidden;
+    overflow: visible;
     position: relative
 }
 
@@ -4680,11 +4680,11 @@ span#im_important_count {
 
 .im-mess:hover .im-mess--fav {
     visibility: visible;
-    opacity: 0.65
+    opacity: 0.5
 }
 
 .im-mess .im-mess--fav:hover {
-    opacity: 0.7
+    opacity: 0.5
 }
 
 .im-mess.im-mess_search {
