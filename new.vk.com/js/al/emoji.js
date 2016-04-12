@@ -937,9 +937,9 @@ if (!window.Emoji) var Emoji = {
             url: "al_im.php",
             params: o,
             index: t,
-            className: "subscribe_post_tt sticker_extra_tt sticker_extra_tt" + t,
+            className: "subscribe_post_tt sticker_extra_tt tt_text_only sticker_extra_tt" + t,
             shift: function() {
-                return [-138, 0, -220]
+                return [-138, 0, -170]
             },
             hasover: 1,
             slideX: 15,
@@ -948,7 +948,7 @@ if (!window.Emoji) var Emoji = {
             forcetodown: !0,
             no_shadow: !0
         };
-        return showTooltip(i, s);
+        return showTooltip(i, s)
     },
     selectPeer: function(e) {
         if (void 0 !== e) {

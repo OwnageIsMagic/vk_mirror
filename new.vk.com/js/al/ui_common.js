@@ -719,6 +719,28 @@ window.Scrollbar = window.Scrollbar || function() {
             return "undefined" == typeof t ? this.contHeight() - this.scrollHeight - this.obj.scrollTop : (this.obj.scrollTop = this.contHeight(!0) - this.scrollHeight -
                 t, void this.update(!0, !0))
         },
+        smoothScroll: function(t, e, i) {
+            var s = this.obj.scrollTop + t;
+            "undefined" == typeof i && (i = 300);
+            var o = this,
+                n = new Fx.Base({
+                    scrollTop: this.obj.scrollTop
+                }, {
+                    transition: Fx.Transitions.easeOutCubic,
+                    onStep: function(t) {
+                        o.obj.scrollTop = t.scrollTop, o.update(!0)
+                    },
+                    duration: i,
+                    onComplete: function() {
+                        e && e(scroll)
+                    }
+                });
+            n.start({
+                scrollTop: this.obj.scrollTop
+            }, {
+                scrollTop: s
+            })
+        },
         scrollLeft: function(t) {
             this.obj.scrollLeft = parseInt(t), this.update(!1, !0)
         },
@@ -859,9 +881,9 @@ window.Scrollbar = window.Scrollbar || function() {
             var d = escapeRE(t),
                 p = parseLatin(t);
             null != p && (d = d + "|" + escapeRE(p));
-            var g = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
+            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var v = l.rsTpl ? l.rsTpl : function(t, e, i, s, o) {
+        var g = l.rsTpl ? l.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
                 r = t[1];
             if (e) {
@@ -879,7 +901,7 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                u.push(rs(n, v(this, t, l.invertedSelection, o, g)))
+                u.push(rs(n, g(this, t, l.invertedSelection, o, v)))
             }), e || u.length || u.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
                 .replace("{search}", t) : l.noSelMsg) + "</div>"), re(this.moreEl), u = u.join(" "), e ? this.olistEl.appendChild(cf(u)) : val(this.olistEl, u), c > e +
             r && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {

@@ -21,12 +21,12 @@
 
 .privacy_locked {
     padding-left: 16px;
-    background: url(/images/icons/lock.png?1) no-repeat 0 2px
+    background: url(/images/icons/lock_icons.png) no-repeat 0 2px
 }
 
 .privacy_locked .privacy_dropdown .header .header_label {
     padding-left: 28px;
-    background: url(/images/icons/lock.png?1) no-repeat 12px 8px
+    background: url(/images/icons/lock_icons.png) no-repeat 12px -52px
 }
 
 .group1,
@@ -406,7 +406,7 @@
     border: 1px solid #c5d0db;
     border-width: 0 0 1px;
     color: #5d6d80;
-    background-color: #fafbfc
+    background-color: #dce1e6
 }
 
 .privacy_dropdown .header .header_label {
@@ -421,8 +421,8 @@
     right: 10px;
     width: 9px;
     height: 5px;
-    background: url(/images/icons/multidd.png?1) no-repeat;
-    background-position: left 0
+    background: url(/images/icons/multidd.png?2) no-repeat;
+    background-position: left -38px
 }
 
 .privacy_dropdown .body {
@@ -454,7 +454,7 @@
     right: 9px;
     width: 10px;
     height: 10px;
-    background: url(/images/icons/multidd.png?1) no-repeat;
+    background: url(/images/icons/multidd.png?2) no-repeat;
     background-position: left -21px
 }
 
@@ -481,8 +481,8 @@
     margin-top: 12px;
     width: 9px;
     height: 5px;
-    background: url(/images/icons/multidd.png?1) no-repeat;
-    background-position: left 0
+    background: url(/images/icons/multidd.png?2) no-repeat;
+    background-position: left -38px
 }
 
 .privacy_dropdown .l_item,
@@ -517,7 +517,7 @@
 }
 
 .privacy_dropdown.pdd_to_up .header_label:after {
-    background-position: left -10px
+    background-position: left -48px
 }
 
 .privacy_dropdown.pdd_to_up .body {
@@ -529,7 +529,7 @@
 }
 
 .privacy_dropdown.pdd_to_up .l_header:after {
-    background-position: left -10px
+    background-position: left -48px
 }
 
 .privacy_custom_box .show_to {

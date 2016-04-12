@@ -759,6 +759,7 @@ Notifier = {
                 push = 0;
                 break;
             case 'notify_tt':
+            case 'new_post':
                 push = 0;
                 break;
         }

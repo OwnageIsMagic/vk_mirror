@@ -5893,7 +5893,8 @@ var _message_box_guid = 0,
         curBox: 0
     };
 __bq.hideLastCheck = __bq.hideLast.pbind(!0), browser.mobile || addEvent(document, "keydown", function(e) {
-    if (_wf = 1, e.keyCode == KEY.ESC && __bq.count() && !cur._noEscHide) return __bq.hideLast(), -1;
+    if (_wf = 1, e.keyCode == KEY.ESC && window.headerDestroy) return window.headerDestroy(), topHeaderClearClose(), -1;
+    if (e.keyCode == KEY.ESC && __bq.count() && !cur._noEscHide) return __bq.hideLast(), -1;
     var t = [176, 177, 178, 179],
         o = !1;
     window.audioPlayer && (t.push(KEY.LEFT), t.push(KEY.RIGHT)), each(t, function(t, n) {

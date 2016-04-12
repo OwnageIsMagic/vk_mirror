@@ -2195,9 +2195,9 @@ var Page = {
             ge("page_wall_switch");
             return ge("page_wall_count_all") && (o.all = intval(ge("page_wall_count_all")
                     .value)), ge("page_wall_count_own") && (o.own = intval(ge("page_wall_count_own")
-                    .value)), t || (t = "own" == cur.wallType ? "all" : "own"), a && "click" == a.type && a.clientX && cur.wallTab == t && cur.wallType == t ? nav.go(e, a) : !
-                o.own && inArray(cur.wallTab, ["all", "own"]) ? cancelEvent(a) : (replaceClass("page_wall_posts", cur.wallType, t), cur.wallType = t, Wall.update(), uiTabs.switchTab(
-                    e), uiTabs.hideProgress(e), wall.switchTabContent(t), cur.wallTab = t, cancelEvent(a))
+                    .value)), t || (t = "own" == cur.wallType ? "all" : "own"), a && "click" == a.type && a.clientX && a.offsetX && cur.wallTab == t && cur.wallType == t ? nav
+                .go(e, a) : !o.own && inArray(cur.wallTab, ["all", "own"]) ? cancelEvent(a) : (replaceClass("page_wall_posts", cur.wallType, t), cur.wallType = t, Wall.update(),
+                    uiTabs.switchTab(e), uiTabs.hideProgress(e), wall.switchTabContent(t), cur.wallTab = t, cancelEvent(a))
         },
         showSuggested: function(e, a, t, o) {
             if (a && checkEvent(a)) return !0;
@@ -3082,10 +3082,9 @@ var Page = {
             if (a.ctrlKey && a.keyCode == KEY.RETURN) {
                 var s = val(t),
                     l = Composer.getCursorPosition(t);
-                return val(t, s.substr(0, l) + "\n" + s.substr(l)),
-                    elfocus(t, l + 1, l + 1), t.autosize.update(), setTimeout(function() {
-                        t.autosize.update()
-                    }, 0), cancelEvent(a)
+                return val(t, s.substr(0, l) + "\n" + s.substr(l)), elfocus(t, l + 1, l + 1), t.autosize.update(), setTimeout(function() {
+                    t.autosize.update()
+                }, 0), cancelEvent(a)
             }
         },
         sendReply: function(e, a, t) {

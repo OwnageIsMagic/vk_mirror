@@ -234,6 +234,15 @@ div.wall_module .ext_video div {
     padding: 15px 20px 0
 }
 
+.wall_module .post_header .ui_actions_menu_icons {
+    top: 20px;
+    right: 18px
+}
+
+.wall_module .post_header .ui_actions_menu {
+    right: -3px
+}
+
 .post_image {
     display: block;
     float: left
@@ -270,7 +279,7 @@ div.wall_module .ext_video div {
 
 .post_author {
     line-height: 16px;
-    padding-right: 15px;
+    padding-right: 20px;
     overflow: hidden;
     text-overflow: ellipsis
 }
@@ -293,6 +302,14 @@ div.wall_module .ext_video div {
 
 .wall_fixed .post_header {
     padding-top: 0
+}
+
+.wall_fixed .post_header .ui_actions_menu_icons {
+    top: 5px
+}
+
+.wall_fixed .post_header .ui_actions_menu {
+    margin-top: -15px
 }
 
 .wall_fixed_label {
@@ -5193,6 +5210,7 @@ div.medadd_c_linkprg {
     width: 100%;
     opacity: 0.55;
     filter: alpha(opacity=55);
+    line-height: normal;
     -o-transition: opacity 70ms linear;
     transition: opacity 70ms linear
 }

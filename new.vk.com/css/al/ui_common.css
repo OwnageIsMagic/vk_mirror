@@ -201,7 +201,7 @@ a.ui_box_header_link {
     content: '';
     display: inline-block;
     margin: 0 0 1px 5px;
-    background: url(/images/icons/multidd.png?1) no-repeat 0 0;
+    background: url(/images/icons/multidd.png?2) no-repeat 0 0;
     width: 9px;
     height: 5px
 }
@@ -508,7 +508,7 @@ a.ui_crumb {
 .ui_rmenu_item_arrow {
     display: inline-block;
     margin: 0 0 1px 5px;
-    background: url(/images/icons/multidd.png?1) no-repeat 0 0;
+    background: url(/images/icons/multidd.png?2) no-repeat 0 0;
     width: 9px;
     height: 5px
 }

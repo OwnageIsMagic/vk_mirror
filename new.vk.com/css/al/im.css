@@ -5033,10 +5033,12 @@ span#im_important_count {
     padding-bottom: 8px
 }
 
+.nim-dialog.nim-dialog_simple.nim-dialog_hovered,
 .nim-dialog.nim-dialog_simple:hover {
     background: #f5f7fa
 }
 
+.nim-dialog.nim-dialog_simple.nim-dialog_hovered .nim-dialog--close,
 .nim-dialog.nim-dialog_simple:hover .nim-dialog--close {
     display: none
 }
@@ -5078,11 +5080,17 @@ span#im_important_count {
     color: #fff
 }
 
+.nim-dialog.nim-dialog_hovered,
+.nim-dialog.nim-dialog_hovered+.nim-dialog,
 .nim-dialog:hover,
 .nim-dialog:hover+.nim-dialog {
     border-top: solid 1px #ebedf0
 }
 
+.nim-dialog.nim-dialog_hovered+.nim-dialog .nim-dialog--content,
+.nim-dialog.nim-dialog_hovered+.nim-dialog .nim-dialog--photo,
+.nim-dialog.nim-dialog_hovered .nim-dialog--content,
+.nim-dialog.nim-dialog_hovered .nim-dialog--photo,
 .nim-dialog:hover+.nim-dialog .nim-dialog--content,
 .nim-dialog:hover+.nim-dialog .nim-dialog--photo,
 .nim-dialog:hover .nim-dialog--content,
@@ -5090,6 +5098,8 @@ span#im_important_count {
     margin-top: -1px
 }
 
+.nim-dialog.nim-dialog_hovered+.nim-dialog .nim-dialog--content,
+.nim-dialog.nim-dialog_hovered .nim-dialog--content,
 .nim-dialog:hover+.nim-dialog .nim-dialog--content,
 .nim-dialog:hover .nim-dialog--content {
     border-color: transparent
@@ -5100,18 +5110,22 @@ span#im_important_count {
     border-top: solid 1px #7293b6
 }
 
+.nim-dialog.nim-dialog_hovered,
 .nim-dialog:hover {
     background: #f5f7fa
 }
 
+.nim-dialog.nim-dialog_hovered .nim-dialog--photo,
 .nim-dialog:hover .nim-dialog--photo {
     border-color: #f5f7fa
 }
 
+.nim-dialog.nim-dialog_hovered .nim-dialog--close,
 .nim-dialog:hover .nim-dialog--close {
     display: block
 }
 
+.nim-dialog.nim-dialog_hovered .nim-dialog--date,
 .nim-dialog:hover .nim-dialog--date {
     display: none
 }
