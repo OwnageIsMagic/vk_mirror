@@ -2907,7 +2907,7 @@ AdsViewEditor.prototype.updateUiParamVisibility = function(paramName) {
             ])));
             toggleClass(this.options.targetIdPrefix + paramName + '_exclusive_wrap', 'unshown', elemsHidden[AdsEdit.ADS_AD_FORMAT_TYPE_EXCLUSIVE] = !(inArray(linkTypeValue, [
                 AdsEdit.ADS_AD_LINK_TYPE_GROUP, AdsEdit.ADS_AD_LINK_TYPE_EVENT, AdsEdit.ADS_AD_LINK_TYPE_PUBLIC, AdsEdit.ADS_AD_LINK_TYPE_URL, AdsEdit.ADS_AD_LINK_TYPE_VIDEO
-            ])));
+            ]) && this.params.format_type.allow_exclusive));
             toggleClass(this.options.targetIdPrefix + paramName + '_promotion_community_wrap', 'unshown', elemsHidden[AdsEdit.ADS_AD_FORMAT_TYPE_PROMOTION_COMMUNITY] = !(
                 inArray(linkTypeValue, [AdsEdit.ADS_AD_LINK_TYPE_GROUP, AdsEdit.ADS_AD_LINK_TYPE_EVENT, AdsEdit.ADS_AD_LINK_TYPE_PUBLIC, AdsEdit.ADS_AD_LINK_TYPE_APP])
             ));

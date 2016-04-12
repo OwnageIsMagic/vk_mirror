@@ -195,9 +195,9 @@ var Feed = {
                                 other: "",
                                 label: getLang("news_show_X_reposts", g.length)
                             });
-                            var T = se('<div class="feed_row' + (y ? "_unshown" : "") + '">' + v + "</div>"),
-                                x = domFC(x);
-                            w.insertBefore(T, w.firstChild), !y && t > getXY(T)[1] && (c += T.offsetHeight), C = !0, f = T.firstChild, u = geByClass1("feed_reposts_first",
+                            var x = se('<div class="feed_row' + (y ? "_unshown" : "") + '">' + v + "</div>"),
+                                T = domFC(T);
+                            w.insertBefore(x, w.firstChild), !y && t > getXY(x)[1] && (c += x.offsetHeight), C = !0, f = x.firstChild, u = geByClass1("feed_reposts_first",
                                 f, "div"), h = geByClass1("feed_reposts_group", f, "div"), each(clone(g), function() {
                                 t > getXY(this)[1] && (c -= this.offsetHeight), re(this.parentNode), h.appendChild(this.firstChild)
                             })
@@ -219,24 +219,24 @@ var Feed = {
                         1 && removeClass(cur.feedEls.wrap, "feed_is_empty");
                     break;
                 case "edit_post":
-                    var B, P = ge("wpt" + r);
-                    if (!isVisible(i) || !P) break;
-                    var E = geByClass1("wall_post_more", P);
-                    E && (E = isVisible(domNS(E))), (B = t > getXY(P)[1]) && (c -= P.offsetHeight);
+                    var E, B = ge("wpt" + r);
+                    if (!isVisible(i) || !B) break;
+                    var P = geByClass1("wall_post_more", B);
+                    P && (P = isVisible(domNS(P))), (E = t > getXY(B)[1]) && (c -= B.offsetHeight);
                     var S = psr(rs(e[3], {
                             poll_hash: cur.wallTpl.poll_hash
                         })),
                         w = ge("post" + r);
-                    w && !isVisible(w.parentNode) && (S = wall.updatePostImages(S)), val(P, S), E && (E = geByClass1("wall_post_more", P), E && E.onclick()), ge(
-                        "post_poll_id" + r) && wall.updatePoll(r), B && (c += P.offsetHeight), nodeUpdated(P);
+                    w && !isVisible(w.parentNode) && (S = wall.updatePostImages(S)), val(B, S), P && (P = geByClass1("wall_post_more", B), P && P.onclick()), ge(
+                        "post_poll_id" + r) && wall.updatePoll(r), E && (c += B.offsetHeight), nodeUpdated(B);
                     break;
                 case "edit_reply":
                     var L = e[3],
-                        P = ge("wpt" + L);
-                    if (!isVisible("post" + L) || !P) break;
-                    var E = geByClass1("wall_reply_more", P);
-                    E && (E = isVisible(domNS(E))), updH = -P.offsetHeight, updY = getXY(P)[1], val(P, psr(e[4])), E && (E = geByClass1("wall_reply_more", P), E && E.onclick()),
-                        updH += P.offsetHeight, nodeUpdated(P);
+                        B = ge("wpt" + L);
+                    if (!isVisible("post" + L) || !B) break;
+                    var P = geByClass1("wall_reply_more", B);
+                    P && (P = isVisible(domNS(P))), updH = -B.offsetHeight, updY = getXY(B)[1], val(B, psr(e[4])), P && (P = geByClass1("wall_reply_more", B), P && P.onclick()),
+                        updH += B.offsetHeight, nodeUpdated(B);
                     break;
                 case "post_parsed_link":
                     if (!i) break;
@@ -499,12 +499,16 @@ var Feed = {
                 reply_names: {}
             }), extend(cur.options.reply_names, options.reply_names), delete options.reply_names, extend(cur, options), cur.subsections[cur.section] = cur.subsection,
             options.loc && 2 == from && nav.setLoc(options.loc), options.section && "news" == options.section && options.subsection && "top" == options.subsection &&
-            statlogsValueEvent("feed_switch", 0, "top_news", from), void 0 !== options.filters && val("feed_filters", options.filters), options.top_hashtags && !ge(
-                "search_hot_hashtags") ? ge("feed_rmenu")
-            .insertAdjacentHTML("afterend", options.top_hashtags) : "search" != options.section && re("search_hot_hashtags"), options.script && eval(options.script),
-            options.htitle && (cur.feedInitialTitle = document.title = replaceEntities(stripHTML(options.htitle))), void 0 !== options.add_queue && null !== options.add_queue ?
-            (options.add_queue === !0 && (cur.add_queue = options.add_queue = !1), feed.getNewQKey(0), options.add_queue !== !0 && (cur.add_queue = options.add_queue) &&
-                setTimeout(feed.update.pbind(0), 0)) : from && "search" != cur.section && "news" != cur.section && cur.section && (cur.add_queue = !1), options.q) {
+            statlogsValueEvent("feed_switch", 0, "top_news", from), void 0 !== options.filters) {
+            var minEl = ge("search_filters_minimized"),
+                filtersExpanded = minEl && hasClass(minEl, "ui_rmenu_item_expanded"),
+                needExpand = !!minEl;
+            val("feed_filters", options.filters), window.searcher && needExpand && searcher.toggleMinimizedFilters(ge("search_filters_minimized"), filtersExpanded, !0)
+        }
+        if (options.script && eval(options.script), options.htitle && (cur.feedInitialTitle = document.title = replaceEntities(stripHTML(options.htitle))), void 0 !==
+            options.add_queue && null !== options.add_queue ? (options.add_queue === !0 && (cur.add_queue = options.add_queue = !1), feed.getNewQKey(0), options.add_queue !==
+                !0 && (cur.add_queue = options.add_queue) && setTimeout(feed.update.pbind(0), 0)) : from && "search" != cur.section && "news" != cur.section && cur.section &&
+            (cur.add_queue = !1), options.q) {
             val(cur.feedEls.search, replaceEntities(options.q));
             var query = options.q;
             query.length > 30 && (query = trim(query.substr(0, 30)) + "...")
@@ -1038,14 +1042,13 @@ var Feed = {
                 no_reposts: ge("feed_list_reposts") && !isChecked("feed_list_reposts") ? 1 : 0,
                 hash: o.hash
             };
-        return e.length < t.length ? i.White = e.join(",") : i.Black = t.join(","),
-            ajax.post("al_feed.php", i, {
-                onDone: function(e, t) {
-                    r.hide(), feed.switchSection("photos" == cur.section ? "photos" : "news")
-                },
-                showProgress: lockButton.pbind(r.btns.ok[0]),
-                hideProgress: unlockButton.pbind(r.btns.ok[0])
-            }), !1
+        return e.length < t.length ? i.White = e.join(",") : i.Black = t.join(","), ajax.post("al_feed.php", i, {
+            onDone: function(e, t) {
+                r.hide(), feed.switchSection("photos" == cur.section ? "photos" : "news")
+            },
+            showProgress: lockButton.pbind(r.btns.ok[0]),
+            hideProgress: unlockButton.pbind(r.btns.ok[0])
+        }), !1
     },
     addList: function() {
         return feed.editList(-1)
@@ -1310,7 +1313,7 @@ var Feed = {
             }(),
             onFrameBlocksDone: function() {
                 cur.isFeedLoading = !1, (0 === cur.wasScroll || cur.wasScroll > 0 || cur.wasScroll === !1 && "search" == cur.section && cur.q && "#" == cur.q.substr(
-                    0, 1)) && (scrollToY(st, 0), cur.wasScroll = !1)
+                    0, 1)) && (cur.wasScroll = !1)
             },
             feedEntriesHTML: {},
             feedUnreadCount: 0,

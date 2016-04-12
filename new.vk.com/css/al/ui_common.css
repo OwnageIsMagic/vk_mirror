@@ -652,6 +652,11 @@ a.ui_crumb {
     padding: 7px 15px 5px
 }
 
+.ui_filters_sibling {
+    margin-top: 1px;
+    border-radius: 0 0 2px 2px
+}
+
 .ui_search {
     border-bottom: 1px solid #ebedf0;
     background-color: #fff;

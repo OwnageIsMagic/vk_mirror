@@ -304,7 +304,8 @@
 }
 
 .feed_search_wrap {
-    display: none
+    display: none;
+    border-radius: 2px 2px 0 0
 }
 
 .feed_search_shown .feed_search_wrap {
@@ -346,10 +347,6 @@
 
 .feed_found_photos .feed_row:first-child .page_post_sized_thumbs {
     margin: 0
-}
-
-.feed_search_filters_wrap {
-    padding: 7px 15px 5px
 }
 
 .feed_new_posts {
@@ -632,8 +629,6 @@
 }
 
 .feedback_img:before {
-    width: 100%;
-    height: 100%;
     background-color: #fff
 }
 
@@ -643,15 +638,13 @@
     display: block;
     position: absolute;
     top: 0;
-    left: 0
+    left: 0;
+    width: 50px;
+    height: 50px
 }
 
 .feedback_img:after {
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
-    width: 100%;
-    height: 100%;
     background-color: #fafbfc;
     background-image: url(/images/camera_100.png);
     background-size: cover
@@ -733,27 +726,22 @@
 }
 
 .feedback_group_photo_img:before {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-color: #fff
 }
 
+.feedback_group_photo_img:before,
 .feedback_group_photo_img:after {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
     content: " ";
     display: block;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 34px;
+    height: 34px
+}
+
+.feedback_group_photo_img:after {
+    border-radius: 50%;
     background-color: #fafbfc;
     background-image: url(/images/camera_100.png);
     background-size: cover
@@ -820,7 +808,8 @@
     border-radius: 50%;
     top: 31px;
     left: 31px;
-    border: 2px solid #fff
+    border: 2px solid #fff;
+    z-index: 10
 }
 
 .feedback_row_wrap.unread .feedback_photo_icon {
@@ -911,6 +900,14 @@
     background-position: 0 -160px
 }
 
+.feedback_support_thumb {
+    float: left;
+    background: url('/images/techsupp.png') no-repeat 0 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%
+}
+
 .feedback_sticky_row {
     min-height: 64px;
     line-height: 60px;
@@ -979,8 +976,6 @@
 }
 
 .feedback_sticky_img:before {
-    width: 100%;
-    height: 100%;
     background-color: #fff
 }
 
@@ -990,15 +985,13 @@
     display: block;
     position: absolute;
     top: 0;
-    left: 0
+    left: 0;
+    width: 40px;
+    height: 40px
 }
 
 .feedback_sticky_img:after {
-    width: 40px;
-    height: 40px;
     border-radius: 50%;
-    width: 100%;
-    height: 100%;
     background-color: #fafbfc;
     background-image: url(/images/camera_100.png);
     background-size: cover
@@ -1020,7 +1013,7 @@
 }
 
 .feedback_birthday_row .feedback_sticky_text {
-    padding-right: 67px
+    padding-right: 77px
 }
 
 .feedback_sticky_actions {
@@ -1172,8 +1165,8 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 40px;
+    height: 40px;
     background-color: #fff
 }
 
@@ -1186,8 +1179,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
     background-color: #fafbfc;
     background-image: url(/images/camera_100.png);
     background-size: cover

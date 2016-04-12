@@ -76,7 +76,7 @@ body.mobfixed #mv_layer_wrap {
     position: relative;
     display: table;
     margin: 0px auto;
-    padding: 50px 0px 85px
+    padding: 10px 0px 85px
 }
 
 #mv_box {
@@ -178,8 +178,6 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_author_img:before {
-    width: 100%;
-    height: 100%;
     background-color: #fff
 }
 
@@ -189,15 +187,13 @@ body.mobfixed #mv_layer_wrap {
     display: block;
     position: absolute;
     top: 0;
-    left: 0
+    left: 0;
+    width: 50px;
+    height: 50px
 }
 
 .mv_author_img:after {
-    width: 50px;
-    height: 50px;
     border-radius: 50%;
-    width: 100%;
-    height: 100%;
     background-color: #fafbfc;
     background-image: url(/images/camera_100.png);
     background-size: cover

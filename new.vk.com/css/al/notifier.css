@@ -2007,46 +2007,8 @@ div.chat_tab_img {
     -moz-osx-font-smoothing: auto
 }
 
-.top_notify_prefs {
-    float: right;
-    position: relative
-}
-
-.top_notify_prefs .ui_actions_menu {
-    position: relative;
-    position: absolute;
-    top: 30px;
-    left: 0;
-    min-width: 190px;
-    z-index: 110
-}
-
-.top_notify_prefs .ui_actions_menu:after,
-.top_notify_prefs .ui_actions_menu:before {
-    position: absolute;
-    pointer-events: none;
-    border: solid transparent;
-    content: '';
-    height: 0;
-    width: 0;
-    bottom: 100%;
-    left: 20px
-}
-
-.top_notify_prefs .ui_actions_menu:before {
-    border-width: 6px;
-    margin: 0 -6px;
-    border-bottom-color: #c5d0db
-}
-
-.top_notify_prefs .ui_actions_menu:after {
-    border-width: 5px;
-    margin: 0 -5px;
-    border-bottom-color: #fff
-}
-
-.top_notify_prefs.ui_actions_menu_wrap.shown .ui_actions_menu {
-    top: 24px
+.top_notify_prefs_lnk {
+    float: right
 }
 
 .top_notify_cont {
@@ -2252,27 +2214,22 @@ div.chat_tab_img {
 }
 
 .top_notify_cont .feedback_img:before {
-    content: " ";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
     background-color: #fff
 }
 
+.top_notify_cont .feedback_img:before,
 .top_notify_cont .feedback_img:after {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
     content: " ";
     display: block;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    width: 40px;
+    height: 40px
+}
+
+.top_notify_cont .feedback_img:after {
+    border-radius: 50%;
     background-color: #fafbfc;
     background-image: url(/images/camera_100.png);
     background-size: cover

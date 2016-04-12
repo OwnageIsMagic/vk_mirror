@@ -2951,20 +2951,25 @@ var Page = {
                 }), window.mvcur && mvcur.post == e && Videoview.updateReplyFormPos(), cur.onReplyFormSizeUpdate && isFunction(cur.onReplyFormSizeUpdate) && cur.onReplyFormSizeUpdate(
                     o), cancelEvent(a)
         },
-        hideEditReply: function(e) {
+        hideEditReply: function(e, a) {
             cur.editing = !1;
-            var a, t = ge("reply_field" + e),
-                o = cur.wallLayer ? ge("wl_reply_form_inner") : ge("post" + e),
-                i = ge("reply_box" + e),
-                s = cur.reply_to && Wall.getReplyName(cur.reply_to[0]),
-                l = trim(window.Emoji ? Emoji.editableVal(t) : ""),
-                r = Wall.hasComposerMedia(t);
-            if (!o && i && (o = gpeByClass("_post_wrap", i)), t && !r && (s && isArray(s) && (l && s[1].indexOf(l) || (val(t, ""), l = "")), !(browser.opera_mobile || browser.safari_mobile ||
-                    l))) {
-                removeClass(o, "reply_box_open"), (a = ge("reply_link" + e)) && hide("replies_wrap" + e), t.blur(), triggerEvent(window, "scroll"), val("reply_to" + e, ""),
-                    hide("reply_to_title" + e), cur.reply_to = !1, cur.onReplyFormSizeUpdate && cur.onReplyFormSizeUpdate();
-                var n = cur.replySubmitSettings;
-                n && n.tt && n.tt.el && n.tt.destroy()
+            var t, o = ge("reply_field" + e),
+                i = cur.wallLayer ? ge("wl_reply_form_inner") : ge("post" + e),
+                s = ge("reply_box" + e),
+                l = cur.reply_to && Wall.getReplyName(cur.reply_to[0]),
+                r = trim(window.Emoji ? Emoji.editableVal(o) : ""),
+                n = Wall.hasComposerMedia(o);
+            if (!i && s && (i = gpeByClass("_post_wrap", s)), o && (!n || a)) {
+                if (l && isArray(l) && (r && l[1].indexOf(r) || (val(o, ""), r = "")), a && r) {
+                    var d = o && data(o, "composer");
+                    d ? Composer.reset(d) : val(o, ""), r = ""
+                }
+                if (!(browser.opera_mobile || browser.safari_mobile || r)) {
+                    removeClass(i, "reply_box_open"), (t = ge("reply_link" + e)) && hide("replies_wrap" + e), o.blur(), triggerEvent(window, "scroll"), val("reply_to" + e, ""),
+                        hide("reply_to_title" + e), cur.reply_to = !1, cur.onReplyFormSizeUpdate && cur.onReplyFormSizeUpdate();
+                    var c = cur.replySubmitSettings;
+                    c && c.tt && c.tt.el && c.tt.destroy()
+                }
             }
         },
         replyNamesRE: function() {
@@ -3077,9 +3082,10 @@ var Page = {
             if (a.ctrlKey && a.keyCode == KEY.RETURN) {
                 var s = val(t),
                     l = Composer.getCursorPosition(t);
-                return val(t, s.substr(0, l) + "\n" + s.substr(l)), elfocus(t, l + 1, l + 1), t.autosize.update(), setTimeout(function() {
-                    t.autosize.update()
-                }, 0), cancelEvent(a)
+                return val(t, s.substr(0, l) + "\n" + s.substr(l)),
+                    elfocus(t, l + 1, l + 1), t.autosize.update(), setTimeout(function() {
+                        t.autosize.update()
+                    }, 0), cancelEvent(a)
             }
         },
         sendReply: function(e, a, t) {
@@ -4120,8 +4126,7 @@ var Page = {
                     i = this.href.replace(o, "");
                 if (void 0 === a[i]) {
                     var s = intval(this.getAttribute("data-from-id"));
-                    s && s != vk.id && (a[i] = t.length,
-                        t.push([s, e, "@" + i, "/images/camera_c.gif"]))
+                    s && s != vk.id && (a[i] = t.length, t.push([s, e, "@" + i, "/images/camera_c.gif"]))
                 }
             }), i = i.concat(Array.prototype.slice.apply(geByClass("post_image", bodyNode, "a"))), i = i.concat(Array.prototype.slice.apply(geByClass("reply_image",
                 bodyNode, "a"))), each(i, function() {

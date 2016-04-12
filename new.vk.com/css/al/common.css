@@ -2383,26 +2383,18 @@ a:hover .left_count_persist .left_void {
 }
 
 .listing {
-    list-style: disc inside;
-    padding-left: 0;
+    list-style: disc;
+    padding-left: 30px;
     color: #758eac;
-    margin: 0 0 15px
-}
-
-.listing .listing {
-    padding-left: 30px
+    margin: 5px 0
 }
 
 ul.listing li {
-    padding: 1px 0
+    padding: 4px 0 4px 3px
 }
 
 ul.listing li span {
     color: #000
-}
-
-ul.listing .l {
-    padding-left: 3px
 }
 
 .divide,
@@ -5560,7 +5552,7 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player .top_audio_player_title_wrap {
-    margin: 17px 0 13px;
+    margin: 16px 0 13px;
     position: relative;
     overflow: hidden;
     text-overflow: ellipsis;

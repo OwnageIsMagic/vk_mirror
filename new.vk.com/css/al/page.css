@@ -3231,6 +3231,7 @@ div.submit_post_field~.placeholder .ph_input {
     max-height: 48px;
     padding: 14px 20px 16px;
     border: 0;
+    border-radius: 2px;
     line-height: 1.462;
     word-wrap: break-word;
     resize: none
@@ -4532,13 +4533,9 @@ textarea.page_poll_export_code {
     cursor: pointer
 }
 
-.page_gif_big {
-    max-width: 100%
-}
-
-#wk_content .page_gif_big,
+.page_gif_big,
 #wk_content .page_gif_big {
-    max-width: 607px
+    max-width: 100%
 }
 
 #dark_box_topic_wrap {

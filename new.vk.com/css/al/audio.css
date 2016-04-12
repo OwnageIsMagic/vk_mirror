@@ -306,7 +306,8 @@
 
 .audio_page_player .audio_page_player_duration {
     float: right;
-    color: #939699
+    color: #939699;
+    cursor: pointer
 }
 
 .audio_page_player .audio_page_player_progress,

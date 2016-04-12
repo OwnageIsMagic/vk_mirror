@@ -21,9 +21,9 @@ var Video = {
         } : nav.objLoc
     },
     init: function() {
-        cur.videoShowWindow = {}, cur.found = {}, cur.silentLoaded = {}, cur.currentSortings = {}, cur._preloadedPages = {}, cur.videoSearchFilters = {}, cur.videoSearchStats =
-            null, cur.videoSearchPos = null, cur.module = "video", cur.albumsPreload = cur.albumsPreload || {}, cur.albumsShowingAll = {}, cur.curLoc = cur.query ? nav.fromStr(
-                cur.query) : !1, cur._back = {
+        cur.searchInputEl = geByClass1("video_search_input"), cur.videoShowWindow = {}, cur.found = {}, cur.silentLoaded = {}, cur.currentSortings = {}, cur._preloadedPages = {},
+            cur.videoSearchFilters = {}, cur.videoSearchStats = null, cur.videoSearchPos = null, cur.module = "video", cur.albumsPreload = cur.albumsPreload || {}, cur.albumsShowingAll = {},
+            cur.curLoc = cur.query ? nav.fromStr(cur.query) : !1, cur._back = {
                 hide: [function() {
                     removeEvent(window, "scroll", cur._ev_onScroll)
                 }],
@@ -32,12 +32,12 @@ var Video = {
                 }]
             }, isObject(cur.curLoc) && (cur.curLoc.section = cur.section), cur.getOwnerId = function() {
                 return cur.oid
-            }, Video.initNavigation(), Video.initSearch(), Video._isAlbumSection() || Video.loadSilent(), Video.loadSilent(Video.getLoc()
+            }, Video.initNavigation(), Video.initSearch(), Video.isInAlbum() || Video.loadSilent(), Video.loadSilent(Video.getLoc()
                 .section);
         var e = Video._getCurrentSectionType();
         "catalog" == e ? (Videocat.init(), Video._preloadPage("all")) : (Video.initOwnerVideoPage(), vk.id == cur.getOwnerId() && -1 != Video.AVAILABLE_TABS.indexOf(e) &&
                 Video._preloadPage("catalog")), cur.curLoc = !1, cur.section = !1, Video.getLoc()
-            .q && (Video._buildCurrentFilters(Video.getLoc()), cur.searchText = Video.getLoc()
+            .q && (Video._prepareSearchFilters(Video.getLoc()), cur.searchText = Video.getLoc()
                 .q, val(cur.searchInputEl, cur.searchText), Video.doSearch(Video.getLoc()
                     .q), Video._initScrollFixedSearch(!0)), cur.currentModule = function() {
                 return Video.isInCatalog() ? "videocat" : "video"
@@ -67,7 +67,7 @@ var Video = {
     },
     initOwnerVideoPage: function() {
         if (!cur._videoInited) {
-            cur._videoInited = !0, cur.videoCanSort && (Video._isAlbumSection() || (cur.albumsSorter = new GridSorter("video_albums_list", "video_playlist_item_a", {
+            cur._videoInited = !0, cur.videoCanSort && (Video.isInAlbum() || (cur.albumsSorter = new GridSorter("video_albums_list", "video_playlist_item_a", {
                 onReorder: Video._onAlbumReorder
             })), Video._createSorters());
             var e = ge("video_sort_dd");
@@ -80,59 +80,59 @@ var Video = {
                 .section)
         }
     },
-    _switch: function(e, o, i) {
-        var t = ge("video_content_" + o);
-        if (!t && "undefined" == typeof cur._preloadedPages[o]) return cur._switchOnPagePreloaded = [e, o], !1;
-        if (Video.doSearch(""), val(cur.searchInputEl, ""), hide("video_content_" + e), toggle("videocat_other_blocks", "catalog" != e), t || ge("video_layout_contents")
-            .appendChild(cur._preloadedPages[o]), show(t), "catalog" == e) Video.initOwnerVideoPage(), document.title = getLang("video_myvideos");
+    _switch: function(e, o) {
+        var i = ge("video_content_" + o);
+        if (!i && "undefined" == typeof cur._preloadedPages[o]) return cur._switchOnPagePreloaded = [e, o], !1;
+        if (Video.doSearch(""), val(cur.searchInputEl, ""), hide("video_content_" + e), toggle("videocat_other_blocks", "catalog" != e), i || ge("video_layout_contents")
+            .appendChild(cur._preloadedPages[o]), show(i), "catalog" == e) Video.initOwnerVideoPage(), document.title = getLang("video_myvideos");
         else {
-            var r = ge("videocat_other_blocks");
-            trim(r.innerHTML) || (r.innerHTML = cur._preloadedPages.other), Videocat.init(), document.title = getLang("video_catalogue_tab_full")
+            var t = ge("videocat_other_blocks");
+            trim(t.innerHTML) || (t.innerHTML = cur._preloadedPages.other), Videocat.init(), document.title = getLang("video_catalogue_tab_full")
         }
         return toggle("video_add_album_btn", "catalog" != o), uiTabs.switchTab(domFC(ge("videocat_tab_" + o))), uiTabs.hideProgress("video_main_tabs"), !1
     },
     updateEmptyPlaceholder: function(e) {
-        e = e || Video._getCurrentSectionType();
-        var o = !1,
-            i = "";
-        "albums" == e ? cur.playlistsCount || (o = !0, i = "video_no_albums_placeholder_text") : cur.videosCount[cur.getOwnerId()][e] || (o = !0, i =
-            "video_no_videos_here_yet"), Video._toggleEmptyPlaceholder(o, i)
+        if (e) {
+            var o = !1,
+                i = "";
+            "albums" == e ? cur.playlistsCount || (o = !0, i = "video_no_albums_placeholder_text") : cur.videosCount[cur.getOwnerId()][e] || (o = !0, i =
+                "video_no_videos_here_yet"), Video._toggleEmptyPlaceholder(o, i)
+        }
     },
     initNavigation: function() {
         cur.nav.push(function(e, o, i, t) {
-            var r, d = e[0] && "video" == o[0] && i[0] == "videos" + vk.id,
-                a = e[0] && "video" == i[0] && o[0] == "videos" + vk.id,
-                n = (e.q || i.q && !o.q) && i[0].indexOf("video") >= 0,
-                c = (o.q || !i.q) && o[0].indexOf("video") >= 0;
-            if ((n || c) && (Video.logSearchStats(), n ? Video._initSearchStats(i) : Video._clearSearchStats()), d ? (nav.setLoc(i), r = Video._switch("catalog",
-                    "all", i)) : a ? (nav.setLoc(i), r = Video._switch("all", "catalog", i)) : (e[0] || i.section && 0 == i.section.indexOf("album_")) && (r = !0),
-                r) return !0;
-            "all" == e.section && delete i.section, !o.q && i.q && (cur.prevVideoLoc = o), Video._buildCurrentFilters(i), n && (trim(val(cur.searchInputEl)) !=
-                trim(e.q) && val(cur.searchInputEl, trim(e.q)), Video.doSearch(e.q));
-            var s = !1;
-            if (each(Video.SEARCH_FILTERS, function(o, i) {
-                    return void 0 !== e[i] ? (s = !0, !1) : !0
-                }), s && Video.doSearch(i.q), e.q === !1 && e.section !== !1) {
-                if (val(cur.searchInputEl, ""), Video.doSearch(""), uiTabs.hideProgress("video_main_tabs"), Video.isInCatalog(cur.prevVideoLoc) && show(
-                        "videocat_other_blocks"), !d && !a && cur.prevVideoLoc) return nav.setLoc(cur.prevVideoLoc), Video.updateEmptyPlaceholder(), !1;
-                delete i.q
+            if (e[0] && 0 != e[0].indexOf("video")) return !0;
+            var r = !!e[0],
+                d = r && i[0] == "videos" + vk.id,
+                a = r && "video" == i[0],
+                n = i.q && !o.q && i[0].indexOf("video") >= 0,
+                c = o.q && !i.q && o[0].indexOf("video") >= 0,
+                s = e.q;
+            (c || s) && Video.logSearchStats(), n ? Video._initSearchStats(i) : c && Video._clearSearchStats();
+            var l;
+            if (d ? (nav.setLoc(i), l = Video._switch("catalog", "all")) : a && (nav.setLoc(i), l = Video._switch("all", "catalog")), l) return !0;
+            if (uiTabs.hideProgress("video_main_tabs"), "all" == e.section && delete i.section, n && (cur.videoLocBeforeSearch = o), c && (cur.videoSearchStr = "",
+                    cur.videoSearchFilters = {}, Video.doSearch(), cur.videoLocBeforeSearch && t.fromSearch)) {
+                var u = clone(cur.videoLocBeforeSearch);
+                return delete cur.videoLocBeforeSearch, nav.go(u), !1
             }
-            var l = e.section === !1 ? "all" : e.section;
-            if (a || d || e.section || (l = "all"), -1 != Video.AVAILABLE_TABS.indexOf(l)) {
-                if (Video._isAlbumSection() || "upload" == o.section) return nav.setLoc(i), !0;
+            trim(val(cur.searchInputEl)) != trim(i.q || "") && val(cur.searchInputEl, trim(i.q || ""));
+            var _ = i.section || "all";
+            if (i.q) Video.isInAlbum() || delete i.section, Video._prepareSearchFilters(i), cur.videoSearchStr = val(cur.searchInputEl), Video.doSearch();
+            else {
+                if (-1 == Video.AVAILABLE_TABS.indexOf(_)) return !0;
+                if (Video.isInAlbum(o.section)) return nav.setLoc(i), !0;
                 each(Video.AVAILABLE_TABS, function(e, o) {
                     hide("video_subtab_pane_" + o)
-                }), show("video_subtab_pane_" + l), Video.updateEmptyPlaceholder(l);
-                var u = domFC(ge("video_tab_" + l));
-                if (u) uiTabs.switchTab(u);
-                else {
-                    var _ = geByClass1("ui_tab_sel", geByClass1("_video_default_tabs"));
-                    removeClass(_, "ui_tab_sel")
-                }
-                "albums" != l ? (Video.loadSilent(l), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[l] || "default", !0), show("video_sort_dd_wrap")) :
-                    hide("video_sort_dd_wrap"), Video._createSorters(l), uiTabs.hideProgress("video_main_tabs")
+                }), show("video_subtab_pane_" + _), Video.updateEmptyPlaceholder(_);
+                var v = domFC(ge("video_tab_" + _));
+                v && uiTabs.switchTab(v, {
+                    noAnim: t.hist
+                }), "albums" != _ ? (Video.loadSilent(_), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[_] || "default", !0), show(
+                    "video_sort_dd_wrap")) : hide("video_sort_dd_wrap"), Video._createSorters(_)
             }
-            return nav.setLoc(i), !1
+            return nav.setLoc(i), !1;
+            var _, v
         }), cur.destroy.push(function() {
             cur.nav.pop()
         })
@@ -247,7 +247,7 @@ var Video = {
             hash: cur.videoSortHash
         })
     },
-    _buildCurrentFilters: function(e) {
+    _prepareSearchFilters: function(e) {
         return cur.videoSearchFilters = {}, each(Video.SEARCH_FILTERS, function(o, i) {
             cur.videoSearchFilters[i] = e[i]
         }), cur.videoSearchFilters
@@ -302,18 +302,18 @@ var Video = {
     loadSilent: function(e) {
         e = e || "all";
         var o = cur.getOwnerId(),
-            i = Video._isAlbumSection(e);
+            i = Video.isInAlbum(e);
         if ((i || this._isGeneralSection(e)) && "albums" != e) {
             cur.silentLoadingProgress = cur.silentLoadingProgress || {}, cur.silentLoadingProgress[o] = cur.silentLoadingProgress[o] || {}, cur.silentLoaded = cur.silentLoaded ||
                 {}, cur.silentLoaded[o] = cur.silentLoaded[o] || {};
             var t = cur.silentLoadingProgress[o][e];
-            return t === !1 || t === !0 ? void Video._callPendingAction(e) : void("undefined" == typeof t && (cur.silentLoadingProgress[o][e] = !0, function(e) {
+            if (t !== !0) return t === !1 ? void Video._callPendingAction(e) : void("undefined" == typeof t && (cur.silentLoadingProgress[o][e] = !0, function(e) {
                 function i(i, t) {
-                    cur.silentLoadingProgress && cur.silentLoadingProgress[o] && (cur.silentLoadingProgress[o][e] = !1, i && (i.length && (cur.indexIndex = i[0]
-                            .length), Video._reindex(i), cur.silentLoaded[o][e] = i), t && (cur.albumsPreload[o] = !1, cur.silentLoaded[o].albums = t),
-                        Video.indexItems(function() {
-                            cur.silentLoadingProgress && (Video._callPendingAction(e), t && Video._callPendingAction("albums"), Video.showMore(e))
-                        }))
+                    cur.silentLoadingProgress && cur.silentLoadingProgress[o] && (cur.silentLoadingProgress[o][e] = !1, i && (i.length && (cur.indexIndex =
+                        i[0].length), Video._reindex(i), cur.silentLoaded[o][e] = i), t && (cur.albumsPreload[o] = !1, cur.silentLoaded[o].albums =
+                        t), Video.indexItems(function() {
+                        cur.silentLoadingProgress && (Video._callPendingAction(e), t && Video._callPendingAction("albums"), Video.showMore(e))
+                    }))
                 }
 
                 function t() {
@@ -377,35 +377,30 @@ var Video = {
             }))
         })
     },
-    _toggleSearchPageTitle: function(e) {
-        e ? (cur.prevVideoPageTitle || (cur.prevVideoPageTitle = document.title), document.title = getLang("video_title_search")
-            .replace("{q}", e)) : cur.prevVideoPageTitle && (document.title = cur.prevVideoPageTitle)
+    _updateSearchPageTitle: function(e) {
+        curBox() || (e ? (cur.prevVideoPageTitle || (cur.prevVideoPageTitle = document.title), document.title = getLang("video_title_search")
+            .replace("{q}", e)) : cur.prevVideoPageTitle && (document.title = cur.prevVideoPageTitle))
     },
     doSearch: function(e) {
-        if (cur.searchInputEl && (e = trim(e), e != cur.curSearchStr)) {
-            cur.searchText = e, Video._initScrollFixedSearch(!!e);
-            var o = geByClass1("video_search_input");
-            each(Video.SEARCH_FILTERS, function(e, i) {
-                var t = Video._setFilterSelector(i, cur.videoSearchFilters[i]);
-                uiSearch.toggleFilter(o, i, t[1], !t[2])
-            });
-            var i = gpeByClass("_wrap", cur.searchInputEl);
-            toggleClass(i, "ui_search_field_empty", !cur.searchText), Video._toggleSearchProgress(!!e), each([Video.VIDEO_SEARCH_TYPE, Video.VIDEO_GLOBAL_SEARCH_TYPE,
-                    Video.ALBUM_SEARCH_TYPE
-                ], function(e, o) {
-                    hide("video_subtab_pane_" + o)
-                }), hide("videocat_other_blocks"), curBox() ? ge("box_layer_wrap")
-                .scrollTop = 0 : scrollToTop(1e3);
-            var t = Video._isAlbumSection(),
-                r = t ? Video.getLoc()
-                .section : "all",
-                d = cur.getOwnerId();
-            if (Video._clearPendingAction(r), Video._toggleSearchPageTitle(e), e && !cur.silentLoaded[d][r]) return Video._addPendingAction(r, function() {
-                Video._searchLocally(e), Video._searchGlobally(e), Video._toggleSearchProgress(!1)
-            }), void Video._searchGlobally(e);
-            var a = Video._searchLocally(e);
-            e && 9 > a && Video._searchGlobally(e)
-        }
+        var o = trim(e ? e : cur.videoSearchStr);
+        each(Video.SEARCH_FILTERS, function(e, o) {
+            var i = Video._setFilterSelector(o, cur.videoSearchFilters[o]);
+            uiSearch.toggleFilter(cur.searchInputEl, o, i[1], !i[2])
+        });
+        var i = gpeByClass("_wrap", cur.searchInputEl);
+        toggleClass(i, "ui_search_field_empty", !o), Video._toggleSearchProgress(!!o);
+        var t = [Video.VIDEO_SEARCH_TYPE, Video.ALBUM_SEARCH_TYPE];
+        cur.videoSearchOnlyGlobal = Video.isInCatalog(), cur.videoSearchOnlyGlobal || t.push(Video.VIDEO_GLOBAL_SEARCH_TYPE), each(t, function(e, o) {
+                hide("video_subtab_pane_" + o)
+            }), hide("videocat_other_blocks"), o || Video._toggleSearchContent(!1), curBox() ? ge("box_layer_wrap")
+            .scrollTop = 0 : scrollToTop(1e3);
+        var r = Video.isInAlbum(),
+            d = r ? Video.getLoc()
+            .section : "all";
+        Video._clearPendingAction(d), Video._updateSearchPageTitle(o), o && (cur.videoSearchOnlyGlobal ? Video._searchGlobally(o) : (Video._addPendingAction(d, function() {
+            var e = Video._searchLocally(o);
+            15 > e && Video._searchGlobally(o), Video._toggleSearchProgress(!1)
+        }), Video.loadSilent(d), Video._searchGlobally(o)))
     },
     _toggleSearchProgress: function(e) {
         cur.searchProgressRef = cur.searchProgressRef || 0, cur.searchProgressRef = Math.max(0, cur.searchProgressRef + (e ? 1 : -1)), e = cur.searchProgressRef > 0;
@@ -459,7 +454,8 @@ var Video = {
     _toggleEmptySearchPlaceholder: function(e, o) {
         var i = ge("video_empty_placeholder_search"),
             t = cur.getOwnerId() < 0 ? "video_not_found_group" : "video_not_found_user";
-        cur.getOwnerId() == vk.id && (t = "video_not_found_yours"), Video._isAlbumSection() && (t = "video_not_found_in_album"), i.innerHTML = getLang(t)
+        cur.getOwnerId() == vk.id && (t = "video_not_found_yours"), Video.isInAlbum() && (t = "video_not_found_in_album"), Video.isInCatalog() && (t =
+                "video_not_found_globally"), i.innerHTML = getLang(t)
             .replace("{searchText}", "<b>" + clean(o ? o.replace(/\$/g, "$$$$") : "") + "</b>"), toggle(i, e)
     },
     _toggleEmptyPlaceholder: function(e, o) {
@@ -475,7 +471,7 @@ var Video = {
                 case Video.ALBUM_SEARCH_TYPE:
                     t = "albums";
                 case Video.VIDEO_SEARCH_TYPE:
-                    t = t || "videos", r = Video._isAlbumSection() ? cur.lang["video_found_" + t + "_in_album"] : cur.getOwnerId() < 0 ? cur.lang["video_found_" + t +
+                    t = t || "videos", r = Video.isInAlbum() ? cur.lang["video_found_" + t + "_in_album"] : cur.getOwnerId() < 0 ? cur.lang["video_found_" + t +
                         "_community"] : cur.getOwnerId() == vk.id ? cur.lang["video_found_" + t + "_yours"] : cur.lang["video_found_" + t + "_of"];
                     break;
                 case Video.VIDEO_GLOBAL_SEARCH_TYPE:
@@ -489,45 +485,47 @@ var Video = {
     },
     _showGlobalSearchResults: function(e, o) {
         var i = e + Video._buildFiltersSearchStr(),
-            t = Video._getCurrentSectionType(),
-            r = cur.getOwnerId();
-        t = "album" == t ? Video.getLoc()
-            .section : "all";
-        var d = cur.silentLoaded[r][t];
-        if (cur.searchText == e && d && cur.globalSearchResults[i] && cur.globalSearchResults[i].count > 0) {
+            t = cur.getOwnerId(),
+            r = Video.isInAlbum() ? Video.getLoc()
+            .section : "all",
+            d = cur.silentLoaded[t][r];
+        if (cur.videoSearchOnlyGlobal && (Video._toggleSearchProgress(!1), Video._toggleSearchContent(!!e), Video._toggleEmptySearchPlaceholder(!1)), cur.videoSearchOnlyGlobal ||
+            cur.searchText == e && d && cur.globalSearchResults[i] && cur.globalSearchResults[i].count > 0) {
             var a = cur.globalSearchResults[i];
             cur.found[Video.VIDEO_GLOBAL_SEARCH_TYPE] = {
                 list: a.list,
                 count: a.count,
                 done: a.done,
                 realOffset: a.realOffset
-            }, !o && Video._showSearchResult(Video.VIDEO_GLOBAL_SEARCH_TYPE), Video._callPendingAction(Video.VIDEO_GLOBAL_SEARCH_TYPE)
+            }, o || Video._showSearchResult(Video.VIDEO_GLOBAL_SEARCH_TYPE), cur.videoSearchOnlyGlobal && Video._toggleEmptySearchPlaceholder(!a.count, e), Video._callPendingAction(
+                Video.VIDEO_GLOBAL_SEARCH_TYPE)
         }
     },
+    _toggleSearchContent: function(e) {
+        toggle("video_layout_contents", !e), toggle("video_layout_search", !!e)
+    },
     _searchLocally: function(e) {
-        if (cur.found = {}, Video._toggleSearchProgress(!1), toggle("video_layout_contents", !e), toggle("video_layout_search", !!e), e) {
-            var o = Video._getCurrentSectionType(),
-                i = cur.getOwnerId(),
-                t = [],
-                r = [];
-            "album" != o && cur.videoIndexes[i].albums && (r = cur.videoIndexes[i].albums.search(e), cur.found[Video.ALBUM_SEARCH_TYPE] = {
-                list: r,
-                count: r.length
-            }, Video._showSearchResult(Video.ALBUM_SEARCH_TYPE));
-            var d = "album" == o ? Video.getLoc()
-                .section : "all";
-            if (cur.videoIndexes[i][d]) {
-                var a = cur.videoIndexes[i][d].search(e);
-                each(a, function(e, o) {
-                    (!cur.videoSearchFilters.hd || o[VideoConstants.VIDEO_ITEM_INDEX_FLAGS] & VideoConstants.VIDEO_ITEM_FLAG_HD) && (vkNow() / 1e3 - o[
-                        VideoConstants.VIDEO_ITEM_INDEX_DATE] > cur.videoSearchFilters.date || t.push(o))
-                }), cur.found[Video.VIDEO_SEARCH_TYPE] = {
-                    list: t,
-                    count: t.length
-                }, Video._showSearchResult(Video.VIDEO_SEARCH_TYPE)
-            }
-            return r.length || t.length ? Video._toggleEmptySearchPlaceholder(!1) : Video._toggleEmptySearchPlaceholder(!0, e), t ? t.length : 0
+        if (cur.found = {}, Video._toggleSearchContent(!!e), !e || !cur.videoIndexes) return !1;
+        var o = cur.getOwnerId(),
+            i = [],
+            t = [];
+        !Video.isInAlbum() && cur.videoIndexes[o].albums && (t = cur.videoIndexes[o].albums.search(e), cur.found[Video.ALBUM_SEARCH_TYPE] = {
+            list: t,
+            count: t.length
+        }, Video._showSearchResult(Video.ALBUM_SEARCH_TYPE));
+        var r = Video.isInAlbum() ? Video.getLoc()
+            .section : "all";
+        if (cur.videoIndexes[o][r]) {
+            var d = cur.videoIndexes[o][r].search(e);
+            each(d, function(e, o) {
+                (!cur.videoSearchFilters.hd || o[VideoConstants.VIDEO_ITEM_INDEX_FLAGS] & VideoConstants.VIDEO_ITEM_FLAG_HD) && (vkNow() / 1e3 - o[VideoConstants.VIDEO_ITEM_INDEX_DATE] >
+                    cur.videoSearchFilters.date || i.push(o))
+            }), cur.found[Video.VIDEO_SEARCH_TYPE] = {
+                list: i,
+                count: i.length
+            }, Video._showSearchResult(Video.VIDEO_SEARCH_TYPE)
         }
+        return t.length || i.length ? Video._toggleEmptySearchPlaceholder(!1) : Video._toggleEmptySearchPlaceholder(!0, e), i ? i.length : 0
     },
     onItemEnter: function(e) {
         setTitle(e, e, e.innerHTML)
@@ -599,7 +597,7 @@ var Video = {
         e = e || Video._getCurrentSectionType();
         var i = ge("video_" + e + "_list");
         if (i) {
-            var t = Video._isAlbumSection(e),
+            var t = Video.isInAlbum(e),
                 r = cur.getOwnerId();
             if ((t || -1 != Video.AVAILABLE_TABS.indexOf(e)) && !cur.silentLoaded[r][e]) return void(isButtonLocked(o) || (Video._addPendingAction(e, function() {
                 Video.showMore(e, o)
@@ -630,7 +628,7 @@ var Video = {
             }
         }
     },
-    _isAlbumSection: function(e) {
+    isInAlbum: function(e) {
         return 0 === (e || Video.getLoc()
                 .section || "")
             .indexOf("album_")
@@ -651,7 +649,7 @@ var Video = {
         return e = e || Video.getLoc(), "video" == e[0] && !e.section
     },
     _getCurrentSectionType: function() {
-        return cur.videoForcedSection ? cur.videoForcedSection : Video.isInCatalog() ? "catalog" : Video._isAlbumSection(Video.getLoc()
+        return cur.videoForcedSection ? cur.videoForcedSection : Video.isInCatalog() ? "catalog" : Video.isInAlbum(Video.getLoc()
                 .section) ? "album" : Video.getLoc()
             .section || "all"
     },
@@ -951,7 +949,7 @@ var Video = {
             var l = geByClass1("video_default_tabs", s.bodyNode),
                 u = geByClass1("video_subtab_pane_album", s.bodyNode),
                 _ = e.section ? e.section : "all";
-            Video._buildCurrentFilters(i);
+            Video._prepareSearchFilters(i);
             var v = e.section ? "" : i.q || val(cur.searchInputEl);
             if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)), _ = "search", Video.doSearch(v), a(), Video._updateChooseFixedBottom()) :
                 (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) d(), show("video_subtab_pane_" +

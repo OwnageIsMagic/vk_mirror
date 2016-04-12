@@ -2377,7 +2377,8 @@ function placeholderInit(e, t) {
         if (r) {
             var s = void 0 !== e.textContent ? e.textContent : e.innerText;
             s && browser.opera && s.match(/^[ ]+$/) && (s = ""), s || (s = geByTag("img", e)
-                .length)
+                .length > 0), s || (s = geByTag("br", e)
+                .length > 1)
         } else var s = e.value;
         a && s ? (hide(i), e.phshown = !1) : a || s || (show(i), e.phshown = !0, browser.opera && n && (e.setAttribute("placeholder", ""), e.removeAttribute("placeholder", "")))
     }
@@ -2409,8 +2410,8 @@ function placeholderInit(e, t) {
                 cur.__focused = a.focused = !1, u(!1, !0)
             }, a.phshown = !0, (a.value || i.editable && ((void 0 !== a.textContent ? a.textContent : a.innerText) || geByTag("img", a)
                 .length)) && (a.phshown = !1, hide(l)), browser.opera_mobile || (addEvent(l, "focus click", function(e) {
-                i.editableFocus ? (setTimeout(i.editableFocus.pbind(a), 0), a.phonfocus()) : (a.blur(),
-                    a.focus())
+                i.editableFocus ? (setTimeout(i.editableFocus.pbind(a), 0),
+                    a.phonfocus()) : (a.blur(), a.focus())
             }), addEvent(a, "focus" + (i.editable ? " click" : ""), a.phonfocus), addEvent(a, "keydown paste cut input", u)), addEvent(a, "blur", a.phonblur), a.check = u, a.phevents = !
             0, a.phonsize = function() {}, i.global || i.reload || (cur.__phinputs || (cur.__phinputs = [], cur.destroy.push(function() {
                 if (cur.__phinputs)
@@ -3577,7 +3578,7 @@ function revertLastInlineVideo(e) {
 function pauseLastInlineVideo() {
     if (_videoLastInlined) {
         var e = ge("video_player") || window.html5video || null;
-        e && e.playVideo && e.playVideo(!1)
+        e && e.playVideo && e.playVideo(!1);
     }
 }
 
@@ -3753,11 +3754,11 @@ function animateCount(e, t, o) {
 }
 
 function topHeaderClose(e) {
-    cur.headerDestroy && cur.headerDestroy(), cur.headerDestroy = e
+    window.headerDestroy && window.headerDestroy(), window.headerDestroy = e
 }
 
 function topHeaderClearClose() {
-    delete cur.headerDestroy
+    delete window.headerDestroy
 }
 
 function mentionOver(e, t) {
@@ -6004,12 +6005,13 @@ TopMenu = {
     },
     toggle: function(e) {
         var t = ge("top_profile_link"),
-            o = ge("top_profile_menu");
-        void 0 === e && (e = !hasClass(o, "shown")), toggleClass(t, "active", e), toggleClass(o, "shown", e), browser.msie8 && (setStyle(o, {
+            o = ge("top_profile_menu"),
+            n = hasClass(o, "shown");
+        (void 0 === e || n != e) && (void 0 === e && (e = !n), toggleClass(t, "active", e), toggleClass(o, "shown", e), browser.msie8 && (setStyle(o, {
             display: "table"
         }), setTimeout(setStyle.pbind(o, {
             display: ""
-        }), 0)), e ? topHeaderClose(TopMenu.toggle.bind(this, !1)) : topHeaderClearClose()
+        }), 0)), e ? topHeaderClose(TopMenu.toggle.bind(this, !1)) : topHeaderClearClose())
     },
     show: function() {
         TopMenu.hidetimer && (clearTimeout(TopMenu.hidetimer), TopMenu.hidetimer = 0), TopMenu.toggle(!0)

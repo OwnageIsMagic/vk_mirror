@@ -2,7 +2,8 @@ function OList(t, e, i, s) {
     0 === i.length && (i = {}), s = s || {}, this.indexer = new vkIndexer(e, s.getName ? s.getName : function(t) {
             return t[1]
         }), this.owners = e, this.tpl = s.tpl, this.rsTpl = s.rsTpl, this.idIndex = s.idIndex || 0, this.selected = i, this.getUnsorted = s.getUnsorted, this.unsortedIndex = s.unsortedIndex ||
-        0, this.box = t, this.filter = s.filter, s.onTabUpdate && (this.onTabUpdate = s.onTabUpdate), t.setButtons(getLang("global_save"), function(i) {
+        0, this.box = t, this.filter = s.filter, s.onTabUpdate && (this.onTabUpdate = s.onTabUpdate), s.onListClick && (this.onListClick = s.onListClick), t.setButtons(getLang(
+            "global_save"), function(i) {
             var n = {},
                 r = [],
                 l = [];
@@ -306,7 +307,7 @@ var uiTabs = {
             removeClass(e, "ui_search_loading")
         },
         scrollResize: function(t) {
-            if (!browser.mobile && !t.ignoreFixed) {
+            if (!browser.mobile) {
                 t = uiSearch.getFieldEl(t);
                 var e, i = uiSearch.getWrapEl(t),
                     s = i && domPN(i),
@@ -314,7 +315,7 @@ var uiTabs = {
                     n = cur.uiSearchPageBlock || gpeByClass("page_block", t),
                     r = getSize(ge("page_header"))[1] || 0,
                     l = i && isAncestor(i, boxLayerWrap);
-                if (i && s && (l || gpeByClass("scroll_fix", i))) {
+                if (i && s && (l || gpeByClass("scroll_fix", i)) && (!t.ignoreFixed || o)) {
                     var a = l ? getXY(s, !0)[1] < 0 : getXY(s, !0)[1] < ge("page_header_cont")
                         .offsetHeight;
                     if (a) {
@@ -782,7 +783,7 @@ window.Scrollbar = window.Scrollbar || function() {
             var i = e.id.match(/-?\d+/)[0],
                 s = !this.invertedSelection && this.selected[i] || this.invertedSelection && !this.selected[i];
             if (toggleClass(e, "olist_item_wrap_on", !s), this.selected[i] = !s || this.invertedSelection, this.selCnt += !s || this.invertedSelection ? 1 : -1, this.selTabUpdate(),
-                this.scrollNode.scrollTop < 50) {
+                this.onListClick && this.onListClick(e, s), this.scrollNode.scrollTop < 50) {
                 var o = this.filter;
                 setTimeout(elfocus.pbind(o), 100)
             }
