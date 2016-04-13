@@ -1031,6 +1031,10 @@
     visibility: hidden
 }
 
+.feedback_sticky_actions .feedback_sticky_menu:last-child .ui_actions_menu {
+    display: none
+}
+
 .feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu,
 .ui_actions_menu_dummy_wrap.feedback_sticky_menu .ui_actions_menu {
     position: relative;
@@ -1130,6 +1134,10 @@
 
 .top_notify_cont .feedback_row:hover {
     background-color: rgba(247, 248, 250, .5)
+}
+
+.top_notify_cont .feedback_row.unread:hover {
+    background-color: #f0f3f7
 }
 
 .feedback_row_answer {

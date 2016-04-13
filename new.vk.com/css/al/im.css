@@ -5105,7 +5105,9 @@ span#im_important_count {
     border-color: transparent
 }
 
+.nim-dialog.nim-dialog.nim-dialog_selected.nim-dialog_hovered,
 .nim-dialog.nim-dialog.nim-dialog_selected:hover,
+.nim-dialog.nim-dialog_hovered+.nim-dialog.nim-dialog_selected,
 .nim-dialog:hover+.nim-dialog.nim-dialog_selected {
     border-top: solid 1px #7293b6
 }

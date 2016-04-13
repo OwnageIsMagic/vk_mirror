@@ -385,7 +385,7 @@ body.dev input.dev_top_input {
     border-radius: 14px;
     -o-transition: background-color 0.05s, color 0.05s;
     transition: background-color 0.05s, color 0.05s;
-    background: #4b6d94 url(/images/icons/dev_head_magglass.png) no-repeat;
+    background: #47698f url(/images/icons/dev_head_magglass.png) no-repeat;
     padding-left: 19px;
     border-left: 8px solid transparent;
     background-position: left 8px;
@@ -464,7 +464,7 @@ input.dev_wide_input~.placeholder .ph_content,
 .dev_home_link:before {
     content: ' ';
     display: inline-block;
-    background: url(/images/icons/head_icons.png) no-repeat;
+    background: url(/images/icons/head_icons.png?1) no-repeat;
     background-position: 0px -98px;
     height: 19px;
     width: 32px;

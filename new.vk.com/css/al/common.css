@@ -1391,7 +1391,7 @@ div#utils {
 }
 
 .top_home_link .top_home_logo {
-    background: url(/images/icons/head_icons.png) no-repeat;
+    background: url(/images/icons/head_icons.png?1) no-repeat;
     background-position: 0 -98px;
     height: 19px;
     width: 32px;
@@ -1432,7 +1432,7 @@ div#utils {
 
 .top_nav_btn .top_nav_btn_icon {
     margin: 13px auto 12px;
-    background: url(/images/icons/head_icons.png) no-repeat;
+    background: url(/images/icons/head_icons.png?1) no-repeat;
     height: 20px;
     width: 20px
 }
@@ -4359,7 +4359,7 @@ input.text.ts_input {
     border-radius: 14px;
     -o-transition: background-color 0.05s, color 0.05s;
     transition: background-color 0.05s, color 0.05s;
-    background: #4b6d94 url(/images/icons/dev_head_magglass.png) no-repeat;
+    background: #47698f url(/images/icons/dev_head_magglass.png) no-repeat;
     padding-left: 19px;
     border-left: 8px solid transparent;
     background-position: left 8px;
@@ -5513,7 +5513,7 @@ button.ui_load_more_btn {
 .top_audio_player .top_audio_player_btn>div {
     width: 14px;
     height: 14px;
-    background-image: url(/images/icons/head_icons.png);
+    background-image: url(/images/icons/head_icons.png?1);
     opacity: 0.65;
     -o-transition: opacity 60ms linear;
     transition: opacity 60ms linear
@@ -5583,7 +5583,8 @@ button.ui_load_more_btn {
 }
 
 .audios_module .audio_row.inlined,
-.wall_audio_rows .audio_row.inlined {
+.wall_audio_rows .audio_row.inlined,
+.wall_text .audio_row.inlined {
     margin: 0 -8px
 }
 

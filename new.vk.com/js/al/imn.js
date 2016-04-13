@@ -734,7 +734,7 @@
                 .mutedPeers)), toggleClass(geByClass1("_im_peer_online", e), "nim-peer_online", !!t.online), t.unread > 0 && s & q.eventTypes.FLAG_UNREAD && addClass(e,
                 "nim-dialog_unread"), -1 === i.messageId && addClass(e, "nim-dialog_empty"), s & q.eventTypes.FLAG_UNREAD && s & q.eventTypes.FLAG_OUTBOUND && !(0, j.isSelfMessage)
             (t.peerId) && addClass(e, "nim-dialog_unread-out"), a && setTimeout(function() {
-                addClass(geByClass1("_im_dialog_" + t.peerId), "nim-dialog_injected")
+                addClass(geByClass1("_im_dialog_" + t.peerId, r), "nim-dialog_injected")
             }, 100)
     }
 
@@ -926,7 +926,7 @@
             },
             appendDialogs: function(t, n) {
                 removeClass(e.parentNode, "im-page--dialogs_with-mess"), n.forEach(function(n) {
-                    var r = geByClass1("_im_dialog_" + n.peerId);
+                    var r = geByClass1("_im_dialog_" + n.peerId, e);
                     r && p(r, n, t, e, !0)
                 }), n = P(n), s.pipe(Promise.resolve(n))
             },
@@ -8269,8 +8269,8 @@
             I = b.bind(null, t, r, e, o, m, n),
             M = C.bind(null, t, r, e, o, m, n),
             N = geByClass1(O, e);
-        return addEvent(N, "click", _), addEvent(N, "mouseover", T), addEvent(geByClass1()), addEvent(geByClass1(R, e), "click", k), addEvent(geByClass1(H, e), "click", I),
-            addEvent(geByClass1(U, e), "click", M), (0, L.addDelegateEvent)(e, "click", F, w), E(e, n, _, o, w, r, m, I, M)
+        return addEvent(N, "click", _), addEvent(N, "mouseover", T), addEvent(geByClass1(R, e), "click", k), addEvent(geByClass1(H, e), "click", I), addEvent(geByClass1(U,
+            e), "click", M), (0, L.addDelegateEvent)(e, "click", F, w), E(e, n, _, o, w, r, m, I, M)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0

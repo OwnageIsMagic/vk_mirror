@@ -430,11 +430,13 @@ var GroupsList = {
         }
     },
     extendedSearch: function(r, s) {
-        var e = geByClass1("groups_section_search");
-        if (window.searcher && e) {
-            var o = searcher.getSectionParams();
-            o["c[category]"] ? (uiRightMenu.switchMenu(e), uiRightMenu.showProgress(e), nav.go(e.href + "&c[q]=" + s)) : searcher.onEnter()
-        } else nav.go("/groups?act=catalog&c[q]=" + s)
+        clearTimeout(cur.searchTimeout), cur.searchTimeout = setTimeout(function() {
+            var r = geByClass1("groups_section_search");
+            if (window.searcher && r) {
+                var e = searcher.getSectionParams();
+                e["c[category]"] ? (uiRightMenu.switchMenu(r), uiRightMenu.showProgress(r), nav.go(r.href + "&c[q]=" + s)) : searcher.onEnter()
+            } else nav.go("/groups?act=catalog&c[q]=" + s)
+        }, 500)
     },
     extendWithAdvancedParams: function(r) {
         return cur.isAdvancedSearch ? extend(r || {}, {

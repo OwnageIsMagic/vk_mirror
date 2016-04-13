@@ -239,7 +239,7 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
     }, GridSorter.prototype._getContSize = function() {
         return this._contInfo = this._contInfo || {}, this._contInfo.size = getSize(this._contEl), this._contInfo.size
     }, GridSorter.prototype._getContPos = function() {
-        return this._contInfo = this._contInfo || {}, this._contInfo.pos = getXY(this._contEl), this._contInfo.pos[1] -= bodyNode.scrollTop, this._contInfo.pos
+        return this._contInfo = this._contInfo || {}, this._contInfo.pos = getXY(this._contEl), this._contInfo.pos[1] -= scrollGetY(), this._contInfo.pos
     }, GridSorter.prototype._getItemShift = function() {
         if (this._contInfo = this._contInfo || {}, !this._contInfo.itemShift) {
             var t = window.getComputedStyle(domFC(this._contEl));
@@ -267,97 +267,101 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
         return this._wrapNodeHeight = this._wrapNodeHeight || getSize(t)[1]
     }, GridSorter.prototype._onMouseMove = function(t) {
         function e() {
-            return i.options.wrapNode ? i.options.wrapNode.scrollTop : scrollGetY()
+            return o.options.wrapNode ? o.options.wrapNode.scrollTop : scrollGetY()
         }
-        var i = this;
+
+        function i(t) {
+            o.options.wrapNode ? o.options.wrapNode.scrollTop = t : scrollToY(t, 0, !1, !0)
+        }
+        var o = this;
         if (this._curDragEl) {
             this._ensureGridIsActual();
-            var o = !t;
+            var r = !t;
             e();
-            o && (t = {
+            r && (t = {
                 clientX: this._lastMousePos.x,
                 clientY: this._lastMousePos.y
             }), this._lastMousePos = {
                 x: t.clientX,
                 y: t.clientY
             }, this._updateDraggablePosition(t);
-            var r = (this._getContShift(), this._getContSize()),
-                s = this._getContPos(),
-                l = this._getRelativeMousePos(t),
-                n = !1,
-                h = l.left > 0 && l.left < r[0] && l.top > 0 && l.top < r[1];
-            if (h)
-                for (var a, _ = 0, d = this._grid.length - 1, c = 50; c;) {
-                    var g = _ + Math.floor((d - _) / 2);
-                    if (a = this._grid[g], l.left > a.pos[0] && l.top > a.pos[1] && l.left < a.pos[0] + a.size[0] && l.top < a.pos[1] + a.size[1]) {
-                        n = a;
+            var s = (this._getContShift(), this._getContSize()),
+                l = this._getContPos(),
+                n = this._getRelativeMousePos(t),
+                h = !1,
+                a = n.left > 0 && n.left < s[0] && n.top > 0 && n.top < s[1];
+            if (a)
+                for (var _, d = 0, c = this._grid.length - 1, g = 50; g;) {
+                    var u = d + Math.floor((c - d) / 2);
+                    if (_ = this._grid[u], n.left > _.pos[0] && n.top > _.pos[1] && n.left < _.pos[0] + _.size[0] && n.top < _.pos[1] + _.size[1]) {
+                        h = _;
                         break
                     }
-                    if (_ == d) break;
-                    l.top < a.pos[1] || l.left < a.pos[0] && l.top < a.pos[1] + a.size[1] ? d = d == g ? d - 1 : g : _ = _ == g ? _ + 1 : g, c--
+                    if (d == c) break;
+                    n.top < _.pos[1] || n.left < _.pos[0] && n.top < _.pos[1] + _.size[1] ? c = c == u ? c - 1 : u : d = d == u ? d + 1 : u, g--
                 } else {
-                    for (var u, p, f, v, E = 999999, S = 0, m = this._grid.length; m > S; S++) {
-                        var a = this._grid[S];
-                        f = l.left - (a.pos[0] + a.size[0] / 2), v = l.top - (a.pos[1] + a.size[1] / 2), p = f * f + v * v, E > p && (E = p, u = a)
+                    for (var p, f, v, E, S = 999999, m = 0, y = this._grid.length; y > m; m++) {
+                        var _ = this._grid[m];
+                        v = n.left - (_.pos[0] + _.size[0] / 2), E = n.top - (_.pos[1] + _.size[1] / 2), f = v * v + E * E, S > f && (S = f, p = _)
                     }
-                    n = u
-                }!n || this._curOverCell && this._curOverCell.el == n.el || (this._curOverCell = n, this._recalc());
-            var y, C, D, I, P = 0;
-            if (this.options.wrapNode) y = I = this.options.wrapNode, C = getSize(y), D = getXY(y), D[1] -= bodyNode.scrollTop, P = t.clientY;
+                    h = p
+                }!h || this._curOverCell && this._curOverCell.el == h.el || (this._curOverCell = h, this._recalc());
+            var C, D, I, P, G = 0;
+            if (this.options.wrapNode) C = P = this.options.wrapNode, D = getSize(C), I = getXY(C), I[1] -= e(), G = t.clientY;
             else {
-                var G = window,
-                    p = document,
-                    z = p.documentElement,
-                    b = p.getElementsByTagName("body")[0],
-                    T = G.innerWidth || z.clientWidth || b.clientWidth,
-                    M = G.innerHeight || z.clientHeight || b.clientHeight;
-                I = G.bodyNode, y = G, C = [T, M], D = [0, 0], P = t.clientY
+                var z = window,
+                    f = document,
+                    w = f.documentElement,
+                    M = f.getElementsByTagName("body")[0],
+                    b = z.innerWidth || w.clientWidth || M.clientWidth,
+                    T = z.innerHeight || w.clientHeight || M.clientHeight;
+                P = z.bodyNode, C = z, D = [b, T], I = [0, 0], G = t.clientY
             }
-            var w = Math.max(20, C[1] / 10),
-                O = (D[1] > s[1], D[1] + C[1] < s[1] + r[1], D[1] + w - P),
-                L = w - (C[1] - P);
-            if (L > 0 || O > 0) {
+            var O = Math.max(20, D[1] / 10),
+                L = (I[1] > l[1], I[1] + D[1] < l[1] + s[1], I[1] + O - G),
+                N = O - (D[1] - G);
+            if (N > 0 || L > 0) {
                 this._isCurrentlyAutoScroll = !0;
-                var N = Math.min(1, O / w),
-                    x = Math.min(1, L / w);
+                var Y = Math.min(1, L / O),
+                    x = Math.min(1, N / O);
                 if (!this._autoScrollTO) {
-                    I.scrollHeight - C[1];
+                    P.scrollHeight - D[1];
                     this._autoScrollTO = setTimeout(function() {
-                        i._autoScrollTO = !1;
-                        var t = I.scrollTop;
-                        I.scrollTop += 16 * (N > 0 ? -N : x), t != I.scrollTop && (i._updateScrollbar(), i._onMouseMove())
+                        o._autoScrollTO = !1;
+                        var t = e();
+                        i(t + 16 * (Y > 0 ? -Y : x)), t != P.scrollTop && (o._updateScrollbar(), o._onMouseMove())
                     }, 20)
                 }
             } else this._isCurrentlyAutoScroll = !1;
             if (this.options.onDragOverElClass) {
-                var Y = t.target;
-                hasClass(Y, this.options.onDragOverElClass) || (Y = gpeByClass(this.options.onDragOverElClass, Y)) ? this._overEl != Y && (this._overEl && this.options.onDragLeave &&
-                    this.options.onDragLeave(this._overEl, this._curDragEl), this.options.onDragEnter && this.options.onDragEnter(Y, this._curDragEl), this._overEl = Y) : (
+                var F = t.target;
+                hasClass(F, this.options.onDragOverElClass) || (F = gpeByClass(this.options.onDragOverElClass, F)) ? this._overEl != F && (this._overEl && this.options.onDragLeave &&
+                    this.options.onDragLeave(this._overEl, this._curDragEl), this.options.onDragEnter && this.options.onDragEnter(F, this._curDragEl), this._overEl = F) : (
                     this._overEl && this.options.onDragLeave && this.options.onDragLeave(this._overEl, this._curDragEl), this._overEl = null)
             }
         } else if (this._dist(t) > this.options.dragThreshold) {
             this._curDragEl = this._initial.candidateEl;
-            for (var S = 0, m = this._grid.length; m > S; S++)
-                if (this._grid[S].el == this._curDragEl) {
-                    this._curDragCellIndex = S;
+            for (var m = 0, y = this._grid.length; y > m; m++)
+                if (this._grid[m].el == this._curDragEl) {
+                    this._curDragCellIndex = m;
                     break
                 }
             this.options.dragCls && addClass(this._curDragEl, this.options.dragCls);
-            var F = getSize(this._curDragEl),
-                A = getXY(this._curDragEl),
-                R = window.getComputedStyle(this._curDragEl),
-                s = this._getContPos();
+            var A = getSize(this._curDragEl),
+                R = getXY(this._curDragEl),
+                H = window.getComputedStyle(this._curDragEl),
+                l = this._getContPos();
             this._initial.hasInlineSize = !(!this._curDragEl.style.width && !this._curDragEl.style.height), setStyle(this._curDragEl, {
-                width: F[0],
-                height: F[1]
+                width: A[0],
+                height: A[1]
             }), this._initialCurDragPos = {
-                left: A[0] - s[0],
-                top: A[1] - s[1] - bodyNode.scrollTop
+                left: R[0] - l[0],
+                top: R[1] - l[1] - bodyNode.scrollTop
             }, this._curPlaceholderEl = ce("div", {
                 className: "ui_gridsorter_placeholder"
             }), setStyle(this._curPlaceholderEl, {
-                width: F[0] + parseFloat(R.marginLeft) + parseFloat(R.marginRight),
-                height: F[1] + parseFloat(R.marginTop) + parseFloat(R.marginBottom)
+                width: A[0] + parseFloat(H.marginLeft) + parseFloat(H.marginRight),
+                height: A[1] + parseFloat(H.marginTop) + parseFloat(H.marginBottom)
             }), this._contEl.insertBefore(this._curPlaceholderEl, this._curDragEl), addClass(this._curDragEl, "ui_gridsorter_moveable"), addClass(this._curDragEl,
                 "ui_gridsorter_moveable_notrans"), addClass(this._contEl, "ui_gridsorter_cont"), this._onMouseMove(t), this._updateDraggablePosition(t)
         }
