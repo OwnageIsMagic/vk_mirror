@@ -381,7 +381,7 @@ var Dev = {
         re(e), show(t)
     },
     checkUploadUrl: function(e) {
-        return e && e.match(/^((https?:\/\/)?)(?:[a-z0-9\.]+\.)?(vkontakte\.ru|vk\.com)\//gi) ? !0 : !1
+        return e && e.match(/^((https?:\/\/)?)(?:[a-z0-9\.]+\.)?(vkontakte\.ru|vk\.com|vk\.me)\//gi) ? !0 : !1
     },
     wrapObject: function(e, t, r, a) {
         var s = "";

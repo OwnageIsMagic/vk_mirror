@@ -918,10 +918,12 @@
     background-color: #f5f7fa
 }
 
+.feedback_sticky_row.hover,
 .feedback_sticky_row:hover {
     background-color: rgba(247, 248, 250, .5)
 }
 
+.feedback_sticky_row.hover .feedback_sticky_menu,
 .feedback_sticky_row:hover .feedback_sticky_menu {
     opacity: 1;
     -webkit-filter: none;
@@ -1029,7 +1031,8 @@
     visibility: hidden
 }
 
-.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu {
+.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu,
+.ui_actions_menu_dummy_wrap.feedback_sticky_menu .ui_actions_menu {
     position: relative;
     position: absolute;
     top: 39px;
@@ -1037,7 +1040,9 @@
 }
 
 .feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu:after,
-.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu:before {
+.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu:before,
+.ui_actions_menu_dummy_wrap.feedback_sticky_menu .ui_actions_menu:after,
+.ui_actions_menu_dummy_wrap.feedback_sticky_menu .ui_actions_menu:before {
     position: absolute;
     pointer-events: none;
     border: solid transparent;
@@ -1048,21 +1053,31 @@
     right: 11.5px
 }
 
-.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu:before {
+.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu:before,
+.ui_actions_menu_dummy_wrap.feedback_sticky_menu .ui_actions_menu:before {
     border-width: 6px;
     margin: 0 -6px;
     border-bottom-color: #c5d0db
 }
 
-.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu:after {
+.feedback_sticky_actions .feedback_sticky_menu .ui_actions_menu:after,
+.ui_actions_menu_dummy_wrap.feedback_sticky_menu .ui_actions_menu:after {
     border-width: 5px;
     margin: 0 -5px;
     border-bottom-color: #fff
 }
 
-.feedback_sticky_actions .feedback_sticky_menu.shown .ui_actions_menu {
+.feedback_sticky_actions .feedback_sticky_menu.shown .ui_actions_menu,
+.ui_actions_menu_dummy_wrap.feedback_sticky_menu.shown .ui_actions_menu {
     top: 29px;
     z-index: 100
+}
+
+.ui_actions_menu_dummy_wrap.feedback_sticky_menu .ui_actions_menu {
+    top: 29px;
+    right: -3px;
+    -o-transition: none;
+    transition: none
 }
 
 .feedback_sticky_menu_icon {

@@ -1095,7 +1095,7 @@ extend(IdleManager.prototype, EventEmitter.prototype), extend(IdleManager.protot
                 h = 0,
                 f = o[0] - l,
                 p = o[1] - u,
-                v = browser.msie ? "selectstart" : "mousedown";
+                _ = browser.msie ? "selectstart" : "mousedown";
             a.options.fixed && FastChat.pinTab(a.options.peer || -1, t, !0), r || a.focus(t), a.toBottom ? (a.toBottom = !1, e = o[0] - intval(getStyle(a.wrap,
                 "bottom")) - l, setStyle(a.wrap, {
                 top: e,
@@ -1105,12 +1105,12 @@ extend(IdleManager.prototype, EventEmitter.prototype), extend(IdleManager.protot
                     left: i,
                     right: "auto"
                 })) : i = intval(getStyle(a.wrap, "left")), d = e, h = i, cur._fcdrag = 1;
-            var _ = function(t) {
+            var v = function(t) {
                     return d = Math.max(0, Math.min(f, e + t.pageY - n)), 10 > f - d ? d = f : 10 > d && (d = 0), a.wrap.style.top = d + "px", h = Math.max(0, Math.min(
                         p, i + t.pageX - c)), 10 > p - h ? h = p : 10 > h && (h = 0), a.wrap.style.left = h + "px", cancelEvent(t)
                 },
                 m = function(t) {
-                    cur._fcdrag = 0, removeEvent(document, "mousemove", _), removeEvent(document, "mouseup", m), removeEvent(document, v, cancelEvent), setStyle(
+                    cur._fcdrag = 0, removeEvent(document, "mousemove", v), removeEvent(document, "mouseup", m), removeEvent(document, _, cancelEvent), setStyle(
                         bodyNode, "cursor", ""), setStyle(s, "cursor", ""), (a.toBottom = d >= f - 5) && (setStyle(a.wrap, {
                         top: "auto",
                         bottom: 0
@@ -1123,7 +1123,7 @@ extend(IdleManager.prototype, EventEmitter.prototype), extend(IdleManager.protot
                     cur._fcpromo > 0 ? cur._fcpromo = e ? 0 : -1 : a.options.minimizer && e ? !a.minimized && r ? a.minimize(!0) : a.minimized && a.unminimize(!0) : a.options
                         .onDragEnd && a.options.onDragEnd(a.toBottom ? -1 : d / o[0], a.toRight ? -1 : h / o[1])
                 };
-            return addEvent(document, "mousemove", _), addEvent(document, "mouseup", m), addEvent(document, v, cancelEvent), setStyle(bodyNode, "cursor", "move"),
+            return addEvent(document, "mousemove", v), addEvent(document, "mouseup", m), addEvent(document, _, cancelEvent), setStyle(bodyNode, "cursor", "move"),
                 setStyle(s, "cursor", "move"), !1
         }
     },
@@ -1142,7 +1142,7 @@ extend(IdleManager.prototype, EventEmitter.prototype), extend(IdleManager.protot
                 h = a.resizeableH.clientHeight - intval(getStyle(a.resizeableH, "paddingBottom")) - intval(getStyle(a.resizeableH, "paddingTop")),
                 f = a.resizeableW.clientWidth - intval(getStyle(a.resizeableW, "paddingRight")) - intval(getStyle(a.resizeableW, "paddingLeft")),
                 p = browser.msie ? "selectstart" : "mousedown",
-                v = !browser.msie && a.options.onResize || !1;
+                _ = !browser.msie && a.options.onResize || !1;
             a.toBottom ? (a.toBottom = !1, e = o[0] - intval(getStyle(a.wrap, "bottom")) - c, setStyle(a.wrap, {
                 top: e,
                 bottom: "auto"
@@ -1151,15 +1151,15 @@ extend(IdleManager.prototype, EventEmitter.prototype), extend(IdleManager.protot
                     left: i,
                     right: "auto"
                 })) : i = intval(getStyle(a.wrap, "left")), a.options.onResizeStart && a.options.onResizeStart(h, f);
-            var _ = h + o[0] - e - c,
+            var v = h + o[0] - e - c,
                 m = f + o[1] - i - l,
                 g = function(t) {
-                    return u = Math.max(a.options.minH, Math.min(_, h + t.pageY - r)), 10 > _ - u && (u = _), a.resizeableH.style.height = u + "px", d = Math.max(a.options
-                        .minW, Math.min(m, f + t.pageX - n)), 10 > m - d && (d = m), a.resizeableW.style.width = d + "px", v && v(u, d), cancelEvent(t)
+                    return u = Math.max(a.options.minH, Math.min(v, h + t.pageY - r)), 10 > v - u && (u = v), a.resizeableH.style.height = u + "px", d = Math.max(a.options
+                        .minW, Math.min(m, f + t.pageX - n)), 10 > m - d && (d = m), a.resizeableW.style.width = d + "px", _ && _(u, d), cancelEvent(t)
                 },
                 C = function(t) {
                     removeEvent(document, "mousemove", g), removeEvent(document, "mouseup", C), removeEvent(document, p, cancelEvent), setStyle(bodyNode, "cursor", ""),
-                        setStyle(s, "cursor", ""), (a.toBottom = u == _) && (setStyle(a.wrap, {
+                        setStyle(s, "cursor", ""), (a.toBottom = u == v) && (setStyle(a.wrap, {
                             top: "auto",
                             bottom: 0
                         }), addClass(a.wrap, "fc_tobottom")), (a.toRight = d == m) && setStyle(a.wrap, {
@@ -2869,17 +2869,17 @@ extend(IdleManager.prototype, EventEmitter.prototype), extend(IdleManager.protot
                     (c = this.box && this.box.pos) && e != t && c[0] + c[2] > n && r.push([c[1], c[1] + c[3]])
                 });
                 var d, h, f, p = lastWindowWidth - 262 - sbWidth(),
-                    v = 0,
-                    _ = !1,
+                    _ = 0,
+                    v = !1,
                     m = !1,
-                    g = v > p ? 1 : -1;
-                for (d = p; g * v > g * d; d += 135 * g) {
+                    g = _ > p ? 1 : -1;
+                for (d = p; g * _ > g * d; d += 135 * g) {
                     for (h = 0, f = 0; f < r.length; f++) d > r[f][0] - 260 && d < r[f][1] && h++, d > r[f][0] - 10 && d < r[f][0] + 10 && (h += 1.1);
-                    (_ === !1 || m > h) && (_ = d, m = h)
+                    (v === !1 || m > h) && (v = d, m = h)
                 }
-                l && m && (_ = p), extend(opts, {
+                l && m && (v = p), extend(opts, {
                     startBottom: 0,
-                    startLeft: _
+                    startLeft: v
                 })
             }
             var C, b = !0;
@@ -3345,7 +3345,7 @@ var DesktopNotifications = {
                 }), TopNotifier.loaded = !0), addClass(this.tnLink, "active");
                 var s = window.innerHeight || document.documentElement.clientHeight;
                 return setStyle(i, {
-                    maxHeight: Math.max(s - 200, 400)
+                    maxHeight: Math.max(s - 200, 300)
                 }), TopNotifier.refresh(), t !== !0 && topHeaderClose(TopNotifier.hide.bind(this)), t ? cancelEvent(t) : !1
             }
         },
@@ -3452,6 +3452,17 @@ var DesktopNotifications = {
                 if (!i || i == t || i.onclick || i.onmousedown || inArray(i.tagName, ["A", "IMG", "TEXTAREA", "EMBED", "OBJECT"]) || (s = i.className.match(o))) break;
             while (a-- && (i = i.parentNode));
             return s ? i || !0 : !1
+        },
+        showActionsMenu: function(t) {
+            var e = !1;
+            row = domClosest("_feed_row", t), rowPN = domPN(row), rowPN.lastChild != row || hasClass(rowPN, "feedback_sticky_rows") && domPN(rowPN)
+                .lastChild != rowPN || (e = {
+                    appendParentCls: "top_notify_wrap",
+                    processHoverCls: "feedback_sticky_row"
+                }), uiActionsMenu.show(t, !1, e)
+        },
+        hideActionsMenu: function(t) {
+            uiActionsMenu.hide(t)
         },
         showGiftBox: function(t, e) {
             return !showBox("al_gifts.php", {

@@ -3400,7 +3400,7 @@ span#im_important_count {
     color: #939699;
     position: absolute;
     font-size: 12px;
-    margin-top: 12px
+    margin-top: 8px
 }
 
 .im-page .im-page--lastact-w {
@@ -3412,9 +3412,9 @@ span#im_important_count {
 }
 
 .im-page .im-page--typing {
-    margin-left: 47px;
+    margin-left: 45px;
     display: none;
-    margin-top: 12px;
+    margin-top: 8px;
     position: absolute
 }
 
@@ -3458,7 +3458,6 @@ span#im_important_count {
     padding: 45px 0;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
-    box-shadow: 1px 0px 0px 0px #e4e6e9, 0 1px 0 0 #e1e8ed, 0 0 0 1px #e9eef2;
     position: relative;
     z-index: 10
 }
@@ -4729,6 +4728,7 @@ span#im_important_count {
     color: #777;
     text-align: center;
     cursor: default;
+    font-size: 12px;
     margin-left: 20px
 }
 
@@ -5271,7 +5271,7 @@ span#im_important_count {
     top: 50%;
     margin-top: -2px;
     background: hsla(210, 2%, 67%, .5);
-    left: 5px;
+    left: 7px;
     -webkit-animation: 1.1s linear 0s infinite typer;
     -o-animation: 1.1s linear 0s infinite typer;
     animation: 1.1s linear 0s infinite typer
@@ -5541,10 +5541,6 @@ span#im_important_count {
     position: relative
 }
 
-.im-member-item .im-member-item--photo {
-    margin-right: 20px
-}
-
 .im-member-item .im-member-item--invite {
     color: #65686c;
     font-size: 12px;
@@ -5601,7 +5597,12 @@ span#im_important_count {
 
 .im-member-item .im-member-item--photo {
     float: left;
-    overflow: hidden;
+    margin-right: 20px;
+    overflow: hidden
+}
+
+.im-member-item .im-member-item--photo,
+.im-member-item .im-member-item--photo img {
     width: 46px;
     height: 46px;
     border-radius: 50%

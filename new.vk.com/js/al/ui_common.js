@@ -112,11 +112,36 @@ var uiTabs = {
     },
     uiActionsMenu = {
         toggle: function(t, e) {
-            toggleClass(t, "shown", e)
+            var i = data(t, "dummyMenu");
+            i && (t = i), toggleClass(t, "shown", e)
         },
-        show: function(t, e) {
-            var i = data(t, "hidetimer");
-            i && (clearTimeout(i), data(t, "hidetimer", 0)), uiActionsMenu.toggle(t, !0)
+        show: function(t, e, i) {
+            var s = data(t, "hidetimer");
+            s && (clearTimeout(s), data(t, "hidetimer", 0));
+            var o = data(t, "origMenu");
+            if (o && (s = data(o, "hidetimer")) && (clearTimeout(s), data(t, "hidetimer", 0)), i && i.appendParentCls) {
+                var n = geByClass1("_ui_menu", t),
+                    r = domClosest("_ui_menu_wrap", t);
+                if (n) {
+                    var l = domClosest(i.appendParentCls, n),
+                        a = getXY(l),
+                        h = getXY(r),
+                        c = se('<div class="' + r.className +
+                            ' ui_actions_menu_dummy_wrap" onmouseover="uiActionsMenu.show(this);" onmouseout="uiActionsMenu.hide(this);"></div>');
+                    c.appendChild(n), l.appendChild(c), data(t, "dummyMenu", c), data(c, "origMenu", t), t = c;
+                    var u = intval(getStyle(n, "top")),
+                        d = intval(getStyle(n, "left")),
+                        p = intval(getStyle(n, "right")),
+                        v = {
+                            top: h[1] - a[1] + u
+                        };
+                    if (p ? v.right = getSize(l)[0] + a[0] - h[0] - getSize(r)[0] + p : v.left = h[0] - a[0] + d, setStyle(n, v), i.processHoverCls) {
+                        var g = domClosest(i.processHoverCls, r);
+                        addEvent(t, "mouseover", addClass.pbind(g, "hover")), addEvent(t, "mouseout", removeClass.pbind(g, "hover"))
+                    }
+                }
+            }
+            uiActionsMenu.toggle(t, !0)
         },
         hide: function(t, e) {
             var i = data(t, "hidetimer");
@@ -881,7 +906,7 @@ window.Scrollbar = window.Scrollbar || function() {
             var d = escapeRE(t),
                 p = parseLatin(t);
             null != p && (d = d + "|" + escapeRE(p));
-            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
+            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi");
         }
         var g = l.rsTpl ? l.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],

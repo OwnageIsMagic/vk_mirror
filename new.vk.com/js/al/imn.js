@@ -4902,8 +4902,7 @@
 
     function ne(e, t, n, r, a) {
         var i = e.get()
-            .peer,
-            s = 0;
+            .peer;
         cancelEvent(r), showBox("al_im.php", {
             act: "a_show_members_box",
             chat: i - 2e9
@@ -4913,11 +4912,11 @@
                 dark: 1
             },
             onDone: function(r, a) {
-                1 === s && (r.setControlsText('<button type="button" class="im-page-btn _im_invite_box">' + getLang("mail_im_create_chat_with") + "</button>"),
-                    (0, ce.addDelegateEvent)(r.bodyNode.parentNode, "click", "_im_invite_box", function() {
+                r.setControlsText('<button type="button" class="im-page-btn _im_invite_box">' + getLang("mail_im_create_chat_with") + "</button>"), (0, ce.addDelegateEvent)
+                    (r.bodyNode.parentNode, "click", "_im_invite_box", function() {
                         r.hide(), ae(e, e.get()
                             .peer, t, n)
-                    })), s++
+                    })
             }
         }, r)
     }
@@ -6248,7 +6247,7 @@
         S = "_im_chat_topic_change_input",
         k = "_im_chat_members",
         P = "_im_chat_verified",
-        I = '<a class="ui_actions_menu_item ' + v + ' im-action im-action_%icon%" data-action="%icon%">%name%</a>'
+        I = '<a class="ui_actions_menu_item ' + v + ' im-action im-action_%icon%" data-action="%icon%">%name%</a>';
 }, function(e, t, n) {
     "use strict";
 
@@ -7451,7 +7450,7 @@
             },
             params: {
                 width: 638,
-                onHide: function() {
+                onDestroy: function() {
                     i && i.unmount()
                 }
             }

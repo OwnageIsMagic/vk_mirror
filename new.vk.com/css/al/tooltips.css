@@ -1101,8 +1101,15 @@ div.own_reply_tt .content {
     width: 275px
 }
 
-.sticker_extra_tt b {
+.sticker_extra_tt .stickers_extra_text {
+    line-height: 16px
+}
+
+.sticker_extra_tt .stickers_extra_text>b {
     margin-bottom: 5px;
+    background: none;
+    height: auto;
+    width: auto;
     display: block;
     color: #2d2d2d
 }

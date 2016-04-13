@@ -2196,8 +2196,9 @@ var Page = {
             return ge("page_wall_count_all") && (o.all = intval(ge("page_wall_count_all")
                     .value)), ge("page_wall_count_own") && (o.own = intval(ge("page_wall_count_own")
                     .value)), t || (t = "own" == cur.wallType ? "all" : "own"), a && "click" == a.type && a.clientX && a.offsetX && cur.wallTab == t && cur.wallType == t ? nav
-                .go(e, a) : !o.own && inArray(cur.wallTab, ["all", "own"]) ? cancelEvent(a) : (replaceClass("page_wall_posts", cur.wallType, t), cur.wallType = t, Wall.update(),
-                    uiTabs.switchTab(e), uiTabs.hideProgress(e), wall.switchTabContent(t), cur.wallTab = t, cancelEvent(a))
+                .go(e, a) : !o.own && inArray(cur.wallTab, ["all", "own"]) ? cancelEvent(a) : ("postponed" == cur.wallTab && wall.checkPostponedCount(), replaceClass(
+                        "page_wall_posts", cur.wallType, t), cur.wallType = t, Wall.update(), uiTabs.switchTab(e), uiTabs.hideProgress(e), wall.switchTabContent(t), cur.wallTab =
+                    t, cancelEvent(a))
         },
         showSuggested: function(e, a, t, o) {
             if (a && checkEvent(a)) return !0;
@@ -2257,6 +2258,19 @@ var Page = {
                     .click(), hide("page_wall_suggest"))
             }
         },
+        showPostponedFull: function(e) {
+            var a = ge("ui_rmenu_postponed"),
+                t = ge("page_wall_posts");
+            if (!a || !hasClass(a, "ui_rmenu_item_sel") || !t) {
+                var o = {
+                    0: nav.objLoc[0],
+                    postponed: 1
+                };
+                return nav.go(o)
+            }
+            val(t, e), FullWall.updateSummary(geByClass("post", t)
+                .length)
+        },
         showPostponed: function(e, a, t) {
             if (a && checkEvent(a)) return !0;
             if (!cur.oid) return !1;
@@ -2276,7 +2290,22 @@ var Page = {
             return !1
         },
         postponedLoaded: function(e) {
-            val("page_postponed_posts", e), wall.switchTabContent("postponed")
+            val("page_postponed_posts", e), wall.postponeUpdateCount(), wall.switchTabContent("postponed")
+        },
+        postponeUpdateCount: function() {
+            var e = ge("page_postponed_posts"),
+                a = ge("page_wall_postponed_cnt"),
+                t = e && geByClass("post", e)
+                .length || 0;
+            e && a && val(a, t ? langNumeric(t, "%s", !0) : "")
+        },
+        checkPostponedCount: function() {
+            var e = geByClass("post", "page_postponed_posts"),
+                a = 0;
+            each(e, function() {
+                var e = this.id.replace("post", "");
+                cur.wallMyDeleted[e] || a++
+            }), a || hide("page_wall_postponed")
         },
         postponedPublished: function(e, a) {
             if (cur.onepost) return nav.go("/wall" + cur.oid);
@@ -2289,7 +2318,7 @@ var Page = {
                 i ? (geByClass1("ui_rmenu_item", i)
                     .click(), hide(geByClass1("_wall_menu_postponed", i))) : ge("wall_tabs") && (geByClass1("ui_tab", ge("wall_tabs"))
                     .click(), hide("page_wall_postponed"))
-            } else re(o)
+            } else re(o), wall.postponeUpdateCount()
         },
         onWallSearchSend: function(e, a) {
             a ? Wall.showSearch(a, 0) : Wall.hideSearch()
@@ -2645,13 +2674,17 @@ var Page = {
             n && buttonLocked(n) || (cur.postAutosave && clearTimeout(cur.postAutosave), hide("submit_post_error"), cur.postSent = !0, setTimeout(function() {
                 ajax.post("al_wall.php", Wall.fixPostParams(s), {
                     onDone: function(e, a) {
-                        if (Wall.clearInput(), cur.postSent = !1, postponePost) return "feed" == i && showDoneBox(e, {
-                            out: 3e3
-                        }), show("page_wall_postponed"), Wall.showPostponed(geByClass1("ui_tab", "page_wall_postponed"), !1, e), void(ge(
-                            "wall_tabs") && removeClass(ge("wall_tabs"), "page_tabs_hidden"));
-                        if (("full_own" == i || "full_all" == i) && cur.pgStart) {
+                        if (Wall.clearInput(), cur.postSent = !1, postponePost) {
+                            if ("feed" == i) showDoneBox(e, {
+                                out: 3e3
+                            });
+                            else if ("full_own" == i || "full_all" == i) return Wall.showPostponedFull(e);
+                            return show("page_wall_postponed"), Wall.showPostponed(geByClass1("ui_tab", "page_wall_postponed"), !1, e), void(ge(
+                                "wall_tabs") && removeClass(ge("wall_tabs"), "page_tabs_hidden"))
+                        }
+                        if (("full_own" == i || "full_all" == i) && (cur.pgStart || nav.objLoc.postponed)) {
                             var t = clone(nav.objLoc);
-                            return delete t.offset, vk.id != cur.oid && delete t.own, nav.go(t)
+                            return delete t.offset, delete t.postponed, vk.id != cur.oid && delete t.own, nav.go(t)
                         }
                         if (vk.id != cur.oid && "full_own" == i) {
                             var t = clone(nav.objLoc);
@@ -4095,7 +4128,8 @@ var Page = {
                                             K = intval(a[2]),
                                             _ = H || ge("page_current_info"),
                                             X = _ && geByClass1("current_audio_cnt", _);
-                                        X && (X.tt && X.tt.destroy(), toggleClass(X, "hidden", 0 == K), animateCount(X, K))
+                                        X && (X.tt && X.tt.destroy(), toggleClass(X, "hidden", 0 == K),
+                                            animateCount(X, K))
                                 }
                                 p && (e ? 0 > u : s > u) && (s += p)
                             }

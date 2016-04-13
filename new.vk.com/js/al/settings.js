@@ -310,9 +310,11 @@ var Settings = {
                 t[s] = isChecked(s) ? 1 : 0
             }), each(cur.options.notify_site_pkeys, function(e, s) {
                 t[s] = Privacy.getValue(s)
-            }), t.ienable = isChecked("settings_ienable") ? 1 : 0, t.itexts = isChecked("settings_itexts") ? 1 : 0, clearTimeout(cur.instantNotifyTO), cur.instantNotifyTO =
-            setTimeout(ajax.post.pbind("al_settings.php", t, {
-                onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind(e)
+            }), t.ienable = isChecked("settings_ienable") ? 1 : 0, t.itexts = isChecked("settings_itexts") ? 1 : 0, clearTimeout(cur.instantNotifyTO), clearTimeout(cur.instantNotifySaveTO),
+            cur.instantNotifyTO = setTimeout(ajax.post.pbind("al_settings.php", t, {
+                onDone: function() {
+                    cur.instantNotifySaveTO = setTimeout(window.uiPageBlock && uiPageBlock.showSaved.pbind(e), 1e3)
+                }
             }), 500), TopNotifier && TopNotifier.invalidate()
     },
     checkboxSiteNotify: function(e, t) {
@@ -1077,7 +1079,7 @@ var Settings = {
         }), !1
     },
     showNextVotesHistory: function(e) {
-        return addClass(e, "loading"), ajax.post("al_settings.php", {
+        return buttonLocked(e) ? void 0 : (lockButton(e), ajax.post("al_settings.php", {
             act: "a_votes_history",
             offset: cur.historyOffset
         }, {
@@ -1085,14 +1087,14 @@ var Settings = {
                 var o = ge("settings_votes_history")
                     .tBodies[0];
                 if (t)
-                    if (removeClass(e, "loading"), cur.historyOffset += 100, browser.msie) {
+                    if (unlockButton(e), cur.historyOffset += 100, browser.msie) {
                         var n = se("<table>" + t + "</table>"),
                             a = geByTag("tr", n);
                         for (i in a) 1 == a[i].nodeType && o.appendChild(a[i])
                     } else o.insertAdjacentHTML("beforeEnd", t);
-                    (!t || s) && (addClass(o.lastChild, "settings_votes_history_last"), re(e))
+                    (!t || s) && (addClass(o.lastChild, "settings_votes_history_last"), hide(e))
             }
-        }), !1
+        }), !1)
     },
     initApps: function(opts, appTpl) {
         extend(cur, {
@@ -1165,7 +1167,8 @@ var Settings = {
                 var i = getLang("settings_apps_not_found_by_query")
                     .split("{query}")
                     .join("<b>" + e.replace(/([<>&#]*)/g, "") + "</b>");
-                cur.aEmptyCont.innerHTML = i, cur.aSummaryCounter && (cur.aSummaryCounter.innerHTML = ""), show(cur.aEmptyCont), hide("settings_apps_noempty");
+                cur.aEmptyCont.innerHTML = i,
+                    cur.aSummaryCounter && (cur.aSummaryCounter.innerHTML = ""), show(cur.aEmptyCont), hide("settings_apps_noempty")
             }
             cur.shownApps += cur.defaultCount, cur.shownApps >= cur.appsCount ? hide(cur.lShowMoreButton) : (show(cur.lShowMoreButton), this.scrollCheckApps()), cur.aSearch &&
                 uiSearch.hideProgress(cur.aSearch)

@@ -106,8 +106,14 @@ if (!window.Emoji) var Emoji = {
         (0 > i || i > e.offsetHeight) && (e.scrollTop += i - e.offsetHeight)
     },
     insertWithBr: function(e, i) {
-        i && Emoji.insertHTML(clean(i)
-            .replace(/\n/g, "<br/>"))
+        if (i) {
+            var o = clean(stripHTML(i))
+                .replace(/\n/g, "<br/>"),
+                t = ce("div", {
+                    innerHTML: o
+                });
+            Emoji.cleanCont(t), Emoji.insertHTML(t.innerHTML)
+        }
     },
     focusTrick: function(e, i, o, t, s) {
         s || (s = e);
@@ -123,13 +129,31 @@ if (!window.Emoji) var Emoji = {
         Emoji.cleanCont(e), setTimeout(Emoji.correctCaret.pbind(e), 10)
     },
     getClipboard: function(e) {
-        return e.clipboardData ? e.clipboardData.getData("text") : window.clipboardData ? window.clipboardData.getData("Text") : !1
+        return e.clipboardData ? /text\/html/.test(e.clipboardData.types) ? e.clipboardData.getData("text/html") : e.clipboardData.getData("text") : window.clipboardData ?
+            window.clipboardData.getData("Text") : !1
+    },
+    imgToEmoji: function(e) {
+        var i = ce("div");
+        i.innerHTML = e;
+        for (var o = geByClass("emoji_css", i)
+                .concat(geByClass("emoji", i)), t = 0; t < o.length; t++) {
+            var s = o[t],
+                r = this.codeToChr(this.getCode(s));
+            if (r) {
+                var a = ce("span");
+                a.innerHTML = r, s.parentNode.insertBefore(a, s), re(s)
+            }
+        }
+        for (var n = i.children.length, l = [], t = 0; n > t; t++) "STYLE" === i.children[t].tagName && l.push(i.children[t]);
+        for (t = 0; t < l.length; t++) re(l[t]);
+        return trim(i.textContent)
     },
     onEditablePaste: function(e, i, o, t, s) {
         var r = !1;
         "true" === e.getAttribute("contenteditable") && (r = Emoji.getRange());
-        var a = this.getClipboard(t);
-        return a && r && !s ? (this.insertWithBr(r, a), setTimeout(this.finalizeInsert.bind(this, e), 0), cancelEvent(t)) : void(r && this.focusTrick(e, this.insertWithBr
+        var a = this.getClipboard(t),
+            n = this.imgToEmoji(a);
+        return n && r && !s ? (this.insertWithBr(r, n), setTimeout(this.finalizeInsert.bind(this, e), 0), cancelEvent(t)) : void(r && this.focusTrick(e, this.insertWithBr
             .pbind(r), this.finalizeInsert.bind(this, e), r))
     },
     cleanCont: function(e) {
