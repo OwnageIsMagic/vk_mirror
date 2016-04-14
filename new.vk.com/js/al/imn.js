@@ -4312,38 +4312,39 @@
             }, n)
             .filter(function(e) {
                 return e
-            })), t.flags & oe.eventTypes.FLAG_OUTBOUND && t.flags & oe.eventTypes.FLAG_UNREAD && u.push("im-mess_unread _im_mess_unread"), t.local && u.push(
-            "im-mess_sending " + fe), t.failed && u.push("im-mess_failed " + ge);
-        var f = t.attaches[0] && "gift" === t.attaches[0].type,
-            g = t.attaches[0] && "chronicle_invite" === t.attaches[0].type;
-        f && u.push("im-mess_gift");
-        var m = t.attaches.map(function(e) {
+            })), t.flags & oe.eventTypes.FLAG_OUTBOUND && t.flags & oe.eventTypes.FLAG_UNREAD && u.push("im-mess_unread _im_mess_unread");
+        var f = Date.now() - 1e3 * t.date > 1e3;
+        t.local && f && u.push("im-mess_sending"), t.local && u.push("" + fe), t.failed && u.push("im-mess_failed " + ge);
+        var g = t.attaches[0] && "gift" === t.attaches[0].type,
+            m = t.attaches[0] && "chronicle_invite" === t.attaches[0].type;
+        g && u.push("im-mess_gift");
+        var p = t.attaches.map(function(e) {
                 return "sticker" === e.type ? i(e.id, e.productId) : l(e.type)
             }),
-            p = S(t.text, t.kludges),
-            _ = getTemplate("im_message_media", {
+            _ = S(t.text, t.kludges),
+            v = getTemplate("im_message_media", {
                 messageId: t.messageId,
-                attaches: m.join(""),
-                text: '<div class="im_msg_text">' + (f ? p : "") + "</div>"
+                attaches: p.join(""),
+                text: '<div class="im_msg_text">' + (g ? _ : "") + "</div>"
             });
-        f || (_ = p + _);
-        var v = getTemplate("im_msg_row", {
+        g || (v = _ + v);
+        var y = getTemplate("im_msg_row", {
                 msg_id: t.messageId,
                 from_id: t.peerId,
-                text: _,
+                text: v,
                 ts: t.date,
                 cls: u.join(" ")
             }),
-            y = domLC(n);
-        (hasClass(y, he) || hasClass(y, _e)) && (y = domPS(y));
-        var b = domLC(geByClass1("_im_stack_messages", y)),
-            C = intval(domData(y, "peer")),
-            T = 1e3 * intval(domData(b, "ts")),
-            k = t.flags & oe.eventTypes.FLAG_OUTBOUND ? e.id : t.userId,
-            P = t.flags & oe.eventTypes.FLAG_OUTBOUND;
-        if (E(P, a.unread, C, T, k, t) || f) {
-            var I = "";
-            if (e.peer === t.peerId && !a.inplaceSearch || a.unread || t.flags & oe.eventTypes.FLAG_OUTBOUND || (I += getTemplate("im_mess_bar", {})), G(t)) I +=
+            b = domLC(n);
+        (hasClass(b, he) || hasClass(b, _e)) && (b = domPS(b));
+        var C = domLC(geByClass1("_im_stack_messages", b)),
+            T = intval(domData(b, "peer")),
+            k = 1e3 * intval(domData(C, "ts")),
+            P = t.flags & oe.eventTypes.FLAG_OUTBOUND ? e.id : t.userId,
+            I = t.flags & oe.eventTypes.FLAG_OUTBOUND;
+        if (E(I, a.unread, T, k, P, t) || g) {
+            var A = "";
+            if (e.peer === t.peerId && !a.inplaceSearch || a.unread || t.flags & oe.eventTypes.FLAG_OUTBOUND || (A += getTemplate("im_mess_bar", {})), G(t)) A +=
                 getTemplate("im_service_row", {
                     text: q(t, a),
                     type: "",
@@ -4352,36 +4353,41 @@
                     message_id: t.messageId
                 });
             else {
-                s = h(t.peerId) ? a.data.members[k].name : P ? e.name : a.name;
-                var A = 1;
-                A = h(t.peerId) ? a.data.members[k].sex : a.sex, o = h(t.peerId) ? a.data.members[k].photo : P ? e.photo : a.photo;
-                var L = h(t.peerId) ? a.data.members[k].link : a.href,
-                    M = getTemplate("im_mess_stack_name", {
+                s = h(t.peerId) ? a.data.members[P].name : I ? e.name : a.name;
+                var L = 1;
+                L = h(t.peerId) ? a.data.members[P].sex : a.sex, o = h(t.peerId) ? a.data.members[P].photo : I ? e.photo : a.photo;
+                var M = h(t.peerId) ? a.data.members[P].link : a.href,
+                    x = getTemplate("im_mess_stack_name", {
                         name: s,
-                        link: L
+                        link: M
                     });
-                f && (M += ' <span class="im-mess-stack--gift">' + getLang("mail_gift_message_sent", A) + "</span>"), g && (M += " " + getLang("mail_chronicle_invite_inf")),
-                    I += getTemplate("im_mess_stack", {
+                g && (x += ' <span class="im-mess-stack--gift">' + getLang("mail_gift_message_sent", L) + "</span>"), m && (x += " " + getLang("mail_chronicle_invite_inf")),
+                    A += getTemplate("im_mess_stack", {
                         photo: o,
-                        href: L,
+                        href: M,
                         cls: "",
                         date_attr: "",
                         link: "/im?sel=" + t.peerId + "&msgid=" + t.messageId,
-                        name: M,
-                        peerId: k,
+                        name: x,
+                        peerId: P,
                         date: w(t.date),
-                        messages: v
+                        messages: y
                     })
-            }(0, de.toArray)(sech(I))
+            }(0, de.toArray)(sech(A))
             .forEach(function(e) {
                 return n.appendChild(e)
             })
         } else {
-            var x = geByClass1("_im_unread_bar_row", n);
-            x && e.peer === t.peerId && !a.inplaceSearch && x.parentNode.removeChild(x), geByClass1("_im_stack_messages", y)
-                .appendChild(se(v))
+            var O = geByClass1("_im_unread_bar_row", n);
+            O && e.peer === t.peerId && !a.inplaceSearch && O.parentNode.removeChild(O), geByClass1("_im_stack_messages", b)
+                .appendChild(se(y))
         }
-        return d(c, e, n)
+        return t.flags & oe.eventTypes.FLAG_OUTBOUND && !f && setTimeout(function() {
+            var e = geByClass1("_im_mess_" + t.messageId, n);
+            hasClass(e, fe) && addClass(e, "im-mess_sending")
+        }, 500), c = c.filter(function(e) {
+            return e.rid !== t.randomId
+        }), d(c, e, n)
     }
 
     function d(e, t, n) {
@@ -4827,7 +4833,7 @@
                     var r = e.parentNode.getBoundingClientRect()
                         .width,
                         a = t * (r / n);
-                    attr(e, "height", a);
+                    attr(e, "height", a)
                 }
             }), e
     }
@@ -5647,20 +5653,21 @@
         var k;
         return {
             changePeer: function(i) {
+                var o = arguments.length <= 1 || void 0 === arguments[1] ? !0 : arguments[1];
                 if (0 === i.get()
                     .peer) return d(e);
                 if ((0, x.isFullyLoadedTab)(i.get(), i.get()
                         .peer)) {
                     removeClass(e, "im-page--history_search"), i.set(M.dropSelection), n.changeActions(i);
-                    var o = i.get()
+                    var l = i.get()
                         .peer,
-                        l = i.get()
+                        u = i.get()
                         .prevPeer;
-                    return removeClass(e, "im-page--history_loading"), r.restoreDraft(i), s()
+                    return removeClass(e, "im-page--history_loading"), o && r.restoreDraft(i), s()
                         .updateTyping({
-                            peerId: o
-                        }, i), y(i, e), 0 !== l || (0, x.isReservedPeer)(o) ? (0, x.isReservedPeer)(l) || (0, x.isReservedPeer)(o) ? void 0 : f(e, i, o, t, s, n, _) :
-                        a(e, i, o, t, s, n, _)
+                            peerId: l
+                        }, i), y(i, e), 0 !== u || (0, x.isReservedPeer)(l) ? (0, x.isReservedPeer)(u) || (0, x.isReservedPeer)(l) ? void 0 : f(e, i, l, t, s, n, _) :
+                        a(e, i, l, t, s, n, _)
                 }
             },
             loadingPeer: function(t) {
@@ -6222,13 +6229,14 @@
                 return (0, p.showVerifiedTooltip)(n, t.get()
                     .peer)
             };
-        return (0, h.addDelegateEvent)(e, "click", w, o), (0, h.addDelegateEvent)(e, "click", v, l), (0, h.addDelegateEvent)(e, "click", k, f), (0, h.addDelegateEvent)(e,
-            "click", p.DESLECT_ALL_CLASS, _), (0, h.addDelegateEvent)(e, "mouseover", P, y), (0, p.isReservedPeer)(t.get()
-            .peer) || setTimeout(function() {
-            t.set(m.setActions)
-                .then(a()
-                    .changeActions)
-        }), i(e, o, l, f, _, y)
+        return (0, h.addDelegateEvent)(e, "click", w, o), (0, h.addDelegateEvent)(e, "click", v, l),
+            (0, h.addDelegateEvent)(e, "click", k, f), (0, h.addDelegateEvent)(e, "click", p.DESLECT_ALL_CLASS, _), (0, h.addDelegateEvent)(e, "mouseover", P, y), (0, p.isReservedPeer)
+            (t.get()
+                .peer) || setTimeout(function() {
+                t.set(m.setActions)
+                    .then(a()
+                        .changeActions)
+            }), i(e, o, l, f, _, y)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0
@@ -6248,7 +6256,7 @@
         S = "_im_chat_topic_change_input",
         k = "_im_chat_members",
         P = "_im_chat_verified",
-        I = '<a class="ui_actions_menu_item ' + v + ' im-action im-action_%icon%" data-action="%icon%">%name%</a>';
+        I = '<a class="ui_actions_menu_item ' + v + ' im-action im-action_%icon%" data-action="%icon%">%name%</a>'
 }, function(e, t, n) {
     "use strict";
 
@@ -6390,7 +6398,7 @@
             })
             .then(function(n) {
                 return t()
-                    .changePeer(e)
+                    .changePeer(e, !1)
             })
             .then(function(e) {
                 return n
@@ -7861,7 +7869,7 @@
                 return geByClass1("_im_mess_" + e)
             })
             .filter(function(e) {
-                return e
+                return e;
             })
             .forEach(function(e) {
                 var t = intval(domData(e, "peer")),

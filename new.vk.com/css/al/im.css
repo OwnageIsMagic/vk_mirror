@@ -4481,7 +4481,12 @@ span#im_important_count {
     background: url(/images/icons/msg_check.png) no-repeat
 }
 
-.im-mess .im-mess--marker,
+.im-mess .im-mess--marker {
+    opacity: 0;
+    -o-transition: 0.2s opacity;
+    transition: 0.2s opacity
+}
+
 .im-mess .im-mess--original {
     display: none
 }
@@ -4739,13 +4744,16 @@ span#im_important_count {
     left: -22px;
     top: 10px;
     position: absolute;
-    display: block
+    opacity: 1
 }
 
 .im-mess.im-mess_unread.im-mess_sending .im-mess--check,
-.im-mess.im-mess_unread.im-mess_sending .im-mess--fav,
-.im-mess:hover .im-mess--marker {
+.im-mess.im-mess_unread.im-mess_sending .im-mess--fav {
     display: none
+}
+
+.im-mess:hover .im-mess--marker {
+    opacity: 0
 }
 
 .im-mess:hover .im-mess--check {
@@ -5129,7 +5137,8 @@ span#im_important_count {
     height: 8px;
     margin-top: -10px;
     background: rgba(147, 173, 200, .9);
-    margin-right: 1px
+    margin-right: 1px;
+    text-indent: -99px
 }
 
 .nim-dialog.nim-dialog_unread-out .nim-dialog--text-preview,
