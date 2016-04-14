@@ -1485,7 +1485,7 @@ a.ui_search_custom_link {
 
 .ui_thumb_x_button .ui_thumb_x {
     display: block;
-    background: url(/images/attach_icons.png?1) no-repeat 0 -40px;
+    background: url(/images/attach_icons.png?2) no-repeat 0 -40px;
     opacity: 0.85;
     filter: alpha(opacity=85);
     width: 8px;

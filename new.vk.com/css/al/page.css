@@ -503,8 +503,8 @@ div.wall_module .ext_video div {
 
 .wall_signed_by {
     padding: 0 15px;
-    background: url(/images/attach_icons.png?1) no-repeat;
-    background-position: left -112px
+    background: url(/images/attach_icons.png?2) no-repeat;
+    background-position: left -145px
 }
 
 .wall_module .ui_tabs {
@@ -3410,7 +3410,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 .checkbox_pic {
     cursor: pointer;
     margin-top: 7px;
-    background: url(/images/attach_icons.png?1) no-repeat 0 0;
+    background: url(/images/attach_icons.png?2) no-repeat 0 0;
     width: 16px;
     height: 16px;
     overflow: hidden;
@@ -3423,23 +3423,31 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 }
 
 .checkbox_pic.facebook_pic {
+    background-position: 0 -97px
+}
+
+.checkbox_pic.facebook_pic.on {
     background-position: 0 -65px
 }
 
 .checkbox_pic.twitter_pic {
+    background-position: 0 -81px
+}
+
+.checkbox_pic.twitter_pic.on {
     background-position: 0 -49px
 }
 
 .checkbox_pic.friends_only_pic {
-    background-position: 0 -97px
+    background-position: 0 -130px
 }
 
 .checkbox_pic.friends_only_pic.on {
-    background-position: 0 -81px
+    background-position: 0 -114px
 }
 
-.checkbox_pic.friends_only_pic:hover,
-.checkbox_pic.on {
+.checkbox_pic.on,
+.checkbox_pic:hover {
     opacity: 1;
     -webkit-filter: none;
     filter: none
@@ -5479,7 +5487,8 @@ button.wall_block_app_btn {
     border-radius: 5px;
     background: #fff;
     background: hsla(0, 0%, 100%, .8);
-    line-height: 160%
+    line-height: 160%;
+    text-align: center
 }
 
 #mv_box .page_no_flash_wrap {

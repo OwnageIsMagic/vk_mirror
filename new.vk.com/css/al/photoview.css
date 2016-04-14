@@ -883,7 +883,7 @@
 
 .pv_place_label {
     display: inline-block;
-    background-image: url(/images/attach_icons.png?1);
+    background-image: url(/images/attach_icons.png?2);
     height: 14px;
     width: 10px;
     background-position: 0px -10px;
@@ -1212,7 +1212,7 @@
 
 #pv_del_reply_to,
 #pv_tags .delete {
-    background-image: url(/images/attach_icons.png?1);
+    background-image: url(/images/attach_icons.png?2);
     height: 9px;
     width: 9px;
     cursor: pointer;

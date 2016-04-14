@@ -460,14 +460,10 @@ a.page_poll_code {
     margin-right: 7px
 }
 
-.page_poll_radio .progress_inline {
-    float: none;
-    margin: 0 0 0 7px;
+.page_poll_radio .poll_progress .pr {
+    margin: 6px 7px 0;
     display: inline-block;
-    vertical-align: bottom;
-    width: 32px;
-    height: 15px;
-    background: url(/images/upload.gif) no-repeat 50%
+    vertical-align: top
 }
 
 .page_media_poll .page_poll_row {
@@ -557,7 +553,7 @@ a.page_poll_code {
 
 .page_pics_preview .page_media_x_wrap .page_media_x {
     display: block;
-    background: url(/images/attach_icons.png?1) no-repeat 0 -40px;
+    background: url(/images/attach_icons.png?2) no-repeat 0 -40px;
     opacity: 0.85;
     filter: alpha(opacity=85);
     width: 8px;
@@ -582,7 +578,7 @@ a.page_poll_code {
 
 .page_docs_preview .page_media_x_wrap .page_media_x {
     display: block;
-    background: url(/images/attach_icons.png?1) no-repeat 0 0;
+    background: url(/images/attach_icons.png?2) no-repeat 0 0;
     opacity: 0.6;
     filter: alpha(opacity=60);
     width: 9px;

@@ -2927,6 +2927,9 @@ var Wall = {
             rf = ge('reply_field' + post);
         }
         Wall.initReplyEditable(rf, realBox, post, fixed);
+        if (cur.wallMyOpened) {
+            cur.wallMyOpened[post] = false;
+        }
         if (cur.editing === post) {
             Emoji.editableFocus(rf, false, true);
             return cancelEvent(ev);
@@ -4221,7 +4224,7 @@ var Wall = {
         if (cur.viewAsBox) return cur.viewAsBox();
 
         addClass(option, 'on');
-        var progress = geByClass1('progress', option);
+        var progress = geByClass1('_poll_progress', option);
         ajax.post('widget_poll.php', extend(params, {
             act: 'a_vote',
             no_widget: 1,
@@ -4235,8 +4238,8 @@ var Wall = {
                     eval(script);
                 }
             },
-            showProgress: addClass.pbind(progress, 'progress_inline'),
-            hideProgress: removeClass.pbind(progress, 'progress_inline')
+            showProgress: showProgress.pbind(progress),
+            hideProgress: hideProgress.pbind(progress)
         });
     },
     pollFull: function(v, post, e, opt) {
@@ -5354,7 +5357,10 @@ var Wall = {
             wall: 2,
             from: ref
         }, {
-            onDone: Wall.likeFullUpdate.pbind(el, post_id)
+            onDone: Wall.likeFullUpdate.pbind(el, post_id),
+            onFail: function() {
+                return true;
+            }
         });
         var count = val(ge('like_real_count_wall' + post_id) || countEl);
         Wall.likeUpdate(el, post_id, !my, intval(count) + (my ? -1 : 1));

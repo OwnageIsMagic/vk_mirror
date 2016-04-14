@@ -208,7 +208,7 @@
 .profile_warning_hide {
     width: 9px;
     height: 9px;
-    background: url(/images/attach_icons.png?1) no-repeat 0 0
+    background: url(/images/attach_icons.png?2) no-repeat 0 0
 }
 
 .profile_warning_label {
@@ -902,7 +902,7 @@
     display: block;
     width: 9px;
     height: 9px;
-    background: url(/images/attach_icons.png?1) 0 0 no-repeat
+    background: url(/images/attach_icons.png?2) 0 0 no-repeat
 }
 
 .gift_tt_header {

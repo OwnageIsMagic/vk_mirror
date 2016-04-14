@@ -1086,94 +1086,97 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(i) {
             0), !1
     }.bind(this))
 }, AudioPage.prototype._initPlayer = function() {
-    function i() {
-        if (!e.options.isLayer || e.options.eltt.isShown()) {
-            var i = e.readyAudio ? e.readyAudio : e.ap.getCurrentAudio();
-            i && (i = AudioUtils.audioObject(i), u.innerHTML = i.performer, _.innerHTML = i.title, domData(a, "id", i.id), domData(a, "owner-id", i.ownerId), domData(a,
-                "full-id", i.fullId));
-            var t = getSize(domPN(p))[0],
-                o = getSize(c)[0];
-            setStyle(p, "width", t - o - 20)
-        }
+    function i(i, t) {
+        var e, a = o.ap.getDurationType(),
+            s = intval(i.duration);
+        return e = a ? "-" + formatTime(Math.round(s - t * s)) : formatTime(Math.round(t * s))
     }
 
     function t() {
-        var t = e.readyAudio ? e.readyAudio : e.ap.getCurrentAudio();
-        if (t = AudioUtils.audioObject(t), e._trackSlider) {
-            var o = geByClass1("_audio_add_btn", a),
-                r = t.ownerId != vk.id;
-            A !== r && (toggle(o, r), setStyle(l, {
-                right: getSize(s)[0] + 22
-            }), e._trackSlider.updateSize(getSize(d)[0]), A = r), domData(o, "audio-id", t.fullId), i(), cur._audioAddRestoreInfo = cur._audioAddRestoreInfo || {};
-            var n = cur._audioAddRestoreInfo[t.fullId];
-            addClass(o, "no_transition"), toggleClass(o, "audio_player_btn_added", !(!n || "added" != n.state)), removeClassDelayed(o, "no_transition")
+        if (!o.options.isLayer || o.options.eltt.isShown()) {
+            var i = o.readyAudio ? o.readyAudio : o.ap.getCurrentAudio();
+            i && (i = AudioUtils.audioObject(i), _.innerHTML = i.performer, h.innerHTML = i.title, domData(s, "id", i.id), domData(s, "owner-id", i.ownerId), domData(s,
+                "full-id", i.fullId));
+            var t = getSize(domPN(g))[0],
+                e = getSize(p)[0];
+            setStyle(g, "width", t - e - 20)
         }
     }
-    var e = this,
-        o = this._container,
-        a = geByClass1("_audio_page_player", o),
-        s = geByClass1("audio_player_controls", a),
-        l = geByClass1("audio_page_line_player", a),
-        d = geByClass1("audio_page_player_progress", a),
-        r = geByClass1("audio_page_player_progress_line", a),
-        n = geByClass1("audio_page_player_volume_line", a),
-        u = geByClass1("audio_performer", a),
-        _ = geByClass1("audio_title", a),
-        h = geByClass1("audio_play", a),
-        c = geByClass1("audio_page_player_duration", a),
-        p = geByClass1("audio_page_player_title", a),
-        g = geByClass1("_audio_add_btn", a),
-        A = void 0;
-    if (i(), t(), !this._playerInited) {
+
+    function e() {
+        var i = o.readyAudio ? o.readyAudio : o.ap.getCurrentAudio();
+        if (i = AudioUtils.audioObject(i), o._trackSlider) {
+            var e = geByClass1("_audio_add_btn", s),
+                a = i.ownerId != vk.id;
+            y !== a && (toggle(e, a), setStyle(d, {
+                right: getSize(l)[0] + 22
+            }), o._trackSlider.updateSize(getSize(r)[0]), y = a), domData(e, "audio-id", i.fullId), t(), cur._audioAddRestoreInfo = cur._audioAddRestoreInfo || {};
+            var n = cur._audioAddRestoreInfo[i.fullId];
+            addClass(e, "no_transition"), toggleClass(e, "audio_player_btn_added", !(!n || "added" != n.state)), removeClassDelayed(e, "no_transition")
+        }
+    }
+    var o = this,
+        a = this._container,
+        s = geByClass1("_audio_page_player", a),
+        l = geByClass1("audio_player_controls", s),
+        d = geByClass1("audio_page_line_player", s),
+        r = geByClass1("audio_page_player_progress", s),
+        n = geByClass1("audio_page_player_progress_line", s),
+        u = geByClass1("audio_page_player_volume_line", s),
+        _ = geByClass1("audio_performer", s),
+        h = geByClass1("audio_title", s),
+        c = geByClass1("audio_play", s),
+        p = geByClass1("audio_page_player_duration", s),
+        g = geByClass1("audio_page_player_title", s),
+        A = geByClass1("_audio_add_btn", s),
+        y = void 0;
+    if (t(), e(), !this._playerInited) {
         this._playerInited = !0;
-        var y = this._trackSlider = new Slider(r, {
+        var P = this._trackSlider = new Slider(n, {
                 value: this.ap.getCurrentProgress(),
                 backValue: this.ap.getCurrentBuffered(),
                 size: 1,
                 hintClass: "audio_player_hint",
                 withBackLine: !0,
                 formatHint: function(i) {
-                    var t = e.ap.getCurrentAudio() || e.readyAudio;
+                    var t = o.ap.getCurrentAudio() || o.readyAudio;
                     return t = AudioUtils.audioObject(t), formatTime(Math.round(i * t.duration))
                 },
                 onEndDragging: function(i) {
-                    e.ap.seek(i)
+                    o.ap.seek(i)
                 }
             }),
-            P = this._volumeSlider = new Slider(n, {
-                value: e.ap.getVolume(),
+            f = this._volumeSlider = new Slider(u, {
+                value: o.ap.getVolume(),
                 size: 1,
                 hintClass: "audio_player_hint",
                 formatHint: function(i) {
                     return Math.round(100 * i) + "%"
                 },
                 onChange: function(i) {
-                    e.ap.setVolume(i)
+                    o.ap.setVolume(i)
                 }
             });
-        toggleClass(h, "audio_playing", this.ap.isPlaying()), AudioUtils.ee.on("audio_event_added", function(i) {
-            var t = AudioUtils.audioObject(e.ap.getCurrentAudio() || e.readyAudio);
-            t.fullId == i && addClass(g, "audio_player_btn_added")
+        toggleClass(c, "audio_playing", this.ap.isPlaying()), AudioUtils.ee.on("audio_event_added", function(i) {
+            var t = AudioUtils.audioObject(o.ap.getCurrentAudio() || o.readyAudio);
+            t.fullId == i && addClass(A, "audio_player_btn_added")
         }), AudioUtils.ee.on("audio_event_removed", function(i) {
-            var t = AudioUtils.audioObject(e.ap.getCurrentAudio() || e.readyAudio);
-            t.fullId == i && removeClass(g, "audio_player_btn_added")
-        }), this.ap.on(this, AudioPlayer.EVENT_PLAY, function(o, a, s) {
-            e.readyAudio = !1, t(), o = AudioUtils.audioObject(o), addClass(h, "audio_playing"), a && (y.setBackValue(0), y.setValue(0), c.innerHTML = "- " +
-                formatTime(o.duration)), i(), AudioUtils.updateCurrentPlaying(), s && e.scrollToTrack()
+            var t = AudioUtils.audioObject(o.ap.getCurrentAudio() || o.readyAudio);
+            t.fullId == i && removeClass(A, "audio_player_btn_added")
+        }), this.ap.on(this, AudioPlayer.EVENT_PLAY, function(a, s, l) {
+            o.readyAudio = !1, e(), a = AudioUtils.audioObject(a), addClass(c, "audio_playing"), s && (P.setBackValue(0), P.setValue(0), p.innerHTML = i(a, 0)), t(),
+                AudioUtils.updateCurrentPlaying(), l && o.scrollToTrack()
         }), this.ap.on(this, AudioPlayer.EVENT_PAUSE, function(i) {
-            removeClass(h, "audio_playing")
+            removeClass(c, "audio_playing")
         }), this.ap.on(this, AudioPlayer.EVENT_BUFFERED, function(i, t) {
-            y.setBackValue(t)
+            P.setBackValue(t)
         }), this.ap.on(this, AudioPlayer.EVENT_VOLUME, function(i, t) {
-            P.setValue(t)
-        }), this.ap.on(this, AudioPlayer.EVENT_UPDATE, function(e, o) {
-            t(), i()
-        }), this.ap.on(this, AudioPlayer.EVENT_PROGRESS, function(t, o) {
-            t = AudioUtils.audioObject(t), y.setValue(o);
-            var a, s = e.ap.getDurationType(),
-                l = intval(t.duration);
-            a = s ? "-" + formatTime(Math.round(l - o * l)) : formatTime(Math.round(o * l)), c.innerHTML = a, i()
-        }), t()
+            f.setValue(t)
+        }), this.ap.on(this, AudioPlayer.EVENT_UPDATE, function(i, o) {
+            e(), t()
+        }), this.ap.on(this, AudioPlayer.EVENT_PROGRESS, function(e, o) {
+            e = AudioUtils.audioObject(e), P.setValue(o), p.innerHTML = i(e, o), t()
+        }), e()
     }
 }, AudioPage.prototype.scrollToTrack = function() {
     if (this.ap.getCurrentPlaylist() && (!this.options.isLayer || this.options.eltt.isShown())) {

@@ -19,8 +19,7 @@ function AudioPlayer() {
         },
         e = browser.msie8 || browser.opera && browser.flash && parseInt(browser.version) <= 36;
     e ? this._impl = new AudioPlayerFlash(t) : AudioPlayerHTML5.isSupported() ? this._impl = new AudioPlayerHTML5(t) : debugLog(
-        "Audio not supported (no flash or html5 can be inited)"), AudioPlayerHTML5.isSupported() && !e ? this._impl = new AudioPlayerHTML5(t) : this._impl = new AudioPlayerFlash(
-        t), i._impl.setVolume(0), this._initEvents(), this._restoreState()
+        "Audio not supported (no flash or html5 can be inited)"), i._impl.setVolume(0), this._initEvents(), this._restoreState()
 }
 
 function AudioPlayerFlash(i) {
@@ -1152,7 +1151,7 @@ AudioPlayer.tabIcons = {
     i.opts.onEnd && i.opts.onEnd()
 }, AudioPlayerFlash.onAudioProgressCallback = function(i, t) {
     var e = AudioPlayerFlash.instance;
-    e._total = t, e._currProgress = i / t, e.opts.onProgressUpdate && e.opts.onProgressUpdate(e._currProgress)
+    t && (e._total = t, e._currProgress = i / t, e.opts.onProgressUpdate && e.opts.onProgressUpdate(e._currProgress))
 }, AudioPlayerFlash.onAudioLoadProgressCallback = function(i, t) {
     var e = AudioPlayerFlash.instance;
     e._currBuffered = i / t, e.opts.onBufferUpdate && e.opts.onBufferUpdate(e._currBuffered)

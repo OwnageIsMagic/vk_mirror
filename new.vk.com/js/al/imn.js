@@ -5885,6 +5885,7 @@
                 right: vk.rtl ? "auto" : 0,
                 left: vk.rtl ? 0 : "auto",
                 nomargin: !0,
+                shadows: !0,
                 nokeys: !0,
                 hidden: !0
             });

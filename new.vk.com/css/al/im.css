@@ -3759,6 +3759,10 @@ span#im_important_count {
     overflow: hidden
 }
 
+.im-page .im-page--chat-body-abs .scrollbar_bottom {
+    bottom: -3px
+}
+
 .im-page .im-page--chat-body-wrap-inner {
     overflow-y: hidden;
     padding-top: 34px;
@@ -4066,10 +4070,13 @@ span#im_important_count {
 }
 
 .im-chat-input {
-    border-color: #fafbfc;
-    padding: 15px 25px;
+    padding: 15px 33px 17px;
     box-sizing: border-box;
     border-top: solid 1px #e4e6e9
+}
+
+.im-chat-input .nim-peer {
+    border-color: #fff
 }
 
 .im-chat-input .ms_items_more {
@@ -4084,9 +4091,9 @@ span#im_important_count {
 }
 
 .im-chat-input .im-chat-input--textarea {
-    width: 427px;
+    width: 405px;
     float: left;
-    margin: 0 10px;
+    margin: 0 14px;
     position: relative
 }
 
@@ -4103,7 +4110,7 @@ span#im_important_count {
     overflow-y: auto;
     overflow-x: hidden;
     max-height: 350px;
-    margin-bottom: 15px
+    margin-bottom: 4px
 }
 
 .im-chat-input .im-chat-input--textarea .multi_media_preview {
@@ -4197,7 +4204,7 @@ span#im_important_count {
     font-size: 12px;
     position: absolute;
     left: 92px;
-    top: 10px;
+    top: 11px;
     color: #939699
 }
 
@@ -4233,7 +4240,7 @@ span#im_important_count {
     font-size: 12px;
     z-index: 2;
     line-height: 1.154;
-    top: 10px
+    top: 11px
 }
 
 .im-mess-stack .im-mess-stack--tools a {
@@ -4253,7 +4260,7 @@ span#im_important_count {
 }
 
 .im-mess-stack .im-mess-stack--mess .im-mess.im-mess_unread:first-child .im-mess--marker {
-    top: 24px
+    top: 21px
 }
 
 .im-mess-stack .im-mess-stack--mess .im-mess.im-mess_failed:first-child .im-mess--marker {
@@ -4261,7 +4268,7 @@ span#im_important_count {
 }
 
 .im-mess-stack .im-mess-stack--mess li:last-of-type {
-    border-bottom: solid 3px #fff
+    margin-bottom: 4px
 }
 
 .im-mess-stack.im-mess-stack_fwd.im-mess-stack_fwd-top .im-mess-stack--tools {
@@ -4405,14 +4412,14 @@ span#im_important_count {
 }
 
 .im-mess {
-    padding: 6px 65px 5px 0;
+    padding: 6px 83px 7px 0;
     position: relative;
-    margin: 0 25px 0 10px;
+    margin: 0 7px;
     cursor: pointer
 }
 
 .im-mess .im-mess--text {
-    margin: 0 20px 0 83px;
+    margin: 0 20px 0 86px;
     line-height: 18px;
     word-wrap: break-word
 }
@@ -4467,8 +4474,8 @@ span#im_important_count {
     width: 17px;
     height: 17px;
     display: block;
-    top: 6px;
-    left: 10px;
+    top: 8px;
+    left: 7px;
     display: none;
     position: absolute;
     background: url(/images/icons/msg_check.png) no-repeat
@@ -4510,12 +4517,21 @@ span#im_important_count {
 
 .im-mess.im-mess_gift.im-mess_selected,
 .im-mess.im-mess_gift.im-mess_selected:hover {
-    background: #f2e7ce
+    background: #f2e7ce!important
+}
+
+.im-mess.im-mess_gift.im-mess_selected .im-mess--check,
+.im-mess.im-mess_gift.im-mess_selected:hover .im-mess--check {
+    background-position: 0 -20px
 }
 
 .im-mess.im-mess_gift {
-    background: #f4ebd6;
+    background-color: #f4ebd6!important;
     border-radius: 3px
+}
+
+.im-mess.im-mess_gift.im-mess_unread .im-mess--check {
+    background-position: 0 0
 }
 
 .im-mess.im-mess_gift .im-mess--check {
@@ -4527,7 +4543,7 @@ span#im_important_count {
 }
 
 .im-mess.im-mess_gift .im-mess--text {
-    margin-top: 18px;
+    margin-top: 18px!important;
     text-align: center;
     color: #7f7660;
     font-size: 14px
@@ -4627,8 +4643,9 @@ span#im_important_count {
     width: 16px;
     height: 16px;
     background: url(/images/icons/msg_fail.png);
-    left: 10px;
-    top: 8px
+    left: -22px;
+    top: 8px;
+    position: absolute
 }
 
 .im-mess.im-mess_failed .im-mess--check,
@@ -4645,24 +4662,83 @@ span#im_important_count {
 }
 
 .im-mess.im-mess_unread {
-    position: relative
+    position: relative;
+    background: #edf0f5;
+    padding-right: 54px;
+    margin-left: 36px;
+    margin-right: 36px
 }
 
-.im-mess.im-mess_unread .im-mess--marker {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
+.im-mess.im-mess_unread>.im-mess--text {
+    margin-left: 57px
+}
+
+.im-mess.im-mess_unread>.im-mess--check {
+    margin-left: -29px
+}
+
+.im-mess.im-mess_unread.im-mess_selected {
+    padding: 6px 83px 7px 0;
+    margin: 0 7px
+}
+
+.im-mess.im-mess_unread.im-mess_selected>.im-mess--text {
+    margin: 0 20px 0 86px
+}
+
+.im-mess.im-mess_unread.im-mess_selected>.im-mess--check {
+    margin-left: 0
+}
+
+.im-mess+.im-mess_selected,
+.im-mess+.im-mess_unread,
+.im-mess.im-mess_selected:first-child,
+.im-mess.im-mess_unread:first-child {
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px
+}
+
+.im-mess.im-mess_selected+.im-mess_selected,
+.im-mess.im-mess_unread+.im-mess_unread {
+    border-radius: 0
+}
+
+.im-mess.im-mess_selected+.im-mess:before,
+.im-mess.im-mess_unread+.im-mess:before {
+    display: block;
+    margin-top: -8px;
+    content: "";
     position: absolute;
-    -o-transition: background-color 0.3s ease;
-    transition: background-color 0.3s ease;
-    top: 12px;
-    left: 14px;
-    background: #7293b6;
-    display: block
+    width: 100%;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: #edf0f5
+}
+
+.im-mess.im-mess_unread.im-mess_gift:last-child:before,
+.im-mess.im-mess_selected.im-mess_gift:last-child:before {
+    display: none
+}
+
+.im-mess.im-mess_selected:last-child:before,
+.im-mess.im-mess_unread:last-child:before {
+    display: block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 3px;
+    border-radius: 0 0 3px 3px;
+    background: #edf0f5;
+    bottom: -2px
 }
 
 .im-mess.im-mess_unread.im-mess_sending .im-mess--marker {
-    background: rgba(147, 173, 200, .5);
+    width: 14px;
+    height: 14px;
+    background: url(/images/icons/im_clock.png);
+    left: -22px;
+    top: 10px;
+    position: absolute;
     display: block
 }
 
@@ -4687,7 +4763,7 @@ span#im_important_count {
 }
 
 .im-mess.im-mess_search {
-    padding-right: 92px
+    padding-right: 110px
 }
 
 .im-mess.im-mess_search .im-mess--fav {
@@ -4706,7 +4782,7 @@ span#im_important_count {
     background: url(/images/icons/search_arrow.png);
     position: absolute;
     right: 27px;
-    top: 11px
+    top: 12px
 }
 
 .im-mess.im-mess_search:hover .im-mess--check,
@@ -5821,7 +5897,7 @@ span#im_important_count {
 }
 
 .im-create .scrollbar_bottom {
-    bottom: 0
+    bottom: -3px
 }
 
 .im-create .im-create--wrap {

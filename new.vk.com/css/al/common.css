@@ -4510,7 +4510,7 @@ a.ts_search_link {
     color: #42648b;
     width: 165px;
     height: 32px;
-    padding: 2px 0 0 8px;
+    padding-left: 8px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -4524,6 +4524,19 @@ a.ts_search_link {
 .ts_search_link .ts_contact_name {
     padding: 0;
     width: 100%
+}
+
+.ts_contact_title_wrap {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: top;
+    line-height: 17px;
+    max-width: 165px
+}
+
+.ts_contact_title_wrap.is_verified {
+    max-width: 146px
 }
 
 .ts_contact_title:after {
@@ -4550,7 +4563,7 @@ em.ts_clist_hl {
     -moz-osx-font-smoothing: auto;
     font-size: 11px;
     color: #939699;
-    padding-top: 3px;
+    padding-top: 1px;
     line-height: 14px;
     overflow: hidden;
     text-overflow: ellipsis
@@ -4719,6 +4732,13 @@ em.highlight {
 
 .page_name .page_verified {
     top: 1px
+}
+
+.ts_cont_wrap .page_verified {
+    background: url(/images/icons/verify_small.png) no-repeat 0;
+    top: 1px;
+    margin-left: 5px;
+    padding: 2px 14px 2px 0
 }
 
 .hint_icon {
