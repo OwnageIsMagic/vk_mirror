@@ -405,12 +405,6 @@
     width: 300px
 }
 
-#feed_recommends {
-    overflow: hidden;
-    -o-transition: all 200ms linear;
-    transition: all 200ms linear
-}
-
 #feed_recommends.recoms_hidden {
     height: 0!important;
     opacity: 0!important;
@@ -1490,37 +1484,8 @@ div.feed_recom {
     color: #bb6900
 }
 
-.feed_suggested_since {
-    padding: 5px 15px 15px
-}
-
 .feed_since_photos {
-    padding: 15px 15px 0
-}
-
-.feed_since_photos .page_post_sized_thumbs {
-    margin: 0;
-    padding: 0
-}
-
-.feed_since_photos .page_post_thumb_wrap {
-    margin-right: 5px
-}
-
-.feed_since_owners {
-    padding: 15px 10px 0 9px
-}
-
-.feed_since_owner_tt .tt_text {
-    max-width: 200px;
-    text-align: center;
-    max-height: 100px;
-    overflow: hidden;
-    text-overflow: ellipsis
-}
-
-.feed_since_owner_tt .toup1 .bottom_pointer {
-    margin: 0 52px
+    padding: 11px 20px 18px
 }
 
 .feed_list_restore,

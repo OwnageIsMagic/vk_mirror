@@ -1309,7 +1309,7 @@ var GroupsList = {
         });
     },
 
-    toggleFastAccess: function(gid, el) {
+    toggleFastAccess: function(el, gid) {
         function updateBtn(val) {
             var text = val ? getLang('groups_fast_menu_access_invert') : getLang('groups_fast_menu_access');
             el.textContent = text;
@@ -1319,6 +1319,7 @@ var GroupsList = {
         ajax.post('al_settings.php', {
             act: 'a_toggle_admin_fast',
             gid: gid,
+            hash: cur.menu_hash,
             update_menu: 1
         }, {
             onDone: function(value, nav) {
@@ -1329,8 +1330,11 @@ var GroupsList = {
                 }
 
             },
-            onFail: function() {
+            onFail: function(error) {
                 updateBtn(0);
+                if (error !== 'too_much_groups') {
+                    return false;
+                }
                 showFastBox(getLang('global_error'), getLang('groups_too_much_comms')
                     .replace('{amt}', 5));
                 return true;

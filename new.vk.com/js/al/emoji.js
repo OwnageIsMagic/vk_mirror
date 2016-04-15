@@ -212,7 +212,7 @@ if (!window.Emoji) {
 
         insertWithBr: function(range, text) {
             if (text) {
-                var cleanText = clean(stripHTML(text))
+                var cleanText = clean(text)
                     .replace(/\n/g, '<br/>');
                 var div = ce('div', {
                     innerHTML: cleanText

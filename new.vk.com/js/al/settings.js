@@ -1340,20 +1340,6 @@ var Settings = {
             }
         }), !1
     },
-    toggleAdminGroup: function(e, t) {
-        var s = Settings.getAdminSelectShowCt(cur.admin_groups);
-        cur.adminGroupsDirty = !0;
-        var o = cur.admin_groups[e];
-        if (!o && s >= Settings.MAX_LEFT_GROUPS - 1 ? addClass(t.parentNode, "settings_group_rows_disabled") : removeClass(t.parentNode, "settings_group_rows_disabled"), !
-            o && s >= Settings.MAX_LEFT_GROUPS) return !1;
-        var n = o ? -1 : 1;
-        toggleClass(t, "olist_item_wrap_on", !o), cur.admin_groups[e] = !o, ls.set("im_m_comms_key", !1), ls.set("im_m_comms_key", !1), ajax.post("al_settings.php", {
-                act: "a_toggle_admin_fast",
-                gid: e
-            }), cur.adminCt.innerHTML = getLang("settings_admin_groups_left")
-            .replace("{count}", s + n)
-            .replace("{amt}", Settings.MAX_LEFT_GROUPS)
-    },
     showNotifySubscriptions: function() {
         return showBox("al_settings.php", {
             act: "notify_subscriptions_box"

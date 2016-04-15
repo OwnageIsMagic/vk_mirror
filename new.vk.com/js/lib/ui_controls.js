@@ -79,7 +79,7 @@ function Slider(t, e) {
         width: this.options.width
     }), this.options.debounce && (this._onValueChangeDebounced = debounce(this._onValueChange, this.options.debounce)), e.formatHint && (addEvent(this._el, "mousemove", this._ev_onMouseOver =
         this._onMouseOver.bind(this)), addEvent(this._el, "mouseleave", this._ev_onMouseLeave = this._onMouseLeave.bind(this))), addEvent(this._el, "mousedown", this._ev_onMouseDown =
-        this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, !1, !0), this.setBackValue(this.options.backValue)
+        this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, !0, !0), this.setBackValue(this.options.backValue)
 }
 
 function InlineDropdown(t, e) {
@@ -2189,7 +2189,7 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
     for (var e = t.target; e && e != this._ttel && e != document.body && e != this._el;) e = domPN(e);
     return e && e != document.body ? void 0 : (this.hide(!0), cancelEvent(t))
 }, ElementTooltip.prototype.destroy = function() {
-    this._clearTimeouts(), data(this._el, "ett", null), re(this._ttel), removeEvent(window, "mousedown", this._ev_wclick)
+    this._clearTimeouts(), data(this._el, "ett", null), re(this._ttel), this._ev_wclick && removeEvent(document, "mousedown", this._ev_wclick)
 }, ElementTooltip.prototype.hide = function(t) {
     this._hide(t)
 }, ElementTooltip.prototype.show = function() {
@@ -2205,7 +2205,7 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
     var e = this;
     show(e._ttel), setTimeout(function() {
         addClass(e._ttel, "eltt_vis")
-    }, 10), this._opts.elClassWhenTooltip && addClass(this._el, this._opts.elClassWhenTooltip), this._opts.hideOnClick && addEvent(window, "mousedown", this._ev_wclick =
+    }, 10), this._opts.elClassWhenTooltip && addClass(this._el, this._opts.elClassWhenTooltip), this._opts.hideOnClick && addEvent(document, "mousedown", this._ev_wclick =
         this._onMouseWindowClick.bind(this))
 }, ElementTooltip.prototype.updatePosition = function() {
     if (this._opts.setPos) style = this._opts.setPos.call(this), "up" == this._opts.to ? style.marginTop = null : "left" == this._opts.to && (style.marginLeft = null),
@@ -2235,7 +2235,7 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
     this._clearTimeouts(), this._reTimeout = setTimeout(function() {
         hide(this._ttel), this._opts.elClassWhenTooltip && removeClass(this._el, this._opts.elClassWhenTooltip), this._opts.onHide && this._opts.onHide(this._ttel, !!t),
             this._isShown = !1
-    }.bind(this), ElementTooltip.FADE_SPEED), removeClass(this._ttel, "eltt_vis"), removeEvent(window, "mousedown", this._ev_wclick)
+    }.bind(this), ElementTooltip.FADE_SPEED), removeClass(this._ttel, "eltt_vis"), this._ev_wclick && removeEvent(document, "mousedown", this._ev_wclick)
 }, ElementTooltip.prototype.isShown = function() {
     return this._isShown
 }, ElementTooltip.prototype._clearTimeouts = function() {

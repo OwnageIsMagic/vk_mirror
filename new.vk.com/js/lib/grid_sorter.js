@@ -117,7 +117,8 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
             .onDragDrop && (i = this.options.onDragDrop(this._overEl, e)), this._overEl = null
     }, GridSorter.prototype._deinitEvents = function(t) {
         t && (this._onMouseUp(), removeEvent(this._contEl, "mousedown", this._ev_mousedown_handler)), this._isCurrentlyAutoScroll = !1, clearTimeout(this._autoScrollTO), this._autoScrollTO = !
-            1, removeEvent(document, "mousemove", this._ev_mousemove_handler), removeEvent(document, "mouseup", this._ev_mouseup_handler), removeEvent(document, "keydown", this._ev_keydown_handler)
+            1, this._ev_mousemove_handler && removeEvent(document, "mousemove", this._ev_mousemove_handler), this._ev_mouseup_handler && removeEvent(document, "mouseup", this._ev_mouseup_handler),
+            this._ev_keydown_handler && removeEvent(document, "keydown", this._ev_keydown_handler)
     }, GridSorter.prototype._setPos = function(t, e) {
         !this.options.noPosTransform && this._grid.length > 100 && (this._hasTranslateFeauture || (this._hasTranslateFeauture = window.getComputedStyle(t)
             .getPropertyValue("transform"))) ? null === e.left || null === e.top ? setStyle(t, {
@@ -309,13 +310,13 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
             var C, D, I, P, G = 0;
             if (this.options.wrapNode) C = P = this.options.wrapNode, D = getSize(C), I = getXY(C), I[1] -= e(), G = t.clientY;
             else {
-                var z = window,
+                var w = window,
                     f = document,
-                    w = f.documentElement,
+                    z = f.documentElement,
                     M = f.getElementsByTagName("body")[0],
-                    b = z.innerWidth || w.clientWidth || M.clientWidth,
-                    T = z.innerHeight || w.clientHeight || M.clientHeight;
-                P = z.bodyNode, C = z, D = [b, T], I = [0, 0], G = t.clientY
+                    b = w.innerWidth || z.clientWidth || M.clientWidth,
+                    T = w.innerHeight || z.clientHeight || M.clientHeight;
+                P = w.bodyNode, C = w, D = [b, T], I = [0, 0], G = t.clientY
             }
             var O = Math.max(20, D[1] / 10),
                 L = (I[1] > l[1], I[1] + D[1] < l[1] + s[1], I[1] + O - G),
@@ -349,7 +350,7 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
             this.options.dragCls && addClass(this._curDragEl, this.options.dragCls);
             var A = getSize(this._curDragEl),
                 R = getXY(this._curDragEl),
-                H = window.getComputedStyle(this._curDragEl),
+                k = window.getComputedStyle(this._curDragEl),
                 l = this._getContPos();
             this._initial.hasInlineSize = !(!this._curDragEl.style.width && !this._curDragEl.style.height), setStyle(this._curDragEl, {
                 width: A[0],
@@ -360,8 +361,8 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
             }, this._curPlaceholderEl = ce("div", {
                 className: "ui_gridsorter_placeholder"
             }), setStyle(this._curPlaceholderEl, {
-                width: A[0] + parseFloat(H.marginLeft) + parseFloat(H.marginRight),
-                height: A[1] + parseFloat(H.marginTop) + parseFloat(H.marginBottom)
+                width: A[0] + parseFloat(k.marginLeft) + parseFloat(k.marginRight),
+                height: A[1] + parseFloat(k.marginTop) + parseFloat(k.marginBottom)
             }), this._contEl.insertBefore(this._curPlaceholderEl, this._curDragEl), addClass(this._curDragEl, "ui_gridsorter_moveable"), addClass(this._curDragEl,
                 "ui_gridsorter_moveable_notrans"), addClass(this._contEl, "ui_gridsorter_cont"), this._onMouseMove(t), this._updateDraggablePosition(t)
         }
