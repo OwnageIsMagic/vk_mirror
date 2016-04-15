@@ -947,8 +947,11 @@ textarea~.placeholder .ph_input {
 
 input.big_text,
 input.big_text~.placeholder .ph_input {
-    font-size: 1.09em!important;
-    padding: 5px 4px 4px
+    font-size: 14px;
+    line-height: 19px;
+    padding: 6px 12px 8px;
+    border-radius: 3px;
+    box-sizing: border-box
 }
 
 .fakeinput.dark,
@@ -1238,6 +1241,12 @@ a.button_link:hover {
 
 .button_big.flat_button {
     line-height: 17px
+}
+
+.button_big_text.flat_button {
+    font-size: 14px;
+    line-height: 20px;
+    border-radius: 3px
 }
 
 .button_big_width.flat_button {
@@ -3368,28 +3377,38 @@ body.no_stl #stl_bg {
     line-height: 15px
 }
 
-#quick_auth_frame {
-    padding: 0;
-    margin: 0;
-    border: 0;
-    width: 130px;
-    height: 300px
+.quick_login {
+    padding: 11px 0 0
 }
 
-#quick_login_button {
-    margin-top: 5px
+.quick_login .label {
+    padding: 0 0 8px;
+    color: #65686c;
+    font-size: 12px;
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
-#quick_reg_button {
-    margin-top: 10px
+.quick_login .labeled {
+    padding-bottom: 13px
 }
 
-#quick_login .text {
-    width: 105px;
-    padding: 5px 5px 6px
+.quick_login input.dark {
+    width: 149px
 }
 
-#quick_login .submit {
+.quick_login .forgot {
+    padding-top: 16px;
+    text-align: center
+}
+
+.quick_login .checkbox {
+    padding-bottom: 10px;
+    display: none
+}
+
+.quick_login .submit {
     position: absolute;
     color: #fff;
     border: 0;
@@ -3399,30 +3418,20 @@ body.no_stl #stl_bg {
     top: -8000px
 }
 
-#quick_login .label {
-    color: #45688e;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    padding: 1px 0 8px
+#quick_auth_frame {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    width: 130px;
+    height: 300px
 }
 
-#quick_login .labeled {
-    padding-bottom: 7px
+.quick_login_button {
+    margin-top: 2px
 }
 
-#quick_login .checkbox {
-    margin-bottom: 7px;
-    display: none
-}
-
-#quick_login .reg {
-    margin-top: 7px
-}
-
-#quick_login .forgot {
-    padding-top: 12px;
-    text-align: center
+.quick_reg_button {
+    margin-top: 10px
 }
 
 .box_error,

@@ -67,7 +67,7 @@ var AudioUtils = {
     ee: new EventEmitter,
     showNeedFlashBox: function() {
         var i = getLang("audio_flash_required")
-            .replace("{link}", '<a target=_blank href="https://get.adobe.com/ru/flashplayer">')
+            .replace("{link}", '<a target=_blank href="https://get.adobe.com/flashplayer">')
             .replace("{/link}", "</a>");
         new MessageBox({
                 title: getLang("audio_need_flash_title")
@@ -810,7 +810,9 @@ AudioPlayer.tabIcons = {
     var t = ls.get(AudioPlayer.LS_PREFIX + AudioPlayer.LS_PROGRESS) || 0;
     this._currentAudio && t && this._impl && "html5" == this._impl.type && (this._implSetUrl(this._currentAudio), this._implSeek(t), this._implSetVolume(0))
 }, AudioPlayer.prototype._ensureImplReady = function(i) {
-    this._impl && this._impl.onReady(i)
+    this._impl && this._impl.onReady(function(t) {
+        return t ? i() : void AudioUtils.showNeedFlashBox()
+    })
 }, AudioPlayer.prototype._implNewTask = function(i, t) {
     this._tasks = this._tasks || [], this._tasks.push({
         name: i,
@@ -851,14 +853,17 @@ AudioPlayer.tabIcons = {
         i._impl.pause(), t()
     })
 }, AudioPlayer.prototype._implSetVolume = function(i, t) {
-    if (this._impl)
+    if (this._impl) {
+        var e = this;
         if (t) {
-            var e = 0 == i ? "vol_down" : "vol_up",
-                o = this;
-            this._implNewTask(e, function(t) {
-                o._impl.fadeVolume(i, t)
+            var o = 0 == i ? "vol_down" : "vol_up";
+            this._implNewTask(o, function(t) {
+                e._impl.fadeVolume(i, t)
             })
-        } else this._impl.setVolume(i)
+        } else this._implNewTask(o, function(t) {
+            e._impl.setVolume(i), t()
+        })
+    }
 }, AudioPlayer.prototype._implSetUrl = function(i) {
     var t = this;
     this._implClearTask("url"), this._implNewTask("url", function(e) {
@@ -917,7 +922,8 @@ AudioPlayer.tabIcons = {
     isArray(t) && !isArray(t[0]) && (t = [t]), i.total = i.total || i.list.length || 0;
     var e = this;
     each(t, function(t, o) {
-        -1 == e.getAudioPlaylistPosition(o, i) && (o = clone(o), AudioUtils.prepareAudioForPlaylist(o), i.list.push(o), i.total++);
+        -1 == e.getAudioPlaylistPosition(o, i) && (o = clone(o),
+            AudioUtils.prepareAudioForPlaylist(o), i.list.push(o), i.total++)
     }), AudioUtils.getPlaylistType(i) != AudioUtils.AUDIO_PLAYLIST_TYPE_CURRENT && AudioUtils.indexPlaylist(i)
 }, AudioPlayer.prototype.getPlaylist = function(i) {
     if (arguments.length > 1 && (i = AudioUtils.makePlaylistId.apply(this, arguments)), isObject(i)) return i;
@@ -1147,7 +1153,7 @@ AudioPlayer.tabIcons = {
         r && (l || (AudioUtils.getPlaylistType(t) != AudioUtils.AUDIO_PLAYLIST_TYPE_CURRENT && (this._prevPlaylist = this._currentPlaylist), this._currentPlaylist = AudioUtils
                 .makeCurrentPlaylist(t), t.initedByUser = !0), this._listenedTime = this._prevProgress = 0, this._currentAudio = r, this._isPlaying = !0, this._sendLCNotification(),
             this._notify(AudioPlayer.EVENT_PLAY, !0, e), this._muteProgressEvents = !0, this._implClearAllTasks(), o ? (this._implSetUrl(r), this._implPlay()) : (this._implSetVolume(
-                0, !0), this._implSetDelay(200), this._implSetUrl(r), this._implPlay(), this._implSetVolume(this.getVolume(), !0)), l || (this._initPlaybackParams(), this._notify(
+                0, !0), this._implSetDelay(200), this._implSetVolume(this.getVolume()), this._implSetUrl(r), this._implPlay()), l || (this._initPlaybackParams(), this._notify(
                 AudioPlayer.EVENT_PLAYLIST_CHANGED, t)))
     }
 }, AudioPlayer.prototype.getCurrentPlaylist = function() {
@@ -1193,7 +1199,8 @@ AudioPlayer.tabIcons = {
 }, AudioPlayerFlash.prototype.fadeVolume = function(i, t) {
     return this.setVolume(i), t()
 }, AudioPlayerFlash.prototype.type = "flash", AudioPlayerFlash.prototype.onReady = function(i) {
-    if (this._player) return i();
+    if (this._player) return i(!0);
+    if (this._player === !1) return i(!1);
     this._onReady = i;
     var t = {
             url: "/swf/audio_lite.swf",
@@ -1236,15 +1243,20 @@ AudioPlayer.tabIcons = {
     return this._currBuffered || 0
 }, AudioPlayerFlash.prototype._checkFlashLoaded = function() {
     var i = ge("player");
+    if (this._checks = this._checks || 0, this._checks++, this._checks > 10) {
+        this._player = !1;
+        var t = this._onReady;
+        return t && t(!1)
+    }
     if (i && i.paused) {
         this._player = i;
         var t = this._onReady;
-        t && t(), this._onReady = null
+        t && t(!0), this._onReady = null
     } else {
         var e = this;
         setTimeout(function() {
             e._checkFlashLoaded()
-        }, 50)
+        }, 100)
     }
 }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.isSupported = function() {
     var i = document.createElement("audio");
@@ -1273,7 +1285,7 @@ AudioPlayer.tabIcons = {
     }
     return this._audioEl
 }, AudioPlayerHTML5.prototype.onReady = function(i) {
-    i()
+    i(!0)
 }, AudioPlayerHTML5.prototype.seek = function(i) {
     var t = this._getAudioEl();
     isNaN(t.duration) ? this._seekOnReady = i : t.currentTime = t.duration * i

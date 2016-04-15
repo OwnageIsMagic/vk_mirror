@@ -890,11 +890,7 @@
         }) : adsHtml);
         var newBlockSizeElem = (geByClass1('ads_ads_box3', newBlockElem) || newBlockElem);
 
-        window.adsRestoreVisibility && adsRestoreVisibility(newBlockElem, {
-            display: 'block',
-            position: 'absolute',
-            top: '100000px'
-        });
+        //window.adsRestoreVisibility && adsRestoreVisibility(newBlockElem, {display: 'block',  position:'absolute', top:'100000px'});
 
         var imagesElems = geByTag('img', newBlockElem);
         var imagesObjects = [];
@@ -1853,8 +1849,6 @@
             }, params);
         });
     }
-
-    AdsLight.restoreVisibility = function() {} // Remove after a while
 
     AdsLight.init();
 

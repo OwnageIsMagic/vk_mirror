@@ -249,7 +249,7 @@ a.page_post_thumb_wrap:hover {
 
 .page_market_album_wrap {
     margin: 6px 0 5px;
-    border: 1px solid rgba(0, 20, 51, .08);
+    border: 1px solid rgba(0, 20, 51, .12);
     border-radius: 2px
 }
 
@@ -401,7 +401,7 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_media_poll_wrap {
-    border: 1px solid rgba(0, 20, 51, .08);
+    border: 1px solid rgba(0, 20, 51, .12);
     border-radius: 2px;
     margin: 15px 0 7px;
     padding: 1px 15px 14px;

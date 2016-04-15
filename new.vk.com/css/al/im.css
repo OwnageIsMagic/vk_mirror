@@ -5128,6 +5128,7 @@ span#im_important_count {
 }
 
 .nim-dialog.nim-dialog_unread-out .nim-dialog--unread,
+.nim-dialog.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--unread,
 .nim-dialog.nim-dialog_unread.nim-dialog_unread-out .nim-dialog--unread {
     display: block;
     overflow: hidden;
@@ -5142,6 +5143,7 @@ span#im_important_count {
 }
 
 .nim-dialog.nim-dialog_unread-out .nim-dialog--text-preview,
+.nim-dialog.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--text-preview,
 .nim-dialog.nim-dialog_unread.nim-dialog_unread-out .nim-dialog--text-preview {
     width: 93%
 }

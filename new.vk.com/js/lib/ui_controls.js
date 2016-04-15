@@ -304,7 +304,9 @@ extend(UiControl.prototype, {
         this.options = extend({}, this.defaultOptions, {
                 resultField: t.name || "selectedItems",
                 customField: t.name ? t.name + "_custom" : "selectedItems_custom"
-            }, this.prepareOptionsText(i || {})), this.options.dark && (this.options.big = 1), this.options.highlight = this.options.highlight || function(t) {
+            }, this.prepareOptionsText(i || {})), (this.options.dark || this.options.big_text) && (this.options.big = 1), this.options.highlight = this.options.highlight ||
+
+            function(t) {
                 return t
             }, !isArray(this.options.selectedItems) && isEmpty(this.options.selectedItems) && (this.options.selectedItems = []), t.value && !this.options.selectedItems
             .length && (this.options.selectedItems = t.value), this.options.width = parseInt(this.options.width) > 0 ? parseInt(this.options.width) : this.defaultOptions
@@ -324,8 +326,9 @@ extend(UiControl.prototype, {
         var i = this;
         this.container = ce("div", {
                 id: "container" + this.guid,
-                className: "selector_container" + (i.options.autocomplete ? "" : " dropdown_container") + (i.options.big ? " big" : "") + (i.options.withIcons ?
-                    " with_icons" : "") + (browser.mobile ? " mobile_selector_container" : "") + (i.options.noArr ? " dropdown_noarr" : ""),
+                className: "selector_container" + (i.options.autocomplete ? "" : " dropdown_container") + (i.options.big ? " big" : "") + (i.options.big_text ?
+                    " big_text" : "") + (i.options.withIcons ? " with_icons" : "") + (browser.mobile ? " mobile_selector_container" : "") + (i.options.noArr ?
+                    " dropdown_noarr" : ""),
                 innerHTML: '<table cellspacing="0" cellpadding="0" class="selector_table">    <tr>      <td class="selector">        <div class="placeholder_wrap1">          <div class="placeholder_wrap2">            <div class="placeholder_content"></div>            <div class="placeholder_cover"></div>          </div>        </div>        <span class="selected_items"></span>        <input type="text" class="selector_input" ' +
                     this.readOnly + ' />        <input type="hidden" name="' + i.options.resultField + '" id="' + i.options.resultField +
                     '" value="" class="resultField">        <input type="hidden" name="' + i.options.customField + '" id="' + i.options.customField +

@@ -30,6 +30,18 @@
     border-radius: 0 0 1px 1px
 }
 
+.big_text.selector_container table.selector_table {
+    border-radius: 3px
+}
+
+.big_text.selector_container.selector_focused table.selector_table {
+    border-radius: 3px 3px 0 0
+}
+
+.big_text.selector_container.selector_focused.reverse table.selector_table {
+    border-radius: 0 0 3px 3px
+}
+
 .selector_container table td {
     vertical-align: middle
 }
@@ -71,6 +83,12 @@
     top: 1px
 }
 
+.big_text.selector_container td.selector .placeholder_wrap2 {
+    font-size: 14px;
+    left: 9px;
+    top: 3px
+}
+
 .selector_container td.selector .placeholder_content {
     white-space: nowrap;
     line-height: normal
@@ -100,6 +118,11 @@
     padding: 2px 0 1px 6px;
     height: 16px;
     margin-bottom: 6px
+}
+
+.big_text.selector_container td.selector input {
+    font-size: 14px;
+    padding: 4px 0 2px 9px
 }
 
 .dropdown_container.selector_container td.selector input {
@@ -323,6 +346,11 @@
 
 .big.with_icons .result_list ul li.first img {
     top: 6px
+}
+
+.big_text .result_list ul li {
+    padding: 7px 0 9px 12px;
+    font-size: 14px
 }
 
 .dividing_line ul li {

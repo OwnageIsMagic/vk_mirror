@@ -1260,7 +1260,7 @@ div.wall_module .ext_video div {
     margin: 15px 0 5px;
     padding: 0;
     background-color: #fff;
-    border: 1px solid rgba(0, 20, 51, .08);
+    border: 1px solid rgba(0, 20, 51, .12);
     border-radius: 2px
 }
 
@@ -1328,7 +1328,7 @@ div.wall_module .ext_video div {
     background-repeat: no-repeat;
     background-size: 160px auto;
     width: 160px;
-    box-shadow: 0 0 0 1px rgba(0, 20, 51, .08) inset;
+    box-shadow: 0 0 0 1px rgba(0, 20, 51, .12) inset;
     border-radius: 2px 0 0 2px
 }
 
@@ -1430,7 +1430,7 @@ div.wall_module .ext_video div {
 .page_media_link_desc_td {
     padding: 11px 15px;
     min-height: 100px;
-    border: 1px solid rgba(0, 20, 51, .08);
+    border: 1px solid rgba(0, 20, 51, .12);
     border-left: 0;
     border-radius: 0 2px 2px 0;
     word-break: break-word
@@ -1572,7 +1572,7 @@ a.page_media_link_desc {
 .page_media_link_img {
     max-width: 100%;
     display: block;
-    outline: 1px solid rgba(0, 20, 51, .08);
+    outline: 1px solid rgba(0, 20, 51, .12);
     outline-offset: -1px
 }
 

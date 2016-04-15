@@ -212,8 +212,7 @@ if (!window.Emoji) {
 
         insertWithBr: function(range, text) {
             if (text) {
-                var cleanText = clean(text)
-                    .replace(/\n/g, '<br/>');
+                var cleanText = text.replace(/\n/g, '<br/>');
                 var div = ce('div', {
                     innerHTML: cleanText
                 });
@@ -237,7 +236,7 @@ if (!window.Emoji) {
                 txt.focus();
                 cont.scrollTop = scroll;
                 Emoji.setRange(range);
-                insert(val(textarea));
+                insert(clean(val(textarea)));
                 finalize(txt);
             }, 0);
         },
@@ -252,10 +251,10 @@ if (!window.Emoji) {
                 if (/text\/html/.test(e.clipboardData.types)) {
                     return e.clipboardData.getData('text/html');
                 } else {
-                    return e.clipboardData.getData('text');
+                    return clean(e.clipboardData.getData('text'));
                 }
             } else if (window.clipboardData) {
-                return window.clipboardData.getData("Text")
+                return clean(window.clipboardData.getData("Text"));
             } else {
                 return false;
             }
@@ -263,7 +262,9 @@ if (!window.Emoji) {
 
         imgToEmoji: function(text) {
             var div = ce('div');
-            div.innerHTML = text;
+            div.innerHTML = text
+                .replace(/\<br(.*?)\>/ig, "<span>\n</span>")
+                .replace(/\<div(.*?)\>(.*?)\<\/div(.*?)\>/ig, '$2<span>\n</span>');
             var emojis = geByClass('emoji_css', div)
                 .concat(geByClass('emoji', div));
             for (var i = 0; i < emojis.length; i++) {
@@ -288,7 +289,7 @@ if (!window.Emoji) {
                 re(rem[i]);
             }
 
-            return trim(div.textContent);
+            return clean(trim(div.textContent));
         },
 
         onEditablePaste: function(txt, opts, optId, e, onlyFocus) {
@@ -298,7 +299,9 @@ if (!window.Emoji) {
                 range = Emoji.getRange();
             }
             var ctext = this.getClipboard(e);
+
             var text = this.imgToEmoji(ctext);
+
 
             if (text && range && !onlyFocus) {
                 this.insertWithBr(range, text);
