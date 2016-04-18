@@ -3469,6 +3469,13 @@ body.no_stl #stl_bg {
     transition: background-color 2s linear
 }
 
+.box_msg.msg_appear,
+.box_msg:empty,
+.msg.msg_appear,
+.msg:empty {
+    background-color: #edf1f7
+}
+
 .box_error {
     margin: 0 0 15px;
     background: #fdf0f0
@@ -3493,6 +3500,11 @@ body.no_stl #stl_bg {
     background: #f5f7fa url(/images/icons/msg_info.png) no-repeat 12px 12px;
     padding-left: 55px;
     border-color: #edf1f7
+}
+
+.info_msg.msg_appear,
+.info_msg:empty {
+    background-color: #edf1f7
 }
 
 .ok_msg {

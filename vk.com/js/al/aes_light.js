@@ -1850,6 +1850,8 @@
         });
     }
 
+    AdsLight.restoreVisibility = function() {} // Remove after a while
+
     AdsLight.init();
 
 })();

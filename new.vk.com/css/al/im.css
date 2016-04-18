@@ -3459,7 +3459,7 @@ span#im_important_count {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     position: relative;
-    z-index: 10
+    z-index: 103
 }
 
 .im-page .im-page--dialogs.im-page--dialogs_with-mess .scrollbar_top {
