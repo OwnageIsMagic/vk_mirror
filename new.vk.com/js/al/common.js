@@ -6608,7 +6608,7 @@ function curBox() {
     return (b && b.isVisible()) ? b : null;
 }
 
-if (!browser.mobile) {
+if (!browser.mobile && !vk.host.match(/snapster\.io/)) {
     addEvent(document, 'keydown', function globalEsc(e) {
         _wf = 1;
         if (e.keyCode == KEY.ESC) {
@@ -8302,12 +8302,6 @@ function zNav(changed, opts, fin) {
                 showVideo(zt[2], listId, options);
                 return false;
                 break;
-            case 'screen':
-                stManager.add(['index.js'], function() {
-                    setTimeout(JoinPhotoview.show.pbind(intval(zt[2])), 0);
-                });
-                return false;
-                break;
             case 'single':
                 if (w === undefined) {
                     stManager.add(['single_pv.css', 'single_pv.js'], ge(z)
@@ -9193,7 +9187,9 @@ TopSearch = {
             tsWrap = ge('ts_wrap'),
             tsCont = ge('ts_cont_wrap');
 
-        Chat.init();
+        if (vk.id) {
+            Chat.init();
+        }
 
         if (!tsInput) return false;
 
@@ -9234,6 +9230,8 @@ TopSearch = {
                     break;
             }
         });
+
+        if (!vk.id) return;
 
         addEvent(tsInput, 'keyup', function(e) {
             switch (e.keyCode) {
@@ -9389,7 +9387,7 @@ TopSearch = {
     initFriendsList: function() {
         var _t = this;
         if (_t.friendsLoaded) return false;
-        if (cur.initingFL || vk.isBanned) return false;
+        if (cur.initingFL || vk.isBanned || !vk.id) return false;
         var isEmpty = function(obj) {
             for (var i in obj) {
                 return false;
@@ -9631,7 +9629,7 @@ TopSearch = {
             tsWrap = ge('ts_cont_wrap'),
             curLink = geByClass1('active', tsWrap),
             activeId = curLink ? curLink.id : '';
-        if (!tsWrap) return false;
+        if (!tsWrap || !vk.id) return false;
         if (cur.tsStr && cur.tsStr == q && !_t.forceUpdate) return false;
         delete _t.forceUpdate;
 

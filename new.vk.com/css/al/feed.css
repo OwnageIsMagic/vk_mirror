@@ -547,7 +547,7 @@
 }
 
 .feedback_row_clickable:not(.feedback_row_touched):hover {
-    background-color: rgba(247, 248, 250, .5);
+    background-color: #fafbfc;
     border-bottom: 1px solid #ebedf0
 }
 
@@ -914,7 +914,7 @@
 
 .feedback_sticky_row.hover,
 .feedback_sticky_row:hover {
-    background-color: rgba(247, 248, 250, .5)
+    background-color: #fafbfc
 }
 
 .feedback_sticky_row.hover .feedback_sticky_menu,
@@ -1126,12 +1126,25 @@
     display: none
 }
 
+.top_notify_cont .feedback_row_clickable:hover,
+.top_notify_cont .feedback_row_wrap {
+    border: none!important
+}
+
 .top_notify_cont .feedback_row:hover {
-    background-color: rgba(247, 248, 250, .5)
+    background-color: #fafbfc
+}
+
+.top_notify_cont .feedback_row:hover .feedback_photo_icon {
+    border-color: #fafbfc
 }
 
 .top_notify_cont .feedback_row.unread:hover {
     background-color: #f0f3f7
+}
+
+.top_notify_cont .feedback_row.unread:hover .feedback_photo_icon {
+    border-color: #f0f3f7
 }
 
 .feedback_row_answer {

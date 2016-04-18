@@ -3405,6 +3405,7 @@ body.no_stl #stl_bg {
 
 .quick_login .checkbox {
     padding-bottom: 10px;
+    text-align: left;
     display: none
 }
 

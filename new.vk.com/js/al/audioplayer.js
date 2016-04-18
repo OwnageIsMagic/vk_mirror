@@ -17,9 +17,8 @@ function AudioPlayer() {
                 i.repeatCurrentAudio ? (i._implSeek(0), i._implPlay()) : (i._isPlaying = !1, i._notify(AudioPlayer.EVENT_PAUSE), i._notify(AudioPlayer.EVENT_ENDED), i.playNext(!
                     0))
             }
-        },
-        e = "flash" == nav.objLoc.ap || browser.opera && parseInt(browser.version) <= 36;
-    e || !AudioPlayerHTML5.isSupported() ? browser.flash && (this._impl = new AudioPlayerFlash(t)) : this._impl = new AudioPlayerHTML5(t), this._implSetVolume(0), this._initEvents(),
+        };
+    AudioPlayerHTML5.isSupported() ? this._impl = new AudioPlayerHTML5(t) : browser.flash && (this._impl = new AudioPlayerFlash(t)), this._implSetVolume(0), this._initEvents(),
         this._restoreState()
 }
 
@@ -922,8 +921,8 @@ AudioPlayer.tabIcons = {
     isArray(t) && !isArray(t[0]) && (t = [t]), i.total = i.total || i.list.length || 0;
     var e = this;
     each(t, function(t, o) {
-        -1 == e.getAudioPlaylistPosition(o, i) && (o = clone(o),
-            AudioUtils.prepareAudioForPlaylist(o), i.list.push(o), i.total++)
+        -1 == e.getAudioPlaylistPosition(o, i) && (o = clone(o), AudioUtils.prepareAudioForPlaylist(o), i.list.push(o),
+            i.total++)
     }), AudioUtils.getPlaylistType(i) != AudioUtils.AUDIO_PLAYLIST_TYPE_CURRENT && AudioUtils.indexPlaylist(i)
 }, AudioPlayer.prototype.getPlaylist = function(i) {
     if (arguments.length > 1 && (i = AudioUtils.makePlaylistId.apply(this, arguments)), isObject(i)) return i;
@@ -1259,8 +1258,10 @@ AudioPlayer.tabIcons = {
         }, 100)
     }
 }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.isSupported = function() {
-    var i = document.createElement("audio");
-    return !(!i.canPlayType || !i.canPlayType("audio/mpeg;")
+    var i = window.navigator && window.navigator.userAgent || "";
+    if (browser.opera && (-1 != i.indexOf("Windows NT 5.1") || -1 != i.indexOf("Windows NT 6.1"))) return !1;
+    var t = document.createElement("audio");
+    return !(!t.canPlayType || !t.canPlayType("audio/mpeg;")
         .replace(/no/, ""))
 }, AudioPlayerHTML5.prototype.type = "html5", AudioPlayerHTML5.prototype._getAudioEl = function() {
     if (!this._audioEl) {
