@@ -2604,7 +2604,8 @@ img.im_chatbox_mem_photo {
     height: 50px;
     margin-right: 10px;
     background: url(/images/chronicle/snapster_invite_logo.png);
-    border-radius: 25px
+    border-radius: 25px;
+    background-size: cover
 }
 
 .im_chronicle_invite_descr {
@@ -2612,7 +2613,7 @@ img.im_chatbox_mem_photo {
 }
 
 .im_chronicle_invite_android {
-    background: #689f38 url(/images/chronicle/install_android.png) no-repeat 16px 6px
+    background: #689f38 url(/images/chronicle/install_android.png) no-repeat 16px 8px
 }
 
 .im_chronicle_invite_android:active,
@@ -2622,7 +2623,7 @@ img.im_chatbox_mem_photo {
 
 .im_chronicle_invite_iphone {
     margin-left: 8px;
-    background: #6383a8 url(/images/chronicle/install_ios.png) no-repeat 16px 6px
+    background: #6383a8 url(/images/chronicle/install_ios.png) no-repeat 16px 8px
 }
 
 .im_chronicle_invite_android,
@@ -2632,7 +2633,32 @@ img.im_chatbox_mem_photo {
 
 .im_chronicle_invite_android:active,
 .im_chronicle_invite_iphone:active {
-    background-position-y: 7px
+    background-position-y: 9px
+}
+
+.im_chronicle_invite_room_info {
+    margin-left: 60px
+}
+
+.im_chronicle_invite_room_title {
+    font-weight: 700
+}
+
+.im_chronicle_invite_room_followers {
+    color: #939699
+}
+
+.im_chronicle_invite_room_descr {
+    line-height: 160%
+}
+
+.im_chronicle_invite_room_descr:empty {
+    display: none
+}
+
+.im_chronicle_invite_install_descr {
+    color: #939699;
+    margin-bottom: 10px
 }
 
 .im_upload_wrap {

@@ -691,7 +691,7 @@ vkApp.prototype.boxApp = function(t) {}, vkApp.prototype.onAppReady = function()
             rnd: parseInt(1e4 * Math.random())
         };
         if (inputParams)
-            for (var i in inputParams) i = trim(i), /^(rnd|format|api_id|method|callback|access_token)(\[.*?\])?$/.test(i) || (params[i] = inputParams[i]);
+            for (var i in inputParams) i = trim(i), /^(rnd|format|api_id|method|callback|access_token)(\[(.|\s)*\])?$/.test(i) || (params[i] = inputParams[i]);
         var lParams = [];
         for (i in params) lParams.push([i, params[i]]);
         lParams.sort(sName);
