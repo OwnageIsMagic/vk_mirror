@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 684189584411,
+    'nav': 682893499639,
     'common.js': 1132,
     'common.css': 1777066246,
     'pads.js': 1601311133,
@@ -194,7 +194,7 @@ var stVersions = {
     'invite.css': 2190657026,
     'invite.js': 2046983763,
     'prereg.js': 1684494884,
-    'index.css': 4257791855,
+    'index.css': 2819926961,
     'index.js': 1940735382,
     'join.css': 1957806379,
     'join.js': 1067986459,
@@ -473,4 +473,4 @@ var stTypes = {
         'snapster/mobile.css': 1
     }
 };
-var _rnd = 4465;
+var _rnd = 6574;

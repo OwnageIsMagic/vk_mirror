@@ -9182,7 +9182,7 @@ TopSearch = {
                         var q = trim(val(this));
                         if (q) {
                             tsInput.blur();
-                            hide(tsWrap);
+                            if (vk.id) hide(tsWrap);
                             TopSearch.tsNeedsClear = true;
                             nav.go('/search?c[section]=auto&c[q]=' + encodeURIComponent(q));
                         }
