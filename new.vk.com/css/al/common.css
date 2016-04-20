@@ -945,6 +945,10 @@ textarea~.placeholder .ph_input {
     line-height: 16px
 }
 
+input.big_text {
+    height: 35px
+}
+
 input.big_text,
 input.big_text~.placeholder .ph_input {
     font-size: 14px;
@@ -952,6 +956,23 @@ input.big_text~.placeholder .ph_input {
     padding: 6px 12px 8px;
     border-radius: 3px;
     box-sizing: border-box
+}
+
+input.big_text::-webkit-input-placeholder {
+    padding-left: 12px
+}
+
+input.big_text::-moz-placeholder,
+input.big_text:-moz-placeholder {
+    padding-left: 12px
+}
+
+input.big_text:-ms-input-placeholder {
+    padding-left: 12px
+}
+
+input.big_text~.placeholder .ph_content {
+    padding-left: 12px
 }
 
 .fakeinput.dark,
@@ -5906,7 +5927,7 @@ button.ui_load_more_btn {
 }
 
 .page_preview_audio_wrap .audio_row {
-    margin-right: 25px
+    margin-right: 25px!important
 }
 
 .slider_hint.audio_player_hint {

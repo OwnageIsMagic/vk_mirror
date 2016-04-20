@@ -2276,3 +2276,93 @@ div.chat_tab_img {
 .top_notify_cont .feedback_sticky_rows:empty {
     display: none
 }
+
+.fc_snapster_invite_room_wrap {
+    text-align: center
+}
+
+.fc_snapster_invite_room_cover {
+    width: 50px;
+    height: 50px;
+    border-radius: 25px;
+    margin: 5px auto;
+    background-size: cover
+}
+
+.fc_snapster_invite_room_title {
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.fc_snapster_invite_room_followers {
+    color: #939699;
+    margin-top: 3px
+}
+
+.fc_snapster_invite_room_desc {
+    margin-top: 2px;
+    line-height: 160%
+}
+
+.fc_snapster_invite_room_sep {
+    width: 100%;
+    height: 1px;
+    background-color: #ebedf0;
+    margin: 10px 0px
+}
+
+.fc_msgs_out_inner .fc_snapster_invite_room_sep {
+    background-color: #cbdbf2
+}
+
+.fc_snapster_invite_room_install {
+    color: #939699;
+    font-size: 11px;
+    line-height: 140%;
+    margin-bottom: 7px
+}
+
+.fc_snapster_invite_ic {
+    background: url(/images/chronicle/install_android.png) no-repeat 0px 0px;
+    display: inline-block;
+    height: 13px;
+    width: 11px;
+    margin: 0px 3px -2px 0px
+}
+
+.fc_snapster_invite_ic_ios {
+    background-image: url(/images/chronicle/install_ios.png)
+}
+
+.fc_snapster_invite_btn {
+    width: 100%
+}
+
+.fc_snapster_invite_btn_android {
+    margin-bottom: 5px;
+    background-color: #689f38
+}
+
+.fc_snapster_invite_btn_android:active,
+.fc_snapster_invite_btn_android:hover {
+    background-color: #6eab39
+}
+
+.fc_snapster_invite_cover {
+    width: 100%;
+    height: 130px;
+    background: url(/images/chronicle/snapster_invite_web.png);
+    border-radius: 2px;
+    background-size: cover
+}
+
+.fc_snapster_invite_about {
+    line-height: 160%;
+    margin: 5px 0px
+}
+
+.fc_msgs_out_inner .fc_snapster_invite_room_followers,
+.fc_msgs_out_inner .fc_snapster_invite_room_install {
+    color: #65686c
+}
