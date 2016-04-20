@@ -1045,6 +1045,13 @@ div.wall_module .ext_video div {
     padding-right: 36px
 }
 
+.replies_wrap:after {
+    display: block;
+    content: '';
+    height: 1px;
+    margin-top: -1px
+}
+
 #like_repost_comment_warn,
 .wall_module .reply_warn {
     display: none;

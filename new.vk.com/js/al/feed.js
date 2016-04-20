@@ -56,7 +56,7 @@ var Feed = {
                                         d += this.offsetHeight, nodeUpdated(e), cur.feedUnreadCount++
                                     })
                                 }
-                                d && a > 100 && scrollToY(a + d, 0)
+                                d && a > 100 && scrollToY(a + d, 0, !1, !0)
                             } else if (s)
                                 for (l.innerHTML = s; r = l.lastChild;)
                                     if ("DIV" == r.tagName)
@@ -85,10 +85,10 @@ var Feed = {
                                         m ? (c.insertBefore(ge("post_ph" + n) || ce("div", {
                                             id: "post_ph" + n
                                         }), c.firstChild), inArray(n, cur.feedToSort) || cur.feedToSort.push(n)) : (re(i.parentNode), c.insertBefore(i.parentNode,
-                                            c.firstChild), m > g + w + 100 && (h = v), h && scrollToY(scrollGetY() + h, 0)), cur.feedUnreadCount += p
+                                            c.firstChild), m > g + w + 100 && (h = v), h && scrollToY(scrollGetY() + h, 0, !1, !0)), cur.feedUnreadCount += p
                                 }
                                 l.removeChild(r)
-                            } else a = scrollGetY(), c.insertBefore(r, c.firstChild), nodeUpdated(r), d = r.offsetHeight, a > 100 && scrollToY(a + d, 0);
+                            } else a = scrollGetY(), c.insertBefore(r, c.firstChild), nodeUpdated(r), d = r.offsetHeight, a > 100 && scrollToY(a + d, 0, !1, !0);
                             else l.removeChild(r);
                             feed.applyOptions(t), feed.updateTitle()
                         }
@@ -141,10 +141,10 @@ var Feed = {
                 var o = scrollGetY(),
                     r = 0;
                 each(t.events, function() {
-                    r += feed.pushEvent(this.split("<!>"), o)
+                    r += feed.pushEvent(this.split("<!>"), o + getSize("page_header_cont")[1])
                 });
                 var i = scrollGetY();
-                r && o > 100 && Math.abs(o - i) < 100 && scrollToY(i + r, 0), feed.updateTitle(), cur.gifAutoplayScrollHandler && cur.gifAutoplayScrollHandler()
+                r && Math.abs(o - i) < 100 && scrollToY(i + r, 0, !1, !0), feed.updateTitle(), cur.gifAutoplayScrollHandler && cur.gifAutoplayScrollHandler()
             }
         }
     },
@@ -184,9 +184,10 @@ var Feed = {
                     if (y && (v = wall.updatePostImages(v)), b) {
                         if (cur.ignore_owners.length && inArray(intval(b), cur.ignore_owners)) break;
                         if (f = geByClass1("feed_reposts_wrap" + b, w, "div")) p = geByClass1("feed_reposts_first", f, "div")
-                            .firstChild, h = geByClass1("feed_reposts_group", f, "div"), _ = geByClass1("feed_reposts_more_link", f, "a"), t > getXY(p)[1] && (c -= p.offsetHeight),
-                            p.parentNode.replaceChild(u = se(k), p), h.insertBefore(p, h.firstChild), isVisible(h) || val(_, getLang("news_show_X_reposts", h.childNodes.length)),
-                            f = f.parentNode, w.firstChild != f && w.insertBefore(f, w.firstChild), t > getXY(f)[1] && (c += f.offsetHeight), f.bits = 0;
+                            .firstChild, h = geByClass1("feed_reposts_group", f, "div"), _ = geByClass1("feed_reposts_more_link", f, "a"), t > getXY(p)[1] && (c -= p.offsetHeight +
+                                intval(getStyle(domByClass(p, "page_block"), "marginTop"))), p.parentNode.replaceChild(u = se(k), p), h.insertBefore(p, h.firstChild),
+                            isVisible(h) || val(_, getLang("news_show_X_reposts", h.childNodes.length)), f = f.parentNode, w.firstChild != f && w.insertBefore(f, w.firstChild),
+                            t > getXY(f)[1] && (c += f.offsetHeight + intval(getStyle(domByClass(f, "page_block"), "marginTop"))), f.bits = 0;
                         else if ((g = geByClass("feed_repost" + b, w, "div")) && g.length) {
                             v = rs(cur.wallTpl.grouped_posts, {
                                 place: b,
@@ -195,16 +196,18 @@ var Feed = {
                                 other: "",
                                 label: getLang("news_show_X_reposts", g.length)
                             });
-                            var x = se('<div class="feed_row' + (y ? "_unshown" : "") + '">' + v + "</div>"),
-                                T = domFC(T);
-                            w.insertBefore(x, w.firstChild), !y && t > getXY(x)[1] && (c += x.offsetHeight), C = !0, f = x.firstChild, u = geByClass1("feed_reposts_first",
-                                f, "div"), h = geByClass1("feed_reposts_group", f, "div"), each(clone(g), function() {
-                                t > getXY(this)[1] && (c -= this.offsetHeight), re(this.parentNode), h.appendChild(this.firstChild)
-                            })
+                            var T = se('<div class="feed_row' + (y ? "_unshown" : "") + '">' + v + "</div>"),
+                                x = domFC(x);
+                            w.insertBefore(T, w.firstChild), !y && t > getXY(T)[1] && (c += T.offsetHeight + intval(getStyle(domByClass(T, "page_block"), "marginTop"))), C = !
+                                0, f = T.firstChild, u = geByClass1("feed_reposts_first", f, "div"), h = geByClass1("feed_reposts_group", f, "div"), each(clone(g),
+                                    function() {
+                                        t > getXY(this)[1] && (c -= this.offsetHeight + intval(getStyle(domByClass(this, "page_block"), "marginTop"))), re(this.parentNode),
+                                            h.appendChild(this.firstChild)
+                                    })
                         } else u = se('<div class="feed_row' + (y ? "_unshown" : "") + '"><div class="feed_repost' + b + '">' + v + "</div></div>"), w.insertBefore(u, w.firstChild),
-                            C = !0, !y && t > getXY(u)[1] && (c += u.offsetHeight)
+                            C = !0, !y && t > getXY(u)[1] && (c += u.offsetHeight + intval(getStyle(domByClass(u, "page_block"), "marginTop")))
                     } else u = se('<div class="feed_row' + (y ? "_unshown" : "") + '">' + v + "</div>"), w.insertBefore(u, w.firstChild), C = !0, !y && t > getXY(u)[1] &&
-                        (c += u.offsetHeight);
+                        (c += u.offsetHeight + intval(getStyle(domByClass(u, "page_block"), "marginTop")));
                     y && C && (cur.newPostsCount = cur.newPostsCount ? cur.newPostsCount + 1 : 1, cur.feedEls.newPosts.innerHTML = getLang("news_new_posts", cur.newPostsCount),
                         addClass(cur.feedEls.wrap, "feed_has_new")), ge("post_poll_id" + r) && wall.updatePoll(r), cur.feedUnreadCount++, "search" != n && nodeUpdated(
                         u), m.length > 300 ? w.removeChild(m[300]) : m.length <= 1 && removeClass(cur.feedEls.wrap, "feed_is_empty"), Wall.updateMentionsIndex();
@@ -215,28 +218,28 @@ var Feed = {
                         m = w.childNodes,
                         v = wall.getNewPostHTML(e, !1, feed.feedPostRepl),
                         u = se('<div class="feed_row">' + v + "</div>");
-                    w.insertBefore(u, w.firstChild), t > getXY(u)[1] && (c += u.offsetHeight), cur.feedUnreadCount++, m.length > 300 ? w.removeChild(m[300]) : m.length <=
-                        1 && removeClass(cur.feedEls.wrap, "feed_is_empty");
+                    w.insertBefore(u, w.firstChild), t > getXY(u)[1] && (c += u.offsetHeight + intval(getStyle(domByClass(u, "page_block"), "marginTop"))), cur.feedUnreadCount++,
+                        m.length > 300 ? w.removeChild(m[300]) : m.length <= 1 && removeClass(cur.feedEls.wrap, "feed_is_empty");
                     break;
                 case "edit_post":
-                    var E, B = ge("wpt" + r);
-                    if (!isVisible(i) || !B) break;
-                    var P = geByClass1("wall_post_more", B);
-                    P && (P = isVisible(domNS(P))), (E = t > getXY(B)[1]) && (c -= B.offsetHeight);
-                    var S = psr(rs(e[3], {
+                    var B, E = ge("wpt" + r);
+                    if (!isVisible(i) || !E) break;
+                    var S = geByClass1("wall_post_more", E);
+                    S && (S = isVisible(domNS(S))), (B = t > getXY(E)[1]) && (c -= E.offsetHeight);
+                    var P = psr(rs(e[3], {
                             poll_hash: cur.wallTpl.poll_hash
                         })),
                         w = ge("post" + r);
-                    w && !isVisible(w.parentNode) && (S = wall.updatePostImages(S)), val(B, S), P && (P = geByClass1("wall_post_more", B), P && P.onclick()), ge(
-                        "post_poll_id" + r) && wall.updatePoll(r), E && (c += B.offsetHeight), nodeUpdated(B);
+                    w && !isVisible(w.parentNode) && (P = wall.updatePostImages(P)), val(E, P), S && (S = geByClass1("wall_post_more", E), S && S.onclick()), ge(
+                        "post_poll_id" + r) && wall.updatePoll(r), B && (c += E.offsetHeight), nodeUpdated(E);
                     break;
                 case "edit_reply":
                     var L = e[3],
-                        B = ge("wpt" + L);
-                    if (!isVisible("post" + L) || !B) break;
-                    var P = geByClass1("wall_reply_more", B);
-                    P && (P = isVisible(domNS(P))), updH = -B.offsetHeight, updY = getXY(B)[1], val(B, psr(e[4])), P && (P = geByClass1("wall_reply_more", B), P && P.onclick()),
-                        updH += B.offsetHeight, nodeUpdated(B);
+                        E = ge("wpt" + L);
+                    if (!isVisible("post" + L) || !E) break;
+                    var S = geByClass1("wall_reply_more", E);
+                    S && (S = isVisible(domNS(S))), updH = -E.offsetHeight, updY = getXY(E)[1], val(E, psr(e[4])), S && (S = geByClass1("wall_reply_more", E), S && S.onclick()),
+                        updH += E.offsetHeight, nodeUpdated(E);
                     break;
                 case "post_parsed_link":
                     if (!i) break;
@@ -246,7 +249,8 @@ var Feed = {
                     break;
                 case "del_post":
                     if (i) {
-                        cur.wallMyDeleted[r] || (t > getXY(i)[1] && (c -= i.offsetHeight), revertLastInlineVideo(i), hide(i)), cur.options.offset--;
+                        cur.wallMyDeleted[r] || (t > getXY(i)[1] && (c -= i.offsetHeight + intval(getStyle(domByClass(i, "page_block"), "marginTop"))),
+                            revertLastInlineVideo(i), hide(i)), cur.options.offset--;
                         var N = i.parentNode;
                         hasClass(N, "feed_row") || (N = N.parentNode), hasClass(cur.feedEls.wrap, "feed_has_new") && !isVisible(N) && (cur.newPostsCount--, cur.newPostsCount ?
                             cur.feedEls.newPosts.innerHTML = getLang("news_new_posts", cur.newPostsCount) : removeClass(cur.feedEls.wrap, "feed_has_new"))
@@ -365,15 +369,15 @@ var Feed = {
     },
     showNewPosts: function() {
         var e = cur.feedEls.newPosts,
-            t = -e.offsetHeight - intval(getStyle(e, "marginTop")) - intval(getStyle(e, "marginBottom"));
+            t = -e.offsetHeight,
+            s = intval(getStyle(e, "marginTop"));
         removeClass(cur.feedEls.wrap, "feed_has_new"), cur.newPostsCount = 0;
-        var s = ge("feed_rows"),
-            o = scrollGetY();
-        Wall.loadPostImages(s), each(geByClass("feed_row_unshown", s, "div"), function() {
-            removeClass(this, "feed_row_unshown"), addClass(this, "feed_row"), t += this.offsetHeight, nodeUpdated(this)
+        var o = ge("feed_rows");
+        startST = scrollGetY(), Wall.loadPostImages(o), each(geByClass("feed_row_unshown", o, "div"), function() {
+            replaceClass(this, "feed_row_unshown", "feed_row"), t += this.offsetHeight + s, nodeUpdated(this)
         });
         var r = scrollGetY();
-        t && Math.abs(o - r) < 100 && scrollToY(r + t, 0)
+        t && Math.abs(startST - r) < 100 && scrollToY(r + t, 0, !1, !0)
     },
     updateTitle: function() {
         cur.idleManager && (cur.idleManager.isIdle || (cur.feedUnreadCount = 0), document.title = (cur.feedUnreadCount ? "(" + cur.feedUnreadCount + ") " : "") + cur.feedInitialTitle)
@@ -1022,8 +1026,8 @@ var Feed = {
             a = scrollGetY(),
             c = isVisible(i);
         return i ? (c ? n -= i.offsetHeight + intval(getStyle(e, "marginTop")) : (domPN(domPN(i)) || {})
-            .bits = 0, toggle(i, !c), val(r, c ? getLang("news_show_X_reposts", i.childNodes.length) : getLang("news_hide_reposts")), n && scrollToY(a + n + getSize(
-                "page_header")[1], 0), !1) : void(r && re(r.parentNode.parentNode))
+            .bits = 0, toggle(i, !c), val(r, c ? getLang("news_show_X_reposts", i.childNodes.length) : getLang("news_hide_reposts")),
+            n && scrollToY(a + n + getSize("page_header")[1], 0), !1) : void(r && re(r.parentNode.parentNode))
     },
     editHidden: function() {
         return showTabbedBox("al_settings.php", {

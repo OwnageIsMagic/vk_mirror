@@ -1267,3 +1267,20 @@ div.own_reply_tt .content {
 .member_info_tt .wide_wall_module .post:last-child {
     margin-bottom: 0
 }
+
+.ban_reason_tt .tt_text {
+    padding: 15px 20px 20px
+}
+
+.ban_reason_tt .page_top {
+    border-bottom: 0
+}
+
+.ban_reason_tt .login_blocked_text {
+    padding: 0
+}
+
+.ban_reason_tt .login_blocked_reason_text,
+.ban_reason_tt .login_blocked_reasons {
+    margin-bottom: 0
+}

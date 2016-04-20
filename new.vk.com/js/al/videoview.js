@@ -478,7 +478,7 @@ var Videoview = {
                                     r = t["private"] ? '<span class="mv_tt_playlist_private_icon" onmouseover="showTooltip(this,{black:1,text: \'' + getLang(
                                         "video_album_is_private_tt") + "', shift:[16, 8, 0]})\"></span>" : "";
                                 o += '<div class="mv_tt_playlist">  <div class="checkbox' + (a ? " on" : "") + (t.disabled ? " disabled" : "") + '" data-id="' +
-                                    t.id + '" onclick="checkbox(this);">' + clean(t.title) + "</div>" + r + "</div>          "
+                                    t.id + '" onclick="checkbox(this);">' + t.title + "</div>" + r + "</div>          "
                             }), o += "</div>", o += '<div class="mv_tt_add_playlist" onclick="Videoview.addPlaylist(' + d +
                             ')"><span class="mv_tt_plus_icon"></span>' + (d ? getLang("video_add_private_album") : getLang("video_add_album")) + "</div></div>", i.innerHTML =
                             o, each(geByClass("mv_tt_playlist", i), function() {
@@ -590,17 +590,17 @@ var Videoview = {
         },
         show: function(e, i, o, t) {
             var a = window.ap;
-            if (a && a.isPlaying() && (a.pause(), a.pausedByVideo = 1), window.forcePauseAudio = !0, t && t.autoplay && Videoview.playerCallback.onVideoStreamPlaying(),
-                debugLog("show video " + i), window.mvcur && mvcur.minimized) {
-                if (!t.nomin) return t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) : VideoPlaylist.removeBlock(), !0;
+            a && a.isPlaying() && (a.pause(), a.pausedByVideo = 1), window.forcePauseAudio = !0, t && t.autoplay && Videoview.playerCallback.onVideoStreamPlaying(), debugLog(
+                "show video " + i);
+            var r = window.mvcur && mvcur.mvShown,
+                d = window.mvcur && mvcur.player;
+            if (d && domPN(d.el) === ge("video_player") ? d.unloadVideo() : (hide("mv_content"), show("mv_progress")), window.mvcur && mvcur.minimized) {
+                if (!t.nomin) return mvcur.videoRaw = i, t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) : VideoPlaylist.removeBlock(), !0;
                 t.prevLoc && (mvcur.mvPrevLoc = t.prevLoc), debugLog("unminimizing in show"), Videoview.unminimize(!0, !1, !0)
             }
-            t.queue && (debugLog("pushing in videoview.show"), layerQueue.push(), t.queue = !1), !t.noLocChange && nav.objLoc.z && 0 == nav.objLoc.z.indexOf("video") && (cur.mvHistoryBack =
-                cur.mvHistoryBack || 1, cur.mvHistoryBack++);
-            var r = window.mvcur && mvcur.mvShown && !mvcur.minimized;
-            r || layerQueue.hide(), window.forcePauseAudio = !1;
-            var d = window.mvcur && mvcur.player;
-            return d && d.unloadVideo(), d && domFC(ge("video_player")) === d.el || (val("mv_content", ""), show("mv_progress")), this.init(), mvcur.showTime = (new Date)
+            return t.queue && (debugLog("pushing in videoview.show"), layerQueue.push(), t.queue = !1), !t.noLocChange && nav.objLoc.z && 0 == nav.objLoc.z.indexOf("video") &&
+                (cur.mvHistoryBack = cur.mvHistoryBack || 1, cur.mvHistoryBack++), r || layerQueue.hide(), window.forcePauseAudio = !1, d && domFC(ge("video_player")) === d.el ||
+                (val("mv_content", ""), show("mv_progress")), this.init(), mvcur.showTime = (new Date)
                 .getTime(), removeEvent(window, "resize", Videoview.onResize), removeEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange),
                 removeEvent(document, "keydown", Videoview.onKeyDown), removeEvent(mvLayerWrap, "click", Videoview.onClick), addEvent(window, "resize", Videoview.onResize),
                 addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
@@ -769,10 +769,9 @@ var Videoview = {
                 }, "videos" != i[1] && (mvcur.mvPrevLoc.section = i[1]), o && o[1] && (mvcur.mvPrevLoc.claim = o[1])
             } else e ? mvcur.mvPrevLoc = "z" : Videoview.getPrevLoc();
             if (!e) {
-                var a, a, r = mvcur.videoRaw.match(/^(-?\d+)(photo|video)?_/),
-                    d = (intval(r[1]), "video" + mvcur.videoRaw);
-                mvcur.listId && (d += "/" + mvcur.listId), mvcur.options.playlistId && (d += "/pl_" + mvcur.options.playlistId), a = extend(nav.objLoc, {
-                    z: d
+                var a, r = "video" + mvcur.videoRaw;
+                mvcur.listId && (r += "/" + mvcur.listId), mvcur.options.playlistId && (r += "/pl_" + mvcur.options.playlistId), a = extend(nav.objLoc, {
+                    z: r
                 }), nav.strLoc != nav.toStr(a) && (nav.setLoc(a), (mvcur.options || {})
                     .fromQueue && (mvcur.noHistory = 1)), mvcur.options && (mvcur.options.fromQueue = !1)
             }
