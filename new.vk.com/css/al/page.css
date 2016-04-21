@@ -1301,6 +1301,10 @@ div.wall_module .ext_video div {
     margin-bottom: 5px
 }
 
+.wall_module .post_copy .page_media_thumbed_link:last-child {
+    margin-bottom: 10px
+}
+
 .page_media_link_addr,
 .page_media_link_addr a {
     display: block;

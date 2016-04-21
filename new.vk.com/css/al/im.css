@@ -304,7 +304,8 @@ img.im_photo_thumb {
 }
 
 .im_chronicle_invite_descr {
-    line-height: 16px
+    line-height: 16px;
+    margin-left: 60px
 }
 
 .im_chronicle_invite_android {
@@ -3340,6 +3341,22 @@ img.im_photo_thumb {
     background-image: url(/images/icons/fav_mark.png);
     background-position: center -18px;
     background-repeat: no-repeat
+}
+
+.im-deselect {
+    background: url(/images/icons/box_acts.png) no-repeat 0 -14px;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 8px;
+    opacity: 0.7
+}
+
+.im-deselect:hover {
+    opacity: 1;
+    cursor: pointer
 }
 
 .im-create {

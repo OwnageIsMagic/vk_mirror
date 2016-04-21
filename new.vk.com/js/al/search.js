@@ -30,9 +30,11 @@ var slide_show = function(e) {
             if (t && checkEvent(t)) return !0;
             s = s || {}, "communities" == e && (val("c[category]", 0), cur.filtersShown = !1);
             var r = searcher.getSectionParams(e);
-            return "auto" != e && "quick" != e && s.updateStats && (r.swt = 1), s.tab && (r.tab = 1), ge("search_menu") && uiRightMenu && uiRightMenu.switchMenu(geByClass1(
-                "search_menu_" + e, "search_menu")), searcher.setSection(e), searcher.sendSearchReq(r, !0), hasClass(gpeByClass("ui_search", "search_query"),
-                "ui_search_fixed") && scrollToTop(), !1
+            if ("auto" != e && "quick" != e && s.updateStats && (r.swt = 1), s.tab && (r.tab = 1), ge("search_menu") && uiRightMenu) {
+                var o = geByClass1("search_menu_" + e, "search_menu");
+                o && uiRightMenu.switchMenu(o)
+            }
+            return searcher.setSection(e), searcher.sendSearchReq(r, !0), hasClass(gpeByClass("ui_search", "search_query"), "ui_search_fixed") && scrollToTop(), !1
         },
         switchAudioTop: function(e) {
             return cur.useRec = e, cur.audioTop = e, this.switchSection("audio")

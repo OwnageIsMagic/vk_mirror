@@ -6295,6 +6295,8 @@ var TopNotifier = {
     },
     setCount: function(value, noInvalidate) {
         if (isString(value)) value = trim(value);
+        if (parseInt(value) >= 100) value = '+99';
+
         if (hasClass(this.tnLink, 'has_notify') && value) {
             animateCount(this.tnCount, value, {
                 str: 'auto'

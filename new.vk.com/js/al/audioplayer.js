@@ -64,20 +64,7 @@ var AudioUtils = {
     AUDIO_STATE_ADDED: "added",
     AUDIO_STATE_REMOVED: "removed",
     ee: new EventEmitter,
-    showNeedFlashBox: function() {
-        var i = getLang("audio_flash_required")
-            .replace("{link}", '<a target=_blank href="https://get.adobe.com/flashplayer">')
-            .replace("{/link}", "</a>");
-        new MessageBox({
-                title: getLang("audio_need_flash_title")
-            })
-            .content(i)
-            .setButtons("Ok", function() {
-                curBox()
-                    .hide()
-            })
-            .show()
-    },
+    showNeedFlashBox: function() {},
     addAudio: function(i) {
         function t() {
             return hasClass(o, "audio_add_in_progress")
@@ -921,8 +908,7 @@ AudioPlayer.tabIcons = {
     isArray(t) && !isArray(t[0]) && (t = [t]), i.total = i.total || i.list.length || 0;
     var e = this;
     each(t, function(t, o) {
-        -1 == e.getAudioPlaylistPosition(o, i) && (o = clone(o), AudioUtils.prepareAudioForPlaylist(o), i.list.push(o),
-            i.total++)
+        -1 == e.getAudioPlaylistPosition(o, i) && (o = clone(o), AudioUtils.prepareAudioForPlaylist(o), i.list.push(o), i.total++)
     }), AudioUtils.getPlaylistType(i) != AudioUtils.AUDIO_PLAYLIST_TYPE_CURRENT && AudioUtils.indexPlaylist(i)
 }, AudioPlayer.prototype.getPlaylist = function(i) {
     if (arguments.length > 1 && (i = AudioUtils.makePlaylistId.apply(this, arguments)), isObject(i)) return i;
@@ -1258,10 +1244,8 @@ AudioPlayer.tabIcons = {
         }, 100)
     }
 }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.isSupported = function() {
-    var i = window.navigator && window.navigator.userAgent || "";
-    if (browser.opera && (-1 != i.indexOf("Windows NT 5.1") || -1 != i.indexOf("Windows NT 6.1"))) return !1;
-    var t = document.createElement("audio");
-    return !(!t.canPlayType || !t.canPlayType("audio/mpeg;")
+    var i = document.createElement("audio");
+    return !(!i.canPlayType || !i.canPlayType('audio/mpeg; codecs="mp3"')
         .replace(/no/, ""))
 }, AudioPlayerHTML5.prototype.type = "html5", AudioPlayerHTML5.prototype._getAudioEl = function() {
     if (!this._audioEl) {
