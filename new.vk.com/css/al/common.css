@@ -2414,11 +2414,16 @@ a:hover .left_count_persist .left_void {
 
 .listing {
     list-style: disc;
-    padding-left: 30px;
     color: #758eac;
     margin: 5px 0
 }
 
+ol.numbered,
+ul.listing {
+    padding-left: 30px
+}
+
+ol.numbered li,
 ul.listing li {
     padding: 4px 0 4px 3px
 }

@@ -2767,7 +2767,7 @@ img.im_photo_thumb {
     display: inline-block;
     width: 18px;
     height: 18px;
-    margin-left: 6px;
+    margin-left: 2px;
     background: url(/images/icons/verify.png) no-repeat 0 0
 }
 
@@ -3707,6 +3707,23 @@ img.im_photo_thumb {
     margin-left: -20px;
     margin-top: -45px;
     z-index: 1000
+}
+
+.im_rc_emojibtn {
+    display: inline-block;
+    *display: block;
+    zoom: 1;
+    padding: 3px 2px
+}
+
+.im_rc_emojibtn:hover {
+    background: #d5dde5;
+    text-decoration: none;
+    border-radius: 2px
+}
+
+.im_rc_emojibtn:active {
+    background: #c9d2db
 }
 
 .ui_multiselect_has_selection .ui_search_field {

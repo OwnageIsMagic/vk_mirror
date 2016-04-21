@@ -141,8 +141,8 @@ window["public"] = window.Public = {
             pid: cur.options.public_id,
             hash: cur.options.enterHash
         }, {
-            onDone: function(status, followers, js) {
-                Public.updateStatusHtml(ge("page_actions_btn"), status), Public.updateBlock("public_followers", followers), js && eval(js)
+            onDone: function(actions, followers, js) {
+                val("page_actions", actions), Public.updateBlock("public_followers", followers), js && eval(js)
             },
             showProgress: sp,
             hideProgress: hp
@@ -164,8 +164,8 @@ window["public"] = window.Public = {
             pid: cur.options.public_id,
             hash: cur.options.enterHash
         }, {
-            onDone: function(status, followers, js) {
-                Public.updateStatusHtml(ge("public_subscribe"), status), Public.updateBlock("public_followers", followers), js && eval(js)
+            onDone: function(actions, followers, js) {
+                val("page_actions", actions), Public.updateBlock("public_followers", followers), js && eval(js)
             },
             onFail: function(e) {
                 return e ? (showFastBox({
@@ -177,13 +177,6 @@ window["public"] = window.Public = {
             showProgress: sp,
             hideProgress: hp
         }), !1
-    },
-    updateStatusHtml: function(e, o) {
-        var t = domPN(e),
-            n = domPN(t),
-            a = domPN(n),
-            i = ce("div");
-        t.innerHTML = o[1], i.appendChild(n), a.innerHTML = o[0] + i.innerHTML + o[2]
     },
     editEvent: function(e, o, t) {
         showBox("/al_page.php", {
@@ -309,26 +302,10 @@ window["public"] = window.Public = {
             }
         }), ge("public_wall") && wall.init(extend(e, {
             automore: 1
-        })), each(geByClass("_group_send_msg"), function(e, o) {
-            addEvent(o, "click", Public.sendMessage.bind(this))
-        })
-    },
-    sendMessage: function(e) {
-        showWriteMessageBox(e, cur.oid)
-    },
-    toggleRss: function(e, o, t, n) {
-        e.innerHTML = '<img src="/images/upload.gif" />', ajax.post("al_groups.php", {
-            act: "a_toggle_rss",
-            gid: o,
-            hash: t
-        }, {
-            onDone: function(o) {
-                e.innerHTML = o
-            }
-        })
+        }))
     },
     toggleTop: function(e, o, t, n, a) {
-        e.innerHTML = '<img src="/images/upload.gif" />', ajax.post("al_groups.php", {
+        ajax.post("al_groups.php", {
             act: "a_toggle_top",
             gid: o,
             hash: t,
@@ -336,29 +313,22 @@ window["public"] = window.Public = {
         }, {
             onDone: function(o) {
                 e.innerHTML = o
-            }
-        })
-    },
-    toggleBrand: function(e, o, t, n) {
-        e.innerHTML = '<img src="/images/upload.gif" />', ajax.post("al_groups.php", {
-            act: "a_toggle_brand",
-            gid: o,
-            hash: t
-        }, {
-            onDone: function(o) {
-                e.innerHTML = o
-            }
+            },
+            showProgress: window.Page && Page.actionsDropdownLock.pbind(e),
+            hideProgress: window.Page && Page.actionsDropdownUnlock.pbind(e)
         })
     },
     toggleStickers: function(e, o, t, n) {
-        e.innerHTML = '<img src="/images/upload.gif" />', ajax.post("al_groups.php", {
+        ajax.post("al_groups.php", {
             act: "a_toggle_stickers",
             gid: o,
             hash: t
         }, {
             onDone: function(o) {
                 e.innerHTML = o
-            }
+            },
+            showProgress: window.Page && Page.actionsDropdownLock.pbind(e),
+            hideProgress: window.Page && Page.actionsDropdownUnlock.pbind(e)
         })
     },
     uploadPhotos: function(e, o) {
@@ -402,31 +372,31 @@ var PagedList = function(e, o, t) {
     t = t ? extend(i, t) : i, this.data = o;
     for (var r = [], s = 0; s < o.length; ++s) r.push(o[s]);
     var p = [],
-        l = 0;
+        c = 0;
     this.setData = function(e) {
         this.data = e, this.getPage(0, p, !0)
     };
-    var c = t.getRow.bind(this);
+    var l = t.getRow.bind(this);
     this.getPage = function(o, i, s) {
-        if (void 0 === i && (i = p), l != o || !a(i, p) || s) {
-            if (l = o, t.onStart && t.onStart(), !a(i, p)) {
+        if (void 0 === i && (i = p), c != o || !a(i, p) || s) {
+            if (c = o, t.onStart && t.onStart(), !a(i, p)) {
                 p = n(i), r = [];
                 for (var u = 0; u < this.data.length; ++u)(!i || t.filter(i, this.data[u])) && r.push(this.data[u])
             }
             if (!r.length) return ge(e)
                 .innerHTML = t.emptyRow(i), t.setPages(0, 0, "top"), void t.setPages(0, 0, "bottom");
             for (var d = [], u = o * t.perPage; u < Math.min(r.length, (o + 1) * t.perPage); ++u) {
-                var g = r[u];
-                d.push(c(g, p))
+                var h = r[u];
+                d.push(l(h, p))
             }
-            var h = getSize(ge(e))[1];
+            var g = getSize(ge(e))[1];
             if (ge(e)
                 .innerHTML = d.join(""), setStyle(ge(e), {
-                    height: o ? h : "auto"
+                    height: o ? g : "auto"
                 }), t.onShow)
                 for (var u = o * t.perPage; u < Math.min(r.length, (o + 1) * t.perPage); ++u) {
-                    var g = r[u];
-                    t.onShow(g, u)
+                    var h = r[u];
+                    t.onShow(h, u)
                 }
             var _ = Math.ceil(r.length / t.perPage);
             t.setPages(o, _, "top"), t.setPages(o, _, "bottom"), t.onEnd && t.onEnd()

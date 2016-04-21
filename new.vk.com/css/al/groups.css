@@ -161,13 +161,13 @@
     line-height: 160%
 }
 
-#group_block_admin_comment,
-#group_block_comment,
-#group_block_public_comment {
-    width: 396px;
-    height: 40px;
-    padding: 5px;
-    vertical-align: top
+.groups_box_textarea {
+    width: 100%;
+    height: 60px
+}
+
+.groups_box_radio {
+    margin: 6px 0
 }
 
 .group_block_button,
@@ -191,8 +191,7 @@
 }
 
 #group_block_admin_preview,
-#group_block_public_preview,
-#group_block_warning {
+#group_block_public_preview {
     padding-bottom: 10px
 }
 
@@ -373,7 +372,7 @@ a.groups_messages_block .ui_rmenu_count {
 
 .groups_catalog_info {
     padding: 20px;
-    background-color: #f7f7f7
+    background-color: #fafbfc
 }
 
 .groups_catalog_data {
@@ -381,7 +380,7 @@ a.groups_messages_block .ui_rmenu_count {
 }
 
 .groups_catalog_box_error {
-    margin-bottom: 18px;
+    margin: 0 0 18px;
     display: none
 }
 
@@ -392,8 +391,8 @@ a.groups_messages_block .ui_rmenu_count {
 .groups_catalog_thumb_box img {
     width: 75px;
     height: 75px;
-    display: block;
-    border-radius: 3px
+    border-radius: 50%;
+    display: block
 }
 
 .groups_catalog_comm_info {
@@ -410,20 +409,13 @@ a.groups_messages_block .ui_rmenu_count {
     text-overflow: ellipsis
 }
 
-.groups_catalog_info_row {
-    color: #666;
-    padding-top: 5px
+a.groups_catalog_comm_title_link {
+    color: #42648b
 }
 
-.groups_catalog_header {
-    color: #45688e;
-    line-height: 1.27em;
-    margin: 0;
-    padding: 20px 0 9px;
-    font-size: 1.09em;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+.groups_catalog_info_row {
+    color: #65686c;
+    padding-top: 5px
 }
 
 .groups_catalog_data .wddi_data {
@@ -455,24 +447,12 @@ a.groups_messages_block .ui_rmenu_count {
     margin-left: 6px
 }
 
-#groups_searchwords,
-#groups_searchwords_count {
-    padding: 6px 8px;
-    width: 200px
-}
-
 .groups_input_wrap {
-    text-align: left;
-    display: inline-block
+    text-align: left
 }
 
-.groups_catalog_data {
-    text-align: center
-}
-
-.groups_searchwords_hint {
-    color: #777;
-    margin-top: 3px
+.groups_searchwords_input {
+    width: 100%
 }
 
 .groups_searchwords_allow_admin_change {

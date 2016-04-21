@@ -113,9 +113,9 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 681506597356,
+    'nav': 682907447620,
     'common.js': 1132,
-    'common.css': 1944289248,
+    'common.css': 1023225868,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -204,14 +204,14 @@ var stVersions = {
     'owner_photo.js': 2124522904,
     'owner_photo.css': 191725357,
     'page.js': 3993706785,
-    'page.css': 106498212,
+    'page.css': 2041222233,
     'page_help.css': 4249963104,
     'public.css': 1944959723,
-    'public.js': 525512726,
+    'public.js': 1370745423,
     'pages.css': 4259151537,
-    'pages.js': 1416783860,
-    'groups.css': 3405378530,
-    'groups.js': 1942276054,
+    'pages.js': 3347413999,
+    'groups.css': 2250107211,
+    'groups.js': 3142831624,
     'groups_list.js': 3038780989,
     'groups_edit.css': 4247198484,
     'groups_edit.js': 3159630895,
@@ -234,8 +234,8 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 4288717027,
-    'imn.js': 278912512,
+    'im.css': 1324994089,
+    'imn.js': 808677986,
     'im.js': 973890988,
     'emoji.js': 1901466810,
     'wide_dd.css': 2276826341,
@@ -473,4 +473,4 @@ var stTypes = {
         'snapster/mobile.css': 1
     }
 };
-var _rnd = 1863;
+var _rnd = 1717;

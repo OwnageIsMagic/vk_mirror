@@ -5817,7 +5817,7 @@ button.wall_block_app_btn {
     position: relative;
     padding: 0 13px;
     height: 28px;
-    line-height: 26px;
+    line-height: 28px;
     color: #41658c;
     white-space: nowrap
 }
@@ -5928,12 +5928,21 @@ button.wall_block_app_btn {
     display: none
 }
 
+.page_actions_expanded .page_actions_item {
+    border-radius: 2px
+}
+
+.page_actions_expanded .page_actions_separator {
+    margin: 4px 0 0
+}
+
 .page_photo {
     padding: 15px;
     font-size: 12px
 }
 
 .page_photo .flat_button,
+.page_photo .page_actions_expanded,
 .page_photo .page_actions_wrap {
     margin-top: 10px
 }
