@@ -31,8 +31,8 @@ var slide_show = function(e) {
             s = s || {}, "communities" == e && (val("c[category]", 0), cur.filtersShown = !1);
             var r = searcher.getSectionParams(e);
             if ("auto" != e && "quick" != e && s.updateStats && (r.swt = 1), s.tab && (r.tab = 1), ge("search_menu") && uiRightMenu) {
-                var o = geByClass1("search_menu_" + e, "search_menu");
-                o && uiRightMenu.switchMenu(o)
+                var c = geByClass1("search_menu_" + e, "search_menu");
+                c && uiRightMenu.switchMenu(c)
             }
             return searcher.setSection(e), searcher.sendSearchReq(r, !0), hasClass(gpeByClass("ui_search", "search_query"), "ui_search_fixed") && scrollToTop(), !1
         },
@@ -82,10 +82,10 @@ var slide_show = function(e) {
                 cur.searchLoc && (e.search_loc = cur.searchLoc), void 0 !== cur.topType && (e.type = cur.topType, delete cur.topType), window.iSearch && iSearch.select && (
                     iSearch.select.hide(), delete cur.setISearch), cur.loadingMedia || (uiSearch.showProgress("search_query"), ge("search_query")
                     .ignoreFixed = "statuses" == e["c[section]"]), cur.searchReq = ajax.post("al_search.php", e, {
-                    onDone: function(t, r, o) {
-                        var c = e.uf && ge("results_wrap") ? ge("results_wrap") : ge("results"),
+                    onDone: function(t, r, c) {
+                        var o = e.uf && ge("results_wrap") ? ge("results_wrap") : ge("results"),
                             i = ge("friends_filters_block") ? ge("friends_filters_block") : ge("filter_form");
-                        if (c.innerHTML = r || "", s && (i.innerHTML = o || "", ge("search_query")
+                        if (o.innerHTML = r || "", s && (i.innerHTML = c || "", ge("search_query")
                                 .focus(), t.loc)) {
                             var a = locProtocol + "//" + location.host + "/" + t.loc,
                                 n = document.URL == a ? "" : document.URL;
@@ -113,11 +113,19 @@ var slide_show = function(e) {
             e != cur.section && "auto" != e && e && (cur.section = e)
         },
         applyOptions: function(options, changeSection) {
-            if (iSearch.initSelect(), searcher.setSection(options.section), options.reply_names && (extend(cur.options.reply_names, options.reply_names), delete options.reply_names),
-                extend(cur, options), cur.params = searcher.getSectionParams(), options.tabs ? (val("search_tabs_wrap", options.tabs), hide("search_header"), show(
-                    "search_tabs_wrap")) : options.title && (val("search_header_text", options.title), hide("search_tabs_wrap"), show("search_header")), options.summary ? val(
-                    "search_summary", langNumeric(options.summary, "%s", !0)) : void 0 != options.summary && val("search_summary", ""), void 0 != options.controls && val(
-                    "search_header_controls", options.controls || ""), void 0 !== options.auto_rows && ge("search_auto_rows") && (ge("search_auto_rows")
+            iSearch.initSelect(), searcher.setSection(options.section), options.reply_names && (extend(cur.options.reply_names, options.reply_names), delete options.reply_names),
+                extend(cur, options), cur.params = searcher.getSectionParams();
+            var header = ge("search_header");
+            if (options.tabs) val("search_tabs_wrap", options.tabs), hide(header), show("search_tabs_wrap");
+            else if (options.title) {
+                var header_inner = geByClass1("_header_inner", header);
+                val(header_inner, options.title), options.summary && header_inner.appendChild(ce("span", {
+                    className: "page_block_header_count",
+                    innerHTML: langNumeric(options.summary, "%s", !0)
+                })), hide("search_tabs_wrap"), show(header)
+            }
+            if (void 0 != options.controls && val(geByClass1("_header_extra", header), options.controls || ""), void 0 !== options.auto_rows && ge("search_auto_rows") && (ge(
+                        "search_auto_rows")
                     .innerHTML = options.auto_rows || ""), clearTimeout(cur.setLocTO), options.loc)
                 if (changeSection) try {
                     nav.setLoc(options.loc)
@@ -144,7 +152,7 @@ var slide_show = function(e) {
             res.className = "search_results search_" + cur.section + "_results" + ("statuses" == cur.section || "auto" == cur.section ? " wall_module" : "") + ("statuses" ==
                 cur.section && options.summary ? "" : " page_block"), cur.uiSearchPageBlock = res, lighted && addClass(sc, "highlight");
             var more_results = ge("search_more_results");
-            cur.has_more || more_results && more_results.firstChild ? (hide("seach_pages"), show("show_more_link")) : hide("show_more_link")
+            cur.has_more || more_results && more_results.firstChild ? (hide("seach_pages"), show("ui_search_load_more")) : hide("ui_search_load_more")
         },
         selectHotHashtag: function(e) {
             var s = val(e),
@@ -181,11 +189,11 @@ var slide_show = function(e) {
             }
         },
         showMore: function() {
-            var e = ge("show_more_link"),
+            var e = ge("ui_search_load_more"),
                 s = ge("search_more_results");
             if (!e || !isVisible(e) || cur.isSearchLoading) return void(s && searcher.appendElements(s));
-            if (s && searcher.appendElements(s), !cur.has_more) return void hide("show_more_link");
-            cur.disableAutoMore = !1, cur.isSearchLoading = !0, addClass("show_more_link", "load_more");
+            if (s && searcher.appendElements(s), !cur.has_more) return void hide(e);
+            cur.disableAutoMore = !1, cur.isSearchLoading = !0, lockButton(e);
             var t = extend(searcher.getSectionParams(), {
                 offset: cur.offset
             });
@@ -195,7 +203,7 @@ var slide_show = function(e) {
                         .insertBefore(ce("div", {
                             innerHTML: t,
                             id: "search_more_results"
-                        }), e)), removeClass("show_more_link", "load_more"), searcher.applyOptions(s), searcher.scrollCheck()
+                        }), e)), unlockButton(e), searcher.applyOptions(s), searcher.scrollCheck()
                 },
                 cache: "audio" != t["c[section]"] || t["c[q]"] ? 1 : 0
             })
@@ -207,22 +215,22 @@ var slide_show = function(e) {
         },
         toggleMinimizedFilters: function(e, s, t) {
             var r = e && domNS(e),
-                o = t ? 0 : 500;
-            return void 0 === s && (s = !isVisible(r)), !s && isVisible(r) ? (cur.filtersShown = !1, removeClass(e, "ui_rmenu_item_expanded"), slideUp(r, o)) : s && !isVisible(
-                r) && (cur.filtersShown = !0, val("c[category]", 0), addClass(e, "ui_rmenu_item_expanded"), slideDown(r, o)), !1
+                c = t ? 0 : 500;
+            return void 0 === s && (s = !isVisible(r)), !s && isVisible(r) ? (cur.filtersShown = !1, removeClass(e, "ui_rmenu_item_expanded"), slideUp(r, c)) : s && !isVisible(
+                r) && (cur.filtersShown = !0, val("c[category]", 0), addClass(e, "ui_rmenu_item_expanded"), slideDown(r, c)), !1
         },
         onCommunitiesToggle: function() {
             "search" == cur.module && (uiRightMenu.switchMenu(geByClass1("search_menu_" + cur.section, "search_menu")), searcher.updResults())
         },
-        subscribe: function(e, s, t, r, o, c, i) {
+        subscribe: function(e, s, t, r, c, o, i) {
             var a, n, u = gpeByClass("search_row", e);
-            if (cur.unsubscribed = cur.unsubscribed || {}, !r && c && !cur.unsubscribed[s]) {
+            if (cur.unsubscribed = cur.unsubscribed || {}, !r && o && !cur.unsubscribed[s]) {
                 var l = showFastBox({
                     title: getLang("global_warning"),
                     dark: 1,
                     bodyStyle: "padding: 20px; line-height: 160%;"
-                }, getLang(c), getLang("search_group_leave"), function() {
-                    l.hide(), searcher.subscribe(e, s, t, r, o)
+                }, getLang(o), getLang("search_group_leave"), function() {
+                    l.hide(), searcher.subscribe(e, s, t, r, c)
                 }, getLang("global_cancel"));
                 return !1
             }
@@ -230,7 +238,7 @@ var slide_show = function(e) {
                 act: "subscr",
                 oid: s,
                 hash: t,
-                from: o || "search"
+                from: c || "search"
             }) : (a = "al_fans.php", n = {
                 act: "unsub",
                 oid: s,
@@ -253,15 +261,15 @@ var slide_show = function(e) {
         },
         scrollCheck: function() {
             if (!(browser.mobile || cur.isSearchLoading || cur.disableAutoMore)) {
-                var e = ge("show_more_link");
+                var e = ge("ui_search_load_more");
                 if (!isVisible(e)) {
                     var s = ge("search_more_results");
                     return void(s && searcher.appendElements(s))
                 }
                 var t = document.documentElement,
                     r = window.innerHeight || t.clientHeight || bodyNode.clientHeight,
-                    o = scrollGetY();
-                o + r + 200 > e.offsetTop && searcher.showMore()
+                    c = scrollGetY();
+                c + r + 200 > e.offsetTop && searcher.showMore()
             }
         },
         init: function(e) {
@@ -277,18 +285,18 @@ var slide_show = function(e) {
                         cur.loc));
                     if (cur.searchLoc) {
                         var r = !1;
-                        for (var o in t)
-                            if ("c[" == o.substr(0, 2)) {
+                        for (var c in t)
+                            if ("c[" == c.substr(0, 2)) {
                                 r = !0;
                                 break
                             }
                         if (cur.onLocationChange && cur.onLocationChange(r), !r) return !0
                     }
-                    var c = clone(t);
-                    delete c[0];
-                    var i = c["c[section]"] || c.section || "quick";
+                    var o = clone(t);
+                    delete o[0];
+                    var i = o["c[section]"] || o.section || "quick";
                     return ge("search_menu") && uiRightMenu && uiRightMenu.switchMenu(geByClass1("search_menu_" + i, "search_menu")), searcher.setSection(i), searcher.sendSearchReq(
-                        c, !0), !1
+                        o, !0), !1
                 })), cur.options || (cur.options = {
                     reply_names: {}
                 }), extend(cur.options, e), searcher.applyOptions(e), t.ignoreFixed = "statuses" == cur.section, window.scrollTop = bodyNode.scrollTop = pageNode.scrollTop =
@@ -366,9 +374,9 @@ void 0 === window.iSearch && (iSearch = {
             if (!s.select || s.select.active < 0) return e.keyCode == KEY.RETURN && s.select && (cur.preventISRequest = !0, s.select.hide()), !0;
             if (e.keyCode == KEY.SPACE || (e.keyCode == KEY.RETURN || 10 == e.keyCode) && s.select && s.select.isVisible()) {
                 var t, r = s.select.list.childNodes[s.select.active],
-                    o = r ? r.getAttribute("val") : "";
+                    c = r ? r.getAttribute("val") : "";
                 if (each(s.lastItems, function() {
-                        this[0] == o && (t = this)
+                        this[0] == c && (t = this)
                     }), !t) return;
                 return val(s.input, t[3] + (e.keyCode == KEY.SPACE ? " " : "")), elfocus(s.input, s.input.length), e.keyCode != KEY.SPACE && (cur.preventISRequest = !0,
                     s.select.hide(), searcher.updResults()), cancelEvent(e)
@@ -444,13 +452,13 @@ void 0 === window.iSearch && (iSearch = {
             }
         })
     },
-    groupAction: function(e, s, t, r, o) {
+    groupAction: function(e, s, t, r, c) {
         ajax.post("al_groups.php", {
             act: "member_action",
             action: s,
             gid: t,
             mid: r,
-            hash: o,
+            hash: c,
             context: "search"
         }, {
             onDone: function(s) {
@@ -506,9 +514,9 @@ void 0 === window.iSearch && (iSearch = {
     },
     selectCategory: function(e, s, t) {
         ge("c[category]")
-            .value = s, uiRightMenu.switchMenu(e);
-        var e = ge("search_query");
-        return val(e) && (val(e, ""), e.focus(), triggerEvent(e, "keyup")), searcher.toggleMinimizedFilters(ge("search_filters_minimized"), !1), searcher.updResults(), !1
+            .value = s, e && hasClass(e, "_ui_rmenu_subitem") && uiRightMenu.switchMenu(e);
+        var r = ge("search_query");
+        return val(r) && (val(r, ""), r.focus(), triggerEvent(r, "keyup")), searcher.toggleMinimizedFilters(ge("search_filters_minimized"), !1), searcher.updResults(), !1
     },
     searchUnchooseGeoPoint: function() {
         var e = ge("search_status_map"),
@@ -518,15 +526,15 @@ void 0 === window.iSearch && (iSearch = {
         }), s && s.tt && s.tt.hide && s.tt.hide(), val("search_status_map_hidden", ""), searcher.updResults()
     },
     chooseGeoPoint: function(e, s, t, r) {
-        var o = 0;
+        var c = 0;
         each([8, 11, 14, 17, 20], function(e, s) {
-            return s >= t ? !1 : void(o = e)
+            return s >= t ? !1 : void(c = e)
         }), boxQueue.hideLast();
-        var c = (new Array(o + 1)
+        var o = (new Array(c + 1)
                 .join("+"), Math.pow(10, 10)),
             i = 200,
             a = 120;
-        window.devicePixelRatio >= 2 && (i *= 2, a *= 2), e = Math.round(e * c) / c, s = Math.round(s * c) / c;
+        window.devicePixelRatio >= 2 && (i *= 2, a *= 2), e = Math.round(e * o) / o, s = Math.round(s * o) / o;
         var n = ge("search_status_map");
         addClass(n, "search_status_map_selected"), setStyle(n, {
             backgroundImage: "url(/maps?lat=" + e + "&lng=" + s + "&z=" + t + "&w=" + i + "&h=" + a + ")"
@@ -543,9 +551,9 @@ void 0 === window.iSearch && (iSearch = {
     },
     searchUrlOnChange: function(e, s, t) {
         var r = ge("search_status_url"),
-            o = r.name,
-            c = s ? "c[domain]" : "c[url]";
-        return radiobtn(e, s, "search_status_hint_domain"), elfocus(r), val(r) && c != o && (r.name = c, searcher.updResults()), cancelEvent(t)
+            c = r.name,
+            o = s ? "c[domain]" : "c[url]";
+        return radiobtn(e, s, "search_status_hint_domain"), elfocus(r), val(r) && o != c && (r.name = o, searcher.updResults()), cancelEvent(t)
     }
 };
 try {

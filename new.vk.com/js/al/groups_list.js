@@ -429,13 +429,13 @@ var GroupsList = {
             })
         }
     },
-    extendedSearch: function(r, s) {
+    extendedSearch: function(r) {
         clearTimeout(cur.searchTimeout), cur.searchTimeout = setTimeout(function() {
-            var r = geByClass1("groups_section_search");
-            if (window.searcher && r) {
+            var s = geByClass1("groups_section_search");
+            if (window.searcher && s) {
                 var e = searcher.getSectionParams();
-                e["c[category]"] ? (uiRightMenu.switchMenu(r), uiRightMenu.showProgress(r), nav.go(r.href + "&c[q]=" + s)) : searcher.onEnter()
-            } else nav.go("/groups?act=catalog&c[q]=" + s)
+                e["c[category]"] ? (uiRightMenu.switchMenu(s), uiRightMenu.showProgress(s), nav.go(s.href + "&c[q]=" + r)) : searcher.onEnter()
+            } else nav.go("/groups?act=catalog&c[q]=" + r)
         }, 500)
     },
     extendWithAdvancedParams: function(r) {
