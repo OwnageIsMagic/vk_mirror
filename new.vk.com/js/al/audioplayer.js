@@ -469,7 +469,7 @@ var AudioUtils = {
         else if (l = domClosest("replies_list", i)) o = t(geByClass("wall_audio_rows", l));
         else if (l = domClosest("_bt_rows", i)) o = t(geByClass("_wall_audio_rows", l));
         else if (l = domClosest("_feed_rows", i)) o = t(geByClass("wall_text", l));
-        else if (l = domClosest("wall_posts", i)) {
+        else if ((l = domClosest("wall_posts", i)) && !domClosest("wall_tt", i)) {
             o = t(geByClass("wall_text", l));
             var u = geByClass1("post_fixed");
             u && o.unshift(geByClass1("wall_text", u))
@@ -911,7 +911,8 @@ AudioPlayer.tabIcons = {
         -1 == e.getAudioPlaylistPosition(o, i) && (o = clone(o), AudioUtils.prepareAudioForPlaylist(o), i.list.push(o), i.total++)
     }), AudioUtils.getPlaylistType(i) != AudioUtils.AUDIO_PLAYLIST_TYPE_CURRENT && AudioUtils.indexPlaylist(i)
 }, AudioPlayer.prototype.getPlaylist = function(i) {
-    if (arguments.length > 1 && (i = AudioUtils.makePlaylistId.apply(this, arguments)), isObject(i)) return i;
+    if (arguments.length > 1 && (i = AudioUtils.makePlaylistId.apply(this, arguments)),
+        isObject(i)) return i;
     this.audioPlaylists = this.audioPlaylists || {};
     var t = this.audioPlaylists[i];
     if (!t) {

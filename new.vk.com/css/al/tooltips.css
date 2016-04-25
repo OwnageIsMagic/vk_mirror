@@ -350,11 +350,6 @@
     left: 280px
 }
 
-.fwd_reply_tt table.toup1 .bottom_pointer,
-.fwd_reply_tt table.toup .top_pointer {
-    margin-left: 309px
-}
-
 .gifts_tt .toup1 .bottom_pointer,
 .gifts_tt .toup .top_pointer {
     margin-left: 91px
@@ -363,13 +358,6 @@
 .im_stickers_gift_tt .toup1 .bottom_pointer,
 .im_stickers_gift_tt .toup .top_pointer {
     margin-left: 158px
-}
-
-.fw_reply_tt .fw_reply_date {
-    max-width: 300px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden
 }
 
 .gifts_tt .bottom_sh {
@@ -453,7 +441,7 @@
     max-width: 200px
 }
 
-.wall_tt.tt_default.tt_down:not(.post_source_tt):after {
+.wall_tt.tt_default.tt_down:not(.post_source_tt):not(.fw_reply_tt):after {
     border-top-color: #fafbfc
 }
 
@@ -528,6 +516,7 @@
     overflow: hidden
 }
 
+div.fw_reply_tt .content,
 div.own_reply_tt .content {
     max-width: 448px;
     width: 448px!important;

@@ -85,8 +85,7 @@ var slide_show = function(e) {
                     onDone: function(t, r, c) {
                         var o = e.uf && ge("results_wrap") ? ge("results_wrap") : ge("results"),
                             i = ge("friends_filters_block") ? ge("friends_filters_block") : ge("filter_form");
-                        if (o.innerHTML = r || "", s && (i.innerHTML = c || "", ge("search_query")
-                                .focus(), t.loc)) {
+                        if (o.innerHTML = r || "", s && (i.innerHTML = c || "", elfocus("search_query"), t.loc)) {
                             var a = locProtocol + "//" + location.host + "/" + t.loc,
                                 n = document.URL == a ? "" : document.URL;
                             setTimeout(updateOtherCounters.pbind(a, n), 10)
@@ -215,7 +214,7 @@ var slide_show = function(e) {
         },
         toggleMinimizedFilters: function(e, s, t) {
             var r = e && domNS(e),
-                c = t ? 0 : 500;
+                c = t ? 0 : 200;
             return void 0 === s && (s = !isVisible(r)), !s && isVisible(r) ? (cur.filtersShown = !1, removeClass(e, "ui_rmenu_item_expanded"), slideUp(r, c)) : s && !isVisible(
                 r) && (cur.filtersShown = !0, val("c[category]", 0), addClass(e, "ui_rmenu_item_expanded"), slideDown(r, c)), !1
         },
@@ -277,7 +276,7 @@ var slide_show = function(e) {
             s && globalHistory[s - 1] && globalHistory[s - 1].loc.indexOf("search") ? cur.search_return_to = globalHistory[s - 1].loc : cur.search_return_to = "/", hide(
                 "header");
             var t = ge("search_query");
-            iSearch.destroy(), vk.id && iSearch.init(t), t.focus(), "search" == nav.objLoc[0] && (extend(cur, {
+            iSearch.destroy(), vk.id && iSearch.init(t), elfocus(t), "search" == nav.objLoc[0] && (extend(cur, {
                     oid: e.user_id,
                     module: "search"
                 }), cur.nav.push(function(e, s, t) {

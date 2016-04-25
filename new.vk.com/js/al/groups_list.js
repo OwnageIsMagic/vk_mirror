@@ -394,8 +394,8 @@ var GroupsList = {
                 act: "more_invites",
                 offset: cur.scrollList.invShown
             }, {
-                onDone: function(r) {
-                    e.innerHTML = r
+                onDone: function(r, s) {
+                    e.innerHTML = r, s && (cur.scrollList.counts.invite -= s)
                 },
                 showProgress: function() {
                     cur.loadingInvites = !0
@@ -432,10 +432,8 @@ var GroupsList = {
     extendedSearch: function(r) {
         clearTimeout(cur.searchTimeout), cur.searchTimeout = setTimeout(function() {
             var s = geByClass1("groups_section_search");
-            if (window.searcher && s) {
-                var e = searcher.getSectionParams();
-                e["c[category]"] ? (uiRightMenu.switchMenu(s), uiRightMenu.showProgress(s), nav.go(s.href + "&c[q]=" + r)) : searcher.onEnter()
-            } else nav.go("/groups?act=catalog&c[q]=" + r)
+            window.searcher && s ? hasClass(s, "ui_rmenu_item_sel") ? searcher.onEnter() : (uiRightMenu.switchMenu(s), uiRightMenu.showProgress(s), nav.go(s.href +
+                "&c[q]=" + r)) : nav.go("/groups?act=catalog&c[q]=" + r)
         }, 500)
     },
     extendWithAdvancedParams: function(r) {

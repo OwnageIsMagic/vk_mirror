@@ -1117,7 +1117,7 @@ var Video = {
                 force_no_repeat: 1
             })), cur.videoSearchStats) {
             var _ = domClosest("video_item", t);
-            if (_.hasAttribute("data-search-pos")) {
+            if (_ && _.hasAttribute("data-search-pos")) {
                 cur.videoSearchPos = parseInt(_.getAttribute("data-search-pos")), cur.videoSearchPos > cur.videoSearchStats.lastSeenIndex && (cur.videoSearchStats.lastSeenElement =
                     _, cur.videoSearchStats.lastSeenIndex = cur.videoSearchPos), cur.videoSearchStats.positions[cur.videoSearchPos] = extend({
                     clicked: 0

@@ -772,6 +772,10 @@ function matchesSelector(el, selector) {
     return matches.call(el, selector);
 }
 
+function isHover(el) {
+    return matchesSelector(el, ':hover');
+}
+
 function isAncestor(el, ancestor) {
     var current = ge(el);
     ancestor = ge(ancestor);
@@ -8479,6 +8483,10 @@ function showVideo(videoId, listId, options, ev) {
                 options.addParams.load_playlist = intval(/^(?:post_)?-?\d+_-?\d+$/.test(options.playlistId));
             }
         }
+    }
+
+    if (options.player) {
+        delete cur.videoInlinePlayer;
     }
 
     var hub = new callHub(function() {

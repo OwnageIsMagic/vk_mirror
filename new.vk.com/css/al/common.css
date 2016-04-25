@@ -4784,7 +4784,7 @@ em.highlight {
 
 .ts_cont_wrap .page_verified {
     background: url(/images/icons/verify_small.png) no-repeat 0;
-    top: 1px;
+    top: 2px;
     margin-left: 5px;
     padding: 2px 14px 2px 0
 }

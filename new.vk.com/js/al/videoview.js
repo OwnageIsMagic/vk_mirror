@@ -87,9 +87,17 @@ var Videoview = {
                 Videoview.sendPlayerStats(8, 0), showVideo(e, i, {
                     autoplay: 1,
                     queue: 1,
+                    minimized: 1,
+                    player: player,
                     addParams: {
                         t: o
                     }
+                })
+            },
+            onExpandInline: function(e, i, o) {
+                Videoview.sendPlayerStats(8, 0), showVideo(e, i, {
+                    queue: 1,
+                    player: o
                 })
             },
             onVideoAdEvent: function(e, i, o, t, a, r, d) {
@@ -616,8 +624,12 @@ var Videoview = {
                     mvOldX: e.pageX,
                     mvOldY: e.pageY,
                     mvOldT: vkNow()
-                }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), t.minimized && setTimeout(Videoview.minimize.bind(Videoview), 0), t.playlistId ?
-                Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) : VideoPlaylist.removeBlock(), Videoview.cleanUpStoredVSegs(), !1
+                }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), t.player && (mvcur.player = t.player, val("mv_content",
+                        '<div class="video_box">  <div class="wrap">    <div id="video_box_wrap' + i +
+                        '" class="video_box_wrap">      <div id="video_player" style="width:896px;height:504px;"></div>    </div>  </div></div>    '), ge("video_player")
+                    .appendChild(mvcur.player.el), hide("mv_progress"), show("mv_content"), mvcur.player.onExpanded()), t.minimized && setTimeout(Videoview.minimize.bind(
+                    Videoview), 0), t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) : VideoPlaylist.removeBlock(), Videoview.cleanUpStoredVSegs(), !
+                1
         },
         buildLayerContent: function() {
             var e = "mv_dark";
@@ -871,8 +883,7 @@ var Videoview = {
                 Videoview.recache()
         },
         showEditReply: function(e) {
-            mvcur.commentingInProgress = !0,
-                Videoview.playerNextTimerUpdate()
+            mvcur.commentingInProgress = !0, Videoview.playerNextTimerUpdate()
         },
         hideEditReply: function(e) {
             mvcur.commentingInProgress = !1;
@@ -1358,11 +1369,14 @@ var Videoview = {
                             VideoPlaylist.updateControls())
                     }
                 }
-                if (Wall.cancelEdit(!0), opt.is_vk_player && !opt.is_flv && !opt.cantPlay && mvcur.player && domPN(mvcur.player.el) === ge("video_player")) {
-                    var videoBoxWrap = domByClass(ge("mv_content"), "video_box_wrap");
-                    attr(videoBoxWrap, "id", "video_box_wrap" + mvcur.videoRaw)
-                } else val("mv_content", html);
-                hide("mv_progress"), val("mv_controls", desc), val("mv_service_btns", serviceBtns);
+                if (Wall.cancelEdit(!0), !mvcur.options.player) {
+                    if (opt.is_vk_player && !opt.is_flv && !opt.cantPlay && mvcur.player && domPN(mvcur.player.el) === ge("video_player")) {
+                        var videoBoxWrap = domByClass(ge("mv_content"), "video_box_wrap");
+                        attr(videoBoxWrap, "id", "video_box_wrap" + mvcur.videoRaw)
+                    } else val("mv_content", html);
+                    hide("mv_progress")
+                }
+                val("mv_controls", desc), val("mv_service_btns", serviceBtns);
                 var rf = ge("reply_field" + mvcur.post);
                 if (rf && placeholderInit(rf, {
                         editable: 1

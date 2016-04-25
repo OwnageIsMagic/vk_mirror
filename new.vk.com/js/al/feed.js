@@ -799,7 +799,7 @@ var Feed = {
                 showdt: 400,
                 hidedt: 200,
                 dir: "auto",
-                className: "rich wall_tt",
+                className: "rich wall_tt wall_module",
                 appendParentCls: "scroll_fix_wrap"
             })
     },
@@ -1362,15 +1362,16 @@ var Feed = {
         }, 2e4), addEvent(window, "scroll", feed.scrollCheck), addEvent(window, "resize", feed.scrollCheck)
     },
     mentionClick: function(e, t) {
-        var s = ((e.getAttribute("mention") || "")
-            .match(/^bp(-?\d+_\d+)$/) || {})[1];
-        if (!s) return nav.go(e, t);
-        for (s = s.split("_"); e; e = e.parentNode) {
-            var o = (e.id || "")
+        var s = e,
+            o = ((e.getAttribute("mention") || "")
+                .match(/^bp(-?\d+_\d+)$/) || {})[1];
+        if (!o) return nav.go(e, t);
+        for (o = o.split("_"); e; e = e.parentNode) {
+            var r = (e.id || "")
                 .match(/^replies(-?\d+_topic\d+)$/);
-            if (o) {
-                var r = o[1].split("_");
-                if (r[0] == s[0]) return wall.showReply(o[1], s[0] + "topic_" + s[1]);
+            if (r) {
+                var i = r[1].split("_");
+                if (i[0] == o[0]) return wall.showReply(s, r[1], o[0] + "topic_" + o[1], t);
                 break
             }
         }
