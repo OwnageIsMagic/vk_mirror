@@ -92,7 +92,7 @@ var Photoview = {
                 innerHTML: ""
             })), addClass(layerWrap, o), addClass(layerBG, o);
             var t = !!(cur.pvVideoTagsShown || cur.pvAlbumsShown || cur.pvAlbumShown || cur.pvPhotoTagShown);
-            cur.pvIsLightMode = 0 == nav.objLoc[0].indexOf("blog/") || inArray(nav.objLoc[0], ["blog", "about"]);
+            cur.pvIsLightMode = 0 == nav.objLoc[0].indexOf("blog/") || inArray(nav.objLoc[0], ["blog", "about", "support", "helpdesk"]);
             var r = Photoview.hhCheck() ? "" : ' style="display: none;"',
                 a = (Photoview.canFullscreen() ? "" : ' style="display: none;"', cur.pvAlbumsShown ? cur.pvAlbumsData[cur.pvAlbumsShown].html : ""),
                 i = cur.pvAlbumShown ? cur.pvAlbumData[cur.pvAlbumShown].html : "",

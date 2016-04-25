@@ -3355,7 +3355,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
             ];
             cur.pollAnswerTemplate =
                 '<input onkeydown="cur.addMedia[%lnkid%].keyPoll(this, event)" class="text medadd_c_polla" %attrs%/><div class="page_media_x_wrap medadd_c_pollrem inl_bl" ' +
-                (browser.msie ? 'title' : 'tootltip') + '="' + data.lang.d +
+                (browser.msie ? 'title' : 'tootltip') + '="' + clean(stripHTML(unclean(data.lang.d))) +
                 '" onmouseover="if (browser.msie) return; showTooltip(this, {text: this.getAttribute(\'tootltip\'), shift: [14, 3, 3], black: 1})" onclick="cur.addMedia[%lnkid%].decPoll(this)"><div class="page_media_x"></div></div>';
             for (var i = 0, l = data.answers.length; i < l; ++i) {
                 ans = data.answers[i];

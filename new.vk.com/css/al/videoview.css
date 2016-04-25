@@ -134,12 +134,14 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_title {
-    max-width: 600;
-    overflow: hidden;
-    text-overflow: ellipsis;
     font-size: 17px;
     line-height: 23px;
-    white-space: nowrap;
+    max-height: 46px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
     color: #000
 }
 
@@ -871,27 +873,26 @@ embed#video_player {
 }
 
 .mv_top_button {
-    margin: -5px;
-    padding: 5px;
+    position: relative;
+    padding: 6px 24px 6px 20px;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
     cursor: pointer;
-    position: relative
+    -o-transition: opacity 0.15s ease-in-out;
+    transition: opacity 0.15s ease-in-out
 }
 
-.mv_top_button,
-.mv_top_button:hover .mv_minimize_icon,
-.mv_top_button:hover .mv_pl_toggle_icon,
-.mv_top_button:hover .mv_small_close_icon {
+.mv_top_button:hover {
     opacity: 1;
     -webkit-filter: none;
     filter: none
 }
 
-.mv_top_button.mv_top_minimize {
-    margin-top: 6px
+.mv_top_button.mv_top_close {
+    margin-top: -2px
 }
 
 .mv_top_button.mv_top_pl_toggle {
-    margin-top: 6px;
     display: none;
     -o-transition: visibility 0.2s, opacity 0.2s;
     transition: visibility 0.2s, opacity 0.2s
@@ -906,50 +907,42 @@ embed#video_player {
     opacity: 0
 }
 
-.mv_top_button.mv_btn_move_transition {
-    -o-transition: margin 200ms ease-in-out, opacity 200ms ease-in-out, visibility 200ms ease-in-out;
-    transition: margin 200ms ease-in-out, opacity 200ms ease-in-out, visibility 200ms ease-in-out
-}
-
+.mv_close_icon,
 .mv_minimize_icon,
-.mv_pl_toggle_icon,
-.mv_small_close_icon {
-    background: url(/images/icons/video_icon.png) no-repeat;
-    width: 13px;
-    height: 13px;
-    opacity: 0.55;
-    filter: alpha(opacity=55);
-    -o-transition: opacity 0.15s ease-in-out;
-    transition: opacity 0.15s ease-in-out
-}
-
 .mv_pl_toggle_icon {
-    background-position: 0 -55px;
-    height: 12px;
-    width: 14px
+    background: url(/images/icons/video_icon.png) no-repeat
 }
 
-.mv_container_hide_pl .mv_pl_toggle_icon {
-    background-position: 0px -34px
-}
-
-.mv_small_close_icon {
-    background-position: 0px 0px
+.mv_close_icon {
+    background-position: 0px 0px;
+    height: 20px;
+    width: 20px
 }
 
 .mv_minimize_icon {
-    background-position: 0px -17px
+    background-position: 0px -24px;
+    height: 5px;
+    width: 20px;
+    margin: 7px 0
+}
+
+.mv_pl_toggle_icon {
+    background-position: 0 -52px;
+    height: 19px;
+    width: 20px
+}
+
+.mv_container_hide_pl .mv_pl_toggle_icon {
+    background-position: 0px -32px
 }
 
 .mv_top_controls_wrap {
     position: absolute;
-    right: 0;
-    top: 2px
+    right: 0
 }
 
 #mv_top_controls {
-    position: absolute;
-    padding: 0 35px 10px 15px
+    position: absolute
 }
 
 #mv_top_controls.fixed {
@@ -1774,7 +1767,7 @@ embed#video_player {
     display: inline-block;
     width: 18px;
     height: 18px;
-    margin: -2px 6px
+    margin: -2px 6px -2px 0
 }
 
 .mv_monetized {

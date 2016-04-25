@@ -153,7 +153,7 @@ img.im_photo_thumb {
 }
 
 .im_fwd_log_wrap {
-    min-width: 382px
+    min-width: 342px
 }
 
 .wall_module .media_desc .audio .title_wrap b {
@@ -877,6 +877,108 @@ img.im_photo_thumb {
 .im_cal_clear_lnk:hover {
     text-decoration: underline;
     cursor: pointer
+}
+
+.im-page.im-page_group {
+    width: 550px;
+    min-height: 500px;
+    height: auto
+}
+
+.im-page.im-page_group .im-page--dialogs-footer {
+    display: none
+}
+
+.im-page.im-page_group .im-page--history {
+    display: none;
+    box-shadow: none;
+    margin-left: 0;
+    position: absolute;
+    top: 15px;
+    bottom: 0;
+    width: 100%
+}
+
+.im-page.im-page_group .im-page--header {
+    position: fixed;
+    width: 550px;
+    top: auto;
+    left: auto;
+    margin-top: -60px;
+    border-top: solid 15px #f1f2f4
+}
+
+.im-page.im-page_group .im-page--history.im-page--history_loading {
+    position: absolute
+}
+
+.im-page.im-page_group .im-page--dialogs {
+    width: 100%;
+    padding-bottom: 0;
+    position: absolute;
+    top: 15px;
+    box-shadow: none
+}
+
+.im-page.im-page_group .im-page--dcontent {
+    overflow: visible;
+    min-height: 100%;
+    background: #fff;
+    height: auto;
+    border-bottom: solid 15px #f1f2f4
+}
+
+.im-page.im-page_group .im-page-history-w,
+.im-page.im-page_group .im-page--chat-body {
+    display: block
+}
+
+.im-page.im-page_group .im-page--chat-input {
+    display: block;
+    position: fixed;
+    bottom: 0;
+    border-bottom: solid 15px #f1f2f4;
+    width: 550px;
+    background: #fff;
+    z-index: 110
+}
+
+.im-page.im-page_group .im-page--header-chat {
+    position: fixed;
+    width: 550px;
+    background: #fff;
+    margin-top: -15px;
+    border-top: solid 15px #f1f2f4;
+    height: 61px
+}
+
+.im-page.im-page_group .im-page--chat-body-abs {
+    position: static;
+    overflow: visible;
+    min-height: 100%;
+    display: table
+}
+
+.im-page.im-page_group .im-page--chat-body-wrap-inner {
+    display: table-cell;
+    vertical-align: bottom;
+    position: static;
+    padding-top: 46px;
+    max-height: none;
+    background: #fff;
+    padding-bottom: 147px
+}
+
+.im-page.im-page_group .im-page--mess-search {
+    width: 550px
+}
+
+.im-page.im-page_group.im-page_history-show .im-page--history {
+    display: block
+}
+
+.im-page.im-page_group.im-page_history-show .im-page--dialogs {
+    display: none
 }
 
 .im-page {
@@ -1703,6 +1805,11 @@ img.im_photo_thumb {
 
 .im-chat-input.im-chat-input_shadowed {
     box-shadow: 0px -1px 3px -1px rgba(0, 0, 0, .12)
+}
+
+.im-chat-input.im-chat-input_group {
+    padding-left: 10px;
+    padding-right: 10px
 }
 
 .im-mess-stack {
@@ -3707,6 +3814,13 @@ img.im_photo_thumb {
     margin-left: -20px;
     margin-top: -45px;
     z-index: 1000
+}
+
+.im-none {
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    width: 100%
 }
 
 .im_rc_emojibtn {

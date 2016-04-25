@@ -636,7 +636,7 @@ var Videoview = {
             addClass(window.mvLayerWrap, e), addClass(window.layerBG, e);
             var i = mvcur.options.hideInfo ? "display: none" : "";
             mvLayer.innerHTML =
-                '<div id="mv_container">  <div id="mv_box" onclick="mvcur.mvClicked = true;">    <div id="mv_approve" style="display: none;"></div>    <div id="mv_publish" style="display: none;"></div>    <div id="mv_min_layer">      <div class="mv_min_header">        <div class="mv_mini_control fl_r" onmousedown="return Videoview.hide(false, true);">          <div class="mv_close_control"></div>        </div>        <div class="mv_mini_control fl_r" onclick="return Videoview.unminimize();">          <div class="mv_max_control"></div>        </div>        <div class="mv_min_title" id="mv_min_title"></div>      </div>    </div>    <div class="no_select mv_data">      <div class="mv_pl_prev_wrap">        <div class="mv_playlist_controls" id="mv_pl_prev" onclick="return VideoPlaylist.prevVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_pl_next_wrap">        <div class="mv_playlist_controls" id="mv_pl_next" onclick="return VideoPlaylist.nextVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_top_controls_wrap">        <div id="mv_top_controls">          <div onclick="return Videoview.hide(false, true, event, true);" class="mv_top_button"><div class="mv_small_close_icon"></div></div>          <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize"><div class="mv_minimize_icon"></div></div>          <div onclick="return VideoPlaylist.toggle();" class="mv_top_button mv_top_pl_toggle" id="mv_top_pl_toggle"><div class="mv_pl_toggle_icon"></div></div>        </div>      </div>      <div id="mv_progress">' +
+                '<div id="mv_container">  <div id="mv_box" onclick="mvcur.mvClicked = true;">    <div id="mv_approve" style="display: none;"></div>    <div id="mv_publish" style="display: none;"></div>    <div id="mv_min_layer">      <div class="mv_min_header">        <div class="mv_mini_control fl_r" onmousedown="return Videoview.hide(false, true);">          <div class="mv_close_control"></div>        </div>        <div class="mv_mini_control fl_r" onclick="return Videoview.unminimize();">          <div class="mv_max_control"></div>        </div>        <div class="mv_min_title" id="mv_min_title"></div>      </div>    </div>    <div class="no_select mv_data">      <div class="mv_pl_prev_wrap">        <div class="mv_playlist_controls" id="mv_pl_prev" onclick="return VideoPlaylist.prevVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_pl_next_wrap">        <div class="mv_playlist_controls" id="mv_pl_next" onclick="return VideoPlaylist.nextVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_top_controls_wrap">        <div id="mv_top_controls">          <div onclick="return Videoview.hide(false, true, event, true);" class="mv_top_button mv_top_close"><div class="mv_close_icon"></div></div>          <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize"><div class="mv_minimize_icon"></div></div>          <div onclick="return VideoPlaylist.toggle();" class="mv_top_button mv_top_pl_toggle" id="mv_top_pl_toggle"><div class="mv_pl_toggle_icon"></div></div>        </div>      </div>      <div id="mv_progress">' +
                 getProgressHtml() +
                 '</div>      <div id="mv_content"></div>    </div>    <div id="mv_service_btns_wrap">      <div id="mv_service_btns"></div>    </div>    <div class="mv_controls clear_fix" id="mv_controls" style="' +
                 i + '"></div>    <div id="mv_warning" style="display: none;"></div>  </div></div>  ', browser.mobile && setStyle("mv_container", {
@@ -1592,10 +1592,9 @@ var Videoview = {
         },
         setTitle: function(e) {
             var i = mvcur.mvData.title || "";
-            e = e || 590, ge("mv_min_title")
-                .innerHTML = Videoview._isCurrentVideoPublished() ? i : "", setStyle(ge("mv_min_title"), {
-                    maxWidth: Math.max(0, e - 60)
-                });
+            e = e || 590, val("mv_min_title", Videoview._isCurrentVideoPublished() ? stripHTML(i) : ""), setStyle(ge("mv_min_title"), {
+                maxWidth: Math.max(0, e - 60)
+            });
             var o = ge("mv_title");
             if (o) {
                 var t = getSize(o);
@@ -1604,7 +1603,7 @@ var Videoview = {
                     width: "inherit",
                     position: "absolute",
                     "max-width": "initial"
-                }), t[0] < getSize(o)[0] && o.setAttribute("title", replaceEntities(i)), setStyle(o, {
+                }), t[0] < getSize(o)[0] && o.setAttribute("title", replaceEntities(stripHTML(i))), setStyle(o, {
                     overflow: "",
                     width: "",
                     position: "",

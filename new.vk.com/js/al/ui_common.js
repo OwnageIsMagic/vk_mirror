@@ -737,8 +737,11 @@ window.Scrollbar = window.Scrollbar || function() {
         enable: function() {
             this.show(), this.update(), this.disabled = !1
         },
+        getScrollHeight: function() {
+            return this.scrollHeight
+        },
         scrollTop: function(t) {
-            this.obj.scrollTop = parseInt(t), this.update(!1, !0)
+            return "undefined" == typeof t ? this.obj.scrollTop : (this.obj.scrollTop = parseInt(t), void this.update(!1, !0))
         },
         scrollBottom: function(t) {
             return "undefined" == typeof t ? this.contHeight() - this.scrollHeight - this.obj.scrollTop : (this.obj.scrollTop = this.contHeight(!0) - this.scrollHeight -
@@ -906,7 +909,7 @@ window.Scrollbar = window.Scrollbar || function() {
             var d = escapeRE(t),
                 p = parseLatin(t);
             null != p && (d = d + "|" + escapeRE(p));
-            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi");
+            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
         var g = l.rsTpl ? l.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
