@@ -945,7 +945,7 @@
             },
             updateCounter: function(t, n) {
                 var r = geByClass1("_im_dialog_" + n.peerId, e);
-                if (r && !i(r) && !(0, j.isSelfMessage)(n.peerId)) {
+                if (r && !i(r)) {
                     var a = t.get()
                         .tabs[n.peerId],
                         o = a.unread > 0 ? a.unread : "";
@@ -1437,7 +1437,7 @@
 }, function(e, t) {
     e.exports = function(e) {
         if (void 0 == e) throw TypeError("Can't call method on  " + e);
-        return e;
+        return e
     }
 }, function(e, t, n) {
     "use strict";
@@ -3145,7 +3145,7 @@
 
     function $e(e, t) {
         var n = t.tabs[e];
-        return n.bind_url_to_attach || (n.bind_url_to_attach = ls.get(Ye(e)) || {}), Promise.resolve(n.bind_url_to_attach);
+        return n.bind_url_to_attach || (n.bind_url_to_attach = ls.get(Ye(e)) || {}), Promise.resolve(n.bind_url_to_attach)
     }
 
     function Xe(e, t, n, r, a) {
@@ -4391,11 +4391,12 @@
                 o = h(t.peerId) ? a.data.members[P].name : I ? e.name : a.name;
                 var L = 1;
                 L = h(t.peerId) ? a.data.members[P].sex : a.sex, s = h(t.peerId) ? a.data.members[P].photo : I ? e.photo : a.photo;
-                var M = h(t.peerId) ? a.data.members[P].link : a.href,
-                    x = getTemplate("im_mess_stack_name", {
-                        name: o,
-                        link: M
-                    });
+                var M;
+                M = I ? e.author_link : h(t.peerId) ? a.data.members[P].link : a.href;
+                var x = getTemplate("im_mess_stack_name", {
+                    name: o,
+                    link: M
+                });
                 f && (x += ' <span class="im-mess-stack--gift">' + getLang("mail_gift_message_sent", L) + "</span>"), m && (x += " " + getLang("mail_chronicle_invite_inf")),
                     A += getTemplate("im_mess_stack", {
                         photo: s,
@@ -5516,7 +5517,7 @@
                     s += getTemplate("im_wrap_mobile", (l = {}, r(l, "class", "im_status_mob_onl"), r(l, "params", "mid: " + n +
                         ", was: 1, appendParentCls: '_im_last_act_wrap', forcetoup: true"), r(l, "attrs", ""), l))
                 }
-                if (!a.online && o) domData(o, "time") !== i && (val(o, s), attr(o, "data-time", i)), show(o);
+                if (!a.online && o)(domData(o, "time") !== i || intval(domData(o, "peer")) !== n) && (val(o, s), attr(o, "data-time", i), attr(o, "data-peer", n)), show(o);
                 else if (!a.online && !o) {
                     var u = getTemplate("im_last_act", {
                         lastact: s
@@ -5596,14 +5597,14 @@
         if (0 !== e.get()
             .peer) {
             var o = (0, x.wrapLoading)(n);
-            if (r(i), !$ && i.scrollTop() < z) {
+            if ((0, M.isSearchingInplace)(e.get()
+                    .peer, e.get()) || r(i), !$ && i.scrollTop() < z) {
                 if ((0, M.isSearchingInplace)(e.get()
                         .peer, e.get())) {
                     $ = !0;
                     var l = t()
                         .getSearchResulstModule();
-                    if (l.isAll(e)) return;
-                    return void o(l.loadMore(e)
+                    return l.isAll(e) ? void($ = !1) : void o(l.loadMore(e)
                         .then(function(n) {
                             $ = !1, n && t()
                                 .loadHistory(e.get()
@@ -5781,8 +5782,8 @@
         return r - o
     }
 
-    function A(e, t, n, r, o, l, u, f, m, p, _, v, T, E, w, S, k) {
-        var P;
+    function A(e, t, n, r, o, l, u, f, m, p, _, v, T, E, w, S, k, P) {
+        var A;
         return {
             changePeer: function(i) {
                 var s = arguments.length <= 1 || void 0 === arguments[1] ? !0 : arguments[1];
@@ -5820,7 +5821,7 @@
                     .updateDialogFilters(e)
             },
             getSearchResulstModule: function() {
-                return P
+                return A
             },
             insertSearch: function(n, r) {
                 addClass(e, "im-page--history_search"), s(e), n ? (removeClass(e, "im-page--history_search-empty"), c(e)
@@ -5927,14 +5928,14 @@
             updateScroll: function() {
                 return I(k, t, e)
             },
-            updateOnline: function(t, n) {
-                if ((0, x.isTabLoaded)(n.get(), t)) {
-                    var r = n.get()
+            updateOnline: function(t, r) {
+                if ((0, x.isTabLoaded)(r.get(), t)) {
+                    var a = r.get()
                         .tabs[t].online;
-                    if (t === n.get()
+                    if (t === r.get()
                         .peer) {
-                        var a = geByClass1("_im_peer", e);
-                        toggleClass(a, "nim-peer_online", r), r && s(e)
+                        var i = geByClass1("_im_peer", e);
+                        toggleClass(i, "nim-peer_online", a), n.renderPeer(r), a && s(e)
                     }
                 }
             },
@@ -5968,12 +5969,12 @@
                 r.focusOn(e)
             },
             showSearch: function(t) {
-                addClass(e, "im-page--hisory_search-open"), _.focus(t), P = (0, R.mount)(e, t, o)
+                addClass(e, "im-page--hisory_search-open"), _.focus(t), A = (0, R.mount)(e, t, o)
             },
             cancelSearch: function(n) {
                 var r = arguments.length <= 1 || void 0 === arguments[1] ? !0 : arguments[1];
-                if (removeClass(e, "im-page--hisory_search-open"), removeClass(e, "im-page--history_search"), removeClass(e, "im-page--history_search-empty"), P && (P.unmount(),
-                        P = !1), r && !(0, x.isReservedPeer)(n.get()
+                if (removeClass(e, "im-page--hisory_search-open"), removeClass(e, "im-page--history_search"), removeClass(e, "im-page--history_search-empty"), A && (A.unmount(),
+                        A = !1), r && !(0, x.isReservedPeer)(n.get()
                         .peer)) {
                     var a = n.get()
                         .tabs[n.get()
@@ -5981,7 +5982,7 @@
                     c(e)
                         .innerHTML = (0, M.strHistory)(a.history), I(n, t, e), t.scrollBottom(0), n.get()
                         .msgid && (h(t, e, n.get()
-                            .msgid), y(n, e))
+                            .msgid), y(n, e)), P(t)
                 }
             },
             unmount: function() {
@@ -6069,7 +6070,7 @@
             D.addDelegateEvent)(e, "click", Z, ee), (0, D.addDelegateEvent)(e, "click", x.SHOW_CHAT_MEMBERS_CLASS, te), (0, D.addDelegateEvent)(e, "click", Y, ne),
         addEvent(geByClass1("_im_start_new", e), "click", $), addEvent(geByClass1(V, e), "click", X);
         var re = setInterval(l.bind(null, t, e), 1e3);
-        return d(e, b, k, I, s, n, z, Q, re, K, L, O, R, $, X, p, t)
+        return d(e, b, k, I, s, n, z, Q, re, K, L, O, R, $, X, p, t, g)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0
@@ -7869,7 +7870,7 @@
     }
 
     function s() {
-        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off")
+        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off");
     }
 
     function l(e, t, n, a, o) {
@@ -7880,8 +7881,7 @@
                 r(e, t, a);
                 break;
             case "sound":
-                ls.get("sound_notify_off") ? ls.set("sound_notify_off", 0) : ls.set("sound_notify_off", 1),
-                    u.outerHTML = i();
+                ls.get("sound_notify_off") ? ls.set("sound_notify_off", 0) : ls.set("sound_notify_off", 1), u.outerHTML = i();
                 break;
             case "browser":
                 var c = s();

@@ -541,9 +541,17 @@ function domCA(el, selector) {
         function() {
             return true;
         };
+    var doesMatch = function(e, s) {
+        try {
+            return matches.call(e, s);
+        } catch (err) {
+            return false;
+        }
+    };
+
     do {
         el = domPN(el);
-    } while (el && !matches.call(el, selector));
+    } while (el && !doesMatch(el, selector));
     return el;
 }
 

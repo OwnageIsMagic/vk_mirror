@@ -364,8 +364,8 @@ var Videoview = {
         },
         playerNextTimerUpdate: function() {
             var e;
-            mvcur.scrolledAway || mvcur.commentingInProgress || isVisible(window.boxLayerWrap) ? (e = "nextTimerReset", mvcur.nextTimerStopped = !0) : (e = "nextTimerStart",
-                mvcur.nextTimerStopped = !1);
+            mvcur.scrolledAway || mvcur.replyFormShown || mvcur.pageNotFocused || isVisible(window.boxLayerWrap) ? (e = "nextTimerReset", mvcur.nextTimerStopped = !0) : (e =
+                "nextTimerStart", mvcur.nextTimerStopped = !1);
             var i = mvcur.playerPrevTimerFunc == e ? 100 : 0;
             mvcur.playerPrevTimerFunc = e, clearTimeout(mvcur.playerTimerDebounce), mvcur.playerTimerDebounce = setTimeout(function() {
                 var i = Videoview.getPlayerObject();
@@ -609,8 +609,9 @@ var Videoview = {
             return t.queue && (debugLog("pushing in videoview.show"), layerQueue.push(), t.queue = !1), !t.noLocChange && nav.objLoc.z && 0 == nav.objLoc.z.indexOf("video") &&
                 (cur.mvHistoryBack = cur.mvHistoryBack || 1, cur.mvHistoryBack++), r || layerQueue.hide(), window.forcePauseAudio = !1, d && domFC(ge("video_player")) === d.el ||
                 (val("mv_content", ""), show("mv_progress")), this.init(), mvcur.showTime = (new Date)
-                .getTime(), removeEvent(window, "resize", Videoview.onResize), removeEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange),
-                removeEvent(document, "keydown", Videoview.onKeyDown), removeEvent(mvLayerWrap, "click", Videoview.onClick), addEvent(window, "resize", Videoview.onResize),
+                .getTime(), removeEvent(window, "resize", Videoview.onResize), removeEvent(window, "focus blur", Videoview.onPageFocusChange), removeEvent(document,
+                    "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
+                removeEvent(mvLayerWrap, "click", Videoview.onClick), addEvent(window, "resize", Videoview.onResize), addEvent(window, "focus blur", Videoview.onPageFocusChange),
                 addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
                 addEvent(mvLayerWrap, "click", Videoview.onClick), boxQueue.hideAll(), layers.wrapshow(mvLayerWrap, .8), layers.fullhide = Videoview.hide, setTimeout(function() {
                     layers.wrapshow(mvLayerWrap, .8), layers.fullhide = Videoview.hide
@@ -755,6 +756,9 @@ var Videoview = {
                 d = mvcur.mvVeryBig;
             mvcur.mvVeryBig = t > 1280 ? 2 : t > 807 ? 1 : !1, r = d != mvcur.mvVeryBig, Videoview.updateExternalVideoFinishBlock(), Videoview.updateReplyFormPos()
         },
+        onPageFocusChange: function(e) {
+            mvcur.pageNotFocused = "blur" == e.type, Videoview.playerNextTimerUpdate()
+        },
         onFullscreenChange: function() {
             Videoview.updateExternalVideoFinishBlock()
         },
@@ -882,14 +886,11 @@ var Videoview = {
                 }), toggleClass("mv_comments_header", "mv_comments_expanded", !o), toggleClass("mv_comments_summary", "mv_comments_expanded", !o), val("mv_comments_header", o),
                 Videoview.recache()
         },
-        showEditReply: function(e) {
-            mvcur.commentingInProgress = !0, Videoview.playerNextTimerUpdate()
+        onShowEditReply: function() {
+            mvcur.replyFormShown = !0, Videoview.updateReplyFormPos(), Videoview.playerNextTimerUpdate()
         },
-        hideEditReply: function(e) {
-            mvcur.commentingInProgress = !1;
-            var i = mvcur.post;
-            rf = ge("reply_field" + i), composer = rf && data(rf, "composer"), composer ? Composer.reset(composer) : val(rf, ""), Wall.hideEditReply(i), mvcur.mvReplyTo = !1,
-                Videoview.updateReplyFormPos(), setTimeout(Videoview.updateReplyFormPos, 10)
+        onHideEditReply: function() {
+            mvcur.replyFormShown = !1, mvcur.mvReplyTo = !1, Videoview.updateReplyFormPos(), setTimeout(Videoview.updateReplyFormPos, 10), Videoview.playerNextTimerUpdate()
         },
         commentClick: function(e, i, o, t) {
             Wall.checkReplyClick(e, i) || (mvcur.mvReplyTo = [o, t], Wall.replyTo(mvcur.post, t, o))
@@ -1425,13 +1426,10 @@ var Videoview = {
                             }
                         }) : re("mv_more"), toggle(ge("mv_edit_button"), mvcur.mvData.editHash && !mvcur.mvData.hideEdit)
                 }
-                mvcur.mvData.uploaded || Videoview.recache();
-                var replyField = ge("reply_field" + mvcur.post);
-                replyField && addEvent(replyField, "blur focus", function(e) {
-                    mvcur.commentingInProgress = "focus" == e.type, Videoview.playerNextTimerUpdate()
-                }), Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData && stManager.add("notifier.js", function() {
-                    Videoview.checkUpdates(opt.queueData)
-                })
+                mvcur.mvData.uploaded || Videoview.recache(), Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData && stManager.add("notifier.js",
+                    function() {
+                        Videoview.checkUpdates(opt.queueData)
+                    })
             }
         },
         adaptRecomsHeight: function() {
@@ -2004,7 +2002,7 @@ var Videoview = {
                     i[0] > 250 && i[1] > 200 ? u = !0 : _ = !0
                 }
                 var p = window.mvcur && mvcur.minimized,
-                    h = se(
+                    w = se(
                         '<div class="mv_external_finish" id="mv_external_finish" onclick="Videoview.onExternalVideoBgClick(this, event)">  <div class="mv_finish_header">    <div id="mv_finish_subscribe" class="fl_r mv_finish_subscribe ' +
                         (v ? "mv_finish_subscribed" : "") +
                         '">      <button id="mv_finish_subscribe_btn" class="mv_finish_subscribe_btn fl_l" onclick="Videoview.onExternalVideoSubscribe()">' + (v ? getLang(
@@ -2019,9 +2017,9 @@ var Videoview = {
                         getLang("video_share_with_friends") + '</div>    </div>    <div class="mv_finish_add ' + (d ? "selected" : "") +
                         '" onclick="Videoview.onExternalVideoAdd()">      <div class="mv_finish_add_icon mv_finish_icon"></div>      <div class="mv_finish_added_icon mv_finish_icon"></div>    </div>  </div>  ' +
                         s + "  " + m + "</div>  ");
-                a.canSubscribe || re(geByClass1("mv_finish_subscribe", h)), (a.noControls || a.nolikes) && re(geByClass1("mv_finish_actions", h)), e.appendChild(h), t && o &&
+                a.canSubscribe || re(geByClass1("mv_finish_subscribe", w)), (a.noControls || a.nolikes) && re(geByClass1("mv_finish_actions", w)), e.appendChild(w), t && o &&
                     s && (mvcur.nextTimer = {
-                            ctx: geByClass1("mv_finish_next_timer_canvas", h)
+                            ctx: geByClass1("mv_finish_next_timer_canvas", w)
                                 .getContext("2d"),
                             nextTimerReset: function() {
                                 clearTimeout(mvcur.nextTimer.timeout), mvcur.nextTimer.ctx.clearRect(0, 0, 100, 100), mvcur.nextTimer.started = null

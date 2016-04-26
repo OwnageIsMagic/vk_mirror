@@ -1636,7 +1636,8 @@ img.im_photo_thumb {
     border-color: transparent
 }
 
-.im-page .im-page--mess-search-w+.nim-dialog:hover {
+.im-page .im-page--mess-search-w+.nim-dialog:hover,
+.im-page .im-page--mess-search-w+.nim-dialog_hovered {
     border-top-color: transparent
 }
 
@@ -2582,7 +2583,7 @@ img.im_photo_thumb {
 .nim-dialog a.nim-dialog--star {
     width: 12px;
     height: 12px;
-    background: url(/images/icons/im_actions.png) -4px -4px;
+    background: url(/images/icons/im_actions.png?2) -4px -4px;
     display: block;
     float: left;
     margin-left: 6px;
@@ -2662,7 +2663,7 @@ img.im_photo_thumb {
     outline: 0;
     padding: 0;
     line-height: 1;
-    background: url(/images/icons/im_actions.png) -4px -66px;
+    background: url(/images/icons/im_actions.png?2) -4px -66px;
     position: absolute;
     display: none;
     right: 0;
@@ -2818,6 +2819,14 @@ img.im_photo_thumb {
     border-top: solid 1px #7293b6
 }
 
+.nim-dialog:hover .nim-dialog--close {
+    display: block
+}
+
+.nim-dialog:hover .nim-dialog--date {
+    display: none
+}
+
 .nim-dialog.nim-dialog_hovered,
 .nim-dialog:hover {
     background: #f5f7fa
@@ -2826,16 +2835,6 @@ img.im_photo_thumb {
 .nim-dialog.nim-dialog_hovered .nim-dialog--photo,
 .nim-dialog:hover .nim-dialog--photo {
     border-color: #f5f7fa
-}
-
-.nim-dialog.nim-dialog_hovered .nim-dialog--close,
-.nim-dialog:hover .nim-dialog--close {
-    display: block
-}
-
-.nim-dialog.nim-dialog_hovered .nim-dialog--date,
-.nim-dialog:hover .nim-dialog--date {
-    display: none
 }
 
 .nim-dialog.nim-dialog_prep-injected .nim-dialog--date,
@@ -3155,7 +3154,7 @@ img.im_photo_thumb {
     content: "";
     width: 20px;
     height: 15px;
-    background: url(/images/icons/im_actions.png) no-repeat 5px -184px;
+    background: url(/images/icons/im_actions.png?2) no-repeat 5px -184px;
     display: inline-block;
     padding-left: 15px;
     opacity: 0.8;
@@ -3197,6 +3196,10 @@ img.im_photo_thumb {
 
 .ui_actions_menu_item.im-action.im-action_leave:before {
     background-position: 5px -270px
+}
+
+.ui_actions_menu_item.im-action.im-action_return:before {
+    background-position: 7px -324px
 }
 
 .ui_actions_menu_item.im-action:hover:before {

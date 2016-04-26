@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 699901712092,
+    'nav': 692930773454,
     'common.js': 1132,
     'common.css': 1031282107,
     'pads.js': 1601311133,
@@ -180,7 +180,7 @@ var stVersions = {
     'video.css': 4081142433,
     'videocat.js': 972120599,
     'videocat.css': 2768202123,
-    'videoview.js': 4073838352,
+    'videoview.js': 3401664836,
     'videoview.css': 2398518621,
     'video_edit.js': 660308478,
     'video_edit.css': 3290437348,
@@ -205,7 +205,7 @@ var stVersions = {
     'module.css': 1552001586,
     'owner_photo.js': 2124522904,
     'owner_photo.css': 191725357,
-    'page.js': 3964347913,
+    'page.js': 2117875073,
     'page.css': 2315628263,
     'page_help.css': 4249963104,
     'public.css': 1944959723,
@@ -236,10 +236,10 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 796164577,
-    'imn.js': 3689489113,
+    'im.css': 2493123886,
+    'imn.js': 65731174,
     'im.js': 973890988,
-    'emoji.js': 1901466810,
+    'emoji.js': 2849385263,
     'wide_dd.css': 2276826341,
     'wide_dd.js': 1655931755,
     'writebox.css': 3912883473,
@@ -281,7 +281,7 @@ var stVersions = {
     'widget_auth.css': 2175122291,
     'widget_community.css': 503844513,
     'widget_post.css': 2551740978,
-    'api/widgets/al_comments.js': 3518811134,
+    'api/widgets/al_comments.js': 4231179037,
     'api/widgets/al_auth.js': 4125400749,
     'api/widgets/al_poll.js': 2140073636,
     'api/widgets/al_community.js': 2012310203,
@@ -306,7 +306,7 @@ var stVersions = {
     'docs.css': 1720673809,
     'tags_dd.js': 2519761220,
     'tags_dd.css': 3629295033,
-    'tasks.js': 1597417844,
+    'tasks.js': 2719584771,
     'tasks.css': 1669297652,
     'helpdesk.js': 2078628771,
     'tickets.js': 608086122,
@@ -440,8 +440,8 @@ var stVersions = {
     '/swf/video.swf': 142,
     '/swf/vkvideochat.swf': 50,
     '/swf/vchatdevices.swf': 1,
-    'snapster/style.css': 3075906139,
-    'snapster/page.js': 3089916248,
+    'snapster/style.css': 441702168,
+    'snapster/page.js': 416173284,
     'snapster/mobile.css': 2095315211,
     'favicon': 5,
     'lang': 6704
@@ -475,4 +475,4 @@ var stTypes = {
         'snapster/mobile.css': 1
     }
 };
-var _rnd = 5165;
+var _rnd = 2001;
