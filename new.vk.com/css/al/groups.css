@@ -244,12 +244,23 @@ a.groups_messages_block .ui_rmenu_count {
 }
 
 .group_list_row {
+    position: relative;
     border-bottom: 1px solid #ebedf0;
     padding: 15px 0
 }
 
 .group_list_row:last-child {
     border-bottom: 0
+}
+
+.group_list_row.deleted .group_row_info,
+.group_list_row.deleted .group_row_photo {
+    opacity: 0.5;
+    filter: alpha(opacity=50)
+}
+
+.group_list_row.closed .group_row_actions {
+    display: none
 }
 
 .groups_list_invites .group_list_row:last-child {
@@ -281,7 +292,16 @@ a.groups_messages_block .ui_rmenu_count {
 }
 
 .group_row_actions .flat_button {
-    padding-top: 10px
+    margin-top: 10px;
+    width: 135px
+}
+
+.ui_actions_menu_item.group_menu_action {
+    display: none
+}
+
+.group_list_row.adminned .ui_actions_menu_item.group_menu_action {
+    display: block
 }
 
 .group_row_info {
@@ -368,6 +388,63 @@ a.groups_messages_block .ui_rmenu_count {
 .gtop_button {
     margin: 15px 10px 0 0;
     float: left
+}
+
+.groups_actions_menu .ui_actions_menu {
+    position: relative;
+    position: absolute;
+    right: -30px;
+    min-width: 200px
+}
+
+.groups_actions_menu .ui_actions_menu:after,
+.groups_actions_menu .ui_actions_menu:before {
+    position: absolute;
+    pointer-events: none;
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    bottom: 100%;
+    right: 41.5px
+}
+
+.groups_actions_menu .ui_actions_menu:before {
+    border-width: 6px;
+    margin: 0 -6px;
+    border-bottom-color: #c5d0db
+}
+
+.groups_actions_menu .ui_actions_menu:after {
+    border-width: 5px;
+    margin: 0 -5px;
+    border-bottom-color: #fff
+}
+
+body[data-useragent*=msie_edge] .groups_actions_menu .ui_actions_menu {
+    display: none
+}
+
+.groups_actions_menu .ui_actions_menu_icons {
+    background: none;
+    position: static;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    float: right;
+    margin: 2px 1.5px 0 0
+}
+
+.groups_actions_menu .groups_actions_icons {
+    margin: 10px 0;
+    width: 22px;
+    height: 4px;
+    background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAAICAYAAAD0g6+qAAAAAXNSR0IArs4c6QAAAH5JREFUKBWtUMEJgDAQy50dQwdxBJ3ACRzKCZxAR3CR/vz5t7WpIv0eGrgjEBJIZF62rlKdkHCGMA59u5ITFs3lEJGaxiewIScsmt6W719ZBzF6XuZFpkVz+34gapXtEs4iBrBoLoVMAuSNyFPSu5FF+2+jVGeMgOeRl90s2gWzvXWffiSjSQAAAABJRU5ErkJggg==") no-repeat 50% 0
+}
+
+.groups_actions_menu.shown .groups_actions_icons {
+    background-position: 50% -4px
 }
 
 .groups_catalog_info {

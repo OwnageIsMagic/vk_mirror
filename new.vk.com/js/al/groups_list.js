@@ -4,107 +4,183 @@ var GroupsList = {
             act: "create_box"
         })
     },
-    createGroup: function(r, s) {
+    createGroup: function(s, r) {
         var e = ge("group_create_title");
         return trim(val(e)) ? void ajax.post("al_groups.php", {
             act: "create",
             title: trim(val(e)),
             cls: radioval("club_type"),
-            hash: r
+            hash: s
         }, {
-            onDone: function(r) {
-                "title" == r && notaBene(ge("group_create_title"))
+            onDone: function(s) {
+                "title" == s && notaBene(ge("group_create_title"))
             },
-            onFail: function(r) {
-                return r ? (setTimeout(showFastBox({
+            onFail: function(s) {
+                return s ? (setTimeout(showFastBox({
                         title: getLang("global_error"),
                         dark: 1,
                         bodyStyle: "padding: 20px; line-height: 160%;"
-                    }, r)
+                    }, s)
                     .hide, 3e3), !0) : void 0
             },
-            showProgress: lockButton.pbind(s),
-            hideProgress: unlockButton.pbind(s)
+            showProgress: lockButton.pbind(r),
+            hideProgress: unlockButton.pbind(r)
         }) : notaBene(e)
     },
     rand: function() {
         return Math.floor(1e4 * Math.random())
     },
-    enter: function(r, s, e, o, t) {
-        if (cur.invSwitching) return setTimeout(GroupsList.enter.pbind(r, s, e, o, t), 100), !1;
+    toggleFave: function(s, r, e, o) {
+        var t = parseInt(s.getAttribute("data-value")) ? 1 : 0;
+        ajax.post("fave.php", {
+            act: t ? "a_delete_group" : "a_add_group",
+            gid: r,
+            hash: e
+        }, {
+            onDone: function(e) {
+                val(s, e), s.setAttribute("data-value", 1 - t), GroupsList.updateGroupField(r, 12, 1 - t)
+            },
+            showProgress: lockActionsMenuItem.pbind(s),
+            hideProgress: unlockActionsMenuItem.pbind(s)
+        }), cancelEvent(o)
+    },
+    toggleSubscription: function(s, r, e, o) {
+        var t = parseInt(s.getAttribute("data-value")) ? 1 : 0;
+        ajax.post("al_wall.php", {
+            act: "a_toggle_posts_subscription",
+            subscribe: t ? 0 : 1,
+            oid: -r,
+            hash: e
+        }, {
+            onDone: function(e) {
+                val(s, e), s.setAttribute("data-value", 1 - t), GroupsList.updateGroupField(r, 13, 1 - t)
+            },
+            showProgress: lockActionsMenuItem.pbind(s),
+            hideProgress: unlockActionsMenuItem.pbind(s)
+        }), cancelEvent(o)
+    },
+    subscribe: function(s, r, e, o) {
+        var t = hasClass(s, "flat_button");
+        if (!(t && buttonLocked(s) || actionsMenuItemLocked(s))) {
+            var i = t ? hasClass(s, "secondary") : !cur.scrollList.deleted[r],
+                c = function(o) {
+                    ajax.post("al_groups.php", {
+                        act: i ? "list_leave" : "list_enter",
+                        gid: r,
+                        hash: e,
+                        confirm: o
+                    }, {
+                        showProgress: (t ? lockButton : lockActionsMenuItem)
+                            .pbind(s),
+                        hideProgress: (t ? unlockButton : unlockActionsMenuItem)
+                            .pbind(s),
+                        onDone: function(e, o, l) {
+                            if (o) {
+                                var n = showFastBox(getLang("global_warning"), o, getLang("group_leave_group"), function() {
+                                    n.hide(), c(1)
+                                }, getLang("global_cancel"));
+                                return !0
+                            }
+                            if (val(s, e), cur.scrollList.deleted[r] = i, t) toggleClass(s, "secondary", !i);
+                            else {
+                                var a = domClosest("_gl_row", s);
+                                toggleClass(a, "deleted", i), l && addClass(a, "closed")
+                            }
+                        },
+                        onFail: function(s) {
+                            setTimeout(showFastBox(getLang("global_error"), s)
+                                .hide, 3e3)
+                        }
+                    })
+                };
+            c()
+        }
+    },
+    updateGroupField: function(s, r, e) {
+        cur.scrollList && cur.scrollList.lists && each(cur.scrollList.lists, function() {
+            if (this && this.length)
+                for (var o = 0, t = this.length; t > o; ++o)
+                    if (this[o][2] == s) {
+                        this[o][r] = e;
+                        break
+                    }
+        })
+    },
+    enter: function(s, r, e, o, t) {
+        if (cur.invSwitching) return setTimeout(GroupsList.enter.pbind(s, r, e, o, t), 100), !1;
         var i, c, l = cur.scrollList.tab;
-        "button" != r.tagName.toLowerCase() ? (r.backhtml || (r.backhtml = r.innerHTML), i = function() {
-            var s = getSize(r)[0];
-            r.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(r), {
-                width: s
+        "button" != s.tagName.toLowerCase() ? (s.backhtml || (s.backhtml = s.innerHTML), i = function() {
+            var r = getSize(s)[0];
+            s.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(s), {
+                width: r
             })
         }, c = function() {
-            r.innerHTML = r.backhtml
-        }) : (i = lockButton.pbind(r), c = unlockButton.pbind(r));
+            s.innerHTML = s.backhtml
+        }) : (i = lockButton.pbind(s), c = unlockButton.pbind(s));
         var n = GroupsList.rand(),
-            u = GroupsList.rand();
-        cur.scrollList[n] = u, cur.invSwitching = !0, ajax.post("/al_groups.php", {
+            a = GroupsList.rand();
+        cur.scrollList[n] = a, cur.invSwitching = !0, ajax.post("/al_groups.php", {
             act: "enter",
-            gid: s,
+            gid: r,
             hash: e,
             context: "2" + (o ? "_" + o : "")
         }, {
-            onDone: function(r, e) {
-                if (cur.invSwitching = !1, cur.scrollList && cur.scrollList[n] == u) {
+            onDone: function(s, e) {
+                if (cur.invSwitching = !1, cur.scrollList && cur.scrollList[n] == a) {
                     var i = cur.scrollList.lists[l],
                         c = t ? 5 : 1;
                     if ("unsure" == o ? c = t ? 5 : 3 : "decline" == o ? c = t ? -3 : -1 : "undecided" == o && (c = 4), i && "loading" != i && "update" != i)
-                        for (var a = 0, p = i.length; p > a; ++a) i[a][2] == s && (i[a][1] = c);
-                    else cur.scrollList.processed[l][s] = c;
-                    if (r && cur.scrollList.lists.groups) {
+                        for (var u = 0, p = i.length; p > u; ++u) i[u][2] == r && (i[u][1] = c);
+                    else cur.scrollList.processed[l][r] = c;
+                    if (s && cur.scrollList.lists.groups) {
                         var h = cur.scrollList.lists.groups;
                         if ("join" != o && "unsure" != o && o) {
                             if ("undecided" == o)
-                                for (var a in h) h[a][2] == r[2] && (h.splice(a, 1), cur.scrollList.counts.groups--)
-                        } else h.unshift(r), cur.scrollList.counts.groups++;
+                                for (var u in h) h[u][2] == s[2] && (h.splice(u, 1), cur.scrollList.counts.groups--)
+                        } else h.unshift(s), cur.scrollList.counts.groups++;
                         GroupsList.updateIndexer(h), GroupsList.showMore(!0)
                     }
-                    var d = ge("gl_inv" + s),
+                    var d = ge("gl_inv" + r),
                         g = d && geByClass1("group_row_status", d);
                     d && (g.basehtml = g.innerHTML, g.innerHTML = e)
                 }
             },
-            onFail: function(r) {
-                return r ? (setTimeout(showFastBox(getLang("global_error"), r)
+            onFail: function(s) {
+                return s ? (setTimeout(showFastBox(getLang("global_error"), s)
                     .hide, 3e3), !0) : void 0
             },
             showProgress: i,
             hideProgress: c
         })
     },
-    leave: function(r, s, e, o) {
-        if (cur.invSwitching) return setTimeout(GroupsList.leave.pbind(r, s, e, o), 100), !1;
-        if (!r.firstChild || "progress_inline" != r.firstChild.className) {
+    leave: function(s, r, e, o) {
+        if (cur.invSwitching) return setTimeout(GroupsList.leave.pbind(s, r, e, o), 100), !1;
+        if (!s.firstChild || "progress_inline" != s.firstChild.className) {
             var t, i, c = GroupsList.rand(),
                 l = GroupsList.rand(),
                 n = cur.scrollList.tab;
-            cur.scrollList[c] = l, "button" != r.tagName.toLowerCase() ? (r.backhtml || (r.backhtml = r.innerHTML), t = function() {
-                var s = getSize(r)[0];
-                r.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(r), {
-                    width: s
+            cur.scrollList[c] = l, "button" != s.tagName.toLowerCase() ? (s.backhtml || (s.backhtml = s.innerHTML), t = function() {
+                var r = getSize(s)[0];
+                s.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(s), {
+                    width: r
                 })
             }, i = function() {
-                r.innerHTML = r.backhtml
-            }) : (t = lockButton.pbind(r), i = unlockButton.pbind(r)), cur.invSwitching = !0, ajax.post("/al_groups.php", {
+                s.innerHTML = s.backhtml
+            }) : (t = lockButton.pbind(s), i = unlockButton.pbind(s)), cur.invSwitching = !0, ajax.post("/al_groups.php", {
                 act: "leave",
-                gid: s,
+                gid: r,
                 hash: e,
                 context: 2
             }, {
-                onDone: function(r, e) {
+                onDone: function(s, e) {
                     if (cur.invSwitching = !1, cur.scrollList && cur.scrollList[c] == l) {
                         var o = cur.scrollList.lists[n];
                         if (o && "loading" != o && "update" != o)
-                            for (var t = 0, i = o.length; i > t; ++t) o[t][2] == s && (o[t][1] = -1);
-                        else cur.scrollList.processed[n][s] = -1;
-                        var u = ge("gl_inv" + s),
-                            a = u && geByClass1("group_row_status", u);
-                        u && (a.basehtml = a.innerHTML, a.innerHTML = e)
+                            for (var t = 0, i = o.length; i > t; ++t) o[t][2] == r && (o[t][1] = -1);
+                        else cur.scrollList.processed[n][r] = -1;
+                        var a = ge("gl_inv" + r),
+                            u = a && geByClass1("group_row_status", a);
+                        a && (u.basehtml = u.innerHTML, u.innerHTML = e)
                     }
                 },
                 showProgress: t,
@@ -112,108 +188,108 @@ var GroupsList = {
             })
         }
     },
-    spam: function(r, s, e) {
-        if (!domFC(r) || "progress_inline" != domFC(r)) {
+    spam: function(s, r, e) {
+        if (!domFC(s) || "progress_inline" != domFC(s)) {
             var o = GroupsList.rand(),
                 t = GroupsList.rand(),
                 i = cur.scrollList.tab;
             cur.scrollList[o] = t, ajax.post("/al_groups.php", {
                 act: "spam",
-                gid: s,
+                gid: r,
                 hash: e,
                 context: 1
             }, {
-                onDone: function(r) {
+                onDone: function(s) {
                     if (cur.scrollList && cur.scrollList[o] == t) {
                         var e = cur.scrollList.lists[i];
                         if (e && "loading" != e && "update" != e)
-                            for (var c = 0, l = e.length; l > c; ++c) e[c][2] == s && (e[c][1] = -2);
-                        else cur.scrollList.processed[i][s] = -2;
-                        var n = ge("gl_inv" + s),
-                            u = n && geByClass1("group_row_status", n);
-                        n && (u.innerHTML = r)
+                            for (var c = 0, l = e.length; l > c; ++c) e[c][2] == r && (e[c][1] = -2);
+                        else cur.scrollList.processed[i][r] = -2;
+                        var n = ge("gl_inv" + r),
+                            a = n && geByClass1("group_row_status", n);
+                        n && (a.innerHTML = s)
                     }
                 },
                 showProgress: function() {
-                    r.oldhtml = r.innerHTML;
-                    var s = getSize(r)[0];
-                    r.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(r), {
-                        width: s
+                    s.oldhtml = s.innerHTML;
+                    var r = getSize(s)[0];
+                    s.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(s), {
+                        width: r
                     })
                 },
                 hideProgress: function() {
-                    r.innerHTML = r.oldhtml
+                    s.innerHTML = s.oldhtml
                 }
             })
         }
     },
-    cancel: function(r, s, e) {
-        if (!domFC(r) || "progress_inline" != domFC(r)
+    cancel: function(s, r, e) {
+        if (!domFC(s) || "progress_inline" != domFC(s)
             .className) {
             var o = GroupsList.rand(),
                 t = GroupsList.rand(),
                 i = cur.scrollList.tab;
             cur.scrollList[o] = t, ajax.post("/al_groups.php", {
                 act: "cancel",
-                gid: s,
+                gid: r,
                 hash: e,
                 context: 1
             }, {
                 onDone: function() {
                     if (cur.scrollList && cur.scrollList[o] == t) {
-                        var r = cur.scrollList.lists[i];
-                        if (r && "loading" != r && "update" != r) {
-                            for (var e in r) r[e][2] == s && (r.splice(e, 1), cur.scrollList.counts.groups--);
-                            GroupsList.updateIndexer(r), GroupsList.showMore(!0)
-                        } else cur.scrollList.processed[i][s] = 0;
-                        var c = ge("gl_inv" + s),
+                        var s = cur.scrollList.lists[i];
+                        if (s && "loading" != s && "update" != s) {
+                            for (var e in s) s[e][2] == r && (s.splice(e, 1), cur.scrollList.counts.groups--);
+                            GroupsList.updateIndexer(s), GroupsList.showMore(!0)
+                        } else cur.scrollList.processed[i][r] = 0;
+                        var c = ge("gl_inv" + r),
                             l = c && geByClass1("group_row_status", c);
                         c && l && l.basehtml && (l.innerHTML = l.basehtml)
                     }
                 },
                 showProgress: function() {
-                    r.oldhtml = r.innerHTML;
-                    var s = getSize(r)[0];
-                    r.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(r), {
-                        width: s
+                    s.oldhtml = s.innerHTML;
+                    var r = getSize(s)[0];
+                    s.innerHTML = '<span class="progress_inline"></span>', setStyle(domFC(s), {
+                        width: r
                     })
                 },
                 hideProgress: function() {
-                    r.innerHTML = r.oldhtml
+                    s.innerHTML = s.oldhtml
                 }
             })
         }
     },
-    updateIndexer: function(r) {
+    updateIndexer: function(s) {
         cur.scrollList.cache.groups = {
             all: []
         };
-        var s = cur.scrollList.cache.groups;
-        for (var e in r) s.all.push(e);
-        cur.scrollList.index.groups = new vkIndexer(s.all, function(s) {
-            return r[s][0]
+        var r = cur.scrollList.cache.groups;
+        for (var e in s) r.all.push(e);
+        cur.scrollList.index.groups = new vkIndexer(r.all, function(r) {
+            return s[r][0]
         })
     },
-    rejectAll: function(r, s) {
-        showFastBox(getLang("global_warning"), getLang("groups_sure_reject_all"), getLang("groups_reject_all_inv"), function(r) {
+    rejectAll: function(s, r) {
+        showFastBox(getLang("global_warning"), getLang("groups_sure_reject_all"), getLang("groups_reject_all_inv"), function(s) {
             ajax.post("/al_groups.php", {
                 act: "reject_all",
-                hash: s
+                hash: r
             }, {
-                showProgress: lockButton.pbind(r),
-                hideProgress: unlockButton.pbind(r)
+                showProgress: lockButton.pbind(s),
+                hideProgress: unlockButton.pbind(s)
             })
         }, getLang("global_cancel"))
     },
     scrollCheck: function() {
         if (!browser.mobile && cur.scrollList) {
-            var r = ge("ui_" + cur.scrollList.tab + "_load_more"),
-                s = ge("ui_search_load_more");
-            if (isVisible(r) || (r = s, isVisible(r))) {
+            var s = ge("ui_" + cur.scrollList.tab + "_load_more"),
+                r = ge("ui_search_load_more");
+            if (isVisible(s) || (s = r, isVisible(s))) {
                 var e = document.documentElement,
                     o = window.innerHeight || e.clientHeight || bodyNode.clientHeight,
                     t = scrollGetY();
-                (t + o > r.offsetTop || cur.searchOffset && t + 2 * o > r.offsetTop) && GroupsList.showMore()
+                (t + o > s.offsetTop || cur.searchOffset && t + 2 * o > s.offsetTop) && GroupsList.showMore()
             }
         }
     },
@@ -223,16 +299,16 @@ var GroupsList = {
     destroyScroll: function() {
         removeEvent(window, "scroll", GroupsList.scrollCheck), removeEvent(window, "resize", GroupsList.scrollCheck)
     },
-    locNav: function(r, s, e) {
-        var o = r.tab,
+    locNav: function(s, r, e) {
+        var o = s.tab,
             t = o || ("events" == e.act ? "future" : "groups");
-        return delete r.tab, isEmpty(r) && void 0 !== o ? (hide("groups_list_tab_" + cur.scrollList.tab), GroupsList.updateSummary(cur.scrollList.counts[cur.scrollList.tab]),
+        return delete s.tab, isEmpty(s) && void 0 !== o ? (hide("groups_list_tab_" + cur.scrollList.tab), GroupsList.updateSummary(cur.scrollList.counts[cur.scrollList.tab]),
             cur.scrollList.tab = t, cur.scrollList.summary = geByClass1("ui_tab_count", ge("groups_" + t + "_tab")), show("groups_list_tab_" + t), checkPageBlocks(),
             nav.setLoc(e), window.uiSearch && uiSearch.reset(cur.scrollList.query, !0), elfocus(cur.scrollList.query), GroupsList.updateSummary(cur.scrollList.counts[t]),
             cur.scrollList.offset = ge("groups_list_" + t)
             .childNodes.length, GroupsList.showMore(!0), window.uiTabs && uiTabs.hideProgress(ge("groups_" + t + "_tab")), !1) : void 0
     },
-    init: function(r) {
+    init: function(s) {
         extend(cur, {
             module: "groups_list",
             _back: {
@@ -241,17 +317,17 @@ var GroupsList = {
                 hide: [GroupsList.destroyScroll]
             },
             scrollList: {
-                tab: r.tab,
+                tab: s.tab,
                 url: "al_groups.php",
                 params: {
                     act: "get_list",
-                    mid: r.mid
+                    mid: s.mid
                 },
                 prefix: "groups_list_",
                 query: ge("groups_list_search"),
                 queryCont: gpeByClass("_wrap", ge("groups_list_search")),
                 queryWrap: ge("group_u_search_input_wrap"),
-                summary: geByClass1("ui_tab_count", ge("groups_" + (r.tab || "groups") + "_tab")),
+                summary: geByClass1("ui_tab_count", ge("groups_" + (s.tab || "groups") + "_tab")),
                 searchSummary: ge("groups_search_summary"),
                 invites: ge("groups_invites_wrap"),
                 invitesPreload: ge("groups_invites_preload"),
@@ -260,11 +336,12 @@ var GroupsList = {
                 searchCont: ge("groups_list_search_cont"),
                 eventsPopular: ge("events_popular_list"),
                 perpage: 20,
-                offset: ge("groups_list_" + r.tab)
+                offset: ge("groups_list_" + s.tab)
                     .childNodes.length,
                 lists: {},
                 cache: {},
                 index: {},
+                deleted: {},
                 processed: {
                     groups: {},
                     admin: {},
@@ -274,49 +351,49 @@ var GroupsList = {
                 },
                 filtered: {},
                 queries: {},
-                counts: r.counts,
-                genEmpty: r.genEmpty,
-                genRow: r.genRow,
-                genSummary: r.genSummary,
-                genGroupsSummary: r.genGroupsSummary,
-                invShown: r.invShown
+                counts: s.counts,
+                genEmpty: s.genEmpty,
+                genRow: s.genRow,
+                genSummary: s.genSummary,
+                genGroupsSummary: s.genGroupsSummary,
+                invShown: s.invShown
             },
-            filter: r.filter
+            filter: s.filter
         }), setTimeout(elfocus.pbind(cur.scrollList.query), 0), cur.nav.push(GroupsList.locNav), setTimeout(GroupsList.load, 0), vk.version ? addEvent(window, "load",
-            GroupsList.initScroll) : GroupsList.initScroll(), cur.destroy.push(function(r) {
-            r == cur && GroupsList.destroyScroll()
-        }), GroupsList.initAdvancedSearchBlock(r)
+            GroupsList.initScroll) : GroupsList.initScroll(), cur.destroy.push(function(s) {
+            s == cur && GroupsList.destroyScroll()
+        }), GroupsList.initAdvancedSearchBlock(s)
     },
-    initAdvancedSearchBlock: function(r) {
+    initAdvancedSearchBlock: function(s) {
         return
     },
-    updateSummary: function(r, s) {
-        val(s ? cur.scrollList.searchSummary : cur.scrollList.summary, r ? langNumeric(r, "%s", !0) : "")
+    updateSummary: function(s, r) {
+        val(r ? cur.scrollList.searchSummary : cur.scrollList.summary, s ? langNumeric(s, "%s", !0) : "")
     },
-    load: function(r, s) {
-        var e = s || cur.scrollList.tab;
+    load: function(s, r) {
+        var e = r || cur.scrollList.tab;
         if (!cur.scrollList.lists[e]) {
             var o = GroupsList.rand(),
                 t = GroupsList.rand();
             cur.scrollList[o] = t, cur.scrollList.lists[e] = "loading", ajax.post(cur.scrollList.url, extend(cur.scrollList.params, {
                 tab: e
             }), {
-                onDone: function(s) {
+                onDone: function(r) {
                     if (cur.scrollList && cur.scrollList[o] == t) {
                         var i = "update" == cur.scrollList.lists[e];
                         if (i || "loading" == cur.scrollList.lists[e]) {
                             cur.scrollList.cache[e] = {
                                 all: []
                             };
-                            for (var c = cur.scrollList.processed[e], l = 0, n = s.length; n > l; ++l) res = c[s[l][2]], res && (s[l][1] = res), cur.scrollList
+                            for (var c = cur.scrollList.processed[e], l = 0, n = r.length; n > l; ++l) res = c[r[l][2]], res && (r[l][1] = res), cur.scrollList
                                 .cache[e].all.push(l);
-                            cur.scrollList.lists[e] = s;
-                            var u = i ? function() {
-                                cur.scrollList && cur.scrollList[o] == t && cur.scrollList.tab == e && GroupsList.showMore(r)
+                            cur.scrollList.lists[e] = r;
+                            var a = i ? function() {
+                                cur.scrollList && cur.scrollList[o] == t && cur.scrollList.tab == e && GroupsList.showMore(s)
                             } : function() {};
-                            cur.scrollList.index[e] = new vkIndexer(cur.scrollList.cache[e].all, function(r) {
-                                return cur.scrollList.lists[e][r][0]
-                            }, u)
+                            cur.scrollList.index[e] = new vkIndexer(cur.scrollList.cache[e].all, function(s) {
+                                return cur.scrollList.lists[e][s][0]
+                            }, a)
                         }
                     }
                 },
@@ -324,49 +401,49 @@ var GroupsList = {
             })
         }
     },
-    getHighlight: function(r) {
-        var s = cur.scrollList.index[cur.scrollList.tab],
-            e = s.delimiter,
-            o = s.trimmer;
-        return r += " " + (parseLatin(r) || ""), r = escapeRE(r)
-            .replace(/&/g, "&amp;"), r = r.replace(o, "")
+    getHighlight: function(s) {
+        var r = cur.scrollList.index[cur.scrollList.tab],
+            e = r.delimiter,
+            o = r.trimmer;
+        return s += " " + (parseLatin(s) || ""), s = escapeRE(s)
+            .replace(/&/g, "&amp;"), s = s.replace(o, "")
             .replace(e, "|"), {
-                re: new RegExp("(" + r + ")", "gi"),
+                re: new RegExp("(" + s + ")", "gi"),
                 val: '<span class="highlight">$1</span>'
             }
     },
-    showMore: function(r) {
-        var s = cur.scrollList.tab,
-            e = cur.scrollList.lists[s];
-        if (!e || "loading" == e || "update" == e) return e || GroupsList.load(r), void(cur.scrollList.lists[s] = "update");
-        var s = cur.scrollList.tab,
-            e = cur.scrollList.cache[s].all,
+    showMore: function(s) {
+        var r = cur.scrollList.tab,
+            e = cur.scrollList.lists[r];
+        if (!e || "loading" == e || "update" == e) return e || GroupsList.load(s), void(cur.scrollList.lists[r] = "update");
+        var r = cur.scrollList.tab,
+            e = cur.scrollList.cache[r].all,
             o = trim(cur.scrollList.query.value);
-        cur.searchStr = o, void 0 === cur.scrollList.queries[s] && (cur.scrollList.queries[s] = "");
-        var t = r || o != cur.scrollList.queries[s];
-        if (t || r !== !1) {
-            cur.scrollList.queries[s] = o;
+        cur.searchStr = o, void 0 === cur.scrollList.queries[r] && (cur.scrollList.queries[r] = "");
+        var t = s || o != cur.scrollList.queries[r];
+        if (t || s !== !1) {
+            cur.scrollList.queries[r] = o;
             var i = !1;
             if (o) {
-                if (e = cur.scrollList.cache[s]["_" + o], void 0 === e) {
-                    var c = cur.scrollList.index[s].search(o),
+                if (e = cur.scrollList.cache[r]["_" + o], void 0 === e) {
+                    var c = cur.scrollList.index[r].search(o),
                         l = {};
                     e = [];
-                    for (var n = 0, u = c.length; u > n; ++n) l[c[n]] || (l[c[n]] = !0, e.push(c[n]));
-                    e.sort(function(r, s) {
-                        return r - s
-                    }), cur.scrollList.cache[s]["_" + o] = e
+                    for (var n = 0, a = c.length; a > n; ++n) l[c[n]] || (l[c[n]] = !0, e.push(c[n]));
+                    e.sort(function(s, r) {
+                        return s - r
+                    }), cur.scrollList.cache[r]["_" + o] = e
                 }
                 i = GroupsList.getHighlight(o)
             }
-            var a = e.length,
-                p = ge(cur.scrollList.prefix + s),
-                h = ge("ui_" + s + "_load_more");
-            if (GroupsList.updateSummary(a), !a) return p.innerHTML = cur.scrollList.genEmpty(o), void(o && GroupsList.needSearch(s) ? t ? (GroupsList.serverSearch(p, o),
+            var u = e.length,
+                p = ge(cur.scrollList.prefix + r),
+                h = ge("ui_" + r + "_load_more");
+            if (GroupsList.updateSummary(u), !u) return p.innerHTML = cur.scrollList.genEmpty(o), void(o && GroupsList.needSearch(r) ? t ? (GroupsList.serverSearch(p, o),
                 hide(h)) : cur.searchOffset && GroupsList.serverSearchMore(p, o) : (hide(h), hide(cur.scrollList.searchWrap), show(cur.scrollList.eventsPopular),
                 cur.searchOffset = 0));
-            for (var d = t ? 0 : cur.scrollList.offset, g = Math.min(a, d + cur.scrollList.perpage), L = [], n = d; g > n; ++n) {
-                var f = cur.scrollList.lists[s][e[n]];
+            for (var d = t ? 0 : cur.scrollList.offset, g = Math.min(u, d + cur.scrollList.perpage), L = [], n = d; g > n; ++n) {
+                var f = cur.scrollList.lists[r][e[n]];
                 if (f) {
                     var v = f[0];
                     i && (v = v.replace(i.re, i.val)), L.push(cur.scrollList.genRow(f, v))
@@ -374,28 +451,28 @@ var GroupsList = {
             }
             if (o || d && !t || (hide(cur.scrollList.searchWrap), show(cur.scrollList.eventsPopular), cur.searchOffset = 0), t)
                 if (hasClass(cur.scrollList.queryCont, "ui_search_fixed") && scrollToY(getXY(cur.scrollList.queryWrap)[1] + 1, 0), p.innerHTML = L.join(""),
-                    checkPageBlocks(), cur.searchOffset = !1, e.length < 5 && o && GroupsList.needSearch(s)) {
+                    checkPageBlocks(), cur.searchOffset = !1, e.length < 5 && o && GroupsList.needSearch(r)) {
                     var _ = [];
                     for (var n in e) {
-                        var m = cur.scrollList.lists[s][e[n]];
+                        var m = cur.scrollList.lists[r][e[n]];
                         _.push(m[2])
                     }
                     GroupsList.serverSearch(p, o, _)
                 } else hide(cur.scrollList.searchWrap), show(cur.scrollList.eventsPopular), cur.searchOffset = 0;
             else p.innerHTML += L.join(""), cur.searchOffset && GroupsList.serverSearchMore(p, o);
-            cur.scrollList.offset = g, cur.searchOffset || (a > g ? show : hide)(h)
+            cur.scrollList.offset = g, cur.searchOffset || (u > g ? show : hide)(h)
         }
     },
-    showMoreInvites: function(r) {
+    showMoreInvites: function(s) {
         if (!cur.loadingInvites) {
-            for (var s = cur.scrollList.invites && geByClass1("groups_list", cur.scrollList.invites), e = cur.scrollList.invitesPreload, o = cur.scrollList.invitesMoreLnk; domFC(
-                    e);) s.appendChild(domFC(e)), cur.scrollList.invShown++;
+            for (var r = cur.scrollList.invites && geByClass1("groups_list", cur.scrollList.invites), e = cur.scrollList.invitesPreload, o = cur.scrollList.invitesMoreLnk; domFC(
+                    e);) r.appendChild(domFC(e)), cur.scrollList.invShown++;
             toggle(o, cur.scrollList.counts.invite > cur.scrollList.invShown), isVisible(o) && ajax.post("/al_groups.php", {
                 act: "more_invites",
                 offset: cur.scrollList.invShown
             }, {
-                onDone: function(r, s) {
-                    e.innerHTML = r, s && (cur.scrollList.counts.invite -= s)
+                onDone: function(s, r) {
+                    e.innerHTML = s, r && (cur.scrollList.counts.invite -= r)
                 },
                 showProgress: function() {
                     cur.loadingInvites = !0
@@ -406,19 +483,19 @@ var GroupsList = {
             })
         }
     },
-    serverSearchMore: function(r, s) {
+    serverSearchMore: function(s, r) {
         if (!cur.searchLoadingMore) {
             cur.searchLoadingMore = 1;
             var e = ge("ui_search_load_more");
             e.innerHTML;
             ajax.post("/al_groups.php", GroupsList.extendWithAdvancedParams({
                 act: "server_search",
-                q: s,
+                q: r,
                 offset: cur.searchOffset,
                 exclude: cur.searchExclude.join(",")
             }), {
-                onDone: function(r, s, e) {
-                    cur.searchLoadingMore = 0, r ? (cur.searchOffset += r, cur.scrollList.searchCont.appendChild(cf(s))) : cur.searchOffset = 0, (!s || e >= r ?
+                onDone: function(s, r, e) {
+                    cur.searchLoadingMore = 0, s ? (cur.searchOffset += s, cur.scrollList.searchCont.appendChild(cf(r))) : cur.searchOffset = 0, (!r || e >= s ?
                         hide : show)("ui_search_load_more")
                 },
                 onFail: function() {
@@ -429,72 +506,64 @@ var GroupsList = {
             })
         }
     },
-    extendedSearch: function(r) {
+    extendedSearch: function(s) {
         clearTimeout(cur.searchTimeout), cur.searchTimeout = setTimeout(function() {
-            var s = geByClass1("groups_section_search");
-            window.searcher && s ? hasClass(s, "ui_rmenu_item_sel") ? searcher.onEnter() : (uiRightMenu.switchMenu(s), uiRightMenu.showProgress(s), nav.go(s.href +
-                "&c[q]=" + r)) : nav.go("/groups?act=catalog&c[q]=" + r)
+            var r = geByClass1("groups_section_search");
+            window.searcher && r ? hasClass(r, "ui_rmenu_item_sel") ? searcher.onEnter() : (uiRightMenu.switchMenu(r), uiRightMenu.showProgress(r), nav.go(r.href +
+                "&c[q]=" + s)) : nav.go("/groups?act=catalog&c[q]=" + s)
         }, 500)
     },
-    extendWithAdvancedParams: function(r) {
-        return cur.isAdvancedSearch ? extend(r || {}, {
+    extendWithAdvancedParams: function(s) {
+        return cur.isAdvancedSearch ? extend(s || {}, {
             extended: 1,
             safe: intval(cur.searchSafe),
             sort: intval(cur.searchSort || -1),
             type: intval(cur.searchGroupType || -1)
-        }) : r
+        }) : s
     },
-    needSearch: function(r) {
-        return "groups" == r || "future" == r || "past" == r
+    needSearch: function(s) {
+        return "groups" == s || "future" == s || "past" == s
     },
-    serverSearch: function(r, s, e) {
+    serverSearch: function(s, r, e) {
         return GroupsList.needSearch(cur.scrollList.tab) ? (clearTimeout(cur.searchTimeout), void(cur.searchTimeout = setTimeout(function() {
-            cur.searchStr == s && (cur.searchExclude = e || [], ajax.post("/al_groups.php", GroupsList.extendWithAdvancedParams({
+            cur.searchStr == r && (cur.searchExclude = e || [], ajax.post("/al_groups.php", GroupsList.extendWithAdvancedParams({
                 act: "server_search",
-                q: s,
+                q: r,
                 exclude: cur.searchExclude.join(",")
             }), {
-                onDone: function(r, e, o) {
-                    cur.searchStr == s && (r ? (cur.scrollList.searchCont.innerHTML = e, show(cur.scrollList.searchWrap), hide(cur.scrollList
-                        .eventsPopular), (r > o || !e) && show("ui_search_load_more")) : (cur.scrollList.searchCont.innerHTML = "",
+                onDone: function(s, e, o) {
+                    cur.searchStr == r && (s ? (cur.scrollList.searchCont.innerHTML = e, show(cur.scrollList.searchWrap), hide(cur.scrollList
+                        .eventsPopular), (s > o || !e) && show("ui_search_load_more")) : (cur.scrollList.searchCont.innerHTML = "",
                         hide(cur.scrollList.searchWrap), show(cur.scrollList.eventsPopular)), checkPageBlocks(), GroupsList.updateSummary(
-                        r, !0), cur.searchOffset = r)
+                        s, !0), cur.searchOffset = s)
                 },
                 showProgress: uiSearch.showProgress.pbind(cur.scrollList.query),
                 hideProgress: uiSearch.hideProgress.pbind(cur.scrollList.query)
             }))
         }, 300))) : !1
     },
-    showMapBox: function(r, s, e) {
+    showMapBox: function(s, r, e) {
         window.showZeroZoneBox && showZeroZoneBox("places", function() {
-            GroupsList.showMapBox(r, s, e)
+            GroupsList.showMapBox(s, r, e)
         }) || showTabbedBox("/al_places.php", {
             act: "show_photo_place",
-            place_id: r
+            place_id: s
         }, {
             stat: ["places.css", "map.css", "maps.js", "ui_controls.css", "ui_controls.js"]
         })
     },
-    feedbanGroup: function(r, s, e) {
-        var o = -s;
+    feedbanGroup: function(s, r, e) {
+        var o = -r;
         ajax.post("/al_fans.php", {
             act: "feedtgl",
             oid: o,
             hash: e
         }, {
             onDone: function(e, o) {
-                if (r.innerHTML = o, cur.scrollList.lists && cur.scrollList.lists.groups) {
-                    var t = cur.scrollList.lists.groups;
-                    if (t && t.length)
-                        for (var i = 0, c = t.length; c > i; ++i)
-                            if (t[i][2] == s) {
-                                cur.scrollList.lists.groups[i][12] = e;
-                                break
-                            }
-                }
+                s.innerHTML = o, GroupsList.updateGroupField(r, 9, e)
             },
             showProgress: function() {
-                r.innerHTML = '<span class="progress_inline"></span>'
+                s.innerHTML = '<span class="progress_inline"></span>'
             }
         })
     }

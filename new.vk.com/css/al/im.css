@@ -1773,6 +1773,8 @@ img.im_photo_thumb {
     max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
+    line-height: 16px;
+    padding-top: 6px;
     margin-bottom: 10px;
     box-sizing: border-box;
     border: none;

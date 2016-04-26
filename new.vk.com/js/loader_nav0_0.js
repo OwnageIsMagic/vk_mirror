@@ -113,9 +113,9 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 692930773454,
+    'nav': 696869719247,
     'common.js': 1132,
-    'common.css': 1031282107,
+    'common.css': 2264311117,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -212,9 +212,9 @@ var stVersions = {
     'public.js': 1370745423,
     'pages.css': 4259151537,
     'pages.js': 3347413999,
-    'groups.css': 2250107211,
-    'groups.js': 3142831624,
-    'groups_list.js': 3633710213,
+    'groups.css': 1234393450,
+    'groups.js': 2016833031,
+    'groups_list.js': 611266370,
     'groups_edit.css': 4247198484,
     'groups_edit.js': 3159630895,
     'profile.css': 1789947477,
@@ -236,7 +236,7 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 2493123886,
+    'im.css': 3818345285,
     'imn.js': 65731174,
     'im.js': 973890988,
     'emoji.js': 2849385263,
@@ -440,9 +440,9 @@ var stVersions = {
     '/swf/video.swf': 142,
     '/swf/vkvideochat.swf': 50,
     '/swf/vchatdevices.swf': 1,
-    'snapster/style.css': 441702168,
-    'snapster/page.js': 416173284,
-    'snapster/mobile.css': 2095315211,
+    'snapster/style.css': 3570810658,
+    'snapster/page.js': 1866270403,
+    'snapster/mobile.css': 4060961183,
     'favicon': 5,
     'lang': 6704
 };
@@ -475,4 +475,4 @@ var stTypes = {
         'snapster/mobile.css': 1
     }
 };
-var _rnd = 2001;
+var _rnd = 1950;
