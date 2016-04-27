@@ -2173,6 +2173,7 @@ var Wall = {
                             description: replaceEntities(share.description),
                             extra: share.extra,
                             extra_data: share.extraData,
+                            mode: share.mode,
                             photo_url: share.noPhoto ? '' : replaceEntities(share.photo_url),
                             open_graph_data: (share.openGraph || {})
                                 .data,
