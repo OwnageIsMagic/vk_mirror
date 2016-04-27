@@ -276,6 +276,11 @@ var Videoview = {
                     playerViewType = 'layer';
                 }
 
+                if (window.mvcur && mvcur.mvData) {
+                    mvcur.viewStartedTimestamp = new Date()
+                        .getTime();
+                }
+
                 var firstRequest = ajax.post('al_video.php', {
                     act: 'video_view_started',
                     oid: oid,
@@ -326,6 +331,7 @@ var Videoview = {
                 mvcur.finished = true;
                 mvcur.mousemoved = true;
                 Videoview.moveCheck();
+                Videoview.logViewedPercentage();
 
                 if (mvcur.adData) {
                     if (mvcur.adData.stat_link_start && !mvcur.adData.view_complete_start) {
@@ -1391,15 +1397,6 @@ var Videoview = {
                 if (backOnClick) return history.back();
             }
 
-            if (cur.vSearchPos) {
-                delete cur.vSearchPos;
-            }
-
-            if (cur.vSearchLastActionTime) {
-                cur.vSearchLastActionTime = new Date()
-                    .getTime();
-            }
-
             if (!force && mvcur.minimized) {
                 if (!mvcur.noLocChange && noLoc !== true) {
                     if (noLoc === 2) {
@@ -1482,6 +1479,19 @@ var Videoview = {
                     };
                     return true;
                 }
+            }
+
+            if (cur.vSearchPos) {
+                delete cur.vSearchPos;
+            }
+
+            if (cur.vSearchLastActionTime) {
+                cur.vSearchLastActionTime = new Date()
+                    .getTime();
+            }
+
+            if (!mvcur.finished) {
+                Videoview.logViewedPercentage();
             }
 
             if (!window.forcePauseAudio) {
@@ -4520,6 +4530,8 @@ var Videoview = {
             var canAdd = mv.can_add;
             var isSubscribed = mv.subscribed;
 
+            Videoview.logViewedPercentage();
+
             var nextBlockHtml = '';
             if (nextVideo && containerSize[0] >= 400 && containerSize[1] >= 300) {
                 nextBlockHtml = '\
@@ -4768,6 +4780,30 @@ var Videoview = {
                 Videoview.onExternalVideoNextCancel();
             }
             re('mv_external_finish');
+        },
+
+        logViewedPercentage: function() {
+            if (mvcur && mvcur.mvData && mvcur.mvData.videoRaw && mvcur.mvData.duration) {
+                var videoRaw = mvcur.mvData.videoRaw;
+                var duration = mvcur.mvData.duration;
+                var now = new Date()
+                    .getTime();
+                var viewStart = mvcur.viewStartedTimestamp;
+
+                if (!viewStart) {
+                    return false;
+                }
+
+                var viewedTime = Math.min(Math.round((now - viewStart) / 1000), duration);
+                delete mvcur.viewStartedTimestamp;
+
+                ajax.post('al_video.php', {
+                    act: 'a_viewed_percentage',
+                    video_raw: videoRaw,
+                    viewed_time: viewedTime,
+                    duration: duration
+                });
+            }
         },
 
         _eof: 1

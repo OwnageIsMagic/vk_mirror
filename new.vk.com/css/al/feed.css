@@ -783,7 +783,7 @@
 
 .feedback_grouped_row_wrap .post_actions {
     margin-top: 9px;
-    background: url(/images/icons/feedback_arrow.png?2) no-repeat;
+    background: url(/images/icons/feedback_arrow.png?3) no-repeat;
     background-position: right 0;
     height: 5px
 }
@@ -1009,7 +1009,7 @@
 }
 
 .feedback_birthday_row .feedback_sticky_text {
-    padding-right: 77px
+    padding-right: 76px
 }
 
 .feedback_sticky_actions {
@@ -1079,7 +1079,7 @@
 }
 
 .feedback_sticky_menu_icon {
-    background: url(/images/icons/feedback_arrow.png?2) no-repeat 50% 50%;
+    background: url(/images/icons/feedback_arrow.png?3) no-repeat 50% 50%;
     width: 18px;
     height: 25px;
     cursor: pointer;
@@ -1089,15 +1089,9 @@
 
 .feedback_sticky_gift_btn {
     float: left;
-    padding: 7px 8px 6px;
-    margin-right: 4px;
-    width: 27px;
-    height: 26px
-}
-
-.feedback_sticky_gift_btn_icon {
-    background: url(/images/icons/gift_icon.png) no-repeat 0 0;
-    padding-right: 11px
+    width: 26px;
+    height: 26px;
+    background: url(/images/icons/feedback_gift.png) no-repeat 50% 50%
 }
 
 .feedback_sticky_progress:before {

@@ -311,8 +311,9 @@
 }
 
 .friends_user_row.deleted .friends_actions_icons,
-.friends_user_row.deleted .ui_actions_menu {
-    display: none
+.friends_user_row.deleted .friends_actions_menu.shown .ui_actions_menu {
+    display: none!important;
+    visibility: none!important
 }
 
 .friends_user_row.deleted .friends_restore_link {

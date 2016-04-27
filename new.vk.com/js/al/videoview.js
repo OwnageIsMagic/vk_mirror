@@ -173,7 +173,8 @@ var Videoview = {
                 }
                 var d;
                 d = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
-                    .playlistId ? "layer_with_playlist" : "layer";
+                    .playlistId ? "layer_with_playlist" : "layer", window.mvcur && mvcur.mvData && (mvcur.viewStartedTimestamp = (new Date)
+                        .getTime());
                 var n = ajax.post("al_video.php", {
                     act: "video_view_started",
                     oid: e,
@@ -205,8 +206,8 @@ var Videoview = {
                 }
             },
             onVideoPlayFinished: function() {
-                cur.pinnedVideoDestroy && cur.pinnedVideoDestroy(), window.mvcur && mvcur.mvShown && (mvcur.finished = !0, mvcur.mousemoved = !0, Videoview.moveCheck(), mvcur.adData ?
-                    (mvcur.adData.stat_link_start && !mvcur.adData.view_complete_start && (ajax.post(mvcur.adData.stat_link_start, {}, {
+                cur.pinnedVideoDestroy && cur.pinnedVideoDestroy(), window.mvcur && mvcur.mvShown && (mvcur.finished = !0, mvcur.mousemoved = !0, Videoview.moveCheck(),
+                    Videoview.logViewedPercentage(), mvcur.adData ? (mvcur.adData.stat_link_start && !mvcur.adData.view_complete_start && (ajax.post(mvcur.adData.stat_link_start, {}, {
                         onDone: function() {},
                         onFail: function() {
                             return !0
@@ -259,25 +260,29 @@ var Videoview = {
                                 hash: t
                             },
                             v = parseInt(cur.videoSearchPos);
-                        isNaN(v) || (n.search_pos = v), ajax.post("/al_video.php", n, {
-                            onDone: function(e, i, o) {
-                                if (!(0 > e)) {
-                                    e && ls.set(a, {
-                                        segments: e,
-                                        segmentsSig: i,
-                                        ts: (new Date)
-                                            .getTime()
-                                    }), cur.segmentsSaveProcess = !1, o = parseInt(o) || 0;
-                                    var t = parseInt(cur.videoSearchPos);
-                                    o > 0 && !isNaN(t) && cur.videoSearchStats && (cur.videoSearchStats.positions[t] = extend({
-                                        viewedParts: 0
-                                    }, cur.videoSearchStats.positions[t]), cur.videoSearchStats.positions[t].viewedParts++)
+                        if (isNaN(v) || (n.search_pos = v), ajax.post("/al_video.php", n, {
+                                onDone: function(e, i, o) {
+                                    if (!(0 > e)) {
+                                        e && ls.set(a, {
+                                            segments: e,
+                                            segmentsSig: i,
+                                            ts: (new Date)
+                                                .getTime()
+                                        }), cur.segmentsSaveProcess = !1, o = parseInt(o) || 0;
+                                        var t = parseInt(cur.videoSearchPos);
+                                        o > 0 && !isNaN(t) && cur.videoSearchStats && (cur.videoSearchStats.positions[t] = extend({
+                                            viewedParts: 0
+                                        }, cur.videoSearchStats.positions[t]), cur.videoSearchStats.positions[t].viewedParts++)
+                                    }
                                 }
-                            }
-                        }), cur.videoSearchStats && (cur.videoSearchStats.totalViewedTime || (cur.videoSearchStats.totalViewedTime = 0), cur.videoSearchStats.totalViewedTime +=
-                            mvcur.mvData.vsegsSize, isNaN(v) || (cur.videoSearchStats.positions[v] = extend({
+                            }), cur.videoSearchStats && (cur.videoSearchStats.totalViewedTime || (cur.videoSearchStats.totalViewedTime = 0), cur.videoSearchStats.totalViewedTime +=
+                                mvcur.mvData.vsegsSize, !isNaN(v))) {
+                            cur.videoSearchStats.positions[v] = extend({
                                 viewedSeconds: 0
-                            }, cur.videoSearchStats.positions[v]), cur.videoSearchStats.positions[v].viewedSeconds += mvcur.mvData.vsegsSize))
+                            }, cur.videoSearchStats.positions[v]);
+                            var s = cur.videoSearchStats.positions[v].viewedSeconds;
+                            s = Math.min(mvcur.mvData.duration, s + mvcur.mvData.vsegsSize), cur.videoSearchStats.positions[v].viewedSeconds = s
+                        }
                     }
                 }
             },
@@ -669,8 +674,7 @@ var Videoview = {
                     var a = cur.videoBackOnClick;
                     if (cur.videoBackOnClick = !1, a) return history.back()
                 }
-                if (cur.videoSearchPos && delete cur.videoSearchPos, cur.videoSearchStats && (cur.videoSearchStats.lastActionTime = (new Date)
-                        .getTime()), !i && mvcur.minimized) return void(mvcur.noLocChange || e === !0 || (2 === e ? nav.setLoc(hab.getLoc()) : layerQueue.count() || Videoview.backLocation()));
+                if (!i && mvcur.minimized) return void(mvcur.noLocChange || e === !0 || (2 === e ? nav.setLoc(hab.getLoc()) : layerQueue.count() || Videoview.backLocation()));
                 if (!mvcur.noHistory && !e && !t) {
                     mvcur.noHistory = 1, mvcur.forceHistoryHide = i, __adsUpdate("very_lazy");
                     var r = cur.mvHistoryBack ? -cur.mvHistoryBack : -1;
@@ -707,7 +711,8 @@ var Videoview = {
                         }, !0
                     }
                 }
-                if (!window.forcePauseAudio) {
+                if (cur.vSearchPos && delete cur.vSearchPos, cur.vSearchLastActionTime && (cur.vSearchLastActionTime = (new Date)
+                        .getTime()), mvcur.finished || Videoview.logViewedPercentage(), !window.forcePauseAudio) {
                     var u = window.ap,
                         _ = window.Notifier;
                     u && !u.isPlaying() && u.pausedByVideo && (u.play(), delete u.pausedByVideo), _ && _.lcSend("video_hide")
@@ -1975,8 +1980,9 @@ var Videoview = {
                 var r = a.liked,
                     d = a.added,
                     n = a.can_add,
-                    v = a.subscribed,
-                    s = "";
+                    v = a.subscribed;
+                Videoview.logViewedPercentage();
+                var s = "";
                 if (o && i[0] >= 400 && i[1] >= 300) s =
                     '<div id="mv_finish_next" class="mv_finish_next" onclick="Videoview.onExternalVideoNext(true)">  <div class="mv_finish_next_caption">' + getLang(
                         "video_player_next_title") + '</div>  <div class="mv_finish_next_thumb" style="background-image: url(' + o.thumb +
@@ -2091,6 +2097,23 @@ var Videoview = {
         },
         removeExternalVideoFinishBlock: function() {
             window.mvcur && mvcur.nextTimer && Videoview.onExternalVideoNextCancel(), re("mv_external_finish")
+        },
+        logViewedPercentage: function() {
+            if (mvcur && mvcur.mvData && mvcur.mvData.videoRaw && mvcur.mvData.duration) {
+                var e = mvcur.mvData.videoRaw,
+                    i = mvcur.mvData.duration,
+                    o = (new Date)
+                    .getTime(),
+                    t = mvcur.viewStartedTimestamp;
+                if (!t) return !1;
+                var a = Math.min(Math.round((o - t) / 1e3), i);
+                delete mvcur.viewStartedTimestamp, ajax.post("al_video.php", {
+                    act: "a_viewed_percentage",
+                    video_raw: e,
+                    viewed_time: a,
+                    duration: i
+                })
+            }
         }
     },
     videoview = Videoview,
