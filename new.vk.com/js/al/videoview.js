@@ -352,7 +352,7 @@ var Videoview = {
             return cur.mvOpts || window.mvcur && mvcur.mvData
         },
         getPlayerObject: function() {
-            return ge("video_yt") && window.VideoYoutube || ge("video_player") || window.html5video || null
+            return mvcur.player || ge("video_yt") && window.VideoYoutube || ge("video_player") || window.html5video || null
         },
         getPlayerObjectEl: function() {
             return ge("video_player") || ge("html5_player") || geByClass1("extra_player") || null
@@ -607,7 +607,7 @@ var Videoview = {
                 "show video " + i);
             var r = window.mvcur && mvcur.mvShown,
                 d = window.mvcur && mvcur.player;
-            if (d && domPN(d.el) === ge("video_player") ? d.unloadVideo() : (hide("mv_content"), show("mv_progress")), window.mvcur && mvcur.minimized) {
+            if (d && domPN(d.el) === ge("video_player") ? d.deinitVideo() : (hide("mv_content"), show("mv_progress")), window.mvcur && mvcur.minimized) {
                 if (!t.nomin) return mvcur.videoRaw = i, t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) : VideoPlaylist.removeBlock(), !0;
                 t.prevLoc && (mvcur.mvPrevLoc = t.prevLoc), debugLog("unminimizing in show"), Videoview.unminimize(!0, !1, !0)
             }
@@ -1595,24 +1595,15 @@ var Videoview = {
         },
         setTitle: function(e) {
             var i = mvcur.mvData.title || "";
-            e = e || 590, val("mv_min_title", Videoview._isCurrentVideoPublished() ? stripHTML(i) : ""), setStyle(ge("mv_min_title"), {
+            e = e || 590, val("mv_min_title", Videoview._isCurrentVideoPublished() ? stripHTML(i) : ""), setStyle("mv_min_title", {
                 maxWidth: Math.max(0, e - 60)
             });
             var o = ge("mv_title");
-            if (o) {
-                var t = getSize(o);
-                setStyle(o, {
-                    overflow: "visible",
-                    width: "inherit",
-                    position: "absolute",
-                    "max-width": "initial"
-                }), t[0] < getSize(o)[0] && o.setAttribute("title", replaceEntities(stripHTML(i))), setStyle(o, {
-                    overflow: "",
-                    width: "",
-                    position: "",
-                    "max-width": ""
-                }), val(o, i)
-            }
+            o && (setStyle(o, {
+                display: "block"
+            }), o.scrollHeight > o.offsetHeight && attr(o, "title", replaceEntities(stripHTML(i))), setStyle(o, {
+                display: ""
+            }))
         },
         expandDescr: function(e) {
             var i = ge("mv_desc_full_text");

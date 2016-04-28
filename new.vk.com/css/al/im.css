@@ -149,7 +149,7 @@ img.im_photo_thumb {
 .im_fwd_log_wrap,
 .im_wall_log_wrap {
     border-left: 2px solid #dee6ee;
-    margin: 0 0 5px 3px
+    margin: 0 0 0 3px
 }
 
 .im_fwd_log_wrap {
@@ -879,6 +879,12 @@ img.im_photo_thumb {
     cursor: pointer
 }
 
+.im_change_topic_label {
+    padding-top: 2px;
+    padding-right: 8px;
+    color: #777
+}
+
 .im-page.im-page_group {
     width: 550px;
     min-height: 500px;
@@ -997,7 +1003,7 @@ img.im_photo_thumb {
     padding-top: 86px;
     width: 100%;
     text-align: center;
-    margin-top: -87.5px
+    margin-top: -90px
 }
 
 .im-page .im-page--lastact {
@@ -1030,12 +1036,12 @@ img.im_photo_thumb {
 .im-page .im-page--center-empty {
     position: absolute;
     display: none;
-    width: 175px;
+    width: 180px;
     height: 115px;
     top: 50%;
     left: 50%;
-    margin-left: -87.5px;
-    margin-top: -87.5px;
+    margin-left: -90px;
+    margin-top: -90px;
     box-sizing: border-box;
     color: #929eb0;
     line-height: 22px;
@@ -1045,8 +1051,8 @@ img.im_photo_thumb {
 }
 
 .im-page .im-page--center-empty.im-page--center-empty_fwd {
-    width: 350px;
-    margin-left: -175px;
+    width: 360px;
+    margin-left: -180px;
     background: url(/images/icons/fwd_icon.png) no-repeat top
 }
 
@@ -1709,6 +1715,7 @@ img.im_photo_thumb {
     position: relative;
     margin-top: -15px;
     cursor: text;
+    margin-bottom: 15px;
     border-top: solid 15px transparent
 }
 
@@ -1717,6 +1724,10 @@ img.im_photo_thumb {
     float: left;
     margin: 0 14px;
     position: relative
+}
+
+.im-chat-input .im-chat-input--textarea.im-chat-input--textarea_has-attaches .im-chat-input--attaches {
+    margin-bottom: 15px
 }
 
 .im-chat-input .im-chat-input--textarea .ms_items_more_wrap {
@@ -1731,8 +1742,7 @@ img.im_photo_thumb {
 .im-chat-input .im-chat-input--textarea .im-chat-input--attaches {
     overflow-y: auto;
     overflow-x: hidden;
-    max-height: 350px;
-    margin-bottom: 4px
+    max-height: 350px
 }
 
 .im-chat-input .im-chat-input--textarea .multi_media_preview {
@@ -1759,8 +1769,7 @@ img.im_photo_thumb {
 }
 
 .im-chat-input .im-chat-input--fwd {
-    clear: both;
-    margin-bottom: 10px
+    clear: both
 }
 
 .im-chat-input .im-chat-input--text {
@@ -1775,7 +1784,7 @@ img.im_photo_thumb {
     overflow-x: hidden;
     line-height: 16px;
     padding-top: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
     box-sizing: border-box;
     border: none;
     border-bottom: solid 1px #e4e6e9;
@@ -2044,6 +2053,11 @@ img.im_photo_thumb {
     margin: 0 20px 0 86px;
     line-height: 18px;
     word-wrap: break-word
+}
+
+.im-mess .im-mess--text .media_desc,
+.im-mess .im-mess--text .post_media {
+    padding-bottom: 0
 }
 
 .im-mess .im-mess--text .im_srv_lnk {
@@ -3165,7 +3179,8 @@ img.im_photo_thumb {
 }
 
 .ui_actions_menu_item.im-action.im-action_clear:before {
-    background-position: 5px -253px
+    background-position: 5px -253px;
+    margin-top: -4px
 }
 
 .ui_actions_menu_item.im-action.im-action_search:before {
@@ -3185,23 +3200,28 @@ img.im_photo_thumb {
 }
 
 .ui_actions_menu_item.im-action.im-action_invite:before {
-    background-position: 5px -114px
+    background-position: 5px -114px;
+    margin-top: -3px
 }
 
 .ui_actions_menu_item.im-action.im-action_topic:before {
-    background-position: 5px -131px
+    background-position: 5px -131px;
+    margin-top: -4px
 }
 
 .ui_actions_menu_item.im-action.im-action_avatar:before {
-    background-position: 5px -148px
+    background-position: 5px -148px;
+    margin-top: -3px
 }
 
 .ui_actions_menu_item.im-action.im-action_leave:before {
-    background-position: 5px -270px
+    background-position: 5px -270px;
+    margin-top: -3px
 }
 
 .ui_actions_menu_item.im-action.im-action_return:before {
-    background-position: 7px -324px
+    background-position: 7px -324px;
+    margin-top: -3px
 }
 
 .ui_actions_menu_item.im-action:hover:before {

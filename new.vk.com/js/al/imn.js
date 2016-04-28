@@ -6623,32 +6623,32 @@
         })
     }
 
-    function m(e, t, n, r, a, i, o, s) {
+    function m(e, t, n, r, a, i, o, s, l) {
         if (show("_im_media_preview"), !t.get()
             .rebuilding_draft) {
-            if ("page" === r) return !1;
+            if ("page" === a) return !1;
             t.set(x.cleanMediaStore.bind(null, t.get()
                 .peer));
-            var l = s.getMedias()
+            var u = l.getMedias()
                 .slice()
                 .map(function(e) {
                     return e.slice(0, 2)
                 }),
-                u = [];
-            "undefined" != typeof a && r ? (o && t.set(x.bindAttachToUrl.bind(null, t.get()
-                    .peer, r, a, o)), u = [
-                    [r, a, i]
-                ]) : r || "undefined" == typeof a || l.splice(a, 1), l = l.concat(u), l.filter(function(e) {
+                c = [];
+            "undefined" != typeof i && a ? (s && t.set(x.bindAttachToUrl.bind(null, t.get()
+                    .peer, a, i, s)), c = [
+                    [a, i, o]
+                ]) : a || "undefined" == typeof i || u.splice(i, 1), u = u.concat(c), u.filter(function(e) {
                     return e
                 })
                 .forEach(function(e) {
                     t.set(x.addMediaStore.bind(null, e))
                 });
-            var c = e()
+            var d = e()
                 .updateScroll();
             return e()
                 .scrollFix(t, t.get()
-                    .peer, c), t.get()
+                    .peer, d), toggleClass(r, "im-chat-input--textarea_has-attaches", u.length > 0), t.get()
                 .delayed_message && !(0, x.isAnythingLoading)(t.get()) ? (n([]), !1) : void 0
         }
     }
@@ -6893,8 +6893,8 @@
             ["map", getLang("profile_wall_map")]
         ], {
             maxShown: 1,
-            onAddMediaChange: function(e, r, a, i) {
-                return m(n, t, U, e, r, a, i, N)
+            onAddMediaChange: function(r, a, i, o) {
+                return m(n, t, U, e, r, a, i, o, N)
             },
             editable: 1,
             onChangedSize: function() {
@@ -7870,7 +7870,7 @@
     }
 
     function s() {
-        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off");
+        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off")
     }
 
     function l(e, t, n, a, o) {

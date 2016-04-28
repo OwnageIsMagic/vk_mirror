@@ -1859,12 +1859,13 @@ AppsSlider.prototype = {
     updateLeftNav: function(t) {
         t && val(geByTag1("ol", ge("side_bar")), t)
     },
-    restoreApp: function(t, e) {
+    restoreApp: function(t, e, i) {
         if (this.restoringApp) return !1;
-        var i = ge("app" + t);
-        return cur.deletedApps[t] && "al_apps" == cur.deletedApps[t].from && val(geByClass1("app_deleted_layer", i, "div"), cur.progressTpl), ajax.post(this.address, {
+        var s = ge("app" + t);
+        return cur.deletedApps[t] && "al_apps" == cur.deletedApps[t].from && val(geByClass1("app_deleted_layer", s, "div"), cur.progressTpl), ajax.post(this.address, {
             act: "join",
             gid: cur.gid,
+            gidhash: i,
             id: t,
             hash: e,
             restore: 1,
@@ -1872,14 +1873,14 @@ AppsSlider.prototype = {
             section: cur.section
         }, {
             onDone: this.withFastBackCheck(function(e) {
-                cur.deletedApps[t] && (val(i, cur.deletedApps[t].html), e.left_nav && this.updateLeftNav(e.left_nav), delete cur.deletedApps[t]), cur.apps[
-                    t] && (delete cur.apps[t].deleted, cur.appsIndex.add(cur.apps[t])), removeClass(i, "deleted")
+                cur.deletedApps[t] && (val(s, cur.deletedApps[t].html), e.left_nav && this.updateLeftNav(e.left_nav), delete cur.deletedApps[t]), cur.apps[
+                    t] && (delete cur.apps[t].deleted, cur.appsIndex.add(cur.apps[t])), removeClass(s, "deleted")
             }.bind(this)),
             showProgress: function() {
-                this.restoringApp = !0, addClass(i, this.optionLoadingClass)
+                this.restoringApp = !0, addClass(s, this.optionLoadingClass)
             }.bind(this),
             hideProgress: this.withFastBackCheck(function() {
-                this.restoringApp = !1, removeClass(i, this.optionLoadingClass)
+                this.restoringApp = !1, removeClass(s, this.optionLoadingClass)
             }.bind(this))
         }), !1
     },
