@@ -2015,7 +2015,7 @@ a.ui_search_custom_link {
     position: absolute;
     box-sizing: border-box;
     width: 100%;
-    z-index: 999;
+    z-index: 101;
     zoom: 1;
     background-color: #fff;
     border: 1px solid #d3d9de;

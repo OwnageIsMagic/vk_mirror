@@ -1010,8 +1010,8 @@ Slider.prototype.destroy = function(t) {
 }, Slider.prototype._onMouseLeave = function(t) {
     hasClass(this._el, "active") || this._toggleHint(!1)
 }, Slider.prototype._onMouseDown = function(t) {
-    addEvent(window, "mousemove", this._ev_onMouseMove = this._onMouseMove.bind(this)), addEvent(window, "mouseup", this._ev_onMouseUp = this._onMouseUp.bind(this)), this._onMouseMove(
-        t), Slider._currenSliderDrag = this, addClass(this._el, "active"), cancelEvent(t)
+    0 == t.button && (addEvent(window, "mousemove", this._ev_onMouseMove = this._onMouseMove.bind(this)), addEvent(window, "mouseup", this._ev_onMouseUp = this._onMouseUp.bind(
+        this)), this._onMouseMove(t), Slider._currenSliderDrag = this, addClass(this._el, "active"), cancelEvent(t))
 }, Slider.prototype._onMouseUp = function(t) {
     removeEvent(window, "mousemove", this._ev_onMouseMove), removeEvent(window, "mouseup", this._ev_onMouseUp), clearTimeout(this._debounceto), this._onValueChange(),
         removeClass(this._el, "active"), Slider._currenSliderDrag = !1, this._toggleHint(!1), this.options.onEndDragging && this.options.onEndDragging(this._currValue)

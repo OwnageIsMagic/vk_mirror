@@ -538,7 +538,7 @@ var Video = {
             0), Video._toggleEmptySearchPlaceholder(!0, e)), i ? i.length : 0
     },
     onItemEnter: function(e) {
-        setTitle(e, e, e.innerHTML)
+        setTitle(e, e, e.innerHTML.replace(/<\/?em>/g, ""))
     },
     showMoreAlbums: function(e) {
         var o = !1,
@@ -901,9 +901,7 @@ var Video = {
     },
     initChooseBox: function(e, o, i, t) {
         function r() {
-            setStyle(gpeByClass("popup_box_container", l.bodyNode), {
-                marginTop: .12 * clientHeight()
-            })
+            setStyle(gpeByClass("popup_box_container", l.bodyNode))
         }
 
         function d() {
@@ -966,9 +964,8 @@ var Video = {
             Video._prepareSearchFilters(i);
             var v = e.section ? "" : i.q || val(cur.searchInputEl);
             if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)), _ = "search", Video.doSearch(v), a(), Video._updateChooseFixedBottom()) :
-                (val(cur.searchInputEl, ""), Video.doSearch("")),
-                cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" + _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection =
-                _, "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
+                (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" +
+                _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection = _, "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
             else if (_ && 0 == _.indexOf("album_")) {
                 var h = _.split("_")[1];
                 showGlobalPrg(ge("video_playlist_item_" + h), {

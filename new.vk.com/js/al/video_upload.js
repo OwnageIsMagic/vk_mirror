@@ -760,7 +760,7 @@ var VideoUpload = {
                 var l = ge("video_item_" + videoId),
                     d = attr(l, "data-add-hash");
                 videoId = videoId.split("_");
-                var s = window.Video && Video._isAlbumSection() ? Video._getSectionAlbumId() : -2;
+                var s = window.Video && Video.isInAlbum() ? Video._getSectionAlbumId() : -2;
                 ajax.post("al_video.php", {
                     act: "a_add_to_playlist",
                     oid: videoId[0],
