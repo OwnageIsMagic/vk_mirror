@@ -34,7 +34,7 @@ AutoList.STATE_IDLE = "idle", AutoList.STATE_PENDING_ROWS = "pend_rows", AutoLis
         this._ev_scroll && (removeEvent(this._opts.scrollNode, "scroll", this._ev_scroll), this._ev_scroll = !1), this._setState(AutoList.STATE_DONE), this.toggleProgress(!1)
     }, AutoList.prototype._requestRows = function(t) {
         function s() {
-            o._opts.onNeedRows(o._onRowsProvided.bind(o), o._offset, o._page++)
+            o._opts.onNeedRows(o._onRowsProvided.bind(o), o._offset, o._page++, o._state == AutoList.STATE_PENDING_PREFETCH_ROWS)
         }
         if (this._state != AutoList.STATE_DONE_PREFETCH) {
             var o = this;

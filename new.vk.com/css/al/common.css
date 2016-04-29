@@ -9,6 +9,14 @@
     transition: opacity 0.2s ease
 }
 
+.ts_contact_photo.online.mobile:after {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%206%209%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%238AC176%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-136.000000%2C%20-209.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M136%2C210.506398%20C136%2C209.674437%20136.66503%2C209%20137.498576%2C209%20L140.501424%2C209%20C141.329065%2C209%20142%2C209.676463%20142%2C210.506398%20L142%2C216.493602%20C142%2C217.325563%20141.33497%2C218%20140.501424%2C218%20L137.498576%2C218%20C136.670935%2C218%20136%2C217.323537%20136%2C216.493602%20L136%2C210.506398%20Z%20M137%2C211%20L141%2C211%20L141%2C216%20L137%2C216%20L137%2C211%20Z%22%20id%3D%22mobile_s%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
+.online.mobile:after {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%207%2011%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%238AC176%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-203.000000%2C%20-217.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M203%2C218.506439%20C203%2C217.674456%20203.671189%2C217%20204.501676%2C217%20L208.498324%2C217%20C209.327677%2C217%20210%2C217.671541%20210%2C218.506439%20L210%2C226.493561%20C210%2C227.325544%20209.328811%2C228%20208.498324%2C228%20L204.501676%2C228%20C203.672323%2C228%20203%2C227.328459%20203%2C226.493561%20L203%2C218.506439%20Z%20M204%2C219%20L209%2C219%20L209%2C225%20L204%2C225%20L204%2C219%20Z%20M206%2C226%20L207%2C226%20L207%2C227%20L206%2C227%20L206%2C226%20Z%22%20id%3D%22mobile_m%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
 .media-photo-thumb-background {
     background-repeat: no-repeat;
     background-size: cover;
@@ -309,18 +317,29 @@ textarea.ashelper {
 .online:after {
     content: '';
     position: absolute;
-    bottom: 11%;
-    right: 11%;
-    margin: 0 -4px -4px 0;
     background-color: #8ac176;
-    border: 2px solid #fff;
-    width: 12.5%;
-    height: 12.5%;
-    min-width: 8px;
-    min-height: 8px;
-    max-width: 10px;
-    max-height: 10px;
     border-radius: 50%
+}
+
+.online.mobile:after {
+    border-radius: 3px;
+    background-size: cover
+}
+
+.online:after {
+    bottom: 2%;
+    right: 2%;
+    border: 2px solid #fff;
+    height: 8px;
+    width: 8px
+}
+
+.online.mobile:after {
+    bottom: 0%;
+    right: 4%;
+    background-color: #fff;
+    height: 11px;
+    width: 7px
 }
 
 .event {
@@ -1384,17 +1403,17 @@ div#utils {
     line-height: 11px
 }
 
-#audio_layer_tt {
+.top_audio_layer {
     border-top-width: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0
 }
 
-#audio_layer_tt:before {
+.top_audio_layer:before {
     display: none
 }
 
-#audio_layer_tt:after {
+.top_audio_layer:after {
     border-bottom-color: #fafbfc;
     border-width: 6px
 }
@@ -4327,31 +4346,33 @@ a.ts_search_link {
 
 .ts_contact_photo {
     position: relative;
+    float: left;
     width: 34px;
     height: 34px
 }
 
-.ts_contact_photo:after {
-    display: none;
-    content: '';
-    position: absolute;
+.ts_contact_photo.online:after {
     bottom: 0;
     right: 0;
-    width: 6px;
+    border: 2px solid #fff;
     height: 6px;
-    border-radius: 50%;
-    background-color: #8ac176;
-    border: 2px solid;
-    border-color: #fff
+    width: 6px
 }
 
-.ts_contact.active .ts_contact_photo:after {
+.ts_contact_photo.online.mobile:after {
+    bottom: -1px;
+    right: 0;
+    background-color: #fff;
+    height: 9px;
+    width: 6px
+}
+
+.ts_contact.active .ts_contact_photo.online:after {
     border-color: #f5f7fa
 }
 
-.ts_contact_mobile .ts_contact_photo:after,
-.ts_contact_online .ts_contact_photo:after {
-    display: block
+.ts_contact.active .ts_contact_photo.online.mobile:after {
+    background-color: #f5f7fa
 }
 
 .ts_contact_img {
@@ -4420,19 +4441,6 @@ a.ts_search_link {
 
 .ts_contact_title_wrap.is_verified {
     max-width: 146px
-}
-
-.ts_contact_title:after {
-    display: none;
-    content: '';
-    background: url(/images/icons/search_mobile_icon.png?1) no-repeat 0 -17px;
-    height: 11px;
-    width: 7px;
-    margin: 0 0 -1px 6px
-}
-
-.ts_contact_mobile .ts_contact_title:after {
-    display: inline-block
 }
 
 em.ts_clist_hl {
@@ -5479,7 +5487,7 @@ button.ui_load_more_btn {
 }
 
 .audio_row {
-    padding: 6px 10px;
+    padding: 7px 10px;
     cursor: pointer;
     position: relative;
     border-radius: 3px
@@ -5492,20 +5500,17 @@ button.ui_load_more_btn {
 }
 
 .audio_row .audio_acts {
-    display: none
+    display: none;
+    margin-top: -5px;
+    margin-right: -5px
 }
 
 .audio_row .audio_acts .audio_act {
     float: left;
-    height: 13px;
-    width: 13px;
-    background-image: url(/images/icons/common.png?5);
     opacity: 0.75;
     filter: alpha(opacity=75);
+    padding: 5px 6px;
     display: none;
-    margin-left: 15px;
-    -o-transition: background-position 100ms ease;
-    transition: background-position 100ms ease;
     cursor: pointer
 }
 
@@ -5520,24 +5525,35 @@ button.ui_load_more_btn {
     top: 1px
 }
 
+.audio_row .audio_acts .audio_act>div {
+    height: 13px;
+    width: 13px;
+    background-image: url(/images/icons/common.png?5);
+    -o-transition: background-position 200ms ease;
+    transition: background-position 200ms ease
+}
+
 .audio_row .audio_acts #recom {
-    display: block;
+    display: block
+}
+
+.audio_row .audio_acts #recom>div {
     background-position: 0 -126px
 }
 
-.audio_row .audio_acts #delete {
+.audio_row .audio_acts #delete>div {
     background-position: 1px -29px
 }
 
-.audio_row .audio_acts #edit {
+.audio_row .audio_acts #edit>div {
     background-position: 0 -44px
 }
 
-.audio_row .audio_acts #add {
+.audio_row .audio_acts #add>div {
     background-position: 0 0
 }
 
-.audio_row .audio_acts #next {
+.audio_row .audio_acts #next>div {
     background-position: 0 -92px;
     width: 14px
 }
@@ -5675,7 +5691,7 @@ button.ui_load_more_btn {
     display: none;
     font-size: 12px;
     line-height: 1.3em;
-    padding: 10px 35px;
+    padding: 10px 35px 0;
     overflow: hidden;
     cursor: default
 }
@@ -5702,7 +5718,10 @@ button.ui_load_more_btn {
 }
 
 .audio_row.added .audio_act#add {
-    display: block;
+    display: block
+}
+
+.audio_row.added .audio_act#add>div {
     background-position: 0 -15px
 }
 

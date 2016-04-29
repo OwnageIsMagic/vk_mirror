@@ -312,7 +312,7 @@ function MediaSelector(e, a, i, o) {
                     case "audio":
                         if (!t.info) return !1;
                         var B = geByClass1("_audio_row_" + i);
-                        B && (t = AudioUtils.buildAudioFromRow(B)), P = Page.addAudioPreview(i, t), T = ' id="pam' + m + "_audio" + i + '"';
+                        B && (t = AudioUtils.getAudioFromEl(B)), P = Page.addAudioPreview(i, t), T = ' id="pam' + m + "_audio" + i + '"';
                         break;
                     case "doc":
                         if (!t.lang) return !1;

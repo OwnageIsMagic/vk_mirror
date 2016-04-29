@@ -89,10 +89,188 @@
 }
 
 .audio_page_player {
-    padding: 10px 11px;
     background-color: #fafbfc;
     border-bottom: 1px solid #ebedf0;
     box-sizing: border-box
+}
+
+.audio_page_player .audio_page_player_ctrl {
+    float: left
+}
+
+.audio_page_player .audio_page_player_ctrl.audio_page_player_btns {
+    float: right
+}
+
+.audio_page_player .audio_page_player_ctrl.audio_page_player_track {
+    float: none;
+    overflow: hidden
+}
+
+.audio_page_player .audio_page_player_play {
+    padding: 15px 4px 15px 14px;
+    cursor: pointer;
+    opacity: 0.9
+}
+
+.audio_page_player .audio_page_player_play .icon {
+    background-image: url(/images/icons/audio_player_controls.png);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: #577ca1
+}
+
+.audio_page_player .audio_page_player_play:hover {
+    opacity: 1
+}
+
+.audio_page_player .audio_page_player_play.audio_playing .icon {
+    background-position: 0px -56px
+}
+
+.audio_page_player .audio_page_player_next,
+.audio_page_player .audio_page_player_prev {
+    padding: 24px 4px;
+    cursor: pointer;
+    opacity: 0.9
+}
+
+.audio_page_player .audio_page_player_next .icon,
+.audio_page_player .audio_page_player_prev .icon {
+    background-image: url(/images/icons/audio_player_controls.png);
+    height: 10px;
+    width: 12px;
+    background-position: 0 -88px
+}
+
+.audio_page_player .audio_page_player_next:hover,
+.audio_page_player .audio_page_player_prev:hover {
+    opacity: 1
+}
+
+.audio_page_player .audio_page_player_next .icon {
+    background-position: 0 -102px
+}
+
+.audio_page_player .audio_page_player_btns .audio_page_player_btn {
+    position: relative;
+    padding: 4px;
+    float: left;
+    margin-top: 18px;
+    cursor: pointer
+}
+
+.audio_page_player .audio_page_player_btns .audio_page_player_btn:last-child {
+    padding-right: 10px
+}
+
+.audio_page_player .audio_page_player_btns .icon {
+    background-image: url(/images/icons/audio_player_controls.png);
+    height: 15px;
+    width: 16px;
+    -o-transition: background-position 150ms ease;
+    transition: background-position 150ms ease;
+    opacity: 0.75
+}
+
+.audio_page_player .audio_page_player_btns .audio_page_player_btn_enabled .icon {
+    opacity: 1
+}
+
+.audio_page_player .audio_page_player_add .icon {
+    background-position: 2px -185px
+}
+
+.audio_page_player .audio_page_player_add.audio_player_btn_added {
+    opacity: 1
+}
+
+.audio_page_player .audio_page_player_add.audio_player_btn_added .icon {
+    background-position: 2px -205px
+}
+
+.audio_page_player .audio_page_player_shuffle .icon {
+    background-position: 0 -115px
+}
+
+.audio_page_player .audio_page_player_repeat .icon {
+    background-position: 0 -132px;
+    height: 14px;
+    width: 18px
+}
+
+.audio_page_player .audio_page_player_recoms .icon {
+    background-position: 0 -148px;
+    height: 14px;
+    width: 13px
+}
+
+.audio_page_player .audio_page_player_status .icon {
+    background-position: 0 -165px
+}
+
+.audio_page_player .audio_page_player_volume_wrap {
+    float: right;
+    width: 50px;
+    padding: 37px 8px 0 0
+}
+
+.audio_page_player .audio_page_player_track_wrap {
+    overflow: hidden;
+    padding: 19px 10px 0 7px
+}
+
+.audio_page_player .audio_page_player_duration {
+    float: right;
+    padding: 0 0 0 8px;
+    letter-spacing: 0.02em
+}
+
+.audio_page_player .audio_page_player_track_info_wrap {
+    font-size: 12px;
+    padding: 0 0 1px;
+    line-height: 14px
+}
+
+.audio_page_player .audio_page_player_title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #393e42
+}
+
+.audio_page_player .audio_page_player_title_performer,
+.audio_page_player .audio_page_player_title_song {
+    display: inline-block;
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.audio_page_player .audio_page_player_title_performer {
+    max-width: 45%;
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.audio_page_player .audio_page_player_title_song_delim {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 3px
+}
+
+.audio_page_player .audio_page_player_track_slider.slider,
+.audio_page_player .audio_page_player_volume_slider.slider {
+    padding-bottom: 14px
+}
+
+.audio_page_player .audio_page_player_track_slider:not(.slider),
+.audio_page_player .audio_page_player_volume_slider:not(.slider) {
+    margin-top: 3px;
+    height: 2px;
+    background-color: #e1e8ee
 }
 
 .audio_page_player .audio_play {
@@ -287,7 +465,7 @@
     width: 55px
 }
 
-.audio_page_player .audio_page_player_title {
+.audio_page_player ._audio_page_player_title {
     float: left;
     white-space: nowrap;
     overflow: hidden;
@@ -298,7 +476,7 @@
     height: 1.25em
 }
 
-.audio_page_player .audio_page_player_title .audio_performer {
+.audio_page_player ._audio_page_player_title .audio_performer {
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
@@ -308,6 +486,10 @@
     float: right;
     color: #939699;
     cursor: pointer
+}
+
+.audio_page_player .audio_page_player_duration:hover {
+    color: #7f8184
 }
 
 .audio_page_player .audio_page_player_progress,
@@ -510,6 +692,27 @@
 }
 
 .ui_rmenu_loading .audio_upload_btn {
+    display: none
+}
+
+.audio_delete_current_btn {
+    background-image: url(/images/icons/common.png?5);
+    background-position: 0px -29px;
+    height: 13px;
+    width: 13px;
+    float: right;
+    margin-top: 10px;
+    margin-right: 10px;
+    opacity: 0.75
+}
+
+.audio_delete_current_btn:hover {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.ui_rmenu_loading .audio_delete_current_btn {
     display: none
 }
 
@@ -2846,6 +3049,11 @@
     -moz-osx-font-smoothing: auto;
     font-size: 14px;
     color: #2b2f33
+}
+
+.audio_owner_subscribe {
+    width: 100%;
+    margin-top: 15px
 }
 
 .audio_catalog_hide_more,

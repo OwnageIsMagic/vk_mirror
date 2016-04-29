@@ -21,9 +21,9 @@ var Video = {
         } : nav.objLoc
     },
     init: function() {
-        cur.searchInputEl = geByClass1("video_search_input"), cur.videoShowWindow = {}, cur.found = {}, cur.silentLoaded = {}, cur.currentSortings = {}, cur._preloadedPages = {},
-            cur.videoSearchFilters = {}, cur.videoSearchStats = null, cur.videoSearchPos = null, cur.module = "video", cur.albumsPreload = cur.albumsPreload || {}, cur.albumsShowingAll = {},
-            cur.curLoc = cur.query ? nav.fromStr(cur.query) : !1, cur._back = {
+        cur.searchInputEl = geByClass1("video_search_input"), cur.videoRecentlyRemoved = {}, cur.videoShowWindow = {}, cur.found = {}, cur.silentLoaded = {}, cur.currentSortings = {},
+            cur._preloadedPages = {}, cur.videoSearchFilters = {}, cur.videoSearchStats = null, cur.videoSearchPos = null, cur.module = "video", cur.albumsPreload = cur.albumsPreload ||
+            {}, cur.albumsShowingAll = {}, cur.curLoc = cur.query ? nav.fromStr(cur.query) : !1, cur._back = {
                 hide: [function() {
                     removeEvent(window, "scroll", cur._ev_onScroll)
                 }],
@@ -110,7 +110,7 @@ var Video = {
                 a = i.q && !o.q && i[0].indexOf("video") >= 0,
                 c = o.q && !i.q && o[0].indexOf("video") >= 0,
                 s = e.q;
-            if ((c || s) && Video.logSearchStats(), a || s ? Video._initSearchStats(i) : c && Video._clearSearchStats(), e[0]) {
+            if ((c || s) && Video.logSearchStats(), a || s ? Video._initSearchStats(i) : c && Video._clearSearchStats(), r) {
                 var l = cur.getOwnerId();
                 if (l == vk.id && !inArray(e[0], ["video", "videos" + l])) return !0;
                 if (l != vk.id && !inArray(e[0], ["videos" + l])) return !0
@@ -184,7 +184,10 @@ var Video = {
         "album" == o && (o = Video.getLoc()
             .section);
         var t = cur.silentLoaded[i][o];
-        return t ? (hide("video_sort_progress"), show("video_sort_dd"), clearTimeout(cur._sortTO), void(cur._sortTO = setTimeout(function() {
+        return t = t.filter(function(e) {
+            var o = e[VideoConstants.VIDEO_ITEM_INDEX_OWNER_ID] + "_" + e[VideoConstants.VIDEO_ITEM_INDEX_ID];
+            return !cur.videoRecentlyRemoved[o]
+        }), cur.silentLoaded[i][o] = t, t ? (hide("video_sort_progress"), show("video_sort_dd"), clearTimeout(cur._sortTO), void(cur._sortTO = setTimeout(function() {
             if (t.length) {
                 t.sort(function(o, i) {
                     switch (e) {
@@ -812,7 +815,7 @@ var Video = {
         addClass(d, "video_deleted");
         var a = Video._showProgressPanel(d),
             c = "album" == n ? Video._getSectionAlbumId() : -2;
-        return ajax.post("/al_video.php", {
+        return cur.videoRecentlyRemoved[i + "_" + t] = !0, ajax.post("/al_video.php", {
             act: "a_delete_video",
             oid: i,
             vid: t,
@@ -846,7 +849,7 @@ var Video = {
             onDone: function() {
                 removeClass(d, "video_deleted"), re(a)
             }
-        })
+        }), delete cur.videoRecentlyRemoved[i]
     },
     onVideoEdit: function(e, o, i, t, r) {
         cur.videoEditItem = gpeByClass("video_item", o), window.Videoview && Videoview.hidePlayer();
@@ -963,8 +966,9 @@ var Video = {
             Video._prepareSearchFilters(i);
             var v = e.section ? "" : i.q || val(cur.searchInputEl);
             if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)), _ = "search", Video.doSearch(v), a(), Video._updateChooseFixedBottom()) :
-                (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" +
-                _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection = _, "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
+                (val(cur.searchInputEl, ""), Video.doSearch("")),
+                cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" + _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection =
+                _, "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
             else if (_ && 0 == _.indexOf("album_")) {
                 var h = _.split("_")[1];
                 showGlobalPrg(ge("video_playlist_item_" + h), {

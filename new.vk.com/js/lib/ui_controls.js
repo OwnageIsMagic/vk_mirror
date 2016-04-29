@@ -50,38 +50,6 @@ function UiUtil(t) {
     return this.__construct__(t)
 }
 
-function Slider(t, e) {
-    if (this.constructor != Slider) throw new Error("Slider was called without 'new' operator");
-    if (!t) throw new Error("No element was provided for Slider");
-    t = ge(t), this.options = e || {
-        size: 1
-    }, this.options.backValue = this.options.backValue || 0;
-    var i = 100 * this.options.backValue,
-        s = this.options.withBackLine ? '<div class="slider_back" style="width:' + i + '%"></div>' : "",
-        o = '<div class="slider_slide"> ' + s + ' <div class="slider_amount"></div> <div class="slider_handler"></div> </div>';
-    this._el = ce("div", {
-        innerHTML: o,
-        className: "slider",
-        id: t.getAttribute("id") || ""
-    });
-    for (var n = t.classList, h = this, l = 0, r = n.length; r > l; l++) addClass(this._el, n[l]);
-    each(this._el.attributes, function(t, e) {
-        ("id" != e.name || "class" != e.name) && h._el.setAttribute(e.name, e.value)
-    }), t.parentNode.replaceChild(this._el, t), data(this._el, "slider", this), this._amountEl = geByClass1("slider_amount", this._el), this._handlerEl = geByClass1(
-        "slider_handler", this._el), this._slideEl = geByClass1("slider_slide", this._el), this._backEl = geByClass1("slider_back", this._el), this.options.color && (setStyle(
-        this._amountEl, {
-            backgroundColor: this.options.color
-        }), setStyle(this._handlerEl, {
-        backgroundColor: this.options.color
-    })), this.options.backColor && setStyle(this._slideEl, {
-        backgroundColor: this.options.backColor
-    }), this.options.width = this.options.width || getSize(this._el)[0], addClass(this._el, "slider_size_" + this.options.size), setStyle(this._el, {
-        width: this.options.width
-    }), this.options.debounce && (this._onValueChangeDebounced = debounce(this._onValueChange, this.options.debounce)), e.formatHint && (addEvent(this._el, "mousemove", this._ev_onMouseOver =
-        this._onMouseOver.bind(this)), addEvent(this._el, "mouseleave", this._ev_onMouseLeave = this._onMouseLeave.bind(this))), addEvent(this._el, "mousedown", this._ev_onMouseDown =
-        this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, !0, !0), this.setBackValue(this.options.backValue)
-}
-
 function InlineDropdown(t, e) {
     if (this.constructor != InlineDropdown) throw new Error("InlineDropdown was called without 'new' operator");
     if (t = ge(t)) {
@@ -854,7 +822,7 @@ extend(UiControl.prototype, {
                 }, {
                     onDone: function(t) {
                         self.options.onData && self.options.onData(t), self.cache.setData(term, t), t.length ? isFunction(success) && success(term, t) :
-                            isFunction(failure) && failure(term);
+                            isFunction(failure) && failure(term)
                     },
                     onFail: function() {
                         self.cache.setData(term, []), isFunction(failure) && failure(term)
@@ -1815,8 +1783,8 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
             }), this.mainTable = geByClass("inlMainTable", this.container)[0], this.mainCell = geByClass("inlContent", this.mainTable)[0], this.contentTable =
             geByClass("inlContentTable", this.mainCell)[0], setStyle(this.contentTable, "width", this.options.width), this.input = geByClass("inlInput", this.contentTable)[
                 0], this.buttonOkCell = geByClass("inlButtonOk", this.contentTable)[0], this.buttonCancelCell = geByClass("inlButtonCancel", this.contentTable)[0],
-            this.buttonOk = this.buttonOkCell.firstChild.firstChild, this.buttonCancel = this.buttonCancelCell.firstChild.firstChild, this.container.appendChild(this.mainTable),
-            this.mainCell.appendChild(this.contentTable)
+            this.buttonOk = this.buttonOkCell.firstChild.firstChild,
+            this.buttonCancel = this.buttonCancelCell.firstChild.firstChild, this.container.appendChild(this.mainTable), this.mainCell.appendChild(this.contentTable)
     },
     initEvents: function() {
         var t = this;
@@ -1858,65 +1826,7 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
         isVisible(this.container) || (this.moveToTarget(), this.options.onBeforeShow && this.options.onBeforeShow.apply(this), show(this.container), curInlineEdit &&
             curInlineEdit.hide(), curInlineEdit = this, this.input && elfocus(this.input), this.options.onShow && this.options.onShow.apply(this))
     }
-}), Slider.prototype.destroy = function(t) {
-    this.options.formatHint && (removeEvent(this._el, "mousemove", this._ev_onMouseOver), removeEvent(this._el, "mouseleave", this._ev_onMouseLeave), removeEvent(this._el,
-        "mousedown", this._ev_onMouseDown)), re(this._el), re(this._currHintEl)
-}, Slider.prototype.updateSize = function(t) {
-    this.options.width = t, setStyle(this._el, {
-        width: this.options.width
-    })
-}, Slider.prototype._updateHint = function(t, e) {
-    this._currHintEl || (this._currHintEl = se('<div class="slider_hint" id="slider_hint"></div>'), this.options.hintClass && addClass(this._currHintEl, this.options.hintClass),
-        this._el.appendChild(this._currHintEl));
-    var i = this._getPos(),
-        s = Math.round(t.pageX - i[0]);
-    if (s = e ? Math.min(Math.max(0, s), this.options.width) : s, s >= 0 && s <= this.options.width) {
-        var o = s / this.options.width;
-        this._currHintEl.innerHTML = this.options.formatHint ? this.options.formatHint.call(this, o) : o;
-        var n = getSize(this._currHintEl);
-        setStyle(this._currHintEl, {
-            left: this._slideEl.offsetLeft + s - n[0] / 2,
-            top: this._slideEl.offsetTop - n[1] - 10
-        }), !e && this._toggleHint(!0)
-    } else !e && this._toggleHint(!1);
-    this.options.formatHint || this._toggleHint(!1)
-}, Slider.prototype._toggleHint = function(t) {
-    toggleClass(this._currHintEl, "visible", t)
-}, Slider.prototype._onMouseOver = function(t) {
-    Slider._currenSliderDrag || hasClass(this._el, "active") || this._updateHint(t)
-}, Slider.prototype._onMouseLeave = function(t) {
-    hasClass(this._el, "active") || this._toggleHint(!1)
-}, Slider.prototype._onMouseDown = function(t) {
-    addEvent(window, "mousemove", this._ev_onMouseMove = this._onMouseMove.bind(this)), addEvent(window, "mouseup", this._ev_onMouseUp = this._onMouseUp.bind(this)), this._onMouseMove(
-        t), Slider._currenSliderDrag = this, addClass(this._el, "active"), cancelEvent(t)
-}, Slider.prototype._onMouseUp = function(t) {
-    removeEvent(window, "mousemove", this._ev_onMouseMove), removeEvent(window, "mouseup", this._ev_onMouseUp), clearTimeout(this._debounceto), this._onValueChange(),
-        removeClass(this._el, "active"), Slider._currenSliderDrag = !1, this._toggleHint(!1), this.options.onEndDragging && this.options.onEndDragging(this._currValue)
-}, Slider.prototype._onMouseMove = function(t) {
-    var e = this._getPos(),
-        i = Math.max(t.pageX, e[0]);
-    i = Math.min(i, e[0] + this.options.width), i -= e[0], this.setValue(i / this.options.width, !0, !0), this._onValueChangeDebounced ? this._onValueChangeDebounced() : this._onValueChange(),
-        this._toggleHint(!0), this._updateHint(t, !0), cancelEvent(t)
-}, Slider.prototype._getPos = function() {
-    return this._slidePos = getXY(this._slideEl)
-}, Slider.prototype.setValue = function(t, e, i) {
-    if (!hasClass(this._el, "active") || i) {
-        var s = this.options.width * t;
-        setStyle(this._amountEl, {
-            width: s
-        }), setStyle(this._handlerEl, {
-            left: s
-        }), i && (this._currValue = t), !e && this._onValueChange()
-    }
-}, Slider.prototype.setBackValue = function(t) {
-    toggleClass(this._backEl, "slider_back_transition", t > this._backValue), this._backValue = t;
-    var e = this.options.width * t;
-    setStyle(this._backEl, {
-        width: e
-    })
-}, Slider.prototype._onValueChange = function() {
-    this._lastValue = this._lastValue || 0, this._lastValue != this._currValue && (this._lastValue = this._currValue, this.options.onChange && this.options.onChange(this._currValue))
-}, InlineDropdown.IDD_HEADER_CORRECTION_LEFT = -10, InlineDropdown.IDD_HEADER_CORRECTION_TOP = -8, InlineDropdown.prototype._rebuildDropdown = function() {
+}), InlineDropdown.IDD_HEADER_CORRECTION_LEFT = -10, InlineDropdown.IDD_HEADER_CORRECTION_TOP = -8, InlineDropdown.prototype._rebuildDropdown = function() {
     function t(t, i) {
         i = i || "";
         var s = h._opts.sublists && h._opts.sublists[t[0]] ? "idd_sublist" : "",

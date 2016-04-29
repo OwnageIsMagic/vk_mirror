@@ -12,6 +12,16 @@
     transition: opacity 0.15s ease
 }
 
+.chat_tab_imgcont.online.mobile:after,
+.layers_shown .chat_tab_imgcont.online.mobile:after,
+span.fc_contact_photo.online.mobile:after {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%206%209%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%238AC176%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-136.000000%2C%20-209.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M136%2C210.506398%20C136%2C209.674437%20136.66503%2C209%20137.498576%2C209%20L140.501424%2C209%20C141.329065%2C209%20142%2C209.676463%20142%2C210.506398%20L142%2C216.493602%20C142%2C217.325563%20141.33497%2C218%20140.501424%2C218%20L137.498576%2C218%20C136.670935%2C218%20136%2C217.323537%20136%2C216.493602%20L136%2C210.506398%20Z%20M137%2C211%20L141%2C211%20L141%2C216%20L137%2C216%20L137%2C211%20Z%22%20id%3D%22mobile_s%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
+.chat_tab_imgcont.online.mobile:after {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%206%209%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%2362B245%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-136.000000%2C%20-209.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M136%2C210.506398%20C136%2C209.674437%20136.66503%2C209%20137.498576%2C209%20L140.501424%2C209%20C141.329065%2C209%20142%2C209.676463%20142%2C210.506398%20L142%2C216.493602%20C142%2C217.325563%20141.33497%2C218%20140.501424%2C218%20L137.498576%2C218%20C136.670935%2C218%20136%2C217.323537%20136%2C216.493602%20L136%2C210.506398%20Z%20M137%2C211%20L141%2C211%20L141%2C216%20L137%2C216%20L137%2C211%20Z%22%20id%3D%22mobile_s%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
 #notifiers_wrap {
     bottom: 0;
     left: 0;
@@ -307,27 +317,28 @@ span.fc_contact_photo {
     width: 34px
 }
 
-span.fc_contact_photo:after {
-    display: none;
-    content: '';
-    position: absolute;
+span.fc_contact_photo.online:after {
     bottom: 0;
     right: 0;
-    width: 6px;
+    border: 2px solid #fff;
     height: 6px;
-    border-radius: 50%;
-    background-color: #8ac176;
-    border: 2px solid;
-    border-color: #fff
+    width: 6px
 }
 
-a.fc_contact_over span.fc_contact_photo:after {
+span.fc_contact_photo.online.mobile:after {
+    bottom: -1px;
+    right: 0;
+    background-color: #fff;
+    height: 9px;
+    width: 6px
+}
+
+a.fc_contact_over span.fc_contact_photo.online:after {
     border-color: #f5f7fa
 }
 
-.fc_contact_mobile span.fc_contact_photo:after,
-.fc_contact_online span.fc_contact_photo:after {
-    display: block
+a.fc_contact_over span.fc_contact_photo.online.mobile:after {
+    background-color: #f5f7fa
 }
 
 .fc_contact_status {
@@ -358,19 +369,6 @@ a.fc_contact_over span.fc_contact_photo:after {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #42648b
-}
-
-.fc_contact_name:after {
-    display: none;
-    content: '';
-    background: url(/images/icons/search_mobile_icon.png?1) no-repeat 0 -17px;
-    height: 11px;
-    width: 7px;
-    margin: 0 0 -1px 6px
-}
-
-.fc_contact_mobile .fc_contact_name:after {
-    display: inline-block
 }
 
 .fc_contact_unread {
@@ -1189,8 +1187,8 @@ img.fc_inline_chatter_half {
 
 .chat_tab_close {
     position: absolute;
-    top: 6px;
-    right: 6px;
+    top: 0;
+    right: 0;
     width: 14px;
     height: 14px;
     border-radius: 50%;
@@ -1218,10 +1216,60 @@ img.fc_inline_chatter_half {
 }
 
 .chat_tab_imgcont {
+    position: relative;
     height: 40px;
     width: 40px;
     -o-transition: height 100ms ease-in-out, opacity 100ms ease-in-out;
     transition: height 100ms ease-in-out, opacity 100ms ease-in-out
+}
+
+.chat_tab_imgcont.online:after {
+    bottom: 0;
+    right: 0;
+    border: 2px solid #fff;
+    height: 7px;
+    width: 7px
+}
+
+.chat_tab_imgcont.online.mobile:after {
+    bottom: 0;
+    right: 0;
+    background-color: #fff;
+    height: 9px;
+    width: 6px
+}
+
+.chat_tab_imgcont.online:after {
+    border-color: #dae1e8;
+    background-color: #62b245
+}
+
+.layers_shown .chat_tab_imgcont.online:after {
+    border-color: #5a5a5a
+}
+
+.chat_tab_wrap:hover .chat_tab_imgcont.online:after {
+    border-color: #ccd5de
+}
+
+.layers_shown .chat_tab_wrap:hover .chat_tab_imgcont.online:after {
+    border-color: #6b6b6b
+}
+
+.chat_tab_imgcont.online.mobile:after {
+    background-color: #dae1e8
+}
+
+.layers_shown .chat_tab_imgcont.online.mobile:after {
+    background-color: #5a5a5a
+}
+
+.chat_tab_wrap:hover .chat_tab_imgcont.online.mobile:after {
+    background-color: #ccd5de
+}
+
+.layers_shown .chat_tab_wrap:hover .chat_tab_imgcont.online.mobile:after {
+    background-color: #6b6b6b
 }
 
 .chat_tab_beforeanim {
@@ -1283,36 +1331,6 @@ img.fc_inline_chatter_half {
 
 .chat_cont_sh_bottom {
     margin-top: -14px
-}
-
-.chat_tab_online_icon {
-    display: none;
-    position: absolute;
-    bottom: 7px;
-    right: 7px;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #62b245;
-    border: 2px solid;
-    border-color: #dae1e8
-}
-
-.chat_tab_wrap:hover .chat_tab_online_icon {
-    border-color: #ccd5de
-}
-
-.layers_shown .chat_tab_online_icon {
-    background-color: #8ac176;
-    border-color: #5a5a5a
-}
-
-.layers_shown .chat_tab_wrap:hover .chat_tab_online_icon {
-    border-color: #6b6b6b
-}
-
-.chat_tab_online .chat_tab_online_icon {
-    display: block
 }
 
 .chat_tab_typing_wrap {

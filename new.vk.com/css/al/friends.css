@@ -7,6 +7,14 @@
     transition: opacity 0.15s ease
 }
 
+.friends_phonebook .online.mobile:after {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%207%2011%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%238AC176%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-203.000000%2C%20-217.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M203%2C218.506439%20C203%2C217.674456%20203.671189%2C217%20204.501676%2C217%20L208.498324%2C217%20C209.327677%2C217%20210%2C217.671541%20210%2C218.506439%20L210%2C226.493561%20C210%2C227.325544%20209.328811%2C228%20208.498324%2C228%20L204.501676%2C228%20C203.672323%2C228%20203%2C227.328459%20203%2C226.493561%20L203%2C218.506439%20Z%20M204%2C219%20L209%2C219%20L209%2C225%20L204%2C225%20L204%2C219%20Z%20M206%2C226%20L207%2C226%20L207%2C227%20L206%2C227%20L206%2C226%20Z%22%20id%3D%22mobile_m%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
+.friends_user_row .online.mobile:after {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%209%2014%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%238AC176%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-297.000000%2C%20-242.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M297%2C243.498245%20C297%2C242.670787%20297.676463%2C242%20298.506398%2C242%20L304.493602%2C242%20C305.325563%2C242%20306%2C242.675249%20306%2C243.498245%20L306%2C254.501755%20C306%2C255.329213%20305.323537%2C256%20304.493602%2C256%20L298.506398%2C256%20C297.674437%2C256%20297%2C255.324751%20297%2C254.501755%20L297%2C243.498245%20Z%20M298%2C244.509666%20C298%2C244.228185%20298.232903%2C244%20298.503423%2C244%20L304.496577%2C244%20C304.77461%2C244%20305%2C244.222473%20305%2C244.509666%20L305%2C252.490334%20C305%2C252.771815%20304.767097%2C253%20304.496577%2C253%20L298.503423%2C253%20C298.22539%2C253%20298%2C252.777527%20298%2C252.490334%20L298%2C244.509666%20Z%20M301%2C254%20L302%2C254%20L302%2C255%20L301%2C255%20L301%2C254%20Z%22%20id%3D%22mobile_l%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
 .friends_list,
 .people_results {
     padding: 0 20px
@@ -119,6 +127,22 @@
 
 .friends_user_row:first-child {
     border-top: none
+}
+
+.friends_user_row .online:after {
+    bottom: 5%;
+    right: 5%;
+    border: 3px solid #fff;
+    height: 10px;
+    width: 10px
+}
+
+.friends_user_row .online.mobile:after {
+    bottom: 1.25%;
+    right: 6.25%;
+    background-color: #fff;
+    height: 14px;
+    width: 9px
 }
 
 .friends_list_bl {
@@ -302,6 +326,22 @@
 
 .friends_phonebook .friends_phonebook_skype {
     background-position: left -35px
+}
+
+.friends_phonebook .online:after {
+    bottom: 2%;
+    right: 2%;
+    border: 2px solid #fff;
+    height: 8px;
+    width: 8px
+}
+
+.friends_phonebook .online.mobile:after {
+    bottom: 0%;
+    right: 4%;
+    background-color: #fff;
+    height: 11px;
+    width: 7px
 }
 
 .friends_user_row.deleted .friends_photo_wrap,

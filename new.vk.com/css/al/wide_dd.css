@@ -6,7 +6,7 @@ div.wdd {
     background: #fff;
     border: 1px solid #d3d9de;
     border-radius: 1px;
-    padding: 2px;
+    padding: 2px 2px 1px;
     position: relative;
     overflow: visible!important
 }
@@ -34,7 +34,7 @@ div.wdd.wdd_focused.wdd_toup {
 
 .wdd_text {
     height: 14px;
-    padding: 4px 6px 6px;
+    padding: 4px 6px 7px;
     outline: 0px;
     margin: 0px;
     border: 0px
@@ -154,12 +154,12 @@ div.wdd.wdd_focused.wdd_toup {
 }
 
 .wdd_bubbles .summary_tab_sel {
-    padding: 1px 2px 1px 1px;
+    padding: 1px 2px 2px 1px;
     cursor: default
 }
 
 .wdd_add {
-    padding: 1px 2px 1px 1px;
+    padding: 1px 2px 2px 1px;
     font-size: 12px;
     cursor: pointer;
     display: none

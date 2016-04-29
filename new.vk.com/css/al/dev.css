@@ -631,7 +631,7 @@ input.dev_wide_input~.placeholder .ph_content,
 
 .dev_nav a.nav.submenu {
     line-height: 29px;
-    padding-left: 34px;
+    padding-left: 32px;
     color: #757c85;
     font-size: 1em
 }
@@ -640,13 +640,13 @@ input.dev_wide_input~.placeholder .ph_content,
 .dev_nav a.nav.submenu.nav_selected:hover {
     color: #000;
     font-size: 0.923em;
-    padding-left: 32px;
+    padding-left: 30px;
     padding-right: 10px
 }
 
 .dev_nav.anim a.nav.submenu.nav_selected,
 .dev_nav.anim a.nav.submenu.nav_selected:hover {
-    padding-left: 34px
+    padding-left: 32px
 }
 
 .dev_nav .nav_separator {

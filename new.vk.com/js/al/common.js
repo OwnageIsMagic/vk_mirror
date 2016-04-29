@@ -5504,7 +5504,8 @@ var nav = {
         statDurationsLoadImage();
         statNavigationTiming();
 
-        window.AudioUtils && AudioUtils.updateCurrentPlaying();
+        getAudioPlayer()
+            .updateCurrentPlaying();
 
         if (!opts.nocur) {
             changed = clone(objLoc);
@@ -5604,14 +5605,9 @@ var nav = {
                             updateSTL();
                             updateLeftMenu();
                         }, 10);
-                        /*
-                        var _a = window.audioPlayer, aid = currentAudioId();
-                        if (_a && aid && _a.hideCurrentTrack && _a.showCurrentTrack) {
-                          _a.hideCurrentTrack();
-                          _a.showCurrentTrack();
-                        }
-                        */
-                        window.AudioUtils && AudioUtils.updateCurrentPlaying();
+
+                        getAudioPlayer()
+                            .updateCurrentPlaying();
                     }, 10);
                     return false;
                 }
@@ -5813,7 +5809,8 @@ var nav = {
                 tNode.innerHTML = title;
                 (title ? show : hide)(tNode.parentNode);
 
-                window.AudioUtils && AudioUtils.updateCurrentPlaying();
+                getAudioPlayer()
+                    .updateCurrentPlaying();
             }
             checkPageBlocks();
             updateSTL();
@@ -5846,7 +5843,8 @@ var nav = {
             lTimeout(function() {
                 //nav.setLoc(params.loc || ''); // moved out of this scope (see above)
 
-                window.AudioUtils && AudioUtils.updateCurrentPlaying();
+                getAudioPlayer()
+                    .updateCurrentPlaying();
 
                 if (TopSearch && TopSearch.tsNeedsClear) {
                     TopSearch.clear();
@@ -6605,9 +6603,8 @@ if (!browser.mobile && !vk.host.match(/snapster\.io/)) {
             }
         });
         if (isMedia) {
-            getAudioPlayer(function(ap) {
-                ap.onMediaKeyPressedEvent(e);
-            });
+            getAudioPlayer()
+                .onMediaKeyPressedEvent(e);
         }
         if (Chat.inited) {
             if (e.keyCode == 191 && (e.ctrlKey || (e.metaKey && browser.mac))) {
@@ -7002,7 +6999,8 @@ function showBox(url, params, options, e) {
                 if (opts.onDone) opts.onDone(box, data);
                 return;
             }
-            try {
+
+            function processResponse() {
                 show(boxLayerBG);
                 addClass(bodyNode, 'layers_shown');
                 box.setOptions({
@@ -7017,16 +7015,24 @@ function showBox(url, params, options, e) {
                 box.content(html);
                 box.evalBox(js, url, params);
                 if (opts.onDone) opts.onDone(box, data);
-            } catch (e) {
-                topError(e, {
-                    dt: 15,
-                    type: 103,
-                    url: url,
-                    query: ajx2q(params),
-                    answer: Array.prototype.slice.call(arguments)
-                        .join('<!>')
-                });
-                if (box.isVisible()) box.hide();
+            }
+
+            if (__debugMode) {
+                processResponse();
+            } else {
+                try {
+                    processResponse();
+                } catch (e) {
+                    topError(e, {
+                        dt: 15,
+                        type: 103,
+                        url: url,
+                        query: ajx2q(params),
+                        answer: Array.prototype.slice.call(arguments)
+                            .join('<!>')
+                    });
+                    if (box.isVisible()) box.hide();
+                }
             }
         },
         onFail: function(error) {
@@ -9236,7 +9242,7 @@ TopSearch = {
             //TopSearch.toggleInput(false);
             //TopMenu.toggle(false); // commented since it triggers topHeaderClearClose() which clears needed close function
 
-            if (!domClosest('audio_layout', e.target) && !domClosest('layer_wrap', e.target)) {
+            if (!domClosest('_audio_layer', e.target) && !domClosest('layer_wrap', e.target)) {
                 topHeaderClose();
             }
         });
@@ -9507,12 +9513,12 @@ TopSearch = {
         }
         if (!info) info = '';
         verified = verified ? '<div class="page_verified" onmouseover="pageVerifiedTip(this, {' + (mid > 0 ? ('mid:' + mid) : ('gid:' + Math.abs(mid))) + '})"></div>' : '';
-        return '<a href="' + href + '" class="ts_contact ' + (online ? (mobPlatforms[online] ? 'ts_contact_mobile' : 'ts_contact_online') : '') +
-            ' clear_fix" id="ts_contact' + mid + '" onclick="return TopSearch.select(this, event, ' + peer +
+        return '<a href="' + href + '" class="ts_contact clear_fix" id="ts_contact' + mid + '" onclick="return TopSearch.select(this, event, ' + peer +
             ');" onmousedown="event.cancelBubble = true;" onmouseover="TopSearch.itemOver(this, 1, event);"  onmouseout="TopSearch.itemOver(this, 0, event);" hinttype="' +
-            hintType + '"><span class="ts_contact_photo fl_l"><img class="ts_contact_img" src="' + photo +
-            '"/></span><span class="ts_contact_name fl_l"><div class="ts_contact_title_wrap' + (verified ? ' is_verified' : '') + '"><span class="ts_contact_title">' +
-            name + '</span></div>' + verified + '<div class="ts_contact_info">' + info + '</div></span><div class="ts_contact_status"></div></a>';
+            hintType + '"><span class="ts_contact_photo' + (online ? ' online' + (mobPlatforms[online] ? ' mobile' : '') : '') + '"><img class="ts_contact_img" src="' +
+            photo + '"/></span><span class="ts_contact_name fl_l"><div class="ts_contact_title_wrap' + (verified ? ' is_verified' : '') +
+            '"><span class="ts_contact_title">' + name + '</span></div>' + verified + '<div class="ts_contact_info">' + info +
+            '</div></span><div class="ts_contact_status"></div></a>';
     },
     searchLists: function(q) {
         var _t = TopSearch,
@@ -10550,9 +10556,8 @@ function initTopAudioPlayer() {
 }
 
 function toggleAudioLyrics(event, ref, audioId, lyricsId) {
-    var audioRow = gpeByClass('_audio_row', ref);
-    var audioInfoEl = geByClass1('audio_info', audioRow);
-    var lyricsEl = geByClass1('audio_lyrics', audioRow);
+    var audioRowEl = gpeByClass('_audio_row', ref);
+    var lyricsEl = geByClass1('_audio_lyrics_wrap', audioRowEl);
 
     if (lyricsEl.innerHTML) {
         toggle(lyricsEl);
@@ -10563,8 +10568,8 @@ function toggleAudioLyrics(event, ref, audioId, lyricsId) {
     lyricsId = intval(lyricsId);
 
     if (lyricsId) {
-        addClass(audioRow, 'audio_loading');
-        showProgress(audioRow);
+        addClass(audioRowEl, 'audio_loading');
+        showProgress(audioRowEl);
 
         ajax.post('al_audio.php', {
             act: 'get_lyrics',
@@ -10572,8 +10577,8 @@ function toggleAudioLyrics(event, ref, audioId, lyricsId) {
             lid: lyricsId
         }, {
             onDone: function(lyrics) {
-                hideProgress(audioRow);
-                removeClass(audioRow, 'audio_loading');
+                hideProgress(audioRowEl);
+                removeClass(audioRowEl, 'audio_loading');
 
                 lyricsEl.innerHTML = lyrics;
                 show(lyricsEl);
@@ -10586,29 +10591,8 @@ function toggleAudioLyrics(event, ref, audioId, lyricsId) {
     return false;
 }
 
-function toggleAudio(refEl, event) {
-    if (cur.cancelClick) {
-        return cur.cancelClick = false;
-    }
-
-    if (event && (
-            hasClass(event.target, 'audio_lyrics') ||
-            !!domClosest('_audio_duration_wrap', event.target) ||
-            !!domClosest('_audio_inline_player', event.target)
-        )) {
-        return false;
-    }
-
-    stManager.add(['audioplayer.js', 'ui_controls.js', 'ui_controls.css', 'indexer.js'], function() {
-        AudioUtils.toggleAudio(refEl);
-    });
-}
-
 function getAudioPlayer(cb) {
-    stManager.add(['audioplayer.js', 'ui_controls.js', 'ui_controls.css'], function() {
-        window.ap = window.ap || new AudioPlayer();
-        cb && cb(window.ap);
-    });
+    window.ap = window.ap || new AudioPlayer();
     return window.ap;
 }
 
@@ -10625,21 +10609,10 @@ function showAudioLayer(event, btn) {
     return cancelEvent(event);
 }
 
-function audioSetNext(btn, audio, event) {
-    getAudioPlayer(function(ap) {
-        var rowEl = gpeByClass('_audio_row', btn);
-        if (!hasClass(rowEl, 'audio_added_next')) {
-            addClass(rowEl, 'audio_added_next');
-            ap.setNext(AudioUtils.buildAudioFromRow(rowEl));
-        }
-    });
-    return cancelEvent(event);
-}
-
 function audioShowActionTooltip(btn) {
     if (cur._addRestoreInProgress) return;
 
-    var audioRow = gpeByClass('_audio_row', btn) || gpeByClass('_audio_page_player', btn);
+    var audioRow = gpeByClass('_audio_row', btn);
     var text = btn.id;
 
     var audioFullId = domData(audioRow, 'full-id');
@@ -10660,8 +10633,7 @@ function audioShowActionTooltip(btn) {
             }
             break;
 
-        case 'audio_add': // for player
-        case 'add': // for row
+        case 'add':
             if (hasClass(audioRow, 'recoms') && hasClass(audioRow, 'audio_deleted')) {
                 text = getLang('audio_restore_audio');
 
@@ -10704,7 +10676,7 @@ function audioShowActionTooltip(btn) {
             return text;
         },
         black: 1,
-        shift: [15, 10, 0],
+        shift: [8, 5, 0],
         needLeft: true
     };
 
@@ -10999,6 +10971,26 @@ window.VideoConstants = {
     VIDEO_ITEM_FLAG_NEED_SIGN_IN: 1 << 13,
     VIDEO_ITEM_FLAG_HD: 1 << 14,
 };
+
+var inherit2 = function(child, parent) {
+    var hasProp = {}.hasOwnProperty;
+
+    for (var key in parent) {
+        if (hasProp.call(parent, key)) {
+            child[key] = parent[key];
+        }
+    }
+
+    function ctor() {
+        this.constructor = child;
+    }
+
+    ctor.prototype = parent.prototype;
+    child.prototype = new ctor();
+    child.__super__ = parent.prototype;
+
+    return child;
+}
 
 try {
     stManager.done('common.js');
