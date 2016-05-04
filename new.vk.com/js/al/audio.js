@@ -9,8 +9,9 @@ function AudioPage(e, i, t, o) {
     addTemplates({
             audio_row: t.audioRowTpl
         }), this.options = t, this._container = ge(e), this._onSilentLoaded = {}, this._restores = {}, this._added = {}, this._readyAudio = o, cur.canAudioAddToGroup = this.options
-        .canAudioAddToGroup, this.ap = getAudioPlayer(), ap.langs = t.langs, extend(cur.lang || {}, t.langs), i.type ? (i = new AudioPlaylist(i), i.loadSilent()) : i = this.ap.getCurrentPlaylist(),
-        this._updateAdditionalBlocksAndRightMenu(i), this._initSearch(), this._initScroll(), this.ap.setStatusExportInfo(t.exp), this.onShow(i), data(e, "audioPage", this);
+        .canAudioAddToGroup, this.ap = getAudioPlayer(), ap.langs = t.langs, extend(cur.lang || {}, t.langs), this.ap.getCurrentAudio() && delete this._readyAudio, i.type ? (i =
+            new AudioPlaylist(i), i.loadSilent()) : i = this.ap.getCurrentPlaylist(), this._updateAdditionalBlocksAndRightMenu(i), this._initSearch(), this._initScroll(), this.ap.setStatusExportInfo(
+            t.exp), this.onShow(i), data(e, "audioPage", this);
     var r = this;
     this.isLayer() || cur.destroy.push(function() {
         ap.off(r), delete r
@@ -195,6 +196,24 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             dark: 1
         })
     }), cancelEvent(t)
+}, AudioPage.prototype.addAudioFromChooseBox = function(e, i, t, o, a, s, r) {
+    var n = i.ctrlKey,
+        l = this;
+    e.innerHTML = "", showProgress(e), ajax.post("al_audio.php", {
+        act: "add",
+        gid: a,
+        oid: t,
+        aid: o,
+        hash: s
+    }, {
+        onDone: function(i, t, o, s) {
+            var d = (i[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + i[AudioUtils.AUDIO_ITEM_INDEX_ID], getAudioPlayer()
+                .getPlaylist(AudioPlaylist.TYPE_ALBUM, a ? -a : vk.id, AudioUtils.AUDIO_ALBUM_ID_ALL));
+            if (d.addAudio(i, 0), l.switchToSection(d), n) hideProgress(e), domReplaceEl(e, '<span class="choose_link audio_choose_added_label">' + r + "</span>");
+            else
+                for (; __bq.count();) __bq.hideLast()
+        }
+    })
 }, AudioPage.prototype.onHide = function() {
     var e = this;
     cur.nav = cur.nav.filter(function(i) {
@@ -974,8 +993,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 this.showMoreFriends(!1, c)
         } else if (o.section == AudioPlaylist.TYPE_RECOM) {
             var g = AudioUtils.AUDIO_ALBUM_ID_ALL;
-            o.audio_id ? g = "audio" + o.audio_id : o.album_id && (g = "album" + o.album_id),
-                l = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, g)
+            o.audio_id ? g = "audio" + o.audio_id : o.album_id && (g = "album" + o.album_id), l = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, g)
         } else o.section == AudioPlaylist.TYPE_FEED ? l = this.ap.getPlaylist(AudioPlaylist.TYPE_FEED, vk.id, 0) : o.section == AudioPlaylist.TYPE_CURRENT ? l = this.ap
             .getCurrentPlaylist() : o.band ? (l = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, intval(o.band), AudioUtils.AUDIO_ALBUM_ID_ALL), l.mergeWith({
                 band: 1
@@ -1035,7 +1053,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         h = geByClass1("_audio_page_player_repeat", r),
         c = geByClass1("_audio_page_player_add", r),
         p = void 0;
-    t(), this._trackSlider = new Slider(geByClass1("audio_page_player_track_slider", r), {
+    this._trackSlider = new Slider(geByClass1("audio_page_player_track_slider", r), {
         value: a.getCurrentProgress(),
         backValue: a.getCurrentBuffered(),
         size: 1,
@@ -1077,7 +1095,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         o._trackSlider.setValue(t), u.innerHTML = i(e, t)
     });
     var g = this.ap.getCurrentAudio() || this._readyAudio;
-    g && (domData(r, "audio", JSON.stringify(g)), e(g)), t()
+    g && (domData(r, "audio", JSON.stringify(g)), e(g), toggleClass(_, "audio_playing", this.ap.isPlaying())), t()
 }, AudioPage.prototype.scrollToTrack = function() {
     var e = this,
         i = this.getCurrentPlaylist(),

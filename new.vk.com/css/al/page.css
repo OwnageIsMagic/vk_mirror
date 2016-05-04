@@ -2551,7 +2551,7 @@ a.choose:hover {
 }
 
 .choose_audio_rows {
-    padding: 12px 25px 17px 19px
+    padding: 12px 25px 17px 9px
 }
 
 .choose_audio_rows.light .choose_highlighted {
@@ -2567,6 +2567,14 @@ a.choose:hover {
 
 .choose_audio_rows .choose_row {
     padding: 0 5px
+}
+
+.audio_choose_added_label {
+    color: #939699
+}
+
+.choose_audio_row .pr {
+    margin: 7px 25px 0px 0px
 }
 
 .choose_audio_row {

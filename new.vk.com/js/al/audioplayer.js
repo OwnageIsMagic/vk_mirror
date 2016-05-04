@@ -357,7 +357,8 @@ var AudioUtils = {
                 })
             }
             o = i([r])
-        } else if (r = domClosest("_im_peer_history", t)) o = i(geByClass("_im_mess", r));
+        } else if (r = domClosest("choose_audio_rows", t)) cur.chooseAudioPlaylist = e = new AudioPlaylist(AudioPlaylist.TYPE_TEMP, vk.id, irand(999, 99999)), o = [r];
+        else if (r = domClosest("_im_peer_history", t)) o = i(geByClass("_im_mess", r));
         else if (r = domClosest("replies_list", t)) o = i(geByClass("wall_audio_rows", r));
         else if (r = domClosest("_bt_rows", t)) o = i(geByClass("_wall_audio_rows", r));
         else if (r = domClosest("_feed_rows", t)) o = i(geByClass("wall_text", r)), s = "feed";
@@ -368,7 +369,7 @@ var AudioUtils = {
         } else(r = gpeByClass("_module", t)) ? (e = a.getPlaylist(AudioPlaylist.TYPE_ALBUM, cur.oid, AudioUtils.AUDIO_ALBUM_ID_ALL), e.loadSilent(), o = [r]) : o = [domPN(
             t)];
         return e || (e = a.getPlaylist(AudioPlaylist.TYPE_TEMP, vk.id, s)), e = AudioUtils.initDomPlaylist(e, o), -1 == e.indexOfAudio(l) && (e = new AudioPlaylist(
-            AudioPlaylist.TYPE_TEMP, vk.id, irand(999, 99999)), e = AudioUtils.initDomPlaylist(e, i(donPN(t)))), e
+            AudioPlaylist.TYPE_TEMP, vk.id, irand(999, 99999)), e = AudioUtils.initDomPlaylist(e, [domPN(t)])), e
     }
 };
 TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
@@ -1335,6 +1336,9 @@ AudioPlayer.tabIcons = {
     }
 }, AudioPlayer.prototype._onFailedUrl = function(t) {
     this.notify(AudioPlayer.EVENT_FAILED), this.isPlaying() && (this.pause(), this.playNext(!0))
+}, AudioPlayer.prototype.switchToPrevPlaylist = function() {
+    this._prevPlaylist && (this.pause(), this._currentPlaylist = this._prevPlaylist, this._currentAudio = this._prevAudio, this._prevPlaylist = this._prevAudio = null, this.notify(
+        AudioPlayer.EVENT_PLAYLIST_CHANGED, this._currentPlaylist), this.notify(AudioPlayer.EVENT_UPDATE), this.updateCurrentPlaying())
 }, AudioPlayer.prototype.play = function(t, i, e, o) {
     (isObject(t) || isArray(t)) && (t = AudioUtils.asObject(t), t && (t = t.fullId));
     var a = AudioUtils.asObject(this._currentAudio),
@@ -1349,7 +1353,8 @@ AudioPlayer.tabIcons = {
         this._implClearAllTasks(), this._implSetVolume(0), this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume(), !0)
     } else if (t) {
         var u = i.getAudio(t);
-        u && (l || (this._currentPlaylist = new AudioPlaylist(i)), this._listenedTime = this._prevProgress = 0, this._currentAudio = u, this._isPlaying = !0, this._sendLCNotification(),
+        u && (l || (this._currentPlaylist && (this._prevPlaylist = this._currentPlaylist, this._prevAudio = this._currentAudio), i.getType() == AudioPlaylist.TYPE_TEMP ? this._currentPlaylist =
+                i : this._currentPlaylist = new AudioPlaylist(i)), this._listenedTime = this._prevProgress = 0, this._currentAudio = u, this._isPlaying = !0, this._sendLCNotification(),
             this.notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this._muteProgressEvents = !0, this._implClearAllTasks(), o ? (this._implSetUrl(u), this._implPlay()) :
             (this._implSetVolume(0, !0), this._implSetDelay(200), this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume())), this._prefetchNextAudio(),
             l || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
@@ -1461,7 +1466,7 @@ AudioPlayer.tabIcons = {
             e._checkFlashLoaded()
         }, 100)
     }
-}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.FAILED_URL_TIMEOUT = 5e3, AudioPlayerHTML5.isSupported = function() {
+}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.FAILED_URL_TIMEOUT = 12e3, AudioPlayerHTML5.isSupported = function() {
     var t = document.createElement("audio");
     return !(!t.canPlayType || !t.canPlayType('audio/mpeg; codecs="mp3"')
         .replace(/no/, ""))
@@ -1514,7 +1519,7 @@ AudioPlayer.tabIcons = {
     if (this._seekOnReady = !1, e.src == t || this._prefetchAudioEl.src == t && this._checkedUrls[t]) return i && i(!0);
     var o = this;
     clearTimeout(this._checkUrlTOs[t]), this._checkUrlTOs[t] = setTimeout(function() {
-        o._canPlayTimeout *= 1.5, i && i(!1, t)
+        o._canPlayTimeout *= 2, i && i(!1, t)
     }, this._canPlayTimeout), this._onReadyCallbacks[t] = i, e.src = t
 }, AudioPlayerHTML5.prototype._emptyBLOB = function() {
     return URL.createObjectURL(new Blob([], {
