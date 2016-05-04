@@ -59,7 +59,7 @@ function Slider(t, e) {
         width: this.options.width
     }), this.options.debounce && (this._onValueChangeDebounced = debounce(this._onValueChange, this.options.debounce)), e.formatHint && (addEvent(this._el, "mousemove", this._ev_onMouseOver =
         this._onMouseOver.bind(this)), addEvent(this._el, "mouseleave", this._ev_onMouseLeave = this._onMouseLeave.bind(this))), addEvent(this._el, "mousedown", this._ev_onMouseDown =
-        this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, !0, !0), this.setBackValue(this.options.backValue)
+        this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, this.options.fireChangeEventOnInit ? !1 : !0, !0), this.setBackValue(this.options.backValue)
 }
 var uiTabs = {
         initTabs: function(t, e) {
@@ -864,8 +864,8 @@ window.Scrollbar = window.Scrollbar || function() {
             this.box.changed = !0;
             var i = e.id.match(/-?\d+/)[0],
                 s = !this.invertedSelection && this.selected[i] || this.invertedSelection && !this.selected[i];
-            if (toggleClass(e, "olist_item_wrap_on", !s), this.selected[i] = !s || this.invertedSelection, this.selCnt += !s || this.invertedSelection ? 1 : -1,
-                this.selTabUpdate(), this.onListClick && this.onListClick(e, s), this.scrollNode.scrollTop < 50) {
+            if (toggleClass(e, "olist_item_wrap_on", !s), this.selected[i] = !s || this.invertedSelection,
+                this.selCnt += !s || this.invertedSelection ? 1 : -1, this.selTabUpdate(), this.onListClick && this.onListClick(e, s), this.scrollNode.scrollTop < 50) {
                 var o = this.filter;
                 setTimeout(elfocus.pbind(o), 100)
             }
@@ -1010,11 +1010,12 @@ Slider.prototype.destroy = function(t) {
 }, Slider.prototype._onMouseLeave = function(t) {
     hasClass(this._el, "active") || this._toggleHint(!1)
 }, Slider.prototype._onMouseDown = function(t) {
-    0 == t.button && (addEvent(window, "mousemove", this._ev_onMouseMove = this._onMouseMove.bind(this)), addEvent(window, "mouseup", this._ev_onMouseUp = this._onMouseUp.bind(
-        this)), this._onMouseMove(t), Slider._currenSliderDrag = this, addClass(this._el, "active"), cancelEvent(t))
+    0 == t.button && (delete cur._sliderMouseUpNow, addEvent(window, "mousemove", this._ev_onMouseMove = this._onMouseMove.bind(this)), addEvent(window, "mouseup", this._ev_onMouseUp =
+        this._onMouseUp.bind(this)), this._onMouseMove(t), Slider._currenSliderDrag = this, addClass(this._el, "active"), cancelEvent(t))
 }, Slider.prototype._onMouseUp = function(t) {
-    removeEvent(window, "mousemove", this._ev_onMouseMove), removeEvent(window, "mouseup", this._ev_onMouseUp), clearTimeout(this._debounceto), this._onValueChange(),
-        removeClass(this._el, "active"), Slider._currenSliderDrag = !1, this._toggleHint(!1), this.options.onEndDragging && this.options.onEndDragging(this._currValue)
+    cur._sliderMouseUpNow = !0, removeEvent(window, "mousemove", this._ev_onMouseMove), removeEvent(window, "mouseup", this._ev_onMouseUp), clearTimeout(this._debounceto),
+        this._onValueChange(), removeClass(this._el, "active"), Slider._currenSliderDrag = !1, this._toggleHint(!1), this.options.onEndDragging && this.options.onEndDragging(
+            this._currValue)
 }, Slider.prototype._onMouseMove = function(t) {
     var e = this._getPos(),
         i = Math.max(t.pageX, e[0]);

@@ -1245,7 +1245,8 @@ img.fc_inline_chatter_half {
 }
 
 .layers_shown .chat_tab_imgcont.online:after {
-    border-color: #5a5a5a
+    border-color: #5a5a5a;
+    background-color: #8ac176
 }
 
 .chat_tab_wrap:hover .chat_tab_imgcont.online:after {

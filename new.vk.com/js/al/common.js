@@ -10556,6 +10556,10 @@ function initTopAudioPlayer() {
 }
 
 function toggleAudioLyrics(event, ref, audioId, lyricsId) {
+    if (!lyricsId) {
+        return false;
+    }
+
     var audioRowEl = gpeByClass('_audio_row', ref);
     var lyricsEl = geByClass1('_audio_lyrics_wrap', audioRowEl);
 
@@ -10591,7 +10595,7 @@ function toggleAudioLyrics(event, ref, audioId, lyricsId) {
     return false;
 }
 
-function getAudioPlayer(cb) {
+function getAudioPlayer() {
     window.ap = window.ap || new AudioPlayer();
     return window.ap;
 }

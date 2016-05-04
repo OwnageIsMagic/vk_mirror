@@ -5575,9 +5575,8 @@
             .tabHistoryNotChanged) {
             val(geByClass1("_im_page_peer_name", e), c.tab);
             var g = (0, M.strHistory)(c.history);
-            toggleClass(e, "im-page--history_empty-hist", !g), g || (g = getLang("mail_im_here_history")), val(d, g), getAudioPlayer(function(e) {
-                    return e.updateCurrentPlaying()
-                }), t.get()
+            toggleClass(e, "im-page--history_empty-hist", !g), g || (g = getLang("mail_im_here_history")), val(d, g), getAudioPlayer()
+                .updateCurrentPlaying(), t.get()
                 .gid || (0, x.fixTableCellChildHeight)("_chat_body_wrap", e), (0, x.fixSnippetsHeight)(d), I(t, r, e), !c.online && (0, x.isUserPeer)(n) ? l(t, e) : s(e)
         }(0, M.isSearchingInplace)(n, t.get()) ? a()
             .showSearch(t): a()
@@ -7870,7 +7869,7 @@
     }
 
     function s() {
-        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off")
+        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off");
     }
 
     function l(e, t, n, a, o) {

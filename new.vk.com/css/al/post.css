@@ -157,7 +157,7 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_album_thumb_wrap {
-    background: #ecf1f5;
+    background-color: #ecf1f5;
     text-align: center;
     overflow: hidden
 }
@@ -266,14 +266,9 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_market_album_thumb_wrap {
-    background: #fff;
+    background-color: #fff;
     text-align: center;
     overflow: hidden
-}
-
-.page_market_album_thumb {
-    max-width: 100%;
-    vertical-align: top
 }
 
 .page_market_album_under_row {

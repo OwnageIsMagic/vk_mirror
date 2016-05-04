@@ -647,8 +647,12 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         if (!isObject(this._ref)) {
             if (t.list)
                 for (var i = 0, e = t.list.length; e > i; i++) this.addAudio(t.list[i]);
+            if (t.items) {
+                this._items = this._items || [];
+                for (var i = 0, e = t.items.length; e > i; i++) this._items.push(t.items[i])
+            }
             var o = this;
-            each("blocks nextOffset hasMore isComplete title items feedFrom feedOffset live searchParams totalCount band postId wallQuery wallType".split(" "), function(i, e) {
+            each("blocks nextOffset hasMore isComplete title feedFrom feedOffset live searchParams totalCount band postId wallQuery wallType".split(" "), function(i, e) {
                 void 0 !== t[e] && (o["_" + e] = t[e])
             })
         }
@@ -1313,7 +1317,9 @@ AudioPlayer.tabIcons = {
         }
     })
 }, AudioPlayer.prototype.toggleAudio = function(t, i) {
-    if (i && (hasClass(i.target, "audio_lyrics") || domClosest("_audio_duration_wrap", i.target) || domClosest("_audio_inline_player", i.target))) return !1;
+    if (cur._sliderMouseUpNow) return delete cur._sliderMouseUpNow, !1;
+    if (i && (hasClass(i.target, "audio_lyrics") || domClosest("_audio_duration_wrap", i.target) || domClosest("_audio_inline_player", i.target) || domClosest(
+            "audio_performer", i.target))) return !1;
     var e = domClosest("_audio_row", t),
         o = AudioUtils.getAudioFromEl(e, !0);
     if (AudioUtils.isClaimedAudio(o)) {

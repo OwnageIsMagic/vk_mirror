@@ -812,23 +812,6 @@ input.big_text~.placeholder .ph_input {
     box-sizing: border-box
 }
 
-input.big_text::-webkit-input-placeholder {
-    padding-left: 12px
-}
-
-input.big_text::-moz-placeholder,
-input.big_text:-moz-placeholder {
-    padding-left: 12px
-}
-
-input.big_text:-ms-input-placeholder {
-    padding-left: 12px
-}
-
-input.big_text~.placeholder .ph_content {
-    padding-left: 12px
-}
-
 .fakeinput.dark,
 .fakeinput.dark~.placeholder .ph_input,
 div[contenteditable=true],

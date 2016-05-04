@@ -5449,7 +5449,7 @@ var Wall = {
                 published: 1
             } : {}),
             slide: 15,
-            shift: [-left_offset, 6],
+            shift: [-left_offset, like_type == 'wall_reply' ? -3 : 6],
             ajaxdt: 100,
             showdt: 400,
             hidedt: 200,

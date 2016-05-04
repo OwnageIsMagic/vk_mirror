@@ -634,7 +634,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                                 "$1<em>$2</em>"), p.push(AudioUtils.drawAudio(o))
                         }), a && (i.innerHTML = "", a = !1)
                     }
-                    if (l(p), !d && !s.options.isLayer) {
+                    if (l(p), !d && !s.isLayer()) {
                         var _ = e.getTitle() || document.title;
                         document.title = replaceEntities(_.replace(/(<em>|<\/em>|<strong>|<\/strong>)/g, ""))
                     }
@@ -1108,10 +1108,13 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
 }, AudioPage.prototype.togglePlayerPlay = function(e) {
     if (this.ap.isPlaying()) this.ap.pause();
     else {
-        var i, t = this.getCurrentPlaylist(),
-            o = this.ap.getCurrentPlaylist(),
-            a = this._readyAudio ? this._readyAudio : t.getAudioAt(0); - 1 != t.indexOfAudio(a) ? i = t : o && -1 != o.indexOfAudio(a) ? i = o : (i = new AudioPlaylist(
-            AudioPlaylist.TYPE_TEMP, vk.id), i.addAudio(a)), delete this._readyAudio, this.ap.play(a, i)
+        var i = this.getCurrentPlaylist(),
+            t = this.ap.getCurrentPlaylist(),
+            o = this.ap.getCurrentAudio(),
+            a = this._readyAudio ? this._readyAudio : o;
+        a = a ? a : i.getAudioAt(0);
+        var s; - 1 != i.indexOfAudio(a) ? s = i : t && -1 != t.indexOfAudio(a) ? s = t : (s = new AudioPlaylist(AudioPlaylist.TYPE_TEMP, vk.id), s.addAudio(a)), delete this._readyAudio,
+            this.ap.play(a, s)
     }
 };
 try {

@@ -605,36 +605,38 @@ var Video = {
     },
     showMore: function(e, o) {
         e = e || Video._getCurrentSectionType();
-        var i = ge("video_" + e + "_list");
-        if (i) {
-            var t = Video.isInAlbum(e),
-                r = cur.getOwnerId();
-            if ((t || -1 != Video.AVAILABLE_TABS.indexOf(e)) && !cur.silentLoaded[r][e]) return void(isButtonLocked(o) || (Video._addPendingAction(e, function() {
+        var i = curBox() ? curBox()
+            .bodyNode : void 0,
+            t = geByClass1("_video_" + e + "_list", i);
+        if (t) {
+            var r = Video.isInAlbum(e),
+                d = cur.getOwnerId();
+            if ((r || -1 != Video.AVAILABLE_TABS.indexOf(e)) && !cur.silentLoaded[d][e]) return void(isButtonLocked(o) || (Video._addPendingAction(e, function() {
                 Video.showMore(e, o)
             }), lockButton(o)));
-            unlockButton(o), cur.videoShowWindow = cur.videoShowWindow || {}, cur.videoShowWindow[r] = cur.videoShowWindow[r] || {}, cur.videoShowWindow[r][e] || (cur.videoShowWindow[
-                r][e] = {
+            unlockButton(o), cur.videoShowWindow = cur.videoShowWindow || {}, cur.videoShowWindow[d] = cur.videoShowWindow[d] || {}, cur.videoShowWindow[d][e] || (cur.videoShowWindow[
+                d][e] = {
                 done: !1,
-                offset: i.children.length
+                offset: t.children.length
             });
-            var d = cur.videoShowWindow[r][e];
-            if (!d.done)
+            var n = cur.videoShowWindow[d][e];
+            if (!n.done)
                 if (e.indexOf("search") >= 0 && cur.found[e]) {
-                    var n, a, c, s;
+                    var a, c, s, l;
                     if (e == Video.VIDEO_GLOBAL_SEARCH_TYPE) {
-                        if (n = cur.found[e].list.length, a = cur.found[e].realOffset || n, c = cur.found[e].list.slice(d.offset, n), s = cur.found[e].done, !s && 0 == c.length)
+                        if (a = cur.found[e].list.length, c = cur.found[e].realOffset || a, s = cur.found[e].list.slice(n.offset, a), l = cur.found[e].done, !l && 0 == s.length)
                             return Video._addPendingAction(e, function() {
                                 Video.showMore(e, o)
-                            }), lockButton(o), void(cur.globalSearchInProgress || Video._searchGlobally(cur.searchText, a))
-                    } else n = d.offset + Video.VIDEOS_PER_PAGE, c = cur.found[e].list.slice(d.offset, n), s = n >= cur.found[e].list.length;
-                    Video.onMoreLoaded(o, e, c, n, s)
-                } else if ((t || -1 != Video.AVAILABLE_TABS.indexOf(e)) && cur.silentLoaded[r][e]) {
-                var l = cur.silentLoaded[r][e],
-                    n = Math.min(l.length, d.offset + Video.VIDEOS_PER_PAGE),
-                    c = l.slice(d.offset, n),
-                    s = !1;
-                "albums" == e && cur.albumsPreload[r] ? (s = cur.albumsNoMore, cur.albumsPreload[r] = !1) : s = n >= l.length, "albums" == e && (cur.albumsShowingAll[r] = !
-                    s), Video.onMoreLoaded(o, e, c, n, s)
+                            }), lockButton(o), void(cur.globalSearchInProgress || Video._searchGlobally(cur.searchText, c))
+                    } else a = n.offset + Video.VIDEOS_PER_PAGE, s = cur.found[e].list.slice(n.offset, a), l = a >= cur.found[e].list.length;
+                    Video.onMoreLoaded(o, e, s, a, l)
+                } else if ((r || -1 != Video.AVAILABLE_TABS.indexOf(e)) && cur.silentLoaded[d][e]) {
+                var u = cur.silentLoaded[d][e],
+                    a = Math.min(u.length, n.offset + Video.VIDEOS_PER_PAGE),
+                    s = u.slice(n.offset, a),
+                    l = !1;
+                "albums" == e && cur.albumsPreload[d] ? (l = cur.albumsNoMore, cur.albumsPreload[d] = !1) : l = a >= u.length, "albums" == e && (cur.albumsShowingAll[d] = !
+                    l), Video.onMoreLoaded(o, e, s, a, l)
             }
         }
     },
@@ -673,17 +675,19 @@ var Video = {
             .q || "search" == e ? e = isVisible(gpeByClass("ge_video_pane", "ui_search_global_videos_load_more")) ? Video.VIDEO_GLOBAL_SEARCH_TYPE : Video.VIDEO_SEARCH_TYPE :
             "album" == e && (e = Video.getLoc()
                 .section));
-        var o = ge("video_" + e + "_list");
-        if (o) {
-            var i = gpeByClass("ge_video_pane", o),
-                t = geByClass1("ui_load_more_btn", i);
-            if (t) {
-                var r = clientHeight(),
-                    d = scrollGetY(),
-                    n = getXY(t);
-                d + r > n[1] - r / 2 && Video.showMore(e, t)
+        var o = curBox() ? curBox()
+            .bodyNode : void 0,
+            i = geByClass1("_video_" + e + "_list", o);
+        if (i) {
+            var t = gpeByClass("ge_video_pane", i),
+                r = geByClass1("ui_load_more_btn", t);
+            if (r) {
+                var d = clientHeight(),
+                    n = scrollGetY(),
+                    a = getXY(r);
+                n + d > a[1] - d / 2 && Video.showMore(e, r)
             }
-            e == Video.VIDEO_GLOBAL_SEARCH_TYPE && Video._updateLastSeenElement(o)
+            e == Video.VIDEO_GLOBAL_SEARCH_TYPE && Video._updateLastSeenElement(i)
         }
         Video._updateChooseFixedBottom()
     },
@@ -950,7 +954,7 @@ var Video = {
             })
         }
         cur.found = {}, cur.currentSortings = {}, cur._preloadedPages = {}, cur.videoSearchFilters = {}, cur.chosenVideos = [], cur.albumsShowingAll = {}, cur.isNoteEdit =
-            e, cur.getOwnerId = function() {
+            e, cur.videoShowWindow = {}, cur.getOwnerId = function() {
                 return i
             };
         var l = curBox();
@@ -963,9 +967,10 @@ var Video = {
                 _ = e.section ? e.section : "all";
             Video._prepareSearchFilters(i);
             var v = e.section ? "" : i.q || val(cur.searchInputEl);
-            if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)), _ = "search", Video.doSearch(v), a(), Video._updateChooseFixedBottom()) :
-                (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" +
-                _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection = _, "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
+            if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)),
+                    _ = "search", Video.doSearch(v), a(), Video._updateChooseFixedBottom()) : (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection =
+                _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" + _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection = _,
+                "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
             else if (_ && 0 == _.indexOf("album_")) {
                 var h = _.split("_")[1];
                 showGlobalPrg(ge("video_playlist_item_" + h), {

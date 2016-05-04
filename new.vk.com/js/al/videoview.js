@@ -630,7 +630,7 @@ var Videoview = {
                     mvOldX: e.pageX,
                     mvOldY: e.pageY,
                     mvOldT: vkNow()
-                }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), t.player && (mvcur.player = t.player, val("mv_content",
+                }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), t.player && (mvcur.player = t.player, t.player = 1, val("mv_content",
                         '<div class="video_box">  <div class="wrap">    <div id="video_box_wrap' + i +
                         '" class="video_box_wrap">      <div id="video_player" style="width:896px;height:504px;"></div>    </div>  </div></div>    '), ge("video_player")
                     .appendChild(mvcur.player.el), hide("mv_progress"), show("mv_content"), mvcur.player.onExpanded()), t.minimized && setTimeout(Videoview.minimize.bind(
