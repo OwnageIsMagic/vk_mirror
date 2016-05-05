@@ -1010,22 +1010,6 @@ img.im_photo_thumb {
     margin-top: -90px
 }
 
-.im-page .im-page--lastact {
-    margin-left: 93px;
-    color: #939699;
-    position: absolute;
-    font-size: 12px;
-    margin-top: 8px
-}
-
-.im-page .im-page--lastact-w {
-    position: relative
-}
-
-.im-page .im-page--lastact-w .mott_content {
-    width: 285px!important
-}
-
 .im-page .im-page--typing {
     margin-left: 45px;
     display: none;
@@ -1208,11 +1192,6 @@ img.im_photo_thumb {
 .im-page .im-page--history_empty-hist .im-page--chat-body-wrap-inner {
     top: 50%;
     text-align: center
-}
-
-.im-page .im-page--history_empty-hist .im-page--lastact,
-.im-page .im-page--history_empty-hist .im-page--lastact-w {
-    display: none!important
 }
 
 .im-page .im-page--history_empty.im-page--history .im-page-history-w {
@@ -1558,6 +1537,14 @@ img.im_photo_thumb {
     font-family: Open Sans, Helvetica Neue, sans-serif
 }
 
+.im-page .im-page--members .im_status_mob_onl,
+.im-page .im-page--peer-online .im_status_mob_onl {
+    display: inline-block;
+    background-position: 0 0;
+    vertical-align: middle;
+    margin-top: -1px
+}
+
 .im-page .im-page--header-verified {
     display: none
 }
@@ -1656,7 +1643,7 @@ img.im_photo_thumb {
 }
 
 .im-page .im-page--peer-online_mute:after {
-    margin-left: 7px;
+    margin-left: 9px;
     content: "";
     width: 11px;
     height: 13px;

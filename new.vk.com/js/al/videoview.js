@@ -1670,10 +1670,11 @@ var Videoview = {
                         var r = (new Date)
                             .getTime();
                         return Videoview.getMinSize(), mvcur.resizeDiff < 8 && 400 > r - o && (16 & i || 1 == i) && Videoview.unminimize(), removeClass(mvLayerWrap,
-                            "mv_resizing"), hide("mv_progress"), addEvent("mv_box", "mousemove", Videoview.changeCursor), ls.set("mv_minSize", mvcur.minSize), !1
+                            "mv_resizing"), removeClass("mv_content", "no_events"), addEvent("mv_box", "mousemove", Videoview.changeCursor), ls.set("mv_minSize", mvcur
+                            .minSize), !1
                     };
-                    return addClass(mvLayerWrap, "mv_resizing"), show("mv_progress"), addEvent(document, "mouseup", a), addEvent(document, "mousemove", t), addEvent(document,
-                        "drag", t), removeEvent("mv_box", "mousemove", Videoview.changeCursor), cancelEvent(e)
+                    return addClass(mvLayerWrap, "mv_resizing"), addClass("mv_content", "no_events"), addEvent(document, "mouseup", a), addEvent(document, "mousemove", t),
+                        addEvent(document, "drag", t), removeEvent("mv_box", "mousemove", Videoview.changeCursor), cancelEvent(e)
                 }
             }
         },
@@ -1751,8 +1752,10 @@ var Videoview = {
                 }), Videoview.setTitle(o.w), Videoview.minResize(), Videoview.setStyle("mvLayerWrap", mvLayerWrap, {
                     width: mvcur.minSize.wrap.w + "px",
                     height: mvcur.minSize.wrap.h + "px"
-                }), mvcur.minimized = !0, layers.wraphide(), ge("html5_player") && window.html5video && setTimeout(html5video.onResize, 10), ge("video_yt") && window.VideoYoutube &&
-                setTimeout(VideoYoutube.onResize, 10);
+                }), mvcur.minimized = !0, layers.wraphide(), mvcur.player && setTimeout(function() {
+                    mvcur.player.resize()
+                }, 10), ge("html5_player") && window.html5video && setTimeout(html5video.onResize, 10), ge("video_yt") && window.VideoYoutube && setTimeout(VideoYoutube.onResize,
+                    10);
             var t = layerQueue.count();
             return mvcur.noLocChange || (Videoview.backLocation(), mvcur.noHistory = 1), layerQueue.skipVideo = !0, t && (debugLog("pop from minimize"), layerQueue.pop()),
                 VideoPlaylist.toggleStateClasses(), Videoview.updateExternalVideoFinishBlock(), !1

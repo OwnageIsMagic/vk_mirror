@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 675356010744,
+    'nav': 683641026377,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 1866010105,
@@ -135,7 +135,7 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 3566176605,
+    'audioplayer.js': 587292129,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
     'audio.js': 2257034336,
@@ -181,15 +181,15 @@ var stVersions = {
     'video.css': 4081142433,
     'videocat.js': 972120599,
     'videocat.css': 2768202123,
-    'videoview.js': 433875012,
+    'videoview.js': 3353458626,
     'videoview.css': 2398518621,
     'video_edit.js': 660308478,
     'video_edit.css': 3290437348,
     'video_upload.js': 2759837070,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 3176274232,
-    'videoplayer.css': 186779334,
+    'videoplayer.js': 3834702523,
+    'videoplayer.css': 1844722714,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
     'reg.css': 1314058211,
@@ -206,7 +206,7 @@ var stVersions = {
     'module.css': 1552001586,
     'owner_photo.js': 2124522904,
     'owner_photo.css': 191725357,
-    'page.js': 104474923,
+    'page.js': 1182893006,
     'page.css': 155979271,
     'page_help.css': 525044687,
     'public.css': 1944959723,
@@ -237,15 +237,15 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 3666885347,
-    'imn.js': 3137312528,
-    'im.js': 973890988,
+    'im.css': 1591969534,
+    'imn.js': 57592482,
+    'im.js': 4271552496,
     'emoji.js': 2849385263,
-    'wide_dd.css': 7226864,
-    'wide_dd.js': 840274777,
+    'wide_dd.css': 3273211401,
+    'wide_dd.js': 2933692792,
     'writebox.css': 3912883473,
     'writebox.js': 3786734423,
-    'sharebox.js': 403117571,
+    'sharebox.js': 931032458,
     'fansbox.js': 2597442958,
     'postbox.css': 4170744741,
     'postbox.js': 2878853436,
@@ -480,4 +480,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 5146;
+var _rnd = 4661;

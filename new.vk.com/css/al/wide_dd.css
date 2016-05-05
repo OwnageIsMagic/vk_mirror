@@ -2,6 +2,10 @@
     display: none
 }
 
+.wddi_thumb.online.mobile:after {
+    background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%206%209%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%238AC176%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-136.000000%2C%20-209.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M136%2C210.506398%20C136%2C209.674437%20136.66503%2C209%20137.498576%2C209%20L140.501424%2C209%20C141.329065%2C209%20142%2C209.676463%20142%2C210.506398%20L142%2C216.493602%20C142%2C217.325563%20141.33497%2C218%20140.501424%2C218%20L137.498576%2C218%20C136.670935%2C218%20136%2C217.323537%20136%2C216.493602%20L136%2C210.506398%20Z%20M137%2C211%20L141%2C211%20L141%2C216%20L137%2C216%20L137%2C211%20Z%22%20id%3D%22mobile_s%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
 div.wdd {
     background: #fff;
     border: 1px solid #d3d9de;
@@ -112,18 +116,40 @@ div.wdd.wdd_focused.wdd_toup {
 
 .wddi_thumb {
     position: relative;
+    width: 34px;
+    height: 34px;
     margin-right: 10px;
     overflow: hidden
 }
 
-.wddi_thumb,
-.wddi_img {
-    width: 34px;
-    height: 34px
+.wddi_thumb.online:after {
+    bottom: 0;
+    right: 0;
+    border: 2px solid #fff;
+    height: 6px;
+    width: 6px
+}
+
+.wddi_thumb.online.mobile:after {
+    bottom: -1px;
+    right: 0;
+    background-color: #fff;
+    height: 9px;
+    width: 6px
+}
+
+.wddi_over .wddi_thumb.online:after {
+    border-color: #fafbfc
+}
+
+.wddi_over .wddi_thumb.online.mobile:after {
+    background-color: #fafbfc
 }
 
 .wddi_img {
     vertical-align: top;
+    width: 34px;
+    height: 34px;
     border-radius: 50%
 }
 
@@ -258,30 +284,6 @@ div.wdd.wdd_focused.wdd_toup {
     opacity: 0;
     filter: alpha(opacity=0);
     z-index: 12
-}
-
-.wdd_mark {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #8ac176;
-    border: 2px solid;
-    border-color: #fff
-}
-
-.wdd_img_half .wdd_mark,
-.wdd_img_tiny .wdd_mark {
-    display: none
-}
-
-.wddi_thumb .wdd_mark {
-    position: absolute;
-    bottom: 0;
-    right: 0
-}
-
-.wddi_over .wddi_thumb .wdd_mark {
-    border-color: #fafbfc
 }
 
 div.wdd_disabled {

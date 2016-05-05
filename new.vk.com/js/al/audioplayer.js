@@ -29,13 +29,13 @@ function AudioPlayer() {
                 i._currentProgress = 0
             },
             onEnd: function() {
-                "html5" != i._impl.type && t()
+                t()
             },
-            onProgressUpdate: function(e) {
+            onProgressUpdate: function(t) {
                 if (!i._muteProgressEvents) {
-                    i.notify(AudioPlayer.EVENT_PROGRESS, e);
-                    var o = 0;
-                    i._currentProgress && (o = e - i._currentProgress, o = o > 0 ? o : 0), i._currentProgress = e, e >= 1 - o && "html5" == i._impl.type && t()
+                    i.notify(AudioPlayer.EVENT_PROGRESS, t);
+                    var e = 0;
+                    i._currentProgress && (e = t - i._currentProgress, e = e > 0 ? e : 0), i._currentProgress = t, t >= 1 - e && "html5" == i._impl.type
                 }
             }
         };
@@ -124,11 +124,11 @@ var AudioUtils = {
                     }
                 }), removeClass(o, "audio_deleted"), removeClass(o, "canadd"), addClass(o, "canedit"), delete cur._audioAddRestoreInfo[u.fullId];
                 else if ("added" == _.state) {
-                    var p = _.addedFullId.split("_");
+                    var y = _.addedFullId.split("_");
                     ajax.post("al_audio.php", {
                             act: "delete_audio",
-                            oid: p[0],
-                            aid: p[1],
+                            oid: y[0],
+                            aid: y[1],
                             hash: d
                         }, {
                             onDone: function() {
@@ -1361,11 +1361,7 @@ AudioPlayer.tabIcons = {
                 this.getVolume())), this._prefetchNextAudio(), l || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
     }
 }, AudioPlayer.prototype._prefetchNextAudio = function() {
-    if ("html5" == this._impl.type) {
-        var t = this.getCurrentPlaylist(),
-            i = t.getNextAudio(this.getCurrentAudio());
-        i && (i = AudioUtils.asObject(i), this._impl.prefetch(i.url))
-    }
+    return
 }, AudioPlayer.prototype.getCurrentPlaylist = function() {
     return this._currentPlaylist
 }, AudioPlayer.prototype.getPlaylists = function() {
