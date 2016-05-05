@@ -2926,8 +2926,8 @@ function updateLeftMenu() {
         pageH = intval(getSize(pageBody)[1]),
         pagePos = getXY(pageBody)[1],
         tooBig = menuH >= pageH,
-        lastSt = cur.menuLastSt || 0,
-        lastStyles = cur.menuLastStyles || {},
+        lastSt = window.menuLastSt || 0,
+        lastStyles = window.menuLastStyles || {},
         styles;
 
     if (st <= 0 || tooBig) {
@@ -2963,9 +2963,9 @@ function updateLeftMenu() {
             bottom: null
         };
         setStyle(menu, extend(defaultStyles, styles));
-        cur.menuLastStyles = styles;
+        window.menuLastStyles = styles;
     }
-    cur.menuLastSt = st;
+    window.menuLastSt = st;
 }
 
 function updateSTL() {
@@ -10968,6 +10968,25 @@ window.VideoConstants = {
     VIDEO_ITEM_FLAG_NEED_SIGN_IN: 1 << 13,
     VIDEO_ITEM_FLAG_HD: 1 << 14,
 };
+
+function onlinePlatformClass(platform) {
+    var cls = '';
+    if (platform) {
+        cls += 'online ';
+    }
+
+    if (mobPlatforms[platform]) {
+        cls += 'mobile';
+    }
+
+    return cls;
+}
+
+function toggleOnline(obj, platform) {
+    removeClass(obj, 'online');
+    removeClass(obj, 'mobile');
+    addClass(obj, onlinePlatformClass(platform));
+}
 
 var inherit2 = function(child, parent) {
     var hasProp = {}.hasOwnProperty;

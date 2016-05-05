@@ -1031,7 +1031,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 i = e.ownerId != vk.id;
             if (p !== i) {
                 toggle(c, i);
-                var t = geByClass1("audio_page_player_track_wrap"),
+                var t = geByClass1("audio_page_player_track_wrap", o._container),
                     s = window.getComputedStyle(t);
                 o._trackSlider.updateSize(getSize(t)[0] - parseInt(s.paddingLeft) - parseInt(s.paddingRight)), p = i
             }
@@ -1081,8 +1081,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }), this.ap.on(this, AudioPlayer.EVENT_REMOVED, function(e, i) {
         e = AudioUtils.asObject(e), e && e.fullId == i && removeClass(c, "audio_player_btn_added")
     }), this.ap.on(this, AudioPlayer.EVENT_PLAY, function(a, s, l) {
-        delete o._readyAudio, domData(r, "audio", JSON.stringify(a)), t(), e(a), addClass(_, "audio_playing"), s && (o._trackSlider.setBackValue(0), o._trackSlider.setValue(
-            0), u.innerHTML = i(a, 0), n.setAttribute("title", ""), n.titleSet = !1)
+        delete o._readyAudio, data(r, "audio", a), t(), e(a), addClass(_, "audio_playing"), s && (o._trackSlider.setBackValue(0), o._trackSlider.setValue(0), u.innerHTML =
+            i(a, 0), n.setAttribute("title", ""), n.titleSet = !1)
     }), this.ap.on(this, AudioPlayer.EVENT_PAUSE, function(e) {
         removeClass(_, "audio_playing")
     }), this.ap.on(this, AudioPlayer.EVENT_BUFFERED, function(e, i) {

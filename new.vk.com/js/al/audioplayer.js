@@ -175,9 +175,10 @@ var AudioUtils = {
         var r = formatTime(t[AudioUtils.AUDIO_ITEM_INDEX_DURATION]),
             u = encodeURIComponent(replaceEntities(t[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER])
                 .replace(/(<em>|<\/em>)/g, "")),
-            n = getTemplate("audio_row", t);
-        return n = n.replace(new RegExp("%cls%"), a.join(" ")), n = n.replace(new RegExp("%duration%"), r), n = n.replace(new RegExp("%performer_escaped%"), u), n = n.replace(
-            new RegExp("%serialized%"), clean(JSON.stringify(t)))
+            n = clean(JSON.stringify(t))
+            .replace(/\$\&/, "$$$&"),
+            d = getTemplate("audio_row", t);
+        return d = d.replace(/%cls%/, a.join(" ")), d = d.replace(/%duration%/, r), d = d.replace(/%performer_escaped%/, u), d = d.replace(/%serialized%/, n)
     },
     isRecomAudio: function(t) {
         return t = AudioUtils.asObject(t), t.flags & AudioUtils.AUDIO_ITEM_RECOMS_BIT
@@ -189,8 +190,8 @@ var AudioUtils = {
         return t = AudioUtils.asObject(t), JSON.parse(t.extra || "{}")
     },
     getAudioFromEl: function(t, i) {
-        var e = JSON.parse(domData(t, "audio"));
-        return i ? AudioUtils.asObject(e) : e
+        var e = data(t, "audio");
+        return e || (e = JSON.parse(domData(t, "audio"))), i ? AudioUtils.asObject(e) : e
     },
     showAudioLayer: function(btn) {
         stManager.add(["ui_controls.js", "ui_controls.css", "audio.css"], function() {
@@ -1355,9 +1356,9 @@ AudioPlayer.tabIcons = {
         var u = i.getAudio(t);
         u && (l || (this._currentPlaylist && (this._prevPlaylist = this._currentPlaylist, this._prevAudio = this._currentAudio), i.getType() == AudioPlaylist.TYPE_TEMP ? this._currentPlaylist =
                 i : this._currentPlaylist = new AudioPlaylist(i)), this._listenedTime = this._prevProgress = 0, this._currentAudio = u, this._isPlaying = !0, this._sendLCNotification(),
-            this.notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this._muteProgressEvents = !0, this._implClearAllTasks(), o ? (this._implSetUrl(u), this._implPlay()) :
-            (this._implSetVolume(0, !0), this._implSetDelay(200), this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume())), this._prefetchNextAudio(),
-            l || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
+            this.notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this._muteProgressEvents = !0, this._implClearAllTasks(), o ? (this._implSetUrl(u), this._implPlay(),
+                this._implSetVolume(this.getVolume())) : (this._implSetVolume(0, !0), this._implSetDelay(200), this._implSetUrl(u), this._implPlay(), this._implSetVolume(
+                this.getVolume())), this._prefetchNextAudio(), l || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
     }
 }, AudioPlayer.prototype._prefetchNextAudio = function() {
     if ("html5" == this._impl.type) {
@@ -1466,7 +1467,7 @@ AudioPlayer.tabIcons = {
             e._checkFlashLoaded()
         }, 100)
     }
-}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.FAILED_URL_TIMEOUT = 12e3, AudioPlayerHTML5.isSupported = function() {
+}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.FAILED_URL_TIMEOUT = 14e3, AudioPlayerHTML5.isSupported = function() {
     var t = document.createElement("audio");
     return !(!t.canPlayType || !t.canPlayType('audio/mpeg; codecs="mp3"')
         .replace(/no/, ""))

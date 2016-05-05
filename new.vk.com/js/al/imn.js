@@ -693,7 +693,7 @@
             unread: "",
             more: a.search ? "_im_search" : "",
             is_star: "",
-            is_online: e.online ? "nim-peer_online" : "",
+            is_online: onlinePlatformClass(e.online),
             is_unread: "",
             is_unread_out: "",
             is_selected: e.peerId == r.get()
@@ -726,7 +726,7 @@
                 unread: u,
                 more: m.join(" "),
                 is_star: t.folders & q.eventTypes.FOLDER_IMPORTANT,
-                is_online: t.online ? "nim-peer_online" : "",
+                is_online: onlinePlatformClass(t.online),
                 is_unread: u > 0 && l & q.eventTypes.FLAG_UNREAD ? "nim-dialog_unread" : "",
                 is_unread_out: l & q.eventTypes.FLAG_UNREAD && l & q.eventTypes.FLAG_OUTBOUND && !(0, j.isSelfMessage)(t.peerId) ? "nim-dialog_unread-out" : "",
                 is_selected: r.noselect || t.peerId != e.get()
@@ -744,9 +744,9 @@
         val(geByClass1("_dialog_body", e), s), val(geByClass1("_im_dialog_date", e), d), val(geByClass1("_im_dialog_unread_ct", e), t.unread ? t.unread : ""), val(
                 geByClass1("_im_dialog_link", e), t.tab), val(geByClass1("_im_dialog_photo", e), u), t.folders & q.eventTypes.FOLDER_IMPORTANT, toggleClass(e,
                 "nim-dialog_verified", !!t.verified), toggleClass(e, "nim-dialog_muted", inArray(t.peerId, n.get()
-                .mutedPeers)), toggleClass(geByClass1("_im_peer_online", e), "nim-peer_online", !!t.online), t.unread > 0 && o & q.eventTypes.FLAG_UNREAD && addClass(e,
-                "nim-dialog_unread"), -1 === i.messageId && addClass(e, "nim-dialog_empty"), o & q.eventTypes.FLAG_UNREAD && o & q.eventTypes.FLAG_OUTBOUND && !(0, j.isSelfMessage)
-            (t.peerId) && addClass(e, "nim-dialog_unread-out"), a && setTimeout(function() {
+                .mutedPeers)), toggleOnline(geByClass1("_im_peer_online", e), t.online), t.unread > 0 && o & q.eventTypes.FLAG_UNREAD && addClass(e, "nim-dialog_unread"), -
+            1 === i.messageId && addClass(e, "nim-dialog_empty"), o & q.eventTypes.FLAG_UNREAD && o & q.eventTypes.FLAG_OUTBOUND && !(0, j.isSelfMessage)(t.peerId) &&
+            addClass(e, "nim-dialog_unread-out"), a && setTimeout(function() {
                 addClass(geByClass1("_im_dialog_" + t.peerId, r), "nim-dialog_injected")
             }, 100)
     }
@@ -788,7 +788,7 @@
             is_unread: "nim-dialog_prep-injected",
             is_unread_out: "",
             more: "",
-            is_online: t.online ? "nim-peer_online" : "",
+            is_online: onlinePlatformClass(t.online),
             is_selected: t.peerId == e.get()
                 .peer && n ? "nim-dialog_selected _im_dialog_selected" : ""
         })
@@ -962,7 +962,7 @@
                     var a = n.get()
                         .tabs[t],
                         i = geByClass1("_im_peer_online", r);
-                    toggleClass(i, "nim-peer_online", a.online)
+                    toggleOnline(i, a.online)
                 }
             },
             scrollUp: function() {
@@ -3157,7 +3157,8 @@
 
     function Je(e, t) {
         var n = t.tabs[e];
-        return n.bind_url_to_attach = {}, ls.set(Ye(e), {}), Promise.resolve(t)
+        return n.bind_url_to_attach = {}, ls.set(Ye(e), {}),
+            Promise.resolve(t)
     }
 
     function et(e, t, n) {
@@ -4811,7 +4812,8 @@
                 l = l.replace("{user}", z(d.link, g, n))
             }
         }
-        return r.source_text && (l = l.replace("{title}", '&laquo;<b class="im_srv_lnk">' + r.source_text + "</b>&raquo;")), l
+        return r.source_text && (l = l.replace("{title}", '&laquo;<b class="im_srv_lnk">' + r.source_text + "</b>&raquo;")),
+            l
     }
 
     function Q(e, t, n, r) {
@@ -5470,13 +5472,13 @@
 
     function i(e, t, n, r) {
         var a = geByClass1("_im_peer_photo", n);
-        removeClass(a, "nim-peer--photo_hidden"), (0, x.isChatPeer)(t) ? (removeClass(geByClass1("_im_peer", n), "nim-peer_online", e.online), val(a,
-            '<div class="im-page--chat-photo ' + x.SHOW_CHAT_MEMBERS_CLASS + '">' + (0, x.renderPhotosFromTab)(e) + "</div>"), e.data.kicked && addClass(a,
-            "nim-peer--photo_hidden")) : (toggleClass(geByClass1("_im_peer", n), "nim-peer_online", e.online), val(a, rs(r.get()
-            .im_peer_img_tpl, {
-                peer_photo: e.photo,
-                peer_href: e.href
-            })))
+        removeClass(a, "nim-peer--photo_hidden"), (0, x.isChatPeer)(t) ? (toggleOnline(geByClass1("_im_peer", n), !1), val(a, '<div class="im-page--chat-photo ' + x.SHOW_CHAT_MEMBERS_CLASS +
+            '">' + (0, x.renderPhotosFromTab)(e) + "</div>"), e.data.kicked && addClass(a, "nim-peer--photo_hidden")) : (toggleOnline(geByClass1("_im_peer", n), e.online),
+            val(a, rs(r.get()
+                .im_peer_img_tpl, {
+                    peer_photo: e.photo,
+                    peer_href: e.href
+                })))
     }
 
     function o(e, t, n, r, a) {
@@ -5934,7 +5936,7 @@
                     if (t === r.get()
                         .peer) {
                         var i = geByClass1("_im_peer", e);
-                        toggleClass(i, "nim-peer_online", a), n.renderPeer(r), a && s(e)
+                        toggleOnline(i, a), n.renderPeer(r), a && s(e)
                     }
                 }
             },
@@ -7869,7 +7871,7 @@
     }
 
     function s() {
-        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off");
+        return DesktopNotifications.supported() && !DesktopNotifications.checkPermission() && !ls.get("im_ui_notify_off")
     }
 
     function l(e, t, n, a, o) {
@@ -7880,7 +7882,8 @@
                 r(e, t, a);
                 break;
             case "sound":
-                ls.get("sound_notify_off") ? ls.set("sound_notify_off", 0) : ls.set("sound_notify_off", 1), u.outerHTML = i();
+                ls.get("sound_notify_off") ? ls.set("sound_notify_off", 0) : ls.set("sound_notify_off", 1),
+                    u.outerHTML = i();
                 break;
             case "browser":
                 var c = s();
