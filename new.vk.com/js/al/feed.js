@@ -266,29 +266,29 @@ var Feed = {
                         R = i.offsetHeight,
                         d = r.split("_")[0],
                         l = 0 > d ? 8 & a ? 2 : 2 & a ? 1 : 0 : 0,
-                        D = wall.getNewReplyHTML(e, l),
+                        F = wall.getNewReplyHTML(e, l),
                         u = !1,
-                        q = !1;
+                        D = !1;
                     if (isVisible(M) && isVisible(j) && !isVisible("reply_link" + r)) {
-                        var I = M.nextSibling,
-                            V = geByClass("new_reply", M, "div")
+                        var q = M.nextSibling,
+                            I = geByClass("new_reply", M, "div")
                             .length + 1;
                         if (cur.wallMyOpened[r]) {
-                            I && "replies_open" == I.className && re(I), q = !0;
-                            var F = geByClass1("wr_header", M, "a"),
-                                A = geByClass("reply", M, "div")
+                            q && "replies_open" == q.className && re(q), D = !0;
+                            var V = geByClass1("wr_header", M, "a"),
+                                U = geByClass("reply", M, "div")
                                 .length + 1,
-                                U = A;
-                            F && (U = intval(F.getAttribute("offs")
-                                .split("/")[1]) + 1), (U > 5 || U > A) && (F || M.insertBefore(F = ce("a", {
+                                A = U;
+                            V && (A = intval(V.getAttribute("offs")
+                                .split("/")[1]) + 1), (A > 5 || A > U) && (V || M.insertBefore(V = ce("a", {
                                 className: "wr_header"
-                            }), M.firstChild), wall.updateRepliesHeader(r, F, A, U))
-                        } else D = wall.updatePostImages(D), u = se(D), addClass(u, "new_reply"), I && "replies_open" == I.className || (I = ce("div", {
+                            }), M.firstChild), wall.updateRepliesHeader(r, V, U, A))
+                        } else F = wall.updatePostImages(F), u = se(F), addClass(u, "new_reply"), q && "replies_open" == q.className || (q = ce("div", {
                             className: "replies_open",
                             onclick: wall.openNewComments.pbind(r)
-                        }), M.parentNode.insertBefore(I, M.nextSibling)), I.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, V)), I.newCnt = V
-                    } else re("reply_link" + r), show(j, M), q = !0;
-                    r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(D)), M.appendChild(u), t > getXY(q ? u : I)[1] && (c += i.offsetHeight - R), q &&
+                        }), M.parentNode.insertBefore(q, M.nextSibling)), q.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, I)), q.newCnt = I
+                    } else re("reply_link" + r), show(j, M), D = !0;
+                    r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(F)), M.appendChild(u), t > getXY(D ? u : q)[1] && (c += i.offsetHeight - R), D &&
                         nodeUpdated(u), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
                     break;
                 case "del_reply":
@@ -1376,6 +1376,32 @@ var Feed = {
             }
         }
         return nav.go(e, t)
+    },
+    hideCustomFeedBar: function(e, t, s) {
+        return slideUp(e, 200, re.pbind(e)), ajax.post("al_feed.php", {
+            act: "hide_custom_feed_bar",
+            section: t,
+            hash: s
+        }), !1
+    },
+    toggleCustomFeedTab: function(e, t, s, o) {
+        var r = hasClass(e, "feed_tab_link_hidden"),
+            i = domPN(ge("feed_" + t + "_tab"));
+        if (r) removeClass(i, "feed_tab_hidden"), removeClass(e, "feed_tab_link_hidden"), feed.checkTabsFilter(t, "t_" + t);
+        else {
+            addClass(i, "feed_tab_hidden");
+            var n = getLang("news_hide_named_list")
+                .replace("{title}", getLang(o)),
+                a = function() {
+                    feed.checkTabsFilter(t, "t_" + t), c.hide()
+                },
+                c = showFastBox({
+                    title: getLang("news_hide_list_confirm_title"),
+                    dark: 1,
+                    bodyStyle: "padding: 20px; line-height: 160%;"
+                }, n, getLang("news_hide"), a)
+        }
+        return !1
     },
     recomPreload: function() {
         cur.recomPreload || (cur.recomPreload = !0, ajax.post("/al_feed.php", {

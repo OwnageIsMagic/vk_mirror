@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 683641026377,
+    'nav': 683253094217,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 1866010105,
@@ -138,7 +138,7 @@ var stVersions = {
     'audioplayer.js': 587292129,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 2257034336,
+    'audio.js': 3963880775,
     'audio.css': 2131443913,
     'gifts.css': 1430103786,
     'gifts.js': 1734721709,
@@ -173,7 +173,7 @@ var stVersions = {
     'photos_add.css': 2557532249,
     'photos_add.js': 2100132176,
     'wkpoll.js': 3872977013,
-    'wkview.js': 319422096,
+    'wkview.js': 458396210,
     'wkview.css': 1978487190,
     'single_pv.css': 1756823785,
     'single_pv.js': 2569562240,
@@ -202,11 +202,11 @@ var stVersions = {
     'join.css': 1957806379,
     'join.js': 1067986459,
     'intro.css': 632121273,
-    'post.css': 3638692545,
+    'post.css': 1790252910,
     'module.css': 1552001586,
     'owner_photo.js': 2124522904,
     'owner_photo.css': 191725357,
-    'page.js': 1182893006,
+    'page.js': 3593780590,
     'page.css': 155979271,
     'page_help.css': 525044687,
     'public.css': 1944959723,
@@ -249,8 +249,8 @@ var stVersions = {
     'fansbox.js': 2597442958,
     'postbox.css': 4170744741,
     'postbox.js': 2878853436,
-    'feed.js': 4213549271,
-    'feed.css': 3622545109,
+    'feed.js': 2754720932,
+    'feed.css': 507162754,
     'privacy.js': 3873593331,
     'privacy.css': 328635716,
     'apps.css': 3989265160,
@@ -393,7 +393,7 @@ var stVersions = {
     'admin.js': 1614876408,
     'admin.css': 784246832,
     'exchange.css': 3822057122,
-    'exchange.js': 1444000052,
+    'exchange.js': 829296976,
     'exchange_moder.css': 4190609504,
     'exchange_moder.js': 735536334,
     'ads_offers.css': 2256308232,
@@ -445,7 +445,7 @@ var stVersions = {
     'snapster/page.js': 1720549549,
     'snapster/mobile.css': 100872175,
     'snapster/common.js': 1396538738,
-    'snapster/main.js': 1560731524,
+    'snapster/main.js': 3953444632,
     'favicon': 5,
     'lang': 6704
 };
@@ -480,4 +480,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 4661;
+var _rnd = 5404;

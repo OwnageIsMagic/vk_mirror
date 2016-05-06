@@ -1513,17 +1513,17 @@ div.feed_recom {
 }
 
 .feed_info_bar {
+    position: relative;
     text-align: center;
-    color: #57697a;
-    padding: 10px;
-    margin: 15px 15px 0;
-    background: #f0f2f5;
-    border: 1px solid #e7eaef;
-    border-radius: 1px;
+    padding: 15px 20px;
     line-height: 180%
 }
 
-.feed_info_bar,
+.feed_info_bar .feed_info_bar_btn {
+    margin-top: 8px;
+    display: inline-block
+}
+
 .feedback_reply_field_wrap {
     position: relative
 }

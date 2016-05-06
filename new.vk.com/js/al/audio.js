@@ -28,17 +28,16 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     toggleClass(i, "audio_search_focused", "focus" == e.type)
 }, AudioPage.prototype.updateStatusExportControls = function() {
     var e = this.ap.getStatusExportInfo();
-    each(geByClass("_audio_export_status"), function() {
+    each(geByClass("_audio_export_status", this._container), function() {
         toggleClass(this, "on", !!e[domData(this, "oid")])
     });
-    var i = this.ap.hasStatusExport();
-    return each(geByClass("_audio_page_player_status"), function() {
-        toggleClass(this, "audio_page_player_btn_enabled", i)
-    }), !1
+    var i = this.ap.hasStatusExport(),
+        t = geByClass1("_audio_page_player_status", this._container);
+    return toggleClass(t, "audio_page_player_btn_enabled", i), !1
 }, AudioPage.prototype.updateStatusExport = function(e, i) {
     e && checkbox(e);
     var t, o, i = intval(i),
-        a = this.ap.getStatusExportInfo();
+        a = this.ap.getStatusExportInfo() || {};
     if (i) a[i] ? (delete a[i], t = !1) : (a[i] = 1, t = !0);
     else if (this.ap.hasStatusExport()) {
         for (var s in a) delete a[s];
@@ -238,11 +237,11 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }), cancelEvent(i)
 }, AudioPage.prototype.onShow = function(e) {
     this._initNavigation(), val(this.searchInputEl, ""), uiSearch.removeAllFilters(this.searchInputEl), setTimeout(elfocus.pbind(this.searchInputEl), 10), e = e || this.ap.getCurrentPlaylist() ||
-        this.getCurrentPlaylist(), this.switchToSection(e), this._initPlayer(), this.isLayer() && setTimeout(function() {
+        this.getCurrentPlaylist(), this.switchToSection(e), this._initPlayer(), this.updateStatusExportControls(), this.isLayer() && (setTimeout(function() {
             var e = geByClass1("_audio_rows_header", this._container);
             setStyle(e, "width", getSize(geByClass1("_audio_rows", this._container))[0] - 1), this.getLayer()
                 .sb.widthUpdated()
-        }.bind(this)), this.updateStatusExportControls(), this.scrollToTrack()
+        }.bind(this)), this.scrollToTrack())
 }, AudioPage.prototype.onAudioUploaded = function(e, i) {
     if (i) {
         var t = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL);

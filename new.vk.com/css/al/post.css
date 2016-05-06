@@ -13,6 +13,16 @@
     padding: 0 0 10px
 }
 
+.post_thumbed_media:first-child,
+.wall_reply_text+.post_thumbed_media {
+    padding-top: 10px
+}
+
+.post_thumbed_media:empty {
+    margin: 0;
+    padding: 0
+}
+
 .post_thumbed_media .media_desc {
     padding-top: 8px;
     clear: both
