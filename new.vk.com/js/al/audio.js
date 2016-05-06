@@ -26,6 +26,22 @@ function AudioPage(e, i, t, o) {
 AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     var i = geByClass1("_audio_playlist", gpeByClass("_audio_layout", this));
     toggleClass(i, "audio_search_focused", "focus" == e.type)
+}, AudioPage.prototype._deinitArrowSeeking = function() {
+    this._arrowEventHandler && removeEvent(window.document, "keydown", this._arrowEventHandler)
+}, AudioPage.prototype._initArrowSeeking = function() {
+    this._deinitArrowSeeking();
+    var e = this;
+    addEvent(window.document, "keydown", this._arrowEventHandler = function(i) {
+        var t = getAudioPlayer();
+        if (t.isPlaying() && inArray(i.keyCode, [KEY.RIGHT, KEY.LEFT]) && (e.isLayer() || !t.layer || !t.layer.isShown())) {
+            var o = AudioUtils.asObject(t.getCurrentAudio()),
+                a = 10 / o.duration,
+                s = t.getCurrentProgress() + (i.keyCode == KEY.RIGHT ? a : -a);
+            s = Math.max(0, Math.min(1, s)), console.log(s), t.seek(s)
+        }
+    }), cur.destroy.push(function() {
+        e._deinitArrowSeeking()
+    })
 }, AudioPage.prototype.updateStatusExportControls = function() {
     var e = this.ap.getStatusExportInfo();
     each(geByClass("_audio_export_status", this._container), function() {
@@ -217,7 +233,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     var e = this;
     cur.nav = cur.nav.filter(function(i) {
         return e._nav_func != i
-    })
+    }), this._deinitArrowSeeking()
 }, AudioPage.prototype.showRecoms = function(e, i, t) {
     if (!i) {
         var o = this.readyAudio ? this.readyAudio : this.ap.getCurrentAudio();
@@ -237,11 +253,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }), cancelEvent(i)
 }, AudioPage.prototype.onShow = function(e) {
     this._initNavigation(), val(this.searchInputEl, ""), uiSearch.removeAllFilters(this.searchInputEl), setTimeout(elfocus.pbind(this.searchInputEl), 10), e = e || this.ap.getCurrentPlaylist() ||
-        this.getCurrentPlaylist(), this.switchToSection(e), this._initPlayer(), this.updateStatusExportControls(), this.isLayer() && (setTimeout(function() {
-            var e = geByClass1("_audio_rows_header", this._container);
-            setStyle(e, "width", getSize(geByClass1("_audio_rows", this._container))[0] - 1), this.getLayer()
-                .sb.widthUpdated()
-        }.bind(this)), this.scrollToTrack())
+        this.getCurrentPlaylist(), this.switchToSection(e), this._initPlayer(), this._initArrowSeeking(), this.updateStatusExportControls(), this.isLayer() && (setTimeout(
+            function() {
+                var e = geByClass1("_audio_rows_header", this._container);
+                setStyle(e, "width", getSize(geByClass1("_audio_rows", this._container))[0] - 1), this.getLayer()
+                    .sb.widthUpdated()
+            }.bind(this)), this.scrollToTrack())
 }, AudioPage.prototype.onAudioUploaded = function(e, i) {
     if (i) {
         var t = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL);
@@ -452,19 +469,18 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     AudioPage(this)
         .searchMoreFriends(e)
 }, AudioPage.prototype._updateFriendsList = function(e, i, t) {
-    if (e = trim(e)) {
-        var o = this,
-            a = geByClass1("_audio_friends_list", this._container),
-            s = (getSize(a)[1], se('<div class="audio_friends_list _audio_friends_list" style="opacity: 0; position: absolute; top: 0;">' + e + "</div>"));
-        t && (this._shownFriends = []), domPN(a)
-            .appendChild(s), setTimeout(function() {
-                setStyle(s, {
+    if (e = trim(e), this._friendSearchInProgress = !1, e) {
+        var o = geByClass1("_audio_friends_list", this._container),
+            a = (getSize(o)[1], se('<div class="audio_friends_list _audio_friends_list" style="opacity: 0; position: absolute; top: 0;">' + e + "</div>"));
+        t && (this._shownFriends = []), domPN(o)
+            .appendChild(a), setTimeout(function() {
+                setStyle(a, {
                     opacity: 1
                 })
             }), setTimeout(function() {
-                re(a), setStyle(s, {
+                re(o), setStyle(a, {
                     position: "relative"
-                }), o._friendSearchInProgress = !1
+                }), updateNarrow()
             }, 160)
     }
 }, AudioPage.prototype.searchMoreFriends = function(e) {
@@ -962,7 +978,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             }), s) {
             var n = this.options.oid;
             if (n != vk.id && !inArray(i[0], ["audios" + n])) return !0;
-            if (n == vk.id && !inArray(i[0], ["audios" + n, "audio"])) return !0
+            if (n == vk.id && !inArray(i[0], ["audios" + n, "audio"])) return !0;
         }
         if (this.options.isLayer && (a.hist || a.back || i[0] && 0 != i[0].indexOf("audio"))) return this.options.eltt.hide(), !0;
         if (0 == Object.keys(i)
@@ -1075,6 +1091,10 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         onChange: function(e) {
             a.setVolume(e)
         }
+    }), this.ap.on(this, AudioPlayer.EVENT_START_LOADING, function() {
+        o._trackSlider.toggleLoading(!0)
+    }), this.ap.on(this, AudioPlayer.EVENT_CAN_PLAY, function() {
+        o._trackSlider.toggleLoading(!1)
     }), this.ap.on(this, AudioPlayer.EVENT_ADDED, function(e, i) {
         e = AudioUtils.asObject(e), e && e.fullId == i && addClass(c, "audio_player_btn_added")
     }), this.ap.on(this, AudioPlayer.EVENT_REMOVED, function(e, i) {

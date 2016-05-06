@@ -29,13 +29,13 @@ function AudioPlayer() {
                 i._currentProgress = 0
             },
             onEnd: function() {
-                t()
+                "html5" != i._impl.type && t()
             },
-            onProgressUpdate: function(t) {
+            onProgressUpdate: function(e) {
                 if (!i._muteProgressEvents) {
-                    i.notify(AudioPlayer.EVENT_PROGRESS, t);
-                    var e = 0;
-                    i._currentProgress && (e = t - i._currentProgress, e = e > 0 ? e : 0), i._currentProgress = t, t >= 1 - e && "html5" == i._impl.type
+                    i.notify(AudioPlayer.EVENT_PROGRESS, e);
+                    var o = 0;
+                    i._currentProgress && (o = e - i._currentProgress, o = o > 0 ? o : 0), i._currentProgress = e, "html5" == i._impl.type && e >= 1 - o && t()
                 }
             }
         };
@@ -50,8 +50,7 @@ function AudioPlayerFlash(t) {
 }
 
 function AudioPlayerHTML5(t) {
-    this.opts = t || {}, this._checkUrlTOs = {}, this._checkedUrls = {}, this._onReadyCallbacks = {}, this._canPlayTimeout = AudioPlayerHTML5.FAILED_URL_TIMEOUT, this._currentAudioEl =
-        this._createAudioEl(), this._prefetchAudioEl = this._createAudioEl()
+    this.opts = t || {}, this._onReadyCallbacks = {}, this._currentAudioEl = this._createAudioEl(), this._prefetchAudioEl = this._createAudioEl()
 }
 var AudioUtils = {
     AUDIO_PLAYLIST_TYPE_ALBUM: "album",
@@ -124,11 +123,11 @@ var AudioUtils = {
                     }
                 }), removeClass(o, "audio_deleted"), removeClass(o, "canadd"), addClass(o, "canedit"), delete cur._audioAddRestoreInfo[u.fullId];
                 else if ("added" == _.state) {
-                    var y = _.addedFullId.split("_");
+                    var p = _.addedFullId.split("_");
                     ajax.post("al_audio.php", {
                             act: "delete_audio",
-                            oid: y[0],
-                            aid: y[1],
+                            oid: p[0],
+                            aid: p[1],
                             hash: d
                         }, {
                             onDone: function() {
@@ -349,13 +348,12 @@ var AudioUtils = {
             if (s = hashCode(n + "_" + (cur.wallQuery || "")), e = a.getPlaylist(AudioPlaylist.TYPE_WALL, cur.oid, s), -1 == e.indexOfAudio(l)) {
                 e.clean();
                 var d = gpeByClass("_post", t),
-                    _ = domData(d, "post-id")
-                    .split("_")[1];
-                e.mergeWith({
+                    _ = domData(d, "post-id");
+                _ = _ ? _.split("_")[1] : !1, _ ? e.mergeWith({
                     postId: _,
                     wallQuery: cur.wallQuery,
                     wallType: n
-                })
+                }) : e = null
             }
             o = i([r])
         } else if (r = domClosest("choose_audio_rows", t)) cur.chooseAudioPlaylist = e = new AudioPlaylist(AudioPlaylist.TYPE_TEMP, vk.id, irand(999, 99999)), o = [r];
@@ -734,10 +732,10 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         } else t && t(this)
     }, AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop", AudioPlayer.EVENT_UPDATE = "update", AudioPlayer.EVENT_LOADED =
     "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED = "buffered", AudioPlayer.EVENT_PROGRESS = "progress", AudioPlayer
-    .EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.LS_VER = "v10",
-    AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL =
-    "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LISTEN_TIME =
-    10, AudioPlayer.DEFAULT_VOLUME = .8;
+    .EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.EVENT_START_LOADING =
+    "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX +
+    "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS =
+    "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LISTEN_TIME = 10, AudioPlayer.DEFAULT_VOLUME = .8;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
     def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -883,7 +881,11 @@ AudioPlayer.tabIcons = {
                     e.seek(t)
                 }
             });
-        e.on(t, AudioPlayer.EVENT_BUFFERED, function(t, i) {
+        e.on(t, AudioPlayer.EVENT_START_LOADING, function() {
+            l.toggleLoading(!0)
+        }), e.on(t, AudioPlayer.EVENT_CAN_PLAY, function() {
+            l.toggleLoading(!1)
+        }), e.on(t, AudioPlayer.EVENT_BUFFERED, function(t, i) {
             l.setBackValue(i)
         }), e.on(t, AudioPlayer.EVENT_PROGRESS, function(t, i) {
             l.setValue(i)
@@ -938,7 +940,8 @@ AudioPlayer.tabIcons = {
         }
         isArray(i) && (this._currentAudio = i)
     }
-    return this.notify(AudioPlayer.EVENT_UPDATE), t
+    return this.notify(AudioPlayer.EVENT_UPDATE),
+        t
 }, AudioPlayer.prototype._sendLCNotification = function() {
     var t = window.Notifier;
     t && t.lcSend("audio_start");
@@ -955,31 +958,32 @@ AudioPlayer.tabIcons = {
         i && (i = JSON.parse(i), this._currentPlaylist = new AudioPlaylist(i)), this._currentPlaylist && this._currentAudio ? this.notify(AudioPlayer.EVENT_UPDATE) : this._currentPlaylist =
             this._currentAudio = !1;
         var e = this._lsGet(AudioPlayer.LS_PROGRESS) || 0;
-        this._currentAudio && e && this._impl && "html5" == this._impl.type && (this._implSetUrl(this._currentAudio), this._implSeek(e), this._implSetVolume(0))
+        this._currentAudio && e && this._impl && "html5" == this._impl.type && (this._implSetUrl(this._currentAudio, !0), this._implSeek(e), this._implSetVolume(0))
     }
 }, AudioPlayer.prototype._ensureImplReady = function(t) {
     this._impl && this._impl.onReady(function(i) {
         return i ? t() : void AudioUtils.showNeedFlashBox()
     })
 }, AudioPlayer.prototype._implNewTask = function(t, i) {
-    this._tasks = this._tasks || [], this._tasks.push({
+    this._taskIDCounter = this._taskIDCounter || 1, this._tasks = this._tasks || [], this._tasks.push({
         name: t,
-        cb: i
+        cb: i,
+        id: t + "_" + this._taskIDCounter++
     }), this._implDoTasks()
 }, AudioPlayer.prototype._implDoTasks = function() {
     if (this._tasks = this._tasks || [], !this._taskInProgress) {
         var t = this._tasks.shift();
         if (t) {
             var i = this;
-            this._taskInProgress = t.name, this._ensureImplReady(function() {
+            t = clone(t), this._taskInProgress = t.id, this._ensureImplReady(function() {
                 t.cb.call(i, function() {
-                    i._taskInProgress = !1, i._implDoTasks()
+                    return i._taskAbort == t.id ? void(i._taskAbort = !1) : (i._taskInProgress = !1, void i._implDoTasks())
                 })
             })
         }
     }
 }, AudioPlayer.prototype._implClearAllTasks = function() {
-    this._tasks = []
+    this._taskAbort = this._taskInProgress, this._taskInProgress = !1, this._tasks = []
 }, AudioPlayer.prototype._implClearTask = function(t) {
     this._tasks = this._tasks || [], this._tasks = this._tasks.filter(function(i) {
         return i.name != t
@@ -991,7 +995,7 @@ AudioPlayer.tabIcons = {
 }, AudioPlayer.prototype._implPlay = function() {
     var t = this;
     this._implNewTask("play", function(i) {
-        audio = AudioUtils.asObject(t.getCurrentAudio()), t._impl.play(audio.url), t._muteProgressEvents = !1, i()
+        audio = AudioUtils.asObject(t.getCurrentAudio()), t._impl.play(audio.url), t._muteProgressEvents = !1, t._prefetchNextAudio(), i()
     })
 }, AudioPlayer.prototype._implSeekImmediate = function(t) {
     this._impl && this._impl.seek(t)
@@ -1019,12 +1023,12 @@ AudioPlayer.tabIcons = {
             e._impl.setVolume(t), i()
         })
     }
-}, AudioPlayer.prototype._implSetUrl = function(t) {
-    var i = this;
-    this._implClearTask("url"), this._implNewTask("url", function(e) {
-        i._ensureHasURL(t, function(t) {
-            t = AudioUtils.asObject(t), i._impl.setUrl(t.url, function(t) {
-                t || (i._implClearAllTasks(), i._onFailedUrl()), e()
+}, AudioPlayer.prototype._implSetUrl = function(t, i) {
+    var e = this;
+    this._implClearTask("url"), this._implNewTask("url", function(o) {
+        i || e.notify(AudioPlayer.EVENT_START_LOADING), e._ensureHasURL(t, function(t) {
+            t = AudioUtils.asObject(t), e._impl.setUrl(t.url, function(t) {
+                t || (e._implClearAllTasks(), e._onFailedUrl()), e.notify(AudioPlayer.EVENT_CAN_PLAY), o()
             })
         })
     })
@@ -1319,21 +1323,21 @@ AudioPlayer.tabIcons = {
         }
     })
 }, AudioPlayer.prototype.toggleAudio = function(t, i) {
-    if (cur._sliderMouseUpNow) return delete cur._sliderMouseUpNow, !1;
-    if (i && (hasClass(i.target, "audio_lyrics") || domClosest("_audio_duration_wrap", i.target) || domClosest("_audio_inline_player", i.target) || domClosest(
-            "audio_performer", i.target))) return !1;
     var e = domClosest("_audio_row", t),
-        o = AudioUtils.getAudioFromEl(e, !0);
-    if (AudioUtils.isClaimedAudio(o)) {
-        var a = AudioUtils.getAudioExtra(o),
-            s = a.claim;
-        return void showAudioClaimWarning(o.ownerId, o.id, s.deleteHash, s.id, o.title)
+        o = i && (hasClass(i.target, "audio_lyrics") || domClosest("_audio_duration_wrap", i.target) || domClosest("_audio_inline_player", i.target) || domClosest(
+            "audio_performer", i.target));
+    if (cur._sliderMouseUpNowEl && cur._sliderMouseUpNowEl == geByClass1("audio_inline_player_progress", e) && (o = !0), delete cur._sliderMouseUpNowEl, o) return !1;
+    var a = AudioUtils.getAudioFromEl(e, !0);
+    if (AudioUtils.isClaimedAudio(a)) {
+        var s = AudioUtils.getAudioExtra(a),
+            l = s.claim;
+        return void showAudioClaimWarning(a.ownerId, a.id, l.deleteHash, l.id, a.title)
     }
-    var l = hasClass(e, AudioUtils.AUDIO_PLAYING_CLS);
-    if (l) this.pause();
+    var r = hasClass(e, AudioUtils.AUDIO_PLAYING_CLS);
+    if (r) this.pause();
     else {
-        var r = AudioUtils.getContextPlaylist(e);
-        this.play(o.fullId, r)
+        var u = AudioUtils.getContextPlaylist(e);
+        this.play(a.fullId, u)
     }
 }, AudioPlayer.prototype._onFailedUrl = function(t) {
     this.notify(AudioPlayer.EVENT_FAILED), this.isPlaying() && (this.pause(), this.playNext(!0))
@@ -1358,10 +1362,14 @@ AudioPlayer.tabIcons = {
                 i : this._currentPlaylist = new AudioPlaylist(i)), this._listenedTime = this._prevProgress = 0, this._currentAudio = u, this._isPlaying = !0, this._sendLCNotification(),
             this.notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this._muteProgressEvents = !0, this._implClearAllTasks(), o ? (this._implSetUrl(u), this._implPlay(),
                 this._implSetVolume(this.getVolume())) : (this._implSetVolume(0, !0), this._implSetDelay(200), this._implSetUrl(u), this._implPlay(), this._implSetVolume(
-                this.getVolume())), this._prefetchNextAudio(), l || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
+                this.getVolume())), l || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
     }
 }, AudioPlayer.prototype._prefetchNextAudio = function() {
-    return
+    if ("html5" == this._impl.type) {
+        var t = this.getCurrentPlaylist(),
+            i = t.getNextAudio(this.getCurrentAudio());
+        i = AudioUtils.asObject(i), i && i.url && this._impl.prefetch(i.url)
+    }
 }, AudioPlayer.prototype.getCurrentPlaylist = function() {
     return this._currentPlaylist
 }, AudioPlayer.prototype.getPlaylists = function() {
@@ -1463,7 +1471,7 @@ AudioPlayer.tabIcons = {
             e._checkFlashLoaded()
         }, 100)
     }
-}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.FAILED_URL_TIMEOUT = 14e3, AudioPlayerHTML5.isSupported = function() {
+}, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.isSupported = function() {
     var t = document.createElement("audio");
     return !(!t.canPlayType || !t.canPlayType('audio/mpeg; codecs="mp3"')
         .replace(/no/, ""))
@@ -1483,23 +1491,28 @@ AudioPlayer.tabIcons = {
     }), this.opts.onSeek && addEvent(t, "seeking", function() {
         i._currentAudioEl == t && i.opts.onSeek()
     }), addEvent(t, "error", function() {
-        var e = t.src;
-        clearTimeout(i._checkUrlTOs[e]), delete i._checkedUrls[e];
-        var o = i._onReadyCallbacks[e];
-        o && o(!1)
+        if (i._prefetchAudioEl == t) i._prefetchAudioEl = i._createAudioEl();
+        else if (i._currentAudioEl == t) {
+            var e = i._onReadyCallbacks[t.src];
+            e && e(!1)
+        }
+    }), addEvent(t, "canplaythrough", function() {
+        i._currentAudioEl == t && i._prefetchUrl && (i._prefetchAudioEl && i._prefetchAudioEl.src && (i._prefetchAudioEl.src = ""), i._prefetchAudioEl = i._createAudioEl(),
+            i._prefetchAudioEl.src = i._prefetchUrl, i._prefetchUrl = !1)
     }), addEvent(t, "canplay", function() {
         var e = t.src;
-        clearTimeout(i._checkUrlTOs[e]), i._checkedUrls[e] = !0;
-        var o = i._onReadyCallbacks[e];
-        if (o && o(!0), delete i._onReadyCallbacks[e], i._currentAudioEl == t && i._seekOnReady) {
-            var a = i._seekOnReady;
-            i._seekOnReady = !1, i.seek(a)
+        if (i._prefetchAudioEl == t && (i._prefetchAudioEl._canPlay = !0), i._currentAudioEl == t) {
+            var o = i._onReadyCallbacks[e];
+            if (delete i._onReadyCallbacks[e], o && o(!0), i._seekOnReady) {
+                var a = i._seekOnReady;
+                i._seekOnReady = !1, i.seek(a)
+            }
         }
     }), t
 }, AudioPlayerHTML5.prototype.onReady = function(t) {
     t(!0)
 }, AudioPlayerHTML5.prototype.prefetch = function(t) {
-    this._prefetchAudioEl.src = this._emptyBLOB(), this._prefetchAudioEl.src = t
+    this._prefetchAudioEl.src = "", this._prefetchAudioEl = this._createAudioEl(), this._prefetchUrl = t
 }, AudioPlayerHTML5.prototype.seek = function(t) {
     var i = this._currentAudioEl;
     isNaN(i.duration) ? this._seekOnReady = t : i.currentTime = i.duration * t
@@ -1513,27 +1526,19 @@ AudioPlayer.tabIcons = {
     return t && t.buffered.length ? Math.min(1, t.buffered.end(0) / t.duration) : 0
 }, AudioPlayerHTML5.prototype.setUrl = function(t, i) {
     var e = this._currentAudioEl;
-    if (this._seekOnReady = !1, e.src == t || this._prefetchAudioEl.src == t && this._checkedUrls[t]) return i && i(!0);
-    var o = this;
-    clearTimeout(this._checkUrlTOs[t]), this._checkUrlTOs[t] = setTimeout(function() {
-        o._canPlayTimeout *= 2, i && i(!1, t)
-    }, this._canPlayTimeout), this._onReadyCallbacks[t] = i, e.src = t
-}, AudioPlayerHTML5.prototype._emptyBLOB = function() {
-    return URL.createObjectURL(new Blob([], {
-        type: "audio/mp3"
-    }))
-}, AudioPlayerHTML5.prototype.play = function(t) {
+    if (this._seekOnReady = !1, e.src == t) return i && i(!0);
     if (this._prefetchAudioEl.src == t) {
-        if (!this._checkedUrls[t]) return this._prefetchAudioEl.src = this._emptyBLOB(), void this.setUrl(t, function() {
-            e.play()
-        });
-        var i = this._currentAudioEl;
-        this._currentAudioEl = this._prefetchAudioEl, this._prefetchAudioEl = i, this._prefetchAudioEl.pause(), this._prefetchAudioEl.src = this._emptyBLOB()
+        this._currentAudioEl.src = "";
+        var o = this._prefetchAudioEl._canPlay;
+        if (e = this._currentAudioEl = this._prefetchAudioEl, this._prefetchAudioEl = !1, o) return i && i(!0)
     }
-    var e = this._currentAudioEl;
-    if (e.src) try {
-        e.play()
-    } catch (o) {
+    this._onReadyCallbacks[t] = i, this.prefetch(), e.src != t && (e.src = t)
+}, AudioPlayerHTML5.prototype.play = function(t) {
+    this._prefetchAudioEl.src == t && (this._currentAudioEl.src = "", this._currentAudioEl = this._prefetchAudioEl, this._prefetchAudioEl = this._createAudioEl());
+    var i = this._currentAudioEl;
+    if (i.src) try {
+        i.play()
+    } catch (e) {
         debugLog("Audio: url set failed (html5 impl)")
     }
 }, AudioPlayerHTML5.prototype.pause = function() {

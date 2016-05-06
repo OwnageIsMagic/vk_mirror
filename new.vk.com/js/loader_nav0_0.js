@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 683253094217,
+    'nav': 680091364105,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 1866010105,
@@ -135,12 +135,12 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 587292129,
+    'audioplayer.js': 1587413427,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 3963880775,
+    'audio.js': 353495727,
     'audio.css': 2131443913,
-    'gifts.css': 1430103786,
+    'gifts.css': 291501188,
     'gifts.js': 1734721709,
     'cc.js': 4037201610,
     'indexer.js': 4037127100,
@@ -242,7 +242,7 @@ var stVersions = {
     'im.js': 4271552496,
     'emoji.js': 2849385263,
     'wide_dd.css': 3273211401,
-    'wide_dd.js': 2933692792,
+    'wide_dd.js': 2661848751,
     'writebox.css': 3912883473,
     'writebox.js': 3786734423,
     'sharebox.js': 931032458,
@@ -329,14 +329,14 @@ var stVersions = {
     'verify.css': 262281192,
     'away.css': 2898203759,
     'stats.css': 119059668,
-    'payments.css': 2738898537,
+    'payments.css': 882466922,
     'payments.js': 3222309665,
     'offers.css': 1395278909,
     'offers.js': 3070210054,
     'call.js': 3752504153,
     'call.css': 1208034002,
     'aes_light.css': 1153957525,
-    'aes_light.js': 475877234,
+    'aes_light.js': 1781247776,
     'ads.css': 2818904781,
     'ads.js': 4240687553,
     'ads_payments.js': 899652112,
@@ -386,8 +386,8 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 849758697,
     'ui.js': 3053181925,
-    'ui_common.js': 3361636260,
-    'ui_common.css': 52069275,
+    'ui_common.js': 1734609621,
+    'ui_common.css': 3089137264,
     'ui_media_selector.js': 2323184717,
     'ui_media_selector.css': 4209267876,
     'admin.js': 1614876408,
@@ -480,4 +480,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 5404;
+var _rnd = 719;

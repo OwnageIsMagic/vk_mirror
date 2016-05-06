@@ -2069,6 +2069,19 @@ a.ui_search_custom_link {
     position: relative
 }
 
+.slider .slider_loading_bar {
+    width: 100%;
+    height: 100%;
+    -o-transition: opacity 300ms linear;
+    transition: opacity 300ms linear;
+    background-image: url(/images/audio_progress.png);
+    background-position-x: 0;
+    background-position-y: 0;
+    -webkit-animation: slider_loading_animation 300ms linear infinite;
+    -o-animation: slider_loading_animation 300ms linear infinite;
+    animation: slider_loading_animation 300ms linear infinite
+}
+
 .slider .slider_amount,
 .slider .slider_back {
     height: 100%;
@@ -2149,6 +2162,33 @@ a.ui_search_custom_link {
     width: 8px;
     top: -3px;
     margin-left: -4px
+}
+
+@-webkit-keyframes slider_loading_animation {
+    0% {
+        background-position-x: 0
+    }
+    to {
+        background-position-x: 9px
+    }
+}
+
+@-o-keyframes slider_loading_animation {
+    0% {
+        background-position-x: 0
+    }
+    to {
+        background-position-x: 9px
+    }
+}
+
+@keyframes slider_loading_animation {
+    0% {
+        background-position-x: 0
+    }
+    to {
+        background-position-x: 9px
+    }
 }
 
 .slider_hint {
