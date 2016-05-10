@@ -113,10 +113,10 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 685044338982,
+    'nav': 686197765348,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
-    'common.css': 1604654945,
+    'common.css': 3144404212,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -135,7 +135,7 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 2559038542,
+    'audioplayer.js': 2631183068,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
     'audio.js': 3343080179,
@@ -446,7 +446,7 @@ var stVersions = {
     'snapster/page.js': 1720549549,
     'snapster/mobile.css': 100872175,
     'snapster/common.js': 1396538738,
-    'snapster/main.js': 2740012642,
+    'snapster/main.js': 2281545215,
     'favicon': 5,
     'lang': 6705
 };
@@ -481,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 9745;
+var _rnd = 703;

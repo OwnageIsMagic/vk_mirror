@@ -5731,7 +5731,7 @@ button.ui_load_more_btn {
     display: none!important
 }
 
-.audio_row.audio_added_next #next {
+.audio_row.audio_added_next #next>div {
     background-position: -18px -92px;
     width: 14px
 }

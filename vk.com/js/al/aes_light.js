@@ -865,7 +865,7 @@
         }, 100);
 
         if (abp) {
-            setCookie('remixabp', 1);
+            setCookie('remixab', 1, 30);
         }
     }
 
@@ -1757,13 +1757,11 @@
         function ajax(url, succ, err) {
             clearTimeout(errorTimeout);
             errorTimeout = setTimeout(function() {
-                abp = true; // remove it when px.js will be fixed by ABP team
                 err({
                     "reason": "timeout"
                 });
             }, TIMEOUT_TIME);
             window[callback] = function(e) {
-                abp = false; // remove it when px.js will be fixed by ABP team
                 clearTimeout(errorTimeout);
                 if (e && e[0] && e[0].html) {
                     try {
