@@ -113,10 +113,10 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 680091364105,
+    'nav': 685044338982,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
-    'common.css': 1866010105,
+    'common.css': 1604654945,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -135,13 +135,13 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 1587413427,
+    'audioplayer.js': 2559038542,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 353495727,
+    'audio.js': 3343080179,
     'audio.css': 2131443913,
     'gifts.css': 291501188,
-    'gifts.js': 1734721709,
+    'gifts.js': 2778120873,
     'cc.js': 4037201610,
     'indexer.js': 4037127100,
     'graph.js': 3091977822,
@@ -156,7 +156,7 @@ var stVersions = {
     'usorter.js': 2212338539,
     'phototag.js': 3445996780,
     'phototag.css': 3643271466,
-    'photoview.js': 403145566,
+    'photoview.js': 3931190332,
     'photoview.css': 341138151,
     'fullscreen_pv.js': 1738361993,
     'fullscreen_pv.css': 4174249355,
@@ -177,19 +177,19 @@ var stVersions = {
     'wkview.css': 1978487190,
     'single_pv.css': 1756823785,
     'single_pv.js': 2569562240,
-    'video.js': 1247098546,
+    'video.js': 557729274,
     'video.css': 4081142433,
     'videocat.js': 972120599,
     'videocat.css': 2768202123,
-    'videoview.js': 3353458626,
+    'videoview.js': 2626794984,
     'videoview.css': 2398518621,
     'video_edit.js': 660308478,
     'video_edit.css': 3290437348,
     'video_upload.js': 2759837070,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 3834702523,
-    'videoplayer.css': 1844722714,
+    'videoplayer.js': 644529420,
+    'videoplayer.css': 979522604,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
     'reg.css': 1314058211,
@@ -198,7 +198,7 @@ var stVersions = {
     'invite.js': 2046983763,
     'prereg.js': 1684494884,
     'index.css': 929931153,
-    'index.js': 3896611098,
+    'index.js': 1036656880,
     'join.css': 1957806379,
     'join.js': 1067986459,
     'intro.css': 632121273,
@@ -246,7 +246,7 @@ var stVersions = {
     'writebox.css': 3912883473,
     'writebox.js': 3786734423,
     'sharebox.js': 931032458,
-    'fansbox.js': 2597442958,
+    'fansbox.js': 2721076082,
     'postbox.css': 4170744741,
     'postbox.js': 2878853436,
     'feed.js': 2754720932,
@@ -319,6 +319,7 @@ var stVersions = {
     'bugs.js': 2994463564,
     'bugs.css': 444001557,
     'login.css': 1572258900,
+    'login.js': 1601448228,
     'upload.js': 3849143331,
     'graffiti.js': 1026128914,
     'graffiti.css': 3374342273,
@@ -411,7 +412,7 @@ var stVersions = {
     'vkme.css': 1846895044,
     'ui_controls.js': 3033205957,
     'highcharts.js': 607702664,
-    'grid_sorter.js': 860091999,
+    'grid_sorter.js': 3937644316,
     'suggester.js': 446460284,
     'auto_list.js': 2462724570,
     'ui_controls.css': 1846258701,
@@ -445,9 +446,9 @@ var stVersions = {
     'snapster/page.js': 1720549549,
     'snapster/mobile.css': 100872175,
     'snapster/common.js': 1396538738,
-    'snapster/main.js': 3953444632,
+    'snapster/main.js': 2740012642,
     'favicon': 5,
-    'lang': 6704
+    'lang': 6705
 };
 var stTypes = {
     fromLib: {
@@ -480,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 719;
+var _rnd = 9745;

@@ -7812,10 +7812,10 @@ function onLoginFailed(code, opts) {
             location.href = location.href.replace(/^http:/, 'https:');
             break;
         case 4:
-            location.href = '/login.php?m=1&email=' + opts.email;
+            location.href = '/login?m=1' + (opts.expire ? '&s=0' : '') + '&email=' + opts.email;
             break;
         default:
-            location.href = '/login.php';
+            location.href = '/login';
             break;
     }
 }

@@ -34,19 +34,25 @@ function AudioPlayer() {
             onProgressUpdate: function(e) {
                 if (!i._muteProgressEvents) {
                     i.notify(AudioPlayer.EVENT_PROGRESS, e);
-                    var o = 0;
-                    i._currentProgress && (o = e - i._currentProgress, o = o > 0 ? o : 0), i._currentProgress = e, "html5" == i._impl.type && e >= 1 - o && t()
+                    var o = 0,
+                        a = AudioUtils.asObject(i.getCurrentAudio());
+                    if (i._currentProgress && a) {
+                        o = e - i._currentProgress, o = o > 0 ? o : 0;
+                        var s = .3;
+                        o = Math.min(o, s / a.duration)
+                    }
+                    i._currentProgress = e, "html5" == i._impl.type && e >= 1 - o && t()
                 }
             }
         };
-    AudioPlayerHTML5.isSupported() ? this._impl = new AudioPlayerHTML5(e) : browser.flash && (this._impl = new AudioPlayerFlash(e)), this._implSetVolume(0), this._initEvents(),
+    AudioPlayerHTML5.isSupported() ? this._impl = new AudioPlayerHTML5(e) : browser.flash && (this._impl = new AudioPlayerFlash(e)), this._implSetVolume(0), this._initEvents(), i._restoreVolumeState(),
         setTimeout(function() {
             i._restoreState()
         })
 }
 
 function AudioPlayerFlash(t) {
-    this.opts = t || {}, AudioPlayerFlash.instance = this
+    this.opts = t || {}, window._flashAudioInstance = this
 }
 
 function AudioPlayerHTML5(t) {
@@ -82,8 +88,7 @@ var AudioUtils = {
     AUDIO_PLAYING_CLS: "audio_row_playing",
     AUDIO_CURRENT_CLS: "audio_row_current",
     ACT_ADDRESS: "/audio",
-    AUDIO_LAYER_HEIGHT_RATIO: .5,
-    AUDIO_LAYER_HEIGHT_MIN_HEIGHT: 400,
+    AUDIO_LAYER_HEIGHT: 450,
     AUDIO_LAYER_MIN_WIDTH: 400,
     AUDIO_LAYER_MAX_WIDTH: 1200,
     AUDIO_STATE_ADDED: "added",
@@ -150,14 +155,16 @@ var AudioUtils = {
                     hash: n
                 }, {
                     onDone: function(t, i, o, s) {
-                        var r = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
-                        if (cur._audioAddRestoreInfo[u.fullId] = {
-                                state: "added",
-                                addedFullId: r
-                            }, a) {
-                            var n = getAudioPlayer()
-                                .getPlaylist(AudioPlaylist.TYPE_ALBUM, l ? -l : vk.id, AudioUtils.AUDIO_ALBUM_ID_ALL);
-                            n.addAudio(t, 0)
+                        if (t) {
+                            var r = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
+                            if (cur._audioAddRestoreInfo[u.fullId] = {
+                                    state: "added",
+                                    addedFullId: r
+                                }, a) {
+                                var n = getAudioPlayer()
+                                    .getPlaylist(AudioPlaylist.TYPE_ALBUM, l ? -l : vk.id, AudioUtils.AUDIO_ALBUM_ID_ALL);
+                                n.addAudio(t, 0)
+                            }
                         }
                         e(!1)
                     }
@@ -199,15 +206,14 @@ var AudioUtils = {
                 var telContent = ap.layer.getContent();
                 addClass(telContent, "no_transition"), removeClass(telContent, "top_audio_loading"), telContent.innerHTML = html;
                 var layerScrollNode = geByClass1("audio_layer_rows_wrap", telContent);
-                setStyle(layerScrollNode, "height", Math.max(clientHeight() * AudioUtils.AUDIO_LAYER_HEIGHT_RATIO, AudioUtils.AUDIO_LAYER_HEIGHT_MIN_HEIGHT)),
-                    options.layer = ap.layer, options.layer.sb = new Scrollbar(layerScrollNode, {
-                        nomargin: !0,
-                        right: vk.rtl ? "auto" : 0,
-                        left: vk.rtl ? 0 : "auto",
-                        global: !0,
-                        nokeys: !0,
-                        scrollElements: [geByClass1("audio_layer_menu_wrap", telContent)]
-                    }), data(layerScrollNode, "sb", options.layerScrollbar);
+                setStyle(layerScrollNode, "height", AudioUtils.AUDIO_LAYER_HEIGHT), options.layer = ap.layer, options.layer.sb = new Scrollbar(layerScrollNode, {
+                    nomargin: !0,
+                    right: vk.rtl ? "auto" : 0,
+                    left: vk.rtl ? 0 : "auto",
+                    global: !0,
+                    nokeys: !0,
+                    scrollElements: [geByClass1("audio_layer_menu_wrap", telContent)]
+                }), data(layerScrollNode, "sb", options.layerScrollbar);
                 var audioPage = new AudioPage(geByClass1("_audio_layout", telContent), playlist, options, firstSong);
                 data(ap.layer, "audio-page", audioPage), setTimeout(function() {
                     removeClass(telContent, "no_transition")
@@ -390,28 +396,29 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         }), this.onPlay(this.ap.getCurrentAudio())
     }, TopAudioPlayer.prototype.onPlay = function(t, i, e) {
         function o() {
-            a.ap.audioLayer && a.ap.audioLayer.isShown() && a.ap.audioLayer.updatePosition(), addClass(a._el, "top_audio_player_enabled"), toggleClass(a._el,
-                "top_audio_player_playing", a.ap.isPlaying()), t = AudioUtils.asObject(t), clearTimeout(a._currTitleReTO);
-            var i = geByClass1("top_audio_player_title_out", a._el);
-            re(i);
-            var o = geByClass1("top_audio_player_title", a._el);
+            var i = getAudioPlayer();
+            i.layer && i.layer.isShown() && i.layer.updatePosition(), addClass(a._el, "top_audio_player_enabled"), toggleClass(a._el, "top_audio_player_playing", i.isPlaying()), t =
+                AudioUtils.asObject(t), clearTimeout(a._currTitleReTO);
+            var o = geByClass1("top_audio_player_title_out", a._el);
+            re(o);
+            var s = geByClass1("top_audio_player_title", a._el);
             if (0 != e) {
-                var s = 0 > e ? -10 : 10,
-                    l = o.offsetLeft,
-                    r = se('<div class="top_audio_player_title top_audio_player_title_next" style="opacity: 0; top:' + s + "px; left: " + l + 'px">' + t.performer + " &ndash; " +
+                var l = 0 > e ? -10 : 10,
+                    r = s.offsetLeft,
+                    u = se('<div class="top_audio_player_title top_audio_player_title_next" style="opacity: 0; top:' + l + "px; left: " + r + 'px">' + t.performer + " &ndash; " +
                         t.title + "</div>");
-                r.setAttribute("onmouseover", "setTitle(this)"), e > 0 ? domInsertAfter(r, o) : domInsertBefore(r, o), addClass(o, "top_audio_player_title_out"), setStyle(o, {
-                    top: -s,
+                u.setAttribute("onmouseover", "setTitle(this)"), e > 0 ? domInsertAfter(u, s) : domInsertBefore(u, s), addClass(s, "top_audio_player_title_out"), setStyle(s, {
+                    top: -l,
                     opacity: 0
                 }), setTimeout(function() {
-                    setStyle(r, {
+                    setStyle(u, {
                         top: 0,
                         opacity: 1
                     })
                 }, 1), clearTimeout(a._currTitleReTO), a._currTitleReTO = setTimeout(function() {
-                    re(o), removeClass(r, "top_audio_player_title_next")
+                    re(s), removeClass(u, "top_audio_player_title_next")
                 }, TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED)
-            } else o.innerHTML = t.performer + " &ndash; " + t.title, o.titleSet = 0, o.setAttribute("onmouseover", "setTitle(this)")
+            } else s.innerHTML = t.performer + " &ndash; " + t.title, s.titleSet = 0, s.setAttribute("onmouseover", "setTitle(this)")
         }
         if (t) {
             var a = this;
@@ -556,7 +563,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
             return void o.loadSilent(function() {
                 var a = e.getSearchParams();
                 o.search(a.q, function(o) {
-                    e.setLocalFoundCount(o.length), e.addAudio(o.reverse()), e.load(t, i)
+                    e.setLocalFoundCount(o.length), e.addAudio(o), e.load(t, i)
                 })
             })
         }
@@ -949,16 +956,18 @@ AudioPlayer.tabIcons = {
         var i = ge("video_player") || window.html5video || null;
         i && i.playVideo && i.playVideo(!1)
     } catch (e) {}
+}, AudioPlayer.prototype._restoreVolumeState = function() {
+    AudioPlayer.clearDeprecatedCacheKeys(), AudioPlayer.clearOutdatedCacheKeys();
+    var t = this._lsGet(AudioPlayer.LS_VOLUME);
+    this._userVolume = void 0 == t || t === !1 ? AudioPlayer.DEFAULT_VOLUME : t
 }, AudioPlayer.prototype._restoreState = function() {
     if (!vk.widget) {
-        AudioPlayer.clearDeprecatedCacheKeys(), AudioPlayer.clearOutdatedCacheKeys();
-        var t = this._lsGet(AudioPlayer.LS_VOLUME);
-        this._userVolume = void 0 == t || t === !1 ? AudioPlayer.DEFAULT_VOLUME : t, this._currentAudio = this._lsGet(AudioPlayer.LS_TRACK);
-        var i = this._lsGet(AudioPlayer.LS_PL);
-        i && (i = JSON.parse(i), this._currentPlaylist = new AudioPlaylist(i)), this._currentPlaylist && this._currentAudio ? this.notify(AudioPlayer.EVENT_UPDATE) : this._currentPlaylist =
+        AudioPlayer.clearDeprecatedCacheKeys(), AudioPlayer.clearOutdatedCacheKeys(), this._currentAudio = this._lsGet(AudioPlayer.LS_TRACK);
+        var t = this._lsGet(AudioPlayer.LS_PL);
+        t && (t = JSON.parse(t), this._currentPlaylist = new AudioPlaylist(t)), this._currentPlaylist && this._currentAudio ? this.notify(AudioPlayer.EVENT_UPDATE) : this._currentPlaylist =
             this._currentAudio = !1;
-        var e = this._lsGet(AudioPlayer.LS_PROGRESS) || 0;
-        this._currentAudio && e && this._impl && "html5" == this._impl.type && (this._implSetUrl(this._currentAudio, !0), this._implSeek(e), this._implSetVolume(0))
+        var i = this._lsGet(AudioPlayer.LS_PROGRESS) || 0;
+        this._currentAudio && i && this._impl && "html5" == this._impl.type && (this._implSetUrl(this._currentAudio, !0), this._implSeek(i), this._implSetVolume(0))
     }
 }, AudioPlayer.prototype._ensureImplReady = function(t) {
     this._impl && this._impl.onReady(function(i) {
@@ -1153,7 +1162,7 @@ AudioPlayer.tabIcons = {
         s.et == t && s.cb(o, i, e)
     }), t) {
         case AudioPlayer.EVENT_VOLUME:
-            ls.set(AudioPlayer.LS_PREFIX + AudioPlayer.LS_VOLUME, this._userVolume);
+            this._lsSet(AudioPlayer.LS_VOLUME, this._userVolume);
             break;
         case AudioPlayer.EVENT_PLAY:
             this.saveStateCurrentPlaylist(), this._saveStateCurrentAudio(), this._setTabIcon("play"), this._sendStatusExport();
@@ -1401,13 +1410,13 @@ AudioPlayer.tabIcons = {
             0 > l ? this.seek(0) : this.play(o.getAudioAt(l), o, -1, i)
         }
 }, AudioPlayerFlash.onAudioFinishCallback = function() {
-    var t = AudioPlayerFlash.instance;
+    var t = window._flashAudioInstance;
     t.opts.onEnd && t.opts.onEnd()
 }, AudioPlayerFlash.onAudioProgressCallback = function(t, i) {
-    var e = AudioPlayerFlash.instance;
+    var e = window._flashAudioInstance;
     i && (e._total = i, e._currProgress = t / i, e.opts.onProgressUpdate && e.opts.onProgressUpdate(e._currProgress))
 }, AudioPlayerFlash.onAudioLoadProgressCallback = function(t, i) {
-    var e = AudioPlayerFlash.instance;
+    var e = window._flashAudioInstance;
     e._currBuffered = t / i, e.opts.onBufferUpdate && e.opts.onBufferUpdate(e._currBuffered)
 }, AudioPlayerFlash.prototype.fadeVolume = function(t, i) {
     return this.setVolume(t), i()

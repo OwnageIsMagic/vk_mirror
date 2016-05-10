@@ -2897,6 +2897,10 @@ body.no_stl #stl_bg {
     margin: 0 10px
 }
 
+._scroll_node {
+    outline: none
+}
+
 .page_list {
     list-style: none;
     margin: 0;

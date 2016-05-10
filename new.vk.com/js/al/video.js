@@ -183,11 +183,19 @@ var Video = {
             i = cur.getOwnerId();
         "album" == o && (o = Video.getLoc()
             .section);
-        var t = cur.silentLoaded[i][o];
-        return t = t.filter(function(e) {
+        var t = cur.silentLoaded[i][o],
+            r = 0;
+        t = t.filter(function(e) {
             var o = e[VideoConstants.VIDEO_ITEM_INDEX_OWNER_ID] + "_" + e[VideoConstants.VIDEO_ITEM_INDEX_ID];
-            return !cur.videoRecentlyRemoved[o]
-        }), cur.silentLoaded[i][o] = t, t ? (hide("video_sort_progress"), show("video_sort_dd"), clearTimeout(cur._sortTO), void(cur._sortTO = setTimeout(function() {
+            return cur.videoRecentlyRemoved[o] ? (r++, !1) : !0
+        });
+        var d = cur.videosCount[cur.getOwnerId()];
+        if (r && d)
+            if (Video.isInAlbum()) {
+                var n = "album_" + Video._getSectionAlbumId();
+                d[n] && (d[n] -= r, val(geByClass1("_video_subtitle_counter", ge("video_layout_contents")), langNumeric(d[n], cur.lang.video_playlist_size)))
+            } else d.all -= r, Video.updateTabCounter(d.all);
+        return cur.silentLoaded[i][o] = t, t ? (hide("video_sort_progress"), show("video_sort_dd"), clearTimeout(cur._sortTO), void(cur._sortTO = setTimeout(function() {
             if (t.length) {
                 t.sort(function(o, i) {
                     switch (e) {
@@ -788,16 +796,19 @@ var Video = {
                             } if (cur.videosCount[vk.id]) {
                         var v = n ? 1 : -1;
                         1 == v && c && (v = 0);
-                        var h = cur.videosCount[vk.id].all = Math.max(0, (cur.videosCount[vk.id].all || 0) + v),
-                            g = ge("video_tab_all");
-                        if (g) {
-                            var S = geByClass1("ui_tab_count", g);
-                            S.innerHTML = h
-                        }
+                        var h = cur.videosCount[vk.id].all = Math.max(0, (cur.videosCount[vk.id].all || 0) + v);
+                        Video.updateTabCounter(h)
                     }
                 }
             }
         }), window.tooltips && tooltips.destroyAll(), cancelEvent(e)
+    },
+    updateTabCounter: function(e) {
+        var o = ge("video_tab_all");
+        if (o) {
+            var i = geByClass1("ui_tab_count", o);
+            i.innerHTML = e
+        }
     },
     onVideoMove: function(e, o, i, t) {
         return showBox("/al_video.php", {
@@ -967,10 +978,9 @@ var Video = {
                 _ = e.section ? e.section : "all";
             Video._prepareSearchFilters(i);
             var v = e.section ? "" : i.q || val(cur.searchInputEl);
-            if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)),
-                    _ = "search", Video.doSearch(v), a(), Video._updateChooseFixedBottom()) : (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection =
-                _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" + _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection = _,
-                "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
+            if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)), _ = "search", Video.doSearch(v), a(), Video._updateChooseFixedBottom()) :
+                (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" +
+                _), show(r), hide("albumPane"), c(), d(), cur.videoChoosePrevSection = _, "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
             else if (_ && 0 == _.indexOf("album_")) {
                 var h = _.split("_")[1];
                 showGlobalPrg(ge("video_playlist_item_" + h), {
@@ -982,32 +992,33 @@ var Video = {
                 }), Video._addPendingAction(_, function() {
                     a(), n(), hide("global_prg"), hide(r), u.id = "video_subtab_pane_" + _;
                     var e = geByClass1("video_items_list", u);
-                    e.id = "video_" + _ + "_list", e.innerHTML = "", show(u);
+                    e.id = "video_" + _ + "_list", addClass(e, "_video_" + _ + "_list"), e.innerHTML = "", show(u);
                     var o = cur.getOwnerId();
                     cur.videoShowWindow = cur.videoShowWindow || {}, cur.videoShowWindow[o] = cur.videoShowWindow[o] || {}, cur.videoShowWindow[o][_] = !1,
                         Video.showMore(_, geByClass1("ui_load_more_btn", ge("video_subtab_pane_album"))), d(), s(), Video._updateChooseFixedBottom()
                 }), cur.videoChoosePrevSection = _, Video.loadSilent(_)
             }
             return s(), !1
-        }), cur.isCurrentVideoLayer = !0, Video.loadSilent(), d(), addEvent(ge("box_layer_wrap"), "scroll", Video.onScroll), Video.initSearch(), c(), o || (cur.chooseVideoMedia =
-            function(e, o, i) {
-                var t = e;
-                hasClass(t, "media_check_btn_wrap") ? cur.cancelClick = !0 : t = geByClass1("media_check_btn_wrap", t), toggleClass(t, "checked");
-                var r = 0;
-                if ((r = cur.chosenVideos.indexOf(o)) >= 0) cur.chosenVideos.splice(r, 1);
-                else {
-                    if (cur.chosenVideos.length >= 10) return;
-                    cur.chosenVideos.push(o)
-                }
-                if (1 == cur.chosenVideos.length && !i) return Video.doAttachSelectedVideos(e), !1;
-                var d = ge("video_choosebox_bottom");
-                if (cur.chosenVideos.length > 0) {
-                    show(d);
-                    var n = cur.chooseVideoAdd ? cur.lang.video_add_videos : cur.lang.global_attach_videos;
-                    val(geByClass1("video_choosebox_attach_btn", d), langNumeric(cur.chosenVideos.length, n)), Video._updateChooseFixedBottom()
-                } else hide(d);
-                return toggleClass(ge("video_choose_box"), "with_bottom_fixed", isVisible(d)), !1
-            }), window.uiScrollBox && uiScrollBox.init(curBox(), {
+        }), cur.isCurrentVideoLayer = !0, Video.loadSilent(), d(), addEvent(ge("box_layer_wrap"), "scroll", Video.onScroll);
+        var u = boxLayerWrap.scrollTop;
+        elfocus(geByClass1("_scroll_node", l.bodyNode)), boxLayerWrap.scrollTop = u, Video.initSearch(), c(), o || (cur.chooseVideoMedia = function(e, o, i) {
+            var t = e;
+            hasClass(t, "media_check_btn_wrap") ? cur.cancelClick = !0 : t = geByClass1("media_check_btn_wrap", t), toggleClass(t, "checked");
+            var r = 0;
+            if ((r = cur.chosenVideos.indexOf(o)) >= 0) cur.chosenVideos.splice(r, 1);
+            else {
+                if (cur.chosenVideos.length >= 10) return;
+                cur.chosenVideos.push(o)
+            }
+            if (1 == cur.chosenVideos.length && !i) return Video.doAttachSelectedVideos(e), !1;
+            var d = ge("video_choosebox_bottom");
+            if (cur.chosenVideos.length > 0) {
+                show(d);
+                var n = cur.chooseVideoAdd ? cur.lang.video_add_videos : cur.lang.global_attach_videos;
+                val(geByClass1("video_choosebox_attach_btn", d), langNumeric(cur.chosenVideos.length, n)), Video._updateChooseFixedBottom()
+            } else hide(d);
+            return toggleClass(ge("video_choose_box"), "with_bottom_fixed", isVisible(d)), !1
+        }), window.uiScrollBox && uiScrollBox.init(curBox(), {
             onHide: function() {
                 hide("global_prg"), cur.nav.pop(), removeEvent(ge("box_layer_wrap"), "scroll", Video.onScroll), cur.isCurrentVideoLayer = !1
             }

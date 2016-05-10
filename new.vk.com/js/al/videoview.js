@@ -346,7 +346,7 @@ var Videoview = {
         },
         getSuggestionsData: function() {
             var e = Videoview.getMvData();
-            return e && e.playerSuggestions
+            return e && e.playerSuggestions || []
         },
         getMvData: function() {
             return cur.mvOpts || window.mvcur && mvcur.mvData

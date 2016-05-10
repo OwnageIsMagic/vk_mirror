@@ -16,25 +16,28 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
     }, GridSorter.prototype._onKey = function(t) {
         t.keyCode == KEY.ESC && this.isCurrentlyDragging() && this._onMouseUp()
     }, GridSorter.prototype._onMouseDown = function(t) {
-        if (!(this._disabled || 0 != t.button || this._curDragEl || domData(t.target, "nodrag") || attr(t.target, "nodrag")) && (this._dragElClass ? hasClass(t.target, this._dragElClass) :
-                1)) {
-            var e = this._getParentDragItemEl(t.target);
-            if (e && !attr(e, "nodrag") && (re(geByClass1("ui_gridsorter_placeholder"), this._contEl), this._contInfo = this._contInfo || {
+        if (!(this._disabled || 0 != t.button || this._curDragEl || attr(t.target, "nodrag")) && (this._dragElClass ? hasClass(t.target, this._dragElClass) : 1)) {
+            for (var e = t.target; e && e != window.document;) {
+                if (intval(domData(e, "nodrag"))) return;
+                e = domPN(e)
+            }
+            var i = this._getParentDragItemEl(t.target);
+            if (i && !attr(i, "nodrag") && (re(geByClass1("ui_gridsorter_placeholder"), this._contEl), this._contInfo = this._contInfo || {
                     prevSize: getSize(this._contEl)
                 }, this._ensureGridIsActual(), !(this._grid.length <= 1))) {
-                var i = window.getComputedStyle(e),
-                    o = getXY(e);
+                var o = window.getComputedStyle(i),
+                    r = getXY(i);
                 this._initial = {
-                    candidateEl: e,
+                    candidateEl: i,
                     x: t.clientX,
                     y: t.clientY,
                     itemMargin: {
-                        x: parseInt(i.marginLeft),
-                        y: parseInt(i.marginTop)
+                        x: parseInt(o.marginLeft),
+                        y: parseInt(o.marginTop)
                     },
                     shift: {
-                        x: t.pageX - o[0],
-                        y: t.pageY - o[1]
+                        x: t.pageX - r[0],
+                        y: t.pageY - r[1]
                     }
                 }, addEvent(document, "mousemove", this._ev_mousemove_handler = this._onMouseMove.bind(this)), addEvent(document, "mouseup", this._ev_mouseup_handler = this._onMouseUp
                     .bind(this)), addEvent(document, "keydown", this._ev_keydown_handler = this._onKey.bind(this)), cur.cancelClick = !1, cancelEvent(t)
@@ -292,14 +295,14 @@ GridSorter.AUTO_SCROLL_DY = 10, GridSorter.DRAG_THRESHOLD_DIST = 0, GridSorter.A
                 h = !1,
                 a = n.left > 0 && n.left < s[0] && n.top > 0 && n.top < s[1];
             if (a)
-                for (var _, d = 0, c = this._grid.length - 1, g = 50; g;) {
-                    var u = d + Math.floor((c - d) / 2);
-                    if (_ = this._grid[u], n.left > _.pos[0] && n.top > _.pos[1] && n.left < _.pos[0] + _.size[0] && n.top < _.pos[1] + _.size[1]) {
+                for (var _, d = 0, c = this._grid.length - 1, u = 50; u;) {
+                    var g = d + Math.floor((c - d) / 2);
+                    if (_ = this._grid[g], n.left > _.pos[0] && n.top > _.pos[1] && n.left < _.pos[0] + _.size[0] && n.top < _.pos[1] + _.size[1]) {
                         h = _;
                         break
                     }
                     if (d == c) break;
-                    n.top < _.pos[1] || n.left < _.pos[0] && n.top < _.pos[1] + _.size[1] ? c = c == u ? c - 1 : u : d = d == u ? d + 1 : u, g--
+                    n.top < _.pos[1] || n.left < _.pos[0] && n.top < _.pos[1] + _.size[1] ? c = c == g ? c - 1 : g : d = d == g ? d + 1 : g, u--
                 } else {
                     for (var p, f, v, E, S = 999999, m = 0, y = this._grid.length; y > m; m++) {
                         var _ = this._grid[m];
