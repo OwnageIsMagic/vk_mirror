@@ -118,6 +118,16 @@
     background-position: 0 -51px
 }
 
+.friends_requests_block_btn:after {
+    margin-left: 2px;
+    display: inline-block;
+    content: '';
+    background: url(/images/icons/search_arrow.png) no-repeat 0 0;
+    height: 11px;
+    width: 6px;
+    vertical-align: middle
+}
+
 .friends_user_row {
     border-top: 1px solid #ebedf0;
     padding: 15px 0;

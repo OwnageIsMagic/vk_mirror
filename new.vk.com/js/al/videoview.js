@@ -128,7 +128,7 @@ var Videoview = {
                     Videoview.togglePlay(!0) : "hidden" == document.visibilityState && addEvent(window, "focus", function i() {
                         Videoview.togglePlay(!0), removeEvent(window, "focus", i)
                     }))) : cur.pinnedVideoInitHandlers && cur.pinnedVideoInitHandlers();
-                var e = ge("video_player");
+                var e = window.mvcur && mvcur.player && mvcur.player.el || ge("video_player");
                 e && e.focus()
             },
             onVideoPlayProgress: function(e, i, o, t, a) {
@@ -633,9 +633,8 @@ var Videoview = {
                 }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), t.player && (mvcur.player = t.player, t.player = 1, val("mv_content",
                         '<div class="video_box">  <div class="wrap">    <div id="video_box_wrap' + i +
                         '" class="video_box_wrap">      <div id="video_player" style="width:896px;height:504px;"></div>    </div>  </div></div>    '), ge("video_player")
-                    .appendChild(mvcur.player.el), hide("mv_progress"), show("mv_content"), mvcur.player.onExpanded()), t.minimized && setTimeout(Videoview.minimize.bind(
-                    Videoview), 0), t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) : VideoPlaylist.removeBlock(), Videoview.cleanUpStoredVSegs(), !
-                1
+                    .appendChild(mvcur.player.el), hide("mv_progress"), show("mv_content"), mvcur.player.onExpanded()), t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId,
+                    t.catLoadMore) : VideoPlaylist.removeBlock(), Videoview.cleanUpStoredVSegs(), t.minimized && setTimeout(Videoview.minimize.bind(Videoview), 0), !1
         },
         buildLayerContent: function() {
             var e = "mv_dark";
@@ -1388,7 +1387,7 @@ var Videoview = {
                         editable: 1
                     }), mvcur.finished = !1, js && eval("(function(){" + js + "})()"), opt.publishAction) {
                     var publishAction = ge("mv_publish");
-                    publishAction.innerHTML = opt.publishAction, show(publishAction)
+                    val(publishAction, opt.publishAction), show(publishAction)
                 }
                 if (Videoview.updateSize(), mvcur.changeCanvasSize = function() {
                         Videoview.updateSize(), window.checkRBoxes && checkRBoxes()
@@ -1721,9 +1720,9 @@ var Videoview = {
         },
         minimize: function(e) {
             if (e && cancelEvent(e), mvcur.minimized) return !1;
-            VideoPlaylist.toggleStateClasses(), mvcur.controlsVisibility = isVisible("mv_controls"), show("mv_min_header"), hide("mv_controls"), hide("mv_top_controls"),
-                isVisible("mv_approve") ? (mvcur.needShowApprove = !0, hide("mv_approve")) : mvcur.needShowApprove = !1, Wall.cancelEdit(!0), addClass(mvLayerWrap,
-                    "mv_minimized"), mvcur.minSize || (mvcur.minSize = ls.get("mv_minSize"));
+            mvcur.controlsVisibility = isVisible("mv_controls"), show("mv_min_header"), hide("mv_controls"), hide("mv_top_controls"), isVisible("mv_approve") ? (mvcur.needShowApprove = !
+                0, hide("mv_approve")) : mvcur.needShowApprove = !1, Wall.cancelEdit(!0), addClass(mvLayerWrap, "mv_minimized"), mvcur.minSize || (mvcur.minSize = ls.get(
+                "mv_minSize"));
             var i = "mv_dark";
             removeClass(mvLayerWrap, i), removeClass(layerBG, i), layers.fullhide = !1, mvcur.minSize && Videoview.enabledResize() && mvcur.minSize.wrap.w || (mvcur.minSize = {
                 wrap: {
@@ -1865,7 +1864,8 @@ var Videoview = {
         },
         viewScroll: function() {
             var e, i = 6,
-                o = (ge("mv_top_controls"), getXY("mv_box", !0)[1]),
+                o = (ge("mv_top_controls"),
+                    getXY("mv_box", !0)[1]),
                 t = getSize("mv_content")[1];
             e = o - i, e = 0 > e ? -e : 0, toggleClass("mv_top_controls", "fixed", e > 0), toggleClass("mv_pl_prev", "fixed", e > 0), toggleClass("mv_pl_next", "fixed", e > 0),
                 toggleClass("mv_top_pl_toggle", "hidden", e > t), mvcur.scrolledAway = e > t / 3, Videoview.playerNextTimerUpdate(), Videoview.updateReplyFormPos()
