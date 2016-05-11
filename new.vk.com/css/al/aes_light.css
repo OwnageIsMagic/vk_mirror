@@ -1360,6 +1360,10 @@ a.ads_ad_box2:hover {
     width: 145px
 }
 
+.ads_ad_box.redesign .ads_ad_box_border {
+    border-color: #e2e6ed
+}
+
 .ads_ad_box.redesign .ads_ad_box_border.repeat_ver.first {
     border-top-width: 0
 }

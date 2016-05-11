@@ -1357,10 +1357,11 @@ var Videoview = {
                 }, 500);
                 if (title && !html) return val("mv_content", '<div id="video_player" class="video_layer_message">' + title + "</div>"), hide("mv_progress"), void hide(
                     "mv_controls");
-                if (opt = opt || {}, cur.lang = extend(cur.lang || {}, opt.lang), mvcur.post = opt.post, mvcur.maxReplyLength = opt.maxReplyLength, mvcur.maxDescriptionLength =
-                    opt.maxDescriptionLength, mvcur.mvData = opt.mvData, mvcur.videoRaw = opt.mvData.videoRaw, mvcur.commentsTpl = opt.commentsTpl, mvcur.mvMediaTypes = opt.media,
-                    mvcur.mvMediaShare = opt.share, mvcur.mvReplyNames = opt.names || {}, mvcur.rmedia_types = opt.rmedia_types, mvcur.adminLevel = opt.adminLevel, opt.queueData &&
-                    (mvcur.queueKey = opt.queueData.key, mvcur.qversion = opt.qversion), mvcur.wallTpl = opt.wallTpl, opt.pl_list) {
+                if (opt = opt || {}, cur.lang = extend(cur.lang || {}, opt.lang), cur.share_timehash = cur.share_timehash || opt.share_timehash, mvcur.post = opt.post, mvcur.maxReplyLength =
+                    opt.maxReplyLength, mvcur.maxDescriptionLength = opt.maxDescriptionLength, mvcur.mvData = opt.mvData, mvcur.videoRaw = opt.mvData.videoRaw, mvcur.commentsTpl =
+                    opt.commentsTpl, mvcur.mvMediaTypes = opt.media, mvcur.mvMediaShare = opt.share, mvcur.mvReplyNames = opt.names || {}, mvcur.rmedia_types = opt.rmedia_types,
+                    mvcur.adminLevel = opt.adminLevel, opt.queueData && (mvcur.queueKey = opt.queueData.key, mvcur.qversion = opt.qversion), mvcur.wallTpl = opt.wallTpl, opt.pl_list
+                ) {
                     var lists = JSON.parse(opt.pl_list);
                     each(lists, function(e, i) {
                         VideoPlaylist.addList(i)
@@ -1864,8 +1865,7 @@ var Videoview = {
         },
         viewScroll: function() {
             var e, i = 6,
-                o = (ge("mv_top_controls"),
-                    getXY("mv_box", !0)[1]),
+                o = (ge("mv_top_controls"), getXY("mv_box", !0)[1]),
                 t = getSize("mv_content")[1];
             e = o - i, e = 0 > e ? -e : 0, toggleClass("mv_top_controls", "fixed", e > 0), toggleClass("mv_pl_prev", "fixed", e > 0), toggleClass("mv_pl_next", "fixed", e > 0),
                 toggleClass("mv_top_pl_toggle", "hidden", e > t), mvcur.scrolledAway = e > t / 3, Videoview.playerNextTimerUpdate(), Videoview.updateReplyFormPos()
