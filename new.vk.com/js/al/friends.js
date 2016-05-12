@@ -27,15 +27,14 @@ var Friends = {
         }), cur.nav.push(function(e, r, s) {
             if ("id" in e || "sort" in e || "act" in e || isEmpty(e)) return !0;
             if ("friends" == s[0] || "al_friends.php" == s[0] && e.section) {
-                var i = e.section;
-                return "requests" != i && "all_requests" != i && "out_requests" != i || cur.requestsCount || cur.suggCount || cur.allRequestsCount || cur.outRequestsCount ?
-                    "requests" != i || cur.requestsCount || cur.suggCount ? "all_requests" != i || cur.allRequestsCount ? ("out_requests" != i || cur.outRequestsCount) &&
-                    ("subscribers" != i || cur.subscribersCount) ? (("all" == i || "online" == i || "requests" == i || "all_requests" == i || "out_requests" == i) &&
-                        __adsUpdate("force"), "all_requests" != i || "sort" in e || cur.sortByDate || (delete s.sort, setTimeout(Friends.changeSummary, 0)), this.section(
-                            s.section,
-                            function() {
-                                this.changeSummary(), nav.setLoc(s)
-                            }.bind(this)), !1) : nav.change({
+                var n = e.section;
+                return "requests" != n && "all_requests" != n && "out_requests" != n || cur.requestsCount || cur.suggCount || cur.allRequestsCount || cur.outRequestsCount ?
+                    "requests" != n || cur.requestsCount || cur.suggCount ? "all_requests" != n || cur.allRequestsCount ? ("out_requests" != n || cur.outRequestsCount) &&
+                    ("subscribers" != n || cur.subscribersCount) ? (("all" == n || "online" == n || "requests" == n || "all_requests" == n || "out_requests" == n) &&
+                        __adsUpdate("force"), "all_requests" != n || "sort" in e || cur.sortByCommon || (delete s.sort, setTimeout(Friends.changeSummary, 0)), this
+                        .section(s.section, function() {
+                            this.changeSummary(), nav.setLoc(s)
+                        }.bind(this)), !1) : nav.change({
                         section: "all"
                     }) : nav.change({
                         section: cur.requestsCount || cur.suggCount ? "requests" : "out_requests"
@@ -83,8 +82,8 @@ var Friends = {
         cur.phoneIndex = new vkIndexer(cur.friendsList.phonebook, function(e) {
             var r = e[11][0] || "",
                 s = e[11][1] || "",
-                i = e[11][2] || "";
-            return [e[5], r, r.replace(/[^0-9\+]/g, ""), s, s.replace(/[^0-9\+]/g, ""), i].join(" ")
+                n = e[11][2] || "";
+            return [e[5], r, r.replace(/[^0-9\+]/g, ""), s, s.replace(/[^0-9\+]/g, ""), n].join(" ")
         })
     },
     initBackFunc: function() {
@@ -103,51 +102,51 @@ var Friends = {
     switchTab: function(e, r, s) {
         if (checkEvent(s)) return !0;
         uiTabs.switchTab(e);
-        var i = {
-            0: "friends",
-            section: r
-        };
-        return checkEvent(s) || nav.change(i)
-    },
-    switchMenu: function(e, r, s) {
-        if (void 0 !== e.href && checkEvent(s)) return !0;
-        var i = gpeByClass("ui_rmenu", e);
-        if (geByClass1("ui_rmenu_item_sel", i) == e) return !1;
-        uiRightMenu.switchMenu(e);
         var n = {
             0: "friends",
             section: r
         };
-        if (vk.id != cur.oid) n.id = cur.oid;
+        return checkEvent(s) || nav.change(n)
+    },
+    switchMenu: function(e, r, s) {
+        if (void 0 !== e.href && checkEvent(s)) return !0;
+        var n = gpeByClass("ui_rmenu", e);
+        if (geByClass1("ui_rmenu_item_sel", n) == e) return !1;
+        uiRightMenu.switchMenu(e);
+        var i = {
+            0: "friends",
+            section: r
+        };
+        if (vk.id != cur.oid) i.id = cur.oid;
         else if (cur.gid) return nav.change({
             section: r
         }), !1;
-        return "find" == nav.objLoc.act && uiRightMenu.showProgress(e), nav.go(n, s), scrollToTop(0), !1
+        return "find" == nav.objLoc.act && uiRightMenu.showProgress(e), nav.go(i, s), scrollToTop(0), !1
     },
     filter: function(e, r) {
         var s = e ? e.length : 0,
-            i = [];
+            n = [];
         if ("list" == r.substr(0, 4)) {
-            var n = parseInt(r.substr(4));
+            var i = parseInt(r.substr(4));
             r = "list"
         }
         for (var t = 0; s > t; t++) {
             var o = e[t];
             if (!cur.filterIds || cur.filterIds[parseInt(o[0])]) switch (r) {
                 case "online":
-                    intval(o[4]) && i.push(o);
+                    intval(o[4]) && n.push(o);
                     break;
                 case "common":
-                    cur.commonCount && o[11] && i.push(o);
+                    cur.commonCount && o[11] && n.push(o);
                     break;
                 case "list":
-                    parseInt(o[6]) & 1 << n && i.push(o);
+                    parseInt(o[6]) & 1 << i && n.push(o);
                     break;
                 default:
-                    i.push(o)
+                    n.push(o)
             }
         }
-        return i
+        return n
     },
     loadMore: function(start, end, force_section) {
         var section = force_section ? force_section : cur.section,
@@ -258,10 +257,10 @@ var Friends = {
                 addClass("friends", "friends_phonebook");
             else if ("recent" == cur.section) show("friends_search_input_wrap", cur.fSearchFilterLnk), Friends.showListHeader(cur.summaryLang.friends_tab_recently_added);
             else if (hide("friends_sugg_header"), show("friends_search_input_wrap", "friends_search_header", cur.fSearchFilterLnk), cur.requestsCount) {
-                var i = ge("friends_req_block");
-                geByClass1("_friends_list", i)
+                var n = ge("friends_req_block");
+                geByClass1("_friends_list", n)
                     .innerHTML = cur.commonTpl(cur.friendsList.requests[0], "requests")
-                    .join(""), show(i)
+                    .join(""), show(n)
             }
             val(geByClass1("_label", cur.showMore), r ? cur.summaryLang.friends_show_more_requests : cur.summaryLang.friends_show_more_friends)
         } else cur.gid || ("subscribers" == cur.section ? (hide("friends_search_input_wrap"), Friends.showListHeader(cur.summaryLang.friends_tab_subscribers)) : show(
@@ -269,13 +268,13 @@ var Friends = {
         isVisible("friends_search_input_wrap") && (hasClass("friends_search_input_wrap", "ui_search_fixed") && setStyle(cur.fSearchWrap, {
             width: ""
         }), uiSearch.scrollResize(cur.fSearchWrap), elfocus(cur.fSearch)), cur.filterIds && (cur.curList += "_filter");
-        var n = cur.friendsList[cur.curList];
-        if (!n) {
+        var i = cur.friendsList[cur.curList];
+        if (!i) {
             if ("recent" == e || "phonebook" == e || "requests" == e) var t = e;
             else var t = "all";
-            n = cur.friendsList[cur.curList] = this.filter(cur.friendsList[t], cur.section)
+            i = cur.friendsList[cur.curList] = this.filter(cur.friendsList[t], cur.section)
         }
-        return cur.sectionCount = n ? n.length : 0, cur.selection = !1, cur.filter && !cur.filterIds ? (Friends.changeFilter(), cur.searchStr || this.clearServerSearch(), !
+        return cur.sectionCount = i ? i.length : 0, cur.selection = !1, cur.filter && !cur.filterIds ? (Friends.changeFilter(), cur.searchStr || this.clearServerSearch(), !
             1) : void this.showMore(!0)
     },
     updateView: function() {
@@ -311,18 +310,18 @@ var Friends = {
     },
     serverSearch: function(e, r, s) {
         cur.searchCount = 0, Friends.showLoading(), cur.serverSearchStr = e, clearTimeout(cur.serverSearchTimeout);
-        var i = [];
-        for (var n in s) i.push(s[n][0]);
+        var n = [];
+        for (var i in s) n.push(s[i][0]);
         cur.serverSearchTimeout = setTimeout(function() {
             ajax.post("friends", {
                 act: "server_search",
                 q: e,
-                exclude: i.join(",")
+                exclude: n.join(",")
             }, {
-                onDone: function(s, i, n) {
-                    if (cur.searchOffset = n, cur.searchFinished = !i, Friends.hideLoading(), cur.searchStr == e) {
-                        if (cur.searchCount = i, 0 == cur.shownFriends && (hide("friends_search_wrap"), cur.fContent.innerHTML = "", Friends.showMore()), !
-                            i) return void Friends.changeSummary();
+                onDone: function(s, n, i) {
+                    if (cur.searchOffset = i, cur.searchFinished = !n, Friends.hideLoading(), cur.searchStr == e) {
+                        if (cur.searchCount = n, 0 == cur.shownFriends && (hide("friends_search_wrap"), cur.fContent.innerHTML = "", Friends.showMore()), !
+                            n) return void Friends.changeSummary();
                         cur.searchFinished ? hide("friends_search_more") : show("friends_search_more"), ge("friends_search_cont")
                             .innerHTML = '<div class="friends_list_bl">' + s + "</div>", show("friends_search_wrap"), Friends.changeSummary(), r ?
                             removeClass("friends_not_found", "friends_only_other") : (addClass("friends_not_found", "friends_only_other"), removeClass(
@@ -339,21 +338,21 @@ var Friends = {
     goToSearch: function(e) {
         nav.go("friends?act=find&c%5Bname%5D=1&c%5Bq%5D=" + encodeURIComponent(cur.searchStr) + "&c%5Bsection%5D=people")
     },
-    search: function(e, r, s, i) {
+    search: function(e, r, s, n) {
         if (cur.shownFriends = 0, cur.section = r, e) {
-            var n, t = "phonebook" == r ? cur.phoneIndex : cur.friendsIndex;
+            var i, t = "phonebook" == r ? cur.phoneIndex : cur.friendsIndex;
             if (-1 == e) {
                 if ("phonebook" == r) var o = r;
                 else var o = "all";
-                n = this.filter(cur.friendsList[o], r), e = "", e != cur.searchStr && this.clearServerSearch()
+                i = this.filter(cur.friendsList[o], r), e = "", e != cur.searchStr && this.clearServerSearch()
             } else {
-                n = t.search(e), cur.filterIds && (n = this.filter(n, r));
-                var c = n.length;
-                c && (e == cur.serverSearchStr || cur.sectionCount || this.clearServerSearch()), 5 > c && cur.oid == vk.id && "phonebook" != r && this.serverSearch(e, c, n)
+                i = t.search(e), cur.filterIds && (i = this.filter(i, r));
+                var c = i.length;
+                c && (e == cur.serverSearchStr || cur.sectionCount || this.clearServerSearch()), 5 > c && cur.oid == vk.id && "phonebook" != r && this.serverSearch(e, c, i)
             }
             var u = cur.section;
-            if (cur.filterIds && (u += "_filter"), e && (u += "_search_" + e), cur.curList == u && !i) return;
-            cur.curList = u, cur.friendsList[cur.curList] = n;
+            if (cur.filterIds && (u += "_filter"), e && (u += "_search_" + e), cur.curList == u && !n) return;
+            cur.curList = u, cur.friendsList[cur.curList] = i;
             var a = {
                 all: 1,
                 online: 1,
@@ -361,7 +360,7 @@ var Friends = {
             };
             if ("" == e && cur.filterIds && a[r]) {
                 delete a[r];
-                for (var d in a) cur.friendsList[d] && (n = this.filter(cur.friendsList[o], d), cur.friendsList[d + "_filter"] = n)
+                for (var d in a) cur.friendsList[d] && (i = this.filter(cur.friendsList[o], d), cur.friendsList[d + "_filter"] = i)
             }
             e && (e += " " + (parseLatin(e) || ""), e = trim(escapeRE(e.replace(/[,]/g, ""))), cur.selection = {
                 re: new RegExp("(" + e.replace(t.delimiter, "|")
@@ -398,13 +397,13 @@ var Friends = {
         if (each(r, function(e, r) {
                 var s = ge("friends_tab_" + e);
                 if (s) {
-                    var i = geByClass1("ui_tab_count", s);
-                    i && (i.innerHTML = r ? langNumeric(r, "%s", !0) : "")
+                    var n = geByClass1("ui_tab_count", s);
+                    n && (n.innerHTML = r ? langNumeric(r, "%s", !0) : "")
                 }
             }), !cur.gid && vk.id == cur.oid) {
             var s = intval(r.requests + cur.suggCount);
             s = s ? langNumeric(s, "%s", !0) : "", val(geByClass1("ui_rmenu_count", "ui_rmenu_requests"), s), val(geByClass1("page_block_header_count", "friends_req_block"),
-                s)
+                s), (s > 1 ? show : hide)("ui_request_load_more")
         }
         document.title = replaceEntities(stripHTML(cur.htitles[cur.section] || cur.htitles.all))
     },
@@ -471,8 +470,8 @@ var Friends = {
                             var r = cur.friendsList.all,
                                 s = [];
                             if (r)
-                                for (var i = 0, n = r.length; n > i; i++) {
-                                    var t = r[i],
+                                for (var n = 0, i = r.length; i > n; n++) {
+                                    var t = r[n],
                                         o = e[t[0]];
                                     o && (t.push(o), s.push(t))
                                 }
@@ -498,8 +497,8 @@ var Friends = {
                             var r = [];
                             len = e.length;
                             for (var s = 0; s < len; s++) {
-                                var i = cur.friends[e[s]];
-                                i && r.push(i)
+                                var n = cur.friends[e[s]];
+                                n && r.push(n)
                             }
                             cur.friendsList[cur.section] = r, cur.sectionCount = r.length, cur.fContent.innerHTML = "", uiRightMenu.hideProgress(tab), Friends.showSection(
                                 type), Friends.onSectionChange(), callback(), this.showMore()
@@ -536,12 +535,12 @@ var Friends = {
     drawFriend: function(e, r) {
         return "requests" == cur.section || "all_requests" == cur.section || "out_requests" == cur.section ? cur.commonTpl(e, r || cur.section) : cur.friendsTpl(e, cur.section)
     },
-    inviteToGroup: function(e, r, s, i, n) {
-        var t = function(i) {
-            for (var n in cur.friendsList[cur.curList]) {
-                var t = cur.friendsList[cur.curList][n];
+    inviteToGroup: function(e, r, s, n, i) {
+        var t = function(n) {
+            for (var i in cur.friendsList[cur.curList]) {
+                var t = cur.friendsList[cur.curList][i];
                 if (t[0] == s) {
-                    t[11] = i, i ? link = '<button class="flat_button button_small button_wide secondary" onclick="return Friends.inviteToGroup(this, ' + r + ", " + s +
+                    t[11] = n, n ? link = '<button class="flat_button button_small button_wide secondary" onclick="return Friends.inviteToGroup(this, ' + r + ", " + s +
                         ", 1, '" + t[12] + "')\">" + getLang("friends_cancel_invite") + "</button>" : link =
                         '<button class="flat_button button_small button_wide" onclick="return Friends.inviteToGroup(this, ' + r + ", " + s + ", 0, '" + t[12] + "')\">" +
                         getLang("friends_send_invite") + "</button>", e.parentNode.replaceChild(se(link), e);
@@ -549,11 +548,11 @@ var Friends = {
                 }
             }
         };
-        return i ? ajax.post("/al_page.php", {
+        return n ? ajax.post("/al_page.php", {
             act: "a_cancel_invite",
             mid: s,
             gid: r,
-            hash: n
+            hash: i
         }, {
             onDone: function(e) {
                 t(0)
@@ -564,19 +563,19 @@ var Friends = {
             act: "a_invite",
             mid: s,
             gid: r,
-            hash: n
+            hash: i
         }, {
-            onDone: function(r, i) {
-                r ? t(1) : (showMsg("res" + s, i, "msg"), hide(e))
+            onDone: function(r, n) {
+                r ? t(1) : (showMsg("res" + s, n, "msg"), hide(e))
             },
             showProgress: lockButton.pbind(e),
             hideProgress: unlockButton.pbind(e)
         }), !1
     },
-    acceptRequest: function(e, r, s, i) {
-        var n = ge("request_controls_" + e);
-        n.parentNode;
-        s || (n.innerHTML = '<div class="progress_inline"></div>'), ajax.post("al_friends.php", {
+    acceptRequest: function(e, r, s, n) {
+        var i = ge("request_controls_" + e);
+        i.parentNode;
+        s || (i.innerHTML = '<div class="progress_inline"></div>'), ajax.post("al_friends.php", {
             act: "add",
             mid: e,
             hash: r,
@@ -584,7 +583,7 @@ var Friends = {
             select_list: 1
         }, {
             onDone: function(r) {
-                n.innerHTML = r, Friends.processRequest(e, !0, i), cur.friendsList && (delete cur.friendsList.recent, delete cur.friendsList.online, Friends.indexAll())
+                i.innerHTML = r, Friends.processRequest(e, !0, n), cur.friendsList && (delete cur.friendsList.recent, delete cur.friendsList.online, Friends.indexAll())
             },
             onFail: function(e) {
                 return e ? (showFastBox(getLang("global_error"), e), !0) : void 0
@@ -594,9 +593,9 @@ var Friends = {
         })
     },
     declineRequest: function(e, r, s) {
-        var i = ge("request_controls_" + e);
-        i.parentNode;
-        s || (i.innerHTML = '<div class="progress_inline"></div>'), ajax.post("al_friends.php", {
+        var n = ge("request_controls_" + e);
+        n.parentNode;
+        s || (n.innerHTML = '<div class="progress_inline"></div>'), ajax.post("al_friends.php", {
             act: "remove",
             mid: e,
             hash: r,
@@ -604,10 +603,10 @@ var Friends = {
             from_section: cur.section
         }, {
             onDone: function(r) {
-                cur.declinedRequestsCnt = cur.declinedRequestsCnt + 1 || 1, hasClass(gpeByClass("friends_user_row", i), "friends_user_request") && cur.declinedRequestsCnt >=
+                cur.declinedRequestsCnt = cur.declinedRequestsCnt + 1 || 1, hasClass(gpeByClass("friends_user_row", n), "friends_user_request") && cur.declinedRequestsCnt >=
                     2 && cur.requestsCount > 1 && (r +=
                         '<button class="friends_decline_all flat_button button_small secondary" onclick="Friends.subscribeAllRequests(this, \'' + cur.declineAllHash +
-                        "')\">" + cur.summaryLang.friends_hide_all_requests + "</button>"), i.innerHTML = r, Friends.processRequest(e, !1)
+                        "')\">" + cur.summaryLang.friends_hide_all_requests + "</button>"), n.innerHTML = r, Friends.processRequest(e, !1)
             },
             onFail: function(e) {
                 return e ? (showFastBox(getLang("global_error"), e), !0) : void 0
@@ -618,30 +617,30 @@ var Friends = {
     },
     processRequest: function(e, r, s) {
         if (cur.friendsList) {
-            for (var i = cur.friendsList[s ? "sugg_requests" : "requests"] || [], n = i.length, t = !1; n--;)
-                if (i[n][0] == e) {
-                    var o = i.splice(n, 1)[0];
+            for (var n = cur.friendsList[s ? "sugg_requests" : "requests"] || [], i = n.length, t = !1; i--;)
+                if (n[i][0] == e) {
+                    var o = n.splice(i, 1)[0];
                     s ? --cur.suggCount : --cur.requestsCount, Friends.changeSummary(), r ? (t = !0, o.pop(), cur.friendsList.all ? cur.friendsList.all.push(o) : cur.friendsList
                         .all = [o], cur.friends[o[0]] = o) : s ? (cur.shownSugg--, cur.suggCount--) : (cur.shownFriends--, cur.sectionCount--)
                 }
             if (r) {
-                for (var i = cur.friendsList.all_requests || [], n = i.length; n--;)
-                    if (i[n][0] == e) {
-                        var o = i.splice(n, 1)[0];
+                for (var n = cur.friendsList.all_requests || [], i = n.length; i--;)
+                    if (n[i][0] == e) {
+                        var o = n.splice(i, 1)[0];
                         --cur.allRequestsCount, t || (o.pop(), cur.friendsList.all ? cur.friendsList.all.push(o) : cur.friendsList.all = [o], cur.friends[o[0]] = o)
                     }
             } else
-                for (var i = cur.friendsList.out_requests || [], n = i.length; n--;)
-                    if (i[n][0] == e) {
-                        var o = i.splice(n, 1)[0];
+                for (var n = cur.friendsList.out_requests || [], i = n.length; i--;)
+                    if (n[i][0] == e) {
+                        var o = n.splice(i, 1)[0];
                         --cur.outRequestsCount
                     }
         }
     },
-    actionPossible: function(e, r, s, i) {
-        window.tooltips && tooltips.hide(i);
-        var n = gpeByClass("right_list_row", i);
-        if (slideUp(n, 100), cur.possibleHidden ? cur.possibleHidden++ : cur.possibleHidden = 1, geByClass("right_list_row", n.parentNode)
+    actionPossible: function(e, r, s, n) {
+        window.tooltips && tooltips.hide(n);
+        var i = gpeByClass("right_list_row", n);
+        if (slideUp(i, 100), cur.possibleHidden ? cur.possibleHidden++ : cur.possibleHidden = 1, geByClass("right_list_row", i.parentNode)
             .length - cur.possibleHidden <= 0 && slideUp("friends_possible_block", 100), s) var t = {
             act: "add",
             mid: e,
@@ -665,10 +664,10 @@ var Friends = {
                 section: "out_requests"
             })), !1
     },
-    actionFindUser: function(e, r, s, i) {
-        window.tooltips && tooltips.hide(i);
-        var n = gpeByClass("friends_find_user", i),
-            t = geByClass1("friends_find_user_result", n);
+    actionFindUser: function(e, r, s, n) {
+        window.tooltips && tooltips.hide(n);
+        var i = gpeByClass("friends_find_user", n),
+            t = geByClass1("friends_find_user_result", i);
         if (t.innerHTML = '<div class="progress_inline"></div>', s) var o = {
             act: "add",
             mid: e,
@@ -682,19 +681,19 @@ var Friends = {
         };
         return ajax.post("al_friends.php", o, {
             onDone: function(e) {
-                addClass(n, "touched"), t.innerHTML = e
+                addClass(i, "touched"), t.innerHTML = e
             },
             onFail: function(e) {
                 return e ? (showFastBox(getLang("global_error"), e), !0) : void 0
             },
-            showProgress: addClass.pbind(n, "loading"),
-            hideProgress: removeClass.pbind(n, "loading")
+            showProgress: addClass.pbind(i, "loading"),
+            hideProgress: removeClass.pbind(i, "loading")
         }), !1
     },
-    actionFindUserCancel: function(e, r, s, i) {
-        var n = gpeByClass("friends_find_user", i),
-            t = geByClass1("friends_find_user_result", n);
-        if (t.innerHTML = '<div class="progress_inline"></div>', removeClass(n, "touched"), s) var o = {
+    actionFindUserCancel: function(e, r, s, n) {
+        var i = gpeByClass("friends_find_user", n),
+            t = geByClass1("friends_find_user_result", i);
+        if (t.innerHTML = '<div class="progress_inline"></div>', removeClass(i, "touched"), s) var o = {
             act: "remove",
             mid: e,
             hash: r
@@ -709,8 +708,8 @@ var Friends = {
             onFail: function(e) {
                 return e ? (showFastBox(getLang("global_error"), e), !0) : void 0
             },
-            showProgress: addClass.pbind(n, "loading"),
-            hideProgress: removeClass.pbind(n, "loading")
+            showProgress: addClass.pbind(i, "loading"),
+            hideProgress: removeClass.pbind(i, "loading")
         }), !1
     },
     reportSpam: function(e, r) {
@@ -739,7 +738,7 @@ var Friends = {
         })
     },
     deleteFriend: function(e, r, s) {
-        var i = gpeByClass("_actions_menu", s);
+        var n = gpeByClass("_actions_menu", s);
         return ajax.post("al_friends.php", {
             act: "remove",
             mid: r,
@@ -747,10 +746,10 @@ var Friends = {
         }, {
             onDone: Friends.onRemoveFriend.pbind(r, !1),
             showProgress: function() {
-                uiActionsMenu.hide(i), addClass(i, "action_progress")
+                uiActionsMenu.hide(n), addClass(n, "action_progress")
             },
             hideProgress: function() {
-                removeClass(i, "action_progress")
+                removeClass(n, "action_progress")
             }
         }), !1
     },
@@ -758,12 +757,12 @@ var Friends = {
         (cur.friendsList[cur.curList] || [])
         .length < 10;
         for (var s in cur.friendsList) "all" != s && "requests" != s && "all_requests" != s && "out_requests" != s && delete cur.friendsList[s];
-        var i = cur.friendsList.all;
-        i.length;
+        var n = cur.friendsList.all;
+        n.length;
         e = positive(e);
-        var n = ge("friends_user_row" + e),
+        var i = ge("friends_user_row" + e),
             t = cur.friends[e];
-        t && n ? (r ? (t[6] = cur.savedMasks[e], delete cur.savedMasks[e]) : (cur.savedMasks[e] = t[6], t[6] = 0), toggleClass(n, "deleted", !t[6])) : re(n), Friends.indexAll(
+        t && i ? (r ? (t[6] = cur.savedMasks[e], delete cur.savedMasks[e]) : (cur.savedMasks[e] = t[6], t[6] = 0), toggleClass(i, "deleted", !t[6])) : re(i), Friends.indexAll(
             function() {})
     },
     showCommonBox: function(e, r) {
@@ -783,8 +782,8 @@ var Friends = {
         }), scrollToTop(0), !1
     },
     searchFriendToggle: function(e, r, s) {
-        var i = s ? ge("friends_subsc" + e) : ge("friends_unsubsc" + e),
-            n = s ? ge("friends_unsubsc" + e) : ge("friends_subsc" + e);
+        var n = s ? ge("friends_subsc" + e) : ge("friends_unsubsc" + e),
+            i = s ? ge("friends_unsubsc" + e) : ge("friends_subsc" + e);
         ajax.post("al_friends.php", {
             act: s ? "add" : "remove",
             mid: e,
@@ -792,19 +791,19 @@ var Friends = {
             from: "friends"
         }, {
             onDone: function(e) {
-                hide(i), show(n)
+                hide(n), show(i)
             },
-            showProgress: lockButton.pbind(i),
-            hideProgress: unlockButton.pbind(i)
+            showProgress: lockButton.pbind(n),
+            hideProgress: unlockButton.pbind(n)
         })
     },
-    checkCat: function(e, r, s, i) {
-        if (1 == i) var n = isChecked(e);
-        else var n = hasClass(e, "checked"),
+    checkCat: function(e, r, s, n) {
+        if (1 == n) var i = isChecked(e);
+        else var i = hasClass(e, "checked"),
             t = ge("lists" + r);
         var o = cur.friends[r];
-        return o ? (o[6] = parseInt(o[6]), n ? (o[6] & 1 << s && (o[6] -= 1 << s), t && (t.innerHTML = Friends.getLists(o[6]))) : (o[6] & 1 << s || (o[6] += 1 << s), t &&
-            (t.innerHTML = Friends.getLists(o[6]))), 1 == i ? checkbox(e) : (n ? removeClass : addClass)(e, "checked"), cur.timeouts["list" + r] && clearTimeout(
+        return o ? (o[6] = parseInt(o[6]), i ? (o[6] & 1 << s && (o[6] -= 1 << s), t && (t.innerHTML = Friends.getLists(o[6]))) : (o[6] & 1 << s || (o[6] += 1 << s), t &&
+            (t.innerHTML = Friends.getLists(o[6]))), 1 == n ? checkbox(e) : (i ? removeClass : addClass)(e, "checked"), cur.timeouts["list" + r] && clearTimeout(
             cur.timeouts["list" + r]), delete cur.friendsList["list" + s], delete cur.friendsList["list" + o[6]], void(cur.timeouts["list" + r] = setTimeout(
             function() {
                 ajax.post("al_friends.php", {
@@ -814,7 +813,7 @@ var Friends = {
                     hash: cur.userHash
                 }, {
                     onDone: function(e) {
-                        if (i) {
+                        if (n) {
                             var s = ge("friends_added_" + r);
                             !cur["fr_add_text_" + r] && s && (cur["fr_add_text_" + r] = s.innerHTML), fadeTo(s, 100, 0, function() {
                                 s.innerHTML = e, fadeTo(s, 100, 1)
@@ -865,7 +864,7 @@ var Friends = {
         });
         var r = [];
         if (-1 == e && (e = intval(cur.curList.substr(4))), e)
-            for (var s = Friends.filter(cur.friendsList.all, cur.curList), i = s.length; i--;) r.push(s[i][0]);
+            for (var s = Friends.filter(cur.friendsList.all, cur.curList), n = s.length; n--;) r.push(s[n][0]);
         else e = 0;
         showTabbedBox("al_friends.php", {
             act: "select_friends_box",
@@ -880,15 +879,15 @@ var Friends = {
                 return setTimeout(showFastBox(getLang("global_error"), e)
                     .hide, 3e3), !0
             }
-        }), cur.onFlistSave = function(r, s, i, n) {
+        }), cur.onFlistSave = function(r, s, n, i) {
             var t = [];
             for (var o in s) t.push(parseInt(o));
             return ajax.post("al_friends.php", {
                 act: "save_list",
-                title: n,
+                title: i,
                 cat_id: e,
                 Friends: t.join(","),
-                hash: i
+                hash: n
             }, {
                 onDone: function(r, s) {
                     Friends.editListClient(e, r, s, t)
@@ -900,8 +899,8 @@ var Friends = {
             }), Friends.clearFilter(), Friends.updateCurFilters(), !1
         }
     },
-    editListClient: function(e, r, s, i) {
-        var n = "list" + r;
+    editListClient: function(e, r, s, n) {
+        var i = "list" + r;
         if (0 == e) {
             var t = "<div onclick=\"return Friends.switchMenu(this, 'list" + r + '\', event);"  class="ui_rmenu_subitem ui_rmenu_item_sel friends_section_list' + r + '">' +
                 s + "</div>";
@@ -909,31 +908,31 @@ var Friends = {
                 .insertBefore(ce("div", {
                     innerHTML: t
                 }), geByClass1("friends_create_list", "narrow_column"));
-            var o = i.length,
+            var o = n.length,
                 c = 1 << parseInt(r);
-            for (cur.friendsList[n] = []; o--;) {
-                var u = cur.friends[i[o]];
-                u[6] = parseInt(u[6]), u[6] & c || (u[6] += c, cur.friendsList[n].push(u))
+            for (cur.friendsList[i] = []; o--;) {
+                var u = cur.friends[n[o]];
+                u[6] = parseInt(u[6]), u[6] & c || (u[6] += c, cur.friendsList[i].push(u))
             }
             return cur.userLists[r] = s, Friends.indexAll(), removeClass(ge("main_class"), "no_lists"), nav.change({
                 0: "friends",
-                section: n
+                section: i
             })
         }
         25 > r && (geByClass1("friends_section_list" + r, "narrow_column")
             .innerHTML = s, cur.userLists[r] = s);
         var c = 1 << r;
-        cur.friendsList[n] = [];
+        cur.friendsList[i] = [];
         for (var a in cur.friends) {
             var u = cur.friends[a],
-                d = -1 != i.indexOf(parseInt(u[0]));
-            d && cur.friendsList[n].push(u), u[6] = parseInt(u[6]),
-                u[6] & c ? d || (u[6] -= c) : d && (u[6] += c)
+                d = -1 != n.indexOf(parseInt(u[0]));
+            d && cur.friendsList[i].push(u),
+                u[6] = parseInt(u[6]), u[6] & c ? d || (u[6] -= c) : d && (u[6] += c)
         }
-        return Friends.indexAll(), Friends.section(n, function() {
+        return Friends.indexAll(), Friends.section(i, function() {
             Friends.changeSummary(), nav.setLoc({
                 0: "friends",
-                section: n
+                section: i
             })
         })
     },
@@ -951,9 +950,9 @@ var Friends = {
         var r = 1 << e;
         for (var s in cur.friends) cur.friends[s][6] & r && (cur.friends[s][6] -= r);
         delete cur.userLists[e];
-        var i = 0;
-        for (var s in cur.userLists) i++;
-        return i || addClass(ge("main_class"), "no_lists"), nav.change({
+        var n = 0;
+        for (var s in cur.userLists) n++;
+        return n || addClass(ge("main_class"), "no_lists"), nav.change({
             0: "friends",
             section: "all"
         })
@@ -962,11 +961,11 @@ var Friends = {
         Friends.ddShow(r, e, s)
     },
     showListsDD: function(e, r, s) {
-        var i = gpeByClass("ui_actions_menu", r),
-            n = geByClass1("ui_actions_menu_sublist", i);
-        if (n) {
-            var t = data(n, "hidetimer");
-            return clearTimeout(t), void data(n, "hidetimer", 0)
+        var n = gpeByClass("ui_actions_menu", r),
+            i = geByClass1("ui_actions_menu_sublist", n);
+        if (i) {
+            var t = data(i, "hidetimer");
+            return clearTimeout(t), void data(i, "hidetimer", 0)
         }
         for (var o, c = cur.friends[parseInt(e)], u = parseInt(c[6]), a = [], d = [28, 29, 27, 25, 26], l = 0; 5 > l; ++l) o = d[l], cur.publicLists[o] && a.push(
             '<a class="ui_actions_menu_item' + (u & 1 << parseInt(o) ? " checked" : "") + '" onclick="Friends.checkCat(this, ' + e + ", " + o + ');">' + cur.publicLists[
@@ -978,20 +977,20 @@ var Friends = {
                     '" onclick="Friends.checkCat(this, ' + e + ", " + o + ');">' + f + "</a>")
             }
         a = se('<div class="ui_actions_menu_sublist shown" onmouseover="Friends.showListsDD(' + e + ', this, event);" onmouseout="Friends.hideListsDD(this);">' + a.join("") +
-            "</div>"), i.appendChild(a)
+            "</div>"), n.appendChild(a)
     },
     hideListsDD: function(e) {
         var r = gpeByClass("ui_actions_menu", e),
             s = geByClass1("ui_actions_menu_sublist", r);
         if (s) {
-            var i = data(s, "hidetimer");
-            i || data(s, "hidetimer", setTimeout(function() {
+            var n = data(s, "hidetimer");
+            n || data(s, "hidetimer", setTimeout(function() {
                 data(s, "hidetimer", 0), re(s)
             }, 150))
         }
     },
     hideSuggestion: function(e, r, s) {
-        var i = ge("request_controls_" + e);
+        var n = ge("request_controls_" + e);
         ajax.post("al_friends.php", {
             act: "hide_suggestion",
             mid: e,
@@ -999,10 +998,10 @@ var Friends = {
             report_spam: 1
         }, {
             onDone: function(r) {
-                cur.hiddenSuggestionsCnt = cur.hiddenSuggestionsCnt + 1 || 1, hasClass(gpeByClass("friends_user_row", i), "friends_user_request") && cur.hiddenSuggestionsCnt >=
+                cur.hiddenSuggestionsCnt = cur.hiddenSuggestionsCnt + 1 || 1, hasClass(gpeByClass("friends_user_row", n), "friends_user_request") && cur.hiddenSuggestionsCnt >=
                     2 && cur.suggCount > 1 && (r +=
                         '<button class="friends_decline_all flat_button button_small secondary" onclick="Friends.hideAllSuggs(this, \'' + cur.declineAllHash +
-                        "')\">" + cur.summaryLang.friends_hide_all_suggs + "</button>"), i.innerHTML = r, Friends.processRequest(e, !1, !0)
+                        "')\">" + cur.summaryLang.friends_hide_all_suggs + "</button>"), n.innerHTML = r, Friends.processRequest(e, !1, !0)
             },
             onFail: function(e) {
                 return e ? (showFastBox(getLang("global_error"), e), !0) : void 0
@@ -1011,8 +1010,8 @@ var Friends = {
             hideProgress: unlockButton.pbind(s)
         })
     },
-    addRecommend: function(e, r, s, i) {
-        i = i.parentNode, i.innerHTML = '<img src="/images/upload.gif" />', ajax.post("al_friends.php", {
+    addRecommend: function(e, r, s, n) {
+        n = n.parentNode, n.innerHTML = '<img src="/images/upload.gif" />', ajax.post("al_friends.php", {
             act: "a_suggest_friends",
             mid: e,
             uids: r,
@@ -1020,10 +1019,10 @@ var Friends = {
             from: "add"
         }, {
             onDone: function(e) {
-                i.innerHTML = e
+                n.innerHTML = e
             },
             onFail: function(e) {
-                i.innerHTML = e
+                n.innerHTML = e
             }
         })
     },
@@ -1038,12 +1037,12 @@ var Friends = {
                 dark: 1
             }
         });
-        return r.leaveOnSave = !0, cur.onFlistSave = function(s, i, n) {
+        return r.leaveOnSave = !0, cur.onFlistSave = function(s, n, i) {
             ajax.post("al_friends.php", {
                 act: "a_suggest_friends",
                 mid: e,
                 ids: s.join(","),
-                hash: n
+                hash: i
             }, {
                 onDone: function(e) {
                     r.hide(), showDoneBox(e)
@@ -1059,15 +1058,15 @@ var Friends = {
     getAgeToData: function(e, r) {
         return e = parseInt(e), !e > 0 && (e = r.ageFrom), Friends.getRangeData(e, r.ageTo, 1, r.langAgeTo + " ", r.langAgeToEmpty)
     },
-    getRangeData: function(e, r, s, i, n) {
+    getRangeData: function(e, r, s, n, i) {
         if (e > r) return !1;
         var t = [
-            [0, n]
+            [0, i]
         ];
         if (0 > s)
-            for (var o = r; o >= e; o += s) t.push([o, i + o]);
+            for (var o = r; o >= e; o += s) t.push([o, n + o]);
         else if (s > 0)
-            for (var o = e; r >= o; o += s) t.push([o, i + o]);
+            for (var o = e; r >= o; o += s) t.push([o, n + o]);
         return t
     },
     radioFilter: function(e, r, s) {
@@ -1141,26 +1140,26 @@ var Friends = {
         if (cur.filter) {
             for (var r in cur.filter) {
                 var s = cur.filter[r],
-                    i = "",
-                    n = !1,
+                    n = "",
+                    i = !1,
                     t = !1,
                     o = ge("friends_filters_token_" + r);
                 if (s) {
                     switch (r) {
                         case "city":
-                            i = cur.cityFilter.val_full()[1];
+                            n = cur.cityFilter.val_full()[1];
                             break;
                         case "age_from":
-                            i = cur.ageFromFilter.val_full()[1], n = "age_to";
+                            n = cur.ageFromFilter.val_full()[1], i = "age_to";
                             break;
                         case "age_to":
-                            i = cur.ageToFilter.val_full()[1], t = "age_from";
+                            n = cur.ageToFilter.val_full()[1], t = "age_from";
                             break;
                         case "sex":
-                            i = 2 == s ? getLang("sex_m") : getLang("sex_fm")
+                            n = 2 == s ? getLang("sex_m") : getLang("sex_fm")
                     }
-                    i = stripHTML(i);
-                    var c = '<span class="label">' + i + '</span><span class="del_icon"></span>';
+                    n = stripHTML(n);
+                    var c = '<span class="label">' + n + '</span><span class="del_icon"></span>';
                     if (o) o.innerHTML = c;
                     else {
                         var u = ce("div", {
@@ -1169,7 +1168,7 @@ var Friends = {
                             innerHTML: c,
                             onclick: Friends.clearFilter.pbind(!0, r)
                         });
-                        n && ge("friends_filters_token_" + n) ? domInsertBefore(u, ge("friends_filters_token_" + n)) : t && ge("friends_filters_token_" + t) ?
+                        i && ge("friends_filters_token_" + i) ? domInsertBefore(u, ge("friends_filters_token_" + i)) : t && ge("friends_filters_token_" + t) ?
                             domInsertAfter(u, ge("friends_filters_token_" + t)) : e.appendChild(u)
                     }
                 } else o && re(o)
@@ -1177,12 +1176,13 @@ var Friends = {
             show(e)
         } else hide(e), e.innerHTML = ""
     },
-    changeFriendsOrder: function(e) {
-        "date" != nav.objLoc.sort ? (nav.change({
-            sort: "date"
-        }), addClass(e, "friends_sort_sel_date"), removeClass(e, "friends_sort_sel_common")) : (nav.change({
+    changeFriendsOrder: function(e, r) {
+        var s = domPN(e);
+        "date" === r && "date" !== nav.objLoc.sort ? (nav.change({
             sort: !1
-        }), addClass(e, "friends_sort_sel_common"), removeClass(e, "friends_sort_sel_date"))
+        }), addClass(s, "friends_sort_sel_date"), removeClass(s, "friends_sort_sel_common")) : "common" === r && "common" !== nav.objLoc.sort && (nav.change({
+            sort: "common"
+        }), addClass(s, "friends_sort_sel_common"), removeClass(s, "friends_sort_sel_date"))
     },
     findAdd: function(e, r, s) {
         ajax.post("al_friends.php", {

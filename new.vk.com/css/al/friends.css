@@ -88,34 +88,35 @@
 
 .friends_sort_control {
     float: right;
-    margin: 19px 10px 0 0;
-    cursor: pointer
+    margin: 17px 8px 0 0
 }
 
 .friends_sort_common,
 .friends_sort_date {
     display: inline-block;
     background: url(/images/tab_friends.png) no-repeat 0 0;
+    padding: 2px;
     width: 15px;
-    height: 15px
+    height: 15px;
+    cursor: pointer
 }
 
 .friends_sort_common {
-    background-position: 0 -33px;
-    margin-right: 11px;
+    background-position: 2px -31px;
+    margin-right: 6px;
     width: 16px
 }
 
 .friends_sort_sel_common .friends_sort_common {
-    background-position: 0 2px
+    background-position: 2px 4px
 }
 
 .friends_sort_date {
-    background-position: 0 -16px
+    background-position: 2px -14px
 }
 
 .friends_sort_sel_date .friends_sort_date {
-    background-position: 0 -51px
+    background-position: 2px -49px
 }
 
 .friends_requests_block_btn:after {

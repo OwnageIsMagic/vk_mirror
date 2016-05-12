@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 695097581512,
+    'nav': 689567581539,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 3144404212,
@@ -162,8 +162,8 @@ var stVersions = {
     'fullscreen_pv.css': 4174249355,
     'friendsphotos.js': 3869757571,
     'friendsphotos.css': 3816436303,
-    'friends.js': 1914485428,
-    'friends.css': 3788163651,
+    'friends.js': 2165106552,
+    'friends.css': 543850762,
     'friends_search.js': 3426781484,
     'friends_search.css': 204916655,
     'board.js': 3457684991,
@@ -237,7 +237,7 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 1591969534,
+    'im.css': 945882248,
     'imn.js': 57592482,
     'im.js': 4271552496,
     'emoji.js': 2849385263,
@@ -309,9 +309,9 @@ var stVersions = {
     'tags_dd.css': 3629295033,
     'tasks.js': 2719584771,
     'tasks.css': 1669297652,
-    'helpdesk.js': 3861773790,
+    'helpdesk.js': 672449726,
     'tickets.js': 3412750255,
-    'tickets.css': 215510515,
+    'tickets.css': 1514613657,
     'faq.js': 997292752,
     'faq.css': 551689430,
     'meminfo.css': 3946771123,
@@ -481,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 6883;
+var _rnd = 5236;
