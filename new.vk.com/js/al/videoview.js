@@ -228,15 +228,15 @@ var Videoview = {
             randomNumber: function() {
                 return mvcur.mvData.randomNumber = mvcur.mvData.randomNumber || Math.round(1e9 * Math.random()), mvcur.mvData.randomNumber
             },
-            onVideoAdsLoadStarted: function(e, i, o) {
+            onVideoAdsLoadStarted: function() {
                 vkImage()
                     .src = locProtocol + "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videoload-license/" + this.playerCallback.randomNumber()
             },
-            onVideoAdsPlayStarted: function(e, i, o) {
+            onVideoAdsPlayStarted: function() {
                 vkImage()
                     .src = locProtocol + "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videostart-license/" + this.playerCallback.randomNumber()
             },
-            onVideoAdsPlayFinished: function(e, i, o) {
+            onVideoAdsPlayFinished: function() {
                 vkImage()
                     .src = locProtocol + "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videoend-license/" + this.playerCallback.randomNumber()
             },

@@ -864,7 +864,7 @@
             AdsLight.onAdsShowed(0);
         }, 100);
 
-        if (abp !== undefined && abp) {
+        if (typeof(abp) !== 'undefined' && abp) {
             setCookie('remixab', 1, 30);
         }
     }

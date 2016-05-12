@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 689567581539,
+    'nav': 692760595689,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 3144404212,
@@ -181,14 +181,14 @@ var stVersions = {
     'video.css': 4081142433,
     'videocat.js': 972120599,
     'videocat.css': 2768202123,
-    'videoview.js': 3310013270,
+    'videoview.js': 3319149956,
     'videoview.css': 2398518621,
     'video_edit.js': 660308478,
     'video_edit.css': 3290437348,
     'video_upload.js': 2759837070,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 3911612264,
+    'videoplayer.js': 3730838996,
     'videoplayer.css': 979522604,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
@@ -309,9 +309,9 @@ var stVersions = {
     'tags_dd.css': 3629295033,
     'tasks.js': 2719584771,
     'tasks.css': 1669297652,
-    'helpdesk.js': 672449726,
+    'helpdesk.js': 578530187,
     'tickets.js': 3412750255,
-    'tickets.css': 1514613657,
+    'tickets.css': 2962604319,
     'faq.js': 997292752,
     'faq.css': 551689430,
     'meminfo.css': 3946771123,
@@ -446,7 +446,7 @@ var stVersions = {
     'snapster/page.js': 1720549549,
     'snapster/mobile.css': 100872175,
     'snapster/common.js': 1396538738,
-    'snapster/main.js': 2281545215,
+    'snapster/main.js': 4292124824,
     'favicon': 5,
     'lang': 6705
 };
@@ -481,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 5236;
+var _rnd = 151;
