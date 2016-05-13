@@ -1056,13 +1056,13 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 i = e.ownerId != vk.id;
             if (p !== i) {
                 toggle(c, i);
-                var t = geByClass1("audio_page_player_track_wrap", o._container),
-                    s = window.getComputedStyle(t);
-                o._trackSlider.updateSize(getSize(t)[0] - parseInt(s.paddingLeft) - parseInt(s.paddingRight)), p = i
+                var t = geByClass1("audio_page_player_track_wrap", o._container);
+                window.getComputedStyle(t);
+                p = i
             }
             cur._audioAddRestoreInfo = cur._audioAddRestoreInfo || {};
-            var r = cur._audioAddRestoreInfo[e.fullId];
-            addClass(c, "no_transition"), toggleClass(c, "audio_player_btn_added", !(!r || "added" != r.state)), removeClassDelayed(c, "no_transition"), toggleClass(h,
+            var s = cur._audioAddRestoreInfo[e.fullId];
+            addClass(c, "no_transition"), toggleClass(c, "audio_player_btn_added", !(!s || "added" != s.state)), removeClassDelayed(c, "no_transition"), toggleClass(h,
                 "audio_page_player_btn_enabled", o.ap.isRepeatCurrentAudio())
         }
     }

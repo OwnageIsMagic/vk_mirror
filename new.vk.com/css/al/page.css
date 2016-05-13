@@ -3257,6 +3257,10 @@ img.page_preview_video {
     position: relative
 }
 
+.submit_post_box_bordered .post_field_wrap {
+    border-top: 1px solid #ebedf0
+}
+
 div.submit_post_field,
 div.submit_post_field[contenteditable=true],
 div.submit_post_field[contenteditable=true]~.placeholder .ph_input,

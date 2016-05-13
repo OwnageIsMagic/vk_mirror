@@ -1744,6 +1744,10 @@ img.im_photo_thumb {
     margin-bottom: 0
 }
 
+.im-chat-input .im-chat-input--textarea .multi_media_preview .page_preview_audio_wrap {
+    width: 390px!important
+}
+
 .im-chat-input .im-chat-input--textarea .multi_media_preview .page_preview_audio_wrap .tt_black {
     display: none!important
 }
@@ -2610,6 +2614,7 @@ img.im_photo_thumb {
     text-overflow: ellipsis;
     overflow: hidden;
     font-size: 12px;
+    color: #65686c;
     padding-bottom: 1px
 }
 
@@ -3639,9 +3644,10 @@ img.im_photo_thumb {
     position: absolute;
     top: 50%;
     z-index: 10;
-    margin-top: -6px;
+    margin-top: -16px;
     margin-left: -1px;
-    right: -5px
+    right: -15px;
+    padding: 10px
 }
 
 .im-dialog-select.im-dialog-select_rotated .im-dialog-select--btn {

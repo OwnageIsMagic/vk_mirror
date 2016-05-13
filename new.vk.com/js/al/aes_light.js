@@ -358,7 +358,7 @@
                     .updateBlock())
             }, vk.ads_rotate_interval)), setTimeout(function() {
             vk__adsLight.updateProgress = 3, AdsLight.onAdsShowed(0)
-        }, 100), abp && setCookie("remixabp", 1)
+        }, 100), "undefined" != typeof abp && abp && setCookie("remixab", 1, 30)
     }, AdsLight.showNewBlock = function(e, t, s) {
         function i(e) {
             if (--e.count > 0)
@@ -786,11 +786,11 @@
     }, AdsLight.getRBAds = function(e, t, s, i) {
         function a(t, s, i) {
             clearTimeout(d), d = setTimeout(function() {
-                abp = !0, i({
+                i({
                     reason: "timeout"
                 })
             }, h), window[o] = function(t) {
-                if (abp = !1, clearTimeout(d), t && t[0] && t[0].html) {
+                if (clearTimeout(d), t && t[0] && t[0].html) {
                     try {
                         var a = ge(e),
                             o = a && isVisible(a) || vk.ad_preview;

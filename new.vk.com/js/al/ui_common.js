@@ -47,20 +47,19 @@ function Slider(t, e) {
     });
     for (var n = t.classList, l = this, r = 0, a = n.length; a > r; r++) addClass(this._el, n[r]);
     each(this._el.attributes, function(t, e) {
-        ("id" != e.name || "class" != e.name) && l._el.setAttribute(e.name, e.value)
-    }), t.parentNode.replaceChild(this._el, t), data(this._el, "slider", this), this._amountEl = geByClass1("slider_amount", this._el), this._handlerEl = geByClass1(
-        "slider_handler", this._el), this._slideEl = geByClass1("slider_slide", this._el), this._backEl = geByClass1("slider_back", this._el), this._progressEl = geByClass1(
-        "slider_loading_bar", this._el), this.options.color && (setStyle(this._amountEl, {
-        backgroundColor: this.options.color
-    }), setStyle(this._handlerEl, {
-        backgroundColor: this.options.color
-    })), this.options.backColor && setStyle(this._slideEl, {
-        backgroundColor: this.options.backColor
-    }), this.options.width = this.options.width || getSize(this._el)[0], addClass(this._el, "slider_size_" + this.options.size), setStyle(this._el, {
-        width: this.options.width
-    }), this.options.debounce && (this._onValueChangeDebounced = debounce(this._onValueChange, this.options.debounce)), e.formatHint && (addEvent(this._el, "mousemove", this._ev_onMouseOver =
-        this._onMouseOver.bind(this)), addEvent(this._el, "mouseleave", this._ev_onMouseLeave = this._onMouseLeave.bind(this))), addEvent(this._el, "mousedown", this._ev_onMouseDown =
-        this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, this.options.fireChangeEventOnInit ? !1 : !0, !0), this.setBackValue(this.options.backValue)
+            ("id" != e.name || "class" != e.name) && l._el.setAttribute(e.name, e.value)
+        }), t.parentNode.replaceChild(this._el, t), data(this._el, "slider", this), this._amountEl = geByClass1("slider_amount", this._el), this._handlerEl = geByClass1(
+            "slider_handler", this._el), this._slideEl = geByClass1("slider_slide", this._el), this._backEl = geByClass1("slider_back", this._el), this._progressEl = geByClass1(
+            "slider_loading_bar", this._el), this.options.color && (setStyle(this._amountEl, {
+            backgroundColor: this.options.color
+        }), setStyle(this._handlerEl, {
+            backgroundColor: this.options.color
+        })), this.options.backColor && setStyle(this._slideEl, {
+            backgroundColor: this.options.backColor
+        }), addClass(this._el, "slider_size_" + this.options.size), this.options.debounce && (this._onValueChangeDebounced = debounce(this._onValueChange, this.options.debounce)),
+        e.formatHint && (addEvent(this._el, "mousemove", this._ev_onMouseOver = this._onMouseOver.bind(this)), addEvent(this._el, "mouseleave", this._ev_onMouseLeave = this._onMouseLeave
+            .bind(this))), addEvent(this._el, "mousedown", this._ev_onMouseDown = this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, this.options.fireChangeEventOnInit ?
+            !1 : !0, !0), this.setBackValue(this.options.backValue)
 }
 var uiTabs = {
         initTabs: function(t, e) {
@@ -159,14 +158,14 @@ var uiTabs = {
                     var r = domClosest(i.appendParentCls, n),
                         a = getXY(r),
                         h = getXY(l),
-                        d = se('<div class="' + l.className +
+                        c = se('<div class="' + l.className +
                             ' ui_actions_menu_dummy_wrap" onmouseover="uiActionsMenu.show(this);" onmouseout="uiActionsMenu.hide(this);"></div>');
-                    d.appendChild(n), r.appendChild(d), data(t, "dummyMenu", d), data(d, "origMenu", t), t = d;
-                    var c = intval(getStyle(n, "top")),
+                    c.appendChild(n), r.appendChild(c), data(t, "dummyMenu", c), data(c, "origMenu", t), t = c;
+                    var d = intval(getStyle(n, "top")),
                         u = intval(getStyle(n, "left")),
                         p = intval(getStyle(n, "right")),
                         v = {
-                            top: h[1] - a[1] + c
+                            top: h[1] - a[1] + d
                         };
                     if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + u, setStyle(n, v), i.processHoverCls) {
                         var _ = domClosest(i.processHoverCls, l);
@@ -217,10 +216,10 @@ var uiTabs = {
                 a = domPN(t);
             if (s && (n += getXY(a)[1] - getXY(e)[1]), hasClass(e, "_ui_rmenu_auto_expand")) {
                 var h = geByClass("_ui_rmenu_sublist", e),
-                    d = hasClass(t, "_ui_rmenu_subitem") ? gpeByClass("_ui_rmenu_sublist", t) : hasClass(domNS(t), "_ui_rmenu_sublist") ? domNS(t) : !1;
+                    c = hasClass(t, "_ui_rmenu_subitem") ? gpeByClass("_ui_rmenu_sublist", t) : hasClass(domNS(t), "_ui_rmenu_sublist") ? domNS(t) : !1;
                 each(h, function() {
-                    isVisible(this) && this !== d && (l.push(this), hide(this))
-                }), d && !isVisible(d) && (r.push(d), show(d)), n = t.offsetTop, each(l, function() {
+                    isVisible(this) && this !== c && (l.push(this), hide(this))
+                }), c && !isVisible(c) && (r.push(c), show(c)), n = t.offsetTop, each(l, function() {
                     show(this)
                 }), each(r, function() {
                     hide(this)
@@ -379,12 +378,12 @@ var uiTabs = {
                     if (a) {
                         var h = intval(getStyle(t, "width"));
                         !o && h && (setStyle(s, "height", getSize(i)[1]), setStyle(i, "width", h), addClass(i, "ui_search_fixed"));
-                        var d = Math.min(0, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(ge("page_layout"))[0]));
+                        var c = Math.min(0, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(ge("page_layout"))[0]));
                         if (setStyle(i, {
-                                marginLeft: d
+                                marginLeft: c
                             }), n) {
-                            var c = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
-                            e = Math.min(l, Math.max(-t.offsetHeight, c)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
+                            var d = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
+                            e = Math.min(l, Math.max(-t.offsetHeight, d)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
                         }
                     } else o && (setStyle(s, "height", ""), setStyle(i, {
                         top: "",
@@ -680,19 +679,19 @@ window.Scrollbar = window.Scrollbar || function() {
                     var h = function(t) {
                             this.isHorizontal ? cur.touchX = t.touches[0].pageX : cur.touchY = t.touches[0].pageY
                         }.bind(this),
-                        d = function(t) {
+                        c = function(t) {
                             return this.isHorizontal ? (cur.touchDiff = cur.touchX - (cur.touchX = t.touches[0].pageX), o.scrollLeft += cur.touchDiff, o.scrollLeft > 0 &&
                                 this.shown !== !1 && this.update(!0)) : (cur.touchDiff = cur.touchY - (cur.touchY = t.touches[0].pageY), o.scrollTop += cur.touchDiff,
                                 o.scrollTop > 0 && this.shown !== !1 && this.update(!0)), cancelEvent(t)
                         }.bind(this),
-                        c = function() {
+                        d = function() {
                             cur.animateInt = setInterval(function() {
                                 cur.touchDiff = .9 * cur.touchDiff, cur.touchDiff < 1 && cur.touchDiff > -1 ? clearInterval(cur.animateInt) : (o[self.scrollProp] +=
                                     cur.touchDiff, this.update(!0))
                             }.bind(this), 0)
                         }.bind(this);
-                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", d), addEvent(o, "touchend", c), this.destroyList.push(function() {
-                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", d), removeEvent(o, "touchend", c)
+                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", c), addEvent(o, "touchend", d), this.destroyList.push(function() {
+                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", c), removeEvent(o, "touchend", d)
                     })
                 }
                 addEvent(this.inner, "mousedown", this.mouseDown), this.options.nokeys ? this.onkeydown = l : addEvent(window, "keydown", l), this.destroyList.push(
@@ -865,8 +864,9 @@ window.Scrollbar = window.Scrollbar || function() {
             this.box.changed = !0;
             var i = e.id.match(/-?\d+/)[0],
                 s = !this.invertedSelection && this.selected[i] || this.invertedSelection && !this.selected[i];
-            if (toggleClass(e, "olist_item_wrap_on", !s), this.selected[i] = !s || this.invertedSelection, this.selCnt += !s || this.invertedSelection ? 1 : -1, this.selTabUpdate(),
-                this.onListClick && this.onListClick(e, s), this.scrollNode.scrollTop < 50) {
+            if (toggleClass(e, "olist_item_wrap_on", !s),
+                this.selected[i] = !s || this.invertedSelection, this.selCnt += !s || this.invertedSelection ? 1 : -1, this.selTabUpdate(), this.onListClick && this.onListClick(
+                    e, s), this.scrollNode.scrollTop < 50) {
                 var o = this.filter;
                 setTimeout(elfocus.pbind(o), 100)
             }
@@ -934,9 +934,9 @@ window.Scrollbar = window.Scrollbar || function() {
                 return (!a && o[t] || a && !o[t]) && (h.push(this), h.length > e + l) ? !1 : void 0
             }), s = h
         }
-        var d = s.length;
+        var c = s.length;
         s = s.slice(e, e + l);
-        var c = [];
+        var d = [];
         if (t) {
             t = clean(t);
             var u = escapeRE(t),
@@ -962,9 +962,9 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                c.push(rs(n, _(this, t, r.invertedSelection, o, v)))
-            }), e || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
-                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), e ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), d > e +
+                d.push(rs(n, _(this, t, r.invertedSelection, o, v)))
+            }), e || d.length || d.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
+                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), d = d.join(" "), e ? this.olistEl.appendChild(cf(d)) : val(this.olistEl, d), c > e +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {
                 return r.renderList(t, e + l), cancelEvent(i)
             }), r.box && r.box.scroll && r.box.scroll.update(!1, !0), r.onScroll()
@@ -987,22 +987,19 @@ Slider.prototype.toggleLoading = function(t) {
 }, Slider.prototype.destroy = function(t) {
     this.options.formatHint && (removeEvent(this._el, "mousemove", this._ev_onMouseOver), removeEvent(this._el, "mouseleave", this._ev_onMouseLeave), removeEvent(this._el,
         "mousedown", this._ev_onMouseDown)), re(this._el), re(this._currHintEl)
-}, Slider.prototype.updateSize = function(t) {
-    this.options.width = t, setStyle(this._el, {
-        width: this.options.width
-    })
 }, Slider.prototype._updateHint = function(t, e) {
     this._currHintEl || (this._currHintEl = se('<div class="slider_hint" id="slider_hint"></div>'), this.options.hintClass && addClass(this._currHintEl, this.options.hintClass),
         this._el.appendChild(this._currHintEl));
     var i = this._getPos(),
-        s = Math.round(t.pageX - i[0]);
-    if (s = e ? Math.min(Math.max(0, s), this.options.width) : s, s >= 0 && s <= this.options.width) {
-        var o = s / this.options.width;
-        this._currHintEl.innerHTML = this.options.formatHint ? this.options.formatHint.call(this, o) : o;
-        var n = getSize(this._currHintEl);
+        s = Math.round(t.pageX - i[0]),
+        o = this._width;
+    if (s = e ? Math.min(Math.max(0, s), o) : s, s >= 0 && o >= s) {
+        var n = s / o;
+        this._currHintEl.innerHTML = this.options.formatHint ? this.options.formatHint.call(this, n) : n;
+        var l = getSize(this._currHintEl);
         setStyle(this._currHintEl, {
-            left: this._slideEl.offsetLeft + s - n[0] / 2,
-            top: this._slideEl.offsetTop - n[1] - 10
+            left: this._slideEl.offsetLeft + s - l[0] / 2,
+            top: this._slideEl.offsetTop - l[1] - 10
         }), !e && this._toggleHint(!0)
     } else !e && this._toggleHint(!1);
     this.options.formatHint || this._toggleHint(!1)
@@ -1014,7 +1011,8 @@ Slider.prototype.toggleLoading = function(t) {
     hasClass(this._el, "active") || this._toggleHint(!1)
 }, Slider.prototype._onMouseDown = function(t) {
     0 == t.button && (delete cur._sliderMouseUpNowEl, addEvent(window, "mousemove", this._ev_onMouseMove = this._onMouseMove.bind(this)), addEvent(window, "mouseup", this._ev_onMouseUp =
-        this._onMouseUp.bind(this)), this._onMouseMove(t), Slider._currenSliderDrag = this, addClass(this._el, "active"), cancelEvent(t))
+            this._onMouseUp.bind(this)), this._width = getSize(this._el)[0], this._onMouseMove(t), Slider._currenSliderDrag = this, addClass(this._el, "active"),
+        cancelEvent(t))
 }, Slider.prototype._onMouseUp = function(t) {
     cur._sliderMouseUpNowEl = this._el, removeEvent(window, "mousemove", this._ev_onMouseMove), removeEvent(window, "mouseup", this._ev_onMouseUp), clearTimeout(this._debounceto),
         this._onValueChange(), removeClass(this._el, "active"), Slider._currenSliderDrag = !1, this._toggleHint(!1), this.options.onEndDragging && this.options.onEndDragging(
@@ -1022,13 +1020,13 @@ Slider.prototype.toggleLoading = function(t) {
 }, Slider.prototype._onMouseMove = function(t) {
     var e = this._getPos(),
         i = Math.max(t.pageX, e[0]);
-    i = Math.min(i, e[0] + this.options.width), i -= e[0], this.setValue(i / this.options.width, !0, !0), this._onValueChangeDebounced ? this._onValueChangeDebounced() : this._onValueChange(),
+    i = Math.min(i, e[0] + this._width), i -= e[0], this.setValue(i / this._width, !0, !0), this._onValueChangeDebounced ? this._onValueChangeDebounced() : this._onValueChange(),
         this._toggleHint(!0), this._updateHint(t, !0), cancelEvent(t)
 }, Slider.prototype._getPos = function() {
     return this._slidePos = getXY(this._slideEl)
 }, Slider.prototype.setValue = function(t, e, i) {
     if (!hasClass(this._el, "active") || i) {
-        var s = this.options.width * t;
+        var s = 100 * t + "%";
         setStyle(this._amountEl, {
             width: s
         }), setStyle(this._handlerEl, {
@@ -1037,7 +1035,7 @@ Slider.prototype.toggleLoading = function(t) {
     }
 }, Slider.prototype.setBackValue = function(t) {
     toggleClass(this._backEl, "slider_back_transition", t > this._backValue), this._backValue = t;
-    var e = this.options.width * t;
+    var e = 100 * t + "%";
     setStyle(this._backEl, {
         width: e
     })
