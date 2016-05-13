@@ -107,8 +107,8 @@ var Videoview = {
                         events: []
                     };
                     var n = cur._vadStatQueue[e + "_" + i];
-                    n.type = a, n.events.push(t), n.err = r, n.pl_type = d, clearTimeout(cur._vadStatTimer), cur._vadStatTimer = setTimeout(Videoview.sendVideoAdStat.bind(
-                        Videoview, e, i, o), 1e3)
+                    n.type = a, n.events.push(t), n.pl_type = d, clearTimeout(cur._vadStatTimer), cur._vadStatTimer = setTimeout(Videoview.sendVideoAdStat.bind(Videoview, e, i,
+                        o), 1e3)
                 }
             },
             onVideoAdShown: function(e, i, o, t) {
