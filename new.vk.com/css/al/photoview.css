@@ -372,6 +372,10 @@
     background-position: 0 -41px
 }
 
+#pv_more_acts_tt #pv_more_act_to_dialog:before {
+    background-position: 0 -60px
+}
+
 #pv_more_acts_tt #pv_more_act_move_to:before {
     background-position: 0 -79px
 }

@@ -264,6 +264,22 @@ textarea.ashelper {
     line-height: 1.36em
 }
 
+.recaptcha .pr {
+    padding: 35px 0;
+    text-align: center
+}
+
+.recaptcha .pr_bt {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 4px
+}
+
+.recaptcha .pr_bt:last-child {
+    margin-right: 0
+}
+
 .summary_wrap {
     color: #54595e;
     padding: 20px 20px 0
@@ -5678,6 +5694,7 @@ button.ui_load_more_btn {
     display: none;
     font-size: 12px;
     line-height: 1.3em;
+    margin-top: 3px;
     padding: 10px 35px 0;
     overflow: hidden;
     cursor: default

@@ -1131,7 +1131,7 @@ AudioPlayer.tabIcons = {
     return !!this._repeatCurrent
 }, AudioPlayer.prototype.setNext = function(t, i) {
     var e = domClosest("_audio_row", t),
-        o = AudioUtils.getAudioFromEl(e, !0),
+        o = AudioUtils.getAudioFromEl(e),
         a = AudioUtils.asObject(o);
     if (!hasClass(e, "audio_added_next")) {
         addClass(e, "audio_added_next");
@@ -1373,9 +1373,11 @@ AudioPlayer.tabIcons = {
         r = !1;
     r = t && a && t == a.fullId, i ? s && (l = i == s.getSelf() || i == s) : (i = s, l = !0);
     if (r && l) {
-        this._isPlaying = !0, this._sendLCNotification(), this.notify(AudioPlayer.EVENT_PLAY);
-        var u = i.getAudio(t);
-        this._implClearAllTasks(), this._implSetVolume(0), this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume(), !0)
+        if (!this.isPlaying()) {
+            this._isPlaying = !0, this._sendLCNotification(), this.notify(AudioPlayer.EVENT_PLAY);
+            var u = i.getAudio(t);
+            this._implClearAllTasks(), this._implSetVolume(0), this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume(), !0)
+        }
     } else if (t) {
         var u = i.getAudio(t);
         u && (l || (this._currentPlaylist && (this._prevPlaylist = this._currentPlaylist, this._prevAudio = this._currentAudio), i.getType() == AudioPlaylist.TYPE_TEMP ? this._currentPlaylist =

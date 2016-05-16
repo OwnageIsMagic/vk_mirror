@@ -45,7 +45,7 @@ var tooltips = {
                     e[0] -= v[0], e[1] -= v[1];
                     var f = domPN(t);
                     if (el.tt.zIndexEls = [], !opts.noZIndex)
-                        for (; f && f != bodyNode;) {
+                        for (; f && f != bodyNode && !hasClass(f, "scroll_fix");) {
                             var w = intval(getStyle(f, "zIndex")),
                                 m = intval(f.ttCount);
                             if (w && !m) break;
