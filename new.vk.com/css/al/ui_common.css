@@ -2075,8 +2075,7 @@ a.ui_search_custom_link {
     -o-transition: opacity 300ms linear;
     transition: opacity 300ms linear;
     background-image: url(/images/audio_progress.png);
-    background-position-x: 0;
-    background-position-y: 0;
+    background-position: 0 0;
     -webkit-animation: slider_loading_animation 300ms linear infinite;
     -o-animation: slider_loading_animation 300ms linear infinite;
     animation: slider_loading_animation 300ms linear infinite
@@ -2166,28 +2165,28 @@ a.ui_search_custom_link {
 
 @-webkit-keyframes slider_loading_animation {
     0% {
-        background-position-x: 0
+        background-position: 0 0
     }
     to {
-        background-position-x: 9px
+        background-position: 9px 0
     }
 }
 
 @-o-keyframes slider_loading_animation {
     0% {
-        background-position-x: 0
+        background-position: 0 0
     }
     to {
-        background-position-x: 9px
+        background-position: 9px 0
     }
 }
 
 @keyframes slider_loading_animation {
     0% {
-        background-position-x: 0
+        background-position: 0 0
     }
     to {
-        background-position-x: 9px
+        background-position: 9px 0
     }
 }
 

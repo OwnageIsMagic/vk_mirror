@@ -87,8 +87,6 @@ var Videoview = {
                 Videoview.sendPlayerStats(8, 0), showVideo(e, i, {
                     autoplay: 1,
                     queue: 1,
-                    minimized: 1,
-                    player: player,
                     addParams: {
                         t: o
                     }
@@ -133,8 +131,8 @@ var Videoview = {
             },
             onVideoPlayProgress: function(e, i, o, t, a) {
                 var r = e + "_" + i;
-                5e3 > t && cur.tnsStart != r ? (this.playerCallback.scoreCardCounter(), cur.tnsStart = r) : t > a / 2 && cur.tnsEnd != r && (cur.tnsEnd = r), mvcur.adData && (
-                    mvcur.adData.stat_link_start && !mvcur.adData.view_complete_start && t >= 5e3 && (ajax.post(mvcur.adData.stat_link_start, {}, {
+                5e3 > t && cur.tnsStart != r ? (this.playerCallback.scoreCardCounter(), cur.tnsStart = r) : t > a / 2 && cur.tnsEnd != r && (cur.tnsEnd = r), window.mvcur &&
+                    mvcur.adData && (mvcur.adData.stat_link_start && !mvcur.adData.view_complete_start && t >= 5e3 && (ajax.post(mvcur.adData.stat_link_start, {}, {
                         onDone: function() {},
                         onFail: function() {
                             return !0
@@ -369,8 +367,8 @@ var Videoview = {
         },
         playerNextTimerUpdate: function() {
             var e;
-            mvcur.scrolledAway || mvcur.replyFormShown || mvcur.pageNotFocused || isVisible(window.boxLayerWrap) ? (e = "nextTimerReset", mvcur.nextTimerStopped = !0) : (e =
-                "nextTimerStart", mvcur.nextTimerStopped = !1);
+            mvcur.scrolledAway || mvcur.replyFormShown || "visible" != document.visibilityState || isVisible(window.boxLayerWrap) ? (e = "nextTimerReset", mvcur.nextTimerStopped = !
+                0) : (e = "nextTimerStart", mvcur.nextTimerStopped = !1);
             var i = mvcur.playerPrevTimerFunc == e ? 100 : 0;
             mvcur.playerPrevTimerFunc = e, clearTimeout(mvcur.playerTimerDebounce), mvcur.playerTimerDebounce = setTimeout(function() {
                 var i = Videoview.getPlayerObject();
@@ -760,8 +758,8 @@ var Videoview = {
                 d = mvcur.mvVeryBig;
             mvcur.mvVeryBig = t > 1280 ? 2 : t > 807 ? 1 : !1, r = d != mvcur.mvVeryBig, Videoview.updateExternalVideoFinishBlock(), Videoview.updateReplyFormPos()
         },
-        onPageFocusChange: function(e) {
-            mvcur.pageNotFocused = "blur" == e.type, Videoview.playerNextTimerUpdate()
+        onPageFocusChange: function() {
+            setTimeout(Videoview.playerNextTimerUpdate, 10)
         },
         onFullscreenChange: function() {
             Videoview.updateExternalVideoFinishBlock()
@@ -1628,15 +1626,17 @@ var Videoview = {
                 55 && (o += 16), o
         },
         changeCursor: function(e) {
-            var i = Videoview.getContPlace(e),
-                o = "default";
-            if (i && mvcur.minimized) {
-                var t = "";
-                1 & i && (t += "n"), 4 & i && (t += "s"), 2 & i && (t += "e"), 8 & i && (t += "w"), o = t + "-resize", 16 & i && (o = "move")
+            if (!Videoview.isFS) {
+                var i = Videoview.getContPlace(e),
+                    o = "default";
+                if (i && mvcur.minimized) {
+                    var t = "";
+                    1 & i && (t += "n"), 4 & i && (t += "s"), 2 & i && (t += "e"), 8 & i && (t += "w"), o = t + "-resize", 16 & i && (o = "move")
+                }
+                setStyle("mv_box", {
+                    cursor: o
+                })
             }
-            setStyle("mv_box", {
-                cursor: o
-            })
         },
         getMinSize: function() {
             extend(mvcur.minSize, {
@@ -1653,7 +1653,7 @@ var Videoview = {
             })
         },
         startDrag: function(e) {
-            if (!e.button || 1 === e.button) {
+            if (!(Videoview.isFS || e.button && 1 !== e.button)) {
                 var i = Videoview.getContPlace(e, !0);
                 if (i) {
                     var o = (new Date)
@@ -2018,7 +2018,7 @@ var Videoview = {
                         '" onclick="Videoview.onExternalVideoAdd()">      <div class="mv_finish_add_icon mv_finish_icon"></div>      <div class="mv_finish_added_icon mv_finish_icon"></div>    </div>  </div>  ' +
                         s + "  " + m + "</div>  ");
                 a.canSubscribe || re(geByClass1("mv_finish_subscribe", w)), (a.noControls || a.nolikes) && re(geByClass1("mv_finish_actions", w)), e.appendChild(w), t && o &&
-                    s && (mvcur.nextTimer = {
+                    s && (window.focus(), mvcur.nextTimer = {
                             ctx: geByClass1("mv_finish_next_timer_canvas", w)
                                 .getContext("2d"),
                             nextTimerReset: function() {

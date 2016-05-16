@@ -176,35 +176,34 @@ Notifier = {
 
     initCommunityQueues: function(fails) {
         return false;
-
+        /*
         var key = ls.get('im_m_comms_key');
 
         var check = key && key.split ? key.split(';') : [];
         if (check[0] === 'empty' && check[1] && Date.now() - check[1] < 60 * 1 * 1000) {
-            key = 'empty';
+          key = 'empty';
         } else if (check[0] === 'empty') {
-            key = false;
+          key = false;
         }
 
         if (key) {
-            return Notifier.proccessCommunityQueues(key, fails || 0);
+          return Notifier.proccessCommunityQueues(key, fails || 0);
         }
 
-        ajax.post('al_im.php', {
-            act: 'a_get_comms_key'
-        }, {
-            onDone: function(queue) {
-                if (queue === 'empty') {
-                    queue += ";" + Date.now();
-                } else {
-                    Notifier.proccessCommunityQueues(queue, fails || 0);
-                }
-                ls.set('im_m_comms_key', queue);
-            },
-            onFail: function() {
-                return true;
+        ajax.post('al_im.php', { act: 'a_get_comms_key' }, {
+          onDone: function(queue) {
+            if (queue === 'empty') {
+              queue += ";" + Date.now();
+            } else {
+              Notifier.proccessCommunityQueues(queue, fails || 0);
             }
+            ls.set('im_m_comms_key', queue);
+          },
+          onFail: function() {
+            return true;
+          }
         })
+        */
     },
 
     notificationsGc: function() {
@@ -6320,36 +6319,30 @@ var TopNotifier = {
     },
     postTooltip: function(el, post, opts) {
         return false;
+        /*
 
-        var reply = (opts || {})
-            .reply,
-            url = 'al_wall.php';
+        var reply = (opts || {}).reply, url = 'al_wall.php';
 
         if (!post.indexOf('topic_comment')) {
-            url = 'al_board.php';
-            post = post.replace('topic_comment', '');
+          url = 'al_board.php';
+          post = post.replace('topic_comment', '');
         } else {
-            post = post.replace('wall_reply', '')
-                .replace('wall', '');
+          post = post.replace('wall_reply', '').replace('wall', '');
         }
 
         showTooltip(el, {
-            url: url,
-            params: extend({
-                act: 'post_tt',
-                post: post,
-                self: 1,
-                from: 'feedback'
-            }, opts || {}),
-            slide: 15,
-            shift: [(reply && !(reply % 2)) ? 329 : 27, 6],
-            ajaxdt: 100,
-            showdt: 400,
-            hidedt: 200,
-            dir: 'auto',
-            className: 'rich wall_tt',
-            appendParentCls: 'page_header_wrap'
+          url: url,
+          params: extend({act: 'post_tt', post: post, self: 1, from: 'feedback'}, opts || {}),
+          slide: 15,
+          shift: [(reply && !(reply % 2)) ? 329 : 27, 6],
+          ajaxdt: 100,
+          showdt: 400,
+          hidedt: 200,
+          dir: 'auto',
+          className: 'rich wall_tt',
+          appendParentCls: 'page_header_wrap'
         });
+        */
     },
     hideRow: function(el, item, hash) {
         var row = gpeByClass('_feed_row', el);

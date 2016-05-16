@@ -1665,6 +1665,7 @@ embed#video_player {
 #mv_external_finish .mv_finish_next_info {
     position: absolute;
     left: 181px;
+    right: 0;
     top: 0;
     padding: 10px 25px 10px 15px;
     color: #fff
@@ -1680,7 +1681,8 @@ embed#video_player {
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    text-overflow: ellipsis
+    text-overflow: ellipsis;
+    word-break: break-word
 }
 
 #mv_external_finish .mv_finish_next_views {

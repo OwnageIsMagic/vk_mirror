@@ -56,6 +56,7 @@ global_online = ['', 'Online', 'Online'];
 global_online_sm = ['', 'online', 'online'];
 global_privacy_except = '�����:';
 global_rating_box_header = '�������';
+global_recaptcha_title = '������������� ��������';
 global_recommended_exceeded = ['', '������������� ����� �������� �� %s ����.', '������������� ����� �������� �� %s �����.', '������������� ����� �������� �� %s ������.'];
 global_recommended_lines = ['', '������������� ����� �������� �� %s ������.', '������������� ����� �������� �� %s ������.', '������������� ����� �������� �� %s �����.'];
 global_reply_to = '����� {user}';
