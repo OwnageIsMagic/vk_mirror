@@ -577,7 +577,7 @@ a.page_poll_code {
 }
 
 .page_docs_preview .page_media_x_wrap {
-    margin: 9px 4px;
+    margin: 0 4px;
     float: right;
     cursor: pointer
 }
@@ -598,8 +598,8 @@ a.page_poll_code {
     filter: none
 }
 
-.page_docs_preview .page_preview_postpone_wrap .page_media_x_wrap {
-    margin: 0 4px
+.page_docs_preview .page_preview_doc_wrap .page_media_x_wrap {
+    margin: 9px 4px
 }
 
 .medadd_c_link {
