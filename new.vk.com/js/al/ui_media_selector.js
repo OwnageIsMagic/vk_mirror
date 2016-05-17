@@ -714,14 +714,15 @@ function MediaSelector(e, a, i, o) {
             },
             incPoll: function() {
                 var e = ge("create_poll_answers" + m),
-                    a = e.childNodes.length;
-                10 > a && elfocus(geByTag1("input", e.appendChild(ce("div", {
+                    a = e.childNodes.length,
+                    i = o.pollLimit || 10;
+                i > a && elfocus(geByTag1("input", e.appendChild(ce("div", {
                     className: "medadd_c_polla_wr",
                     innerHTML: rs(cur.pollAnswerTemplate, {
                         attrs: "",
                         lnkid: m
                     })
-                })))), toggle("create_poll_add" + m, 9 > a)
+                })))), toggle("create_poll_add" + m, i - 1 > a)
             },
             decPoll: function(e) {
                 e.tt && e.tt.el && e.tt.destroy(), re(domPN(e)), show("create_poll_add" + m)
@@ -894,9 +895,9 @@ function MediaSelector(e, a, i, o) {
                         height: P
                     }, 200, function() {
                         clearInterval(cur.animateUpdateInterval)
-                    }), re(geByClass1("medadd_c_linkprg", b))
+                    }), re(geByClass1("medadd_c_linkprg", b));
                 }
-                t && addClass(geByClass1("medadd_c_linkcon", b), t);
+                t && addClass(geByClass1("medadd_c_linkcon", b), t)
             },
             showExternalPreview: function() {
                 var e = s.shareData;

@@ -736,6 +736,10 @@ div.media_preview {
     display: none
 }
 
+div.media_preview:empty {
+    padding: 0
+}
+
 div.med_no_attach {
     padding-bottom: 0
 }

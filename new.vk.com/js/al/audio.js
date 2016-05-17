@@ -811,7 +811,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
 }, AudioPage.prototype.switchToSection = function(e, i) {
     var t = this,
         o = geByClass1("_audio_playlist", this._container);
-    this._initAutoList(e, o, function(a) {
+    toggleClass(o, "audio_search_rows", e.getType() == AudioPlaylist.TYPE_SEARCH), this._initAutoList(e, o, function(a) {
         if (a) {
             var s = geByClass1("_ui_item_audio_" + e.getId(), t._getMenuEl());
             if (!s) switch (e.getType()) {
@@ -973,7 +973,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     removeClass(geByClass1("ui_rmenu", this._container), "ui_rmenu_item_sel")
 }, AudioPage.prototype._unselectFriends = function() {
     hideProgress(geByClass1("_audio_friends_list", this._container)), each(geByClass("_audio_friend", this._container), function() {
-        removeClass(this, "audio_friend_selected")
+        removeClass(this, "audio_friend_selected");
     }), unlockButton(geByClass1("audio_more_friends_btn"))
 }, AudioPage.prototype._initNavigation = function() {
     var e = !1;
