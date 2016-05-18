@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 698751192831,
+    'nav': 702602032334,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 317248823,
@@ -173,7 +173,7 @@ var stVersions = {
     'photos_add.css': 2557532249,
     'photos_add.js': 2100132176,
     'wkpoll.js': 3872977013,
-    'wkview.js': 458396210,
+    'wkview.js': 3525033627,
     'wkview.css': 1978487190,
     'single_pv.css': 1756823785,
     'single_pv.js': 2569562240,
@@ -206,10 +206,10 @@ var stVersions = {
     'module.css': 2271964242,
     'owner_photo.js': 2124522904,
     'owner_photo.css': 191725357,
-    'page.js': 3108438852,
-    'page.css': 662233928,
+    'page.js': 3802651060,
+    'page.css': 1744975126,
     'page_help.css': 439817088,
-    'public.css': 1944959723,
+    'public.css': 1472241584,
     'public.js': 1370745423,
     'pages.css': 4259151537,
     'pages.js': 3347413999,
@@ -303,7 +303,7 @@ var stVersions = {
     'restore.css': 2631325096,
     'recover.js': 2216623723,
     'recover.css': 1708940698,
-    'docs.js': 2708595736,
+    'docs.js': 2759484561,
     'docs.css': 1250038639,
     'tags_dd.js': 2519761220,
     'tags_dd.css': 3629295033,
@@ -481,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 7736;
+var _rnd = 9081;

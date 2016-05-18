@@ -3790,13 +3790,22 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 .wall_module .post_like_count,
 .wall_module .post_share_count {
     margin: 1px 0 1px 6px;
-    float: left
+    float: left;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #7996b5
 }
 
 .wall_module .post_like_count .counter_anim_wrap,
 .wall_module .post_share_count .counter_anim_wrap {
     line-height: 14px;
     height: 14px
+}
+
+.wall_module .post_like_link:empty+.post_like_count,
+.wall_module .post_share_link:empty+.post_share_count {
+    margin-left: 0
 }
 
 .wall_module .post_like:hover .post_like_icon,
@@ -3809,14 +3818,6 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
     background-position: 0 -15px;
     height: 14px;
     margin-bottom: 0
-}
-
-.wall_module .post_like_count,
-.wall_module .post_share_count {
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #7996b5
 }
 
 .wall_module .my_like .post_like_icon,

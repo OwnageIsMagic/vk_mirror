@@ -5,12 +5,12 @@
 .new_public_header {
     text-align: center;
     border-bottom: 1px solid #ebedf0;
-    padding: 25px 25px 27px
+    padding: 32px 25px 28px
 }
 
 .new_public_header .header {
     font-size: 19px;
-    margin-bottom: 11px
+    margin-bottom: 9px
 }
 
 .new_public_error {
