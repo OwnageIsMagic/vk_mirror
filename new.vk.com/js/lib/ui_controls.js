@@ -1020,9 +1020,9 @@ extend(UiControl.prototype, {
             i = this.list.childNodes,
             s = this;
         if (e) {
-            this.currSearchStr = this.currSearchStr || "", setTimeout(function() {
+            this.currSearchStr = this.currSearchStr || "", s.quickSearchTimer && clearTimeout(s.quickSearchTimer), s.quickSearchTimer = setTimeout(function() {
                 s.currSearchStr = ""
-            }, 500), this.currQuickSearchIndex = this.currQuickSearchIndex || 0, this.currQuickSearchChar != e && (this.currQuickSearchIndex = 0, this.currQuickSearchChar =
+            }, 1e3), this.currQuickSearchIndex = this.currQuickSearchIndex || 0, this.currQuickSearchChar != e && (this.currQuickSearchIndex = 0, this.currQuickSearchChar =
                 e), this.currSearchStr += e;
             for (var o = this.currQuickSearchIndex; o < i.length; o++) {
                 var n = i[o].innerHTML.toLowerCase();
@@ -1783,8 +1783,8 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
             }), this.mainTable = geByClass("inlMainTable", this.container)[0], this.mainCell = geByClass("inlContent", this.mainTable)[0], this.contentTable =
             geByClass("inlContentTable", this.mainCell)[0], setStyle(this.contentTable, "width", this.options.width), this.input = geByClass("inlInput", this.contentTable)[
                 0], this.buttonOkCell = geByClass("inlButtonOk", this.contentTable)[0], this.buttonCancelCell = geByClass("inlButtonCancel", this.contentTable)[0],
-            this.buttonOk = this.buttonOkCell.firstChild.firstChild,
-            this.buttonCancel = this.buttonCancelCell.firstChild.firstChild, this.container.appendChild(this.mainTable), this.mainCell.appendChild(this.contentTable)
+            this.buttonOk = this.buttonOkCell.firstChild.firstChild, this.buttonCancel = this.buttonCancelCell.firstChild.firstChild, this.container.appendChild(this.mainTable),
+            this.mainCell.appendChild(this.contentTable)
     },
     initEvents: function() {
         var t = this;

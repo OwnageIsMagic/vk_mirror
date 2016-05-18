@@ -268,7 +268,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
 }, AudioPage.prototype.onAudioUploaded = function(e, i) {
     if (i) {
         var t = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL);
-        t.addAudio(i);
+        t.addAudio(i, 0);
         var o = this.ap.getCurrentPlaylist();
         o && o.getSelf() == t && o.addAudio(i);
         var a = this.getCurrentPlaylist();

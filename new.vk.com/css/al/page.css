@@ -660,6 +660,10 @@ div.wall_module .ext_video div {
     border-top: 1px solid #ebedf0
 }
 
+.wall_module .replies_list:empty {
+    border-top: 0
+}
+
 .wall_module .reply {
     background: transparent;
     line-height: 14px;

@@ -3529,7 +3529,7 @@ var Wall = {
             .reply,
             extraClass = (opts || {})
             .className || '',
-            toRight = (reply && !(reply % 2));
+            toRight = (reply && !(reply % 2)) && getXY(el)[0] > 420;
 
         showTooltip(el, {
             url: 'al_wall.php',
