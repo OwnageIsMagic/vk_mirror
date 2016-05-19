@@ -1639,8 +1639,6 @@ div.chat_tab_img {
 .emoji_smile_cont {
     display: inline-block;
     position: relative;
-    *display: inline;
-    *zoom: 1;
     padding: 5px 4px;
     margin-right: 1px;
     cursor: pointer;
@@ -1784,19 +1782,16 @@ div.chat_tab_img {
 }
 
 .emoji_tabs_cont {
+    display: inline-block;
+    zoom: 1;
     height: 36px;
     white-space: nowrap
 }
 
-.emoji_tabs_cont,
-.emoji_tabs_wrap {
-    display: inline-block;
-    *display: inline;
-    zoom: 1
-}
-
 .emoji_tabs_wrap {
     position: absolute;
+    display: inline-block;
+    zoom: 1;
     width: 220px;
     overflow: hidden;
     z-index: 111
@@ -1807,7 +1802,6 @@ div.chat_tab_img {
     width: 18px;
     height: 18px;
     display: inline-block;
-    *display: inline;
     zoom: 1;
     vertical-align: top
 }
@@ -1837,7 +1831,6 @@ div.chat_tab_img {
 .emoji_sticker_item {
     padding: 3px 2px;
     display: inline-block;
-    *display: inline;
     zoom: 1;
     border-radius: 4px;
     width: 64px;
@@ -1952,7 +1945,6 @@ div.chat_tab_img {
 .emoji_tab_icon_recent {
     background-position: -131px 0px;
     display: inline-block;
-    *display: inline;
     zoom: 1
 }
 

@@ -92,7 +92,8 @@ var Photoview = {
                 innerHTML: ""
             })), addClass(layerWrap, e), addClass(layerBG, e);
             var t = !!(cur.pvVideoTagsShown || cur.pvAlbumsShown || cur.pvAlbumShown || cur.pvPhotoTagShown);
-            cur.pvIsLightMode = 0 == nav.objLoc[0].indexOf("blog/") || inArray(nav.objLoc[0], ["blog", "about", "support", "helpdesk"]);
+            cur.pvIsLightMode = 0 == nav.objLoc[0].indexOf("blog/") || inArray(nav.objLoc[0], ["blog", "about", "support", "helpdesk"]), cur.pvShowBottomActions = !cur.pvIsLightMode ||
+                inArray(nav.objLoc[0], ["helpdesk", "support"]);
             var r = Photoview.hhCheck() ? "" : ' style="display: none;"',
                 a = (Photoview.canFullscreen() ? "" : ' style="display: none;"', cur.pvAlbumsShown ? cur.pvAlbumsData[cur.pvAlbumsShown].html : ""),
                 i = cur.pvAlbumShown ? cur.pvAlbumData[cur.pvAlbumShown].html : "",
@@ -118,7 +119,7 @@ var Photoview = {
                 '      <div class="pv_fs_wrap" onclick="return Photoview.show(false, cur.pvIndex + 1, event);">         <div class="pv_fs_btn" onclick="return Photoview.fullscreen(event);"><div></div></div>       </div>     ',
                 m =
                 '      <div class="pv_bottom_info clear_fix">         <div class="pv_bottom_info_left"><span class="pv_album_name" onmouseover="setTitle(this)"></span><span class="pv_counter"></span></div>         ' +
-                (cur.pvIsLightMode ? "" : '<div class="pv_bottom_actions"></div>') + "       </div>",
+                (cur.pvShowBottomActions ? '<div class="pv_bottom_actions"></div>' : "") + "       </div>",
                 w = cur.pvIsLightMode ? "" :
                 '      <div class="pv_narrow_column_wrap">        <div class="pv_narrow_column_cont wall_module">          <div class="narrow_column" id="pv_narrow"></div>        </div>      </div>',
                 f = getProgressHtml("pv_image_progress");
@@ -552,7 +553,7 @@ var Photoview = {
                     cur.pvMaxTags && _.push(
                         "<a id=\"pv_tag_link\" onclick=\"stManager.add(['phototag.js', 'phototag.css', 'tagger.css', 'tagger.js'], function() { Phototag.startTag(); })\">" +
                         getLang("photos_tagperson") + "</a>"), e.actions.del && _.push('<a id="pv_delete" onclick="Photoview.deletePhoto()">' + getLang("photos_pv_act_delete") +
-                        "</a>"), e.actions.save && _.push('<a id="pv_save_to_me" onclick="Photoview.savePhoto()">' + getLang("photos_pv_act_save") + "</a>"), !cur.pvIsLightMode &&
+                        "</a>"), e.actions.save && _.push('<a id="pv_save_to_me" onclick="Photoview.savePhoto()">' + getLang("photos_pv_act_save") + "</a>"), cur.pvShowBottomActions &&
                     !a) {
                     var m = [],
                         w = [];
@@ -582,9 +583,10 @@ var Photoview = {
                             b += "sep" == e ? '<div class="pv_more_act_item_sep"></div>' : '<div class="pv_more_act_item" onmouseover="' + (e[3] || "") + '" onclick="' + (
                                 e[2] || "") + '" id="pv_more_act_' + e[0] + '">' + e[1] + "</div>"
                         }), b += '<a class="pv_more_act_item" id="pv_more_act_download" target="_blank" href="' + Photoview.genData(e, "w")
-                        .src + '">' + getLang("photos_pv_act_open_original") + "</a>", b = '<div class="pv_more_acts">' + b + "</div>", m.length && (m = JSON.stringify(m), m =
-                            m.replace(/\"/g, "&quot;"), _.push('<a class="pv_actions_more" data-items="' + m + '">' + getLang("photos_actions_more") + "</a>")), _ = _.join(
-                            '<span class="divider"></span>'), cur.pvBottomActions.innerHTML = _;
+                        .src + '">' + getLang("photos_pv_act_open_original") + "</a>", b = '<div class="pv_more_acts">' + b + "</div>", m.length ? (m = JSON.stringify(m), m =
+                            m.replace(/\"/g, "&quot;"), _.push('<a class="pv_actions_more" data-items="' + m + '">' + getLang("photos_actions_more") + "</a>")) : inArray(nav.objLoc[
+                            0], ["support", "helpdesk"]) && _.push('<a id="pv_more_act_download" target="_blank" href="' + Photoview.genData(e, "w")
+                            .src + '">' + getLang("photos_pv_act_open_original") + "</a>"), _ = _.join('<span class="divider"></span>'), cur.pvBottomActions.innerHTML = _;
                     var T = geByClass1("pv_actions_more");
                     T && (cur.pvMoreActionsTooltip = new ElementTooltip(T, {
                         id: "pv_more_acts_tt",
@@ -1702,8 +1704,9 @@ var Photoview = {
             }, {
                 onDone: function(o, e, i, p) {
                     a.tags = o, a.tagged = e, a.tagshtml = i, a.taginfo = a.tagid = !1, t == cur.pvListId && r == cur.pvIndex && (Photoview.setTags(i), (!a.taginfo &&
-                        a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink), cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel",
-                        "pv_prof_done"), Photoview.toggleTopInfoPanel(!1))
+                            a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink), cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel",
+                            "pv_prof_done"),
+                        Photoview.toggleTopInfoPanel(!1))
                 },
                 showProgress: function() {
                     lockButton(e)
@@ -1715,7 +1718,7 @@ var Photoview = {
         },
         toProfileTag: function() {
             var o = cur.pvData[cur.pvListId][cur.pvIndex].tagged[vk.id];
-            o && !cur.pvTagger && Photoview.showTag(o);
+            o && !cur.pvTagger && Photoview.showTag(o)
         },
         showTag: function(o) {
             if (clearTimeout(cur.pvHidingTag), cur.pvShowingTag != o) {

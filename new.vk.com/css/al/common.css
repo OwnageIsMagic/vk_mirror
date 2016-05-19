@@ -553,8 +553,7 @@ a .num_delim {
     display: inline-block;
     _overflow: hidden;
     vertical-align: top;
-    zoom: 1;
-    *display: inline
+    zoom: 1
 }
 
 .sl_nowrap {
@@ -946,7 +945,6 @@ h4 span,
 .button_light_gray {
     border: 0;
     display: inline-block;
-    *display: inline;
     position: relative;
     line-height: normal;
     zoom: 1
@@ -961,7 +959,6 @@ a.button_link:hover {
 
 .as_button {
     padding: 7px 16px 8px;
-    *padding: 7px 17px 8px;
     font-size: 12px;
     line-height: 15px
 }
@@ -971,11 +968,9 @@ a.button_link:hover {
 .button_light_gray button,
 .flat_button {
     padding: 7px 16px 8px;
-    *padding: 7px 17px 8px;
     margin: 0;
     font-size: 12px;
     display: inline-block;
-    *display: inline;
     zoom: 1;
     cursor: pointer;
     white-space: nowrap;
@@ -989,7 +984,6 @@ a.button_link:hover {
     background-color: #6287ae;
     color: #fff;
     border: 0;
-    *border: 0;
     border-radius: 2px;
     box-sizing: border-box
 }
@@ -1126,9 +1120,7 @@ a.button_link:hover {
 
 .button_big_width.flat_button {
     padding-left: 32px;
-    padding-right: 32px;
-    *padding-left: 32px;
-    *padding-right: 32px
+    padding-right: 32px
 }
 
 .button_wide {
@@ -1739,7 +1731,6 @@ a.ad_box_new:hover {
 .left_hide_button {
     position: absolute;
     margin: -3px 0 0 145px;
-    *margin-left: 60px;
     width: 19px;
     height: 14px;
     background: url(/images/icons/common.png?5) no-repeat 5px -26px;
@@ -1815,8 +1806,7 @@ a.ad_box_new:hover {
     opacity: 0;
     filter: alpha(opacity=0);
     -o-transition: opacity 200ms linear;
-    transition: opacity 200ms linear;
-    *display: none
+    transition: opacity 200ms linear
 }
 
 .left_app_block:hover .left_app_play {
@@ -3099,7 +3089,6 @@ body.no_stl #stl_bg {
 
 .__audio_performer {
     display: inline-block;
-    *display: inline;
     vertical-align: top;
     max-width: 65%;
     font-weight: 600
@@ -3604,7 +3593,6 @@ body.no_stl #stl_bg {
 
 .summary_tab3 {
     max-width: 230px;
-    *display: inline;
     height: 15px;
     overflow: hidden;
     color: #33567f;
@@ -4054,7 +4042,6 @@ ul.t0 li.active_link a b.tl2 {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     display: inline-block;
-    *display: inline;
     zoom: 1
 }
 
@@ -4564,7 +4551,6 @@ em.highlight {
     padding-left: 7px;
     margin-left: 7px;
     background: url(/images/icons/mobile.png?1) no-repeat 0 3px;
-    *zoom: 1;
     cursor: pointer
 }
 

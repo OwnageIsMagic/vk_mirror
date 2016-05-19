@@ -2443,7 +2443,7 @@ a.photos_tt_edit:hover {
 .photos_choose_more,
 .photos_choose_more_albums {
     display: block;
-    background: #eef0f2;
+    background: #e9edf1;
     text-align: center;
     color: #738392
 }
@@ -2451,6 +2451,11 @@ a.photos_tt_edit:hover {
 .photos_choose_more_albums {
     padding: 8px;
     margin: 10px 25px 0px
+}
+
+.photos_choose_more.photos_choose_more_loading {
+    background: #e9edf1 url(/images/upload.gif) no-repeat 50%;
+    color: transparent
 }
 
 .photos_choose_more:hover,

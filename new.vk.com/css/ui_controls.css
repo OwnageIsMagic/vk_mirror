@@ -181,7 +181,6 @@
     vertical-align: top;
     padding: 0;
     margin: 3px 0 0 2px!important;
-    *margin-top: 3px!important;
     margin: 0
 }
 
@@ -525,17 +524,13 @@ a.dd_link {
     white-space: nowrap;
     padding-right: 17px;
     line-height: 1.27em;
-    *line-height: 1.18em;
-    *padding-right: 16px;
-    background: #6d8fb3 url(/images/flydead.gif) no-repeat right -13px;
-    *background-position: -14px right
+    background: #6d8fb3 url(/images/flydead.gif) no-repeat right -13px
 }
 
 .dd_menu_header.leftArrow div {
     background: #6d8fb3 url(/images/flydead.gif) no-repeat 1px -13px;
     padding-right: 5px;
-    padding-left: 16px;
-    *background-position: 14px left
+    padding-left: 16px
 }
 
 .dd_header_hover {
@@ -546,7 +541,6 @@ a.dd_link {
 
 .dd_header_hover div {
     background: #dae1e8 url(/images/flydead.gif) no-repeat right 5px;
-    *background-position: 6px right;
     color: #2b587a;
     border-color: #dae1e8
 }
@@ -576,7 +570,6 @@ x:-moz-any-link {
     line-height: 1.09em;
     padding: 4px 6px 0;
     height: 18px;
-    *height: 17px;
     white-space: nowrap;
     cursor: pointer;
     background-repeat: no-repeat
