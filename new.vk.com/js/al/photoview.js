@@ -584,13 +584,15 @@ var Photoview = {
                         }), b += '<a class="pv_more_act_item" id="pv_more_act_download" target="_blank" href="' + Photoview.genData(e, "w")
                         .src + '">' + getLang("photos_pv_act_open_original") + "</a>", b = '<div class="pv_more_acts">' + b + "</div>", m.length && (m = JSON.stringify(m), m =
                             m.replace(/\"/g, "&quot;"), _.push('<a class="pv_actions_more" data-items="' + m + '">' + getLang("photos_actions_more") + "</a>")), _ = _.join(
-                            '<span class="divider"></span>'), cur.pvBottomActions.innerHTML = _, cur.pvMoreActionsTooltip = new ElementTooltip(geByClass1("pv_actions_more"), {
-                            id: "pv_more_acts_tt",
-                            to: "down",
-                            elClassWhenTooltip: "pv_more_shown",
-                            content: P + b,
-                            offset: [0, -5]
-                        })
+                            '<span class="divider"></span>'), cur.pvBottomActions.innerHTML = _;
+                    var T = geByClass1("pv_actions_more");
+                    T && (cur.pvMoreActionsTooltip = new ElementTooltip(T, {
+                        id: "pv_more_acts_tt",
+                        to: "down",
+                        elClassWhenTooltip: "pv_more_shown",
+                        content: P + b,
+                        offset: [0, -5]
+                    }))
                 }
                 Photoview.updatePhotoDimensions(), extend(cur, {
                         pvTagLink: ge("pv_tag_link"),
@@ -682,7 +684,7 @@ var Photoview = {
                             duration: 1e3
                         })
                     }) : (val(ge("pv_fs_img_wrap"), '<img src="' + o.src + '" />'), e = Photoview.fullscreenOnLoad), Photoview.pvCanvasUpdate(!0), t.onload = e, t.src = o.src,
-                    window.FullscreenPV && FullscreenPV.updateInfo();
+                    window.FullscreenPV && FullscreenPV.updateInfo()
             }
         },
         updateLoc: function() {
@@ -1713,11 +1715,10 @@ var Photoview = {
         },
         toProfileTag: function() {
             var o = cur.pvData[cur.pvListId][cur.pvIndex].tagged[vk.id];
-            o && !cur.pvTagger && Photoview.showTag(o)
+            o && !cur.pvTagger && Photoview.showTag(o);
         },
         showTag: function(o) {
-            if (clearTimeout(cur.pvHidingTag),
-                cur.pvShowingTag != o) {
+            if (clearTimeout(cur.pvHidingTag), cur.pvShowingTag != o) {
                 var e = clone(cur.pvData[cur.pvListId][cur.pvIndex].tags[o]);
                 each(e, function(o, t) {
                     var r = cur[o % 2 ? "pvPhHeight" : "pvPhWidth"];

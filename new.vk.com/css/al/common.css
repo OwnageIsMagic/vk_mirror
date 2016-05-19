@@ -5774,8 +5774,8 @@ button.ui_load_more_btn {
     display: none
 }
 
-.audio_search_rows .audio_row.hq .audio_hq_label,
-.ctrl_key_pressed .audio_row.hq .audio_hq_label {
+.audio_hq_label_show .audio_row.hq .audio_hq_label,
+.audio_search_rows .audio_row.hq .audio_hq_label {
     display: inline-block;
     width: 15px;
     height: 11px;

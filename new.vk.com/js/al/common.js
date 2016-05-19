@@ -2191,7 +2191,8 @@ var KEY = window.KEY = {
     ESC: 27,
     PAGEUP: 33,
     PAGEDOWN: 34,
-    SPACE: 32
+    SPACE: 32,
+    CTRL: 17
 };
 
 function addEvent(elem, types, handler, custom, context, useCapture) {
@@ -6654,16 +6655,6 @@ if (!browser.mobile && !vk.host.match(/snapster\.io/)) {
                 Chat.showFriends();
             }
         }
-
-        if (e.ctrlKey) {
-            addClass(document.body, 'ctrl_key_pressed');
-        }
-    });
-
-    addEvent(document, 'keyup', function globalKeyUp(e) {
-        if (!e.ctrlKey) {
-            removeClass(document.body, 'ctrl_key_pressed');
-        }
     });
 }
 
@@ -9984,7 +9975,7 @@ var mobilePromo = showBox.pbind('al_login.php', {
 });
 
 function mobileOnlineTip(el, opts) {
-    var sh = (opts.right ? 278 : 35) + (browser.opera ? 1 : 0);
+    var sh = (opts.right ? 289 : 35) + (browser.opera ? 1 : 0);
     return showTooltip(el, {
         url: 'al_login.php',
         params: {

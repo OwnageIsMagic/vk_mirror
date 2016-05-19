@@ -4531,11 +4531,15 @@ textarea.page_poll_export_code {
 
 .page_avatar {
     text-align: center;
-    max-height: 300px;
+    max-height: 500px;
     height: auto!important;
-    height: 300px;
+    height: 500px;
     overflow: hidden;
     border-radius: 2px
+}
+
+.profile_content .page_avatar {
+    max-height: 300px
 }
 
 .page_avatar_img {

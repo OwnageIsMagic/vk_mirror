@@ -175,8 +175,8 @@
 }
 
 .tt_w .tt_text {
-    padding: 7px 12px 9px;
-    line-height: 18px
+    padding: 12px 14px 13px;
+    line-height: 17px
 }
 
 .tt_w.tt_black {
@@ -302,7 +302,7 @@
 .tt .tt_text {
     background: #fff;
     border: 1px solid #c5d0db;
-    padding: 7px 12px 9px;
+    padding: 12px 14px 13px;
     color: #222
 }
 
@@ -347,7 +347,7 @@
 
 .tt_w.mobile_tt_right:after,
 .tt_w.mobile_tt_right:before {
-    left: 280px
+    left: 291px
 }
 
 .gifts_tt .toup1 .bottom_pointer,
@@ -376,21 +376,42 @@
 .promoted_post_tt .header,
 .verified_tt_header,
 .wall_tt .header {
-    color: #45688e;
+    color: #42648b;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow: hidden;
-    margin: 0px 0px 6px
+    margin: 0px 0px 9px
 }
 
-.mott_header a {
-    color: #45688e
+.mott_header a,
+.verified_tt_header a {
+    color: #42648b
 }
 
 .mott_text,
 .verified_tt_text {
-    line-height: 160%
+    line-height: 17px
+}
+
+.mott_apps {
+    padding: 12px 0 3px
+}
+
+.mott_app {
+    display: inline-block;
+    background: url(/images/icons/mob_devices.png) no-repeat 0 1px;
+    padding-left: 20px;
+    margin-right: 20px;
+    line-height: 15px
+}
+
+.mott_app.mott_app_ios {
+    background-position: 0 -19px
+}
+
+.mott_app.mott_app_wp {
+    background-position: 0 -36px
 }
 
 .gifts_tt_wrap {
@@ -462,10 +483,8 @@
 }
 
 .mott_content {
-    max-width: 315px;
-    width: auto!important;
-    width: 315px;
-    padding: 10px;
+    width: 300px;
+    padding: 14px;
     overflow: hidden
 }
 
@@ -512,7 +531,7 @@
     max-width: 270px;
     width: auto!important;
     width: 270px;
-    padding: 10px;
+    padding: 14px;
     overflow: hidden
 }
 
