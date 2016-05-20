@@ -1191,8 +1191,7 @@ var photos = {
             act: "choose_uploaded"
         }, o), {
             onDone: function(o, e) {
-                var t = curBox();
-                t && t.hide(), photos.showEditView(o, e)
+                photos.showEditView(o, e)
             }
         })
     },
@@ -1257,7 +1256,7 @@ var photos = {
     },
     showEditView: function(o, e) {
         cur.webcamPhotoMedia = o, cur.pvPhoto = null, cur.uploadPhotoData = e, stManager.add(["photoview.js"], function() {
-            Photoview.openEditor(o, e.editable.sizes.x[0])
+            cur.fromWebcam = !0, Photoview.openEditor(o, e.editable.sizes.x[0])
         })
     },
     onFiltersSave: function() {

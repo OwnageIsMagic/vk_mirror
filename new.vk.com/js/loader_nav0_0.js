@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 714810412801,
+    'nav': 704255624114,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 1986629707,
@@ -135,10 +135,10 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 4213733926,
+    'audioplayer.js': 2415488154,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 1946647925,
+    'audio.js': 2803225811,
     'audio.css': 237683046,
     'gifts.css': 4269209150,
     'gifts.js': 2778120873,
@@ -156,7 +156,7 @@ var stVersions = {
     'usorter.js': 2212338539,
     'phototag.js': 3445996780,
     'phototag.css': 3643271466,
-    'photoview.js': 2928198781,
+    'photoview.js': 770275723,
     'photoview.css': 1066620912,
     'fullscreen_pv.js': 1738361993,
     'fullscreen_pv.css': 4174249355,
@@ -169,7 +169,7 @@ var stVersions = {
     'board.js': 3457684991,
     'board.css': 877836109,
     'photos.css': 2377494850,
-    'photos.js': 1034435199,
+    'photos.js': 186138862,
     'photos_add.css': 2557532249,
     'photos_add.js': 2100132176,
     'wkpoll.js': 3872977013,
@@ -342,7 +342,7 @@ var stVersions = {
     'ads.js': 4240687553,
     'ads_payments.js': 899652112,
     'ads_edit.css': 1391889050,
-    'ads_edit.js': 2657547981,
+    'ads_edit.js': 763237109,
     'ads_moder.css': 2214583942,
     'ads_moder.js': 3337341676,
     'ads_tagger.js': 468647746,
@@ -369,7 +369,7 @@ var stVersions = {
     'btagger.js': 2682888485,
     'btagger.css': 520431514,
     'filters.js': 1865892730,
-    'filters_pe.js': 3560346702,
+    'filters_pe.js': 1406401216,
     'pe.js': 2387291388,
     'pe.css': 660979626,
     'dev.js': 632513723,
@@ -481,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 6268;
+var _rnd = 9949;

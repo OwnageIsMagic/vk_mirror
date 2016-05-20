@@ -716,7 +716,7 @@ var Photoview = {
                 o !== !0 && (Photoview.updateSize(), Photoview.show(cur.pvListId, cur.pvIndex)))
         },
         fullscreen: function(o) {
-            if (!cur.pvCanvas) {
+            if (!cur.pvCanvas && !cur.pe) {
                 var e = cur.pvCanvas = bodyNode.appendChild(ce("div", {
                         className: "fixed",
                         id: "pv_fullscreen",

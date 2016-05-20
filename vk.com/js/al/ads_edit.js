@@ -1492,6 +1492,7 @@ AdsViewEditor.prototype.init = function(options, editor, targetingEditor, params
         },
         link_domain: {
             value: '',
+            value_escaped: '',
             value_p: '',
             value_a: '',
             value_k: '',
@@ -4797,7 +4798,7 @@ AdsViewEditor.prototype.getPreviewDomain = function() {
             }
             var linkDomain = linkUrlInfo.domain;
             if (!linkDomain.match(/(^|\.)(vkontakte\.ru|vk\.com)$/)) {
-                var linkDomainInfo = this.getLinkInfo(this.params.link_domain.value);
+                var linkDomainInfo = this.getLinkInfo(this.params.link_domain.value_escaped);
                 if (!linkDomainInfo) {
                     return '';
                 }

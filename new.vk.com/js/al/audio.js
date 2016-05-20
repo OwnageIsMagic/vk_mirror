@@ -650,8 +650,11 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             i = (getXY(e)[1], getSize(e)[1] + getSize(r.searchInputEl)[1]),
             t = 14,
             o = geByClass1("_audio_layer_menu_wrap", r._container),
-            a = getSize(o)[1];
-        a > i ? setStyle(e, "padding-bottom", a - i + t - 1) : setStyle(e, "padding-bottom", null)
+            a = getSize(o)[1],
+            s = geByClass1("_audio_layer_rows_wrap", r._container),
+            n = getSize(s)[1],
+            d = Math.max(a, n);
+        d > i ? setStyle(e, "padding-bottom", d - i + t - 1) : setStyle(e, "padding-bottom", null)
     }
     var a = geByClass1("_audio_playlist", this._container),
         s = geByClass1("_ui_audio_load_more", this._container),
