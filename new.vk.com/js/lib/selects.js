@@ -510,6 +510,7 @@ function ClassSelect(input, container, options) {
         hide: hide,
         visible: true,
         multiselect: false,
+        zeroPlaceholder: true,
         placeholder: getLang('select_class_not_selected'),
         country: 0,
         school: 0,

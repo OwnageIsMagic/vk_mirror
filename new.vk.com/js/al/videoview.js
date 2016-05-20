@@ -151,7 +151,7 @@ var Videoview = {
             },
             onVideoStreamPlaying: function(e, i, o) {
                 if (e + "_" + i == cur.pinnedVideo) {
-                    var t = ge("video_player") || window.html5video;
+                    var t = window.mvcur && mvcur.player || cur.videoInlinePlayer || ge("video_player") || window.html5video;
                     if (!(t && t.isTouchedByUser && t.isTouchedByUser())) return;
                     cur.pinnedVideoDestroyHandlers()
                 }

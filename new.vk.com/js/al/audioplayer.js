@@ -53,7 +53,7 @@ function AudioPlayer() {
             };
         AudioPlayerHTML5.isSupported() ? this._impl = new AudioPlayerHTML5(e) : browser.flash && (this._impl = new AudioPlayerFlash(e)), this._implSetVolume(0), this._initEvents(),
             i._restoreVolumeState(), setTimeout(function() {
-                i._restoreState(), AudioUtils.toggleAudioHQBodyClass()
+                i._restoreState(), AudioUtils.toggleAudioHQBodyClass(), i.updateCurrentPlaying()
             })
     }
 }
@@ -1357,7 +1357,7 @@ AudioPlayer.tabIcons = {
         var e = domClosest("_audio_row", t),
             o = i && (hasClass(i.target, "audio_lyrics") || domClosest("_audio_duration_wrap", i.target) || domClosest("_audio_inline_player", i.target) || domClosest(
                 "audio_performer", i.target));
-        if (cur._sliderMouseUpNowEl && cur._sliderMouseUpNowEl == geByClass1("audio_inline_player_progress", e) && (o = !0), delete cur._sliderMouseUpNowEl, o) return !1;
+        if (cur._sliderMouseUpNowEl && cur._sliderMouseUpNowEl == geByClass1("audio_inline_player_progress", e) && (o = !0), delete cur._sliderMouseUpNowEl, o) return !0;
         var a = AudioUtils.getAudioFromEl(e, !0);
         if (AudioUtils.isClaimedAudio(a)) {
             var s = AudioUtils.getAudioExtra(a),

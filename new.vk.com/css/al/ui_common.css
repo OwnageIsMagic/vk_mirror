@@ -1169,6 +1169,29 @@ a.ui_search_custom_link {
     border-color: #c9d0d6
 }
 
+.prefix_big_text {
+    height: 35px;
+    font-size: 14px
+}
+
+.prefix_big_text .prefix_input_prefix {
+    padding: 6px 12px 8px;
+    padding-right: 0;
+    line-height: 19px
+}
+
+.prefix_big_text .prefix_input {
+    padding: 6px 12px 8px;
+    padding-left: 0;
+    font-size: 14px;
+    height: 33px;
+    line-height: 19px
+}
+
+.prefix_big_text .prefix_input_border {
+    border-radius: 3px
+}
+
 .ui_actions_menu_wrap {
     cursor: pointer
 }

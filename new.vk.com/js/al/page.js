@@ -1187,7 +1187,7 @@ var Page = {
                 autoplay: 1,
                 addParams: {
                     post_id: postId,
-                    mute: 1
+                    from_autoplay: 1
                 }
             }, null, thumb);
 
