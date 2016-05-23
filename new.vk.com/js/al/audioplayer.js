@@ -202,7 +202,7 @@ var AudioUtils = {
             n = clean(JSON.stringify(t))
             .replace(/\$\&/, "$$$&"),
             d = getTemplate("audio_row", t);
-        return d = d.replace(/%cls%/, a.join(" ")), d = d.replace(/%duration%/, r), d = d.replace(/%performer_escaped%/, u), d = d.replace(/%serialized%/, n)
+        return d = d.replace(/%cls%/, a.join(" ")), d = d.replace(/%duration%/, r), d = d.replace(/%performer_escaped%/g, u), d = d.replace(/%serialized%/, n)
     },
     isRecomAudio: function(t) {
         return t = AudioUtils.asObject(t), t.flags & AudioUtils.AUDIO_ITEM_RECOMS_BIT

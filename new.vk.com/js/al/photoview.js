@@ -1279,13 +1279,15 @@ var Photoview = {
             }
         },
         onKeyDown: function(o) {
-            return o.returnValue === !1 ? !1 : o.keyCode == KEY.ESC && cur.pvEditing ? (Photoview.cancelInline(), cancelEvent(o)) : (o.altKey && o.keyCode == KEY.RETURN &&
-                Photoview.canFullscreen() && (cur.pvCanvas ? Photoview.fullscreenStop() : Photoview.fullscreen()), o.keyCode == KEY.SPACE && cur.pvCanvas && window.FullscreenPV &&
-                (FullscreenPV.startSlide(), FullscreenPV.showControls(!0)), window.Emoji && Emoji.shown || o.target && ("INPUT" == o.target.tagName || "TEXTAREA" == o.target
-                    .tagName || "DIV" == o.target.tagName && o.target.contentEditable) ? !0 : o.keyCode == KEY.ESC ? (cur.pvCanvas ? Photoview.fullscreenStop() : cur.pvTagger ?
-                    Phototag.stopTag() : o.vkCanceled || curBox() || Photoview.hide(0), cancelEvent(o)) : (cur.pvTagger || boxQueue.count() || cur.pvComment && cur.pvComment
-                    .focused || (o.keyCode == KEY.RIGHT ? Photoview.show(cur.pvListId, cur.pvIndex + 1) : o.keyCode == KEY.LEFT && Photoview.show(cur.pvListId, cur.pvIndex -
-                        1)), cur.pvCanvas && window.FullscreenPV ? !1 : void 0))
+            if (o.returnValue === !1) return !1;
+            if (o.keyCode == KEY.ESC && cur.pvEditing) return Photoview.cancelInline(), cancelEvent(o);
+            o.altKey && o.keyCode == KEY.RETURN && Photoview.canFullscreen() && (cur.pvCanvas ? Photoview.fullscreenStop() : Photoview.fullscreen()), o.keyCode == KEY.SPACE &&
+                cur.pvCanvas && window.FullscreenPV && (FullscreenPV.startSlide(), FullscreenPV.showControls(!0));
+            var e = o.target.contentEditable;
+            return window.Emoji && Emoji.shown || o.target && ("INPUT" == o.target.tagName || "TEXTAREA" == o.target.tagName || "DIV" == o.target.tagName && e && "inherit" !=
+                e) ? !0 : o.keyCode == KEY.ESC ? (cur.pvCanvas ? Photoview.fullscreenStop() : cur.pvTagger ? Phototag.stopTag() : o.vkCanceled || curBox() || Photoview.hide(
+                0), cancelEvent(o)) : (cur.pvTagger || boxQueue.count() || cur.pvComment && cur.pvComment.focused || (o.keyCode == KEY.RIGHT ? Photoview.show(cur.pvListId,
+                cur.pvIndex + 1) : o.keyCode == KEY.LEFT && Photoview.show(cur.pvListId, cur.pvIndex - 1)), cur.pvCanvas && window.FullscreenPV ? !1 : void 0)
         },
         updateVerticalPosition: function() {
             if (cur.pvCont) {
@@ -1704,9 +1706,8 @@ var Photoview = {
             }, {
                 onDone: function(o, e, i, p) {
                     a.tags = o, a.tagged = e, a.tagshtml = i, a.taginfo = a.tagid = !1, t == cur.pvListId && r == cur.pvIndex && (Photoview.setTags(i), (!a.taginfo &&
-                            a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink), cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel",
-                            "pv_prof_done"),
-                        Photoview.toggleTopInfoPanel(!1))
+                            a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink),
+                        cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel", "pv_prof_done"), Photoview.toggleTopInfoPanel(!1))
                 },
                 showProgress: function() {
                     lockButton(e)

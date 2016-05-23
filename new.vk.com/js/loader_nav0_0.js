@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 701382550138,
+    'nav': 703047671567,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 1986629707,
@@ -124,7 +124,7 @@ var stVersions = {
     'uncommon.css': 27085503,
     'filebutton.css': 2582548248,
     'filebutton.js': 1457823047,
-    'lite.js': 2055407961,
+    'lite.js': 1155182394,
     'lite.css': 3640558949,
     'ie6.css': 1054141387,
     'ie7.css': 532233945,
@@ -135,10 +135,10 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 2369526827,
+    'audioplayer.js': 3163613160,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 2458953966,
+    'audio.js': 4291559717,
     'audio.css': 237683046,
     'gifts.css': 4269209150,
     'gifts.js': 2778120873,
@@ -156,7 +156,7 @@ var stVersions = {
     'usorter.js': 2212338539,
     'phototag.js': 3445996780,
     'phototag.css': 3643271466,
-    'photoview.js': 770275723,
+    'photoview.js': 355859504,
     'photoview.css': 1066620912,
     'fullscreen_pv.js': 1738361993,
     'fullscreen_pv.css': 4174249355,
@@ -198,15 +198,15 @@ var stVersions = {
     'invite.js': 2046983763,
     'prereg.js': 1684494884,
     'index.css': 1337048832,
-    'index.js': 3228834875,
-    'join.css': 2466026705,
-    'join.js': 2845989546,
+    'index.js': 1152958183,
+    'join.css': 1956968452,
+    'join.js': 4143458120,
     'intro.css': 632121273,
     'post.css': 3834673596,
     'module.css': 2271964242,
     'owner_photo.js': 777617564,
     'owner_photo.css': 191725357,
-    'page.js': 1767144457,
+    'page.js': 141655097,
     'page.css': 582846638,
     'page_help.css': 439817088,
     'public.css': 1472241584,
@@ -481,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 4711;
+var _rnd = 9775;

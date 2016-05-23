@@ -2636,9 +2636,8 @@ var Wall = {
         }
         Wall.updateMentionsIndex();
         setTimeout(function() {
-            getAudioPlayer(function(ap) {
-                ap.updateCurrentPlaying();
-            });
+            getAudioPlayer()
+                .updateCurrentPlaying();
         }, 10);
     },
     repliesSideSetup: function(post) {
