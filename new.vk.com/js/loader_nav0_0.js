@@ -113,7 +113,7 @@ var navMap = {
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
 };
 var stVersions = {
-    'nav': 704255624114,
+    'nav': 701382550138,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 1986629707,
@@ -135,10 +135,10 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 2415488154,
+    'audioplayer.js': 2369526827,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 2803225811,
+    'audio.js': 2458953966,
     'audio.css': 237683046,
     'gifts.css': 4269209150,
     'gifts.js': 2778120873,
@@ -150,7 +150,7 @@ var stVersions = {
     'box.js': 986491972,
     'rate.css': 768419415,
     'tooltips.js': 3337223331,
-    'tooltips.css': 3630457622,
+    'tooltips.css': 4082385397,
     'sorter.js': 2514645581,
     'qsorter.js': 2821441961,
     'usorter.js': 2212338539,
@@ -188,7 +188,7 @@ var stVersions = {
     'video_upload.js': 2759837070,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 1912601693,
+    'videoplayer.js': 2168365281,
     'videoplayer.css': 547330273,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
@@ -204,10 +204,10 @@ var stVersions = {
     'intro.css': 632121273,
     'post.css': 3834673596,
     'module.css': 2271964242,
-    'owner_photo.js': 2124522904,
+    'owner_photo.js': 777617564,
     'owner_photo.css': 191725357,
     'page.js': 1767144457,
-    'page.css': 3201316304,
+    'page.css': 582846638,
     'page_help.css': 439817088,
     'public.css': 1472241584,
     'public.js': 1370745423,
@@ -240,7 +240,7 @@ var stVersions = {
     'im.css': 2034980490,
     'imn.js': 1775578504,
     'im.js': 4271552496,
-    'emoji.js': 556081479,
+    'emoji.js': 2743385565,
     'wide_dd.css': 3273211401,
     'wide_dd.js': 2661848751,
     'writebox.css': 3912883473,
@@ -314,8 +314,8 @@ var stVersions = {
     'tickets.css': 2574142171,
     'faq.js': 997292752,
     'faq.css': 551689430,
-    'meminfo.css': 3946771123,
-    'groupinfo.css': 2403637487,
+    'meminfo.css': 413479089,
+    'groupinfo.css': 2377869286,
     'bugs.js': 2994463564,
     'bugs.css': 444001557,
     'login.css': 1572258900,
@@ -387,7 +387,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 849758697,
     'ui.js': 3053181925,
-    'ui_common.js': 1042641793,
+    'ui_common.js': 3189240781,
     'ui_common.css': 3250320157,
     'ui_media_selector.js': 4129913599,
     'ui_media_selector.css': 4209267876,
@@ -481,4 +481,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 9949;
+var _rnd = 4711;

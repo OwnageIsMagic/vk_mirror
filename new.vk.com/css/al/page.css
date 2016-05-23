@@ -146,6 +146,11 @@ div.wall_module .ext_video div {
     cursor: pointer
 }
 
+.big_wall_cards .post:first-child,
+.big_wall_phone_info .post:first-child {
+    border-top: 1px solid #ebedf0
+}
+
 .wall_module .delete_post_wrap {
     position: relative;
     z-index: 10
@@ -1297,7 +1302,8 @@ div.wall_module .ext_video div {
     margin-bottom: -20px
 }
 
-#like_wall_preview.wall_module .wall_text .page_media_thumbed_link:last-child {
+#like_wall_preview.wall_module .wall_text .page_media_thumbed_link:last-child,
+.wall_module .suggested .wall_text .page_media_thumbed_link:last-child {
     margin-bottom: 0
 }
 

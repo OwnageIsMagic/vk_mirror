@@ -644,74 +644,76 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             limitBottomMove: !0
         }, n))
     }
-}, AudioPage.prototype._initAutoList = function(e, i, t) {
-    function o() {
-        var e = geByClass1("_audio_rows", r._container),
-            i = (getXY(e)[1], getSize(e)[1] + getSize(r.searchInputEl)[1]),
+}, AudioPage.prototype._updateLayerRowsBottomPadding = function() {
+    if (this.isLayer()) {
+        var e = geByClass1("_audio_rows", this._container);
+        setStyle(e, "padding-bottom", null);
+        var i = (getXY(e)[1], getSize(e)[1] + getSize(this.searchInputEl)[1]),
             t = 14,
-            o = geByClass1("_audio_layer_menu_wrap", r._container),
+            o = geByClass1("_audio_layer_menu_wrap", this._container),
             a = getSize(o)[1],
-            s = geByClass1("_audio_layer_rows_wrap", r._container),
-            n = getSize(s)[1],
-            d = Math.max(a, n);
-        d > i ? setStyle(e, "padding-bottom", d - i + t - 1) : setStyle(e, "padding-bottom", null)
+            s = geByClass1("_audio_layer_rows_wrap", this._container),
+            r = getSize(s)[1],
+            n = Math.max(a, r);
+        n > i ? setStyle(e, "padding-bottom", n - i + t - 1) : setStyle(e, "padding-bottom", null), this.getLayer()
+            .sb.update()
     }
-    var a = geByClass1("_audio_playlist", this._container),
-        s = geByClass1("_ui_audio_load_more", this._container),
-        r = this,
-        n = 50;
+}, AudioPage.prototype._initAutoList = function(e, i, t) {
+    var o = geByClass1("_audio_playlist", this._container),
+        a = geByClass1("_ui_audio_load_more", this._container),
+        s = this,
+        r = 50;
     this._autoList && this._autoList.destroy();
-    var d = 0;
-    this._autoList = new AutoList(a, {
+    var n = 0;
+    this._autoList = new AutoList(o, {
         isLayer: this.isLayer(),
         scrollNode: this.isLayer() ? geByClass1("audio_layer_rows_wrap", this._container) : window,
         renderImmediate: !0,
         rowClass: "_audio_row audio_feed_post",
         onNoMore: function() {
-            hide(s), r._updateEmptyPlaceholder(e)
+            hide(a), s._updateEmptyPlaceholder(e)
         },
         onHasMore: function() {
-            r._updateEmptyPlaceholder(e)
+            s._updateEmptyPlaceholder(e)
         },
         onRendered: function() {
-            t(!1), r.isLayer() && (o(), r.getLayer()
-                .sb.update()), r.ap.updateCurrentPlaying()
+            t(!1), s._updateLayerRowsBottomPadding(), s.ap.updateCurrentPlaying()
         },
-        onNeedRows: function(o, l, u, _) {
+        onNeedRows: function(d, l, u, _) {
             function h(e) {
                 if (e) {
-                    0 == l && (a.innerHTML = "");
+                    0 == l && (o.innerHTML = "");
                     var t = !1,
-                        s = !1;
+                        a = !1;
                     if (e.getType() == AudioPlaylist.TYPE_FEED && e != ap.getCurrentPlaylist()) g = e.getItemsList()
-                        .slice(l, l + n);
+                        .slice(l, l + r);
                     else {
                         c = e.getAudiosList()
-                            .slice(l, l + n);
+                            .slice(l, l + r);
                         var t = e.getType() == AudioPlaylist.TYPE_SEARCH,
-                            d = !1;
+                            n = !1;
                         if (t) {
                             var u = e.getSearchParams()
                                 .q;
                             u += " " + (parseLatin(u) || ""), u = trim(u.replace(/\)/g, "")
-                                .replace(/&/, "&amp;")), d = new RegExp("(\\s|^)(" + u.replace(vkIndexer.delimiter, "|")
+                                .replace(/&/, "&amp;")), n = new RegExp("(\\s|^)(" + u.replace(vkIndexer.delimiter, "|")
                                 .replace(/(^\||\|$|\?)/g, "") + ")", "gi")
                         }
                         each(c, function(i, o) {
                             t && l + i == e.getLocalFoundCount() && g.push("<h3>" + langNumeric(e.getTotalCount(), ap.langs.audio_global_search_found, !0) +
-                                "</h3>"), o = clone(o), o[AudioUtils.AUDIO_ITEM_INDEX_TITLE] = o[AudioUtils.AUDIO_ITEM_INDEX_TITLE].replace(d,
-                                "$1<em>$2</em>"), o[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER] = o[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER].replace(d,
+                                "</h3>"), o = clone(o), o[AudioUtils.AUDIO_ITEM_INDEX_TITLE] = o[AudioUtils.AUDIO_ITEM_INDEX_TITLE].replace(n,
+                                "$1<em>$2</em>"), o[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER] = o[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER].replace(n,
                                 "$1<em>$2</em>"), g.push(AudioUtils.drawAudio(o))
-                        }), s && (i.innerHTML = "", s = !1)
+                        }), a && (i.innerHTML = "", a = !1)
                     }
-                    if (o(g), !l && !r.isLayer()) {
+                    if (d(g), !l && !s.isLayer()) {
                         var _ = e.getTitle() || document.title;
                         document.title = replaceEntities(_.replace(/(<em>|<\/em>|<strong>|<\/strong>)/g, ""))
                     }
                 }
             }
             var c, g = [];
-            d = l, _ || t(!0), l > 0 && (show(s), lockButton(s)), e.load(l, function(e) {
+            n = l, _ || t(!0), l > 0 && (show(a), lockButton(a)), e.load(l, function(e) {
                 h(e)
             })
         }
@@ -949,7 +951,9 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                     block_id: i
                 })), val(s, t._blocks[i]), a.appendChild(s)), show(s), show(a)
             }
-        }), uiSearch.init("audio_friends_search")
+        }), uiSearch.init("audio_friends_search"), this._updateLayerRowsBottomPadding()
+}, AudioPage.prototype.onSubmenuToggle = function() {
+    this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype._updateLayerBottom = function() {}, AudioPage.prototype._loadMorePaginatedPlaylist = function(e, i, t) {
     if ("string" == typeof e && (e = this.ap.getPlaylist(e)), !e.has_more) return t && t(e);
     if (i * this.options.audioRowsPerPage < e.next_offset) return t && t(e);

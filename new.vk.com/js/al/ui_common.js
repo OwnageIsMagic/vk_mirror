@@ -158,16 +158,16 @@ var uiTabs = {
                     var r = domClosest(i.appendParentCls, n),
                         a = getXY(r),
                         h = getXY(l),
-                        c = se('<div class="' + l.className +
+                        u = se('<div class="' + l.className +
                             ' ui_actions_menu_dummy_wrap" onmouseover="uiActionsMenu.show(this);" onmouseout="uiActionsMenu.hide(this);"></div>');
-                    c.appendChild(n), r.appendChild(c), data(t, "dummyMenu", c), data(c, "origMenu", t), t = c;
-                    var d = intval(getStyle(n, "top")),
-                        u = intval(getStyle(n, "left")),
+                    u.appendChild(n), r.appendChild(u), data(t, "dummyMenu", u), data(u, "origMenu", t), t = u;
+                    var c = intval(getStyle(n, "top")),
+                        d = intval(getStyle(n, "left")),
                         p = intval(getStyle(n, "right")),
                         v = {
-                            top: h[1] - a[1] + d
+                            top: h[1] - a[1] + c
                         };
-                    if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + u, setStyle(n, v), i.processHoverCls) {
+                    if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + d, setStyle(n, v), i.processHoverCls) {
                         var _ = domClosest(i.processHoverCls, l);
                         addEvent(t, "mouseover", addClass.pbind(_, "hover")), addEvent(t, "mouseout", removeClass.pbind(_, "hover"))
                     }
@@ -216,10 +216,10 @@ var uiTabs = {
                 a = domPN(t);
             if (s && (n += getXY(a)[1] - getXY(e)[1]), hasClass(e, "_ui_rmenu_auto_expand")) {
                 var h = geByClass("_ui_rmenu_sublist", e),
-                    c = hasClass(t, "_ui_rmenu_subitem") ? gpeByClass("_ui_rmenu_sublist", t) : hasClass(domNS(t), "_ui_rmenu_sublist") ? domNS(t) : !1;
+                    u = hasClass(t, "_ui_rmenu_subitem") ? gpeByClass("_ui_rmenu_sublist", t) : hasClass(domNS(t), "_ui_rmenu_sublist") ? domNS(t) : !1;
                 each(h, function() {
-                    isVisible(this) && this !== c && (l.push(this), hide(this))
-                }), c && !isVisible(c) && (r.push(c), show(c)), n = t.offsetTop, each(l, function() {
+                    isVisible(this) && this !== u && (l.push(this), hide(this))
+                }), u && !isVisible(u) && (r.push(u), show(u)), n = t.offsetTop, each(l, function() {
                     show(this)
                 }), each(r, function() {
                     hide(this)
@@ -248,11 +248,17 @@ var uiTabs = {
             var e = gpeByClass("ui_rmenu", t);
             removeClass(t, "ui_rmenu_loading"), uiRightMenu.hideSliding(e)
         },
-        toggleSubmenu: function(t, e) {
-            var i, s, o = gpeByClass("ui_rmenu", e);
-            return "string" == typeof t ? s = geByClass1("_ui_rmenu_" + t + "_list", o) : (s = t, t = s.getAttribute("data-sublist-id")), i = geByClass1("_ui_rmenu_" + t +
-                "_toggle", o), s ? (void 0 !== e && uiRightMenu.hideSliding(o), i && toggleClass(i, "ui_rmenu_item_expanded", !isVisible(s)), slideToggle(s, s && getSize(s)[
-                1] ? 100 : 0), !1) : !1
+        toggleSubmenu: function(name, ref) {
+            var menu = gpeByClass("ui_rmenu", ref),
+                el, submenu;
+            if ("string" == typeof name ? submenu = geByClass1("_ui_rmenu_" + name + "_list", menu) : (submenu = name, name = submenu.getAttribute("data-sublist-id")), el =
+                geByClass1("_ui_rmenu_" + name + "_toggle", menu), !submenu) return !1;
+            void 0 !== ref && uiRightMenu.hideSliding(menu), el && toggleClass(el, "ui_rmenu_item_expanded", !isVisible(submenu)), slideToggle(submenu, submenu && getSize(
+                submenu)[1] ? 100 : 0);
+            var onToggle = domData(el, "on-toggle");
+            return onToggle && setTimeout(function() {
+                eval(onToggle)
+            }, 150), !1
         }
     },
     uiPageBlock = {
@@ -378,12 +384,12 @@ var uiTabs = {
                     if (a) {
                         var h = intval(getStyle(t, "width"));
                         !o && h && (setStyle(s, "height", getSize(i)[1]), setStyle(i, "width", h), addClass(i, "ui_search_fixed"));
-                        var c = Math.min(0, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(ge("page_layout"))[0]));
+                        var u = Math.min(0, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(ge("page_layout"))[0]));
                         if (setStyle(i, {
-                                marginLeft: c
+                                marginLeft: u
                             }), n) {
-                            var d = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
-                            e = Math.min(l, Math.max(-t.offsetHeight, d)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
+                            var c = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
+                            e = Math.min(l, Math.max(-t.offsetHeight, c)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
                         }
                     } else o && (setStyle(s, "height", ""), setStyle(i, {
                         top: "",
@@ -679,19 +685,19 @@ window.Scrollbar = window.Scrollbar || function() {
                     var h = function(t) {
                             this.isHorizontal ? cur.touchX = t.touches[0].pageX : cur.touchY = t.touches[0].pageY
                         }.bind(this),
-                        c = function(t) {
+                        u = function(t) {
                             return this.isHorizontal ? (cur.touchDiff = cur.touchX - (cur.touchX = t.touches[0].pageX), o.scrollLeft += cur.touchDiff, o.scrollLeft > 0 &&
                                 this.shown !== !1 && this.update(!0)) : (cur.touchDiff = cur.touchY - (cur.touchY = t.touches[0].pageY), o.scrollTop += cur.touchDiff,
                                 o.scrollTop > 0 && this.shown !== !1 && this.update(!0)), cancelEvent(t)
                         }.bind(this),
-                        d = function() {
+                        c = function() {
                             cur.animateInt = setInterval(function() {
                                 cur.touchDiff = .9 * cur.touchDiff, cur.touchDiff < 1 && cur.touchDiff > -1 ? clearInterval(cur.animateInt) : (o[self.scrollProp] +=
                                     cur.touchDiff, this.update(!0))
                             }.bind(this), 0)
                         }.bind(this);
-                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", c), addEvent(o, "touchend", d), this.destroyList.push(function() {
-                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", c), removeEvent(o, "touchend", d)
+                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", u), addEvent(o, "touchend", c), this.destroyList.push(function() {
+                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", u), removeEvent(o, "touchend", c)
                     })
                 }
                 addEvent(this.inner, "mousedown", this.mouseDown), this.options.nokeys ? this.onkeydown = l : addEvent(window, "keydown", l), this.destroyList.push(
@@ -864,9 +870,8 @@ window.Scrollbar = window.Scrollbar || function() {
             this.box.changed = !0;
             var i = e.id.match(/-?\d+/)[0],
                 s = !this.invertedSelection && this.selected[i] || this.invertedSelection && !this.selected[i];
-            if (toggleClass(e, "olist_item_wrap_on", !s),
-                this.selected[i] = !s || this.invertedSelection, this.selCnt += !s || this.invertedSelection ? 1 : -1, this.selTabUpdate(), this.onListClick && this.onListClick(
-                    e, s), this.scrollNode.scrollTop < 50) {
+            if (toggleClass(e, "olist_item_wrap_on", !s), this.selected[i] = !s || this.invertedSelection, this.selCnt += !s || this.invertedSelection ? 1 : -1, this.selTabUpdate(),
+                this.onListClick && this.onListClick(e, s), this.scrollNode.scrollTop < 50) {
                 var o = this.filter;
                 setTimeout(elfocus.pbind(o), 100)
             }
@@ -934,15 +939,15 @@ window.Scrollbar = window.Scrollbar || function() {
                 return (!a && o[t] || a && !o[t]) && (h.push(this), h.length > e + l) ? !1 : void 0
             }), s = h
         }
-        var c = s.length;
+        var u = s.length;
         s = s.slice(e, e + l);
-        var d = [];
+        var c = [];
         if (t) {
             t = clean(t);
-            var u = escapeRE(t),
+            var d = escapeRE(t),
                 p = parseLatin(t);
-            null != p && (u = u + "|" + escapeRE(p));
-            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + u + "))(?![^<>]*>)(?![^&;]+;)", "gi")
+            null != p && (d = d + "|" + escapeRE(p));
+            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
         var _ = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
@@ -962,9 +967,9 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                d.push(rs(n, _(this, t, r.invertedSelection, o, v)))
-            }), e || d.length || d.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
-                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), d = d.join(" "), e ? this.olistEl.appendChild(cf(d)) : val(this.olistEl, d), c > e +
+                c.push(rs(n, _(this, t, r.invertedSelection, o, v)))
+            }), e || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
+                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), e ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), u > e +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {
                 return r.renderList(t, e + l), cancelEvent(i)
             }), r.box && r.box.scroll && r.box.scroll.update(!1, !0), r.onScroll()

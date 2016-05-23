@@ -1048,69 +1048,18 @@ div.own_reply_tt .content {
     color: #424242
 }
 
-.subscribe_post_tt .bottom_sh {
-    display: none
-}
-
-.sticker_extra_tt .toup:before {
-    border-right: 6px solid #bccad7;
-    left: -6px
-}
-
-.sticker_extra_tt .toup:before,
-.sticker_extra_tt .toup:after {
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent;
-    content: "";
-    display: block;
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    top: 55%;
-    margin-top: -6px;
-    margin-left: -6px
-}
-
-.sticker_extra_tt .toup:after {
-    border-right: 6px solid #fff;
-    left: -5px
-}
-
+.subscribe_post_tt .bottom_sh,
 .sticker_extra_tt.tt_text_only .stickers_extra_image_wrap {
     display: none
 }
 
-.sticker_extra_tt.tt_text_only .toup:before {
-    border-right: 6px solid #bccad7;
-    left: -6px
-}
-
-.sticker_extra_tt.tt_text_only .toup:before,
-.sticker_extra_tt.tt_text_only .toup:after {
-    border-top: 6px solid transparent;
-    border-bottom: 6px solid transparent;
-    content: "";
-    display: block;
-    position: absolute;
-    width: 0px;
-    height: 0px;
-    top: 50%;
-    margin-top: -6px;
-    margin-left: -6px
-}
-
-.sticker_extra_tt.tt_text_only .toup:after {
-    border-right: 6px solid #fff;
-    left: -5px
-}
-
 .sticker_extra_tt .tt_text {
     padding: 10px 16px 12px;
-    width: 275px
+    width: 222px
 }
 
 .sticker_extra_tt .stickers_extra_text {
-    line-height: 16px
+    line-height: 17px
 }
 
 .sticker_extra_tt .stickers_extra_text>b {
