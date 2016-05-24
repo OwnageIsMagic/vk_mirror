@@ -122,9 +122,7 @@ var VideoUpload = {
                         var a = void 0 !== e.ind ? e.ind : e;
                         cur._uploadStart = vkNow(), delete VideoUpload.videoUploadCallback;
                         var d = function() {
-                            cur.ocl || nav.change({
-                                section: "upload"
-                            });
+                            cur.ocl || (nav.objLoc.section = "upload", nav.setLoc(nav.objLoc));
                             var o = se(rs(itemTemplate, {
                                 id: a
                             }));
@@ -707,7 +705,7 @@ var VideoUpload = {
                 }, o, getLang("global_continue"), function() {
                     cur.leaving = !0, r.hide(), cur.onContinueCb && cur.onContinueCb()
                 }, getLang("global_cancel"), function() {
-                    r.hide(), cur.onCancelCb && cur.onCancelCb()
+                    r.hide(), cur.onCancelCb && cur.onCancelCb(), nav.objLoc.section = "upload", nav.setLoc(nav.objLoc)
                 });
                 return !1
             }

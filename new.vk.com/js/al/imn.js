@@ -2386,15 +2386,16 @@
                 block: r
             })
             .then(function(t) {
-                var r = ft(t, 3),
+                var r = ft(t, 4),
                     i = r[0],
                     o = r[1],
-                    s = r[2];
-                if (a.tabs || (a.tabs = {}), a.tabs[e] || (a.tabs[e] = {}), c(s, a), n) {
+                    s = r[2],
+                    l = r[3];
+                if (a.tabs || (a.tabs = {}), a.dialog_tab_cts = l, a.tabs[e] || (a.tabs[e] = {}), c(s, a), n) {
                     if (a.tabs[e]) {
-                        var l = a.tabs[e].lastmsg,
-                            u = a.tabs[e].lastmsg_meta;
-                        extend(a.tabs[e], i), a.tabs[e].lastmsg = l, a.tabs[e].lastmsg_meta = u
+                        var u = a.tabs[e].lastmsg,
+                            d = a.tabs[e].lastmsg_meta;
+                        extend(a.tabs[e], i), a.tabs[e].lastmsg = u, a.tabs[e].lastmsg_meta = d
                     }
                 } else extend(a.tabs[e], i);
                 a.admins = extend(a.admins, o);
@@ -3147,7 +3148,7 @@
                 return t !== e
             })), r.history = (0, bt.restoreMessage)(e, t, l(r.history)), r.offset++
         }
-        return Promise.resolve(n)
+        return Promise.resolve(n);
     }
 
     function Se(e, t, n, r) {
@@ -3573,7 +3574,7 @@
             }), Promise.resolve(a)
         }
         return d(e, !1, !1, !1, a)
-            .then(ut.bind(null, e, t, n))
+            .then(ut.bind(null, e, t, n, a))
     }
 
     function ct(e) {
@@ -8346,9 +8347,7 @@
         e.set(h.setExecStack.bind(null, (0, T.execuctionStackFilter)(e.get()
             .stack, "im_search")));
         var r = a(t);
-        r.value = "", i(e, n, t, {
-            target: r
-        })
+        r.value = "", i(e, n, t, r, r.value)
     }
 
     function c(e, t, n, r, a) {

@@ -2549,7 +2549,7 @@ var layers = {
             if (cur.pvShown && cur.pvListId != 'temp') {
                 clayer = ['photo', cur.pvData[cur.pvListId][cur.pvIndex].id, cur.pvListId, {
                     onHide: cur.pvOptions.onHide,
-                    scroll: layerWrap.scrollTop,
+                    scroll: cur.pvNarrowScrollbar ? cur.pvNarrowScrollbar.scrollTop() : 0,
                     onShow: onShow,
                     noHistory: !!cur.pvNoHistory,
                     histLen: cur.pvHistoryLength
@@ -10686,8 +10686,10 @@ function audioSearchPerformer(ref, ev) {
     var audio = AudioUtils.getAudioFromEl(audioEl, true);
 
     if (isInAudioPage) {
+        var performer = unclean(audio.performer)
+            .replace(/<em>|<\/em>/g, '');
         return nav.change({
-            q: unclean(audio.performer),
+            q: performer,
             performer: 1
         }, event, {
             searchPerformer: true

@@ -109,36 +109,37 @@ var Video = {
                 n = r && "video" == i[0],
                 a = i.q && !o.q && i[0].indexOf("video") >= 0,
                 c = o.q && !i.q && o[0].indexOf("video") >= 0,
-                s = e.q;
-            if ((c || s) && Video.logSearchStats(), a || s ? Video._initSearchStats(i) : c && Video._clearSearchStats(), r) {
-                var l = cur.getOwnerId();
-                if (l == vk.id && !inArray(e[0], ["video", "videos" + l])) return !0;
-                if (l != vk.id && !inArray(e[0], ["videos" + l])) return !0
+                s = "upload" == o.section && !i.section,
+                l = e.q;
+            if ((c || l) && Video.logSearchStats(), a || l ? Video._initSearchStats(i) : c && Video._clearSearchStats(), r) {
+                var u = cur.getOwnerId();
+                if (u == vk.id && !inArray(e[0], ["video", "videos" + u])) return !0;
+                if (u != vk.id && !inArray(e[0], ["videos" + u])) return !0
             }
-            var u;
-            if (d ? (nav.setLoc(i), u = Video._switch("catalog", "all")) : n && (nav.setLoc(i), u = Video._switch("all", "catalog")), u) return !0;
+            var _;
+            if (d ? (nav.setLoc(i), _ = Video._switch("catalog", "all")) : n && (nav.setLoc(i), _ = Video._switch("all", "catalog")), _ || s) return !0;
             if (uiTabs.hideProgress("video_main_tabs"), "all" == e.section && delete i.section, a && (cur.videoLocBeforeSearch = o), c && (cur.videoSearchStr = "",
                     cur.videoSearchFilters = {}, Video.doSearch(), cur.videoLocBeforeSearch && t.fromSearch)) {
-                var _ = clone(cur.videoLocBeforeSearch);
-                return delete cur.videoLocBeforeSearch, nav.go(_), !1
+                var v = clone(cur.videoLocBeforeSearch);
+                return delete cur.videoLocBeforeSearch, nav.go(v), !1
             }
             trim(val(cur.searchInputEl)) != trim(i.q || "") && val(cur.searchInputEl, trim(i.q || ""));
-            var v = i.section || "all";
+            var h = i.section || "all";
             if (i.q) Video.isInAlbum() || delete i.section, Video._prepareSearchFilters(i), cur.videoSearchStr = val(cur.searchInputEl), Video.doSearch();
             else {
-                if (-1 == Video.AVAILABLE_TABS.indexOf(v)) return !0;
+                if (-1 == Video.AVAILABLE_TABS.indexOf(h)) return !0;
                 if (Video.isInAlbum(o.section)) return nav.setLoc(i), !0;
                 each(Video.AVAILABLE_TABS, function(e, o) {
                     hide("video_subtab_pane_" + o)
-                }), show("video_subtab_pane_" + v), Video.updateEmptyPlaceholder(v);
-                var h = domFC(ge("video_tab_" + v));
-                h && uiTabs.switchTab(h, {
+                }), show("video_subtab_pane_" + h), Video.updateEmptyPlaceholder(h);
+                var g = domFC(ge("video_tab_" + h));
+                g && uiTabs.switchTab(g, {
                     noAnim: t.hist
-                }), "albums" != v ? (Video.loadSilent(v), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[v] || "default", !0), show(
-                    "video_sort_dd_wrap")) : hide("video_sort_dd_wrap"), Video._createSorters(v)
+                }), "albums" != h ? (Video.loadSilent(h), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[h] || "default", !0), show(
+                    "video_sort_dd_wrap")) : hide("video_sort_dd_wrap"), Video._createSorters(h)
             }
             return nav.setLoc(i), !1;
-            var v, h
+            var h, g
         }), cur.destroy.push(function() {
             cur.nav.pop()
         })

@@ -678,7 +678,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             s._updateEmptyPlaceholder(e)
         },
         onRendered: function() {
-            t(!1), s._updateLayerRowsBottomPadding(), s.ap.updateCurrentPlaying(), d || (d = !0, scrollToY(0))
+            if (t(!1), s._updateLayerRowsBottomPadding(), s.ap.updateCurrentPlaying(), !d)
+                if (d = !0, s.isLayer()) {
+                    var e = geByClass1("audio_layer_rows_wrap", s._container);
+                    e.scrollTop = 0, s.getLayer()
+                        .sb.update()
+                } else scrollToY(0)
         },
         onNeedRows: function(d, l, u, _) {
             function h(e) {
@@ -783,11 +788,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             width: s[0]
         }), void addEvent(i, "scroll", this._ev_onScroll = function(n) {
             getSize(e)[1], getSize(i)[1];
-            if (!cur.audioCancelMenuScroll) {
+            if (cur.audioCancelMenuScroll) a = o = 0;
+            else {
                 var d = i.scrollTop - o;
-                a -= d, a = Math.max(getSize(i)[1] - getSize(e)[1], a), a = Math.min(0, a), setStyle(e, "top", a)
+                a -= d, a = Math.max(getSize(i)[1] - getSize(e)[1], a), a = Math.min(0, a)
             }
-            o = i.scrollTop, delete cur.audioCancelMenuScroll;
+            setStyle(e, "top", a), o = i.scrollTop, delete cur.audioCancelMenuScroll;
             var l = geByClass1("_audio_padding_cont", r._container);
             i.scrollTop > 0 ? (setStyle(l, {
                 "padding-top": s[1]
@@ -863,7 +869,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             e), uiSearch.hideProgress(t.searchInputEl), t._initSorter(e)
     }), this.isLayer() && toggleClass(uiSearch.getWrapEl(this.searchInputEl), "ui_search_field_empty", !val(this.searchInputEl))
 }, AudioPage.prototype._getForeignTogglerEl = function() {
-    return geByClass1("_ui_toggler", geByClass1("_audio_foreign_filter_block", this._getMenuEl()))
+    return geByClass1("_ui_toggler", geByClass1("_audio_foreign_filter_block", this._container))
 }, AudioPage.prototype.toggleForeign = function() {
     var e = this._getForeignTogglerEl(),
         i = toggleClass(e, "on"),
@@ -1179,8 +1185,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 u = getSize(o)[1],
                 _ = l - n / 2 + u / 2;
             e.isLayer() ? (cur.audioCancelMenuScroll = !0, s.scrollTop = _, setTimeout(function() {
-                s.scrollTop = _, e.getLayer()
-                    .sb.update()
+                cur.audioCancelMenuScroll = !0, s.scrollTop = _, e.getLayer()
+                    .sb.update(), delete cur.audioCancelMenuScroll
             })) : scrollToY(_, 400)
         }
     }

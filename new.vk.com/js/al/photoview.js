@@ -611,7 +611,7 @@ var Photoview = {
                         '</button>         <button class="flat_button secondary black" id="pv_delete_tag" onclick="Photoview.deleteTag(' + e.tagid + ', this)">' + getLang(
                             "photos_delete_tag") + "</button>       </div>"), show(cur.pvCommentsData), Photoview.hhCheck() && show(cur.pvHHWrap)) : (Photoview.toggleTopInfoPanel(!
                         1), Photoview.toggleDeletedState(!1), Photoview.hhCheck() && show(cur.pvHHWrap)), (cur.pvOptions || {})
-                    .scroll && (layerWrap.scrollTop = cur.pvOptions.scroll), cur.pvBodyScrollTop = bodyNode.scrollTop, setTimeout(function() {
+                    .scroll && cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.scrollTop(cur.pvOptions.scroll), cur.pvBodyScrollTop = bodyNode.scrollTop, setTimeout(function() {
                         void 0 !== cur.pvBodyScrollTop && (bodyNode.scrollTop = cur.pvBodyScrollTop, delete cur.pvBodyScrollTop)
                     }, 0), Photoview.updateVerticalPosition(), setTimeout(Photoview.afterShow, 2)
             }
@@ -673,19 +673,20 @@ var Photoview = {
                             .id = "pv_fs_img_wrap")
                     };
                 r(), domFC(ge("pv_fs_img_wrap")) && cur.pvSlideNeedAnimation ? (cur.pvSlideNeedAnimation = !1, cur.pvCanvas.insertBefore(se(
-                        '<div id="pv_fs_img_fade"><img src="' + o.src + '" /></div>'), ge("pv_fs_img_wrap")), e = function() {
-                        cssAnim(ge("pv_fs_img_wrap"), {
-                            opacity: 0
-                        }, {
-                            duration: 1e3
-                        }, function() {
-                            r(), Photoview.fullscreenOnLoad()
-                        }), cssAnim(ge("pv_fs_img_fade"), {
-                            opacity: 1
-                        }, {
-                            duration: 1e3
-                        })
-                    }) : (val(ge("pv_fs_img_wrap"), '<img src="' + o.src + '" />'), e = Photoview.fullscreenOnLoad), Photoview.pvCanvasUpdate(!0), t.onload = e, t.src = o.src,
+                            '<div id="pv_fs_img_fade"><img src="' + o.src + '" /></div>'), ge("pv_fs_img_wrap")),
+                        e = function() {
+                            cssAnim(ge("pv_fs_img_wrap"), {
+                                opacity: 0
+                            }, {
+                                duration: 1e3
+                            }, function() {
+                                r(), Photoview.fullscreenOnLoad()
+                            }), cssAnim(ge("pv_fs_img_fade"), {
+                                opacity: 1
+                            }, {
+                                duration: 1e3
+                            })
+                        }) : (val(ge("pv_fs_img_wrap"), '<img src="' + o.src + '" />'), e = Photoview.fullscreenOnLoad), Photoview.pvCanvasUpdate(!0), t.onload = e, t.src = o.src,
                     window.FullscreenPV && FullscreenPV.updateInfo()
             }
         },
@@ -1041,8 +1042,8 @@ var Photoview = {
                     current && !Photoview.cmp(current.id, u.id) ? (v.replaceChild(u, current), current = u) : (current && domNS(current) ? v.insertBefore(u, domNS(current)) :
                         !current && domFC(v) ? a === !0 ? (--c.commshown, p.removeChild(u)) : v.insertBefore(u, domFC(v)) : v.appendChild(u), ++c.commshown)
                 }
-                i && n && (layerWrap.scrollTop += getXY(n, !0)[1] - s), cur.pvCommsLikes[c.id][0] = v, extend(cur.pvReplyNames, r), Photoview.updateComms(), cur.pvNarrowScrollbar &&
-                    cur.pvNarrowScrollbar.update()
+                i && n && (layerWrap.scrollTop += getXY(n, !0)[1] - s), cur.pvCommsLikes[c.id][0] = ge("pv_comments"), extend(cur.pvReplyNames, r), Photoview.updateComms(),
+                    cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.update()
             }
         },
         commSaved: function(o) {
