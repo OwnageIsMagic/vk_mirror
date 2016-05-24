@@ -95,7 +95,8 @@ function MediaSelector(e, a, i, o) {
             var n = !1,
                 c = o.toId || cur.postTo,
                 h = {
-                    to_id: c
+                    to_id: c,
+                    blockPersonal: o.blockPersonal
                 };
             switch (h.mail_add = o.mail ? 1 : "", i) {
                 case "graffiti":
@@ -149,9 +150,10 @@ function MediaSelector(e, a, i, o) {
                     };
                     break;
                 case "doc":
-                    n = r.doc ? r.doc.pbind(o) : showBox.pbind("docs.php", extend(h, {
+                    var _ = o.docParams || {};
+                    _ = extend(_, {
                         act: "a_choose_doc_box"
-                    }), {
+                    }), n = r.doc ? r.doc.pbind(o) : showBox.pbind("docs.php", extend(h, _), {
                         stat: ["docs.css"]
                     });
                     break;
@@ -895,7 +897,7 @@ function MediaSelector(e, a, i, o) {
                         height: P
                     }, 200, function() {
                         clearInterval(cur.animateUpdateInterval)
-                    }), re(geByClass1("medadd_c_linkprg", b));
+                    }), re(geByClass1("medadd_c_linkprg", b))
                 }
                 t && addClass(geByClass1("medadd_c_linkcon", b), t)
             },

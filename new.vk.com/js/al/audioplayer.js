@@ -239,7 +239,7 @@ var AudioUtils = {
             }
 
             function getPageEl() {
-                return geByClass1("js-im-page") || ge("page_body")
+                return geByClass1("_im-page-wrap") || ge("page_body")
             }
 
             function getLayerWidth() {
@@ -1093,7 +1093,7 @@ AudioPlayer.tabIcons = {
         }), t.addRecvClbk("video_hide", "audio", function(t) {
             !i.isPlaying() && i.pausedByVideo && (i.play(), delete i.pausedByVideo)
         }), t.addRecvClbk("logged_off", "audio", function() {
-            AudioPlayer.clearAllCacheKeys(), i.stop()
+            cur.loggingOff = !0, AudioPlayer.clearAllCacheKeys(), i.stop()
         }))
     }, AudioPlayer.prototype.addPlaylist = function(t) {
         this._playlists.push(t)
@@ -1394,26 +1394,28 @@ AudioPlayer.tabIcons = {
         this._prevPlaylist && (this.pause(), this._currentPlaylist = this._prevPlaylist, this._currentAudio = this._prevAudio, this._prevPlaylist = this._prevAudio = null, this.notify(
             AudioPlayer.EVENT_PLAYLIST_CHANGED, this._currentPlaylist), this.notify(AudioPlayer.EVENT_UPDATE), this.updateCurrentPlaying())
     }, AudioPlayer.prototype.play = function(t, i, e, o) {
-        (isObject(t) || isArray(t)) && (t = AudioUtils.asObject(t), t && (t = t.fullId));
-        var a = AudioUtils.asObject(this._currentAudio),
-            l = this.getCurrentPlaylist();
-        !t && a && (t = a.fullId);
-        var s = !1,
-            r = !1;
-        r = t && a && t == a.fullId, i ? l && (s = i == l.getSelf() || i == l) : (i = l, s = !0);
-        if (r && s) {
-            if (!this.isPlaying()) {
-                this._isPlaying = !0, this._sendLCNotification(), this.notify(AudioPlayer.EVENT_PLAY);
+        if (!cur.loggingOff) {
+            (isObject(t) || isArray(t)) && (t = AudioUtils.asObject(t), t && (t = t.fullId));
+            var a = AudioUtils.asObject(this._currentAudio),
+                l = this.getCurrentPlaylist();
+            !t && a && (t = a.fullId);
+            var s = !1,
+                r = !1;
+            r = t && a && t == a.fullId, i ? l && (s = i == l.getSelf() || i == l) : (i = l, s = !0);
+            if (r && s) {
+                if (!this.isPlaying()) {
+                    this._isPlaying = !0, this._sendLCNotification(), this.notify(AudioPlayer.EVENT_PLAY);
+                    var u = i.getAudio(t);
+                    this._implClearAllTasks(), this._implSetVolume(0), this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume(), !0)
+                }
+            } else if (t) {
                 var u = i.getAudio(t);
-                this._implClearAllTasks(), this._implSetVolume(0), this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume(), !0)
+                u && (s || (this._currentPlaylist && (this._prevPlaylist = this._currentPlaylist, this._prevAudio = this._currentAudio), i.getType() == AudioPlaylist.TYPE_TEMP ?
+                        this._currentPlaylist = i : this._currentPlaylist = new AudioPlaylist(i)), this._listenedTime = this._prevProgress = 0, this._currentAudio = u, this._isPlaying = !
+                    0, this._sendLCNotification(), this.notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this._muteProgressEvents = !0, this._implClearAllTasks(), o ? (this._implSetUrl(
+                        u), this._implPlay(), this._implSetVolume(this.getVolume())) : (this._implSetVolume(0, !0), this._implSetDelay(200), this._implSetUrl(u), this._implPlay(),
+                        this._implSetVolume(this.getVolume())), s || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
             }
-        } else if (t) {
-            var u = i.getAudio(t);
-            u && (s || (this._currentPlaylist && (this._prevPlaylist = this._currentPlaylist, this._prevAudio = this._currentAudio), i.getType() == AudioPlaylist.TYPE_TEMP ? this._currentPlaylist =
-                    i : this._currentPlaylist = new AudioPlaylist(i)), this._listenedTime = this._prevProgress = 0, this._currentAudio = u, this._isPlaying = !0, this._sendLCNotification(),
-                this.notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this._muteProgressEvents = !0, this._implClearAllTasks(), o ? (this._implSetUrl(u), this._implPlay(),
-                    this._implSetVolume(this.getVolume())) : (this._implSetVolume(0, !0), this._implSetDelay(200), this._implSetUrl(u), this._implPlay(), this._implSetVolume(
-                    this.getVolume())), s || (this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED, i)))
         }
     }, AudioPlayer.prototype._prefetchAudio = function(t) {
         "html5" == this._impl.type && (t = AudioUtils.asObject(t), t && t.url && this._impl.prefetch(t.url))

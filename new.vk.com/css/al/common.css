@@ -1881,6 +1881,15 @@ a.ad_box_new:hover {
     position: fixed
 }
 
+body.body_im.firefox #page_wrap {
+    overflow: visible
+}
+
+.body_im #stl_left,
+.body_im #stl_side {
+    display: none!important
+}
+
 #side_bar .inl_bl {
     vertical-align: baseline
 }
@@ -5618,6 +5627,10 @@ button.ui_load_more_btn {
     display: inline-block
 }
 
+.audio_row.audio_row_current .audio_duration {
+    color: #818d99
+}
+
 .audio_row .audio_info_divider {
     padding: 0 5px
 }
@@ -5770,6 +5783,10 @@ button.ui_load_more_btn {
     vertical-align: top;
     margin-top: 1px;
     margin-right: 4px
+}
+
+.audio_row .audio_row_current .audio_hq_label {
+    opacity: 0.5
 }
 
 .top_audio_layer .audio_author {

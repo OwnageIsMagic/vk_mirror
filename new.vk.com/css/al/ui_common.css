@@ -572,7 +572,7 @@ a.ui_crumb {
     -moz-osx-font-smoothing: auto;
     margin: 7px 10px 0 0;
     padding: 1px 6px;
-    border-radius: 8.5px;
+    border-radius: 9px;
     background-color: #7394b5;
     font-size: 11px;
     height: 16px;
@@ -582,6 +582,13 @@ a.ui_crumb {
 
 .ui_rmenu_count:empty {
     display: none
+}
+
+.ui_rmenu_count.ui_rmenu_count_grey {
+    background: none;
+    border-radius: 0;
+    color: #939699;
+    font-size: 13px
 }
 
 .ui_calendar_icon {

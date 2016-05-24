@@ -451,8 +451,9 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 performer: i.val ? 1 : null,
                 lyrics: hasClass(geByClass1("_audio_fltr_with_lyrics", this._container), "on") ? 1 : null,
                 sort: t ? 1 : null
-            };
-        nav.change(e && isObject(e) ? e : o, !1, {
+            },
+            a = e && isObject(e) ? e : o;
+        this.isLayer() && (a = extend({}, this._prevLoc, a)), nav.change(a, !1, {
             fromSearch: !0,
             filtersChanged: !0
         })
@@ -663,7 +664,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         s = this,
         r = 50;
     this._autoList && this._autoList.destroy();
-    var n = 0;
+    var n = 0,
+        d = !1;
     this._autoList = new AutoList(o, {
         isLayer: this.isLayer(),
         scrollNode: this.isLayer() ? geByClass1("audio_layer_rows_wrap", this._container) : window,
@@ -676,7 +678,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             s._updateEmptyPlaceholder(e)
         },
         onRendered: function() {
-            t(!1), s._updateLayerRowsBottomPadding(), s.ap.updateCurrentPlaying()
+            t(!1), s._updateLayerRowsBottomPadding(), s.ap.updateCurrentPlaying(), d || (d = !0, scrollToY(0))
         },
         onNeedRows: function(d, l, u, _) {
             function h(e) {
@@ -1005,58 +1007,64 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         removeClass(this, "audio_friend_selected")
     }), unlockButton(geByClass1("audio_more_friends_btn"))
 }, AudioPage.prototype._initNavigation = function() {
-    var e = !1;
-    this._prevSearchPlaylistId = null, cur.nav.push(this._nav_func = function(i, t, o, a) {
-        "audio" == i[0] && o.q && (this.options.oid != vk.id || nav.objLoc.friend) && delete i[0];
-        var s = !!i[0],
-            r = e.q && !o.q && (this.isLayer() || e[0].indexOf("audio") >= 0);
+    this._prevLoc = !1;
+    var e = !1,
+        i = !1;
+    this._prevSearchPlaylistId = null, cur.nav.push(this._nav_func = function(t, o, a, s) {
         if (each(cur._audioAddRestoreInfo || {}, function(e, i) {
                 ("deleted" == i.state || "recom_hidden" == i.state) && getAudioPlayer()
                     .deleteAudioFromAllPlaylists(e)
-            }), s) {
-            var n = this.options.oid;
-            if (n != vk.id && !inArray(i[0], ["audios" + n])) return !0;
-            if (n == vk.id && !inArray(i[0], ["audios" + n, "audio"])) return !0
+            }), s.searchPerformer && (a = extend({}, this._prevLoc, a)), this.isLayer()) {
+            if (this._prevLoc !== !1) {
+                o = clone(this._prevLoc), t = clone(a);
+                for (var r in o) o[r] && void 0 === a[r] ? t[r] = !1 : o[r] == a[r] && delete t[r]
+            }
+            i === !1 && (i = o[0]), 0 != a[0].indexOf("audio") && i == a[0] && delete t[0]
         }
-        if (this.isLayer() && (a.hist || a.back || i[0] && 0 != i[0].indexOf("audio"))) return this.options.eltt.hide(), !0;
-        if (0 == Object.keys(i)
-            .length && !a.fromSearch && !a.fromMenu && !a.friendEl) return !1;
-        r && this._prevSearchLoc && a.fromSearch && (o = this._prevSearchLoc);
-        var d;
-        if (this._unselectFriends(), o.q) {
-            var l = trim(val(this.searchInputEl));
-            l != o.q && val(this.searchInputEl, replaceEntities(o.q));
-            var u = replaceEntities(o.q),
-                _ = {
-                    q: o.q
+        var n = !!t[0],
+            d = t.q === !1;
+        if (n) {
+            var l = this.options.oid;
+            if (l != vk.id && !inArray(t[0], ["audios" + l]) || l == vk.id && !inArray(t[0], ["audios" + l, "audio"])) return !0
+        }
+        if (this.isLayer() && (s.hist || s.back || t[0] && 0 != t[0].indexOf("audio"))) return this.options.eltt.hide(), !0;
+        if (0 == Object.keys(t)
+            .length && !s.fromSearch && !s.fromMenu && !s.friendEl) return !1;
+        d && e && s.fromSearch && (a = e);
+        var u;
+        if (this._unselectFriends(), a.q) {
+            var _ = trim(val(this.searchInputEl));
+            _ != a.q && val(this.searchInputEl, replaceEntities(a.q));
+            var h = replaceEntities(a.q),
+                c = {
+                    q: a.q
                 };
             each(["performer", "lyrics", "sort"], function(e, i) {
-                _[i] = intval(o[i]), u += _[i]
-            }), u = hashCode(u);
-            var h = o.friend || o.band || this.options.oid;
-            d = this.ap.getPlaylist(AudioPlaylist.TYPE_SEARCH, h, u), d.mergeWith({
-                    searchParams: _
-                }), removeClass(uiSearch.getWrapEl(this.searchInputEl), "ui_search_field_empty"), this._prevSearchLoc || nav.objLoc.q || (this._prevSearchLoc = nav.objLoc),
-                delete o.section
-        } else if (o.section == AudioPlaylist.TYPE_POPULAR) {
-            var c = hasClass(this._getForeignTogglerEl(), "on") ? "foreign" : "";
-            d = this.ap.getPlaylist(AudioPlaylist.TYPE_POPULAR, vk.id, c + intval(o.genre))
-        } else if (o.friend) {
-            var g = intval(o.friend),
-                p = geByClass1("_audio_friend_" + g, this._container);
-            addClass(p, "audio_friend_selected"), d = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, g, AudioUtils.AUDIO_ALBUM_ID_ALL), geByClass1("_audio_friend_" + g) ||
-                this.showMoreFriends(!1, g)
-        } else if (o.section == AudioPlaylist.TYPE_RECOM) {
-            var y = AudioUtils.AUDIO_ALBUM_ID_ALL;
-            o.audio_id ? y = "audio" + o.audio_id : o.album_id && (y = "album" + o.album_id), d = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, y)
-        } else o.section == AudioPlaylist.TYPE_FEED ? d = this.ap.getPlaylist(AudioPlaylist.TYPE_FEED, vk.id, 0) : o.section == AudioPlaylist.TYPE_CURRENT ? d = this.ap
-            .getCurrentPlaylist() : o.band ? (d = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, intval(o.band), AudioUtils.AUDIO_ALBUM_ID_ALL), d.mergeWith({
+                c[i] = intval(a[i]), h += c[i]
+            }), h = hashCode(h);
+            var g = a.friend || a.band || this.options.oid;
+            u = this.ap.getPlaylist(AudioPlaylist.TYPE_SEARCH, g, h), u.mergeWith({
+                searchParams: c
+            }), removeClass(uiSearch.getWrapEl(this.searchInputEl), "ui_search_field_empty"), e || o.q || (e = o), delete a.section
+        } else if (a.section == AudioPlaylist.TYPE_POPULAR) {
+            var p = hasClass(this._getForeignTogglerEl(), "on") ? "foreign" : "";
+            u = this.ap.getPlaylist(AudioPlaylist.TYPE_POPULAR, vk.id, p + intval(a.genre))
+        } else if (a.friend) {
+            var y = intval(a.friend),
+                A = geByClass1("_audio_friend_" + y, this._container);
+            addClass(A, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioUtils.AUDIO_ALBUM_ID_ALL), geByClass1("_audio_friend_" + y) ||
+                this.showMoreFriends(!1, y)
+        } else if (a.section == AudioPlaylist.TYPE_RECOM) {
+            var f = AudioUtils.AUDIO_ALBUM_ID_ALL;
+            a.audio_id ? f = "audio" + a.audio_id : a.album_id && (f = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, f)
+        } else a.section == AudioPlaylist.TYPE_FEED ? u = this.ap.getPlaylist(AudioPlaylist.TYPE_FEED, vk.id, 0) : a.section == AudioPlaylist.TYPE_CURRENT ? u = this.ap
+            .getCurrentPlaylist() : a.band ? (u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, intval(a.band), AudioUtils.AUDIO_ALBUM_ID_ALL), u.mergeWith({
                 band: 1
-            })) : o.album_id ? d = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, o.album_id) : (d = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM,
+            })) : a.album_id ? u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, a.album_id) : (u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM,
                 this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL), addClass(uiSearch.getWrapEl(this.searchInputEl), "ui_search_field_empty"));
-        return o.section != AudioUtils.AUDIO_PLAYLIST_TYPE_RECOMS && (delete o.audio_id, o.section && delete o.album_id), r && (this._prevRenderedPlaylistId = !1, val(
-                this.searchInputEl, ""), this._muteFilterEvent = !0, uiSearch.removeAllFilters(this.searchInputEl), delete o.performer, delete o.lyrics, delete o.sort,
-            this._muteFilterEvent = !1), this.isLayer() || nav.setLoc(o), e = o, this.syncFilters(o), this.switchToSection(d, !0), !1
+        return a.section != AudioUtils.AUDIO_PLAYLIST_TYPE_RECOMS && (delete a.audio_id, a.section && delete a.album_id), d && (e = !1, val(this.searchInputEl, ""),
+            this._muteFilterEvent = !0, uiSearch.removeAllFilters(this.searchInputEl), delete a.performer, delete a.lyrics, delete a.sort, this._muteFilterEvent = !
+            1), this.isLayer() || nav.setLoc(a), this._prevLoc = a, this.syncFilters(a), this.switchToSection(u, !0), !1
     }.bind(this))
 }, AudioPage.prototype.deleteCurrentPlaylist = function(e) {
     this.ap.deleteCurrentPlaylist();

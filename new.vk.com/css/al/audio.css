@@ -422,7 +422,7 @@
 }
 
 #audio_status_tt .audio_status_wrap {
-    max-height: 317px;
+    max-height: 260px;
     overflow: hidden;
     padding: 15px 30px 10px 15px;
     font-size: 12px
@@ -433,11 +433,12 @@
 }
 
 #audio_status_tt .hint_description {
-    margin: 10px 0px 15px
+    margin: 10px 0px 15px;
+    line-height: 16px
 }
 
 #audio_status_tt .checkbox {
-    margin: 5px 0;
+    margin: 7px 0;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
