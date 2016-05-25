@@ -250,14 +250,14 @@ FAQ = {
             back: true
         });
 
-        var requiredChb = geByClass1('faq_optional_extra_field_required__inp', block);
-        requiredChb.id = block.id + '_required';
+        var requiredInp = geByClass1('faq_optional_extra_field_required__inp', block);
+        requiredInp.id = block.id + '_required';
 
         if (list.children.length >= 10) {
             hide(btn);
         }
 
-        FAQ.prepareExtraField(block, typeInp, requiredChb, titleInp, noteInp);
+        FAQ.prepareExtraField(block, typeInp, requiredInp, titleInp, noteInp);
     },
     prepareExtraField: function(block, typeInp, requiredInp, titleInp, noteInp) {
         var typeSelector = new Dropdown(typeInp, cur.selData['extra_field_types'], {
@@ -276,11 +276,16 @@ FAQ = {
             back: true
         });
 
-        var chb = new Checkbox(requiredInp, {
-            label: requiredInp.title,
-            width: 120
+        var requiredSelector = new Dropdown(requiredInp, cur.selData['extra_field_required_types'], {
+            width: 188,
+            introText: '',
+            noResult: '',
+            multiselect: false,
+            autocomplete: false,
+            big: 1
         });
-        data(block, 'requiredCheckbox', chb);
+        /*var chb = new Checkbox(requiredInp, {label: requiredInp.title, width: 120});*/
+        data(block, 'requiredSelector', requiredSelector);
 
         var removeBtn = geByClass1('faq_optional_extra_field__close', block);
         addEvent(removeBtn, 'click', function() {
@@ -297,8 +302,10 @@ FAQ = {
         for (var i = 0; i < 10; i++) {
             var eBlock = ge('faq_optional_extra_field_' + i);
             if (eBlock) {
-                var ts = data(eBlock, 'typeSelector');
+                var ts = data(eBlock, 'typeSelector'),
+                    rs = data(eBlock, 'requiredSelector');
                 ts.destroy.bind(ts)();
+                rs.destroy.bind(rs)();
             }
         }
     },
@@ -394,12 +401,11 @@ FAQ = {
                 var b = blocks[i];
                 d['ef_' + i + '_type'] = data(b, 'typeSelector')
                     .val();
-
                 d['ef_' + i + '_title'] = geByClass1('faq_optional_extra_field__title', b)
                     .value;
                 d['ef_' + i + '_note'] = geByClass1('faq_optional_extra_field__note', b)
                     .value;
-                d['ef_' + i + '_required'] = data(b, 'requiredCheckbox')
+                d['ef_' + i + '_required'] = data(b, 'requiredSelector')
                     .val();
             }
             query = extend(query, d);

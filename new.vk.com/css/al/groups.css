@@ -238,7 +238,7 @@ a.groups_messages_block:before {
 
 a.groups_messages_block:hover {
     text-decoration: none;
-    background-color: #f5f7fa
+    color: #33567f
 }
 
 a.groups_messages_block .ui_rmenu_count {
