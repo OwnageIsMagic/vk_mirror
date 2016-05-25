@@ -232,27 +232,6 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             dark: 1
         })
     }), cancelEvent(t)
-}, AudioPage.prototype.addAudioFromChooseBox = function(e, i, t, o, a, s, r) {
-    var n = i.ctrlKey,
-        d = this;
-    e.innerHTML = "", showProgress(e), ajax.post("al_audio.php", {
-        act: "add",
-        gid: a,
-        oid: t,
-        aid: o,
-        hash: s
-    }, {
-        onDone: function(i, t, o, s) {
-            if (i) {
-                var l = (i[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + i[AudioUtils.AUDIO_ITEM_INDEX_ID], getAudioPlayer()
-                    .getPlaylist(AudioPlaylist.TYPE_ALBUM, a ? -a : vk.id, AudioUtils.AUDIO_ALBUM_ID_ALL));
-                l.addAudio(i, 0), d.switchToSection(l)
-            }
-            if (n) hideProgress(e), domReplaceEl(e, '<span class="choose_link audio_choose_added_label">' + r + "</span>");
-            else
-                for (; __bq.count();) __bq.hideLast()
-        }
-    })
 }, AudioPage.prototype.onHide = function() {
     var e = this;
     cur.nav = cur.nav.filter(function(i) {

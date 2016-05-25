@@ -350,16 +350,14 @@ var Videoview = {
             return cur.mvOpts || window.mvcur && mvcur.mvData
         },
         getPlayerObject: function() {
-            return mvcur.player || ge("video_yt") && window.VideoYoutube || ge("video_player") || window.html5video || null
+            return window.mvcur && mvcur.player || cur.videoInlinePlayer || ge("video_yt") && window.VideoYoutube || ge("video_player") || window.html5video || null
         },
         getPlayerObjectEl: function() {
             return ge("video_player") || ge("html5_player") || geByClass1("extra_player") || null
         },
         playerOnAdded: function() {
             var e = Videoview.getPlayerObject();
-            try {
-                e && e.onAdded && e.onAdded()
-            } catch (i) {}
+            e && e.onAdded && e.onAdded()
         },
         playerOnLiked: function() {
             var e = Videoview.getPlayerObject();
@@ -2055,9 +2053,7 @@ var Videoview = {
             i.target === e && re("mv_external_finish")
         },
         onExternalVideoLike: function() {
-            videoCallback(["onLike", 4]);
-            var e = Videoview.getPlayerObject();
-            e.onLiked && e.onLiked()
+            videoCallback(["onLike", 4]), Videoview.playerOnLiked()
         },
         onExternalVideoShare: function() {
             if (Videoview.isFS) {

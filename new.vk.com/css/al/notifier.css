@@ -2247,7 +2247,8 @@ div.chat_tab_img {
 }
 
 .top_notify_cont .feedback_header {
-    padding: 1px 0 0
+    padding: 1px 0 0;
+    color: #000
 }
 
 .top_notify_cont .feedback_content {

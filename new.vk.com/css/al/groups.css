@@ -219,8 +219,9 @@
 a.groups_messages_block {
     display: block;
     font-size: 12px;
-    padding: 13px 15px 15px;
-    color: #222
+    padding: 14px 15px;
+    color: #222;
+    border-radius: 2px
 }
 
 a.groups_messages_block:before {
@@ -229,10 +230,15 @@ a.groups_messages_block:before {
     float: left;
     width: 15px;
     height: 14px;
-    margin: 1px 8px 0 0;
+    margin: 0 8px 0 0;
     background: url(/images/icons/menu_icon.png?2) no-repeat 0 -28px;
     opacity: 0.75;
     filter: alpha(opacity=75)
+}
+
+a.groups_messages_block:hover {
+    text-decoration: none;
+    background-color: #f5f7fa
 }
 
 a.groups_messages_block .ui_rmenu_count {

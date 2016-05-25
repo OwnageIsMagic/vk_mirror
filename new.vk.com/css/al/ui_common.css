@@ -564,6 +564,10 @@ a.ui_crumb {
     margin: 6px 15px
 }
 
+.ui_ownblock+.ui_rmenu_sep {
+    margin-top: 0
+}
+
 .ui_rmenu_count {
     display: inline-block;
     float: right;
@@ -615,15 +619,16 @@ a.ui_crumb {
 
 .ui_ownblock {
     display: block;
-    padding: 9px 15px
+    padding: 15px;
+    margin-top: -6px;
+    border-radius: 2px 2px 0 0
 }
 
 .ui_ownblock:hover {
-    text-decoration: none
-}
-
-.ui_ownblock:hover .ui_ownblock_label {
-    text-decoration: underline
+    text-decoration: none;
+    background-color: #f5f7fa;
+    margin-bottom: -1px;
+    border-bottom: 1px solid #ebedf0
 }
 
 .ui_ownblock_img {

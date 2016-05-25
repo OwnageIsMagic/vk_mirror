@@ -821,6 +821,11 @@ if (!window.Upload) {
                 if (!files.length) return;
             }
 
+            if (options.filterCallback) {
+                files = options.filterCallback(i, files);
+                if (!files.length) return;
+            }
+
             if (options.reverse_files) {
                 files = Array.prototype.slice.call(files)
                     .reverse();

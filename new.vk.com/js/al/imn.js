@@ -3564,13 +3564,17 @@
                     })
             }, function(e, t, n) {
                 if (o[bt.FOLDER_ALL] || o[e]) return !0;
+                if (t.filter(function(e) {
+                        return e === n.peerId
+                    })
+                    .length > 0) return !0;
                 var r = t.map(function(e) {
                         return a.tabs[e]
                     })
                     .filter(function(e) {
-                        return e.lastmsg > n.lastmsg
+                        return e.lastmsg < n.lastmsg
                     });
-                return r.length > 0 ? !0 : void 0
+                return r.length > 0 ? !0 : !1
             }), Promise.resolve(a)
         }
         return d(e, !1, !1, !1, a)
@@ -6299,7 +6303,7 @@
                         if (o) {
                             var c = domData(o, "rdate"),
                                 d = domData(o, "peer");
-                            (c !== u || n !== intval(d)) && (val(o, l), domData(o, "rdate", u), domData(o, "peer", n))
+                            (c !== u || n !== intval(d)) && (val(o, l), domData(o, "rdate", u), domData(o, "peer", n));
                         } else l = '<div class="' + X + ' im-page--lastact" data-rdate="' + u + '">' + l + "</div>", val(i, l)
                     }
                 }
@@ -9488,7 +9492,7 @@
                     });
                 break;
             default:
-                throw new Error("Unkonwn error from queue: " + e)
+                throw new Error("Unkonwn error from queue: " + e);
         }(0, p.pause)(3)
         .then(function() {
                 return a

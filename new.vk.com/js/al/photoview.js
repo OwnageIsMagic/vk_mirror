@@ -482,7 +482,8 @@ var Photoview = {
                 if (Photoview.toggleLightModeClass(!0), isVisible(cur.pvAlbumsWrap) && (val("pva_scroll", layerWrap.scrollTop), hide(cur.pvAlbumsWrap), show(cur.pvPhotoWrap),
                         Photoview.updateSize()), isVisible(cur.pvAlbumWrap) && (val("pvsa_scroll", layerWrap.scrollTop), hide(cur.pvAlbumWrap), show(cur.pvPhotoWrap),
                         Photoview.updateSize()), uiScrollBox.hide(), hide(cur.pvTitle), cur.pvPhoto.innerHTML = '<img src="' + o.src + '" />', Photoview.updatePhotoDimensions(),
-                    "temp" == cur.pvListId) return hide(cur.pvCommentsData), Photoview.toggleOnPhotoControls(!1), void Photoview.updateVerticalPosition();
+                    window.tooltips && tooltips.destroyAll(cur.pvBox), "temp" == cur.pvListId) return hide(cur.pvCommentsData), Photoview.toggleOnPhotoControls(!1), void Photoview
+                    .updateVerticalPosition();
                 Photoview.toggleOnPhotoControls(!0);
                 var e = cur.pvCurPhoto,
                     t = e.commshown >= 0 ? !1 : -e.commshown;

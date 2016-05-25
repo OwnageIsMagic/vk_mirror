@@ -190,6 +190,29 @@ var AudioUtils = {
                 .notify(AudioPlayer.EVENT_ADDED, u.fullId)
         }
     },
+    addAudioFromChooseBox: function(t, i, e, o, a, l, s) {
+        var r = i.ctrlKey;
+        t.innerHTML = "", showProgress(t), ajax.post("al_audio.php", {
+            act: "add",
+            gid: a,
+            oid: e,
+            aid: o,
+            hash: l
+        }, {
+            onDone: function(i, e, o, l) {
+                var u = a ? -a : vk.id;
+                if (i) {
+                    var n = (i[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + i[AudioUtils.AUDIO_ITEM_INDEX_ID], getAudioPlayer()
+                        .getPlaylist(AudioPlaylist.TYPE_ALBUM, u, AudioUtils.AUDIO_ALBUM_ID_ALL));
+                    n.addAudio(i, 0), cur.audioPage && cur.audioPage.switchToSection(n)
+                }
+                if (r) hideProgress(t), domReplaceEl(t, '<span class="choose_link audio_choose_added_label">' + s + "</span>");
+                else
+                    for (; __bq.count();) __bq.hideLast();
+                nav.go("audios" + u)
+            }
+        })
+    },
     drawAudio: function(t, i) {
         for (var e = JSON.parse(getTemplate("audio_bits_to_cls")), o = t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS], a = [], l = 0; 32 > l; l++) {
             var s = 1 << l;
@@ -961,8 +984,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.updateAudio = function(t, i) {
         var e = "";
         if (isString(t) ? e = t : isArray(t) && (e = AudioUtils.asObject(t)
-                .fullId),
-            each(this._playlists, function(t, o) {
+                .fullId), each(this._playlists, function(t, o) {
                 for (var a = o.getAudiosList(), l = 0, s = a.length; s > l; l++)
                     if (a[l][AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + a[l][AudioUtils.AUDIO_ITEM_INDEX_ID] == e) return isObject(i) && each(i, function(t, i) {
                         a[l][t] = i

@@ -3219,6 +3219,7 @@ img.page_preview_video {
 .page_preview_doc_photo {
     background: #000;
     text-align: center;
+    width: 130px;
     height: 97px;
     line-height: 97px;
     overflow: hidden

@@ -6207,7 +6207,7 @@ var TopNotifier = {
         }
     },
     showTooltip: function(text, key) {
-        if (TopNotifier.shown()) return;
+        if (TopNotifier.shown() || isVisible('dev_top_nav')) return;
 
         function _onHide(key) {
             if (!key && cur.topNotifyTTKey) {
