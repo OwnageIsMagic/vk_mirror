@@ -54,8 +54,9 @@ global_num_date_year_time = ['', '{num_day}.{month}.{short_year} {num_hour}:{min
 global_n_votes = ['', '%s �����', '%s ������', '%s �������'];
 global_online = ['', 'Online', 'Online'];
 global_online_sm = ['', 'online', 'online'];
-global_on_behalf_group = '�� ����� ������';
-global_on_behalf_me = '�� ����� �����';
+global_on_behalf_group = '�� ����� ����������';
+global_on_behalf_me = '�� ������ �����';
+global_on_behalf_title = '��������� ��������';
 global_privacy_except = '�����:';
 global_rating_box_header = '�������';
 global_recaptcha_title = '������������� ��������';
@@ -222,7 +223,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 426;
+// section = 0; version = 430;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;
