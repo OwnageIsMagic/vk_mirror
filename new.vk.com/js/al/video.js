@@ -507,7 +507,7 @@ var Video = {
             r = Video.isInAlbum() ? Video.getLoc()
             .section : "all",
             d = cur.silentLoaded[t][r];
-        if (cur.searchText == e && d && cur.globalSearchResults[i] && cur.globalSearchResults[i].count > 0) {
+        if (cur.searchText == e && d && cur.globalSearchResults[i] && cur.globalSearchResults[i].count >= 0) {
             var n = cur.globalSearchResults[i];
             cur.found[Video.VIDEO_GLOBAL_SEARCH_TYPE] = {
                 list: n.list,

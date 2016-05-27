@@ -994,7 +994,7 @@ Slider.prototype.toggleLoading = function(t) {
         "mousedown", this._ev_onMouseDown)), re(this._el), re(this._currHintEl)
 }, Slider.prototype._updateHint = function(t, e) {
     this._currHintEl || (this._currHintEl = se('<div class="slider_hint" id="slider_hint"></div>'), this.options.hintClass && addClass(this._currHintEl, this.options.hintClass),
-        this._el.appendChild(this._currHintEl));
+        this._el.appendChild(this._currHintEl)), this._width = this._width || getSize(this._el)[0];
     var i = this._getPos(),
         s = Math.round(t.pageX - i[0]),
         o = this._width;

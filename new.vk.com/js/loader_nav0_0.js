@@ -110,10 +110,11 @@ var navMap = {
     'link(\\d+)?$': ['patterns_info.php', ['dyn-patterns_info.css', 'dyn-patterns_info.js', 'page.css']],
     'autoreg(\\d+)?$': ['patterns_info.php', ['dyn-patterns_info.css', 'dyn-patterns_info.js', 'page.css']],
     'statlogs($|/)': ['statlogs_view.php', ['statlogs.css']],
-    'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']]
+    'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']],
+    'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 713015055344,
+    'nav': 709026432071,
     'fonts_cnt.css': 2307916144,
     'common.js': 1132,
     'common.css': 2726300433,
@@ -135,7 +136,7 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 2036446343,
+    'audioplayer.js': 2860246391,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
     'audio.js': 2481987248,
@@ -177,7 +178,7 @@ var stVersions = {
     'wkview.css': 1978487190,
     'single_pv.css': 1756823785,
     'single_pv.js': 2569562240,
-    'video.js': 1448603092,
+    'video.js': 1643038912,
     'video.css': 4081142433,
     'videocat.js': 972120599,
     'videocat.css': 2768202123,
@@ -237,8 +238,8 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 3404074575,
-    'imn.js': 1740164652,
+    'im.css': 2895240130,
+    'imn.js': 1215070466,
     'im.js': 4271552496,
     'emoji.js': 2743385565,
     'wide_dd.css': 3273211401,
@@ -380,14 +381,14 @@ var stVersions = {
     'mapbox.js': 4245575080,
     'mapbox.css': 1578941304,
     'jobs.js': 1431325420,
-    'jobs.css': 2576208687,
+    'jobs.css': 856007092,
     'print.js': 3671532933,
     'print.css': 3483095015,
     'qrcode.js': 2897722391,
     'contests.css': 630790975,
     'ui.css': 849758697,
     'ui.js': 3053181925,
-    'ui_common.js': 3189240781,
+    'ui_common.js': 701394587,
     'ui_common.css': 2806894556,
     'ui_media_selector.js': 820225478,
     'ui_media_selector.css': 4209267876,
@@ -409,6 +410,7 @@ var stVersions = {
     'landings/community_message.css': 877172513,
     'landings/wdsd.css': 3959193380,
     'landings/smartfeed.css': 3800404485,
+    'landings/job38.css': 257596551,
     'vkme.css': 1846895044,
     'ui_controls.js': 1572838920,
     'highcharts.js': 607702664,
@@ -481,4 +483,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 1362;
+var _rnd = 2177;

@@ -1093,21 +1093,31 @@ img.im_photo_thumb {
     display: inline-block;
     vertical-align: top;
     position: relative;
-    top: 3px;
+    top: -11px;
     border: none;
     outline: 0;
-    width: 25px;
-    height: 17px;
+    width: 34px;
+    height: 47px;
     padding: 0;
-    background: url(/images/icons/comm_msg.png) no-repeat;
-    cursor: pointer
+    background: none;
+    cursor: pointer;
+    text-align: center
 }
 
-.im-page.im-page_group .im-page--header-icon_star {
+.im-page.im-page_group .im-page--header-icon:before {
+    content: "";
+    margin-top: 3px;
+    display: inline-block;
+    background: url(/images/icons/comm_msg.png) no-repeat;
+    height: 17px;
+    width: 25px
+}
+
+.im-page.im-page_group .im-page--header-icon_star:before {
     background-position: 4px -18px
 }
 
-.im-page.im-page_group .im-page--header-icon_star-active {
+.im-page.im-page_group .im-page--header-icon_star-active:before {
     background-position: 4px -40px
 }
 
@@ -1116,13 +1126,15 @@ img.im_photo_thumb {
 }
 
 .im-page.im-page_group .im-page--header-icon_answer {
-    background-position: center 2px;
-    opacity: 0.7;
-    display: none;
-    margin-right: 10px
+    display: none
 }
 
-.im-page.im-page_group .im-page--header-icon_answer:hover {
+.im-page.im-page_group .im-page--header-icon_answer:before {
+    background-position: center 2px;
+    opacity: 0.7
+}
+
+.im-page.im-page_group .im-page--header-icon_answer:hover:before {
     opacity: 1
 }
 
@@ -1340,9 +1352,9 @@ img.im_photo_thumb {
     display: inline-block;
     vertical-align: middle;
     padding-right: 13px;
-    margin-top: -15px;
+    margin-top: -16px;
     padding-top: 15px;
-    padding-bottom: 16px;
+    padding-bottom: 15px;
     margin-bottom: -16px;
     margin-left: -20px
 }
@@ -1700,14 +1712,14 @@ img.im_photo_thumb {
 }
 
 .im-page .im-page--header-more {
-    width: 15px;
-    height: 15px;
+    width: 48px;
+    margin-right: -20px;
+    height: 46px;
+    margin-top: -12px;
     display: inline-block;
     cursor: pointer;
-    margin-left: 15px;
     vertical-align: middle;
-    opacity: 0;
-    margin-top: 1px
+    opacity: 0
 }
 
 .im-page .im-page--header-more:hover .ui_actions_menu_icons {
@@ -1715,11 +1727,13 @@ img.im_photo_thumb {
 }
 
 .im-page .im-page--header-more .ui_actions_menu_icons {
-    margin-top: -14px;
-    background: url(/images/icons/m_more.png) no-repeat 50%;
-    height: 40px;
+    margin-top: -17px;
+    background: url(/images/icons/m_more.png) no-repeat 2px;
+    height: 46px;
     opacity: 0.7;
-    margin-right: 3px
+    margin-right: 0;
+    width: 42px;
+    right: 0
 }
 
 .im-page .im-page--header-more .ui_actions_menu_icons:hover {

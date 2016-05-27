@@ -1548,8 +1548,10 @@ AudioPlayer.tabIcons = {
         }
     }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.STATE_HAVE_NOTHING = 0, AudioPlayerHTML5.STATE_HAVE_FUTURE_DATA = 3, AudioPlayerHTML5.HAVE_ENOUGH_DATA = 4,
     AudioPlayerHTML5.SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=", AudioPlayerHTML5.isSupported = function() {
-        var t = document.createElement("audio");
-        return !(!t.canPlayType || !t.canPlayType('audio/mpeg; codecs="mp3"')
+        var t = "undefined" != typeof navigator ? navigator.userAgent : "";
+        if (t && /vivaldi/i.test(t) && /(Windows 7|Windows NT 6.1)/.test(t)) return !1;
+        var i = document.createElement("audio");
+        return !(!i.canPlayType || !i.canPlayType('audio/mpeg; codecs="mp3"')
             .replace(/no/, ""))
     }, AudioPlayerHTML5.prototype.type = "html5", AudioPlayerHTML5.prototype.getPlayedTime = function() {
         for (var t = this._currentAudioEl.played, i = 0, e = 0; e < t.length; e++) i += t.end(e) - t.start(e);
