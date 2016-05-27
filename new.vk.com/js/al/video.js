@@ -58,13 +58,15 @@ var Video = {
             preload: 1
         }, {
             onDone: function(o, i, t) {
-                var r = cur.getOwnerId(),
-                    d = cur.videosCount[r];
-                extend(cur, i), extend(cur.videosCount[r], d), cur._preloadedPages = cur._preloadedPages || {}, cur._preloadedPages[e] = ce("div", {
-                        innerHTML: o,
-                        id: "video_content_" + e
-                    }), cur._preloadedPages.other = t, cur._switchOnPagePreloaded && Video._switch.apply(Video, cur._switchOnPagePreloaded), cur._switchOnPagePreloaded = !
-                    1
+                if (Video.isInCatalog() || Video.isInVideosList()) {
+                    var r = cur.getOwnerId(),
+                        d = cur.videosCount[r];
+                    extend(cur, i), extend(cur.videosCount[r], d), cur._preloadedPages = cur._preloadedPages || {}, cur._preloadedPages[e] = ce("div", {
+                            innerHTML: o,
+                            id: "video_content_" + e
+                        }), cur._preloadedPages.other = t, cur._switchOnPagePreloaded && Video._switch.apply(Video, cur._switchOnPagePreloaded), cur._switchOnPagePreloaded = !
+                        1
+                }
             }
         })
     },
@@ -107,39 +109,41 @@ var Video = {
             var r = !!e[0],
                 d = r && i[0] == "videos" + vk.id,
                 n = r && "video" == i[0],
-                a = i.q && !o.q && i[0].indexOf("video") >= 0,
-                c = o.q && !i.q && o[0].indexOf("video") >= 0,
-                s = "upload" == o.section && !i.section,
-                l = e.q;
-            if ((c || l) && Video.logSearchStats(), a || l ? Video._initSearchStats(i) : c && Video._clearSearchStats(), r) {
-                var u = cur.getOwnerId();
-                if (u == vk.id && !inArray(e[0], ["video", "videos" + u])) return !0;
-                if (u != vk.id && !inArray(e[0], ["videos" + u])) return !0
+                a = "comments" == i.section,
+                c = i.q && !o.q && i[0].indexOf("video") >= 0,
+                s = o.q && !i.q && o[0].indexOf("video") >= 0,
+                l = "upload" == o.section && !i.section,
+                u = e.q;
+            if ((s || u) && Video.logSearchStats(), c || u ? Video._initSearchStats(i) : s && Video._clearSearchStats(), a) return delete cur._back, !0;
+            if (r) {
+                var _ = cur.getOwnerId();
+                if (_ == vk.id && !inArray(e[0], ["video", "videos" + _])) return !0;
+                if (_ != vk.id && !inArray(e[0], ["videos" + _])) return !0
             }
-            var _;
-            if (d ? (nav.setLoc(i), _ = Video._switch("catalog", "all")) : n && (nav.setLoc(i), _ = Video._switch("all", "catalog")), _ || s) return !0;
-            if (uiTabs.hideProgress("video_main_tabs"), "all" == e.section && delete i.section, a && (cur.videoLocBeforeSearch = o), c && (cur.videoSearchStr = "",
+            var v;
+            if (d ? (nav.setLoc(i), v = Video._switch("catalog", "all")) : n && (nav.setLoc(i), v = Video._switch("all", "catalog")), v || l) return !0;
+            if (uiTabs.hideProgress("video_main_tabs"), "all" == e.section && delete i.section, c && (cur.videoLocBeforeSearch = o), s && (cur.videoSearchStr = "",
                     cur.videoSearchFilters = {}, Video.doSearch(), cur.videoLocBeforeSearch && t.fromSearch)) {
-                var v = clone(cur.videoLocBeforeSearch);
-                return delete cur.videoLocBeforeSearch, nav.go(v), !1
+                var h = clone(cur.videoLocBeforeSearch);
+                return delete cur.videoLocBeforeSearch, nav.go(h), !1
             }
             trim(val(cur.searchInputEl)) != trim(i.q || "") && val(cur.searchInputEl, trim(i.q || ""));
-            var h = i.section || "all";
+            var g = i.section || "all";
             if (i.q) Video.isInAlbum() || delete i.section, Video._prepareSearchFilters(i), cur.videoSearchStr = val(cur.searchInputEl), Video.doSearch();
             else {
-                if (-1 == Video.AVAILABLE_TABS.indexOf(h)) return !0;
+                if (-1 == Video.AVAILABLE_TABS.indexOf(g)) return !0;
                 if (Video.isInAlbum(o.section)) return nav.setLoc(i), !0;
                 each(Video.AVAILABLE_TABS, function(e, o) {
                     hide("video_subtab_pane_" + o)
-                }), show("video_subtab_pane_" + h), Video.updateEmptyPlaceholder(h);
-                var g = domFC(ge("video_tab_" + h));
-                g && uiTabs.switchTab(g, {
+                }), show("video_subtab_pane_" + g), Video.updateEmptyPlaceholder(g);
+                var V = domFC(ge("video_tab_" + g));
+                V && uiTabs.switchTab(V, {
                     noAnim: t.hist
-                }), "albums" != h ? (Video.loadSilent(h), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[h] || "default", !0), show(
-                    "video_sort_dd_wrap")) : hide("video_sort_dd_wrap"), Video._createSorters(h)
+                }), "albums" != g ? (Video.loadSilent(g), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[g] || "default", !0), show(
+                    "video_sort_dd_wrap")) : hide("video_sort_dd_wrap"), Video._createSorters(g)
             }
             return nav.setLoc(i), !1;
-            var h, g
+            var g, V
         }), cur.destroy.push(function() {
             cur.nav.pop()
         })
@@ -966,7 +970,8 @@ var Video = {
             })
         }
         cur.found = {}, cur.currentSortings = {}, cur._preloadedPages = {}, cur.videoSearchFilters = {}, cur.chosenVideos = [], cur.albumsShowingAll = {}, cur.isNoteEdit =
-            e, cur.videoShowWindow = {}, cur.getOwnerId = function() {
+            e,
+            cur.videoShowWindow = {}, cur.getOwnerId = function() {
                 return i
             };
         var u = curBox();
@@ -1153,7 +1158,7 @@ var Video = {
     },
     isInVideosList: function() {
         var e = Video.getLoc();
-        return /^videos-?\d+|video-?\d+_\d+$/.test(e[0]) && !e.q
+        return /^videos-?\d+|video-?\d+_\d+$/.test(e[0]) && !e.q && inArray(Video._getCurrentSectionType(), Video.AVAILABLE_TABS)
     },
     onDeleteFromPlaylist: function(event, vid, oid) {
         var video = !1,

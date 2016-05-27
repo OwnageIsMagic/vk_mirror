@@ -536,7 +536,6 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             this.statusTT = new ElementTooltip(e, {
                 offset: [0, 3],
                 content: t,
-                showImmediate: !!cur._onStatusExportBtn,
                 width: 300,
                 offset: [-5, 0],
                 elClassWhenTooltip: "audio_status_tt_shown",
@@ -548,7 +547,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                         nokeys: !0
                     })
                 }
-            })
+            }), cur._onStatusExportBtn && this.statusTT.show()
         }.bind(this)
     }))
 }, AudioPage.prototype.isLayer = function() {

@@ -86,6 +86,7 @@ var AudioUtils = {
     AUDIO_ITEM_INDEX_DURATION: 5,
     AUDIO_ITEM_INDEX_ALBUM_ID: 6,
     AUDIO_ITEM_INDEX_AUTHOR_LINK: 8,
+    AUDIO_ITEM_INDEX_LYRICS: 9,
     AUDIO_ITEM_INDEX_FLAGS: 10,
     AUDIO_ITEM_INDEX_CONTEXT: 11,
     AUDIO_ITEM_INDEX_EXTRA: 12,
@@ -98,9 +99,9 @@ var AudioUtils = {
     AUDIO_PLAYING_CLS: "audio_row_playing",
     AUDIO_CURRENT_CLS: "audio_row_current",
     ACT_ADDRESS: "/audio",
-    AUDIO_LAYER_HEIGHT: 450,
+    AUDIO_LAYER_HEIGHT: 550,
     AUDIO_LAYER_MIN_WIDTH: 400,
-    AUDIO_LAYER_MAX_WIDTH: 1200,
+    AUDIO_LAYER_MAX_WIDTH: 800,
     AUDIO_STATE_ADDED: "added",
     AUDIO_STATE_REMOVED: "removed",
     toggleAudioHQBodyClass: function() {
@@ -241,7 +242,7 @@ var AudioUtils = {
         return e || (e = JSON.parse(domData(t, "audio"))), i ? AudioUtils.asObject(e) : e
     },
     showAudioLayer: function(btn) {
-        stManager.add(["ui_controls.js", "ui_controls.css", "audio.css"], function() {
+        stManager.add(["audio.css"], function() {
             function initLayer(html, playlist, options, firstSong, script) {
                 eval(script);
                 var telContent = ap.layer.getContent();
@@ -297,11 +298,10 @@ var AudioUtils = {
                         id: ""
                     }),
                     cls: "top_audio_loading top_audio_layer",
-                    showImmediate: !0,
                     autoShow: !1,
                     appendTo: document.body,
-                    hideOnClick: !0,
                     elClassWhenTooltip: "audio_top_btn_active",
+                    forceSide: "bottom",
                     onHide: function(t, i) {
                         audioPage = data(ap.layer, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), i && topHeaderClearClose()
                     },
@@ -326,7 +326,7 @@ var AudioUtils = {
                             position: "fixed"
                         }
                     }
-                }), addClass(btn, "active"), ajax.post("al_audio.php", {
+                }), ap.layer.show(), addClass(btn, "active"), ajax.post("al_audio.php", {
                     act: "show_layer",
                     my: currentPlaylist ? 0 : 1
                 }, {
@@ -364,6 +364,7 @@ var AudioUtils = {
             title: t[AudioUtils.AUDIO_ITEM_INDEX_TITLE],
             performer: t[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER],
             duration: intval(t[AudioUtils.AUDIO_ITEM_INDEX_DURATION]),
+            lyrics: intval(t[AudioUtils.AUDIO_ITEM_INDEX_LYRICS]),
             url: t[AudioUtils.AUDIO_ITEM_INDEX_URL],
             flags: t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS],
             context: t[AudioUtils.AUDIO_ITEM_INDEX_CONTEXT],

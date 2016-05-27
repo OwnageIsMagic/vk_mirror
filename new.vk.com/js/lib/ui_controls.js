@@ -126,22 +126,6 @@ function addTootlip(t, e) {
 }
 
 function removeTooltip(t, e) {}
-
-function ElementTooltip(t, e) {
-    if (this.constructor != ElementTooltip) throw new Error("ElementTooltip was called without 'new' operator");
-    if (t = ge(t), !t || !t.nodeType) throw new Error("First argument not a DOM element");
-    data(t, "ett") || (this._opts = extend({
-        delay: 200,
-        showImmediate: !1,
-        offset: [0, 0],
-        to: "up",
-        id: "",
-        cls: "",
-        width: null,
-        autoShow: !0,
-        hideOnClick: !1
-    }, e), this._el = t, data(this._el, "ett", this), this._initEvents(t), this._clearTimeouts(), this._isShown = !1, this._opts.showImmediate && this.show())
-}
 var UI_CONTROLS_DEBUG = !1;
 if (window.vk || (vk = {}), void 0 === window._ui) {
     var _ui = {
@@ -1791,7 +1775,7 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
         createButton(this.buttonOk, function() {
             t.options.onConfirm && t.options.onConfirm.apply(t) === !1 || t.hide()
         }), createButton(this.buttonCancel, function() {
-            t.options.onCancel && t.options.onCancel.apply(t) === !1 || t.hide()
+            t.options.onCancel && t.options.onCancel.apply(t) === !1 || t.hide();
         }), addEvent(this.target, "click", function() {
             return t.show(), !1
         }), this.onEvent = function(t) {}
@@ -2093,71 +2077,6 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
     }
 }, InlineDropdown.prototype.val = function(t, e) {
     return void 0 !== t ? this.select(t, e) : this.getSelected() ? this.getSelected()[0] : ""
-}, ElementTooltip.FADE_SPEED = 100, ElementTooltip.prototype._initEvents = function(t) {
-    addEvent(t, "mouseenter", this._onMouseEnter.bind(this)), this._opts.hideOnClick || this._opts.noHideOnMouseLeave || addEvent(t, "mouseleave", this._onMouseLeave.bind(this))
-}, ElementTooltip.prototype._onMouseEnter = function(t) {
-    clearTimeout(this._hto), this._hto = !1, !isVisible(this._ttel) && this._opts.autoShow && (clearTimeout(this._sto), this._sto = !1, this._sto = setTimeout(this.show.bind(
-        this), this._opts.delay))
-}, ElementTooltip.prototype._onMouseLeave = function(t) {
-    this._clearTimeouts(), this._hto = setTimeout(this._hide.bind(this), this._opts.delay)
-}, ElementTooltip.prototype._onMouseWindowClick = function(t) {
-    for (var e = t.target; e && e != this._ttel && e != document.body && e != this._el;) e = domPN(e);
-    return e && e != document.body ? void 0 : (this.hide(!0), cancelEvent(t))
-}, ElementTooltip.prototype.destroy = function() {
-    this._clearTimeouts(), data(this._el, "ett", null), re(this._ttel), this._ev_wclick && removeEvent(document, "mousedown", this._ev_wclick)
-}, ElementTooltip.prototype.hide = function(t) {
-    this._hide(t)
-}, ElementTooltip.prototype.show = function() {
-    if (this._clearTimeouts(), this._ttel || (this._ttel = se('<div class="eltt ' + (this._opts.cls || "") + '" id="' + this._opts.id + '"></div>'), this._opts.content && (
-                "string" == typeof this._opts.content ? this._ttel.appendChild(se("<div>" + trim(this._opts.content) + "</div>")) : this._ttel.appendChild(this._opts.content)),
-            (this._opts.appendTo || this._el)
-            .appendChild(this._ttel), this._opts.onFirstTimeShow && this._opts.onFirstTimeShow.call(this, this._ttel)), addClass(this._ttel, "eltt_" + this._opts.to), this._opts
-        .width) {
-        var t = isFunction(this._opts.width) ? this._opts.width.call(this) : this._opts.width;
-        setStyle(this._ttel, "width", t)
-    }
-    this._opts.onShow && this._opts.onShow(this._ttel), this._isShown = !0, this.updatePosition();
-    var e = this;
-    show(e._ttel), setTimeout(function() {
-        addClass(e._ttel, "eltt_vis")
-    }, 10), this._opts.elClassWhenTooltip && addClass(this._el, this._opts.elClassWhenTooltip), this._opts.hideOnClick && addEvent(document, "mousedown", this._ev_wclick =
-        this._onMouseWindowClick.bind(this))
-}, ElementTooltip.prototype.updatePosition = function() {
-    if (this._opts.setPos) style = this._opts.setPos.call(this), "up" == this._opts.to ? style.marginTop = null : "left" == this._opts.to && (style.marginLeft = null),
-        setStyle(this._ttel, style);
-    else {
-        var t = getSize(this._el),
-            e = getSize(this._ttel),
-            i = 5,
-            s = [0, 0];
-        if (this._opts.appendTo) {
-            var o = getXY(this._el),
-                n = getXY(this._opts.appendTo);
-            s[0] = o[0] - n[0], s[1] = o[1] - n[1]
-        }
-        "up" == this._opts.to ? style = {
-            left: -e[0] / 2 + t[0] / 2 + this._opts.offset[0] + s[0],
-            top: t[1] + i + this._opts.offset[1] + s[1]
-        } : "down" == this._opts.to ? style = {
-            left: -e[0] / 2 + t[0] / 2 + this._opts.offset[0],
-            top: -e[1] - i + this._opts.offset[1]
-        } : "left" == this._opts.to && (style = {
-            left: t[0] + i + this._opts.offset[0],
-            top: t[1] / 2 - e[1] / 2 + this._opts.offset[1]
-        }), setStyle(this._ttel, style)
-    }
-}, ElementTooltip.prototype._hide = function(t) {
-    this._clearTimeouts(), this._reTimeout = setTimeout(function() {
-        hide(this._ttel), this._opts.elClassWhenTooltip && removeClass(this._el, this._opts.elClassWhenTooltip), this._opts.onHide && this._opts.onHide(this._ttel, !!t),
-            this._isShown = !1
-    }.bind(this), ElementTooltip.FADE_SPEED), removeClass(this._ttel, "eltt_vis"), this._ev_wclick && removeEvent(document, "mousedown", this._ev_wclick)
-}, ElementTooltip.prototype.isShown = function() {
-    return this._isShown
-}, ElementTooltip.prototype._clearTimeouts = function() {
-    this._sto && clearTimeout(this._sto), this._sto = !1, this._hto && clearTimeout(this._hto), this._hto = !1, this._reTimeout && clearTimeout(this._reTimeout), this._reTimeout = !
-        1
-}, ElementTooltip.prototype.getContent = function() {
-    return this._ttel
 };
 try {
     jsDispatcher.triggerOnload("lib/ui_controls")

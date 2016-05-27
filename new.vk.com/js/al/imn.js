@@ -1226,7 +1226,9 @@
                 removeClass(e.parentNode, "im-page--dialogs_with-mess"), 0 !== N(t)
                     .length || o.isLoading() || (n = !0), n && o.reset(), r && o.wipe(), o.pipeReplace(Promise.resolve(N(t)))
                     .then(function(e) {
-                        if (n) {
+                        if (!(!n || t.get()
+                                .gid && t.get()
+                                .peer)) {
                             var r = A(o, l, t);
                             return o.toTop(), r
                         }
@@ -1264,7 +1266,7 @@
                 }
             },
             scrollUp: function() {
-                o.toTop()
+                o.toTop(), o.saveScroll("list", !0)
             },
             promoteDialog: function(t, n) {
                 var a = geByClass1("_im_dialog_" + n.peerId, e);
@@ -1371,15 +1373,15 @@
             y = a.bind(null, t, e, v),
             E = S.bind(null, t, e, i);
         return (0, H.addDelegateEvent)(e, "click", "_im_dialog_close", u), (0, H.addDelegateEvent)(e, "click", "_im_dialog_markre", m), (0, H.addDelegateEvent)(e, "click",
-                J, f), (0, H.addDelegateEvent)(e, "click", "_im_dialog", h), (0, H.addDelegateEvent)(e, "click", X, y), (0, H.addDelegateEvent)(e, "mouseover",
-                "_im_dialog_close", c),
-            (0, H.addDelegateEvent)(e, "mouseover", "_im_dialog_markre", d), (0, H.addDelegateEvent)(e, "mouseover", J, g), (0, H.addDelegateEvent)(e, "click", ee, E),
-            addEvent(e, "mouseover", throttle(function() {
-                var t = geByClass("_im_dialog_hovered", e);
-                t.forEach(function(e) {
-                    removeClass(e, "_im_dialog_hovered"), removeClass(e, "nim-dialog_hovered")
-                })
-            }, 100)), l(e, h, c, i, u, v, n)
+                J, f), (0, H.addDelegateEvent)(e, "click", "_im_dialog", h),
+            (0, H.addDelegateEvent)(e, "click", X, y), (0, H.addDelegateEvent)(e, "mouseover", "_im_dialog_close", c), (0, H.addDelegateEvent)(e, "mouseover",
+                "_im_dialog_markre", d), (0, H.addDelegateEvent)(e, "mouseover", J, g), (0, H.addDelegateEvent)(e, "click", ee, E), addEvent(e, "mouseover", throttle(
+                function() {
+                    var t = geByClass("_im_dialog_hovered", e);
+                    t.forEach(function(e) {
+                        removeClass(e, "_im_dialog_hovered"), removeClass(e, "nim-dialog_hovered")
+                    })
+                }, 100)), l(e, h, c, i, u, v, n)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0
@@ -3099,7 +3101,8 @@
 
     function ge(e) {
         var t = e.active_tab;
-        return (0, vt.post)("al_im.php", {
+        return (0,
+                vt.post)("al_im.php", {
                 act: "a_get_dialogs",
                 offset: e.offset,
                 tab: t,
@@ -4877,7 +4880,7 @@
         }
         try {
             var a = new Date;
-            console.debug("%cLP:[" + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds() + ":" + a.getMilliseconds() + "]%c " + e, r, n)
+            console.debug("%cLP:[" + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds() + ":" + a.getMilliseconds() + "]%c " + e, r, n);
         } catch (i) {}
     }
 
@@ -5990,11 +5993,11 @@
             })
     }
 
-    function T(e, t) {
-        return t.scrolls || (t.scrolls = {}), t.scrolls[e] || (t.scrolls[e] = {
-            scrolled: t.scrolled || 0,
-            scrollItem: t.scrollItem
-        }), Promise.resolve(t)
+    function T(e, t, n) {
+        return n.scrolls || (n.scrolls = {}), (!n.scrolls[e] || t) && (n.scrolls[e] = {
+            scrolled: n.scrolled || 0,
+            scrollItem: n.scrollItem
+        }), Promise.resolve(n)
     }
 
     function C(e, t) {
@@ -6069,8 +6072,8 @@
             wipe: function() {
                 e.innerHTML = ""
             },
-            saveScroll: function(e) {
-                return t.set(T.bind(null, e))
+            saveScroll: function(e, n) {
+                return t.set(T.bind(null, e, n))
             },
             updateScroll: function() {
                 l.update(!1, !0)
@@ -8545,7 +8548,7 @@
         e.set(h.setExecStack.bind(null, (0, T.execuctionStackFilter)(e.get()
             .stack, "im_search")));
         var r = a(t);
-        r.value = "", i(e, n, t, r, r.value)
+        uiSearch.reset(r), i(e, n, t, r, r.value)
     }
 
     function c(e, t, n, r, a) {

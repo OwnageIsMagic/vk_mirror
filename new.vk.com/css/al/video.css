@@ -158,15 +158,25 @@
     margin-right: 10px
 }
 
-.video_sort_dd_wrap {
+.video_tab_actions_wrap {
     float: right;
     margin-top: -45px;
     position: absolute;
-    right: 20px
+    right: 20px;
+    text-transform: lowercase
 }
 
-.video_sort_dd_wrap.in_album {
+.video_tab_actions_wrap.in_album {
     margin-top: -30px
+}
+
+.video_tab_actions_wrap>a,
+.video_tab_actions_wrap>div {
+    display: inline-block
+}
+
+.video_tab_actions_wrap .divider:before {
+    left: -2px
 }
 
 .video_sort_dd_wrap .video_sort_dd {
@@ -198,6 +208,10 @@
     -moz-osx-font-smoothing: auto;
     margin: 20px 0 15px;
     display: inline-block
+}
+
+.video_comments_rows_wrap .reply_content {
+    margin-right: 100px
 }
 
 .video_playlist_item {

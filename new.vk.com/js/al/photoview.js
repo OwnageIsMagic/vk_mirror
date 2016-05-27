@@ -177,8 +177,7 @@ var Photoview = {
                     pvAddMedia: domFC(ge("pv_add_media")),
                     pvMediaPreview: ge("pv_media_preview"),
                     pvCommentSend: ge("pv_comment_send"),
-                    pvComment: ge("pv_comment"),
-                    pvAsGroup: ge("pv_reply_as_group")
+                    pvComment: ge("pv_comment")
                 }), addEvent(cur.pvPhoto, "mousemove", Photoview.onMouseMove), addEvent(layerWrap, "scroll", Photoview.scrollResize), Photoview.updateSize(), t && uiScrollBox.init(!
                     1, {
                         parent: layerWrap
@@ -591,7 +590,7 @@ var Photoview = {
                     var T = geByClass1("pv_actions_more");
                     T && (cur.pvMoreActionsTooltip = new ElementTooltip(T, {
                         id: "pv_more_acts_tt",
-                        to: "down",
+                        forceSide: "top",
                         elClassWhenTooltip: "pv_more_shown",
                         content: P + b,
                         offset: [0, -5]
@@ -1138,6 +1137,9 @@ var Photoview = {
             }
             cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.update(!0, !0)
         },
+        getReplyAsGroupEl: function() {
+            return ge("pv_reply_as_group")
+        },
         sendComment: function(o, e, t) {
             var r = cur.pvListId,
                 a = cur.pvIndex,
@@ -1159,12 +1161,14 @@ var Photoview = {
                 if (u.delayed) return;
                 if (!u.attach1_type && (!u.message || n && !n.indexOf(u.message))) return void Emoji.editableFocus(p, !1, !0)
             }
-            hide("reply_warn" + o), ajax.post("al_photos.php", Wall.fixPostParams(extend(u, {
+            hide("reply_warn" + o);
+            var l = Photoview.getReplyAsGroupEl();
+            ajax.post("al_photos.php", Wall.fixPostParams(extend(u, {
                 act: "post_comment",
                 photo: i.id,
                 hash: i.hash,
                 fromview: 1,
-                from_group: isVisible(cur.pvAsGroup) ? isChecked(cur.pvAsGroup) : "",
+                from_group: l ? isChecked(l) : "",
                 reply_to: (cur.reply_to || {})[1]
             })), {
                 onDone: function(t, n) {
@@ -1707,9 +1711,9 @@ var Photoview = {
                 hash: a.hash
             }, {
                 onDone: function(o, e, i, p) {
-                    a.tags = o, a.tagged = e, a.tagshtml = i, a.taginfo = a.tagid = !1, t == cur.pvListId && r == cur.pvIndex && (Photoview.setTags(i), (!a.taginfo &&
-                            a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink),
-                        cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel", "pv_prof_done"), Photoview.toggleTopInfoPanel(!1))
+                    a.tags = o, a.tagged = e, a.tagshtml = i, a.taginfo = a.tagid = !1, t == cur.pvListId && r == cur.pvIndex && (Photoview.setTags(i),
+                        (!a.taginfo && a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink), cleanElems("pv_confirm_tag", "pv_delete_tag",
+                            "pv_prof_cancel", "pv_prof_done"), Photoview.toggleTopInfoPanel(!1))
                 },
                 showProgress: function() {
                     lockButton(e)
@@ -1804,9 +1808,9 @@ var Photoview = {
                     }), window.pvcur = extend(window.pvcur || {}, {
                         wallTpl: a.wallTpl,
                         rmedia_types: a.rmedia_types
-                    }), cur.options || (cur.options = {}), cur.options.share || (cur.options.share = a.share), val(cur.pvAsGroup, "<div></div>" + getLang(
-                        "wall_reply_as_group")), val("pv_comment_header", getLang("photos_yourcomment")), val(domFC(ge("pv_add_media")), getLang("global_add_media"))), e =
-                    Photoview.realCount(o, e), t = Photoview.realOffset(o, t, 1), cur.pvData || (cur.pvData = {}), cur.pvCommsLikes || (cur.pvCommsLikes = {}), cur.pvData[o])
+                    }), cur.options || (cur.options = {}), cur.options.share || (cur.options.share = a.share), val("pv_comment_header", getLang("photos_yourcomment")), val(
+                        domFC(ge("pv_add_media")), getLang("global_add_media"))), e = Photoview.realCount(o, e), t = Photoview.realOffset(o, t, 1), cur.pvData || (cur.pvData = {}),
+                    cur.pvCommsLikes || (cur.pvCommsLikes = {}), cur.pvData[o])
                     if (cur.pvData[o].length < e)
                         for (var i = cur.pvData[o].length; e > i; ++i) cur.pvData[o].push(void 0);
                     else cur.pvData[o].length > e && (cur.pvData[o] = cur.pvData[o].slice(0, e));

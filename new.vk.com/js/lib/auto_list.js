@@ -3,7 +3,8 @@ function AutoList(t, s) {
     if (this._opts = extend({
             scrollNode: window,
             threshold: 0,
-            renderImmediate: !1
+            renderImmediate: !1,
+            rowClass: ""
         }, s), this._containerEl = ge(t), !this._containerEl) throw new Error("AutoList: container not found");
     this._rowClasses = isArray(this._opts.rowClass) ? this._opts.rowClass : this._opts.rowClass.split(" "), delete this._opts.rowClass, this._initialRender = this._opts.renderImmediate,
         this._isProgressShown = !1, this._prefetched = [], this._offset = this._initialRender ? 0 : this._opts.rowClasses ? this._countRows(this._containerEl.children) : this._containerEl

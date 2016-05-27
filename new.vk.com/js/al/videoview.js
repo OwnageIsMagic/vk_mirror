@@ -831,10 +831,10 @@ var Videoview = {
             if (node) {
                 var comment = domByClass(node, "reply_wrap"),
                     msg = domByClass(node, "dld");
-                if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
+                if (!text) return re(msg), show(comment), "mv" == from ? window.mvcur && (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
-                hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script)
+                hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? window.mvcur && (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --
+                    cur.commentsShown), Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script)
             }
         },
         commAction: function(e, i, o, t) {

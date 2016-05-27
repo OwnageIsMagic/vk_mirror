@@ -3500,23 +3500,14 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
     user-select: none
 }
 
-.checkbox_official,
 .checkbox_official .thumb_off,
-.checkbox_official .thumb_on,
-.checkbox_official:after,
-.checkbox_official:before {
+.checkbox_official .thumb_on {
     -webkit-transform-style: preserve-3d;
     transform-style: preserve-3d;
     transition: -webkit-transform 0.3s ease;
     -o-transition: transform 0.3s ease, -o-transform 0.3s ease;
     transition: transform 0.3s ease;
-    transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease
-}
-
-.checkbox_official .thumb_off,
-.checkbox_official .thumb_on,
-.checkbox_official:after,
-.checkbox_official:before {
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     -webkit-transform: rotateY(0deg);
@@ -3527,20 +3518,32 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 }
 
 .checkbox_official.on .thumb_on,
-.checkbox_official.on:after,
-.checkbox_official .thumb_off,
-.checkbox_official:before {
+.checkbox_official .thumb_off {
     -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
     z-index: 1
 }
 
 .checkbox_official.on .thumb_off,
-.checkbox_official.on:before,
-.checkbox_official .thumb_on,
-.checkbox_official:after {
+.checkbox_official .thumb_on {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg)
+}
+
+.checkbox_official:after {
+    content: " ";
+    display: block;
+    width: 9px;
+    height: 6px;
+    position: absolute;
+    left: 29px;
+    top: 10px;
+    opacity: 0.7;
+    background-image: url(/images/icons/profile_arrow.png)
+}
+
+.checkbox_official:hover:after {
+    opacity: 1
 }
 
 .submit_post_box {
@@ -3573,7 +3576,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 
 .submit_post_box .checkbox_official {
     margin-top: 3px;
-    width: 24px;
+    width: 42px;
     height: 24px
 }
 
@@ -3595,6 +3598,18 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 
 .reply_box_open .submit_post_box .emoji_smile {
     display: block
+}
+
+.post_reply_tt_choose {
+    padding: 7px 15px
+}
+
+.post_reply_tt_choose>.radiobtn {
+    margin: 8px 0
+}
+
+.post_reply_tt_choose h3 {
+    margin: 6px 0 11px
 }
 
 .signed_wrap {
