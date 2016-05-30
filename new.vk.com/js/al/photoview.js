@@ -83,7 +83,8 @@ var Photoview = {
             a = Math.min(1, Math.max(0, a)), setStyle(cur.pvHH, "opacity", Math.min(1, Math.max(0, a)))
         }, 60),
         toggleLightModeClass: function(o) {
-            o = o ? cur.pvIsLightMode : !1, toggleClass(cur.pvBox, "pv_light_mode", !!o)
+            o = o ? cur.pvIsLightMode : !1, toggleClass(cur.pvBox, "pv_light_mode", !!o), o = o ? cur.pvShowBottomActions : !1, toggleClass(cur.pvBox, "pv_show_bottom_actions", !
+                !o)
         },
         createLayer: function(o) {
             var e = "pv_dark";
@@ -586,7 +587,9 @@ var Photoview = {
                         .src + '">' + getLang("photos_pv_act_open_original") + "</a>", b = '<div class="pv_more_acts">' + b + "</div>", m.length ? (m = JSON.stringify(m), m =
                             m.replace(/\"/g, "&quot;"), _.push('<a class="pv_actions_more" data-items="' + m + '">' + getLang("photos_actions_more") + "</a>")) : inArray(nav.objLoc[
                             0], ["support", "helpdesk"]) && _.push('<a id="pv_more_act_download" target="_blank" href="' + Photoview.genData(e, "w")
-                            .src + '">' + getLang("photos_pv_act_open_original") + "</a>"), _ = _.join('<span class="divider"></span>'), cur.pvBottomActions.innerHTML = _;
+                            .src + '">' + getLang("photos_pv_act_open_original") + "</a>"), _ = _.join('<span class="divider"></span>'), cur.pvIsLightMode && (_ +=
+                            '<div id="pv_rotate" style="display:none;"><form method="POST" target="pv_rotate_frame" name="pv_rotate_form" id="pv_rotate_form"></form></div></div>'
+                        ), cur.pvBottomActions.innerHTML = _;
                     var T = geByClass1("pv_actions_more");
                     T && (cur.pvMoreActionsTooltip = new ElementTooltip(T, {
                         id: "pv_more_acts_tt",
@@ -673,20 +676,19 @@ var Photoview = {
                             .id = "pv_fs_img_wrap")
                     };
                 r(), domFC(ge("pv_fs_img_wrap")) && cur.pvSlideNeedAnimation ? (cur.pvSlideNeedAnimation = !1, cur.pvCanvas.insertBefore(se(
-                            '<div id="pv_fs_img_fade"><img src="' + o.src + '" /></div>'), ge("pv_fs_img_wrap")),
-                        e = function() {
-                            cssAnim(ge("pv_fs_img_wrap"), {
-                                opacity: 0
-                            }, {
-                                duration: 1e3
-                            }, function() {
-                                r(), Photoview.fullscreenOnLoad()
-                            }), cssAnim(ge("pv_fs_img_fade"), {
-                                opacity: 1
-                            }, {
-                                duration: 1e3
-                            })
-                        }) : (val(ge("pv_fs_img_wrap"), '<img src="' + o.src + '" />'), e = Photoview.fullscreenOnLoad), Photoview.pvCanvasUpdate(!0), t.onload = e, t.src = o.src,
+                        '<div id="pv_fs_img_fade"><img src="' + o.src + '" /></div>'), ge("pv_fs_img_wrap")), e = function() {
+                        cssAnim(ge("pv_fs_img_wrap"), {
+                            opacity: 0
+                        }, {
+                            duration: 1e3
+                        }, function() {
+                            r(), Photoview.fullscreenOnLoad()
+                        }), cssAnim(ge("pv_fs_img_fade"), {
+                            opacity: 1
+                        }, {
+                            duration: 1e3
+                        })
+                    }) : (val(ge("pv_fs_img_wrap"), '<img src="' + o.src + '" />'), e = Photoview.fullscreenOnLoad), Photoview.pvCanvasUpdate(!0), t.onload = e, t.src = o.src,
                     window.FullscreenPV && FullscreenPV.updateInfo()
             }
         },
@@ -1531,12 +1533,13 @@ var Photoview = {
             if (p) {
                 var v = i.tt || {},
                     n = clone(v.opts || {}),
-                    s = domByClass(v.container, "_content"),
-                    c = domByClass(v.container, "_title");
-                t && c && val(c, t), v && (v.likeInvalidated = !0), animateCount(p, e), toggleClass(i, "pv_liked", o), toggleClass(i, "no_likes", !e), toggleClass(s,
-                    "me_hidden", !o), e ? !v.el || isVisible(v.container) || t || tooltips.show(v.el, extend(n, {
-                    showdt: 0
-                })) : v.el && v.hide(), toggleClass(cur.pvHH, "pv_liked", !!o)
+                    s = domByClass(v.container, "_value"),
+                    c = domByClass(v.container, "_content"),
+                    u = domByClass(v.container, "_title");
+                t && u && val(u, t), v && (v.likeInvalidated = !0), s && (s.value = e), animateCount(p, e), toggleClass(i, "pv_liked", o), toggleClass(i, "no_likes", !e),
+                    toggleClass(c, "me_hidden", !o), e ? !v.el || isVisible(v.container) || t || tooltips.show(v.el, extend(n, {
+                        showdt: 0
+                    })) : v.el && v.hide(), toggleClass(cur.pvHH, "pv_liked", !!o)
             }
         },
         like: function() {
@@ -1692,7 +1695,7 @@ var Photoview = {
                     },
                     showProgress: function() {
                         var o = Photoview.actionInfo();
-                        o.innerHTML = "", showProgress(o)
+                        o.innerHTML = "", showProgress(o);
                     },
                     hideProgress: function() {
                         re(Photoview.actionInfo())
@@ -1711,9 +1714,9 @@ var Photoview = {
                 hash: a.hash
             }, {
                 onDone: function(o, e, i, p) {
-                    a.tags = o, a.tagged = e, a.tagshtml = i, a.taginfo = a.tagid = !1, t == cur.pvListId && r == cur.pvIndex && (Photoview.setTags(i),
-                        (!a.taginfo && a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink), cleanElems("pv_confirm_tag", "pv_delete_tag",
-                            "pv_prof_cancel", "pv_prof_done"), Photoview.toggleTopInfoPanel(!1))
+                    a.tags = o, a.tagged = e, a.tagshtml = i, a.taginfo = a.tagid = !1, t == cur.pvListId && r == cur.pvIndex && (Photoview.setTags(i), (!a.taginfo &&
+                        a.actions.tag && o[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink), cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel",
+                        "pv_prof_done"), Photoview.toggleTopInfoPanel(!1))
                 },
                 showProgress: function() {
                     lockButton(e)

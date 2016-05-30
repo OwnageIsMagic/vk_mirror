@@ -463,6 +463,18 @@
     overflow: hidden
 }
 
+#pv_box.pv_light_mode.pv_show_bottom_actions {
+    overflow: visible
+}
+
+#pv_box.pv_light_mode.pv_show_bottom_actions .pv_data {
+    border-radius: 3px
+}
+
+#pv_box.pv_light_mode.pv_show_bottom_actions .pv_img_area_wrap {
+    border-radius: 3px 3px 0 0
+}
+
 #pv_box .divider {
     margin-left: 9px
 }
@@ -2313,6 +2325,10 @@
 
 #pv_sett_to_cover {
     margin-top: 10px
+}
+
+#pv_cover_check {
+    white-space: nowrap
 }
 
 .pv_filter_custom_block {

@@ -1919,6 +1919,11 @@ img.im_photo_thumb {
     position: absolute
 }
 
+.im-page .im-page--failed-tt:after,
+.im-page .im-page--failed-tt:before {
+    left: 19px!important
+}
+
 .im-page-btn {
     border: none;
     background: none;

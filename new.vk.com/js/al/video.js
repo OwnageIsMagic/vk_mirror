@@ -782,6 +782,9 @@ var Video = {
             add: intval(n),
             hash: r
         }, a), {
+            onFail: function() {
+                n && (window.tooltips && tooltips.destroyAll(), removeClass(d, "video_added"))
+            },
             onDone: function(e, o, r) {
                 var d = cur.currentSortings && (!cur.currentSortings.all || "default" == cur.currentSortings.all),
                     a = cur._preloadedPages ? geByClass1("_video_list_my_all", cur._preloadedPages.all) : !1,
@@ -969,9 +972,8 @@ var Video = {
                 toggleClass(e, "checked", -1 != cur.chosenVideos.indexOf(o))
             })
         }
-        cur.found = {}, cur.currentSortings = {}, cur._preloadedPages = {}, cur.videoSearchFilters = {}, cur.chosenVideos = [], cur.albumsShowingAll = {}, cur.isNoteEdit =
-            e,
-            cur.videoShowWindow = {}, cur.getOwnerId = function() {
+        cur.found = {}, cur.currentSortings = {}, cur._preloadedPages = {},
+            cur.videoSearchFilters = {}, cur.chosenVideos = [], cur.albumsShowingAll = {}, cur.isNoteEdit = e, cur.videoShowWindow = {}, cur.getOwnerId = function() {
                 return i
             };
         var u = curBox();

@@ -306,22 +306,23 @@ var AudioUtils = {
                         audioPage = data(ap.layer, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), i && topHeaderClearClose()
                     },
                     width: getLayerWidth,
-                    setPos: function() {
-                        var t = getXY(getPageEl()),
-                            i = getSize(getPageEl())[0] - BORDER_COMPENSATION,
-                            e = getLayerWidth(),
-                            o = getAudioBtn(),
-                            a = getXY(o)[0],
-                            l = getSize(o)[0],
-                            s = a + l / 2,
-                            r = s - e / 2;
-                        i <= AudioUtils.AUDIO_LAYER_MAX_WIDTH && i >= AudioUtils.AUDIO_LAYER_MIN_WIDTH && (r = t[0]);
-                        var u = 37,
-                            n = a - r + Math.min(l / 2, u);
+                    setPos: function(t) {
+                        var i = this.isShown(),
+                            e = getXY(getPageEl()),
+                            o = getSize(getPageEl())[0] - BORDER_COMPENSATION,
+                            a = getLayerWidth(),
+                            l = getAudioBtn(),
+                            s = getXY(l)[0],
+                            r = getSize(l)[0],
+                            u = s + r / 2,
+                            n = i ? t.left : u - a / 2;
+                        o <= AudioUtils.AUDIO_LAYER_MAX_WIDTH && o >= AudioUtils.AUDIO_LAYER_MIN_WIDTH && (n = e[0]);
+                        var d = 37,
+                            _ = s - n + Math.min(r / 2, d);
                         return setPseudoStyle(this.getContent(), "after", {
-                            left: n + "px"
+                            left: _ + "px"
                         }), {
-                            left: r,
+                            left: n,
                             top: AudioUtils.AUDIO_LAYER_TOP,
                             position: "fixed"
                         }
@@ -1396,9 +1397,10 @@ AudioPlayer.tabIcons = {
         }
     }, AudioPlayer.prototype.toggleAudio = function(t, i) {
         var e = domClosest("_audio_row", t),
-            o = i && (hasClass(i.target, "audio_lyrics") || domClosest("_audio_duration_wrap", i.target) || domClosest("_audio_inline_player", i.target) || domClosest(
-                "audio_performer", i.target));
-        if (cur._sliderMouseUpNowEl && cur._sliderMouseUpNowEl == geByClass1("audio_inline_player_progress", e) && (o = !0), delete cur._sliderMouseUpNowEl, o) return !0;
+            o = cur.cancelClick || i && (hasClass(i.target, "audio_lyrics") || domClosest("_audio_duration_wrap", i.target) || domClosest("_audio_inline_player", i.target) ||
+                domClosest("audio_performer", i.target));
+        if (cur._sliderMouseUpNowEl && cur._sliderMouseUpNowEl == geByClass1("audio_inline_player_progress", e) && (o = !0), delete cur.cancelClick, delete cur._sliderMouseUpNowEl,
+            o) return !0;
         var a = AudioUtils.getAudioFromEl(e, !0);
         if (AudioUtils.isClaimedAudio(a)) {
             var l = AudioUtils.getAudioExtra(a),
@@ -1550,7 +1552,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.STATE_HAVE_NOTHING = 0, AudioPlayerHTML5.STATE_HAVE_FUTURE_DATA = 3, AudioPlayerHTML5.HAVE_ENOUGH_DATA = 4,
     AudioPlayerHTML5.SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=", AudioPlayerHTML5.isSupported = function() {
         var t = "undefined" != typeof navigator ? navigator.userAgent : "";
-        if (t && /vivaldi/i.test(t) && /(Windows 7|Windows NT 6.1)/.test(t)) return !1;
+        if (t && /vivaldi/i.test(t) && (/(Windows 7|Windows NT 6.1)/.test(t) || /(Windows NT 5.1|Windows XP)/.test(t))) return !1;
         var i = document.createElement("audio");
         return !(!i.canPlayType || !i.canPlayType('audio/mpeg; codecs="mp3"')
             .replace(/no/, ""))

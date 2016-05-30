@@ -464,7 +464,7 @@ input.dev_wide_input~.placeholder .ph_content,
 .dev_home_link:before {
     content: ' ';
     display: inline-block;
-    background: url(/images/icons/head_icons.png?1) no-repeat;
+    background: url(/images/icons/head_icons.png?2) no-repeat;
     background-position: 0px -98px;
     height: 19px;
     width: 32px;

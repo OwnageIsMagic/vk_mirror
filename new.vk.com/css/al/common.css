@@ -1267,7 +1267,7 @@ div#utils {
 }
 
 .top_home_link .top_home_logo {
-    background: url(/images/icons/head_icons.png?1) no-repeat;
+    background: url(/images/icons/head_icons.png?2) no-repeat;
     background-position: 0 -98px;
     height: 19px;
     width: 32px;
@@ -1308,7 +1308,7 @@ div#utils {
 
 .top_nav_btn .top_nav_btn_icon {
     margin: 13px auto 12px;
-    background: url(/images/icons/head_icons.png?1) no-repeat;
+    background: url(/images/icons/head_icons.png?2) no-repeat;
     height: 20px;
     width: 20px
 }
@@ -5423,7 +5423,7 @@ button.ui_load_more_btn {
 .top_audio_player .top_audio_player_btn>div {
     width: 14px;
     height: 14px;
-    background-image: url(/images/icons/head_icons.png?1);
+    background-image: url(/images/icons/head_icons.png?2);
     opacity: 0.65;
     -o-transition: opacity 60ms linear;
     transition: opacity 60ms linear
