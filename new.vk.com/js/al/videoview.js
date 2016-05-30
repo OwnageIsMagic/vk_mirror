@@ -831,27 +831,26 @@ var Videoview = {
             if (node) {
                 var comment = domByClass(node, "reply_wrap"),
                     msg = domByClass(node, "dld");
-                if (!text) return re(msg), show(comment), "mv" == from ? window.mvcur && (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
+                if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
-                hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? window.mvcur && (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --
-                    cur.commentsShown), Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script)
+                hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
+                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script)
             }
         },
-        commAction: function(e, i, o, t) {
-            var a = ge("post" + i + "video_" + o + "mv"),
-                r = domByClass(a, "post_actions"),
-                d = ge("reply_" + e + i + "video_" + o + "mv"),
-                n = "mv";
-            attr(a, "data-action", e), d && tooltips.hide(d), ajax.post("al_video.php", {
+        commAction: function(e, i, o, t, a) {
+            var r = ge("post" + i + "video_" + o + a),
+                d = domByClass(r, "post_actions"),
+                n = ge("reply_" + e + i + "video_" + o + a);
+            attr(r, "data-action", e), n && tooltips.hide(n), ajax.post("al_video.php", {
                 act: e + "_comment",
                 comment: i + "_" + o,
                 hash: t,
                 videoview: 1,
-                from: n
+                from: a
             }, {
-                onDone: Videoview.commActionDone.pbind(i + "_" + o, n),
-                showProgress: addClass.pbind(r, "post_actions_progress"),
-                hideProgress: removeClass.pbind(r, "post_actions_progress"),
+                onDone: Videoview.commActionDone.pbind(i + "_" + o, a),
+                showProgress: addClass.pbind(d, "post_actions_progress"),
+                hideProgress: removeClass.pbind(d, "post_actions_progress"),
                 stat: ["privacy.js", "privacy.css"]
             })
         },
@@ -880,14 +879,15 @@ var Videoview = {
             }
         },
         updateComms: function(e) {
-            if ("review" == e) return void Video.changeSummary();
-            var i = mvcur.mvData,
-                o = "";
-            i.commcount > i.commshown && (o = getLang("video_show_previous_comments", i.commcount - i.commshown)), i.commcount && val("mv_comments_summary", getLang(
+            if ("review" != e) {
+                var i = mvcur.mvData,
+                    o = "";
+                i.commcount > i.commshown && (o = getLang("video_show_previous_comments", i.commcount - i.commshown)), i.commcount && val("mv_comments_summary", getLang(
                     "video_comments_summary", i.commcount)), setStyle("mv_comments_summary", {
                     display: i.commcount ? null : "none"
-                }), toggleClass("mv_comments_header", "mv_comments_expanded", !o), toggleClass("mv_comments_summary", "mv_comments_expanded", !o), val("mv_comments_header", o),
-                Videoview.recache()
+                }), toggleClass("mv_comments_header", "mv_comments_expanded", !o), toggleClass("mv_comments_summary", "mv_comments_expanded", !o), val("mv_comments_header",
+                    o), Videoview.recache()
+            }
         },
         onShowEditReply: function() {
             mvcur.replyFormShown = !0, Videoview.updateReplyFormPos(), Videoview.playerNextTimerUpdate()

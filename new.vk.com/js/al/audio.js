@@ -63,6 +63,33 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }), cur.destroy.push(function() {
         i._deinitKeyEvents()
     })
+}, AudioPage.prototype.editFeed = function() {
+    var e = this;
+    showTabbedBox("al_settings.php", {
+        act: "a_edit_owners_list",
+        list: "audio",
+        height: lastWindowHeight
+    }, {
+        stat: ["privacy.js", "privacy.css", "ui_controls.js", "ui_controls.css", "indexer.js"],
+        dark: 1
+    }), cur.onOListSave = function(i, t, o, a) {
+        var s = curBox(),
+            r = {
+                act: "a_ignore_olist",
+                hash: a.hash
+            };
+        return i.length < t.length ? r.White = i.join(",") : r.Black = t.join(","), ajax.post("al_audio.php", r, {
+            onDone: function(i, t) {
+                s.hide();
+                var o = e.getCurrentPlaylist();
+                o.clean(), e.refreshCurrentPage()
+            },
+            showProgress: s.showProgress,
+            hiderogress: s.hideProgress
+        }), !1
+    }
+}, AudioPage.prototype.refreshCurrentPage = function() {
+    this.switchToSection(this.getCurrentPlaylist())
 }, AudioPage.prototype.updateStatusExportControls = function() {
     var e = this.ap.getStatusExportInfo();
     each(geByClass("_audio_export_status", this._container), function() {
@@ -1035,12 +1062,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             u = this.ap.getPlaylist(AudioPlaylist.TYPE_POPULAR, vk.id, p + intval(a.genre))
         } else if (a.friend) {
             var y = intval(a.friend),
-                A = geByClass1("_audio_friend_" + y, this._container);
-            addClass(A, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioUtils.AUDIO_ALBUM_ID_ALL), geByClass1("_audio_friend_" + y) ||
+                f = geByClass1("_audio_friend_" + y, this._container);
+            addClass(f, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioUtils.AUDIO_ALBUM_ID_ALL), geByClass1("_audio_friend_" + y) ||
                 this.showMoreFriends(!1, y)
         } else if (a.section == AudioPlaylist.TYPE_RECOM) {
-            var f = AudioUtils.AUDIO_ALBUM_ID_ALL;
-            a.audio_id ? f = "audio" + a.audio_id : a.album_id && (f = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, f)
+            var A = AudioUtils.AUDIO_ALBUM_ID_ALL;
+            a.audio_id ? A = "audio" + a.audio_id : a.album_id && (A = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, A)
         } else a.section == AudioPlaylist.TYPE_FEED ? u = this.ap.getPlaylist(AudioPlaylist.TYPE_FEED, vk.id, 0) : a.section == AudioPlaylist.TYPE_CURRENT ? u = this.ap
             .getCurrentPlaylist() : a.band ? (u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, intval(a.band), AudioUtils.AUDIO_ALBUM_ID_ALL), u.mergeWith({
                 band: 1

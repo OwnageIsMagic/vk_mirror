@@ -676,10 +676,7 @@
     box-sizing: border-box
 }
 
-.audio_upload_btn {
-    background-image: url(/images/icons/edit_newsfeed.png);
-    height: 13px;
-    width: 13px;
+.audio_menu_btn {
     float: right;
     margin-top: 10px;
     margin-right: 10px;
@@ -687,14 +684,29 @@
     filter: alpha(opacity=75)
 }
 
-.audio_upload_btn:hover {
+.audio_menu_btn:hover {
     opacity: 1;
     -webkit-filter: none;
     filter: none
 }
 
-.ui_rmenu_loading .audio_upload_btn {
+.audio_menu_btn:active {
+    margin-top: 11px
+}
+
+.ui_rmenu_loading .audio_menu_btn {
     display: none
+}
+
+.audio_menu_btn.audio_upload_btn,
+.audio_menu_btn.audio_edit_feed_btn {
+    background-image: url(/images/icons/edit_newsfeed.png);
+    height: 13px;
+    width: 13px
+}
+
+.audio_menu_btn.audio_edit_feed_btn {
+    background-position: 0 -15px
 }
 
 .audio_delete_current_btn {

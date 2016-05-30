@@ -557,7 +557,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
             .getCurrentAudio(),
             i = this.indexOfAudio(t); - 1 != i && (this._list.splice(i, 1), this._list.unshift(t))
     }, AudioPlaylist.prototype.clean = function() {
-        this._unref(), this._hasMore = !0, this._list = [], this._nextOffset = 0
+        this._unref(), this._hasMore = !0, this._list = [], this._items = [], this._feedOffset = this._feedFrom = 0, this._nextOffset = 0
     }, AudioPlaylist.prototype.shuffle = function(t) {
         if (this._unref(), this._shuffle = t, this._shuffle)
             if (this.hasMore()) {
