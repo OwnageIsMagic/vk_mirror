@@ -716,6 +716,11 @@ body.mobfixed #mv_layer_wrap {
     padding: 0
 }
 
+#mv_content #video_player {
+    height: 504px;
+    width: 896px
+}
+
 .mv_container_has_pl #html5_player,
 .mv_container_has_pl #video_player,
 .mv_container_has_pl .video_box_wrap,

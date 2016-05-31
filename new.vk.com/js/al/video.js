@@ -81,9 +81,13 @@ var Video = {
                 withArrow: !0,
                 selected: "default",
                 onSelect: Video._sortVideos
-            })), toggle("video_sort_dd_wrap", "albums" != Video.getLoc()
+            })), Video._toggleSorter("albums" != Video.getLoc()
                 .section)
         }
+    },
+    _toggleSorter: function(e) {
+        var o = [geByClass1("_video_sort_dd_wrap"), geByClass1("divider")];
+        toggle(o[0], e), toggle(o[1], e)
     },
     _switch: function(e, o) {
         var i = ge("video_content_" + o);
@@ -139,11 +143,12 @@ var Video = {
                 var V = domFC(ge("video_tab_" + g));
                 V && uiTabs.switchTab(V, {
                     noAnim: t.hist
-                }), "albums" != g ? (Video.loadSilent(g), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[g] || "default", !0), show(
-                    "video_sort_dd_wrap")) : hide("video_sort_dd_wrap"), Video._createSorters(g)
+                });
+                geByClass1("video_tab_actions_wrap"), [geByClass1("_video_sort_dd_wrap"), geByClass1("divider")];
+                "albums" != g ? (Video.loadSilent(g), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[g] || "default", !0), Video._toggleSorter(!0)) :
+                    Video._toggleSorter(!1), Video._createSorters(g)
             }
-            return nav.setLoc(i), !1;
-            var g, V
+            return nav.setLoc(i), !1
         }), cur.destroy.push(function() {
             cur.nav.pop()
         })
@@ -972,8 +977,8 @@ var Video = {
                 toggleClass(e, "checked", -1 != cur.chosenVideos.indexOf(o))
             })
         }
-        cur.found = {}, cur.currentSortings = {}, cur._preloadedPages = {},
-            cur.videoSearchFilters = {}, cur.chosenVideos = [], cur.albumsShowingAll = {}, cur.isNoteEdit = e, cur.videoShowWindow = {}, cur.getOwnerId = function() {
+        cur.found = {}, cur.currentSortings = {}, cur._preloadedPages = {}, cur.videoSearchFilters = {}, cur.chosenVideos = [], cur.albumsShowingAll = {}, cur.isNoteEdit =
+            e, cur.videoShowWindow = {}, cur.getOwnerId = function() {
                 return i
             };
         var u = curBox();
