@@ -1355,8 +1355,8 @@ var Videoview = {
         restoreStyle: function(e, i) {
             i = ge(i), setStyle(i, mvcur.restoreStyles[e])
         },
-        showVideo: function(title, html, js, desc, serviceBtns, opt) {
-            if (mvcur.mvShown && opt.mvData.videoRaw == mvcur.videoRaw) {
+        showVideo: function(videoRaw, title, html, js, desc, serviceBtns, opt) {
+            if (mvcur.mvShown && videoRaw == mvcur.videoRaw) {
                 if (!vk.id && !html) return void setTimeout(function() {
                     Videoview.hide(!1, !0), showDoneBox(title)
                 }, 500);
@@ -2350,7 +2350,7 @@ var Videoview = {
                     var t = i.loaded;
                     Videoview.show(null, e, t.listId, extend(t.options, {
                         playlistId: i.id
-                    })), Videoview.showVideo.apply(videoview, t.hubData);
+                    })), Videoview.showVideo.apply(Videoview, t.hubData);
                     var o = mvcur.preloadStatsHashes ? mvcur.preloadStatsHashes[e] : "";
                     o && ajax.post("/al_video.php", {
                         act: "a_inc_preload_stats",

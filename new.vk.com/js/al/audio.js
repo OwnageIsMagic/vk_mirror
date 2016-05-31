@@ -947,7 +947,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         case AudioPlaylist.TYPE_TEMP:
         case AudioPlaylist.TYPE_FEED:
             var y = e.getOwnerId();
-            e.getType() == AudioUtils.AUDIO_PLAYLIST_TYPE_ALBUM && e.isPopBand() ? p.push("pop_band_" + y) : 0 > y ? p.push(this._prevSearchPlaylistId) : p.push("friends");
+            e.getType() == AudioUtils.AUDIO_PLAYLIST_TYPE_ALBUM && e.isPopBand() ? p.push("pop_band_" + y) : 0 > y ? p.push(this._prevSearchPlaylistId) : p.push("friends"), 0 >
+                y && cur.prevSearchPlaylist && p.push(cur.prevSearchPlaylist.getId());
             break;
         case AudioPlaylist.TYPE_RECOM:
             p.push("recoms");
@@ -1064,7 +1065,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             var y = intval(a.friend),
                 f = geByClass1("_audio_friend_" + y, this._container);
             addClass(f, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioUtils.AUDIO_ALBUM_ID_ALL), geByClass1("_audio_friend_" + y) ||
-                this.showMoreFriends(!1, y)
+                this.showMoreFriends(!1, y), o.q && 0 > y && !cur.prevSearchPlaylist && (cur.prevSearchPlaylist = this.getCurrentPlaylist())
         } else if (a.section == AudioPlaylist.TYPE_RECOM) {
             var A = AudioUtils.AUDIO_ALBUM_ID_ALL;
             a.audio_id ? A = "audio" + a.audio_id : a.album_id && (A = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, A)
@@ -1075,7 +1076,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL), addClass(uiSearch.getWrapEl(this.searchInputEl), "ui_search_field_empty"));
         return a.section != AudioUtils.AUDIO_PLAYLIST_TYPE_RECOMS && (delete a.audio_id, a.section && delete a.album_id), d && (e = !1, val(this.searchInputEl, ""),
             this._muteFilterEvent = !0, uiSearch.removeAllFilters(this.searchInputEl), delete a.performer, delete a.lyrics, delete a.sort, this._muteFilterEvent = !
-            1), this.isLayer() || nav.setLoc(a), this._prevLoc = a, this.syncFilters(a), this.switchToSection(u, !0), !1
+            1), a.friend || delete cur.prevSearchPlaylist, this.isLayer() || nav.setLoc(a), this._prevLoc = a, this.syncFilters(a), this.switchToSection(u, !0), !1
     }.bind(this))
 }, AudioPage.prototype.deleteCurrentPlaylist = function(e) {
     this.ap.deleteCurrentPlaylist();

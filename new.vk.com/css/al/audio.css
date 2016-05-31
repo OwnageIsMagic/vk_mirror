@@ -706,7 +706,15 @@
 }
 
 .audio_menu_btn.audio_edit_feed_btn {
-    background-position: 0 -15px
+    background-position: 0 -15px;
+    opacity: 0;
+    -o-transition: opacity 100ms linear;
+    transition: opacity 100ms linear
+}
+
+.ui_rmenu_item:hover .audio_edit_feed_btn {
+    opacity: 0.75;
+    filter: alpha(opacity=75)
 }
 
 .audio_delete_current_btn {
