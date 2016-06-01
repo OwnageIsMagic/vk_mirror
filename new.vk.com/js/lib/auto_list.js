@@ -41,9 +41,9 @@ AutoList.STATE_IDLE = "idle", AutoList.STATE_PENDING_ROWS = "pend_rows", AutoLis
             var o = this;
             this._initialRender = !1, s()
         }
-    }, AutoList.prototype._onRowsProvided = function(t) {
+    }, AutoList.prototype._onRowsProvided = function(t, s) {
         if (t === !1) return this._requestRows();
-        switch (t = t || [], this._offset += this._countRows(t), this._state) {
+        switch (t = t || [], this._offset += void 0 === s ? this._countRows(t) : s, this._state) {
             case AutoList.STATE_PENDING_PREFETCH_ROWS:
                 0 == t.length ? (this._setState(AutoList.STATE_DONE_PREFETCH), this._opts.onNoMore && this._opts.onNoMore(), 0 == this._prefetched.length && this._setState(
                     AutoList.STATE_DONE)) : (this._setState(AutoList.STATE_IDLE), this._prefetched = this._prefetched.concat(t), this._opts.onHasMore && this._opts.onHasMore(),

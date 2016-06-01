@@ -114,7 +114,7 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 694453632049,
+    'nav': 683839766986,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
     'common.css': 838779168,
@@ -164,8 +164,8 @@ var stVersions = {
     'friendsphotos.js': 3869757571,
     'friendsphotos.css': 3816436303,
     'friends.js': 2165106552,
-    'friends.css': 2394530635,
-    'friends_search.js': 3426781484,
+    'friends.css': 1783103619,
+    'friends_search.js': 602457069,
     'friends_search.css': 204916655,
     'board.js': 3457684991,
     'board.css': 877836109,
@@ -189,13 +189,13 @@ var stVersions = {
     'video_upload.js': 1612009913,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 530783960,
+    'videoplayer.js': 2963208548,
     'videoplayer.css': 1500702822,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
     'reg.css': 1314058211,
     'reg.js': 675443900,
-    'invite.css': 2190657026,
+    'invite.css': 1395050567,
     'invite.js': 2046983763,
     'prereg.js': 1684494884,
     'index.css': 1337048832,
@@ -208,7 +208,7 @@ var stVersions = {
     'owner_photo.js': 777617564,
     'owner_photo.css': 191725357,
     'page.js': 632444841,
-    'page.css': 1485604254,
+    'page.css': 292032913,
     'page_help.css': 439817088,
     'public.css': 1472241584,
     'public.js': 1370745423,
@@ -217,7 +217,7 @@ var stVersions = {
     'groups.css': 3117366935,
     'groups.js': 2016833031,
     'groups_list.js': 2835370862,
-    'groups_edit.css': 3970130060,
+    'groups_edit.css': 1081822463,
     'groups_edit.js': 430983739,
     'profile.css': 1789947477,
     'profile.js': 2041998124,
@@ -263,8 +263,8 @@ var stVersions = {
     'settings.js': 3653652875,
     'settings.css': 2530455346,
     'profile_edit.js': 277721666,
-    'profile_edit.css': 966237583,
-    'profile_edit_edu.js': 2866173359,
+    'profile_edit.css': 3253288543,
+    'profile_edit_edu.js': 2409818483,
     'profile_edit_job.js': 1509540900,
     'profile_edit_mil.js': 200684846,
     'search.js': 2159878420,
@@ -389,7 +389,7 @@ var stVersions = {
     'ui.css': 849758697,
     'ui.js': 3053181925,
     'ui_common.js': 888838986,
-    'ui_common.css': 2806894556,
+    'ui_common.css': 338756037,
     'ui_media_selector.js': 820225478,
     'ui_media_selector.css': 4209267876,
     'admin.js': 1614876408,
@@ -416,7 +416,7 @@ var stVersions = {
     'highcharts.js': 607702664,
     'grid_sorter.js': 3937644316,
     'suggester.js': 446460284,
-    'auto_list.js': 3695600660,
+    'auto_list.js': 2426348710,
     'ui_controls.css': 3395789488,
     'selects.js': 1852657841,
     'mentions.js': 3686976691,
@@ -448,7 +448,7 @@ var stVersions = {
     'snapster/page.js': 1720549549,
     'snapster/mobile.css': 100872175,
     'snapster/common.js': 3854326058,
-    'snapster/main.js': 3449363019,
+    'snapster/main.js': 623004581,
     'favicon': 5,
     'lang': 6709
 };
@@ -483,4 +483,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 2330;
+var _rnd = 4829;
