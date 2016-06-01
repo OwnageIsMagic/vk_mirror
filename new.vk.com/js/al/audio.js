@@ -206,20 +206,20 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         onDone: function(i, t, o, a) {
             var n = getAudioPlayer(),
                 d = n.getPlaylist(AudioPlaylist.TYPE_ALBUM, s, i);
-            if (d.clean(), d.mergeWith({
-                    list: a,
-                    hasMore: !1
-                }), n.deletePlaylist(n.getPlaylist(AudioPlaylist.TYPE_RECOM, s, "album" + i)), each(e, function(e, i) {
-                    var t = {};
-                    t[AudioUtils.AUDIO_ITEM_INDEX_ALBUM_ID] = i, n.updateAudio(s + "_" + i, t)
-                }), each(n.getPlaylists(), function(e, i) {
-                    i.getType() == AudioPlaylist.TYPE_ALBUM && i.getOwnerId() == s && i.clean()
-                }), r) {
-                var l = geByClass1("ui_rmenu", cur.audioPage._container),
-                    u = domPN(l);
-                u.replaceChild(se(o), l), cur.audioPage._initAlbumsSort()
-            }
-            curBox()
+            d.clean(), d.mergeWith({
+                list: a,
+                hasMore: !1
+            }), n.deletePlaylist(n.getPlaylist(AudioPlaylist.TYPE_RECOM, s, "album" + i)), each(e, function(e, i) {
+                var t = {};
+                t[AudioUtils.AUDIO_ITEM_INDEX_ALBUM_ID] = i, n.updateAudio(s + "_" + i, t)
+            }), each(n.getPlaylists(), function(e, i) {
+                i.getType() == AudioPlaylist.TYPE_ALBUM && i.getOwnerId() == s && i.clean()
+            });
+            var l = geByClass1("ui_rmenu", cur.audioPage._container),
+                u = geByClass1("ui_rmenu_item_sel", l),
+                _ = u ? u.id : !1,
+                h = domPN(l);
+            h.replaceChild(se(o), l), cur.audioPage._initAlbumsSort(), _ && uiRightMenu.switchMenu(_), curBox()
                 .hide(), setTimeout(function() {
                     if (r) nav.go("/audios" + s + "?album_id=" + i);
                     else if (cur.audioPage) {

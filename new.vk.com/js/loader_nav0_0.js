@@ -114,7 +114,7 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 704311664118,
+    'nav': 694453632049,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
     'common.css': 838779168,
@@ -139,7 +139,7 @@ var stVersions = {
     'audioplayer.js': 1133791850,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 4284435572,
+    'audio.js': 420268459,
     'audio.css': 1072347008,
     'gifts.css': 4269209150,
     'gifts.js': 2778120873,
@@ -189,7 +189,7 @@ var stVersions = {
     'video_upload.js': 1612009913,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 259097514,
+    'videoplayer.js': 530783960,
     'videoplayer.css': 1500702822,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
@@ -207,7 +207,7 @@ var stVersions = {
     'module.css': 2271964242,
     'owner_photo.js': 777617564,
     'owner_photo.css': 191725357,
-    'page.js': 671437415,
+    'page.js': 632444841,
     'page.css': 1485604254,
     'page_help.css': 439817088,
     'public.css': 1472241584,
@@ -330,7 +330,7 @@ var stVersions = {
     'abuse.css': 3360978448,
     'verify.css': 262281192,
     'away.css': 3306968955,
-    'stats.css': 3695235698,
+    'stats.css': 1998992698,
     'payments.css': 548545203,
     'payments.js': 3222309665,
     'offers.css': 1395278909,
@@ -388,7 +388,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 849758697,
     'ui.js': 3053181925,
-    'ui_common.js': 4224153712,
+    'ui_common.js': 888838986,
     'ui_common.css': 2806894556,
     'ui_media_selector.js': 820225478,
     'ui_media_selector.css': 4209267876,
@@ -483,4 +483,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 9808;
+var _rnd = 2330;
