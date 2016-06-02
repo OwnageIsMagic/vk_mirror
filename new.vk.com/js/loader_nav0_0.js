@@ -114,7 +114,7 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 693327212682,
+    'nav': 686982166538,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
     'common.css': 838779168,
@@ -131,7 +131,7 @@ var stVersions = {
     'ie7.css': 532233945,
     'rtl.css': 836314285,
     'pagination.js': 46926455,
-    'blog.css': 2803074647,
+    'blog.css': 106109697,
     'blog.js': 415080405,
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
@@ -189,8 +189,8 @@ var stVersions = {
     'video_upload.js': 1612009913,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 3862265867,
-    'videoplayer.css': 4012534699,
+    'videoplayer.js': 1339581720,
+    'videoplayer.css': 2887137652,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
     'reg.css': 1314058211,
@@ -483,4 +483,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 9105;
+var _rnd = 64;
