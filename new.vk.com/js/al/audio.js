@@ -219,7 +219,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 u = geByClass1("ui_rmenu_item_sel", l),
                 _ = u ? u.id : !1,
                 h = domPN(l);
-            h.replaceChild(se(o), l), cur.audioPage._initAlbumsSort(), _ && uiRightMenu.switchMenu(_), curBox()
+            h.replaceChild(se(o), l), cur.audioPage._initAlbumsSort(), _ && uiRightMenu.switchMenu(ge(_)), curBox()
                 .hide(), setTimeout(function() {
                     if (r) nav.go("/audios" + s + "?album_id=" + i);
                     else if (cur.audioPage) {

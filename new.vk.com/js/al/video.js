@@ -40,7 +40,8 @@ var Video = {
             .q && (Video._prepareSearchFilters(Video.getLoc()), cur.searchText = Video.getLoc()
                 .q, val(cur.searchInputEl, cur.searchText), Video.doSearch(Video.getLoc()
                     .q), Video._initScrollFixedSearch(!0)), cur.currentModule = function() {
-                return Video.isInCatalog() ? "videocat" : "video"
+                return Video.isInSearch() ? "video_search" : Video.isInCatalog() ? "videocat" : Video.isInVideosList() ? cur.oid < 0 ? "community_videos" : cur.oid == vk.id ?
+                    "profile_own_videos" : "profile_videos" : cur.module
             }, Video._initScroll(), addEvent(window, "beforeunload", function(e) {
                 var o = Video.getLoc();
                 return o[0].indexOf("video") >= 0 && o.q && Video.logSearchStats(), !0
@@ -963,7 +964,8 @@ var Video = {
             }
             u.getOptions()
                 .defaultTitle && (e = u.getOptions()
-                    .defaultTitle), u.setOptions({
+                    .defaultTitle),
+                u.setOptions({
                     title: e,
                     grey: o
                 }), d()
@@ -1128,36 +1130,40 @@ var Video = {
             }, i || {}),
             a = i ? i.listId : "";
         if (a || (a = cur.oid < 0 ? "club" + -cur.oid : "tagged" == cur.vSection ? "tag" + cur.oid : cur.pvVideoTagsShown && cur.pvShown ? "tag" + cur.pvVideoTagsShown :
-                ""), n.module || (n.module = cur.currentModule ? cur.currentModule() : cur.module), Video.isInVideosList()) {
-            var c, s = Video.getLoc()
+                ""), !n.module) {
+            var c = cur.currentModule ? cur.currentModule() : cur.module;
+            "video_search" == c && isAncestor(t, "video_search_videos_list") && (c = "video_search_local"), n.module = c
+        }
+        if (Video.isInVideosList()) {
+            var s, l = Video.getLoc()
                 .section || "all";
-            "all" == s ? n.playlistId = cur.oid + "_-2" : "uploaded" == s ? n.playlistId = cur.oid + "_-1" : (c = s.match(/^album_(\d+)$/)) && (n.playlistId = cur.oid +
-                "_" + c[1])
+            "all" == l ? n.playlistId = cur.oid + "_-2" : "uploaded" == l ? n.playlistId = cur.oid + "_-1" : (s = l.match(/^album_(\d+)$/)) && (n.playlistId = cur.oid +
+                "_" + s[1])
         }
         if (Video.isInCatalog() && n.playlistId && /^cat_\d+$/.test(n.playlistId) && t) {
-            var l = gpeByClass("videocat_row", t),
-                u = l ? l.getAttribute("data-type") : "";
-            u = intval(u.replace("cat_", "")), u && cur.moreVideosInfo[u] && (n.catLoadMore = function(e, o, i) {
+            var u = gpeByClass("videocat_row", t),
+                _ = u ? u.getAttribute("data-type") : "";
+            _ = intval(_.replace("cat_", "")), _ && cur.moreVideosInfo[_] && (n.catLoadMore = function(e, o, i) {
                 Videocat.slideLoadMore(e, o, i)
-            }.pbind(l, u))
+            }.pbind(u, _))
         }
         if (n.playlistId && (n.addParams = extend(n.addParams || {}, {
                 playlist_id: n.playlistId,
                 show_next: intval(window.VideoPlaylist && !!VideoPlaylist.getList(n.playlistId)),
                 force_no_repeat: 1
             })), cur.videoSearchStats) {
-            var _ = domClosest("video_item", t);
-            if (_ && _.hasAttribute("data-search-pos")) {
-                cur.videoSearchPos = parseInt(_.getAttribute("data-search-pos")), cur.videoSearchPos > cur.videoSearchStats.lastSeenIndex && (cur.videoSearchStats.lastSeenElement =
-                    _, cur.videoSearchStats.lastSeenIndex = cur.videoSearchPos), cur.videoSearchStats.positions[cur.videoSearchPos] = extend({
+            var v = domClosest("video_item", t);
+            if (v && v.hasAttribute("data-search-pos")) {
+                cur.videoSearchPos = parseInt(v.getAttribute("data-search-pos")), cur.videoSearchPos > cur.videoSearchStats.lastSeenIndex && (cur.videoSearchStats.lastSeenElement =
+                    v, cur.videoSearchStats.lastSeenIndex = cur.videoSearchPos), cur.videoSearchStats.positions[cur.videoSearchPos] = extend({
                     clicked: 0
                 }, cur.videoSearchStats.positions[cur.videoSearchPos]), cur.videoSearchStats.positions[cur.videoSearchPos].clicked++;
-                var v = ++cur.videoSearchStats.clickNum,
-                    h = (new Date)
+                var h = ++cur.videoSearchStats.clickNum,
+                    g = (new Date)
                     .getTime() - cur.videoSearchStats.lastActionTime;
                 n.addParams = extend(n.addParams || {}, {
-                    click_num: v,
-                    click_time: h
+                    click_num: h,
+                    click_time: g
                 })
             }
         }
@@ -1165,7 +1171,7 @@ var Video = {
     },
     isInVideosList: function() {
         var e = Video.getLoc();
-        return /^videos-?\d+|video-?\d+_\d+$/.test(e[0]) && !e.q && inArray(Video._getCurrentSectionType(), Video.AVAILABLE_TABS)
+        return /^videos-?\d+|video-?\d+_\d+$/.test(e[0]) && !e.q && (inArray(Video._getCurrentSectionType(), Video.AVAILABLE_TABS) || Video.isInAlbum())
     },
     onDeleteFromPlaylist: function(event, vid, oid) {
         var video = !1,

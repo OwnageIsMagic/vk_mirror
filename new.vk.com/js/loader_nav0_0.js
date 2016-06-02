@@ -114,7 +114,7 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 683839766986,
+    'nav': 693327212682,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
     'common.css': 838779168,
@@ -139,7 +139,7 @@ var stVersions = {
     'audioplayer.js': 1133791850,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
-    'audio.js': 420268459,
+    'audio.js': 1311042978,
     'audio.css': 1072347008,
     'gifts.css': 4269209150,
     'gifts.js': 2778120873,
@@ -178,19 +178,19 @@ var stVersions = {
     'wkview.css': 1978487190,
     'single_pv.css': 1756823785,
     'single_pv.js': 2569562240,
-    'video.js': 2837402842,
+    'video.js': 2390230277,
     'video.css': 2732585031,
     'videocat.js': 972120599,
     'videocat.css': 2768202123,
-    'videoview.js': 1409141071,
+    'videoview.js': 4247008674,
     'videoview.css': 2112964734,
     'video_edit.js': 660308478,
     'video_edit.css': 3290437348,
     'video_upload.js': 1612009913,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 2963208548,
-    'videoplayer.css': 1500702822,
+    'videoplayer.js': 3862265867,
+    'videoplayer.css': 4012534699,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
     'reg.css': 1314058211,
@@ -250,7 +250,7 @@ var stVersions = {
     'fansbox.js': 2721076082,
     'postbox.css': 4170744741,
     'postbox.js': 2878853436,
-    'feed.js': 2922702376,
+    'feed.js': 3515092319,
     'feed.css': 507162754,
     'privacy.js': 3873593331,
     'privacy.css': 328635716,
@@ -330,7 +330,7 @@ var stVersions = {
     'abuse.css': 3360978448,
     'verify.css': 262281192,
     'away.css': 3306968955,
-    'stats.css': 1998992698,
+    'stats.css': 866374972,
     'payments.css': 548545203,
     'payments.js': 3222309665,
     'offers.css': 1395278909,
@@ -388,7 +388,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 849758697,
     'ui.js': 3053181925,
-    'ui_common.js': 888838986,
+    'ui_common.js': 4224153712,
     'ui_common.css': 338756037,
     'ui_media_selector.js': 820225478,
     'ui_media_selector.css': 4209267876,
@@ -483,4 +483,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 4829;
+var _rnd = 9105;

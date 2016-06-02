@@ -249,18 +249,16 @@ var uiTabs = {
             removeClass(t, "ui_rmenu_loading"), uiRightMenu.hideSliding(e)
         },
         toggleSubmenu: function(name, ref) {
-            if (name && ref) {
-                var menu = gpeByClass("ui_rmenu", ref),
-                    el, submenu;
-                if ("string" == typeof name ? submenu = geByClass1("_ui_rmenu_" + name + "_list", menu) : (submenu = name, name = submenu.getAttribute("data-sublist-id")), el =
-                    geByClass1("_ui_rmenu_" + name + "_toggle", menu), !submenu) return !1;
-                void 0 !== ref && uiRightMenu.hideSliding(menu), el && toggleClass(el, "ui_rmenu_item_expanded", !isVisible(submenu)), slideToggle(submenu, submenu && getSize(
-                    submenu)[1] ? 100 : 0);
-                var onToggle = domData(el, "on-toggle");
-                return onToggle && setTimeout(function() {
-                    eval(onToggle)
-                }, 150), !1
-            }
+            var menu = gpeByClass("ui_rmenu", ref),
+                el, submenu;
+            if ("string" == typeof name ? submenu = geByClass1("_ui_rmenu_" + name + "_list", menu) : (submenu = name, name = submenu.getAttribute("data-sublist-id")), el =
+                geByClass1("_ui_rmenu_" + name + "_toggle", menu), !submenu) return !1;
+            void 0 !== ref && uiRightMenu.hideSliding(menu), el && toggleClass(el, "ui_rmenu_item_expanded", !isVisible(submenu)), slideToggle(submenu, submenu && getSize(
+                submenu)[1] ? 100 : 0);
+            var onToggle = domData(el, "on-toggle");
+            return onToggle && setTimeout(function() {
+                eval(onToggle)
+            }, 150), !1
         }
     },
     uiPageBlock = {
