@@ -2192,7 +2192,8 @@ var KEY = window.KEY = {
     PAGEUP: 33,
     PAGEDOWN: 34,
     SPACE: 32,
-    CTRL: 17
+    CTRL: 17,
+    ALT: 18
 };
 
 function addEvent(elem, types, handler, custom, context, useCapture) {

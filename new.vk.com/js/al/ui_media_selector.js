@@ -191,7 +191,15 @@ function MediaSelector(e, a, i, o) {
                             stat: ["gifts.css", "wide_dd.js", "wide_dd.css"],
                             dark: 1
                         })
-                    }
+                    };
+                    break;
+                case "market":
+                    n = showBox.pbind("al_market.php", extend(h, {
+                        act: "a_choose_product_box"
+                    }), {
+                        cache: 1,
+                        dark: 1
+                    })
             }
             d.push([i, t, n])
         }
