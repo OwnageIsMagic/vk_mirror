@@ -302,19 +302,21 @@ var Exchange = {
             toggleClass(rows[j], 'even', k++ % 2 > 0)
         }
     },
-    addRequest: function(gid, ad_id, from_office) {
+    addRequest: function(gid, ad_id, from_office, cost_max) {
         return !showBox('/exchange', {
             act: 'a_request_box',
             gid: gid,
             ad_id: ad_id,
-            from_office: from_office
+            from_office: from_office,
+            cost_max: cost_max
         }, {
             params: {
                 width: '430px',
                 dark: true,
                 bodyStyle: 'padding: 0px;',
                 hideButtons: true
-            }
+            },
+            onFail: nav.reload
         });
     },
     deleteRequest: function(gid, ad_id, request_id, from_office, hash, show_comment) {

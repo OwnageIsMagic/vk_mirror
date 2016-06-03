@@ -223,7 +223,7 @@ a.ui_box_header_link {
     left: 0;
     margin-top: -1px;
     background: #fff;
-    z-index: 3;
+    z-index: 4;
     border: 1px solid #c5d0db;
     padding: 4px 0;
     border-radius: 0 0 2px 2px;
@@ -914,7 +914,7 @@ a.ui_search_custom_link {
     top: 47px;
     right: -25px;
     background: #fff;
-    z-index: 3;
+    z-index: 4;
     border: 1px solid #c5d0db;
     padding: 14px 16px;
     border-radius: 2px;
@@ -1238,7 +1238,7 @@ a.ui_search_custom_link {
     top: 51px;
     right: -4px;
     background: #fff;
-    z-index: 3;
+    z-index: 4;
     border: 1px solid #c5d0db;
     padding: 4px 0;
     border-radius: 2px;

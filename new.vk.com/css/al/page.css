@@ -858,7 +858,7 @@ div.wall_module .ext_video div {
 
 .wall_module .reply_to_title {
     display: none;
-    margin-top: 7px;
+    margin-top: 6px;
     color: #7c7f82;
     white-space: nowrap;
     overflow: hidden;
@@ -869,7 +869,8 @@ div.wall_module .ext_video div {
     overflow: hidden;
     text-overflow: ellipsis;
     padding-right: 1px;
-    text-align: right
+    text-align: right;
+    line-height: 16px
 }
 
 .wall_module .reply_to_title .reply_to_cancel {

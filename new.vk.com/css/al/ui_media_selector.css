@@ -165,7 +165,7 @@
     position: absolute;
     visibility: hidden;
     background: #fff;
-    z-index: 3;
+    z-index: 4;
     right: -60px;
     border: 1px solid #c5d0db;
     padding: 4px 0;

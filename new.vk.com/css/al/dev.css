@@ -105,8 +105,7 @@ body.dev #page_wrap .selector_container td.selector input {
 }
 
 body.dev #page_wrap .big.selector_container td.selector_dropdown {
-    background-image: url(/images/dev_wide_dd.png);
-    background-position: center 2px
+    background: url(/images/dropdown_arrow.png) no-repeat 6px 50%
 }
 
 body.dev .paginated_table table {
@@ -941,7 +940,7 @@ input.dev_input_simular {
     position: relative;
     display: inline-block;
     width: 319px;
-    color: #5c7b9b;
+    color: #42648b;
     text-align: center;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
@@ -973,8 +972,7 @@ input.dev_input_simular {
 }
 
 .dev_sect_label {
-    padding: 131px 70px 24px;
-    color: #6487a9
+    padding: 131px 70px 24px
 }
 
 .dev_sect:hover {
