@@ -638,31 +638,37 @@ var Friends = {
         }
     },
     actionPossible: function(e, r, s, n) {
-        window.tooltips && tooltips.hide(n);
-        var i = gpeByClass("right_list_row", n);
-        if (slideUp(i, 100), cur.possibleHidden ? cur.possibleHidden++ : cur.possibleHidden = 1, geByClass("right_list_row", i.parentNode)
-            .length - cur.possibleHidden <= 0 && slideUp("friends_possible_block", 100), s) var t = {
-            act: "add",
-            mid: e,
-            hash: r,
-            request: 1
-        };
-        else var t = {
-            act: "hide_possible",
-            mid: e,
-            hash: r
-        };
-        return ajax.post("al_friends.php", t, {
-            onDone: function(e) {
-                s && showDoneBox(e)
-            },
-            onFail: function(e) {
-                return e ? (showFastBox(getLang("global_error"), e), !0) : void 0
-            }
-        }), s && cur.friendsList && (delete cur.friendsList.out_requests, cur.outRequestsCount++, this.changeSummary("out_requests"), "out_requests" == cur.section &&
-            nav.change({
-                section: "out_requests"
-            })), !1
+        if (window.tooltips && tooltips.hide(n), cur.possibleAdded || (cur.possibleAdded = {}), !cur.possibleAdded[e]) {
+            cur.possibleAdded[e] = 1;
+            var i = gpeByClass("right_list_row", n);
+            if (s) var t = {
+                act: "add",
+                mid: e,
+                hash: r,
+                request: 1
+            };
+            else var t = {
+                act: "hide_possible",
+                mid: e,
+                hash: r
+            };
+            return ajax.post("al_friends.php", t, {
+                onDone: function(e) {
+                    s && showDoneBox(e);
+                    var r = i.parentNode,
+                        n = geByClass1("unshown", r);
+                    n && domInsertBefore(n, i), fadeOut(i, 500, function() {
+                        re(i), n || geByClass1("right_list_row", r) || slideUp("friends_possible_block", 100)
+                    }), n && setTimeout(fadeIn.pbind(n, 200, removeClass.pbind(n, "unshown")), 500)
+                },
+                onFail: function(e) {
+                    return e ? (showFastBox(getLang("global_error"), e), !0) : void 0
+                }
+            }), s && cur.friendsList && (delete cur.friendsList.out_requests, cur.outRequestsCount++, this.changeSummary("out_requests"), "out_requests" == cur.section &&
+                nav.change({
+                    section: "out_requests"
+                })), !1
+        }
     },
     actionFindUser: function(e, r, s, n) {
         window.tooltips && tooltips.hide(n);
@@ -920,7 +926,8 @@ var Friends = {
             })
         }
         25 > r && (geByClass1("friends_section_list" + r, "narrow_column")
-            .innerHTML = s, cur.userLists[r] = s);
+            .innerHTML = s,
+            cur.userLists[r] = s);
         var c = 1 << r;
         cur.friendsList[i] = [];
         for (var a in cur.friends) {

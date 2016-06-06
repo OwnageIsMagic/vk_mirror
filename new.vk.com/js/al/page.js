@@ -2439,7 +2439,8 @@ var Wall = {
             empty = true;
 
         if (browser.opera_mobile || !rf) return;
-        if (!force && (v || addmedia.chosenMedia || (addmedia.attachCount && addmedia.attachCount() > 0))) return;
+        if (!force && (v || addmedia.chosenMedia || (addmedia.getMedias && addmedia.getMedias()
+                .length > 0) || (addmedia.attachCount && addmedia.attachCount() > 0))) return;
         removeClass('submit_post_box', 'shown');
         if (rf && !v) {
             if (cur.postMention) {
@@ -3299,7 +3300,9 @@ var Wall = {
         if (!names) return false;
         var greetings = [];
         each(names, function() {
-            greetings.push(escapeRE(this[1]));
+            if (this[1]) {
+                greetings.push(escapeRE(this[1]));
+            }
         });
         return new RegExp('^(' + greetings.join('|') + ')');
     },

@@ -1766,6 +1766,14 @@ a.ui_search_custom_link {
     color: #939699
 }
 
+.right_list_title {
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale
+}
+
 .right_list_field .group_link,
 .right_list_link {
     color: #939699

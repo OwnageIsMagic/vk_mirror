@@ -3669,7 +3669,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
     background: #fff;
     color: #33567f;
     text-align: center;
-    z-index: 120
+    z-index: 119
 }
 
 .post_upload_dropbox.dropbox_over .post_upload_dropbox_inner {
@@ -5760,7 +5760,7 @@ button.wall_block_app_btn {
 }
 
 .page_wm {
-    z-index: 10;
+    z-index: 1;
     background: url(/images/icons/yt_watermark.png) 0 0 no-repeat;
     position: absolute;
     width: 57px;

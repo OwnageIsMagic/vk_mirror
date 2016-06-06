@@ -407,7 +407,8 @@ var GroupsList = {
             o = r.trimmer;
         return s += " " + (parseLatin(s) || ""), s = escapeRE(s)
             .replace(/&/g, "&amp;"), s = s.replace(o, "")
-            .replace(e, "|"), {
+            .replace(e, "|")
+            .replace(/(^\||\|$)/g, ""), {
                 re: new RegExp("(" + s + ")", "gi"),
                 val: '<span class="highlight">$1</span>'
             }

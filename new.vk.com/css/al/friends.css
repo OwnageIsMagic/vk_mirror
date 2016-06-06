@@ -120,11 +120,7 @@
 }
 
 .friends_header_load_more a {
-    text-decoration: none!important;
-    transition: -webkit-transform 70ms linear;
-    -o-transition: transform 70ms linear, -o-transform 70ms linear;
-    transition: transform 70ms linear;
-    transition: transform 70ms linear, -webkit-transform 70ms linear, -o-transform 70ms linear
+    text-decoration: none!important
 }
 
 .friends_header_load_more a:after {
@@ -134,7 +130,11 @@
     margin-left: 5px;
     height: 11px;
     vertical-align: middle;
-    background: url(/images/icons/search_arrow.png) no-repeat
+    background: url(/images/icons/search_arrow.png) no-repeat;
+    transition: -webkit-transform 70ms linear;
+    -o-transition: transform 70ms linear, -o-transform 70ms linear;
+    transition: transform 70ms linear;
+    transition: transform 70ms linear, -webkit-transform 70ms linear, -o-transform 70ms linear
 }
 
 .friends_header_load_more a:hover:after {
@@ -560,6 +560,11 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
     background-position: left -17px;
     width: 10px;
     height: 10px
+}
+
+.friends_possible_link {
+    padding-left: 12px;
+    background: url(/images/icons/ads_icons_blue.png) no-repeat 0 5px
 }
 
 .friends_cur_filters {

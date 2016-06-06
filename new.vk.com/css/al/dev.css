@@ -923,10 +923,15 @@ input.dev_input_simular {
     bottom: 0
 }
 
+.dev_main_all_link,
 .dev_main_my_link {
     display: block;
     margin: 6px 33px;
     line-height: 18px
+}
+
+.dev_main_all_link {
+    margin: 6px 0
 }
 
 .dev_page_block.dev_main_sections {

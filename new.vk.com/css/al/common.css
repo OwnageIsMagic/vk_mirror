@@ -5259,6 +5259,16 @@ button.flat_button .pr {
     margin: 20px -25px -20px
 }
 
+.flat_button.ui_load_more_btn.with_arrow:after {
+    margin-left: 2px;
+    display: inline-block;
+    content: '';
+    background: url(/images/icons/search_arrow.png) no-repeat 0 0;
+    height: 11px;
+    width: 6px;
+    vertical-align: middle
+}
+
 button.ui_load_more_btn {
     width: 100%
 }

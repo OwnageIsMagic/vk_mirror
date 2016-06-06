@@ -526,16 +526,6 @@
     box-sizing: content-box
 }
 
-.market_module .page_market_more_btn:after {
-    margin-left: 2px;
-    display: inline-block;
-    content: '';
-    background: url(/images/icons/search_arrow.png) no-repeat 0 0;
-    height: 11px;
-    width: 6px;
-    vertical-align: middle
-}
-
 .page_list_module .group_desc,
 .page_list_module .people_desc,
 .page_list_module .people_extra {
