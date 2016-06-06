@@ -119,19 +119,34 @@
     background-position: 2px -49px
 }
 
-.friends_requests_block_btn:after {
-    margin-left: 2px;
+.friends_header_load_more a {
+    text-decoration: none!important;
+    transition: -webkit-transform 70ms linear;
+    -o-transition: transform 70ms linear, -o-transform 70ms linear;
+    transition: transform 70ms linear;
+    transition: transform 70ms linear, -webkit-transform 70ms linear, -o-transform 70ms linear
+}
+
+.friends_header_load_more a:after {
+    content: ' ';
     display: inline-block;
-    content: '';
-    background: url(/images/icons/search_arrow.png) no-repeat 0 0;
-    height: 11px;
     width: 6px;
-    vertical-align: middle
+    margin-left: 5px;
+    height: 11px;
+    vertical-align: middle;
+    background: url(/images/icons/search_arrow.png) no-repeat
+}
+
+.friends_header_load_more a:hover:after {
+    -webkit-transform: translateX(3px);
+    -ms-transform: translateX(3px);
+    -o-transform: translateX(3px);
+    transform: translateX(3px)
 }
 
 .friends_user_row {
     border-top: 1px solid #ebedf0;
-    padding: 15px 0;
+    padding: 12px 0;
     clear: both;
     position: relative
 }
@@ -166,7 +181,7 @@
 
 .friends_photo_wrap {
     float: left;
-    margin: 0 12px 0 0;
+    margin: 0 15px 0 0;
     position: relative;
     width: 80px;
     height: 80px;
@@ -217,12 +232,12 @@
 }
 
 .friends_user_info {
-    padding: 7px 10px 0 0;
+    padding: 5px 10px 0 0;
     overflow: hidden
 }
 
 .friends_field {
-    margin-bottom: 7px;
+    margin-bottom: 9px;
     color: #65686c
 }
 
@@ -231,7 +246,6 @@
 }
 
 .friends_field_title {
-    margin-bottom: 6px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -269,13 +283,13 @@
 
 .friends_lists .friends_lists_group {
     float: left;
-    padding: 0 5px;
-    margin: 5px 5px 9px 0;
+    padding: 0 8px;
+    margin: 2px 5px 9px 0;
     height: 21px;
     line-height: 21px;
     cursor: pointer;
     font-size: 12px;
-    border-radius: 3px;
+    border-radius: 11px;
     max-width: 120px;
     overflow: hidden;
     text-overflow: ellipsis
@@ -418,7 +432,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
     left: auto;
     right: auto;
     float: right;
-    margin: 2px 1.5px 0 0
+    margin: 5px 1.5px 0 0
 }
 
 .friends_actions_menu .friends_actions_icons {
@@ -456,7 +470,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 }
 
 .friends_user_common .friends_controls {
-    margin-top: 15px;
+    margin-top: 11px;
     float: none;
     text-align: left;
     width: auto
@@ -477,7 +491,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 
 .friends_common_label {
     color: #65686c;
-    margin-top: 7px
+    margin-top: 9px
 }
 
 .friends_common_thumbs {
@@ -509,6 +523,10 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 
 .friends_decline_all {
     margin-top: 10px
+}
+
+.friends_req_block .friends_common_thumbs {
+    display: none
 }
 
 .friends_possible_block .right_list_controls {

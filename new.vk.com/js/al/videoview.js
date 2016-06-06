@@ -1381,10 +1381,10 @@ var Videoview = {
                     }
                 }
                 if (Wall.cancelEdit(!0), !mvcur.options.player) {
-                    if (opt.is_vk_player && !opt.is_flv && !opt.cantPlay && mvcur.player && domPN(mvcur.player.el) === ge("video_player")) {
+                    if (opt.is_vk_player && !opt.is_flv && !opt.cantPlay && mvcur.player && domPN(mvcur.player.el) && domPN(mvcur.player.el) === ge("video_player")) {
                         var videoBoxWrap = domByClass(ge("mv_content"), "video_box_wrap");
                         attr(videoBoxWrap, "id", "video_box_wrap" + mvcur.videoRaw)
-                    } else val("mv_content", html);
+                    } else mvcur.player && re(mvcur.player.el), val("mv_content", html);
                     hide("mv_progress")
                 }
                 val("mv_controls", desc), val("mv_service_btns", serviceBtns);
@@ -1866,8 +1866,7 @@ var Videoview = {
         },
         viewScroll: function() {
             var e, i = 6,
-                o = (ge("mv_top_controls"),
-                    getXY("mv_box", !0)[1]),
+                o = (ge("mv_top_controls"), getXY("mv_box", !0)[1]),
                 t = getSize("mv_content")[1];
             e = o - i, e = 0 > e ? -e : 0, toggleClass("mv_top_controls", "fixed", e > 0), toggleClass("mv_pl_prev", "fixed", e > 0), toggleClass("mv_pl_next", "fixed", e > 0),
                 toggleClass("mv_top_pl_toggle", "hidden", e > t), mvcur.scrolledAway = e > t / 3, Videoview.playerNextTimerUpdate(), Videoview.updateReplyFormPos()

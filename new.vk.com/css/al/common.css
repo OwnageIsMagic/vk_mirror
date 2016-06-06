@@ -815,16 +815,23 @@ textarea~.placeholder .ph_input {
 }
 
 input.big_text {
-    height: 35px
+    height: 35px;
+    border-radius: 3px
+}
+
+input.big_text:-ms-input-placeholder {
+    padding-left: 12px
 }
 
 input.big_text,
 input.big_text~.placeholder .ph_input {
     font-size: 14px;
-    line-height: 19px;
     padding: 6px 12px 8px;
-    border-radius: 3px;
     box-sizing: border-box
+}
+
+input.big_text~.placeholder .ph_input {
+    line-height: 19px
 }
 
 .fakeinput.dark,

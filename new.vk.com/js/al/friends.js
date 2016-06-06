@@ -403,7 +403,7 @@ var Friends = {
             }), !cur.gid && vk.id == cur.oid) {
             var s = intval(r.requests + cur.suggCount);
             s = s ? langNumeric(s, "%s", !0) : "", val(geByClass1("ui_rmenu_count", "ui_rmenu_requests"), s), val(geByClass1("page_block_header_count", "friends_req_block"),
-                s), (s > 1 ? show : hide)("ui_request_load_more")
+                s), (s > 1 ? show : hide)(domPN(ge("friends_request_load_more")))
         }
         document.title = replaceEntities(stripHTML(cur.htitles[cur.section] || cur.htitles.all))
     },
@@ -926,8 +926,7 @@ var Friends = {
         for (var a in cur.friends) {
             var u = cur.friends[a],
                 d = -1 != n.indexOf(parseInt(u[0]));
-            d && cur.friendsList[i].push(u),
-                u[6] = parseInt(u[6]), u[6] & c ? d || (u[6] -= c) : d && (u[6] += c)
+            d && cur.friendsList[i].push(u), u[6] = parseInt(u[6]), u[6] & c ? d || (u[6] -= c) : d && (u[6] += c)
         }
         return Friends.indexAll(), Friends.section(i, function() {
             Friends.changeSummary(), nav.setLoc({

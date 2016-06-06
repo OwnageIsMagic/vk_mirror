@@ -474,7 +474,7 @@ var photos = {
                     show("photos_del_box_progress"), hide("photos_del_box_text"), re(e);
                     var t = ge("photos_del_box_progress_text");
                     photos.doEditBatchProcess({
-                        act: "a_delete_photos",
+                        act: "delete_photos",
                         hash: o,
                         owner_id: a[0],
                         album_id: a[1]

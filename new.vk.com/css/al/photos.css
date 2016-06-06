@@ -533,11 +533,8 @@
 }
 
 .photos_edit_wall_album {
-    padding: 20px
-}
-
-.photos_edit_wall_album .checkbox {
-    width: 50%
+    padding: 20px;
+    white-space: nowrap
 }
 
 .photos_no_content {
@@ -700,7 +697,7 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1;
+    z-index: 3;
     color: #000;
     display: none;
     font-size: 12px;

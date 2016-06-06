@@ -392,7 +392,7 @@ var AudioUtils = {
             r = null,
             u = gpeByClass("_audio_playlist", t);
         if (u) return data(u, "playlist");
-        if (!cur.pid && inArray(cur.module, ["public", "wall", "groups"]) && (r = domClosest("_wall_audio_rows", t))) {
+        if (!cur.pid && inArray(cur.module, ["public", "wall", "groups", "profile"]) && (r = domClosest("_wall_audio_rows", t))) {
             var n = gpeByClass("_replies_list", t);
             n && (o = o.concat(i([n])));
             var d = inArray(cur.wallType, ["own", "full_own"]) ? "own" : "all";

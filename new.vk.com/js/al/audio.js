@@ -1097,7 +1097,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         e = AudioUtils.asObject(e);
         var t, o = a.getDurationType(),
             s = intval(e.duration);
-        return t = o ? "-" + formatTime(Math.round(s - i * s)) : formatTime(Math.round(i * s))
+        return t = o && 1 != i ? "-" + formatTime(Math.round(s - i * s)) : formatTime(Math.round(i * s))
     }
 
     function t() {
@@ -1168,7 +1168,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         o._trackSlider.setValue(t), u.innerHTML = i(e, t)
     });
     var p = this.ap.getCurrentAudio() || this._readyAudio;
-    p && (domData(r, "audio", JSON.stringify(p)), e(p), toggleClass(_, "audio_playing", this.ap.isPlaying())), t()
+    p && (domData(r, "audio", JSON.stringify(p)), e(p), toggleClass(_, "audio_playing", this.ap.isPlaying()), u.innerHTML = i(p, 1)), t()
 }, AudioPage.prototype.scrollToTrack = function() {
     var e = this,
         i = this.getCurrentPlaylist(),
