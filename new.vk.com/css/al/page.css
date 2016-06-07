@@ -1304,6 +1304,7 @@ div.wall_module .ext_video div {
 }
 
 #like_wall_preview.wall_module .wall_text .page_media_thumbed_link:last-child,
+.wl_postreach_wall_module.wall_module .wall_text .page_media_thumbed_link:last-child,
 .wall_module .suggested .wall_text .page_media_thumbed_link:last-child {
     margin-bottom: 0
 }
@@ -1593,7 +1594,7 @@ a.page_media_link_desc {
 }
 
 .page_media_link_img {
-    max-width: 100%;
+    width: 100%;
     display: block;
     outline: 1px solid rgba(0, 20, 51, .12);
     outline-offset: -1px

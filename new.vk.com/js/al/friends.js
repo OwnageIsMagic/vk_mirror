@@ -256,7 +256,7 @@ var Friends = {
             } else if ("phonebook" == cur.section) show("friends_search_input_wrap", cur.fSearchFilterLnk), Friends.showListHeader(cur.summaryLang.friends_filter_phonebook),
                 addClass("friends", "friends_phonebook");
             else if ("recent" == cur.section) show("friends_search_input_wrap", cur.fSearchFilterLnk), Friends.showListHeader(cur.summaryLang.friends_tab_recently_added);
-            else if (hide("friends_sugg_header"), show("friends_search_input_wrap", "friends_search_header", cur.fSearchFilterLnk), cur.requestsCount) {
+            else if (hide("friends_sugg_header"), show("friends_search_input_wrap", "friends_search_header", cur.fSearchFilterLnk), cur.requestsCount && cur.friendsList.requests) {
                 var n = ge("friends_req_block");
                 geByClass1("_friends_list", n)
                     .innerHTML = cur.commonTpl(cur.friendsList.requests[0], "requests")
@@ -348,7 +348,8 @@ var Friends = {
             } else {
                 i = t.search(e), cur.filterIds && (i = this.filter(i, r));
                 var c = i.length;
-                c && (e == cur.serverSearchStr || cur.sectionCount || this.clearServerSearch()), 5 > c && cur.oid == vk.id && "phonebook" != r && this.serverSearch(e, c, i)
+                c && (e == cur.serverSearchStr || cur.sectionCount || this.clearServerSearch()), 5 > c && cur.oid == vk.id && !cur.gid && "phonebook" != r && this.serverSearch(
+                    e, c, i)
             }
             var u = cur.section;
             if (cur.filterIds && (u += "_filter"), e && (u += "_search_" + e), cur.curList == u && !n) return;

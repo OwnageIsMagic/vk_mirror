@@ -610,7 +610,7 @@ var Videoview = {
             if (d && domPN(d.el) === ge("video_player") ? d.deinitVideo() : (hide("mv_content"), show("mv_progress")), window.mvcur && clearInterval(mvcur.nextTimerUpdateInterval),
                 window.mvcur && mvcur.minimized) {
                 if (!t.nomin) return mvcur.videoRaw = i, mvcur.options = t, mvcur.listId = o, mvcur.mvData = !1, t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) :
-                    VideoPlaylist.removeBlock(), !0;
+                    VideoPlaylist.removeBlock(), VideoPlaylist.updateControls(), !0;
                 t.prevLoc && (mvcur.mvPrevLoc = t.prevLoc), debugLog("unminimizing in show"), Videoview.unminimize(!0, !1, !0)
             }
             return t.queue && (debugLog("pushing in videoview.show"), layerQueue.push(), t.queue = !1), !t.noLocChange && nav.objLoc.z && 0 == nav.objLoc.z.indexOf("video") &&
@@ -1397,7 +1397,7 @@ var Videoview = {
                 }
                 if (Videoview.updateSize(), mvcur.changeCanvasSize = function() {
                         Videoview.updateSize(), window.checkRBoxes && checkRBoxes()
-                    }, mvcur.minimized && Videoview.minimizePlayer(), mvcur.statusVideo) {
+                    }, mvcur.minimized && Videoview.minimizePlayer(!0), mvcur.statusVideo) {
                     var statusCont = ge("like_count" + mvcur.mvData.videoRaw);
                     if (statusCont) {
                         var tt = statusCont.parentNode.tt;
@@ -1767,15 +1767,16 @@ var Videoview = {
             return window.mvcur && mvcur.mvShown && mvcur.minimized
         },
         enabledResize: function() {
-            return (browser.safari || browser.chrome || browser.mozilla || browser.opera) && !browser.safari_mobile
+            return !browser.mobile
         },
-        minimizePlayer: function() {
-            if (mvcur.mvPlayer = ge("video_player") || ge("extra_player") || ge("html5_player") || ge("video_box_wrap" + mvcur.videoRaw), mvcur.mvPlayer) {
-                var e = {
+        minimizePlayer: function(e) {
+            if (!(e && mvcur.player && mvcur.mvPlayer) && (mvcur.mvPlayer = ge("video_player") || ge("extra_player") || ge("html5_player") || ge("video_box_wrap" + mvcur.videoRaw),
+                    mvcur.mvPlayer)) {
+                var i = {
                     width: mvcur.minSize.player.w + "px",
                     height: mvcur.minSize.player.h + "px"
                 };
-                Videoview.setStyle("mvPlayer", mvcur.mvPlayer, e), Videoview.setStyle("mvPlayerParent", mvcur.mvPlayer.parentNode, e), Videoview.playerOnResize()
+                Videoview.setStyle("mvPlayer", mvcur.mvPlayer, i), Videoview.setStyle("mvPlayerParent", mvcur.mvPlayer.parentNode, i), Videoview.playerOnResize()
             }
         },
         minResize: function() {
@@ -2335,11 +2336,9 @@ var Videoview = {
             }
         },
         updateControls: function() {
-            var e = VideoPlaylist.getCurList();
-            if (e) {
-                var i = VideoPlaylist.getVideoIndex();
-                e.reversed && (i = e.list.length - i - 1), toggle("mv_pl_prev", i > 0), toggle("mv_pl_next", i < e.list.length - 1)
-            }
+            var e = VideoPlaylist.getCurList(),
+                i = VideoPlaylist.getVideoIndex();
+            e && e.reversed && (i = e.list.length - i - 1), toggle("mv_pl_prev", !!e && i > 0), toggle("mv_pl_next", !!e && i < e.list.length - 1)
         },
         showVideo: function(e) {
             var i = VideoPlaylist.getCurList();

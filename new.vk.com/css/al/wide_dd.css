@@ -46,7 +46,7 @@ div.wdd.wdd_focused.wdd_toup {
 
 .wdd_arr {
     width: 21px;
-    height: 24px;
+    height: 25px;
     overflow: hidden;
     cursor: pointer;
     background: url(/images/dropdown_arrow.png) no-repeat 2px 50%

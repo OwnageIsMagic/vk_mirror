@@ -704,7 +704,7 @@ window.Scrollbar = window.Scrollbar || function() {
                         function() {
                             removeEvent(o, a, r), this.options.scrollElements && each(this.options.scrollElements, function(t, e) {
                                 removeEvent(e, a, r)
-                            }), removeEvent(this.inner, "mousedown", this.mouseDown), removeEvent(window, "keydown", l)
+                            }), removeEvent(this.inner, "mousedown", this.mouseDown), removeEvent(window, "keydown", l), re(this.scrollbar)
                         }.bind(this)), this.isHorizontal || (this.contHeight() <= this.scrollHeight ? hide(this.bottomShadowDiv) : this.bottomShadow = !0), this.options.onInit &&
                     this.options.onInit(), this.inited = !0, this.update(!0), this.options.global || cur.destroy.push(this.destroy.bind(this))
             }.bind(this), 0)
