@@ -197,7 +197,7 @@ var Feed = {
                                 label: getLang("news_show_X_reposts", g.length)
                             });
                             var x = se('<div class="feed_row' + (b ? "_unshown" : "") + '">' + v + "</div>"),
-                                B = domFC(B);
+                                T = domFC(T);
                             w.insertBefore(x, w.firstChild), !b && t > getXY(x)[1] && (c += x.offsetHeight + intval(getStyle(domByClass(x, "page_block"), "marginTop"))), C = !
                                 0, f = x.firstChild, u = geByClass1("feed_reposts_first", f, "div"), _ = geByClass1("feed_reposts_group", f, "div"), each(clone(g),
                                     function() {
@@ -222,16 +222,16 @@ var Feed = {
                         m.length > 300 ? w.removeChild(m[300]) : m.length <= 1 && removeClass(cur.feedEls.wrap, "feed_is_empty");
                     break;
                 case "edit_post":
-                    var T, S = ge("wpt" + r);
+                    var B, S = ge("wpt" + r);
                     if (!isVisible(i) || !S) break;
                     var P = geByClass1("wall_post_more", S);
-                    P && (P = isVisible(domNS(P))), (T = t > getXY(S)[1]) && (c -= S.offsetHeight);
+                    P && (P = isVisible(domNS(P))), (B = t > getXY(S)[1]) && (c -= S.offsetHeight);
                     var E = psr(rs(e[3], {
                             poll_hash: cur.wallTpl.poll_hash
                         })),
                         w = ge("post" + r);
                     w && !isVisible(w.parentNode) && (E = wall.updatePostImages(E)), val(S, E), P && (P = geByClass1("wall_post_more", S), P && P.onclick()), ge(
-                        "post_poll_id" + r) && wall.updatePoll(r), T && (c += S.offsetHeight), nodeUpdated(S);
+                        "post_poll_id" + r) && wall.updatePoll(r), B && (c += S.offsetHeight), nodeUpdated(S);
                     break;
                 case "edit_reply":
                     var L = e[3],
@@ -268,13 +268,13 @@ var Feed = {
                         l = 0 > d ? 8 & a ? 2 : 2 & a ? 1 : 0 : 0,
                         D = wall.getNewReplyHTML(e, l),
                         u = !1,
-                        q = !1;
+                        F = !1;
                     if (isVisible(M) && isVisible(j) && !isVisible("reply_link" + r)) {
-                        var F = M.nextSibling,
+                        var q = M.nextSibling,
                             I = geByClass("new_reply", M, "div")
                             .length + 1;
                         if (cur.wallMyOpened[r]) {
-                            F && "replies_open" == F.className && re(F), q = !0;
+                            q && "replies_open" == q.className && re(q), F = !0;
                             var A = geByClass1("wr_header", M, "a"),
                                 U = geByClass("reply", M, "div")
                                 .length + 1,
@@ -283,12 +283,12 @@ var Feed = {
                                 .split("/")[1]) + 1), (V > 5 || V > U) && (A || M.insertBefore(A = ce("a", {
                                 className: "wr_header"
                             }), M.firstChild), wall.updateRepliesHeader(r, A, U, V))
-                        } else D = wall.updatePostImages(D), u = se(D), addClass(u, "new_reply"), F && "replies_open" == F.className || (F = ce("div", {
+                        } else D = wall.updatePostImages(D), u = se(D), addClass(u, "new_reply"), q && "replies_open" == q.className || (q = ce("div", {
                             className: "replies_open",
                             onclick: wall.openNewComments.pbind(r)
-                        }), M.parentNode.insertBefore(F, M.nextSibling)), F.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, I)), F.newCnt = I
-                    } else re("reply_link" + r), show(j, M), q = !0;
-                    r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(D)), M.appendChild(u), t > getXY(q ? u : F)[1] && (c += i.offsetHeight - R), q &&
+                        }), M.parentNode.insertBefore(q, M.nextSibling)), q.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, I)), q.newCnt = I
+                    } else re("reply_link" + r), show(j, M), F = !0;
+                    r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(D)), M.appendChild(u), t > getXY(F ? u : q)[1] && (c += i.offsetHeight - R), F &&
                         nodeUpdated(u), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
                     break;
                 case "del_reply":
@@ -1436,6 +1436,17 @@ var Feed = {
             showProgress: lockButton.pbind(t),
             hideProgress: unlockButton.pbind(t)
         })
+    },
+    infoTopFeedNotification: function(e) {
+        Feed.hideTopFeedNotification(e, !1), setTimeout(function() {
+            hide("top_feed_notification")
+        }, 2500), nav.go("/feed?w=smartfeed")
+    },
+    hideTopFeedNotification: function(e, t) {
+        ajax.post("al_feed.php", {
+            act: "hide_top_feed_notification",
+            hash: e
+        }), t && hide("top_feed_notification")
     }
 };
 window.feed = Feed;

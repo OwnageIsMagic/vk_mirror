@@ -1380,10 +1380,12 @@ var Videoview = {
                             VideoPlaylist.updateControls())
                     }
                 }
-                if (Wall.cancelEdit(!0), !mvcur.options.player) {
+                Wall.cancelEdit(!0);
+                var needRemin = !0;
+                if (!mvcur.options.player) {
                     if (opt.is_vk_player && !opt.is_flv && !opt.cantPlay && mvcur.player && domPN(mvcur.player.el) && domPN(mvcur.player.el) === ge("video_player")) {
                         var videoBoxWrap = domByClass(ge("mv_content"), "video_box_wrap");
-                        attr(videoBoxWrap, "id", "video_box_wrap" + mvcur.videoRaw)
+                        attr(videoBoxWrap, "id", "video_box_wrap" + mvcur.videoRaw), needRemin = !1
                     } else mvcur.player && re(mvcur.player.el), val("mv_content", html);
                     hide("mv_progress")
                 }
@@ -1397,7 +1399,7 @@ var Videoview = {
                 }
                 if (Videoview.updateSize(), mvcur.changeCanvasSize = function() {
                         Videoview.updateSize(), window.checkRBoxes && checkRBoxes()
-                    }, mvcur.minimized && Videoview.minimizePlayer(!0), mvcur.statusVideo) {
+                    }, mvcur.minimized && needRemin && Videoview.minimizePlayer(), mvcur.statusVideo) {
                     var statusCont = ge("like_count" + mvcur.mvData.videoRaw);
                     if (statusCont) {
                         var tt = statusCont.parentNode.tt;
@@ -1769,14 +1771,13 @@ var Videoview = {
         enabledResize: function() {
             return !browser.mobile
         },
-        minimizePlayer: function(e) {
-            if (!(e && mvcur.player && mvcur.mvPlayer) && (mvcur.mvPlayer = ge("video_player") || ge("extra_player") || ge("html5_player") || ge("video_box_wrap" + mvcur.videoRaw),
-                    mvcur.mvPlayer)) {
-                var i = {
+        minimizePlayer: function() {
+            if (mvcur.mvPlayer = ge("video_player") || ge("extra_player") || ge("html5_player") || ge("video_box_wrap" + mvcur.videoRaw), mvcur.mvPlayer) {
+                var e = {
                     width: mvcur.minSize.player.w + "px",
                     height: mvcur.minSize.player.h + "px"
                 };
-                Videoview.setStyle("mvPlayer", mvcur.mvPlayer, i), Videoview.setStyle("mvPlayerParent", mvcur.mvPlayer.parentNode, i), Videoview.playerOnResize()
+                Videoview.setStyle("mvPlayer", mvcur.mvPlayer, e), Videoview.setStyle("mvPlayerParent", mvcur.mvPlayer.parentNode, e), Videoview.playerOnResize()
             }
         },
         minResize: function() {

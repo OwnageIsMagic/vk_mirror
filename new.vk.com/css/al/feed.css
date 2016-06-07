@@ -1774,3 +1774,33 @@ div.feed_recom {
     background: url(/images/icons/feed_subsection_top_tt_close.png);
     cursor: pointer
 }
+
+.smartfeed_notification .notification_image {
+    float: left
+}
+
+.smartfeed_notification .notification_header {
+    padding: 15px 20px 0
+}
+
+.smartfeed_notification .notification_info {
+    margin-top: 4px;
+    margin-left: 60px;
+    color: #939699;
+    line-height: 1.5
+}
+
+.smartfeed_notification .notification_info .notification_title {
+    color: #000;
+    font-weight: 600;
+    font-size: 1.1em
+}
+
+.smartfeed_notification .notification_info .notification_body .notification_controls {
+    padding-top: 5px;
+    padding-bottom: 10px
+}
+
+.smartfeed_notification .notification_info .notification_body .notification_controls button {
+    margin-right: 10px
+}
