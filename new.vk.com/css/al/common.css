@@ -1892,6 +1892,11 @@ body.body_im.firefox #page_wrap {
     overflow: visible
 }
 
+body.body_im.firefox.layers_showing #page_wrap,
+body.body_im.firefox.layers_shown #page_wrap {
+    overflow: hidden
+}
+
 .body_im #stl_left,
 .body_im #stl_side {
     display: none!important
@@ -2536,31 +2541,15 @@ body.no_stl #stl_bg {
 
 #box_layer_bg {
     background: #000;
-    opacity: 0.2;
-    filter: alpha(opacity=20)
-}
-
-#box_layer_bg.bg_medium {
-    opacity: 0.5;
-    filter: alpha(opacity=50)
-}
-
-#box_layer_bg.bg_dark {
     opacity: 0.7;
     filter: alpha(opacity=70)
 }
 
 @-moz-document url-prefix() {
     #box_layer_bg {
-        background: url(/images/layer_bg_lite.png);
+        background: url(/images/layer_bg_black.png);
         opacity: 1!important;
         filter: none!important
-    }
-    #box_layer_bg.bg_medium {
-        background: url(/images/layer_bg_medium.png)
-    }
-    #box_layer_bg.bg_dark {
-        background: url(/images/layer_bg_black.png)
     }
 }
 

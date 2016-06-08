@@ -1305,7 +1305,8 @@ div.wall_module .ext_video div {
 
 #like_wall_preview.wall_module .wall_text .page_media_thumbed_link:last-child,
 .wl_postreach_wall_module.wall_module .wall_text .page_media_thumbed_link:last-child,
-.wall_module .suggested .wall_text .page_media_thumbed_link:last-child {
+.wall_module .post.suggest .wall_text .page_media_poll_wrap:last-child,
+.wall_module .post.suggest .wall_text .page_media_thumbed_link:last-child {
     margin-bottom: 0
 }
 

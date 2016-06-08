@@ -435,30 +435,31 @@
     padding-top: 10px
 }
 
-#feed_rows_next {
+#feed_rows_next,
+#all_shown {
     display: none
 }
 
 #all_shown {
-    margin-bottom: 5px;
-    border-top: 1px solid #ebedf0;
-    height: 13px;
-    display: none;
-    padding: 10px 0
-}
-
-#all_shown,
-#feed_error_wrap {
-    color: #777;
+    margin: 15px auto 0;
+    line-height: 30px;
+    color: #65686c;
     text-align: center
 }
 
+.page_block #all_shown {
+    border-top: 1px solid #ebedf0;
+    padding: 5px 0
+}
+
 #feed_error_wrap {
+    color: #777;
     font-size: 1.09em;
     line-height: 170%;
     padding: 100px 30px
 }
 
+#feed_error_wrap,
 .feed_reposts_more {
     text-align: center
 }

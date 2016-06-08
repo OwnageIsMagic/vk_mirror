@@ -75,8 +75,7 @@ var Profile = {
                 act: "edit_photo"
             }), {
                 params: {
-                    bodyStyle: "padding: 16px 7px",
-                    dark: 1
+                    bodyStyle: "padding: 16px 7px"
                 },
                 stat: ["tagger.js", "tagger.css"]
             })
@@ -84,10 +83,6 @@ var Profile = {
         deletePhoto: function() {
             return cur.viewAsBox ? cur.viewAsBox() : void showBox("al_profile.php", {
                 act: "delete_photo_box"
-            }, {
-                params: {
-                    dark: 1
-                }
             })
         },
         toggleFan: function(e, i, o, t) {
@@ -115,10 +110,10 @@ var Profile = {
                 hideProgress: window.Page && Page.actionsDropdownUnlock.pbind(e)
             }), void cancelEvent(t))
         },
-        toggleFriend: function(e, i, o, t, r) {
+        toggleFriend: function(e, i, o, t, s) {
             if (cur.viewAsBox) return cur.viewAsBox();
             if (o) {
-                if (r !== !0 && cur.options.bannedhim) return showBox("al_profile.php", {
+                if (s !== !0 && cur.options.bannedhim) return showBox("al_profile.php", {
                         act: "banned_him",
                         action: "friend",
                         mid: cur.oid
@@ -126,7 +121,7 @@ var Profile = {
                     .onContinue = Profile.toggleFriend.pbind(e, i, o, !1, !0), cancelEvent(t);
                 stManager.add(["tooltips.css", "tooltips.js"])
             }
-            var s = ce("img", {
+            var r = ce("img", {
                     src: "/images/upload" + (window.devicePixelRatio >= 2 ? "_2x" : "") + ".gif"
                 }, {
                     width: 32
@@ -138,7 +133,7 @@ var Profile = {
                 hash: i,
                 from: "profile"
             }, {
-                onDone: function(e, i, t, r, s) {
+                onDone: function(e, i, t, s, r) {
                     if (o && cur.onFriendAdd && cur.onFriendAdd(), !e) return nav.reload();
                     var n = (ge("profile_am_subscribed") || {})
                         .tt;
@@ -146,23 +141,22 @@ var Profile = {
                         fasthide: 1
                     }), n.destroy());
                     var a = ge("friend_status");
-                    cleanElems(a.firstChild), e ? (show(a), val(a, e)) : hide(a), (i ? show : hide)("friend_remove"), s || cur.options.bannedhim ? nav.reload({
+                    cleanElems(a.firstChild), e ? (show(a), val(a, e)) : hide(a), (i ? show : hide)("friend_remove"), r || cur.options.bannedhim ? nav.reload({
                         noscroll: !0
                     }) : t && (ajax.preload("al_friends.php", {
                         act: "friend_tt",
                         mid: cur.oid
-                    }, [t, r]), setTimeout(Profile.friendTooltip, 0)), Profile.frDropdownClear()
+                    }, [t, s]), setTimeout(Profile.friendTooltip, 0)), Profile.frDropdownClear()
                 },
                 showProgress: function() {
-                    "BUTTON" == e.tagName ? lockButton(e) : hasClass(domFC(e), "progress") ? show(domFC(e)) : n.replaceChild(s, n.firstChild)
+                    "BUTTON" == e.tagName ? lockButton(e) : hasClass(domFC(e), "progress") ? show(domFC(e)) : n.replaceChild(r, n.firstChild)
                 },
                 hideProgress: function() {
-                    "BUTTON" == e.tagName ? unlockButton(e) : hasClass(domFC(e), "progress") ? hide(domFC(e)) : n.replaceChild(n.firstChild, s)
+                    "BUTTON" == e.tagName ? unlockButton(e) : hasClass(domFC(e), "progress") ? hide(domFC(e)) : n.replaceChild(n.firstChild, r)
                 },
                 onFail: function(e) {
                     return e ? (showFastBox({
                         title: getLang("global_error"),
-                        dark: 1,
                         bodyStyle: "padding: 20px; line-height: 160%;"
                     }, e), !0) : void 0
                 }
@@ -215,8 +209,7 @@ var Profile = {
                 params: {
                     bodyStyle: "padding: 0px",
                     width: 502,
-                    hideButtons: 1,
-                    dark: 1
+                    hideButtons: 1
                 }
             }, i)
         },
@@ -242,13 +235,13 @@ var Profile = {
             var i = ge("page_actions_item_lists");
             if (addClass(i, "page_actions_item_unfolded"), ge("page_actions_sublist")) return clearTimeout(cur.frListsDDHide), void show("page_actions_sublist");
             cur.frListsCats || (cur.frListsCats = cur.options.curCats);
-            for (var o, t = [], r = cur.frListsCats, s = [28, 29, 27, 25, 26], n = 0; 5 > n; ++n) o = s[n], cur.options.publicLists[o] && t.push(
-                '<a class="page_actions_item page_actions_subitem' + (r & 1 << parseInt(o) ? " checked" : "") + '" onclick="Profile.frListsCheck(this, ' + o + ');">' + cur
+            for (var o, t = [], s = cur.frListsCats, r = [28, 29, 27, 25, 26], n = 0; 5 > n; ++n) o = r[n], cur.options.publicLists[o] && t.push(
+                '<a class="page_actions_item page_actions_subitem' + (s & 1 << parseInt(o) ? " checked" : "") + '" onclick="Profile.frListsCheck(this, ' + o + ');">' + cur
                 .options.publicLists[o] + "</a>");
             for (var o in cur.options.userLists)
                 if (25 > o) {
                     var a = cur.options.userLists[o];
-                    a.length > 20 && (a = trim(a.substr(0, 18)) + "..."), t.push('<a class="page_actions_item page_actions_subitem' + (r & 1 << parseInt(o) ? " checked" : "") +
+                    a.length > 20 && (a = trim(a.substr(0, 18)) + "..."), t.push('<a class="page_actions_item page_actions_subitem' + (s & 1 << parseInt(o) ? " checked" : "") +
                         '" onclick="Profile.frListsCheck(this, ' + o + ');">' + a + "</a>")
                 }
             t = se('<div id="page_actions_sublist" onmouseover="Profile.frListsDDShow(event);">' + t.join("") + "</div>"), i.parentNode.appendChild(t)
@@ -310,23 +303,23 @@ var Profile = {
                                 "\r": 0,
                                 "!": 5,
                                 "'": 5
-                            }, r = 0, s = 0, n = !1, a = 0, c = e.length; c > a; a++) {
+                            }, s = 0, r = 0, n = !1, a = 0, c = e.length; c > a; a++) {
                             var d = t[e.charAt(a)],
                                 l = e.charCodeAt(a);
-                            10 == l && ++s, r += void 0 !== d ? d : l > 128 && 192 > l || l > 1280 ? ("&#" + l + ";")
-                                .length : 1, n === !1 && (i && r > i || o && s > o) && (n = a ? e.substr(0, a) : "")
+                            10 == l && ++r, s += void 0 !== d ? d : l > 128 && 192 > l || l > 1280 ? ("&#" + l + ";")
+                                .length : 1, n === !1 && (i && s > i || o && r > o) && (n = a ? e.substr(0, a) : "")
                         }
-                        return [r, s, n === !1 ? e : n]
+                        return [s, r, n === !1 ? e : n]
                     },
-                    r = 240,
-                    s = 4,
-                    n = t(o, r, s),
+                    s = 240,
+                    r = 4,
+                    n = t(o, s, r),
                     a = n[0],
                     c = n[1],
                     d = ge("preq_warn");
-                n[2] !== o && (a > r ? a = r : c > 4 && (c = 4), val(i, n[2]), i.lastLen = trim(n[2])
-                    .length), a > r - 40 || c > s ? (a > r ? d.innerHTML = getLang("friends_exceeds_symbol_limit", a - r) : c > 4 ? d.innerHTML = getLang(
-                    "friends_exceeds_lines_limit", c - 4) : d.innerHTML = getLang("text_N_symbols_remain", r - a), show(d)) : hide(d)
+                n[2] !== o && (a > s ? a = s : c > 4 && (c = 4), val(i, n[2]), i.lastLen = trim(n[2])
+                    .length), a > s - 40 || c > r ? (a > s ? d.innerHTML = getLang("friends_exceeds_symbol_limit", a - s) : c > 4 ? d.innerHTML = getLang(
+                    "friends_exceeds_lines_limit", c - 4) : d.innerHTML = getLang("text_N_symbols_remain", s - a), show(d)) : hide(d)
             }
         },
         toggleBlacklist: function(e, i, o) {
@@ -364,8 +357,7 @@ var Profile = {
                 fr: e == vk.id ? 1 : 0
             }, {
                 stat: ["gifts.css", "wide_dd.js", "wide_dd.css"],
-                cache: 1,
-                dark: 1
+                cache: 1
             }, i)
         },
         showHideGiftsBox: function(e) {
@@ -378,8 +370,7 @@ var Profile = {
                 o = showFastBox({
                     title: getLang("global_warning"),
                     bodyStyle: "line-height: 160%;",
-                    width: 350,
-                    dark: 1
+                    width: 350
                 }, i, getLang("profile_gifts_hide_button"), function() {
                     ajax.post("al_profile.php", {
                         act: "hide_gifts",
@@ -397,21 +388,21 @@ var Profile = {
             var o = ge("profile_gifts");
             if (o && e) {
                 var t = geByTag("img", geByClass1("module_body", o)),
-                    r = vkImage();
-                r.src = i || "/images/gift/" + e + "/" + (window.devicePixelRatio >= 2, "96") + ".png";
-                var s = function() {
+                    s = vkImage();
+                s.src = i || "/images/gift/" + e + "/" + (window.devicePixelRatio >= 2, "96") + ".png";
+                var r = function() {
                     var e = t[0],
                         i = e.parentNode,
                         o = t.length;
-                    e && (addClass(r, "profile_gift_img"), setStyle(i, {
+                    e && (addClass(s, "profile_gift_img"), setStyle(i, {
                         marginLeft: -getSize(e)[0] + "px"
-                    }), e.parentNode.insertBefore(r, e), animate(i, {
+                    }), e.parentNode.insertBefore(s, e), animate(i, {
                         marginLeft: "0px"
                     }, 200, function() {
                         o >= 4 && re(t[t.length - 1])
                     }))
                 };
-                r.width ? s() : addEvent(r, "load", s)
+                s.width ? r() : addEvent(s, "load", r)
             }
         },
         declineFriend: function(e) {
@@ -427,7 +418,7 @@ var Profile = {
         },
         processRelation: function(e, i, o, t) {
             if (cur.viewAsBox) return cur.viewAsBox();
-            var r = (getXY(e), getXY(e.parentNode), ge("relation_progress" + i));
+            var s = (getXY(e), getXY(e.parentNode), ge("relation_progress" + i));
             ajax.post("al_profile.php", {
                 act: "process_relation",
                 mid: i,
@@ -439,10 +430,10 @@ var Profile = {
                     val("relations_wrap", e)
                 },
                 showProgress: function() {
-                    r.style.left = e.offsetLeft + Math.floor((e.offsetWidth - 32) / 2) + "px", show(r), e.style.visibility = "hidden"
+                    s.style.left = e.offsetLeft + Math.floor((e.offsetWidth - 32) / 2) + "px", show(s), e.style.visibility = "hidden"
                 },
                 hideProgress: function() {
-                    e.style.visibility = "visible", hide(r)
+                    e.style.visibility = "visible", hide(s)
                 }
             })
         },
@@ -480,11 +471,11 @@ var Profile = {
                         display: "none"
                     })),
                     t = getXY(i),
-                    r = getSize(i);
+                    s = getSize(i);
                 o.style.opacity = 0, show(o);
-                var s = getSize(o),
-                    n = t[1] - Math.floor((s[1] - r[1]) / 2),
-                    a = t[0] + (vk.rtl ? -(s[0] + 10) : r[0] + 10);
+                var r = getSize(o),
+                    n = t[1] - Math.floor((r[1] - s[1]) / 2),
+                    a = t[0] + (vk.rtl ? -(r[0] + 10) : s[0] + 10);
                 o.style.left = a + (vk.rtl ? -10 : 10) + "px", o.style.top = n + "px";
                 var c = animate.pbind(o, {
                         left: a,
@@ -509,7 +500,6 @@ var Profile = {
                     viewAsBox: e.view_as ? function() {
                         return setTimeout(showFastBox({
                                 title: getLang("global_warning"),
-                                dark: 1,
                                 bodyStyle: "padding: 20px; line-height: 160%;"
                             }, cur.options.view_as)
                             .hide, 2e3), !1
@@ -523,7 +513,6 @@ var Profile = {
                 }), e.view_as && cur.nav.push(function(e, i, o, t) {
                     return cur._leave ? void(cur._leave = !1) : (showFastBox({
                         title: getLang("global_warning"),
-                        dark: 1,
                         bodyStyle: "padding: 20px; line-height: 160%;"
                     }, cur.viewAsWarn, getLang("global_continue"), function() {
                         cur._leave = !0, nav.go(o)
@@ -557,10 +546,10 @@ var Profile = {
             i && o && i.showCurrentTrack && i.showCurrentTrack(), cur.onPeerStatusChanged = function(e, i, o) {
                 if (e == cur.oid) {
                     var t = ge("profile_online_lv"),
-                        r = ge("profile_time_lv");
+                        s = ge("profile_time_lv");
                     "online" == i ? (o = intval(o), setStyle("profile_mobile_online", {
                         display: o && 1 != o ? "inline" : "none"
-                    }), isVisible(t) || (hide(r), show(t))) : "offline" == i && (hide(t), show(r))
+                    }), isVisible(t) || (hide(s), show(t))) : "offline" == i && (hide(t), show(s))
                 }
             }
         },
@@ -597,10 +586,7 @@ var Profile = {
                 from: "suggest_friends",
                 friend_id: cur.oid
             }, {
-                stat: ["privacy.js", "privacy.css", "indexer.js"],
-                params: {
-                    dark: 1
-                }
+                stat: ["privacy.js", "privacy.css", "indexer.js"]
             });
             e.leaveOnSave = !0, cur.onFlistSave = function(i, o, t) {
                 ajax.post("al_friends.php", {
@@ -632,8 +618,8 @@ var Profile = {
         },
         hideFillBlock: function(e, i, o, t) {
             e.tt && e.tt.hide && e.tt.hide();
-            var r = gpeByClass("page_block", e);
-            return r && slideUp(r, 200, re.pbind(r)), ajax.post("/al_profile.php", {
+            var s = gpeByClass("page_block", e);
+            return s && slideUp(s, 200, re.pbind(s)), ajax.post("/al_profile.php", {
                 act: "hide_rate_block",
                 type: o,
                 hash: t
