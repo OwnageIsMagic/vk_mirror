@@ -963,7 +963,8 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 
 .friends_stub_block {
     padding: 10px;
-    cursor: pointer
+    cursor: pointer;
+    position: static
 }
 
 .friends_search_filters,

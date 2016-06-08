@@ -111,7 +111,7 @@ var Video = {
     },
     initNavigation: function() {
         cur.nav.push(function(e, o, i, t) {
-            var r = !!e[0],
+            var r = void 0 !== e[0],
                 d = r && i[0] == "videos" + vk.id,
                 n = r && "video" == i[0],
                 a = "comments" == i.section,

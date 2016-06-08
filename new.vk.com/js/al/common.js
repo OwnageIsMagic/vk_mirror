@@ -2340,11 +2340,7 @@ function _eventHandle(event) {
         if (event.type == 'mouseover' || event.type == 'mouseout') {
             var parent = event.relatedElement;
             while (parent && parent != this) {
-                try {
-                    parent = parent.parentNode;
-                } catch (e) {
-                    parent = this;
-                }
+                parent = parent.parentNode;
             }
             if (parent == this) {
                 continue
@@ -3136,6 +3132,11 @@ function redraw(el, fixedClass) {
 }
 
 function onBodyScroll() {
+
+    if (cur.module === 'im') {
+        return;
+    }
+
     if (!window.pageNode) return;
 
     var ml = Math.min(0, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(ge('page_layout'))[0]));

@@ -1033,7 +1033,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             }
             i === !1 && (i = o[0]), 0 != a[0].indexOf("audio") && i == a[0] && delete t[0]
         }
-        var n = !!t[0],
+        var n = void 0 !== t[0],
             d = t.q === !1;
         if (n) {
             var l = this.options.oid;

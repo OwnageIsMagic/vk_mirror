@@ -65,10 +65,11 @@ var uiTabs = {
         initTabs: function(t, e) {
             if (!(browser.msie && intval(browser.version) < 10 || browser.opera && intval(browser.version) < 15 || hasClass(t, "ui_tabs_sliding"))) {
                 var i = getSize(e)[0],
-                    s = e.offsetLeft;
-                setPseudoStyle(t, "before", {
+                    s = e.offsetLeft,
+                    o = geByClass1("_ui_tabs_slider", t);
+                setStyle(o, {
                     width: i + "px",
-                    left: s + "px"
+                    transform: "translateX(" + s + "px)"
                 })
             }
         },
@@ -84,19 +85,24 @@ var uiTabs = {
                 n = null,
                 l = hasClass(s, "ui_tab_group_item") ? n = gpeByClass("ui_tab_group", s) : s,
                 r = hasClass(t, "ui_tab_group_item") ? o = gpeByClass("ui_tab_group", t) : t;
-            if (t != s && (t != r && (uiTabs.toggleGroup(r, !1), uiTabs.resetLabel(r, t)), l && (uiTabs.initTabs(i, l), e = e || {}, e.noAnim || r === l || (addClass(i,
-                    "ui_tabs_sliding"), clearTimeout(cur.tabSlidingTO), cur.tabSlidingTO = setTimeout(removeClass.pbind(i, "ui_tabs_sliding"), 300)), setPseudoStyle(i,
-                    "before", {
+            if (t != s) {
+                if (t != r && (uiTabs.toggleGroup(r, !1), uiTabs.resetLabel(r, t)), l) {
+                    uiTabs.initTabs(i, l), e = e || {}, e.noAnim || r === l || (addClass(i, "ui_tabs_sliding"), clearTimeout(cur.tabSlidingTO), cur.tabSlidingTO = setTimeout(
+                        removeClass.pbind(i, "ui_tabs_sliding"), 300));
+                    var a = geByClass1("_ui_tabs_slider", i);
+                    setStyle(a, {
                         width: getSize(r)[0] + "px",
-                        left: r.offsetLeft + "px"
-                    }), s != l && r != l && uiTabs.resetLabel(l), l != s && removeClass(l, "ui_tab_group_sel"), removeClass(s, "ui_tab_sel")), r != t && addClass(r,
-                    "ui_tab_group_sel"), addClass(t, "ui_tab_sel"), n && removeClass(n, "ui_tab_hide_separator"), o)) {
-                i = geByClass1("ui_tab_group_items", o, "div")
-                    .children;
-                var a = null;
-                each(i, function(t, e) {
-                    "SPAN" === e.tagName ? a = e : hasClass(domFC(e), "ui_tab_sel") || (a = null)
-                }), a && addClass(o, "ui_tab_hide_separator")
+                        transform: "translateX(" + r.offsetLeft + "px)"
+                    }), s != l && r != l && uiTabs.resetLabel(l), l != s && removeClass(l, "ui_tab_group_sel"), removeClass(s, "ui_tab_sel")
+                }
+                if (r != t && addClass(r, "ui_tab_group_sel"), addClass(t, "ui_tab_sel"), n && removeClass(n, "ui_tab_hide_separator"), o) {
+                    i = geByClass1("ui_tab_group_items", o, "div")
+                        .children;
+                    var h = null;
+                    each(i, function(t, e) {
+                        "SPAN" === e.tagName ? h = e : hasClass(domFC(e), "ui_tab_sel") || (h = null)
+                    }), h && addClass(o, "ui_tab_hide_separator")
+                }
             }
             return !1
         },
@@ -164,12 +170,12 @@ var uiTabs = {
                     var c = intval(getStyle(n, "top")),
                         d = intval(getStyle(n, "left")),
                         p = intval(getStyle(n, "right")),
-                        v = {
+                        _ = {
                             top: h[1] - a[1] + c
                         };
-                    if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + d, setStyle(n, v), i.processHoverCls) {
-                        var _ = domClosest(i.processHoverCls, l);
-                        addEvent(t, "mouseover", addClass.pbind(_, "hover")), addEvent(t, "mouseout", removeClass.pbind(_, "hover"))
+                    if (p ? _.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : _.left = h[0] - a[0] + d, setStyle(n, _), i.processHoverCls) {
+                        var v = domClosest(i.processHoverCls, l);
+                        addEvent(t, "mouseover", addClass.pbind(v, "hover")), addEvent(t, "mouseout", removeClass.pbind(v, "hover"))
                     }
                 }
             }
@@ -189,10 +195,11 @@ var uiTabs = {
                     s = geByClass1("ui_rmenu_item_sel", t),
                     o = s || i,
                     n = getSize(o)[1],
-                    l = o.offsetTop;
-                e || (setPseudoStyle(t, "before", {
-                    height: n + "px",
-                    top: s ? l + "px" : null
+                    l = o.offsetTop,
+                    r = geByClass1("_ui_rmenu_slider", t);
+                e || (setStyle(r, {
+                    height: n,
+                    transform: s ? "translateY(" + l + "px)" : null
                 }), addClass(t, "ui_rmenu_sliding"))
             }
         },
@@ -225,9 +232,10 @@ var uiTabs = {
                     hide(this)
                 })
             }
-            return setPseudoStyle(e, "before", {
-                height: o + "px",
-                top: n + "px"
+            var c = geByClass1("_ui_rmenu_slider", e);
+            return setStyle(c, {
+                height: o,
+                transform: "translateY(" + n + "px)"
             }), removeClass(i, "ui_rmenu_item_sel"), addClass(t, "ui_rmenu_item_sel"), hasClass(e, "_ui_rmenu_auto_expand") ? each(l.concat(r), function() {
                 uiRightMenu.toggleSubmenu(this)
             }) : hasClass(t, "_ui_rmenu_subitem") && !isVisible(domPN(t)) && uiRightMenu.toggleSubmenu(domPN(t)), !1
@@ -378,7 +386,7 @@ var uiTabs = {
                     n = cur.uiSearchPageBlock || gpeByClass("page_block", t),
                     l = getSize(ge("page_header"))[1] || 0,
                     r = i && isAncestor(i, boxLayerWrap);
-                if (i && s && (r || gpeByClass("scroll_fix", i)) && (!t.ignoreFixed || o)) {
+                if (i && s && (r || gpeByClass("scroll_fix", i)) && (!t.ignoreFixed || o) && isVisible(s)) {
                     var a = r ? getXY(s, !0)[1] < 0 : getXY(s, !0)[1] < ge("page_header_cont")
                         .offsetHeight;
                     if (a) {
@@ -947,9 +955,9 @@ window.Scrollbar = window.Scrollbar || function() {
             var d = escapeRE(t),
                 p = parseLatin(t);
             null != p && (d = d + "|" + escapeRE(p));
-            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
+            var _ = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var _ = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
+        var v = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
                 l = t[1];
             if (e) {
@@ -967,7 +975,7 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                c.push(rs(n, _(this, t, r.invertedSelection, o, v)))
+                c.push(rs(n, v(this, t, r.invertedSelection, o, _)))
             }), e || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
                 .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), e ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), u > e +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {

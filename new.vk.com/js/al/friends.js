@@ -265,9 +265,7 @@ var Friends = {
             val(geByClass1("_label", cur.showMore), r ? cur.summaryLang.friends_show_more_requests : cur.summaryLang.friends_show_more_friends)
         } else cur.gid || ("subscribers" == cur.section ? (hide("friends_search_input_wrap"), Friends.showListHeader(cur.summaryLang.friends_tab_subscribers)) : show(
             "friends_search_input_wrap"));
-        isVisible("friends_search_input_wrap") && (hasClass("friends_search_input_wrap", "ui_search_fixed") && setStyle(cur.fSearchWrap, {
-            width: ""
-        }), uiSearch.scrollResize(cur.fSearchWrap), elfocus(cur.fSearch)), cur.filterIds && (cur.curList += "_filter");
+        isVisible("friends_search_input_wrap") && elfocus(cur.fSearch), cur.filterIds && (cur.curList += "_filter");
         var i = cur.friendsList[cur.curList];
         if (!i) {
             if ("recent" == e || "phonebook" == e || "requests" == e) var t = e;
@@ -927,8 +925,7 @@ var Friends = {
             })
         }
         25 > r && (geByClass1("friends_section_list" + r, "narrow_column")
-            .innerHTML = s,
-            cur.userLists[r] = s);
+            .innerHTML = s, cur.userLists[r] = s);
         var c = 1 << r;
         cur.friendsList[i] = [];
         for (var a in cur.friends) {
@@ -1210,24 +1207,17 @@ var Friends = {
             hideProgress: unlockButton.pbind(s)
         })
     },
-    toggleFindFilters: function() {
-        function e(e, r, s) {
-            return animate(e, {
-                height: "show",
-                paddingTop: "show",
-                paddingBottom: "show"
-            }, r, s)
-        }
-        return isVisible("friends_filters_block") ? (hide("friends_import_stub", "friends_filters_header", "friends_clear_link", "results"), show("friends_import_header",
-            "friends_list_wrap"), e("friends_import_block", 500), slideUp("friends_filters_block", 500, function() {
-            show("friends_filters_stub")
-        }), nav.setLoc("friends?act=find"), val("search_query", ""), cur.params && (cur.params["c[q]"] = ""), cur.disableAutoMore = !0, scrollToTop()) : (hide(
-            "friends_filters_stub"), e("friends_filters_block", 500), slideUp("friends_import_block", 500, function() {
-            show("friends_import_stub")
-        }), cur.disableAutoMore = !1, searcher.updResults()), !1
+    toggleFindFilters: function(e, r) {
+        var s = r ? 0 : 200;
+        e || (e = ge("search_filters_minimized"), r ? searcher.toggleMinimizedFilters(e, !0, r) : searcher.toggleMinimizedFilters(e)), hasClass(e, "ui_rmenu_item_expanded") ?
+            (slideUp("friends_import_block", s, function() {
+                show("friends_import_stub")
+            }), cur.disableAutoMore = !1, geByClass1("search_row", "results") && searcher.updResults()) : (hide("friends_import_stub", "friends_filters_header", "results"),
+                show("friends_import_header", "friends_list_wrap"), slideDown("friends_import_block", s), nav.setLoc("friends?act=find"), val("search_query", ""), cur.params &&
+                (cur.params["c[q]"] = ""), cur.disableAutoMore = !0, scrollToTop())
     },
     extendedSearchQuery: function() {
-        isVisible("friends_filters_block") || Friends.toggleFindFilters(), searcher.onEnter()
+        hasClass("search_filters_minimized", "ui_rmenu_item_expanded") || Friends.toggleFindFilters(!1, !0), searcher.onEnter()
     },
     clearFindParams: function(e, r) {
         return hide("search_clear_params"), uiSearch.reset(e, !1, r)

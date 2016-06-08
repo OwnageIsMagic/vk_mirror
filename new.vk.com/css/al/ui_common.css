@@ -314,18 +314,21 @@ a.ui_box_header_link {
     background-image: url(/images/search_icon_popup.png)
 }
 
-.ui_tabs.ui_tabs_sliding:before {
-    content: '';
-    position: absolute;
+.ui_tabs_slider {
+    position: absolute
+}
+
+.ui_tabs.ui_tabs_sliding .ui_tabs_slider {
     z-index: 5;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
     bottom: -1px;
+    left: 0;
     width: 100px;
     height: 2px;
     background-color: #6387ac;
-    -o-transition: width 0.2s ease, left 0.2s ease;
-    transition: width 0.2s ease, left 0.2s ease
+    transition: width 0.2s ease, -webkit-transform 0.2s ease;
+    -o-transition: width 0.2s ease, transform 0.2s ease, -o-transform 0.2s ease;
+    transition: width 0.2s ease, transform 0.2s ease;
+    transition: width 0.2s ease, transform 0.2s ease, -webkit-transform 0.2s ease, -o-transform 0.2s ease
 }
 
 .ui_tabs.ui_tabs_sliding .ui_tab_sel {
@@ -528,15 +531,21 @@ a.ui_crumb {
     padding-left: 26px
 }
 
-.ui_rmenu_sliding:before {
-    content: '';
+.ui_rmenu_slider {
+    position: absolute
+}
+
+.ui_rmenu_sliding .ui_rmenu_slider {
+    top: 0;
     position: absolute;
     left: 0;
     height: 32px;
     width: 2px;
     background-color: #6285af;
-    -o-transition: top 0.2s ease;
-    transition: top 0.2s ease;
+    transition: -webkit-transform 0.2s ease;
+    -o-transition: transform 0.2s ease, -o-transform 0.2s ease;
+    transition: transform 0.2s ease;
+    transition: transform 0.2s ease, -webkit-transform 0.2s ease, -o-transform 0.2s ease;
     z-index: 1
 }
 
@@ -2252,4 +2261,15 @@ a.ui_search_custom_link {
     border-top-color: #d2dbe4;
     border-width: 5px;
     margin-left: -5px
+}
+
+.ui_bullet:after {
+    content: "";
+    display: inline-block;
+    margin: 0 7px 0 9px;
+    width: 2px;
+    height: 2px;
+    border-radius: 2px;
+    vertical-align: middle;
+    background: #b3b3b3
 }

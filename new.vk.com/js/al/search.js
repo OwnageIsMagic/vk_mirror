@@ -334,8 +334,7 @@ void 0 === window.iSearch && (iSearch = {
                     .onclick = function(e) {
                         return hab.getLoc()
                             .indexOf("search") ? nav.go("search", e, {
-                                search: !0,
-                                noframe: !0
+                                search: !0
                             }) : (window.searcher && searcher.close(), !1)
                     })
         }

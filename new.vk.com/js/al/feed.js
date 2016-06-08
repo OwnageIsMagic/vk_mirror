@@ -343,7 +343,7 @@ var Feed = {
                 i = r.toLowerCase()
                 .split(/[\s.,:;!?()]/),
                 n = [];
-            o = o.replace(/<.+?>/g, function(e) {
+            o = o.replace(/<(.|\n)+?>/g, function(e) {
                 return n.push(e), ""
             });
             var a, c, l, d = o.toLowerCase();
@@ -1445,7 +1445,8 @@ var Feed = {
     hideTopFeedNotification: function(e, t) {
         ajax.post("al_feed.php", {
             act: "hide_top_feed_notification",
-            hash: e
+            hash: e,
+            hide: t ? 1 : 0
         }), t && hide("top_feed_notification")
     }
 };
