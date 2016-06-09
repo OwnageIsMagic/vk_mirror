@@ -644,12 +644,14 @@ var Friends = {
                 act: "add",
                 mid: e,
                 hash: r,
+                ref: cur.module,
                 request: 1
             };
             else var t = {
                 act: "hide_possible",
                 mid: e,
-                hash: r
+                hash: r,
+                ref: cur.module
             };
             return ajax.post("al_friends.php", t, {
                 onDone: function(e) {

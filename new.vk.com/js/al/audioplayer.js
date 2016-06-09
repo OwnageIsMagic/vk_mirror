@@ -93,6 +93,7 @@ var AudioUtils = {
     AUDIO_ITEM_INLINED_BIT: 1,
     AUDIO_ITEM_CLAIMED_BIT: 16,
     AUDIO_ITEM_RECOMS_BIT: 64,
+    AUDIO_ITEM_TOP_BIT: 1024,
     AUDIO_LAYER_TOP: 46,
     AUDIO_ENOUGH_LOCAL_SEARCH_RESULTS: 500,
     AUDIO_PAGINATED: -1,
@@ -134,7 +135,11 @@ var AudioUtils = {
             cur._audioAddRestoreInfo = cur._audioAddRestoreInfo || {};
             var _ = cur._audioAddRestoreInfo[u.fullId],
                 A = ge("audio_" + u.fullId);
-            if (A = A == o ? !1 : A, _) {
+            A = A == o ? !1 : A;
+            var y = intval(u.isTop),
+                p = intval(a && a.getCurrentPlaylist()
+                    .getType() == AudioUtils.AUDIO_PLAYLIST_TYPE_SEARCH);
+            if (_) {
                 if ("recom_hidden" == _.state) a && (a.restoreRecommendation(o), e(!1));
                 else if ("deleted" == _.state) ajax.post("al_audio.php", {
                     act: "restore_audio",
@@ -147,11 +152,11 @@ var AudioUtils = {
                     }
                 }), removeClass(o, "audio_deleted"), removeClass(o, "canadd"), addClass(o, "canedit"), delete cur._audioAddRestoreInfo[u.fullId];
                 else if ("added" == _.state) {
-                    var y = _.addedFullId.split("_");
+                    var h = _.addedFullId.split("_");
                     ajax.post("al_audio.php", {
                             act: "delete_audio",
-                            oid: y[0],
-                            aid: y[1],
+                            oid: h[0],
+                            aid: h[1],
                             hash: d
                         }, {
                             onDone: function() {
@@ -171,7 +176,9 @@ var AudioUtils = {
                     gid: s,
                     oid: u.ownerId,
                     aid: u.id,
-                    hash: n
+                    hash: n,
+                    top: y,
+                    search: p
                 }, {
                     onDone: function(t, i, o, l) {
                         if (t) {
@@ -369,7 +376,8 @@ var AudioUtils = {
             url: t[AudioUtils.AUDIO_ITEM_INDEX_URL],
             flags: t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS],
             context: t[AudioUtils.AUDIO_ITEM_INDEX_CONTEXT],
-            extra: t[AudioUtils.AUDIO_ITEM_INDEX_EXTRA]
+            extra: t[AudioUtils.AUDIO_ITEM_INDEX_EXTRA],
+            isTop: t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS] & AudioUtils.AUDIO_ITEM_TOP_BIT
         } : null
     },
     initDomPlaylist: function(t, i) {
@@ -1552,7 +1560,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.STATE_HAVE_NOTHING = 0, AudioPlayerHTML5.STATE_HAVE_FUTURE_DATA = 3, AudioPlayerHTML5.HAVE_ENOUGH_DATA = 4,
     AudioPlayerHTML5.SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=", AudioPlayerHTML5.isSupported = function() {
         var t = "undefined" != typeof navigator ? navigator.userAgent : "";
-        if (t && /vivaldi/i.test(t) && (/(Windows 7|Windows NT 6.1)/.test(t) || /(Windows NT 5.1|Windows XP)/.test(t))) return !1;
+        if (t && /vivaldi/i.test(t) && /(Windows NT 5.1|Windows XP)/.test(t)) return !1;
         var i = document.createElement("audio");
         return !(!i.canPlayType || !i.canPlayType('audio/mpeg; codecs="mp3"')
             .replace(/no/, ""))

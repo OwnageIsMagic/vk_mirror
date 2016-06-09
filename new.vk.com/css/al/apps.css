@@ -1771,6 +1771,10 @@ a.page_block_header:hover .apps_cat_header_link:after {
     background-position: 0 -441px
 }
 
+.apps_access_market {
+    background-position: 0 -480px
+}
+
 .apps_box_change_photo_text {
     text-align: center
 }

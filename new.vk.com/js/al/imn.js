@@ -27,8 +27,9 @@
         l = n(77);
     window.IM = {
         init: function(e) {
-            window.Promise || (window.Promise = o.Promise), cur.ctrl_submit = e.ctrl_submit, cur.module = "im", cur.mutedPeers = e.mutedPeers, cur.gid = e.gid, cur
-                .peer = e.peer, e.blockedFlagUpdates = {}, e.msgid = intval(nav.objLoc.msgid), e.unread_dialogs = Object.keys(e.tabs)
+            window.Promise || (window.Promise = o.Promise), cur.lang.dont_attach = getLang("mail_dont_add_media"), cur.ctrl_submit = e.ctrl_submit, cur.module =
+                "im", cur.mutedPeers = e.mutedPeers, cur.gid = e.gid, cur.peer = e.peer, e.blockedFlagUpdates = {}, e.msgid = intval(nav.objLoc.msgid), e.unread_dialogs =
+                Object.keys(e.tabs)
                 .filter(function(t) {
                     return e.tabs[t].unread > 0
                 })
@@ -335,7 +336,7 @@
                         W.isClassicInterface)(r) && r.get()
                     .tabbedPeers.forEach(function(e) {
                         var t = e.peer;
-                        B.updateCounter(r, t)
+                        B.updateCounter(r, t), B.updateName(t, r)
                     }), t.cleanSelection(r.get()
                         .selectedMessages || []), t.cancelSearch(r, !0), t.changePeer(r);
                 var i = r.get()
@@ -572,7 +573,7 @@
         var o = arguments.length <= 6 || void 0 === arguments[6] ? !0 : arguments[6];
         if (!isFullScreen()) {
             var l = ge("page_header"),
-                u = (ge("footer_wrap"), window.innerHeight - l.offsetHeight - Y - 2),
+                u = (ge("footer_wrap"), (window.innerHeight || document.documentElement.clientHeight) - l.offsetHeight - Y - 2),
                 c = (0, W.isClassicInterface)(t) ? "minHeight" : "height",
                 d = (0, W.isClassicInterface)(t) ? $ : Z;
             if (setStyle(e, r({}, c, Math.max(u, d))), a && a.updateScroll(), i && i.updateScroll(), n) {
@@ -605,7 +606,9 @@
             d = hasClass(e, "im-page--header_static");
         return addEvent(window, "scroll", i), i(),
             function() {
-                return removeEvent(window, "scroll", i)
+                removeEvent(window, "scroll", i), setStyle(s, {
+                    transform: ""
+                })
             }
     }
 
@@ -640,7 +643,7 @@
             for (var e = arguments.length, n = Array(e), r = 0; e > r; r++) n[r] = arguments[r];
             return s()
                 .onEvents(t, n)
-        });
+        }), window.lpl = u;
         var c = geByClass1("_im_dialogs_search", e),
             d = geByClass1("_im_dialogs_settings", e),
             g = (0, M.mount)(geByClass1("_im_page_dcontent", e), t, s),
@@ -1318,9 +1321,8 @@
                     var a = t.get()
                         .tabs[n.peerId],
                         s = a.unread > 0 ? a.unread : "";
-                    val(geByClass1("_im_dialog_unread_ct", r), s), s ? addClass(r, "nim-dialog_unread") : removeClass(r, "nim-dialog_unread"),
-                        a.lastmsg > a.out_up_to && !a.unread && a.lastmsg_meta.flags & Y.eventTypes.FLAG_OUTBOUND ? addClass(r, "nim-dialog_unread-out") : removeClass(
-                            r, "nim-dialog_unread-out")
+                    val(geByClass1("_im_dialog_unread_ct", r), s), s ? addClass(r, "nim-dialog_unread") : removeClass(r, "nim-dialog_unread"), a.lastmsg > a.out_up_to &&
+                        !a.unread && a.lastmsg_meta.flags & Y.eventTypes.FLAG_OUTBOUND ? addClass(r, "nim-dialog_unread-out") : removeClass(r, "nim-dialog_unread-out")
                 }
             },
             removeDialog: function(e, t) {
@@ -1425,7 +1427,7 @@
                 more: s.bind(null, t, i),
                 onScroll: (0, z.isClassicInterface)(t) ? function() {
                     var e = bodyNode.scrollTop || document.documentElement.scrollTop;
-                    0 >= e ? addClass(p, "im-page--header_static") : removeClass(p, "im-page--header_static")
+                    0 >= e && !layers.visible && browser.safari ? addClass(p, "im-page--header_static") : removeClass(p, "im-page--header_static")
                 } : !1
             },
             v = (0, Q.mount)(e, (0, K["default"])({
@@ -2666,8 +2668,9 @@
     }
 
     function E(e) {
-        var t = e.peer,
-            n = e.tabs[t],
+        var t = e.peer;
+        if (0 === t) return Promise.resolve(e);
+        var n = e.tabs[t],
             r = n.data,
             a = [],
             i = e.mutedPeers;
@@ -2983,7 +2986,8 @@
     }
 
     function V(e, t, n) {
-        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].typing = extend(n.tabs[e].typing, r({}, t, Date.now()))), Promise.resolve(n)
+        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].typing = extend(n.tabs[e].typing, r({}, t, Date.now()))),
+            Promise.resolve(n)
     }
 
     function Y(e, t, n) {
@@ -2996,7 +3000,7 @@
                         a >= 1e3 * kt && delete r.typing[t]
                     }
                 }
-                return n;
+                return n
             })
     }
 
@@ -5713,9 +5717,12 @@
                         id: ""
                     }),
                     cls: ["bottom" === n ? "im-preloader_bottom" : "im-preloader_top", r].join(" ")
-                }));
-            "bottom" === n ? e.appendChild(a) : e.insertBefore(a, domFC(e)), addClass(a, "im-preloader_visible"), t.then(function() {
-                removeClass(a, "im-preloader_visible"), a.parentNode && a.parentNode.removeChild(a)
+                })),
+                i = !1;
+            setTimeout(function() {
+                i || ("bottom" === n ? e.appendChild(a) : e.insertBefore(a, domFC(e)), addClass(a, "im-preloader_visible"))
+            }, 0), t.then(function() {
+                i = !0, removeClass(a, "im-preloader_visible"), a.parentNode && a.parentNode.removeChild(a)
             })
         }
     }
@@ -6270,7 +6277,8 @@
             .elCls, n()
             .onClick), {
             pipe: function(r, a) {
-                return t.set(m.bind(null, a)), r.then(P.bind(null, t, e, c, n, a))
+                return t.set(m.bind(null, a)),
+                    r.then(P.bind(null, t, e, c, n, a))
             },
             pipeReplace: function(r, a) {
                 return t.set(m.bind(null, a)), t.set(f), r.then(function(r) {
@@ -6559,7 +6567,7 @@
     function d(e, t, n, r, a, i) {
         if (0 !== e.get()
             .peer && (0, M.isFullyLoadedTab)(e.get(), e.get()
-                .peer)) {
+                .peer) && !layers.visible) {
             var s = (0, M.wrapLoading)(n);
             if ((0, D.isSearchingInplace)(e.get()
                     .peer, e.get()) || r(i), !ee && i.scrollTop() < z) {
@@ -7767,7 +7775,8 @@
         var s = geByClass1("_im_text", e);
         return addEvent(s, "paste", i), addEvent(s, "focus", function() {
             t.get()
-                .longpoll.push([M.eventTypes.transitionEvent("message")]), cur.focused = t.get()
+                .longpoll.push([M.eventTypes.transitionEvent("message")]),
+                cur.focused = t.get()
                 .peer
         }), addEvent(s, "blur", function() {
             t.get()
@@ -7793,6 +7802,7 @@
         if (show("_im_media_preview"), !t.get()
             .rebuilding_draft) {
             if ("page" === a) return !1;
+            if ("share" === a && !s.title) return !1;
             t.set(O.cleanMediaStore.bind(null, t.get()
                 .peer));
             var u = l.getMedias()
@@ -9336,9 +9346,9 @@
             .createCanceled(e, r), a.resetSelection(), "add_member" === e.get()
             .creationType && e.set(w.setCreationType.bind(null, "chat", [])), e.set(w.presetAvatar.bind(null, !1));
         var u = geByClass1(G, t);
-        l(e, i, t), uiSearch.reset(geByClass1(N, t)), uiSearch.reset(geByClass1(R, t)),
-            u && u.parentNode.removeChild(u), l(e, i, t), e.set(w.setExecStack.bind(null, (0, S.execuctionStackFilter)(e.get()
-                .stack, "im_search")))
+        l(e, i, t), uiSearch.reset(geByClass1(N, t)), uiSearch.reset(geByClass1(R, t)), u && u.parentNode.removeChild(u), l(e, i, t), e.set(w.setExecStack.bind(null, (0, S
+            .execuctionStackFilter)(e.get()
+            .stack, "im_search")))
     }
 
     function i(e, t, n) {
@@ -10063,11 +10073,13 @@
                     })
             },
             updateName: function(e, t) {
-                var n = ge("ui_rmenu_peer_" + e),
-                    r = geByClass1("_im_r_tx", n),
-                    a = t.get()
-                    .tabs[e].tab;
-                val(r, a)
+                var n = ge("ui_rmenu_peer_" + e);
+                if (n) {
+                    var r = geByClass1("_im_r_tx", n),
+                        a = t.get()
+                        .tabs[e].tab;
+                    val(r, a)
+                }
             },
             updateCounter: function(e, t) {
                 var n = ge("ui_rmenu_peer_" + t);

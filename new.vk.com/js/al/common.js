@@ -2514,7 +2514,6 @@ var layers = {
             }
             layers.visible = true;
             addClass(bodyNode, 'layers_shown');
-            addClass(bodyNode, 'layers_showing');
             if (con.visibilityHide) {
                 removeClass(con, 'box_layer_hidden');
             } else {
@@ -2537,7 +2536,6 @@ var layers = {
                     !isVisible(window.wkLayerWrap)) {
                     layers.visible = false;
                     removeClass(bodyNode, 'layers_shown');
-                    removeClass(bodyNode, 'layers_showing');
                     toggleFlash(true);
                     if (browser.mozilla) {
                         pageNode.style.height = 'auto';
@@ -2962,7 +2960,7 @@ function updateLeftMenu() {
         lastStyles = window.menuLastStyles || {},
         styles;
 
-    if (st <= 0 || tooBig) {
+    if (st <= 0 || tooBig || hasClass(bodyNode, 'body_im')) {
         styles = {
             position: 'relative',
             marginTop: headH
@@ -7072,10 +7070,13 @@ function showBox(url, params, options, e) {
         boxParams.containerClass = opts.containerClass;
     }
 
-    addClass(bodyNode, 'layers_showing');
     var box = new MessageBox(boxParams);
     var p = {
         onDone: function(title, html, js, data) {
+            if (opts.preOnDone && opts.onDone) { // hack for friends contact import
+                opts.onDone(box);
+            }
+
             if (!box.isVisible()) {
                 if (opts.onDone) opts.onDone(box, data);
                 return;
@@ -11081,7 +11082,7 @@ if (!Object.keys) {
 function fixImHeight(isGroup) {
     var page = document.getElementById('im--page');
     if (page) {
-        var height = window.innerHeight - 78;
+        var height = (window.innerHeight || document.documentElement.clientHeight) - 78;
         var prop = isGroup ? "minHeight" : "height"
         page.style[prop] = height + "px";
     }

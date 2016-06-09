@@ -1885,7 +1885,8 @@ a.ad_box_new:hover {
 }
 
 .body_im #side_bar {
-    position: fixed
+    position: fixed;
+    top: 0
 }
 
 body.body_im.firefox #page_wrap {
@@ -5258,6 +5259,10 @@ button.flat_button .pr {
     vertical-align: middle
 }
 
+.flat_button.ui_load_more_btn.flat_btn_lock.with_arrow:after {
+    display: none!important
+}
+
 button.ui_load_more_btn {
     width: 100%
 }
@@ -5699,6 +5704,10 @@ button.ui_load_more_btn {
 .audio_row.audio_row_current.inlined,
 .audio_row.audio_row_playing.inlined {
     background-color: initial
+}
+
+.audio_row.audio_row_playing .audio_hq_label {
+    display: none!important
 }
 
 .audio_row.audio_deleted .audio_info {

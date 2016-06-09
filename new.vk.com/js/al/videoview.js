@@ -633,26 +633,25 @@ var Videoview = {
                     mvOldX: e.pageX,
                     mvOldY: e.pageY,
                     mvOldT: vkNow()
-                }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), t.player && (mvcur.player = t.player, t.player = 1, val("mv_content",
-                        '<div class="video_box">  <div class="wrap">    <div id="video_box_wrap' + i +
+                }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), toggle("mv_controls", !t.hideInfo), t.player && (mvcur.player = t.player, t.player = 1,
+                    val("mv_content", '<div class="video_box">  <div class="wrap">    <div id="video_box_wrap' + i +
                         '" class="video_box_wrap">      <div id="video_player"></div>    </div>  </div></div>    '), ge("video_player")
                     .appendChild(mvcur.player.el), hide("mv_progress"), show("mv_content"), mvcur.player.onExpanded()), t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId,
-                    t.catLoadMore) : VideoPlaylist.removeBlock(), Videoview.cleanUpStoredVSegs(), t.minimized && setTimeout(Videoview.minimize.bind(Videoview), 0), !1
+                    t.catLoadMore) : VideoPlaylist.removeBlock(), VideoPlaylist.updateControls(), Videoview.cleanUpStoredVSegs(), t.minimized && setTimeout(Videoview.minimize.bind(
+                    Videoview), 0), !1
         },
         buildLayerContent: function() {
             var e = "mv_dark";
-            addClass(window.mvLayerWrap, e), addClass(window.layerBG, e);
-            var i = mvcur.options.hideInfo ? "display: none" : "";
-            mvLayer.innerHTML =
+            addClass(window.mvLayerWrap, e), addClass(window.layerBG, e), mvLayer.innerHTML =
                 '<div id="mv_container">  <div id="mv_box" onclick="mvcur.mvClicked = true;">    <div id="mv_approve" style="display: none;"></div>    <div id="mv_publish" style="display: none;"></div>    <div id="mv_min_layer">      <div class="mv_min_header">        <div class="mv_mini_control fl_r" onmousedown="return Videoview.hide(false, true);">          <div class="mv_close_control"></div>        </div>        <div class="mv_mini_control fl_r" onclick="return Videoview.unminimize();">          <div class="mv_max_control"></div>        </div>        <div class="mv_min_title" id="mv_min_title"></div>      </div>    </div>    <div class="no_select mv_data">      <div class="mv_pl_prev_wrap">        <div class="mv_playlist_controls" id="mv_pl_prev" onclick="return VideoPlaylist.prevVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_pl_next_wrap">        <div class="mv_playlist_controls" id="mv_pl_next" onclick="return VideoPlaylist.nextVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_top_controls_wrap">        <div id="mv_top_controls">          <div onclick="return Videoview.hide(false, true, event, true);" class="mv_top_button mv_top_close"><div class="mv_close_icon"></div></div>          <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize"><div class="mv_minimize_icon"></div></div>          <div onclick="return VideoPlaylist.toggle();" class="mv_top_button mv_top_pl_toggle" id="mv_top_pl_toggle"><div class="mv_pl_toggle_icon"></div></div>        </div>      </div>      <div id="mv_progress">' +
                 getProgressHtml() +
-                '</div>      <div id="mv_content"></div>    </div>    <div id="mv_service_btns_wrap">      <div id="mv_service_btns"></div>    </div>    <div class="mv_controls clear_fix" id="mv_controls" style="' +
-                i + '"></div>    <div id="mv_warning" style="display: none;"></div>  </div></div>  ', browser.mobile && setStyle("mv_container", {
+                '</div>      <div id="mv_content"></div>    </div>    <div id="mv_service_btns_wrap">      <div id="mv_service_btns"></div>    </div>    <div class="mv_controls clear_fix" id="mv_controls"></div>    <div id="mv_warning" style="display: none;"></div>  </div></div>  ',
+                browser.mobile && setStyle("mv_container", {
                     paddingTop: intval(window.pageYOffset) + 10 + "px"
                 }), Videoview.updateSize()
         },
         cleanLayerContent: function() {
-            val("mv_controls", ""), toggle("mv_controls", !mvcur.options.hideInfo)
+            val("mv_controls", "")
         },
         initPlaylistBlock: function(e, i, o) {
             if (/^wall_/.test(i) && VideoPlaylist.lists[i] && cur.wallVideos && cur.wallVideos[i]) {
@@ -663,7 +662,7 @@ var Videoview = {
                 r = VideoPlaylist.buildBlock(i, e, t);
             if (toggleClass("mv_container", "mv_container_has_pl", !!r && !mvcur.minimized), r) {
                 domByClass(mvLayer, "mv_data")
-                    .appendChild(r), VideoPlaylist.restoreScrollPos(), VideoPlaylist.updateScrollbar(), VideoPlaylist.setCurVideo(e, a), VideoPlaylist.updateControls();
+                    .appendChild(r), VideoPlaylist.restoreScrollPos(), VideoPlaylist.updateScrollbar(), VideoPlaylist.setCurVideo(e, a);
                 var d = VideoPlaylist.getCurList()
                     .list.length;
                 (window.Video && Video.isInVideosList() && vk.id == cur.oid || 5 > d) && (a || VideoPlaylist.toggle(!1))
@@ -1360,8 +1359,8 @@ var Videoview = {
                 if (!vk.id && !html) return void setTimeout(function() {
                     Videoview.hide(!1, !0), showDoneBox(title)
                 }, 500);
-                if (title && !html) return val("mv_content", '<div id="video_player" class="video_layer_message">' + title + "</div>"), hide("mv_progress"), void hide(
-                    "mv_controls");
+                if (title && !html) return val("mv_content", '<div id="video_player" class="video_layer_message">' + title + "</div>"), show("mv_content"), hide("mv_progress"),
+                    void hide("mv_controls");
                 if (opt = opt || {}, cur.lang = extend(cur.lang || {}, opt.lang), cur.share_timehash = cur.share_timehash || opt.share_timehash, mvcur.post = opt.post, mvcur.maxReplyLength =
                     opt.maxReplyLength, mvcur.maxDescriptionLength = opt.maxDescriptionLength, mvcur.mvData = opt.mvData, mvcur.videoRaw = opt.mvData.videoRaw, mvcur.commentsTpl =
                     opt.commentsTpl, mvcur.mvMediaTypes = opt.media, mvcur.mvMediaShare = opt.share, mvcur.mvReplyNames = opt.names || {}, mvcur.rmedia_types = opt.rmedia_types,
@@ -1407,8 +1406,8 @@ var Videoview = {
                     }
                 }
                 if (show("mv_content"), window.updateWndVScroll && updateWndVScroll(), (mvcur.options || {})
-                    .scroll && (mvLayerWrap.scrollTop = mvcur.options.scroll, mvcur.options.scroll = 0), toggle("mv_controls", !mvcur.mvData.noControls && !mvcur.minimized), !
-                    mvcur.mvData.noControls) {
+                    .scroll && (mvLayerWrap.scrollTop = mvcur.options.scroll, mvcur.options.scroll = 0), toggle("mv_controls", !mvcur.options.hideInfo && !mvcur.mvData.noControls &&
+                        !mvcur.minimized), !mvcur.mvData.noControls) {
                     var titleWidth = mvcur.minimized ? mvcur.minSize.wrap.w : !1;
                     Videoview.setTitle(titleWidth), Videoview.initAddButton();
                     var items = [];
@@ -2001,7 +2000,7 @@ var Videoview = {
                 var u = !1,
                     _ = !1;
                 if (!s && !m) {
-                    if (a.nolikes) return;
+                    if (a.noControls || a.nolikes) return;
                     i[0] > 250 && i[1] > 200 ? u = !0 : _ = !0
                 }
                 var p = window.mvcur && mvcur.minimized,
