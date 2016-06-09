@@ -15,13 +15,13 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
             return t
         }
 
-        function s(t, e, i, a, o) {
-            t[e] ? i.apply(a) : (o = o || 0, 1e3 > o && setTimeout(function() {
-                s(t, e, i, a, o + 1)
+        function s(t, e, i, o, a) {
+            t[e] ? i.apply(o) : (a = a || 0, 1e3 > a && setTimeout(function() {
+                s(t, e, i, o, a + 1)
             }, 0))
         }
 
-        function a(e) {
+        function o(e) {
             setTimeout(function() {
                 var i = document.createElement("script");
                 i.type = "text/javascript", i.src = e || t.fastXDM.helperUrl, s(document, "body", function() {
@@ -30,7 +30,7 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
             }, 0)
         }
 
-        function o(t, e) {
+        function a(t, e) {
             d.loaded ? t.apply(e, [d]) : p.push([e, t])
         }
 
@@ -40,21 +40,21 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
         }
 
         function r(t, e) {
-            o(function(s) {
-                var a = s.json.parse(t);
-                if (a[0]) {
-                    a[1] || (a[1] = []);
-                    for (i in a[1])
-                        if (a[1][i] && a[1][i]._func) {
-                            var o = a[1][i]._func;
-                            a[1][i] = function() {
+            a(function(s) {
+                var o = s.json.parse(t);
+                if (o[0]) {
+                    o[1] || (o[1] = []);
+                    for (i in o[1])
+                        if (o[1][i] && o[1][i]._func) {
+                            var a = o[1][i]._func;
+                            o[1][i] = function() {
                                 var t = Array.prototype.slice.call(arguments);
-                                t.unshift("_func" + o), e.callMethod.apply(e, t)
+                                t.unshift("_func" + a), e.callMethod.apply(e, t)
                             }
                         }
                     setTimeout(function() {
-                        if (!e.methods[a[0]]) throw Error("fastXDM: Method " + a[0] + " is undefined");
-                        e.methods[a[0]].apply(e, a[1])
+                        if (!e.methods[o[0]]) throw Error("fastXDM: Method " + o[0] + " is undefined");
+                        e.methods[o[0]].apply(e, o[1])
                     }, 0)
                 }
             })
@@ -80,7 +80,7 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
                             "Wrong window.name property.");
                         this.key = window.name.substr(3), this.caller = window.parent, l[this.key] = [r, this], this.client = !0, t.fastXDM.on("helper", function() {
                             t.fastXDM.onClientStart(this)
-                        }, this), o(function(t) {
+                        }, this), a(function(t) {
                             t.send(this, t.json.stringify(["%init%"]));
                             var e = this.methods;
                             setTimeout(function() {
@@ -97,7 +97,7 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
                         d.json = t
                     },
                     getJSON: function(t) {
-                        return t ? void o(function(e) {
+                        return t ? void a(function(e) {
                             t(e.json)
                         }) : d.json
                     },
@@ -130,14 +130,14 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
                 }, t.fastXDM.Server.prototype.append = function(t, e, i) {
                     var s = document.createElement("DIV");
                     s.innerHTML = '<iframe name="' + this.frameName + '" ' + (i || "") + " />";
-                    var a = s.firstChild,
-                        o = this;
+                    var o = s.firstChild,
+                        a = this;
                     return setTimeout(function() {
-                        a.frameBorder = "0", e && c(a, e), t.insertBefore(a, t.firstChild), o.start(a)
-                    }, 0), a
+                        o.frameBorder = "0", e && c(o, e), t.insertBefore(o, t.firstChild), a.start(o)
+                    }, 0), o
                 }, t.fastXDM.Client.prototype.callMethod = t.fastXDM.Server.prototype.callMethod = function() {
                     var e = Array.prototype.slice.call(arguments),
-                        a = e.shift();
+                        o = e.shift();
                     for (i in e)
                         if ("function" == typeof e[i]) {
                             this.funcsCount = (this.funcsCount || 0) + 1;
@@ -151,8 +151,8 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
                         }
                     s(this, "caller", function() {
                         t.fastXDM.on(this.id, function() {
-                            o(function(t) {
-                                t.send(this, t.json.stringify([a, e]))
+                            a(function(t) {
+                                t.send(this, t.json.stringify([o, e]))
                             }, this)
                         }, this)
                     }, this)
@@ -165,18 +165,18 @@ window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "")
                 } : t.fastXDM._needJSON = !0, t.postMessage ? (d.protocol = "p", d.send = function(t, e) {
                     t.caller.postMessage(t.key + ":" + e, "*")
                 }, t.addEventListener ? t.addEventListener("message", t.fastXDM.onMessage, !1) : t.attachEvent("onmessage", t.fastXDM.onMessage), t.fastXDM._needJSON ? (t.fastXDM
-                    ._onlyJSON = !0, a()) : n()) : a()
+                    ._onlyJSON = !0, o()) : n()) : o()
         }
     }(window);
 var vkApp = function(t, e, i, s) {
     if (i = i || {}, e = e || {}, window.parent && window.parent != window && !e.checking) return !1;
-    var a = this;
+    var o = this;
     if (this.cont = ge(t), this.cont) {
         if (i.hash = i.hash || "", -1 != i.hash.indexOf("#")) {
-            var o = i.hash.split("#")
+            var a = i.hash.split("#")
                 .pop();
-            (o || "")
-            .substr(0, 1) == vk.navPrefix ? i.hash = "" : i.hash = o
+            (a || "")
+            .substr(0, 1) == vk.navPrefix ? i.hash = "" : i.hash = a
         }
         if (this.params = i, this.onReady = new Array, 1 == e.type) {
             var n = e.src,
@@ -184,31 +184,31 @@ var vkApp = function(t, e, i, s) {
             for (var c in i) "hash" == c ? r.push(c + "=" + encodeURIComponent(i[c])) : r.push(c + "=" + i[c]);
             n += (-1 == n.indexOf("?") ? "?" : "&") + r.join("&")
         }
-        e.inlineApp && (a.inlineApp = !0), a.options = extend({
+        e.inlineApp && (o.inlineApp = !0), o.options = extend({
             heightMax: 4500
         }, e), this.funcs = {
             onInit: function() {
-                return e.heightSync && a.RPC.callMethod("getHeight", function(t) {
-                    a.setHeight(t)
-                }), a.inited || (a.inited = !0, s && s(), a.inlineApp || a.onAppReady()), !0
+                return e.heightSync && o.RPC.callMethod("getHeight", function(t) {
+                    o.setHeight(t)
+                }), o.inited || (o.inited = !0, s && s(), o.inlineApp || o.onAppReady()), !0
             },
             ApiCall: function(t, e) {
                 var i = t.shift();
-                a.api(i, t[0], e)
+                o.api(i, t[0], e)
             },
             _getAppInfo: function(t) {
-                t([a.params.api_id, window.location.hash])
+                t([o.params.api_id, window.location.hash])
             },
             api: function(t, e, i) {
-                a.api(e, i, function(e) {
-                    a.apiCallback(t, e)
+                o.api(e, i, function(e) {
+                    o.apiCallback(t, e)
                 })
             },
             setHeight: function(t) {
-                a.setHeight(t)
+                o.setHeight(t)
             },
             scrollWindow: function(t, e) {
-                if (!a.inlineApp) {
+                if (!o.inlineApp) {
                     var i = Math.max(t, 0);
                     e = intval(e), e && e > 0 ? (animate(htmlNode, {
                         scrollTop: i
@@ -227,7 +227,7 @@ var vkApp = function(t, e, i, s) {
             scrollSubscribe: function(t) {
                 var e = function() {
                         var t = window.innerHeight || document.documentElement.clientHeight || bodyNode.clientHeight;
-                        a.runCallback("onScroll", parseInt(scrollGetY()), parseInt(t))
+                        o.runCallback("onScroll", parseInt(scrollGetY()), parseInt(t))
                     },
                     i = function() {
                         addEvent(browser.msie6 ? pageNode : window, "scroll", e)
@@ -292,14 +292,14 @@ var vkApp = function(t, e, i, s) {
                 })
             },
             setTitle: function(t) {
-                if (!a.inlineApp) {
+                if (!o.inlineApp) {
                     t = t.replace(/[<>]+/gi, "");
                     var e = cur.backLang;
                     e = e ? e : getLang("global_vkontakte"), document.title = e + (t ? " | " + t : "")
                 }
             },
             resizeWindow: function(t, e) {
-                a.setWidth(t), a.setHeight(e)
+                o.setWidth(t), o.setHeight(e)
             },
             getLocationProtocol: function(t) {
                 t(location.protocol)
@@ -388,7 +388,7 @@ var vkApp = function(t, e, i, s) {
                     })
                 }
                 var s = {};
-                for (var a in t) inArray(a, ["type", "votes", "offer_id", "item", "currency"]) && (s[a] = t[a] + "");
+                for (var o in t) inArray(o, ["type", "votes", "offer_id", "item", "currency"]) && (s[o] = t[o] + "");
                 "offers" == s.type && isArray(s.offer_id) && (s.offer_id = s.offer_id.join(",")), s.act = "show_order_box", s.aid = e.aid, s.hash = e.hash, showBox(
                     "al_apps.php", s, {
                         params: {
@@ -408,7 +408,7 @@ var vkApp = function(t, e, i, s) {
                 }
             },
             showMerchantPaymentBox: function(t) {
-                if (!a.inlineApp) {
+                if (!o.inlineApp) {
                     if ("object" != typeof t) {
                         var e = Array.prototype.slice.call(arguments);
                         t = {}, each(e, function() {
@@ -421,11 +421,11 @@ var vkApp = function(t, e, i, s) {
                         if ("merchant_id" != s && "required_fields" != s)
                             if (0 != s.indexOf("custom_")) {
                                 if (0 == s.indexOf("item_")) {
-                                    var o = s.substr(5),
+                                    var a = s.substr(5),
                                         n = ["id_", "name_", "description_", "price_", "currency_", "quantity_", "photo_url_", "digital_"],
                                         r = !1;
                                     for (var c in n)
-                                        if (0 == o.indexOf(n[c])) {
+                                        if (0 == a.indexOf(n[c])) {
                                             r = !0;
                                             break
                                         }
@@ -496,7 +496,7 @@ var vkApp = function(t, e, i, s) {
             debug: function() {
                 debugLog(1 == arguments.length ? arguments[0] : arguments)
             }
-        }, i.widget ? (a.options.type = 1, a.options.widget = !0) : (renderFlash(ge("flash_api_external_cont"), {
+        }, i.widget ? (o.options.type = 1, o.options.widget = !0) : (renderFlash(ge("flash_api_external_cont"), {
             url: "/swf/api_external.swf",
             id: "flash_api_external",
             width: 1,
@@ -511,11 +511,11 @@ var vkApp = function(t, e, i, s) {
         }, {
             debug: i.debug ? 1 : 0,
             lc_name: i.lc_name
-        }), a.externalFrame = ge("flash_api_external"));
-        var l = a.options.wmode || "opaque";
-        if (a.options.no_init) return !1;
+        }), o.externalFrame = ge("flash_api_external"));
+        var l = o.options.wmode || "opaque";
+        if (o.options.no_init) return !1;
         var p = 1;
-        switch (a.options.type) {
+        switch (o.options.type) {
             case 1:
                 this.RPC = new fastXDM.Server(this.funcs);
                 var d = {
@@ -524,7 +524,7 @@ var vkApp = function(t, e, i, s) {
                     overflow: "hidden",
                     scrolling: "no"
                 };
-                a.options.widget || (d.height = a.options.height + "px"), this.frame = this.RPC.append(a.cont, d,
+                o.options.widget || (d.height = o.options.height + "px"), this.frame = this.RPC.append(o.cont, d,
                     'webkitallowfullscreen="true" mozallowfullscreen="true" allowfullscreen="true"');
                 break;
             case 2:
@@ -532,45 +532,45 @@ var vkApp = function(t, e, i, s) {
                 var u = {
                     url: e.src,
                     id: "flash_app",
-                    width: a.options.width,
-                    height: a.options.height,
+                    width: o.options.width,
+                    height: o.options.height,
                     version: 10
                 };
-                "opaque" == l && (u.preventhide = 1), p = renderFlash(a.cont, u, {
+                "opaque" == l && (u.preventhide = 1), p = renderFlash(o.cont, u, {
                     allowFullScreen: !0,
                     allowscriptaccess: "never",
                     allowFullScreenInteractive: "true",
                     allownetworking: "all",
                     bgcolor: "#F7F7F7",
                     wmode: l
-                }, i), a.frame = ge("flash_app");
+                }, i), o.frame = ge("flash_app");
                 break;
             case 3:
                 var u = {
                     url: e.src,
                     id: "flash_app",
-                    width: a.options.width,
-                    height: a.options.height,
+                    width: o.options.width,
+                    height: o.options.height,
                     version: 9
                 };
-                "opaque" == l && (u.preventhide = 1), p = renderFlash(a.cont, u, {
+                "opaque" == l && (u.preventhide = 1), p = renderFlash(o.cont, u, {
                     allowFullScreen: !0,
                     allownetworking: "all",
                     allowscriptaccess: "never",
                     allowFullScreenInteractive: "true",
                     wmode: l
-                }, i), a.frame = ge("flash_app")
+                }, i), o.frame = ge("flash_app")
         }
-        p || (a.cont.innerHTML = '<div class="apps_no_flash_msg"><img src="/images/upload' + (hasClass(bodyNode, "is_2x") ? "_2x" : "") + '.gif" width="32" height="8"/></div>',
+        p || (o.cont.innerHTML = '<div class="apps_no_flash_msg"><img src="/images/upload' + (hasClass(bodyNode, "is_2x") ? "_2x" : "") + '.gif" width="32" height="8"/></div>',
             ajax.post("al_apps.php", {
                 act: "no_flash",
                 total: browser.iphone || browser.ipad ? 1 : 0
             }, {
                 onDone: function(t) {
-                    a.cont.innerHTML = t
+                    o.cont.innerHTML = t
                 }
             })), i.widget && setTimeout(function() {
-            a.inited || show("app_connect_error")
+            o.inited || show("app_connect_error")
         }, 8e3), cur.destroy.push(function() {
             this.RPC && this.RPC.destroy()
         }.bind(this))
@@ -590,17 +590,17 @@ vkApp.prototype.boxApp = function(t) {}, vkApp.prototype.onAppReady = function()
         case 1:
             if (this.RPC.callMethod("runCallback", t), !this.options.widget && !browser.iphone && !browser.ipad) try {
                 this.externalFrame[i](s)
-            } catch (a) {}
+            } catch (o) {}
             break;
         case 2:
             try {
                 this.externalFrame[i](s)
-            } catch (a) {}
+            } catch (o) {}
             break;
         case 3:
             try {
                 this.externalFrame[i](s)
-            } catch (a) {}
+            } catch (o) {}
     }
 }, vkApp.prototype.apiCallback = function(t, e) {
     Array.prototype.slice.call(arguments);
@@ -625,8 +625,8 @@ vkApp.prototype.boxApp = function(t) {}, vkApp.prototype.onAppReady = function()
 }, vkApp.prototype.checkMethod = function(t, e, i) {
     var s = t.toLowerCase();
     if ("wall.post" == s || "activity.set" == s) {
-        var a = e["wall.post" == s ? "message" : "text"];
-        a || (a = ""), showBox("apps", {
+        var o = e["wall.post" == s ? "message" : "text"];
+        o || (o = ""), showBox("apps", {
             act: "wall_post_box",
             aid: this.options.aid,
             post_id: e.post_id,
@@ -638,7 +638,7 @@ vkApp.prototype.boxApp = function(t) {}, vkApp.prototype.onAppReady = function()
             publish_date: e.publish_date,
             signed: e.signed,
             attachments: e.attachments || e.attachment,
-            text: a,
+            text: o,
             method: s
         }, {
             params: {
@@ -646,11 +646,11 @@ vkApp.prototype.boxApp = function(t) {}, vkApp.prototype.onAppReady = function()
                 dark: 1
             }
         });
-        var o = this;
-        return cur.apiWallPost = function(s, a) {
-            a ? i && i({
-                error: a
-            }) : o.api(t, extend(e, {
+        var a = this;
+        return cur.apiWallPost = function(s, o) {
+            o ? i && i({
+                error: o
+            }) : a.api(t, extend(e, {
                 method_access: s
             }), i)
         }, !1
@@ -963,16 +963,16 @@ AppsSlider.prototype = {
                     onResize: function(t, e) {}
                 };
             Apps.appCall && Apps.appCall.close(), Apps.appCall = new RBox(e, s)
-        }), Notifier.setRecvClbk("apps_call_hide", function() {
+        }), window.Notifier && Notifier.setRecvClbk("apps_call_hide", function() {
             Apps.appCall && (Apps.appCall.close(), Apps.appCall = !1)
         })
     },
     callApprove: function(t) {
-        Notifier.lcSend("apps_call_hide", (new Date)
+        window.Notifier && Notifier.lcSend("apps_call_hide", (new Date)
             .getTime()), Apps.appCall && (Apps.appCall.close(), Apps.appCall = !1), nav.go(t)
     },
     callReject: function() {
-        Notifier.lcSend("apps_call_hide", (new Date)
+        window.Notifier && Notifier.lcSend("apps_call_hide", (new Date)
             .getTime()), Apps.callOnReject()
     },
     callOnReject: function() {
@@ -1002,25 +1002,25 @@ AppsSlider.prototype = {
             }
         }
 
-        function a(i) {
+        function o(i) {
             var s = i.originalTarget || i.target;
             if (hasClass(s, "olist_item_wrap") || (s = gpeByClass("olist_item_wrap", s)), s && s != bodyNode) {
                 if (hasClass(s, "olist_item_loading")) return cancelEvent(i);
                 if (checkEvent(i)) return !0;
                 t.changed = !0;
-                var a = s.id.match(/-?\d+/)[0],
-                    o = l[a],
+                var o = s.id.match(/-?\d+/)[0],
+                    a = l[o],
                     n = !1;
                 return each(e, function() {
-                    return this[0] == a ? (n = this[4], !1) : void 0
+                    return this[0] == o ? (n = this[4], !1) : void 0
                 }), ajax.post("/al_apps.php", {
                     act: "a_blacklist_delete",
-                    cancel: o ? 1 : 0,
-                    owner_id: a,
+                    cancel: a ? 1 : 0,
+                    owner_id: o,
                     hash: n
                 }, {
                     onDone: function() {
-                        toggleClass(s, "olist_item_wrap_on", !o), l[a] = !o
+                        toggleClass(s, "olist_item_wrap_on", !a), l[o] = !a
                     },
                     showProgress: function() {
                         addClass(s, "olist_item_loading")
@@ -1035,13 +1035,13 @@ AppsSlider.prototype = {
             }
         }
 
-        function o(s, a) {
-            a = a || 0;
-            var n, d, u = a ? 60 : 120;
+        function a(s, o) {
+            o = o || 0;
+            var n, d, u = o ? 60 : 120;
             s && (s = clean(s)
                 .replace(/\u2013|\u2014/g, "-")), n = s ? p.search(s) : e, d = i.tpl;
             var h = n.length;
-            n = n.slice(a, a + u);
+            n = n.slice(o, o + u);
             var f = [];
             if (s) {
                 var g = escapeRE(s),
@@ -1050,26 +1050,26 @@ AppsSlider.prototype = {
                 var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + g + "))(?![^<>]*>)(?![^&;]+;)", "gi")
             }
             var w = function(t, e, i, s) {
-                var a = (i[t[0]], t[1]);
+                var o = (i[t[0]], t[1]);
                 if (e) {
-                    a = -1 == e.indexOf(" ") ? a.split(" ") : [a];
-                    var o = "";
-                    for (var n in a) o += (n > 0 ? " " : "") + a[n].replace(s, "$2<em>$3</em>");
-                    a = o
+                    o = -1 == e.indexOf(" ") ? o.split(" ") : [o];
+                    var a = "";
+                    for (var n in o) a += (n > 0 ? " " : "") + o[n].replace(s, "$2<em>$3</em>");
+                    o = a
                 }
                 return {
                     id: t[0],
-                    name: a,
+                    name: o,
                     photo: t[2],
                     link: t[3] || (t[0] > 0 ? "id" + t[0] : "app" + (-t[0] + 1e9))
                 }
             };
             each(n, function() {
                     f.push(rs(d, w(this, s, l, v)))
-                }), a || f.length || f.push('<div class="no_rows">' + (s ? getLang("global_search_not_found")
-                    .replace("{search}", clean(s)) : i.lang.apps_blacklist_empty) + "</div>"), re(c), f = f.join(" "), a ? r.appendChild(cf(f)) : val(r, f), h > a + u &&
+                }), o || f.length || f.push('<div class="no_rows">' + (s ? getLang("global_search_not_found")
+                    .replace("{search}", clean(s)) : i.lang.apps_blacklist_empty) + "</div>"), re(c), f = f.join(" "), o ? r.appendChild(cf(f)) : val(r, f), h > o + u &&
                 (r.appendChild(c), c.onclick = function(t) {
-                    return o(s, a + u), cancelEvent(t)
+                    return a(s, o + u), cancelEvent(t)
                 }), t && t.scroll && t.scroll.update(!1, !0)
         }
         i = i || {};
@@ -1091,10 +1091,10 @@ AppsSlider.prototype = {
         i.nofocus || setTimeout(elfocus.pbind(d), 100);
         var u = data(d, "opts");
         data(d, "opts", extend(u, {
-            onChange: o
+            onChange: a
         })), c && (isVisible(c) ? c.onclick = function(t) {
-            return o("", 60), cancelEvent(t)
-        } : (re(c), show(c))), addEvent(r, "click", a), addEvent(n, "scroll", s), setTimeout(s, 10)
+            return a("", 60), cancelEvent(t)
+        } : (re(c), show(c))), addEvent(r, "click", o), addEvent(n, "scroll", s), setTimeout(s, 10)
     },
     initDescription: function(t) {
         var e = geByClass1("apps_i_description_content");
@@ -1123,16 +1123,16 @@ AppsSlider.prototype = {
             e = ge("apps_i_slider_prev"),
             i = ge("apps_i_slider_outer"),
             s = ge("apps_i_slider_thumbs"),
-            a = s ? domPN(s) : null,
-            o = s ? s.children : [],
+            o = s ? domPN(s) : null,
+            a = s ? s.children : [],
             n = null,
             r = null,
             c = function() {
                 if (s) {
-                    var t = a.offsetWidth,
+                    var t = o.offsetWidth,
                         e = s.scrollWidth;
                     if (t >= e || !e || !t) return;
-                    var i = o[n],
+                    var i = a[n],
                         c = (s.offsetLeft, i.offsetLeft),
                         l = i.offsetWidth,
                         p = -c + (t - l) / 2;
@@ -1145,7 +1145,7 @@ AppsSlider.prototype = {
                 }
             },
             l = function(t) {
-                s && t !== n && (null !== n && removeClass(o[n], "selected"), n = t, addClass(o[n], "selected"), c())
+                s && t !== n && (null !== n && removeClass(a[n], "selected"), n = t, addClass(a[n], "selected"), c())
             };
         if (onRequired = function() {
                 l(null !== cur.appSsSlider.required ? cur.appSsSlider.required : cur.appSsSlider.current)
@@ -1162,11 +1162,12 @@ AppsSlider.prototype = {
                 onChange: onChange,
                 onRequired: onRequired,
                 infinite: !1
-            }), onChange(), onRequired(), this.adjustRunBoxSize(ge("apps_i_run_box")), each(o, function(t, e) {
+            }), onChange(), onRequired(), this.adjustRunBoxSize(ge("apps_i_run_box")), each(a, function(t, e) {
                 var i = new Image;
                 i.onload = c, i.src = geByTag1("img", e)
-                    .src, addEvent(e, "click", function() {
-                        cur.appSsSlider && cur.appSsSlider.requireIndex(t);
+                    .src,
+                    addEvent(e, "click", function() {
+                        cur.appSsSlider && cur.appSsSlider.requireIndex(t)
                     })
             }), cur.promoVideo) {
             var p = ge("apps_promo_video_thumb");
@@ -1194,7 +1195,7 @@ AppsSlider.prototype = {
                 .show()
         }.bind(this), 500)
     },
-    sendInstallRequest: function(t, e, i, s, a, o) {
+    sendInstallRequest: function(t, e, i, s, o, a) {
         if (t && !isButtonLocked(t) && !hasClass(t, "button_disabled")) {
             lockButton(t);
             var n = getSize(t);
@@ -1202,8 +1203,8 @@ AppsSlider.prototype = {
                 act: "send_install_request",
                 aid: i,
                 ref: s,
-                cid: a,
-                hash: o
+                cid: o,
+                hash: a
             }, {
                 hideProgress: function() {
                     var e = getLang("apps_install_push_sent_msg");
@@ -1215,22 +1216,22 @@ AppsSlider.prototype = {
                 act: "send_install_request_box",
                 aid: i
             }, {
-                onDone: function(e, a, o) {
-                    if (unlockButton(t), a) {
+                onDone: function(e, o, a) {
+                    if (unlockButton(t), o) {
                         cur.lang || (cur.lang = {}), extend(cur.lang, e);
                         var n = new MessageBox({
                             title: getLang("apps_get_push_w_install_link")
                         });
-                        n.removeButtons(), n.content(a), n.addButton(getLang("apps_install_sms_send"), function(t) {
+                        n.removeButtons(), n.content(o), n.addButton(getLang("apps_install_sms_send"), function(t) {
                             var e = ge("apps_i_request_btn");
                             if (t && e && !isButtonLocked(t)) {
-                                var a = getSize(e);
+                                var o = getSize(e);
                                 lockButton(t), ajax.post(this.address, {
                                     act: "send_install_request",
                                     ref: s,
                                     aid: i,
                                     cid: -3,
-                                    hash: o
+                                    hash: a
                                 }, {
                                     onFail: function(e) {
                                         if (e) {
@@ -1241,7 +1242,7 @@ AppsSlider.prototype = {
                                     onDone: function() {
                                         this.ttDestroyAll(), n.hide();
                                         var i = getLang("apps_install_push_sent_msg");
-                                        unlockButton(t), addClass(e, "button_disabled"), setStyle(e, "width", a[0]), val(e, i);
+                                        unlockButton(t), addClass(e, "button_disabled"), setStyle(e, "width", o[0]), val(e, i);
                                         var s = ge("apps_i_run_box");
                                         addClass(s, "sent"), val(s, i), this.adjustRunBoxSize(s)
                                     }.bind(this)
@@ -1250,7 +1251,7 @@ AppsSlider.prototype = {
                         }.bind(this), "yes"), n.addButton(getLang("global_cancel"), n.hide, "no"), n.show()
                     } else showBox("activation.php", {
                         act: "change_phone_box",
-                        hash: o
+                        hash: a
                     })
                 }.bind(this)
             }))
@@ -1353,8 +1354,8 @@ AppsSlider.prototype = {
     saveSettings: function(t, e, i, s) {
         if (!cur.savingSettings) {
             i || (s && s.btn && lockButton(s.btn), show("apps_settings_progress"));
-            var a = curBox(),
-                o = ge("app_pay_add"),
+            var o = curBox(),
+                a = ge("app_pay_add"),
                 n = ge("app_pay_withdraw"),
                 r = {
                     act: "save_settings",
@@ -1363,7 +1364,7 @@ AppsSlider.prototype = {
                     from: "appview",
                     app_settings_1: isChecked(ge("app_settings_1")),
                     app_settings_256: isChecked(ge("app_settings_256")),
-                    add: o ? o.value : 0,
+                    add: a ? a.value : 0,
                     withdraw: n ? n.value : 0,
                     only_checkboxes: i ? 1 : 0,
                     cur_aid: cur.aid
@@ -1372,7 +1373,7 @@ AppsSlider.prototype = {
                 onDone: function(t) {
                     if (s && s.btn && unlockButton(s.btn), t.left_nav && this.updateLeftNav(t.left_nav), !i && cur.app && cur.app.runCallback(
                             "onSettingsChanged", t.settings), cur.settingsOnLoad = !1, void 0 !== t.coins && cur.app && cur.app.balanceUpdated(t.coins),
-                        void 0 !== t.balance && updateMoney(t.balance), a && !i && a.hide(), t.left_nav_error) {
+                        void 0 !== t.balance && updateMoney(t.balance), o && !i && o.hide(), t.left_nav_error) {
                         i && checkbox("app_settings_256", 256 & t.settings);
                         var e = new MessageBox({
                             title: getLang("global_error")
@@ -1387,10 +1388,10 @@ AppsSlider.prototype = {
                     t && val("apps_settings_error", t), show("apps_settings_error"), hide("apps_settings_progress"), scrollToTop(200)
                 },
                 showProgress: function() {
-                    cur.savingSettings = !0, a && i && a.showProgress()
+                    cur.savingSettings = !0, o && i && o.showProgress()
                 },
                 hideProgress: function() {
-                    cur.savingSettings = !1, a && i && a.hideProgress()
+                    cur.savingSettings = !1, o && i && o.hideProgress()
                 }
             }, s || {}))
         }
@@ -1459,7 +1460,7 @@ AppsSlider.prototype = {
     deleteApp: function(t, e, i, s) {
         if (!this.deletingApp) {
             this.deletingApp = !0;
-            var a = function(i, s, a, o) {
+            var o = function(i, s, o, a) {
                 ajax.post(this.address, {
                     act: "quit",
                     id: t,
@@ -1473,13 +1474,13 @@ AppsSlider.prototype = {
                     onFail: this.withFastBackCheck(function() {
                         this.deletingApp = !1, s.apply(null, [].slice.call(arguments))
                     }.bind(this)),
-                    showProgress: a,
-                    hideProgress: o
+                    showProgress: o,
+                    hideProgress: a
                 })
             }.bind(this);
             switch (s) {
                 case "appactions":
-                    a(function() {
+                    o(function() {
                         nav.go("/apps", !1)
                     }, function(t) {
                         t && showFastBox({
@@ -1488,17 +1489,17 @@ AppsSlider.prototype = {
                     }, lockActionsMenuItem.pbind(i));
                     break;
                 default:
-                    var o = curBox();
-                    a(function() {
+                    var a = curBox();
+                    o(function() {
                         nav.go("/apps", !1)
                     }, function(t) {
                         if (t) {
                             var e = ge("apps_settings_error");
                             val(e, t), show(e), scrollToTop()
                         }
-                        o && o.hideProgress()
+                        a && a.hideProgress()
                     }, function() {
-                        o && o.showProgress()
+                        a && a.showProgress()
                     })
             }
         }
@@ -1519,13 +1520,13 @@ AppsSlider.prototype = {
         nav.go("/apps", !1)
     },
     approveInstall: function(t, e, i, s) {
-        var a = extend(nav.objLoc, {
+        var o = extend(nav.objLoc, {
             join: 1,
             hash: t,
             sett: e
         });
-        isChecked("apps_notifications_checkbox") && isVisible("apps_notifications_checkbox") && (a.notify = 1), i && val(i, '<img src="/images/upload' + (hasClass(
-            bodyNode, "is_2x") ? "_2x" : "") + '.gif" width="32" height="8"/>'), s && lockButton(s), window.appsListChanged = 1, nav.go(a, !1, {
+        isChecked("apps_notifications_checkbox") && isVisible("apps_notifications_checkbox") && (o.notify = 1), i && val(i, '<img src="/images/upload' + (hasClass(
+            bodyNode, "is_2x") ? "_2x" : "") + '.gif" width="32" height="8"/>'), s && lockButton(s), window.appsListChanged = 1, nav.go(o, !1, {
             pass: !0
         })
     },
@@ -1549,12 +1550,12 @@ AppsSlider.prototype = {
         var e = "",
             i = [],
             s = 0,
-            a = cur.appUser ? cur.userRate ? getLang("apps_you_voted") : getLang("apps_you_not_voted") : getLang("apps_rating_title"),
-            o = rs(cur.rateStatsLabelTpl, {
-                label: a
+            o = cur.appUser ? cur.userRate ? getLang("apps_you_voted") : getLang("apps_you_not_voted") : getLang("apps_rating_title"),
+            a = rs(cur.rateStatsLabelTpl, {
+                label: o
             });
         for (var n in cur.rateStats || {}) s += intval(cur.rateStats[n]);
-        val("app_rate_label", a);
+        val("app_rate_label", o);
         for (var r = 1; 5 >= r; r++) {
             e += '<span class="app_rate stats fl_r"></span>';
             var c = intval(cur.rateStats[r]),
@@ -1574,9 +1575,9 @@ AppsSlider.prototype = {
                 }), val(geByClass1("app_rate_percent", u), l + "%"), val(geByClass1("app_rate_cnt", u), p), geByClass1("app_rate_stars", u)
                 .className = "app_rate_stars fl_l " + d)
         }
-        o += i.reverse()
+        a += i.reverse()
             .join(""), showTooltip(t, {
-                text: o,
+                text: a,
                 slideX: 15,
                 className: "app_rate_tt",
                 shift: [cur.installPage ? -70 : -66, 0, -36],
@@ -1607,16 +1608,16 @@ AppsSlider.prototype = {
         var e = intval(cur.appRate || 0),
             i = geByClass("app_rate", ge("apps_ratings")),
             s = Math.floor((e + 2) / 10),
-            a = Math.floor((e + 2) / 5) - s;
-        for (var o in i) {
-            var n = "app_rate fl_l " + (s > o ? "full" : a > o ? "half" : "empty");
-            i[o].className = n
+            o = Math.floor((e + 2) / 5) - s;
+        for (var a in i) {
+            var n = "app_rate fl_l " + (s > a ? "full" : o > a ? "half" : "empty");
+            i[a].className = n
         }
         if (t) {
             var r = Math.floor(t / 10);
-            for (var o in i) {
-                if (o >= r) break;
-                i[o].className += " over"
+            for (var a in i) {
+                if (a >= r) break;
+                i[a].className += " over"
             }
         }
     },
@@ -1689,8 +1690,8 @@ AppsSlider.prototype = {
                 var e = cur.rNotWrap.offsetTop,
                     i = [],
                     s = [];
-                each(cur.rNotWrap.querySelectorAll('div[data-read="1"]'), function(a, o) {
-                    o.offsetTop - e + o.offsetHeight / 2 <= t + cur.rNotWrap.offsetHeight && (i.push(o.getAttribute("data-id")), s.push(o))
+                each(cur.rNotWrap.querySelectorAll('div[data-read="1"]'), function(o, a) {
+                    a.offsetTop - e + a.offsetHeight / 2 <= t + cur.rNotWrap.offsetHeight && (i.push(a.getAttribute("data-id")), s.push(a))
                 }), i.length && ajax.post(this.address, {
                     act: "a_mark",
                     notif_ids: i.join(","),
@@ -1719,9 +1720,9 @@ AppsSlider.prototype = {
             })
         }))
     },
-    notificationsRemoveAll: function(t, e, i, s, a) {
-        if (!linkLocked(t) && !checkEvent(a)) {
-            var o = showFastBox({
+    notificationsRemoveAll: function(t, e, i, s, o) {
+        if (!linkLocked(t) && !checkEvent(o)) {
+            var a = showFastBox({
                 title: e
             }, i, getLang("global_delete"), function(e) {
                 ajax.post(this.address, {
@@ -1738,7 +1739,7 @@ AppsSlider.prototype = {
                         lockButton(e), lockLink(t)
                     },
                     hideProgress: this.withFastBackCheck(function() {
-                        unlockButton(e), unlockLink(t), o.hide()
+                        unlockButton(e), unlockLink(t), a.hide()
                     })
                 })
             }.bind(this), getLang("global_cancel"));
@@ -1758,9 +1759,9 @@ AppsSlider.prototype = {
     },
     rejectRequest: function(t, e, i, s) {
         if (!buttonLocked(t)) {
-            var a = ge("apps_notification_" + e);
-            this.notificationsMarkReaded(a), data(a, "html", a.innerHTML), setStyle(a, {
-                minHeight: getSize(a)[1]
+            var o = ge("apps_notification_" + e);
+            this.notificationsMarkReaded(o), data(o, "html", o.innerHTML), setStyle(o, {
+                minHeight: getSize(o)[1]
             }), ajax.post(this.address, {
                 act: "reject_" + s,
                 rid: e,
@@ -1770,7 +1771,7 @@ AppsSlider.prototype = {
                     e = cf(trim(e)), this.notificationsRemovedCount++ > 1 && domFC(e)
                         .appendChild(cf(cur.notificationsRemoveAllTpl || "")), val(t, ""), t.appendChild(e), addClass(t, "apps_notification_service"),
                         this.notificationsSetCounters(i), cur.rNotScrollbar.update(!1, !0)
-                }.bind(this, a)),
+                }.bind(this, o)),
                 showProgress: lockButton.pbind(t),
                 hideProgress: this.withFastBackCheck(unlockButton.pbind(t))
             }), cur.rNotScrollbar.update(!1, !0), cur.preload && delete cur.preload.before
@@ -1796,9 +1797,9 @@ AppsSlider.prototype = {
     },
     deleteNotification: function(t, e, i, s) {
         if (!buttonLocked(t)) {
-            var a = ge("apps_notification_" + e);
-            setStyle(a, {
-                minHeight: getSize(a)[1]
+            var o = ge("apps_notification_" + e);
+            setStyle(o, {
+                minHeight: getSize(o)[1]
             }), ajax.post(this.address, {
                 act: "delete_notification",
                 nid: e,
@@ -1809,7 +1810,7 @@ AppsSlider.prototype = {
                     e = cf(trim(e)), this.notificationsRemovedCount++ > 1 && domFC(e)
                         .appendChild(cf(cur.notificationsRemoveAllTpl || "")), val(t, ""), t.appendChild(e), addClass(t, "apps_notification_service"),
                         this.notificationsSetCounters(i)
-                }.bind(this, a)),
+                }.bind(this, o)),
                 showProgress: lockButton.pbind(t),
                 hideProgress: this.withFastBackCheck(unlockButton.pbind(t))
             })
@@ -1817,9 +1818,9 @@ AppsSlider.prototype = {
     },
     denyNotifications: function(t, e, i, s) {
         if (!linkLocked(t)) {
-            var a = ge("apps_notification_" + e);
-            setStyle(a, {
-                minHeight: getSize(a)[1]
+            var o = ge("apps_notification_" + e);
+            setStyle(o, {
+                minHeight: getSize(o)[1]
             }), ajax.post(this.address, {
                 act: "deny_notifications",
                 aid: i,
@@ -1827,7 +1828,7 @@ AppsSlider.prototype = {
             }, {
                 onDone: this.withFastBackCheck(function(t, e) {
                     addClass(t, "apps_notification_service"), e && val(t, e)
-                }.pbind(a)),
+                }.pbind(o)),
                 showProgress: lockLink.pbind(t),
                 hideProgress: this.withFastBackCheck(unlockLink.pbind(t))
             })
@@ -1835,9 +1836,9 @@ AppsSlider.prototype = {
     },
     requestsBanUser: function(t, e, i, s) {
         if (!linkLocked(t)) {
-            var a = ge("apps_notification_" + e);
-            setStyle(a, {
-                minHeight: getSize(a)[1]
+            var o = ge("apps_notification_" + e);
+            setStyle(o, {
+                minHeight: getSize(o)[1]
             }), ajax.post(this.address, {
                 act: "request_ban_user",
                 mid: i,
@@ -1845,7 +1846,7 @@ AppsSlider.prototype = {
             }, {
                 onDone: this.withFastBackCheck(function(t, e) {
                     addClass(t, "apps_notification_service"), e && val(t, e)
-                }.pbind(a)),
+                }.pbind(o)),
                 showProgress: lockLink.pbind(t),
                 hideProgress: this.withFastBackCheck(unlockLink.pbind(t))
             })
@@ -1884,15 +1885,15 @@ AppsSlider.prototype = {
             }.bind(this))
         }), !1
     },
-    removeApp: function(t, e, i, s, a) {
+    removeApp: function(t, e, i, s, o) {
         if (s && cancelEvent(s), this.removingApp) return !1;
         if (this.isDelayedOnSilentLoad("removeApp" + t, this.removeApp.bind(this, t, e, i))) return !1;
         this.ttHideAll();
-        var o = i ? ge("recent" + t) : ge("app" + t),
-            n = o && cur.lContent && cur.lContent.contains(o) && this.isSection("settings") ? "settings" : i ? "recent" : "al_apps",
+        var a = i ? ge("recent" + t) : ge("app" + t),
+            n = a && cur.lContent && cur.lContent.contains(a) && this.isSection("settings") ? "settings" : i ? "recent" : "al_apps",
             r = function() {
                 if ("al_apps" == n) {
-                    var i = o && geByClass1("app_deleted_layer", o, "div");
+                    var i = a && geByClass1("app_deleted_layer", a, "div");
                     val(i, cur.progressTpl)
                 } else if ("recent" == n) var s = cur.rAppsWrap && geByClass1("apps_recent_row_hidden", cur.rAppsWrap);
                 ajax.post(this.address, {
@@ -1909,25 +1910,25 @@ AppsSlider.prototype = {
                             e.count_all)), window.appsListChanged = !0, cur.apps[t] && (cur.appsIndex.remove(cur.apps[t]), cur.apps[t].deleted = !
                             0), e.left_nav && this.updateLeftNav(e.left_nav), "settings" == n ? (cur.deletedApps[t] = {
                             from: n,
-                            html: o.innerHTML
-                        }, o && o.appendChild(cf(e.html))) : "recent" == n ? (s && removeClass(s, "apps_recent_row_hidden"), hide(o), e.html &&
+                            html: a.innerHTML
+                        }, a && a.appendChild(cf(e.html))) : "recent" == n ? (s && removeClass(s, "apps_recent_row_hidden"), hide(a), e.html &&
                             domInsertBefore(cf(e.html), cur.rAppsShowMoreButton), geByClass1("apps_recent_row", cur.rAppsWrap) ? cur.recentOffset +=
                             e.offset : (hide(cur.rAppsShowMoreButton), show(cur.rAppsNoContent), cur.recentOffset = 0)) : (cur.deletedApps[t] = {
                             from: n,
-                            html: o.innerHTML
-                        }, e.html && val(i, e.html)), addClass(o, "deleted"))
+                            html: a.innerHTML
+                        }, e.html && val(i, e.html)), addClass(a, "deleted"))
                     }.bind(this)),
                     showProgress: function() {
-                        addClass(o, this.optionLoadingClass), this.removingApp = !0
+                        addClass(a, this.optionLoadingClass), this.removingApp = !0
                     }.bind(this),
                     hideProgress: this.withFastBackCheck(function() {
-                        removeClass(o, this.optionLoadingClass), this.removingApp = !1
+                        removeClass(a, this.optionLoadingClass), this.removingApp = !1
                     }.bind(this))
                 })
             }.bind(this);
         if ("recent" == n) var c = showFastBox({
             title: getLang("apps_quit_app_box_title")
-        }, getLang(a ? "apps_game_quit_confirm" : "apps_quit_confirm"), getLang("apps_remove"), function() {
+        }, getLang(o ? "apps_game_quit_confirm" : "apps_quit_confirm"), getLang("apps_remove"), function() {
             r(), c.hide()
         }, getLang("global_cancel"));
         else if (cur.adminApps && cur.adminApps[t]) var c = showFastBox({
@@ -1937,17 +1938,17 @@ AppsSlider.prototype = {
         }, getLang("global_cancel"));
         else r()
     },
-    runApp: function(t, e, i, s, a, o) {
+    runApp: function(t, e, i, s, o, a) {
         if (!vk.id) return showDoneBox(cur.pleaseSignInLang), !1;
         lockButton(t);
         var n = clone(nav.objLoc);
         delete n.w, nav.setLoc(n), window.appsListChanged = 1;
         var r = "/" + e + "?join=1&hash=" + i + "&sett=" + s;
-        if (cur.fromInstallBox && (r += "&from_install=" + (1 == cur.fromInstallBox ? 1 : 2)), a)
-            if (isObject(a))
-                for (var c in a) "w" != c && (r += "&" + c + "=" + a[c]);
-            else "" != a && (r += "&ref=" + a);
-        o && (r += "&mid=" + o), nav.objLoc["#"] && (r += "#" + nav.objLoc["#"]), nav.go(r)
+        if (cur.fromInstallBox && (r += "&from_install=" + (1 == cur.fromInstallBox ? 1 : 2)), o)
+            if (isObject(o))
+                for (var c in o) "w" != c && (r += "&" + c + "=" + o[c]);
+            else "" != o && (r += "&ref=" + o);
+        a && (r += "&mid=" + a), nav.objLoc["#"] && (r += "#" + nav.objLoc["#"]), nav.go(r)
     },
     updatesInterval: null,
     stopUpdates: function() {
@@ -1977,12 +1978,12 @@ AppsSlider.prototype = {
             i = t[0];
         if (cur.updatesVersion && i == cur.updatesVersion) {
             var s = browser.opera && intval(browser.version) <= 12,
-                a = t[3],
-                o = new Date,
-                n = o.getHours(),
-                r = o.getMinutes();
-            10 > n && (n = "0" + n), 10 > r && (r = "0" + r), a = a.replace("{date}", n + ":" + r);
-            var c = cf(a);
+                o = t[3],
+                a = new Date,
+                n = a.getHours(),
+                r = a.getMinutes();
+            10 > n && (n = "0" + n), 10 > r && (r = "0" + r), o = o.replace("{date}", n + ":" + r);
+            var c = cf(o);
             cur.fWrap && (addClass(c, "apps_feed_row_just_added"), cur.fWrap.insertBefore(c, domFC(cur.fWrap)), s ? c.addEventListener("oTransitionEnd", e) : addEvent(
                     c, "webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", e), setTimeout(removeClass.pbind(c, "apps_feed_row_just_added"), 10),
                 window.tooltips && tooltips.hideAll())
@@ -2160,16 +2161,16 @@ AppsSlider.prototype = {
                         e = this.isSection("manage"),
                         i = "",
                         s = cur.appsList[cur.curList] || [],
-                        a = s.length;
+                        o = s.length;
                     if (s = this.filter(s.slice(cur.shownApps))
                         .slice(0, cur.defaultCount), s.length && cur.appTpl) {
-                        var o = [];
+                        var a = [];
                         each(s, function(t, i) {
-                            i = clone(i), cur.selection && (i[3] = i[3].replace(cur.selection.re, cur.selection.val)), o.push(cur.appTpl(i, t == s.length - 1,
+                            i = clone(i), cur.selection && (i[3] = i[3].replace(cur.selection.re, cur.selection.val)), a.push(cur.appTpl(i, t == s.length - 1,
                                 e))
-                        }.bind(this)), i = o.join("")
+                        }.bind(this)), i = a.join("")
                     }
-                    cur.shownApps ? i && cur.lContent.appendChild(cf(i)) : i ? (val(cur.lContent, i), val(cur.aSummaryCounter, a)) : (val(cur.lContent, cur.aSummary.innerHTML
+                    cur.shownApps ? i && cur.lContent.appendChild(cf(i)) : i ? (val(cur.lContent, i), val(cur.aSummaryCounter, o)) : (val(cur.lContent, cur.aSummary.innerHTML
                             .replace("{query}", "<b>" + t + "</b>")), val(cur.aSummaryCounter, "")), cur.shownApps += cur.defaultCount, cur.shownApps >= cur.sectionCount ?
                         hide(cur.lShowMoreButton) : (show(cur.lShowMoreButton), this.scrollCheck()), this.searchProgress(!1)
                 }
@@ -2214,8 +2215,8 @@ AppsSlider.prototype = {
     },
     filter: function(t) {
         for (var e = t.length, i = [], s = 0; e > s; s++) {
-            var a = t[s];
-            cur.apps && cur.apps[a[0]] && !cur.apps[a[0]].deleted && i.push(a)
+            var o = t[s];
+            cur.apps && cur.apps[o[0]] && !cur.apps[o[0]].deleted && i.push(o)
         }
         return i
     },
@@ -2263,7 +2264,8 @@ AppsSlider.prototype = {
                             var t = nav.objLoc && ge("notifications" == nav.objLoc.tab ? "apps-recent-notifications-tab" : "apps-recent-apps-tab");
                             t && this.switchTabPrepared(t.getElementsByTagName("a")[0]), cur.aSearch && (uiSearch.startEvents(cur.aSearch), cur.aSearch.value =
                                 cur.searchStr || "", uiSearch.scrollResize(cur.aSearch)), this.searchWriteToAddressBar(cur.searchStr)
-                        }.bind(this), 0), this.ttHideAll(), this.recentTabsUpdate(), this.startEvents(), cur.aTabs) {
+                        }.bind(this), 0),
+                    this.ttHideAll(), this.recentTabsUpdate(), this.startEvents(), cur.aTabs) {
                     var t = this.geTabBySection(this.isSection("list") ? cur.list + (cur.listId || "") : cur.section);
                     t && uiTabs.switchTab(t), uiTabs.hideProgress(cur.aTabs)
                 }

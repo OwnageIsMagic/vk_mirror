@@ -37,7 +37,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }
     this._deinitKeyEvents();
     var i = this;
-    window.Notifier.addRecvClbk("audio_hq_label", "audio", function() {
+    window.Notifier && Notifier.addRecvClbk("audio_hq_label", "audio", function() {
         AudioUtils.toggleAudioHQBodyClass()
     }), addEvent(window.document, "visibilitychange", this._audioHQKeyEventHandler3 = function() {
         delete cur.ctrlPressed
@@ -49,7 +49,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         if (!e() && ((i.keyCode != KEY.CTRL || cur.ctrlMouseDown) && (delete cur.ctrlMouseDown, delete cur.ctrlPressed), cur.ctrlPressed)) {
             var t = getAudioPlayer(),
                 o = AudioUtils.hasAudioHQBodyClass();
-            t.showHQLabel(!o), window.Notifier.lcSend("audio_hq_label"), delete cur.ctrlPressed
+            t.showHQLabel(!o), window.Notifier && Notifier.lcSend("audio_hq_label"), delete cur.ctrlPressed
         }
     }), addEvent(window.document, "keydown", this._audioSeekKeyEventHandler = function(i) {
         var t = getAudioPlayer();

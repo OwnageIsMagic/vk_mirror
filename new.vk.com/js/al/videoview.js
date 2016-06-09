@@ -1450,7 +1450,8 @@ var Videoview = {
                 for (var o = geByClass("mv_recom_item", i), t = o.length - 1; getSize(e)[1] < getSize(i)[1] && t > 0; --t) hide(o[t])
         },
         checkUpdates: function(e) {
-            window.mvcur && mvcur.mvShown && mvcur.queueKey === e.key && (Notifier.addKey(e, Videoview.receiveUpdates), setTimeout(Videoview.checkUpdates.pbind(e), 25e3))
+            window.mvcur && mvcur.mvShown && mvcur.queueKey === e.key && (window.Notifier && Notifier.addKey(e, Videoview.receiveUpdates), setTimeout(Videoview.checkUpdates.pbind(
+                e), 25e3))
         },
         receiveUpdates: function(e, i) {
             if (window.mvcur && mvcur.mvShown && mvcur.queueKey === e && i) {

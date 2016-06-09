@@ -174,7 +174,7 @@
                 .tabs[g];
             if ((!e.get()
                     .notify_msg && !(0, W.isChatPeer)(g) || i && !e.get()
-                    .mute) && Notifier.playSound({
+                    .mute) && window.Notifier && Notifier.playSound({
                     author_id: g
                 }), !(0, W.isChatPeer)(g)) return;
             u = trim(replaceEntities(stripHTML(u.replace(/<br>/g, "\n")
@@ -183,7 +183,7 @@
             var m = t.attaches[0];
             m && "fwd" === m.type ? u += "\n[" + getLang("mail_added_msgs") + "]" : m && (u += "\n[" + getLang("mail_added_" + m.type) + "]"), s = trim(replaceEntities(
                 stripHTML((s || "")
-                    .replace("&nbsp;", " ")))), Notifier.proxyIm({
+                    .replace("&nbsp;", " ")))), window.Notifier && Notifier.proxyIm({
                 id: t.messageId,
                 text: u,
                 author_id: g,
@@ -598,6 +598,7 @@
                     setStyle(a, r({}, cssTransformProp, "translateX(" + i + "px)"))
                 })
         }
+        if (browser.mobile) return !1;
         var s = ge("side_bar"),
             o = geByClass1("_im_chat_input_w", a),
             l = geByClass1("_im_dialog_actions", a),
@@ -2986,8 +2987,8 @@
     }
 
     function V(e, t, n) {
-        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].typing = extend(n.tabs[e].typing, r({}, t, Date.now()))),
-            Promise.resolve(n)
+        return (0,
+            wt.isTabLoaded)(n, e) && (n.tabs[e].typing = extend(n.tabs[e].typing, r({}, t, Date.now()))), Promise.resolve(n)
     }
 
     function Y(e, t, n) {
@@ -4099,7 +4100,7 @@
             })
             .then(function() {
                 var r = t ? "mute" : "unmute";
-                return Notifier.lcSend("im", {
+                return window.Notifier && Notifier.lcSend("im", {
                     act: r,
                     peer: e
                 }), n
@@ -4771,8 +4772,8 @@
     }();
     t.deleteEvent = n, t.replaceFlagsEvent = r, t.setFlagsEvent = a, t.resetFlagsEvent = i, t.addMessageEvent = s, t.readInboundEvent = o, t.readOutboundEvent = l, t.gotOnlineEvent =
         u, t.gotOfflineEvent = c, t.resetDirectoriesEvent = d, t.replaceDirectoriesEvent = g, t.setDirectoriesEvent = f, t.chatChangedEvent = m, t.typingUserEvent = p, t.typingChatEvent =
-        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b, t.emptyEvent = y, t.transitionEvent = C, t.resyncEvent = E, t.resetPeer = T, t.changePeer =
-        w, t.mutexEvent = S;
+        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b, t.emptyEvent = y, t.transitionEvent = C, t.resyncEvent = E,
+        t.resetPeer = T, t.changePeer = w, t.mutexEvent = S;
     var I = t.DELETE = "event_delete",
         P = t.SET_FLAGS = "event_set_flags",
         L = t.REPLACE_FLAGS = "event_replace_flags",
@@ -6232,7 +6233,8 @@
                         return t === !1 ? [] : (0 === t.length && e.set(g), t)
                     })
                     .then(P.bind(null, e, t, a, n, e.get()
-                        .pipeId)) : (s = Promise.resolve(), E(t, a, n, e)), s
+                        .pipeId)) : (s = Promise.resolve(),
+                        E(t, a, n, e)), s
             });
         return r || (0, D.wrapLoading)(t)(s, "bottom", "im-preloader_fixed-bottom"), s
     }
@@ -6277,8 +6279,7 @@
             .elCls, n()
             .onClick), {
             pipe: function(r, a) {
-                return t.set(m.bind(null, a)),
-                    r.then(P.bind(null, t, e, c, n, a))
+                return t.set(m.bind(null, a)), r.then(P.bind(null, t, e, c, n, a))
             },
             pipeReplace: function(r, a) {
                 return t.set(m.bind(null, a)), t.set(f), r.then(function(r) {
@@ -7775,8 +7776,7 @@
         var s = geByClass1("_im_text", e);
         return addEvent(s, "paste", i), addEvent(s, "focus", function() {
             t.get()
-                .longpoll.push([M.eventTypes.transitionEvent("message")]),
-                cur.focused = t.get()
+                .longpoll.push([M.eventTypes.transitionEvent("message")]), cur.focused = t.get()
                 .peer
         }), addEvent(s, "blur", function() {
             t.get()
