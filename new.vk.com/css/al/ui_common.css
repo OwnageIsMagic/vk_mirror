@@ -539,13 +539,14 @@ a.ui_crumb {
     top: 0;
     position: absolute;
     left: 0;
+    border: none;
     height: 32px;
     width: 2px;
     background-color: #6285af;
-    transition: -webkit-transform 0.2s ease;
-    -o-transition: transform 0.2s ease, -o-transform 0.2s ease;
-    transition: transform 0.2s ease;
-    transition: transform 0.2s ease, -webkit-transform 0.2s ease, -o-transform 0.2s ease;
+    transition: margin-top 0.2s ease, -webkit-transform 0.2s ease;
+    -o-transition: margin-top 0.2s ease, transform 0.2s ease, -o-transform 0.2s ease;
+    transition: margin-top 0.2s ease, transform 0.2s ease;
+    transition: margin-top 0.2s ease, transform 0.2s ease, -webkit-transform 0.2s ease, -o-transform 0.2s ease;
     z-index: 1
 }
 
@@ -2124,7 +2125,8 @@ a.ui_search_custom_link {
     border-radius: 2px;
     background-color: #5f81a8;
     position: absolute;
-    top: 0
+    top: 0;
+    left: 0
 }
 
 .slider .slider_amount.slider_back_transition,

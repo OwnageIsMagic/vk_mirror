@@ -1635,6 +1635,15 @@ a.page_block_header:hover .apps_cat_header_link:after {
     text-align: left
 }
 
+@media screen and (max-width: 1045px) {
+    .apps_footer.app_footer_with_moderation .apps_footer_left {
+        width: 30%
+    }
+    .apps_footer.app_footer_with_moderation .apps_footer_right {
+        width: 70%
+    }
+}
+
 .app_actions_menu_wrap+.divider {
     visibility: hidden
 }
@@ -1645,6 +1654,14 @@ a.page_block_header:hover .apps_cat_header_link:after {
 
 .apps_divided_links .divider:first-child {
     display: none
+}
+
+.apps_divided_link_w_lim {
+    max-width: 90px;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: top;
+    text-overflow: ellipsis
 }
 
 .apps_main {

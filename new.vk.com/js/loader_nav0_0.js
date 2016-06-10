@@ -114,7 +114,7 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 704154873281,
+    'nav': 696420930446,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
     'common.css': 2812298637,
@@ -136,11 +136,11 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 254366854,
+    'audioplayer.js': 3041888502,
     'audioplayer.css': 1681639176,
     'audio_html5.js': 3586987067,
     'audio.js': 10087290,
-    'audio.css': 1072347008,
+    'audio.css': 1930844824,
     'gifts.css': 458267212,
     'gifts.js': 2778120873,
     'cc.js': 4037201610,
@@ -169,7 +169,7 @@ var stVersions = {
     'friends_search.css': 204916655,
     'board.js': 1462376027,
     'board.css': 1217740046,
-    'photos.css': 3251759090,
+    'photos.css': 994749270,
     'photos.js': 1204521962,
     'photos_add.css': 2557532249,
     'photos_add.js': 2100132176,
@@ -239,9 +239,9 @@ var stVersions = {
     'mail.js': 4232525143,
     'email.css': 3625468312,
     'im.css': 440926967,
-    'imn.js': 1307134642,
+    'imn.js': 136679140,
     'im.js': 4271552496,
-    'emoji.js': 3354385224,
+    'emoji.js': 1431014276,
     'wide_dd.css': 1747928568,
     'wide_dd.js': 4260857284,
     'writebox.css': 533965541,
@@ -254,7 +254,7 @@ var stVersions = {
     'feed.css': 3945987478,
     'privacy.js': 3873593331,
     'privacy.css': 328635716,
-    'apps.css': 3442451179,
+    'apps.css': 2016510290,
     'apps.js': 4128471812,
     'apps_edit.js': 807186031,
     'apps_edit.css': 1794020803,
@@ -373,8 +373,8 @@ var stVersions = {
     'filters_pe.js': 1406401216,
     'pe.js': 2387291388,
     'pe.css': 660979626,
-    'dev.js': 632513723,
-    'dev.css': 2521565673,
+    'dev.js': 536046694,
+    'dev.css': 1259002144,
     'share.css': 3743589396,
     'stickers_office.css': 2865554295,
     'stickers_office.js': 2247906357,
@@ -388,8 +388,8 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 849758697,
     'ui.js': 3053181925,
-    'ui_common.js': 1826233569,
-    'ui_common.css': 3035893941,
+    'ui_common.js': 262683571,
+    'ui_common.css': 1355289357,
     'ui_media_selector.js': 1121193863,
     'ui_media_selector.css': 428428390,
     'admin.js': 1614876408,
@@ -493,4 +493,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 4027;
+var _rnd = 2455;

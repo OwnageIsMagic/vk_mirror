@@ -77,6 +77,14 @@ var Dev = {
         }
         this.checkBlockHeight();
         this.scrollToAnchor();
+
+        each(geByClass('dev_methods_list_access_group_icon'), function() {
+            this.onmouseover = showTooltip.pbind(this, {
+                text: getLang('developers_group_access_method_tip'),
+                black: 1,
+                shift: [10, 3, 3]
+            });
+        });
     },
 
     checkBlockHeight: function() {

@@ -1271,7 +1271,7 @@
             },
             selectHoveredDialog: function(t) {
                 var n = geByClass1("_im_dialog_hovered", e);
-                n && o(l, t, s, {}, n)
+                n || (n = geByClass1("_im_dialog", e)), o(l, t, s, {}, n)
             },
             appendSearch: function(t, n, r) {
                 var a = k(r, n);
@@ -1314,7 +1314,7 @@
                     var r = geByClass1("_im_dialog_" + n.peerId, e);
                     r && m(r, n, t, e, !0)
                 }), n = L(n), s.isEmpty() && 0 === n.length && (0, z.isPendingForward)(t) && (n = [P(getLang("mail_im_search_empty_chats"))]), s.pipe(Promise.resolve(
-                    n))
+                    n));
             },
             updateCounter: function(t, n) {
                 var r = geByClass1("_im_dialog_" + n.peerId, e);
@@ -2983,12 +2983,11 @@
     }
 
     function W(e, t, n) {
-        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].online = t), Promise.resolve(n)
+        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].online = t), Promise.resolve(n);
     }
 
     function V(e, t, n) {
-        return (0,
-            wt.isTabLoaded)(n, e) && (n.tabs[e].typing = extend(n.tabs[e].typing, r({}, t, Date.now()))), Promise.resolve(n)
+        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].typing = extend(n.tabs[e].typing, r({}, t, Date.now()))), Promise.resolve(n)
     }
 
     function Y(e, t, n) {
@@ -4773,8 +4772,8 @@
     }();
     t.deleteEvent = n, t.replaceFlagsEvent = r, t.setFlagsEvent = a, t.resetFlagsEvent = i, t.addMessageEvent = s, t.readInboundEvent = o, t.readOutboundEvent = l, t.gotOnlineEvent =
         u, t.gotOfflineEvent = c, t.resetDirectoriesEvent = d, t.replaceDirectoriesEvent = g, t.setDirectoriesEvent = f, t.chatChangedEvent = m, t.typingUserEvent = p, t.typingChatEvent =
-        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b, t.emptyEvent = y,
-        t.transitionEvent = C, t.resyncEvent = E, t.resetPeer = T, t.changePeer = w, t.mutexEvent = S;
+        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b,
+        t.emptyEvent = y, t.transitionEvent = C, t.resyncEvent = E, t.resetPeer = T, t.changePeer = w, t.mutexEvent = S;
     var I = t.DELETE = "event_delete",
         P = t.SET_FLAGS = "event_set_flags",
         L = t.REPLACE_FLAGS = "event_replace_flags",

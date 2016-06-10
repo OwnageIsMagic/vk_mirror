@@ -885,7 +885,7 @@ if (!window.Emoji) {
                 showHints();
             } else {
                 clearTimeout(opts.stickerHintTT);
-                opts.stickerHintTT = setTimeout(showHints, 100);
+                opts.stickerHintTT = setTimeout(showHints, 200);
             }
         },
 

@@ -994,12 +994,12 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.updateAudio = function(t, i) {
         var e = "";
         if (isString(t) ? e = t : isArray(t) && (e = AudioUtils.asObject(t)
-                .fullId), each(this._playlists, function(t, o) {
+                .fullId), i || (i = t), each(this._playlists, function(t, o) {
                 for (var a = o.getAudiosList(), l = 0, s = a.length; s > l; l++)
                     if (a[l][AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + a[l][AudioUtils.AUDIO_ITEM_INDEX_ID] == e) return isObject(i) && each(i, function(t, i) {
                         a[l][t] = i
                     }), void(isArray(i) && (a[l] = i))
-            }), this._currentAudio[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID] == e) {
+            }), this._currentAudio[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + this._currentAudio[AudioUtils.AUDIO_ITEM_INDEX_ID] == e) {
             if (isObject(i)) {
                 var o = this;
                 each(i, function(t, i) {

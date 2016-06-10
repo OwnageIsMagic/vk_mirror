@@ -636,6 +636,10 @@
     right: 15px
 }
 
+.audio_search_input .ui_search_fltr {
+    z-index: 102
+}
+
 .audio_add_album_btn_wrap {
     padding: 10px 15px
 }
@@ -691,7 +695,8 @@
 }
 
 .audio_menu_btn:active {
-    margin-top: 11px
+    position: relative;
+    top: 1px
 }
 
 .ui_rmenu_loading .audio_menu_btn {

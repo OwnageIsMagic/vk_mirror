@@ -1552,6 +1552,18 @@ input.dev_section_search {
     background: #f7f8fa
 }
 
+.dev_methods_list_access_icon {
+    width: 20px;
+    height: 19px;
+    margin: 5px 10px 0;
+    display: inline-block
+}
+
+.dev_methods_list_access_group_icon {
+    background: url(/images/icons/dev_method_access_icons.png) no-repeat;
+    background-position: left -19px
+}
+
 .dev_methods_list_name {
     display: block;
     width: 150px;
@@ -1566,13 +1578,13 @@ input.dev_section_search {
 
 .dev_methods_list_desc {
     color: #000;
-    width: 505px;
+    width: 465px;
     padding: 2px 5px 3px
 }
 
 .dev_methods_sect_rows.dev_methods_sect_simular .dev_methods_list_desc,
 .dev_methods_sect_rows.small .dev_methods_list_desc {
-    width: 284px
+    width: 239px
 }
 
 .dev_page_cont .wk_header,
@@ -1655,6 +1667,43 @@ input.dev_section_search {
     height: 14px;
     margin: 0 10px -1px;
     background: url(/images/breadcrumbs.png) -8px 0 no-repeat
+}
+
+.dev_method_page_access {
+    margin: 15px 0 20px;
+    overflow: hidden
+}
+
+.dev_method_page_access_row {
+    padding: 5px 0px
+}
+
+.dev_method_page_access_row_icon {
+    margin: 3px 0 0;
+    width: 20px;
+    height: 19px;
+    background: url(/images/icons/dev_method_access_icons.png) no-repeat
+}
+
+.dev_method_page_access_row_user_icon {
+    background-position: left 0px
+}
+
+.dev_method_page_access_row_group_icon {
+    background-position: left -19px
+}
+
+.dev_method_page_access_row_open_icon {
+    background-position: left -38px
+}
+
+.dev_method_page_access_row_server_icon {
+    background-position: left -57px
+}
+
+.dev_method_page_access_row_desc {
+    padding: 0 0 0 10px;
+    width: 400px
 }
 
 .dev_mlist_sel {
