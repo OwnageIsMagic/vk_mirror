@@ -14,9 +14,9 @@ function AudioPage(e, i, t, o) {
             blocks: ap.friendBlock
         })), this._updateAdditionalBlocksAndRightMenu(i), this._initSearch(), this._initScroll(), this.ap.setStatusExportInfo(t.exp), this.onShow(i), data(e, "audioPage", this);
     var r = this;
-    this.isLayer() || cur.destroy.push(function() {
+    this.isLayer() || (cur.destroy.push(function() {
         ap.off(r), delete r
-    }), this.ap.on(this, AudioPlayer.EVENT_PLAY, function(e, i, t) {
+    }), cur.module = "audio"), this.ap.on(this, AudioPlayer.EVENT_PLAY, function(e, i, t) {
         var o = this.getCurrentPlaylist(),
             a = !this.isLayer() && this.ap.layer && this.ap.layer.isShown();
         i && 0 != t && o.indexOfAudio(e) >= 0 && (a || this.scrollToTrack())

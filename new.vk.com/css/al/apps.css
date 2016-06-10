@@ -4151,7 +4151,7 @@ td.apps_cat_new_h {
 }
 
 .apps_new_date {
-    width: 100px;
+    width: 150px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -4164,7 +4164,8 @@ td.apps_cat_new_h {
 .apps_new_rows {
     background: #fff;
     border-left: 1px solid #dae1e8;
-    margin-right: -1px
+    margin-right: -1px;
+    width: 642px
 }
 
 .apps_new_row {
@@ -4181,7 +4182,6 @@ td.apps_cat_new_h {
 }
 
 .apps_new_row.empty {
-    width: 525px;
     padding: 42px 0px 41px;
     text-align: center;
     color: #777;
@@ -4216,7 +4216,7 @@ td.apps_cat_new_h {
 
 .apps_new_description .label {
     color: #777;
-    width: 110px
+    width: 125px
 }
 
 .apps_new_action {

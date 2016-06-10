@@ -8701,7 +8701,7 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
             eval('(function () {' + js + '})();');
         } catch (e) {}
 
-        if (!options.params.mute) {
+        if (!options.params.from_autoplay) {
             var _n = window.Notifier,
                 _a = window.audioPlayer;
             if (_n) setTimeout(function() {

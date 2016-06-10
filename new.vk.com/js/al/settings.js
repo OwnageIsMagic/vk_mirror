@@ -525,6 +525,20 @@ var Settings = {
             onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("cposts")
         })
     },
+    stickersHintsCheck: function() {
+        clearTimeout(cur.stickersHintsTO), cur.stickersHintsTO = setTimeout(Settings.stickersHintsSubmit, 200)
+    },
+    stickersHintsSubmit: function() {
+        ajax.post("/al_settings.php", {
+            act: "a_change_stickers_hints",
+            hash: cur.options.stickers_hints_hash,
+            hints: isChecked(ge("settings_stickers_hints")) ? 1 : 0
+        }, {
+            onDone: function() {
+                window.uiPageBlock && uiPageBlock.showSaved("cposts"), window.Emoji && Emoji.updateTabs.apply(window, arguments)
+            }
+        })
+    },
     videoCheck: function() {
         clearTimeout(cur.videoUpdateTO), cur.videoUpdateTO = setTimeout(Settings.videoSubmit, 200)
     },
@@ -983,7 +997,7 @@ var Settings = {
                     }
                 }
             })
-        };
+        }, cur.lastAddress = val(t);
         var s = ge("settings_new_mail");
         s && (s.onfocus = function() {
             showTooltip(s, {
@@ -1157,7 +1171,8 @@ var Settings = {
                 .slice(0, cur.defaultCount), s.length && cur.appTpl) {
                 var n = [];
                 each(s, function(e, t) {
-                    t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), n.push(cur.appTpl(t, e == s.length - 1, !1))
+                    t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)),
+                        n.push(cur.appTpl(t, e == s.length - 1, !1))
                 }.bind(this)), t = n.join("")
             }
             if (cur.shownApps) t && cur.lContent.appendChild(cf(t));
@@ -1167,8 +1182,7 @@ var Settings = {
                 var i = getLang("settings_apps_not_found_by_query")
                     .split("{query}")
                     .join("<b>" + e.replace(/([<>&#]*)/g, "") + "</b>");
-                cur.aEmptyCont.innerHTML = i,
-                    cur.aSummaryCounter && (cur.aSummaryCounter.innerHTML = ""), show(cur.aEmptyCont), hide("settings_apps_noempty")
+                cur.aEmptyCont.innerHTML = i, cur.aSummaryCounter && (cur.aSummaryCounter.innerHTML = ""), show(cur.aEmptyCont), hide("settings_apps_noempty")
             }
             cur.shownApps += cur.defaultCount, cur.shownApps >= cur.appsCount ? hide(cur.lShowMoreButton) : (show(cur.lShowMoreButton), this.scrollCheckApps()), cur.aSearch &&
                 uiSearch.hideProgress(cur.aSearch)

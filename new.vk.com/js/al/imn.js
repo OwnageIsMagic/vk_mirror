@@ -3975,7 +3975,8 @@
                 guid: a,
                 share_url: r,
                 random_id: t.rid,
-                gid: n.gid
+                gid: n.gid,
+                sticker_referrer: t.sticker_referrer
             })
             .then(function(e) {
                 var t = ht(e, 1),
@@ -4772,8 +4773,8 @@
     }();
     t.deleteEvent = n, t.replaceFlagsEvent = r, t.setFlagsEvent = a, t.resetFlagsEvent = i, t.addMessageEvent = s, t.readInboundEvent = o, t.readOutboundEvent = l, t.gotOnlineEvent =
         u, t.gotOfflineEvent = c, t.resetDirectoriesEvent = d, t.replaceDirectoriesEvent = g, t.setDirectoriesEvent = f, t.chatChangedEvent = m, t.typingUserEvent = p, t.typingChatEvent =
-        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b, t.emptyEvent = y, t.transitionEvent = C, t.resyncEvent = E,
-        t.resetPeer = T, t.changePeer = w, t.mutexEvent = S;
+        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b, t.emptyEvent = y,
+        t.transitionEvent = C, t.resyncEvent = E, t.resetPeer = T, t.changePeer = w, t.mutexEvent = S;
     var I = t.DELETE = "event_delete",
         P = t.SET_FLAGS = "event_set_flags",
         L = t.REPLACE_FLAGS = "event_replace_flags",
@@ -6230,11 +6231,11 @@
                 return l + o > i.length ? s = n()
                     .more(o, l)
                     .then(function(t) {
-                        return t === !1 ? [] : (0 === t.length && e.set(g), t)
+                        return t === !1 ? [] : (0 === t.length && e.set(g),
+                            t)
                     })
                     .then(P.bind(null, e, t, a, n, e.get()
-                        .pipeId)) : (s = Promise.resolve(),
-                        E(t, a, n, e)), s
+                        .pipeId)) : (s = Promise.resolve(), E(t, a, n, e)), s
             });
         return r || (0, D.wrapLoading)(t)(s, "bottom", "im-preloader_fixed-bottom"), s
     }
@@ -7683,14 +7684,15 @@
             })
     }
 
-    function o(e, t, n, r, a) {
-        var i = e.get()
+    function o(e, t, n, r, a, i) {
+        var o = e.get()
             .peer;
         l(e, t, !1)
-            .then(function(o) {
-                s(n, i, {
+            .then(function(l) {
+                s(n, o, {
                     message: "",
-                    attaches: a
+                    attaches: a,
+                    sticker_referrer: i
                 }, e, t, r, !1)
             })
     }
@@ -7789,10 +7791,10 @@
             forceTxt: !t.get()
                 .editable,
             checkEditable: n,
-            onStickerSend: function(e) {
+            onStickerSend: function(e, t) {
                 a([
                     ["sticker", e]
-                ])
+                ], t)
             }
         })
     }
@@ -8160,7 +8162,7 @@
             X = h.bind(null, t, e, n),
             J = u.bind(null, t);
         return addEvent(geByClass1("_im_text_wrap", e), "click", function() {
-                Z !== document.activeElement && elfocus(Z)
+                Z !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)(Z)
             }), (0, R.addDelegateEvent)(e, "click", "_im_rc_emoji", $), (0, R.addDelegateEvent)(e, "click", K, X), (0, R.addDelegateEvent)(e, "click", "_im_will_fwd", A),
             (0, R.addDelegateEvent)(bodyNode, "click", Q, J), i(N, Z, e, W, n, $, y, X, A, s, D, J)
     }

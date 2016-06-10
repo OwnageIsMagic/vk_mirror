@@ -1835,11 +1835,17 @@ div.chat_tab_img {
     border-radius: 4px;
     width: 64px;
     text-align: center;
-    vertical-align: center
+    vertical-align: middle
 }
 
+.emoji_sticker_item.over,
 .emoji_sticker_item:hover {
     background: #f7f7f7
+}
+
+.emoji_sticker_image {
+    max-width: 64px;
+    max-height: 64px
 }
 
 .emoji_shop {
@@ -1946,6 +1952,80 @@ div.chat_tab_img {
     background-position: -131px 0px;
     display: inline-block;
     zoom: 1
+}
+
+.sticker_hints_tt {
+    display: none;
+    z-index: 118;
+    top: -83px;
+    left: -4px;
+    padding: 0 3px;
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
+    background-color: #fff;
+    border: 1px solid #c5d0db;
+    white-space: nowrap;
+    position: absolute;
+    max-width: 100%;
+    overflow: hidden
+}
+
+.im-chat-input .sticker_hints_tt {
+    top: -98px
+}
+
+.fc_tab_txt .sticker_hints_tt {
+    top: -89px;
+    max-width: 225px
+}
+
+.bt_reply_form_wrap .sticker_hints_tt,
+.post_content .sticker_hints_tt {
+    max-width: 405px
+}
+
+.sticker_hints_tt .emoji_sticker_item {
+    padding: 2px;
+    margin: 3px;
+    height: 64px
+}
+
+.sticker_hints_tt .emoji_sticker_item.promo .emoji_sticker_image {
+    opacity: 0.5;
+    filter: alpha(opacity=50)
+}
+
+.sticker_hints_inner {
+    padding: 5px 2px;
+    overflow: hidden
+}
+
+.sticker_hints_arrow {
+    display: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 30px;
+    background: #fff url(/images/icons/stickers_hints_arrow.png) no-repeat 50% 50%;
+    border-left: 1px solid #e4e6e9;
+    border-radius: 0 2px 2px 0;
+    cursor: pointer
+}
+
+.sticker_hints_arrow.sticker_left {
+    left: 0;
+    -webkit-transform: scaleX(-1);
+    -ms-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    transform: scaleX(-1)
+}
+
+.sticker_hints_arrow.sticker_right {
+    right: 0
+}
+
+.sticker_hints_arrow:hover {
+    background-color: #f5f7fa
 }
 
 #top_notify_wrap {

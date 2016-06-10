@@ -2475,7 +2475,8 @@ FastChat = {
         var friends = ls.get('fcFriends' + vk.id);
         ajax.post('al_im.php', {
             act: 'a_get_fast_chat',
-            friends: friends && friends.version
+            friends: friends && friends.version,
+            cache_time: FastChat.cachedStickersKeywordsTime()
         }, {
             onDone: function(data) {
                 if (data.friends == -1) {
@@ -2494,6 +2495,10 @@ FastChat = {
                 return true;
             }
         });
+    },
+    cachedStickersKeywordsTime: function() {
+        var data = ls.get('stickers_keywords');
+        return data && data.time ? Math.floor(data.time / 1000) : 0;
     },
     gotSettings: function(data) {
         if (data['emoji_stickers']) {
@@ -5064,9 +5069,9 @@ FastChat = {
                     tab.box.hide();
                     return cancelEvent(e);
                 },
-                onStickerSend: function(stNum) {
+                onStickerSend: function(stNum, sticker_referrer) {
                     var msgId = --tab.sent;
-                    FastChat.send(peer, stNum);
+                    FastChat.send(peer, stNum, sticker_referrer);
                 }
             });
         } else {
@@ -5641,7 +5646,7 @@ FastChat = {
         re('fc_msg_progress' + id);
     },
 
-    send: function(peer, stickerId) {
+    send: function(peer, stickerId, sticker_referrer) {
         var t = this,
             tab = curFastChat.tabs[peer],
             msg = trim(tab.editable ? Emoji.editableVal(tab.txt) : val(tab.txt));
@@ -5683,6 +5688,9 @@ FastChat = {
             from: 'fc',
             media: [],
         };
+        if (sticker_referrer) {
+            params.sticker_referrer = sticker_referrer;
+        }
         for (var i = 0, l = media.length, v; i < l; ++i) {
             if (v = media[i]) {
                 params.media.push(v[0] + ':' + v[1]);
@@ -5940,7 +5948,7 @@ FastChat = {
         curFastChat.gotMedia[msgId] = [peer, text, msgOpts];
 
         if (msgOpts.stickers && window.Emoji) {
-            Emoji.updateTabs(msgOpts.stickers);
+            Emoji.updateTabs(msgOpts.stickers, msgOpts.keywords);
         }
 
         if (curFastChat.needMedia[msgId] === undefined) return;

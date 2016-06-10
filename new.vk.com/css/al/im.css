@@ -672,8 +672,7 @@ img.im_photo_thumb {
 .im_stickers_my_tip {
     background: #f7f8fa;
     color: #222;
-    text-align: center;
-    padding: 15px 10px
+    padding: 17px 25px
 }
 
 .im_stickers_my_wrap {
@@ -2071,7 +2070,7 @@ img.im_photo_thumb {
 }
 
 .im-chat-input .im-chat-input--textarea .ms_items_more_wrap {
-    z-index: 100
+    z-index: 119
 }
 
 .im-chat-input .im-chat-input--textarea>.flat_button {

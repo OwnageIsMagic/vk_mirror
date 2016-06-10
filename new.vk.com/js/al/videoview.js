@@ -149,17 +149,17 @@ var Videoview = {
                         }
                     }), mvcur.adData.view_complete_full = !0))
             },
-            onVideoStreamPlaying: function(e, i, o) {
+            onVideoStreamPlaying: function(e, i) {
                 if (e + "_" + i == cur.pinnedVideo) {
-                    var t = window.mvcur && mvcur.player || cur.videoInlinePlayer || ge("video_player") || window.html5video;
-                    if (!(t && t.isTouchedByUser && t.isTouchedByUser())) return;
+                    var o = window.mvcur && mvcur.player || cur.videoInlinePlayer || ge("video_player") || window.html5video;
+                    if (!(o && o.isTouchedByUser && o.isTouchedByUser())) return;
                     cur.pinnedVideoDestroyHandlers()
                 }
-                var a = window.Notifier,
-                    r = window.ap;
-                a && setTimeout(function() {
-                    a.lcSend("video_start")
-                }, 0), r && r.isPlaying() && (r.pause(), r.pausedByVideo = 1), window.mvcur && mvcur.mvData && !i && !e && (mvcur.mvData.randomNumber = Math.round(1e9 *
+                var t = window.Notifier,
+                    a = window.ap;
+                t && setTimeout(function() {
+                    t.lcSend("video_start")
+                }, 0), a && a.isPlaying() && (a.pause(), a.pausedByVideo = 1), window.mvcur && mvcur.mvData && !i && !e && (mvcur.mvData.randomNumber = Math.round(1e9 *
                     Math.random()))
             },
             onVideoPlayStarted: function(e, i, o) {

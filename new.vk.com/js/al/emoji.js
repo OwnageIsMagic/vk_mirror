@@ -74,7 +74,7 @@ if (!window.Emoji) {
                             var ctrlSubm = (cur.ctrl_submit && !opts.noCtrlSend);
                             if ((ctrlSubm || noEnter) && (e.ctrlKey || browser.mac && e.metaKey) ||
                                 !ctrlSubm && !e.shiftKey && !(e.ctrlKey || browser.mac && e.metaKey)) {
-                                if (!Emoji.emojiEnter(optId, e)) {
+                                if (!Emoji.emojiEnter(optId, e) || !Emoji.stickerHintMove(e)) {
                                     return false;
                                 }
                                 if (!noEnter || (e.ctrlKey || browser.mac && e.metaKey)) {
@@ -112,6 +112,19 @@ if (!window.Emoji) {
                             return false;
                         }
                         if (e.keyCode == KEY.TAB && !(e.ctrlKey || browser.mac && e.metaKey)) {
+                            var stCont = geByClass1('_sticker_hints', domPN(opts.txt));
+                            if (stCont && isVisible(stCont)) {
+                                var selected = geByClass1('over', stCont);
+                                if (selected) {
+                                    Emoji.stickerHintKeyOut(optId, selected);
+                                } else {
+                                    Emoji.stickerHintKeyOver(optId, geByClass1('emoji_sticker_item', stCont));
+                                }
+
+                                if (!Emoji.shown) {
+                                    return cancelEvent(e);
+                                }
+                            }
                             if (Emoji.shown) {
                                 Emoji.editableFocus(txt, false, true, void(0), true);
                                 Emoji.ttClick(optId, geByClass1('emoji_smile', opts.controlsCont), true);
@@ -121,9 +134,19 @@ if (!window.Emoji) {
                             return cancelEvent(e);
                         }
                         if (e.keyCode == KEY.ESC) {
+                            var stCont = geByClass1('_sticker_hints', domPN(opts.txt)),
+                                needCancel = false;
+                            if (stCont && isVisible(stCont)) {
+                                Emoji.stickerHintKeyOut(optId, geByClass1('emoji_sticker_item', stCont));
+                                Emoji.stickersHintsHide(stCont, opts, 100);
+                                needCancel = true;
+                            }
                             if (Emoji.shown) {
                                 Emoji.editableFocus(txt, false, true, void(0), true);
                                 Emoji.ttClick(optId, geByClass1('emoji_smile', opts.controlsCont), true);
+                                needCancel = true;
+                            }
+                            if (needCancel) {
                                 return cancelEvent(e);
                             }
                             if (opts.onEsc) {
@@ -137,14 +160,17 @@ if (!window.Emoji) {
                         if (opts.checkEditable) {
                             setTimeout(opts.checkEditable.pbind(optId, txt), 0);
                         }
+                        Emoji.checkStickersKeywords(optId, opts);
                     } else if (e.type == 'keyup') {
                         if (opts.checkEditable) {
                             opts.checkEditable(optId, txt);
                         }
+                        Emoji.checkStickersKeywords(optId, opts);
                     } else if (e.type == 'keydown') {
                         if (opts.checkEditable) {
                             setTimeout(opts.checkEditable.pbind(optId, txt), 0);
                         }
+                        Emoji.checkStickersKeywords(optId, opts);
                     }
 
                     if (opts.onKeyAction) {
@@ -189,6 +215,7 @@ if (!window.Emoji) {
 
 
             window.Notifier && Notifier.addRecvClbk('emoji', 0, Emoji.lcRecv, true);
+            Emoji.initStickersKeywords();
 
             Emoji.opts[Emoji.last] = opts;
             return Emoji.last++;
@@ -197,7 +224,7 @@ if (!window.Emoji) {
         lcRecv: function(data) {
             switch (data.act) {
                 case 'updateTabs':
-                    Emoji.updateTabs(data.newStickers);
+                    Emoji.updateTabs(data.newStickers, data.keywords);
                     break;
             }
         },
@@ -410,6 +437,7 @@ if (!window.Emoji) {
                 } else {
                     cont.innerHTML = value;
                 }
+                Emoji.updateStickersHints();
                 return true;
             }
         },
@@ -620,6 +648,430 @@ if (!window.Emoji) {
             }
         },
 
+        stickersHintsShow: function(el, opts, delay) {
+            if (!isVisible(el)) {
+                fadeIn(el, delay);
+            }
+            if (!opts.stickerEventsInited) {
+                var inner = el && geByClass1('_sticker_hints_inner', el);
+                opts.onHintsWheel = Emoji.onWheelStickersHints.pbind(inner);
+                addEvent(inner, 'DOMMouseScroll wheel', opts.onHintsWheel);
+                addEvent(document, 'keydown', Emoji.stickerHintMove);
+                opts.onHintsMouseDown = function() {
+                    opts.hintsClicked = true;
+                    setTimeout(function() {
+                        delete opts.hintsClicked;
+                    }, 0);
+                }
+                addEvent(el, 'mousedown', opts.onHintsMouseDown);
+                if (opts.txt) {
+                    if (opts.onTxtFocus) {
+                        removeEvent(opts.txt, 'focus', opts.onTxtFocus);
+                        delete opts.onTxtFocus;
+                    }
+                    opts.onTxtBlur = function(ev) {
+                        if (opts.hintsClicked) {
+                            cancelEvent(ev);
+                            return true;
+                        }
+                        Emoji.stickersHintsHide(el, opts, delay);
+                    }
+                    addEvent(opts.txt, 'blur', opts.onTxtBlur);
+                }
+                opts.stickerEventsInited = true;
+            }
+            Emoji.checkStickersHintsSize(el, opts);
+        },
+
+        stickersHintsHide: function(el, opts, delay) {
+            fadeOut(el, delay);
+            removeEvent(document, 'keydown', Emoji.stickerHintMove);
+            if (opts.onHintsMouseDown) {
+                removeEvent(el, 'mousedown', Emoji.onHintsMouseDown);
+            }
+            if (opts.onHintsWheel) {
+                var inner = el && geByClass1('_sticker_hints_inner', el);
+                removeEvent(inner, 'DOMMouseScroll wheel', Emoji.onHintsWheel);
+            }
+            if (opts.txt) {
+                if (opts.onTxtBlur) {
+                    removeEvent(opts.txt, 'blur', opts.onTxtBlur);
+                    delete opts.onTxtBlur;
+                }
+                opts.onTxtFocus = function() {
+                    var stCont = opts.txt && geByClass1('_sticker_hints', domPN(opts.txt));
+                    if (stCont && !isVisible(stCont)) {
+                        delete opts.stickerHintsString;
+                        Emoji.checkStickersKeywords(opts.id, opts, false);
+                    }
+                }
+                addEvent(opts.txt, 'focus', opts.onTxtFocus);
+            }
+            delete opts.stickerEventsInited;
+            delete Emoji.shownHintId;
+        },
+
+        stickerHintOver: function(el) {
+            Emoji.stickerHintOut(el);
+            addClass(el, 'over');
+        },
+
+        stickerHintOut: function(el) {
+            each(geByClass('over', domPN(el)), function() {
+                removeClass(this, 'over');
+            });
+        },
+
+        stickerHintClick: function(optId, stickerId, el) {
+            var opts = Emoji.opts[optId] || {},
+                text = opts.txt,
+                stCont = text && geByClass1('_sticker_hints', domPN(text)),
+                sticker_referrer = 'suggestion_' + Emoji.getStickersHintsQuery(text);
+
+            if (stickerId < 0) {
+                Emoji.previewSticker(false, el, {
+                    stickerId: -stickerId,
+                    sticker_referrer: sticker_referrer
+                });
+            } else {
+                val(text, '');
+                Emoji.stickerClick(optId, stickerId, 256, el, sticker_referrer);
+                if (opts.checkEditable) {
+                    opts.checkEditable(optId, text);
+                }
+            }
+            Emoji.stickersHintsHide(stCont, opts, 0);
+
+            return false;
+        },
+
+        stickerHintKeyOver: function(optId, el) {
+            Emoji.stickerHintOver(el);
+            Emoji.shownHintId = optId;
+        },
+
+        stickerHintKeyOut: function(optId, el) {
+            Emoji.stickerHintOut(el);
+            delete Emoji.shownHintId;
+        },
+
+        stickerHintMove: function(e) {
+            var optId = Emoji.shownHintId;
+            if (optId === undefined) {
+                return true;
+            }
+
+            var opts = Emoji.opts[optId],
+                stCont = opts && geByClass1('_sticker_hints', domPN(opts.txt));
+            if (stCont && isVisible(stCont)) {
+                var el = geByClass1('over', stCont) || geByClass1('emoji_sticker_item', stCont);
+                switch (e.keyCode) {
+                    case KEY.LEFT:
+                        el = domPS(el);
+                        if (el) {
+                            Emoji.stickerHintOver(el);
+                            Emoji.checkStickersHintsScroll(el);
+                        }
+                        cancelEvent(e);
+                        return false;
+                        break;
+                    case KEY.RIGHT:
+                        el = domNS(el);
+                        if (el) {
+                            Emoji.stickerHintOver(el);
+                            Emoji.checkStickersHintsScroll(el);
+                        }
+                        cancelEvent(e);
+                        return false;
+                        break;
+                    case KEY.ENTER:
+                        el.click();
+                        cancelEvent(e);
+                        return false;
+                        break;
+                }
+            }
+            return true;
+        },
+
+        checkStickersHintsSize: function(el, opts) {
+            setStyle(el, {
+                marginLeft: 0
+            });
+            var gap = 10,
+                hintXY = getXY(el),
+                hintSize = getSize(el),
+                emojiXY = opts.tt && getXY(opts.tt);
+            if (opts.tt && emojiXY &&
+                emojiXY[0] && hintXY[0] + hintSize[0] + gap > emojiXY[0] &&
+                hintXY[1] + hintSize[1] > emojiXY[1]) {
+                setStyle(el, {
+                    marginLeft: emojiXY[0] - hintXY[0] - hintSize[0] - gap
+                });
+            }
+
+            while (getXY(el)[0] < 0 && domFC(el)) {
+                re(domFC(el));
+            }
+            if (!domFC(el)) {
+                Emoji.stickersHintsHide(el, opts, 0);
+            }
+        },
+
+        getStickersHintsQuery: function(el) {
+            var str = Emoji.val(el);
+            if (str.length > 30) {
+                return '';
+            }
+
+            var cur = window.cur.wallLayer ? wkcur : window.cur,
+                replyName = cur.reply_to && window.Wall && Wall.getReplyName(cur.reply_to[0]);
+            if (replyName && replyName[1]) {
+                str = str.replace(new RegExp('^(' + escapeRE(replyName[1]) + ')'), '');
+            }
+
+            each(Emoji.cssEmoji, function(code, data) {
+                var re = new RegExp('(\\s|^)(' + escapeRE(data[1]) + (data[1][data[1].length - 1] == ')' ? '+' : '') + ')([\\s\\.,]|$)', 'g');
+                str = str.replace(re, function(match, pre, smile, space) {
+                    return (pre || '') + Emoji.codeToChr(code) + (space || '');
+                });
+            });
+            str = str.replace(/^[\s\uFEFF\xA0]+|[\.!\?\)\n]+$/g, '')
+                .toLowerCase()
+                .replace('�', '�');
+
+            return str;
+        },
+
+        checkStickersKeywords: function(optId, opts, force) {
+            if (opts.noStickers || !window.stickersKeywords ||
+                !window.stickersKeywordsData || !window.stickersKeywordsData.length) {
+                return false;
+            }
+
+            var delay = force ? 0 : 100,
+                showHints = function() {
+                    var text = opts.txt,
+                        str = Emoji.getStickersHintsQuery(text),
+                        stCont = geByClass1('_sticker_hints', domPN(text));
+                    if (!stCont) {
+                        stCont = Emoji.initStickersHints(text);
+                        if (!stCont) {
+                            return false;
+                        }
+                    }
+                    if (str == opts.stickerHintsString) return;
+                    if (str && stickersKeywords[str] && stickersKeywords[str].length) {
+                        var stickers = Emoji.sortStickersHints(text, stickersKeywords[str]),
+                            stickerSize = (window.devicePixelRatio >= 2) ? '128' : '64',
+                            html = '';
+                        each(stickers, function() {
+                            html += rs(Emoji.hintsStickerItem(), {
+                                optId: optId,
+                                selId: -1,
+                                stickerId: Math.abs(this),
+                                class: (this < 0 ? 'promo' : ''),
+                                onclick: 'Emoji.stickerHintClick(' + optId + ', ' + this + ', this)',
+                                stickerSize: stickerSize
+                            });
+                        });
+                        Emoji.showStickersHints(stCont, opts, html);
+                    } else {
+                        Emoji.stickersHintsHide(stCont, opts, delay);
+                    }
+                    opts.stickerHintsString = str;
+                }
+            if (force) {
+                showHints();
+            } else {
+                clearTimeout(opts.stickerHintTT);
+                opts.stickerHintTT = setTimeout(showHints, 100);
+            }
+        },
+
+        showStickersHints: function(stCont, opts, html) {
+            var inner = stCont && geByClass1('_sticker_hints_inner', stCont);
+            if (!inner) {
+                return false;
+            }
+
+            val(inner, html);
+            Emoji.stickersHintsShow(stCont, opts, 100);
+            inner.scrollLeft = 0;
+            Emoji.checkStickersHintsScroll(stCont, inner.scrollLeft);
+        },
+
+        checkStickersHintsScroll: function(el, newLeft) {
+            var stCont = domClosest('_sticker_hints', el),
+                inner = stCont && geByClass1('_sticker_hints_inner', stCont),
+                arrowLeft = stCont && geByClass1('_sticker_left', stCont),
+                arrowRight = stCont && geByClass1('_sticker_right', stCont);
+            if (!inner) {
+                return false;
+            }
+
+            if (hasClass(el, 'emoji_sticker_item')) {
+                var maxLeft = el.offsetLeft - 8 - getSize(arrowLeft)[0],
+                    minLeft = el.offsetLeft + getSize(el)[1] + 2 + getSize(arrowRight)[0] - inner.clientWidth;
+                if (inner.scrollLeft > maxLeft) {
+                    inner.scrollLeft = maxLeft;
+                }
+                if (inner.scrollLeft < minLeft) {
+                    inner.scrollLeft = minLeft;
+                }
+                newLeft = inner.scrollLeft;
+            }
+
+            toggle(arrowLeft, newLeft > 0);
+            toggle(arrowRight, newLeft + inner.clientWidth < inner.scrollWidth);
+        },
+
+        scrollStickersHints: function(el, dir, ev) {
+            var stCont = domClosest('_sticker_hints', el),
+                inner = stCont && geByClass1('_sticker_hints_inner', stCont),
+                arrowLeft = stCont && geByClass1('_sticker_left', stCont),
+                arrowRight = stCont && geByClass1('_sticker_right', stCont);;
+            if (!inner) {
+                return false;
+            }
+
+            var newLeft = inner.scrollLeft + dir * (inner.clientWidth - 2 * getSize(el)[0]),
+                hints = geByClass('emoji_sticker_item', inner);
+            each(hints, function(i, el) {
+                if (dir > 0 && el.offsetLeft - 8 - getSize(arrowLeft)[0] > newLeft) {
+                    newLeft = hints[i - 1] && hints[i - 1].offsetLeft - 8 - getSize(arrowLeft)[0] || newLeft;
+                    return false;
+                } else if (dir < 0 && el.offsetLeft + getSize(el)[1] + 2 + getSize(arrowRight)[0] - inner.clientWidth > newLeft) {
+                    newLeft = el.offsetLeft + getSize(el)[1] + 2 + getSize(arrowRight)[0] - inner.clientWidth || newLeft;
+                    return false;
+                }
+            });
+            newLeft = Math.max(0, Math.min(inner.scrollWidth - inner.clientWidth, newLeft));
+            animate(inner, {
+                scrollLeft: newLeft
+            }, {
+                duration: Math.abs(inner.scrollLeft - newLeft) + 50,
+                transition: Fx.Transitions.easeOutCubic
+            });
+            Emoji.checkStickersHintsScroll(inner, newLeft);
+        },
+
+        onWheelStickersHints: function(inner, ev) {
+            var delta;
+            if (ev.type == 'wheel') { // gecko >= 17, webkit
+                delta = -ev.deltaY;
+            } else if (ev.wheelDeltaY !== void(0)) { // presto, old webkit
+                delta = ev.wheelDeltaY;
+            } else if (ev.wheelDelta !== void(0)) { // ie 8 - 11
+                delta = ev.wheelDelta;
+            } else if (ev.detail && ev.axis === 2) { // gecko < 17
+                delta = -ev.detail;
+            }
+            if (Math.abs(delta) >= 120) {
+                delta = 74 * Math.max(-1, Math.min(1, delta));
+            }
+            inner.scrollLeft -= delta;
+            Emoji.checkStickersHintsScroll(inner, inner.scrollLeft);
+            cancelEvent(ev);
+        },
+
+        sortStickersHints: function(el, stickers) {
+            var recent = (Emoji.stickers[-1] || {})
+                .stickers || [],
+                result = [],
+                added = {};
+
+            each(recent, function() {
+                if (inArray(this[0], stickers)) {
+                    result.push(this[0]);
+                    added[this[0]] = 1;
+                }
+            });
+
+            each(stickers, function() {
+                if (!added[this]) {
+                    result.push(this);
+                }
+            });
+
+            return result;
+        },
+
+        initStickersHints: function(el) {
+            if (!el) {
+                return false;
+            }
+
+            return domPN(el)
+                .insertBefore(se(
+                    '<div class="_sticker_hints sticker_hints_tt"><div class="sticker_hints_arrow sticker_left _sticker_left" onclick="Emoji.scrollStickersHints(this, -1, event)"></div><div class="_sticker_hints_inner sticker_hints_inner"></div><div class="sticker_hints_arrow sticker_right _sticker_right" onclick="Emoji.scrollStickersHints(this, 1, event)"></div></div>'
+                ), el);
+        },
+
+        updateStickersHints: function(force) {
+            if (Emoji.opts) {
+                each(Emoji.opts, function(optId, opts) {
+                    if (force) {
+                        delete opts.stickerHintsString;
+                    }
+                    Emoji.checkStickersKeywords(optId, opts, true);
+                });
+            }
+        },
+
+        initStickersKeywords: function() {
+            if (!window.stickersKeywordsData) {
+                var data = ls.get('stickers_keywords');
+                if (data && data.time && data.time > vkNow() - 86400000 * (2 + Math.random())) {
+                    window.stickersKeywordsData = data.keywords;
+                }
+            }
+            if (window.stickersKeywordsData) {
+                Emoji.setStickersKeywords(window.stickersKeywordsData);
+            }
+        },
+
+        cachedStickersKeywordsTime: function() {
+            var data = ls.get('stickers_keywords');
+            return data && data.time ? Math.floor(data.time / 1000) : 0;
+        },
+
+        setStickersKeywords: function(keywords, update) {
+            if (!keywords) {
+                return false;
+            }
+
+            window.stickersKeywords = {};
+            var el = ce('div');
+            each(keywords, function() {
+                var words = this.words || [],
+                    user = this.user_stickers || [],
+                    promo = this.promoted_stickers || [];
+                each(words, function(i, word) {
+                    val(el, word);
+                    word = el.innerText || el.textContent;
+                    stickersKeywords[word] = user.concat(promo.map(function(id) {
+                        return -id;
+                    }));
+                });
+            });
+
+            if (!Emoji.stickers[-1]) {
+                var recent = ls.get('recent_stickers');
+                if (recent) {
+                    Emoji.stickers[-1] = recent;
+                }
+            }
+
+            if (update) {
+                ls.set('stickers_keywords', {
+                    time: vkNow(),
+                    keywords: keywords
+                });
+                Emoji.updateStickersHints(true);
+            }
+        },
+
         emojiEnter: function(optId, e) {
             var opts = Emoji.opts[optId],
                 ctrlSend = (opts.ctrlSend ? opts.ctrlSend() : opts.noEnterSend) || (cur.ctrl_submit && !opts.noCtrlSend);
@@ -727,6 +1179,7 @@ if (!window.Emoji) {
             if (opts.checkEditable) {
                 opts.checkEditable(optId, opts.txt);
             }
+            Emoji.checkStickersKeywords(optId, opts);
             if (opts.saveDraft) {
                 opts.saveDraft();
             }
@@ -1626,17 +2079,26 @@ if (!window.Emoji) {
                     return '';
                 }
                 var list = pack.stickers;
-                var size = 64;
-                var sizeDiv = 256 / size;
                 for (var i in list) {
-                    html += '<a id="emoji_sticker_item' + optId + '_' + selId + '_' + list[i][0] + '" class="emoji_sticker_item" onclick="Emoji.stickerClick(' + optId +
-                        ', ' + list[i][0] + ', ' + list[i][1] + ', this);"><img class="emoji_need_load" width="' + parseInt(list[i][1] / sizeDiv) + '" height="' + size +
-                        '" src="/images/blank.gif" data-src="/images/stickers/' + list[i][0] + '/' + stickerSize + '.png" /></a>';
+                    html += rs(Emoji.stickerItem(), {
+                        optId: optId,
+                        selId: selId,
+                        stickerId: list[i][0],
+                        size: list[i][1],
+                        stickerSize: stickerSize
+                    });
                 }
             } else {
                 var html = Emoji.ttEmojiList(optId);
             }
             return html;
+        },
+
+        stickerItem: function() {
+            return '<a id="emoji_sticker_item%optId%_%selId%_%stickerId%" class="emoji_sticker_item" onclick="Emoji.stickerClick(%optId%, %stickerId%, %size%, this, \'keyboard\');"><img class="emoji_sticker_image emoji_need_load" src="/images/blank.gif" data-src="/images/stickers/%stickerId%/%stickerSize%.png" /></a>';
+        },
+        hintsStickerItem: function() {
+            return '<a id="emoji_sticker_item%optId%_%selId%_%stickerId%" class="emoji_sticker_item %class%" onclick="%onclick%" onmouseover="Emoji.stickerHintOver(this)" onmouseout="Emoji.stickerHintOut(this)"><img class="emoji_sticker_image" src="/images/stickers/%stickerId%/%stickerSize%.png" /></a>';
         },
 
         tabSwitch: function(obj, selId, optId) {
@@ -1677,7 +2139,7 @@ if (!window.Emoji) {
             opts.emojiScroll.update();
         },
 
-        stickerClick: function(optId, stickerNum, width, obj) {
+        stickerClick: function(optId, stickerNum, width, obj, sticker_referrer) {
             var opts = Emoji.opts[optId];
             if (!Emoji.stickers[-1]) {
                 Emoji.stickers[-1] = {
@@ -1693,7 +2155,7 @@ if (!window.Emoji) {
             ls.set('recent_stickers', Emoji.stickers[-1]);
 
             if (opts.onStickerSend) {
-                opts.onStickerSend(stickerNum);
+                opts.onStickerSend(stickerNum, sticker_referrer);
             }
             Emoji.ttHide(optId, false, false, true);
 
@@ -1834,6 +2296,10 @@ if (!window.Emoji) {
             if (opts.preview) {
                 params.preview = 1;
             }
+            if (opts.stickerId) {
+                params.sticker_id = opts.stickerId;
+            }
+            params.sticker_referrer = opts.sticker_referrer || 'store';
             if (opts.name) {
                 var query = nav.objLoc[0].split('/');
                 if (query[0] == 'stickers' && query[1] != opts.name) {
@@ -1846,8 +2312,12 @@ if (!window.Emoji) {
                 dark: 1,
                 stat: ['im.css', 'imn.js'],
                 onFail: function(e) {
-                    if (!window.emojiStickersDisabled) window.emojiStickersDisabled = {};
-                    window.emojiStickersDisabled[packId] = true;
+                    if (!window.emojiStickersDisabled) {
+                        window.emojiStickersDisabled = {};
+                    }
+                    if (packId) {
+                        window.emojiStickersDisabled[packId] = true;
+                    }
                     if (e) return true;
                 }
             });
@@ -1970,13 +2440,15 @@ if (!window.Emoji) {
                 }
             }
             if (!obj || !en) {
-                Emoji.previewSticker(packId);
+                Emoji.previewSticker(packId, false, {
+                    sticker_referrer: 'message'
+                });
             }
             ev && cancelEvent(ev);
             return false;
         },
 
-        buyStickers: function(packId, ev, obj, hash, fromBtn) {
+        buyStickers: function(packId, ev, obj, hash, sticker_referrer) {
             if (obj) {
                 var back = obj.innerHTML;
                 if (hasClass(obj, 'secondary')) {
@@ -1988,9 +2460,10 @@ if (!window.Emoji) {
                 act: 'a_stickers_buy',
                 pack_id: packId,
                 hash: hash,
-                peer: peer
+                peer: peer,
+                sticker_referrer: unclean(sticker_referrer)
             }, {
-                onDone: function(text, newStickers, btnText) {
+                onDone: function(text, newStickers, keywords, btnText) {
                     each(geByClass('_sticker_btn_' + packId), function() {
                         this.innerHTML = btnText;
                         this.onmouseover = '';
@@ -2002,7 +2475,7 @@ if (!window.Emoji) {
                     }
                     showDoneBox(text);
                     if (newStickers) {
-                        Emoji.updateTabs(newStickers, true);
+                        Emoji.updateTabs(newStickers, keywords, true);
                     }
                     var box = cur.tabbedStickersBox;
                     if (box && box.tbUpdate) {
@@ -2056,7 +2529,7 @@ if (!window.Emoji) {
                 state: state,
                 from_btn: fromBtn ? 1 : 0
             }, {
-                onDone: function(text, newStickers, btnText) {
+                onDone: function(text, newStickers, keywords, btnText) {
                     if (!fromBtn) {
                         obj.innerHTML = text;
                         obj.onmouseover = '';
@@ -2070,7 +2543,7 @@ if (!window.Emoji) {
                         this.onmouseover = '';
                         toggleClass(this, 'secondary', !state);
                     });
-                    Emoji.updateTabs(newStickers, true);
+                    Emoji.updateTabs(newStickers, keywords, true);
                     var el = obj.parentNode.parentNode;
                     if (fromBtn) {
                         return;
@@ -2119,7 +2592,7 @@ if (!window.Emoji) {
                 if (isActive) {
                     var act = 'return Emoji.tabSwitch(this, ' + stNum + ', ' + optId + ');';
                 } else {
-                    var act = 'return Emoji.previewSticker(' + stNum + ');';
+                    var act = 'return Emoji.previewSticker(' + stNum + ', false, {sticker_referrer: \'keyboard\'});';
                 }
                 if (stickers[i][2]) {
                     Emoji.hasNewStickers = stickers[i][2];
@@ -2139,17 +2612,32 @@ if (!window.Emoji) {
             return html;
         },
 
-        updateTabs: function(newStickers, update) {
+        updateTabs: function(newStickers, keywords, update) {
             if (newStickers && update && window.Notifier) {
                 Notifier.lcSend('emoji', {
                     act: 'updateTabs',
-                    newStickers: newStickers
+                    newStickers: newStickers,
+                    keywords: keywords
                 });
             }
+
+            var needKeywords = 0;
+            if (keywords === undefined) {
+                Emoji.initStickersKeywords();
+                if (!window.stickersKeywordsData) {
+                    needKeywords = 1;
+                }
+            } else {
+                window.stickersKeywordsData = keywords;
+                Emoji.setStickersKeywords(window.stickersKeywordsData, update);
+            }
+
             if (newStickers === undefined) {
-                if (!window.emojiStickers) {
+                if (!window.emojiStickers || !window.stickersKeywordsData) {
                     ajax.post('al_im.php', {
-                        act: 'a_stickers_list'
+                        act: 'a_stickers_list',
+                        need_keywords: needKeywords,
+                        cache_time: Emoji.cachedStickersKeywordsTime()
                     }, {
                         onDone: Emoji.updateTabs
                     })
@@ -2209,6 +2697,7 @@ if (!window.Emoji) {
             if (opts.from) {
                 params.from = opts.from;
             }
+            params.sticker_referrer = opts.sticker_referrer || 'store';
             boxLayerWrap.scrollTop = 0;
             showBox('/al_im.php', params, {
                 stat: ['wide_dd.js', 'wide_dd.css', 'notifier.css', 'notifier.js'],

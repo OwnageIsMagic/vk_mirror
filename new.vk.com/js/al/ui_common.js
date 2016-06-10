@@ -729,13 +729,13 @@ window.Scrollbar = window.Scrollbar || function() {
                     i = this.obj[this.scrollProp];
                 if (deltaMode = void 0 !== t.deltaMode ? t.deltaMode : "MozMousePixelScroll" == t.type ? 0 : 1, pixelRatio = 1, pixelsPerLine = 15, pixelsPerPage = 30 *
                     pixelsPerLine, "wheel" == t.type ? e = -(this.isHorizontal ? t.deltaX : t.deltaY) : void 0 !== t.wheelDeltaX && void 0 !== t.wheelDeltaY ? (e =
-                        .025 * (this.isHorizontal ? t.wheelDeltaX : t.wheelDeltaY), console.log(t.wheelDeltaY, t), browser.mac && browser.opera && (e *= .1)) : void 0 !==
-                    t.wheelDelta ? e = .025 * t.wheelDelta : t.detail && t.axis === (this.isHorizontal ? 1 : 2) && (e = -t.detail), e = e * pixelRatio * (1 ==
-                        deltaMode ? pixelsPerLine : 2 == deltaMode ? pixelsPerPage : 1)) return this.obj[this.scrollProp] -= e, isFunction(this.options.onScroll) &&
-                    this.options.onScroll(e, this), i != this.obj[this.scrollProp] && this.shown !== !1 && (this.update(!0), addClass(this.inner,
-                        "scrollbar_hovered"), clearTimeout(this.moveTimeout), this.moveTimeout = setTimeout(function() {
-                        removeClass(this.inner, "scrollbar_hovered")
-                    }.bind(this), 300)), !this.shown && !this.options.forceCancelEvent || this.isHorizontal && i == this.obj[this.scrollProp] ? void 0 : !1
+                        .025 * (this.isHorizontal ? t.wheelDeltaX : t.wheelDeltaY), browser.mac && browser.opera && (e *= .1)) : void 0 !== t.wheelDelta ? e = .025 * t
+                    .wheelDelta : t.detail && t.axis === (this.isHorizontal ? 1 : 2) && (e = -t.detail), e = e * pixelRatio * (1 == deltaMode ? pixelsPerLine : 2 ==
+                        deltaMode ? pixelsPerPage : 1)) return this.obj[this.scrollProp] -= e, isFunction(this.options.onScroll) && this.options.onScroll(e, this), i !=
+                    this.obj[this.scrollProp] && this.shown !== !1 && (this.update(!0), addClass(this.inner, "scrollbar_hovered"), clearTimeout(this.moveTimeout),
+                        this.moveTimeout = setTimeout(function() {
+                            removeClass(this.inner, "scrollbar_hovered")
+                        }.bind(this), 300)), !this.shown && !this.options.forceCancelEvent || this.isHorizontal && i == this.obj[this.scrollProp] ? void 0 : !1
             }
         },
         setOptions: function(t) {
@@ -872,8 +872,7 @@ window.Scrollbar = window.Scrollbar || function() {
             s = i.scrollHeight,
             o = i.scrollTop,
             n = i.offsetHeight || i.clientHeight;
-        toggleClass(t, "olist_topsh", o > 0), toggleClass(t, "olist_botsh", s > o + n),
-            e && e.offsetTop && e.onclick && o + n + 200 >= s && e.onclick()
+        toggleClass(t, "olist_topsh", o > 0), toggleClass(t, "olist_botsh", s > o + n), e && e.offsetTop && e.onclick && o + n + 200 >= s && e.onclick();
     },
     onMouseEvent: function(t) {
         var e = t.originalTarget || t.target;

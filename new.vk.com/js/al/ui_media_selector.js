@@ -72,7 +72,9 @@ function MediaSelector(e, a, i, o) {
                                 innerHTML: t ? _ : "",
                                 className: "ms_item ms_item_" + h + " _type_" + h
                             })), t || (c.setAttribute("data-title", _), addEvent(c, "mouseover", function() {
-                                showTitle(this)
+                                showTitle(this, !1, !1, {
+                                    noZIndex: !0
+                                })
                             })), p && addEvent(c, "click", function() {
                                 return r.hide(!0), i.onItemClick && !i.onItemClick(h) ? !1 : (p(), !1)
                             })
