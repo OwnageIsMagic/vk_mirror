@@ -5468,7 +5468,8 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_linkdsc {
-    padding: 5px 5px 3px
+    padding: 5px 5px 3px;
+    overflow: hidden
 }
 
 .medadd_c_linkmicrodata {

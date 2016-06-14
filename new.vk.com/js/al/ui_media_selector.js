@@ -789,7 +789,7 @@ function MediaSelector(e, a, i, o) {
                         if (d.match(/^https?:\/\//) || (d = "http://" + d), !inArray(d, s.urlsCancelled) && !inArray(_, s.urlsCancelled)) {
                             var p = !0;
                             if (h.match(/(^|\.|\/\/)(vkontakte\.ru|vk\.com)/) && (p = c.match(
-                                    /(#photo|^\/(photo|video|album|page|audio|doc)|z=(album|photo|video)|w=(page|product))(-?\d+_)?\d+|\.(jpg|png|gif)$|market-?\d+\?section=album_\d+|^\/stickers\/.+$|^http:\/\/instagram\.com\/p\/.+/
+                                    /(#photo|^\/(photo|video|album|page|audio|doc)|z=(album|photo|video)|w=(page|product))(-?\d+_)?\d+|\.(jpg|png|gif)$|market-?\d+\?section=album_\d+|^\/stickers\/.+$|^\/blog\/.+$|^http:\/\/instagram\.com\/p\/.+/
                                 ) ? !0 : !1), p) return void s.checkURL(_)
                         }
                     }
@@ -869,7 +869,8 @@ function MediaSelector(e, a, i, o) {
                                 "', black: 1, shift: [7, 11, 8], appendParentCls: 'post'})\"",
                                 f = "onmouseover=\"showTooltip(this, {text: '" + getLang("global_link_remove_photo") +
                                 "', black: 1, shift: [7, 11, 8], appendParentCls: 'post'})\"",
-                                k = d.media ? '<div class="medadd_c_linkimg_controls">  <div class="medadd_c_linkimg_controls_btn_group clear_fix fl_l">' + (v > 1 ?
+                                k = d.media && "_" != d.media ? '<div class="medadd_c_linkimg_controls">  <div class="medadd_c_linkimg_controls_btn_group clear_fix fl_l">' +
+                                (v > 1 ?
                                     '    <div class="medadd_c_linkimg_controls_btn_arrows_group">      <div class="medadd_c_linkimg_controls_btn" id="medadd_ctrl_left" onclick="cur.shareShowNext(true);"></div>      <div class="medadd_c_linkimg_controls_btn" id="medadd_ctrl_right" onclick="cur.shareShowNext();"></div>    </div>' :
                                     "") + '    <div class="medadd_c_linkimg_controls_btn ' + (v > 1 ? "medadd_c_btn_side_padd" : "") + '" id="medadd_ctrl_upload" ' + w +
                                 " onclick=\"Page.ownerPhoto('" + d.media +
@@ -901,13 +902,14 @@ function MediaSelector(e, a, i, o) {
                             visibility: "hidden"
                         })),
                         P = getSize(S)[1];
-                    re(S), val(domFC(r), l), shortCurrency(), cur.animateUpdateInterval = setInterval(function() {
-                        o.onChangedSize && o.onChangedSize()
-                    }, 100), cur.preventShareAnim = animate(domFC(r), {
-                        height: P
-                    }, 200, function() {
-                        clearInterval(cur.animateUpdateInterval)
-                    }), re(geByClass1("medadd_c_linkprg", b))
+                    re(S), val(domFC(r), l), shortCurrency(),
+                        cur.animateUpdateInterval = setInterval(function() {
+                            o.onChangedSize && o.onChangedSize()
+                        }, 100), cur.preventShareAnim = animate(domFC(r), {
+                            height: P
+                        }, 200, function() {
+                            clearInterval(cur.animateUpdateInterval)
+                        }), re(geByClass1("medadd_c_linkprg", b))
                 }
                 t && addClass(geByClass1("medadd_c_linkcon", b), t)
             },
@@ -969,7 +971,7 @@ function MediaSelector(e, a, i, o) {
                                 if (e.images.splice(cur.shareShowImg, 1), e.images_proxy && e.images_proxy.length > cur.shareShowImg && e.images_proxy.splice(cur.shareShowImg,
                                         1), e.images.length) return setTimeout(cur.shareShowNext.pbind(0, 0, 1), 0)
                             } else {
-                                var l = a >= 537 && i >= 240;
+                                var l = a >= 537 && i >= 240 && void 0 === e.big_link;
                                 if (!l && s.bigLink && cur.shareShowImg != e.images.length - 1) return e.images.splice(cur.shareShowImg, 1), e.images_proxy.splice(
                                     cur.shareShowImg, 1), cur.prevShareShowDir || cur.shareShowImg--, void cur.shareShowNext(cur.prevShareShowDir);
                                 s.bigLink = s.bigLink || l, a > 150 && (i = 150 * i / a, a = 150);

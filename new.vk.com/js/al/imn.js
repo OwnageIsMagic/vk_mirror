@@ -266,8 +266,9 @@
     }
 
     function C(e, t, n) {
-        t && (t.hide(e), n()
-            .createCanceled(e))
+        t && e.get()
+            .showed && (t.hide(e), n()
+                .createCanceled(e))
     }
 
     function E(e, t, n) {
@@ -298,10 +299,13 @@
             appendDialogs: function(t, n) {
                 e.appendDialogs(t, n)
             },
-            showCreation: function(e, t) {
-                n.rotateCross(e), addClass(a, "im-page_creating"), (0, W.isClassicInterface)(e) && setStyle(a.parentNode, {
-                    overflow: "hidden"
-                }), w && w.show(e, t)
+            showCreation: function(r, i) {
+                (0, W.isClassicInterface)(r) && (e.saveScroll(r), t.saveScroll(r)), n.rotateCross(r), addClass(a, "im-page_creating"), w && w.show(r, i), (0, W.isClassicInterface)
+                    (r) && setTimeout(function() {
+                        setStyle(a.parentNode, {
+                            overflow: "hidden"
+                        })
+                    }, 200)
             },
             updateState: function(n, r) {
                 e.updateDialog(n, r), r.get()
@@ -310,10 +314,14 @@
             appendFastDialogs: function(t, n) {
                 e.appendFastDialogs(t, n, !0)
             },
-            createCanceled: function(e, t) {
-                n.createCanceled(e, t), removeClass(a.parentNode, "im-page_creating"), (0, W.isClassicInterface)(e) && setStyle(a.parentNode, {
+            createCanceled: function(r, i) {
+                n.createCanceled(r, i), removeClass(a.parentNode, "im-page_creating"), (0, W.isClassicInterface)(r) && (setStyle(a.parentNode, {
                     overflow: "visible"
-                })
+                }), setTimeout(function() {
+                    0 === r.get()
+                        .peer ? e.restoreScroll(r) : t.restoreScroll(r, r.get()
+                            .peer)
+                }, 0))
             },
             updateMenu: function(e) {
                 B && B.updateMenu(e)
@@ -353,12 +361,12 @@
                         .peer, e.get())) {
                     var n = e.get(),
                         r = n.peer;
-                    if ((0, W.isFullyLoadedTab)(n, r)) {
+                    if ((0, W.isFullyLoadedTab)(n, r) && !i.is_idle) {
                         var a = (0, Q.countUnread)(e.get()
                             .peer, e.get());
                         if (a > 0) {
-                            var i = n.tabs[r];
-                            i.skipped || e.set(Q.readLastMessages.bind(null, r))
+                            var s = n.tabs[r];
+                            s.skipped || e.set(Q.readLastMessages.bind(null, r))
                         }
                     }
                 }
@@ -374,6 +382,7 @@
                 });
                 var l = !1;
                 return Object.keys(t)
+                    .sort()
                     .forEach(function(e) {
                         switch (e) {
                             case "sel":
@@ -386,7 +395,8 @@
                             case "tab":
                                 C(I, w, T), l = !0;
                                 var n = i.tab || W.FOLDER_ALL;
-                                (0, W.changeTab)(n, I, T, Q.changeDialogsTab);
+                                I.get()
+                                    .longpoll.push([H.eventTypes.changeTab(n)]);
                                 break;
                             case "box":
                                 o(I, i.box)
@@ -476,7 +486,7 @@
                                 case H.eventTypes.RESET_FLAGS:
                                     if (s.flags !== H.eventTypes.FLAG_DELETED || s.type !== H.eventTypes.SET_FLAGS || (0, W.isAlreadyDeleted)(i, s.peerId,
                                             s.messageId) || i.get()
-                                        .blockedFlagUpdates[s.peerId] || h(s), s.flags === H.eventTypes.FLAG_IMPORTANT) {
+                                        .blockedFlagUpdates[s.peerId] || onRemoveMessage(s), s.flags === H.eventTypes.FLAG_IMPORTANT) {
                                         var f = s.type === H.eventTypes.SET_FLAGS;
                                         i.set(Q.updateImportant.bind(null, f ? 1 : -1, s.messageId))
                                             .then(function() {
@@ -515,6 +525,9 @@
                                     break;
                                 case H.eventTypes.RESET_PEER:
                                     u(i, e, t, a), (0, W.isClassicInterface)(i) && B.updateMenu(i), (0, W.isPendingForward)(i) && n.focusInput(i);
+                                    break;
+                                case H.eventTypes.CHANGE_TAB:
+                                    (0, W.changeTab)(s.tab, i, T, Q.changeDialogsTab);
                                     break;
                                 case H.eventTypes.RESET_DIRECTORIES:
                                 case H.eventTypes.SET_DIRECTORIES:
@@ -1170,7 +1183,7 @@
 
     function A(e, t, n) {
         return t()
-            .toggleSettingsLoader(n, !0), e.checkMore((0, z.isClassicInterface)(n))
+            .toggleSettingsLoader(n, !0), e.checkMore(!(0, z.isClassicInterface)(n))
             .then(t()
                 .toggleSettingsLoader.bind(null, n, !1))
     }
@@ -1210,6 +1223,7 @@
                     .tabs[a].folders & Y.eventTypes.FOLDER_IMPORTANT ? getLang("mail_im_toggle_important_off") : getLang("mail_im_toggle_important")
             },
             black: 1,
+            zIndex: 1,
             shift: [14, 8],
             toup: a > 150
         })
@@ -1306,7 +1320,7 @@
                                 .peer)) {
                             var r = A(s, l, t);
                             return s.toTop(), r
-                        }(0, z.isClassicInterface)(t) || s.restoreScroll("list")
+                        }(0, z.isClassicInterface)(t) || s.restoreScroll("list");
                     })
             },
             appendDialogs: function(t, n) {
@@ -1314,7 +1328,7 @@
                     var r = geByClass1("_im_dialog_" + n.peerId, e);
                     r && m(r, n, t, e, !0)
                 }), n = L(n), s.isEmpty() && 0 === n.length && (0, z.isPendingForward)(t) && (n = [P(getLang("mail_im_search_empty_chats"))]), s.pipe(Promise.resolve(
-                    n));
+                    n))
             },
             updateCounter: function(t, n) {
                 var r = geByClass1("_im_dialog_" + n.peerId, e);
@@ -1340,6 +1354,9 @@
             },
             scrollUp: function(e) {
                 s.toTop(e), s.saveScroll("list", !0)
+            },
+            saveScroll: function(e) {
+                s.saveScroll("list", !0)
             },
             promoteDialog: function(t, n) {
                 var a = geByClass1("_im_dialog_" + n.peerId, e);
@@ -1402,7 +1419,8 @@
                     black: 1,
                     center: !0,
                     shift: [1, 10],
-                    toup: n > 150
+                    toup: n > 150,
+                    zIndex: 1
                 })
             },
             d = function(e, t) {
@@ -1412,6 +1430,7 @@
                     text: getLang("mail_end_conversation"),
                     black: 1,
                     center: !0,
+                    zIndex: 1,
                     shift: [1, 4],
                     toup: n > 150
                 })
@@ -2968,7 +2987,7 @@
         return e.set(q.bind(null, t))
             .then(function(e) {
                 return (0, wt.isFullyLoadedTab)(e.get(), t) ? e.get()
-                    .tabs[t].attaches : []
+                    .tabs[t].attaches : [];
             })
     }
 
@@ -2983,7 +3002,7 @@
     }
 
     function W(e, t, n) {
-        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].online = t), Promise.resolve(n);
+        return (0, wt.isTabLoaded)(n, e) && (n.tabs[e].online = t), Promise.resolve(n)
     }
 
     function V(e, t, n) {
@@ -3421,15 +3440,16 @@
             .filter(function(e) {
                 return e && !r.admins[e]
             });
-        return n.pause(), Promise.all([Me(a, r), O(i, r)])["catch"](function() {
-                return r
-            })
-            .then(function() {
-                return n.resume()
-            })
-            .then(function() {
-                return r
-            })
+        return 0 === Object.keys(a)
+            .length && 0 === i.length ? Promise.resolve(r) : (n.pause(), Promise.all([Me(a, r), O(i, r)])["catch"](function() {
+                    return r
+                })
+                .then(function() {
+                    return n.resume()
+                })
+                .then(function() {
+                    return r
+                }))
     }
 
     function Oe(e, t, n, r) {
@@ -4452,21 +4472,21 @@
     "use strict";
 
     function n(e) {
-        var t = k(e, 2),
+        var t = I(e, 2),
             n = t[1];
         return {
-            type: I,
+            type: P,
             localId: n
         }
     }
 
     function r(e) {
-        var t = k(e, 4),
+        var t = I(e, 4),
             n = t[1],
             r = t[2],
             a = t[3];
         return {
-            type: L,
+            type: A,
             messageId: n,
             mask: r,
             peerId: a
@@ -4474,12 +4494,12 @@
     }
 
     function a(e) {
-        var t = k(e, 4),
+        var t = I(e, 4),
             n = t[1],
             r = t[2],
             a = t[3];
         return {
-            type: P,
+            type: L,
             messageId: n,
             flags: r,
             peerId: a
@@ -4487,12 +4507,12 @@
     }
 
     function i(e) {
-        var t = k(e, 4),
+        var t = I(e, 4),
             n = t[1],
             r = t[2],
             a = t[3];
         return {
-            type: A,
+            type: D,
             messageId: n,
             flags: r,
             peerId: a
@@ -4500,7 +4520,7 @@
     }
 
     function s(e) {
-        for (var t = k(e, 9), n = t[1], r = t[2], a = t[3], i = t[4], s = t[5], o = t[6], l = t[7], u = t[8], c = [], d = 1; l["attach" + d + "_type"];) c.push({
+        for (var t = I(e, 9), n = t[1], r = t[2], a = t[3], i = t[4], s = t[5], o = t[6], l = t[7], u = t[8], c = [], d = 1; l["attach" + d + "_type"];) c.push({
             type: l["attach" + d + "_type"],
             id: l["attach" + d],
             productId: l["attach" + d + "_product_id"],
@@ -4525,7 +4545,7 @@
             productId: null,
             build: null
         }), {
-            type: D,
+            type: M,
             messageId: intval(n),
             flags: intval(r),
             peerId: intval(a),
@@ -4540,18 +4560,7 @@
     }
 
     function o(e) {
-        var t = k(e, 3),
-            n = t[1],
-            r = t[2];
-        return {
-            type: M,
-            peerId: n,
-            upToId: r
-        }
-    }
-
-    function l(e) {
-        var t = k(e, 3),
+        var t = I(e, 3),
             n = t[1],
             r = t[2];
         return {
@@ -4561,36 +4570,47 @@
         }
     }
 
-    function u(e) {
-        var t = k(e, 3),
+    function l(e) {
+        var t = I(e, 3),
             n = t[1],
             r = t[2];
         return {
             type: O,
+            peerId: n,
+            upToId: r
+        }
+    }
+
+    function u(e) {
+        var t = I(e, 3),
+            n = t[1],
+            r = t[2];
+        return {
+            type: B,
             userId: -n,
             platform: r
         }
     }
 
     function c(e) {
-        var t = k(e, 3),
+        var t = I(e, 3),
             n = t[1],
             r = t[2];
         return {
-            type: B,
+            type: F,
             userId: -n,
             reason: r
         }
     }
 
     function d(e) {
-        var t = k(e, 4),
+        var t = I(e, 4),
             n = t[1],
             r = t[2],
             a = t[3],
             i = void 0 === a ? !1 : a;
         return {
-            type: G,
+            type: z,
             peerId: n,
             mask: r,
             local: i
@@ -4598,24 +4618,24 @@
     }
 
     function g(e) {
-        var t = k(e, 3),
+        var t = I(e, 3),
             n = t[1],
             r = t[2];
         return {
-            type: z,
+            type: q,
             peerId: n,
             mask: r
         }
     }
 
     function f(e) {
-        var t = k(e, 4),
+        var t = I(e, 4),
             n = t[1],
             r = t[2],
             a = t[3],
             i = void 0 === a ? !1 : a;
         return {
-            type: q,
+            type: K,
             peerId: n,
             mask: r,
             local: i
@@ -4623,63 +4643,63 @@
     }
 
     function m(e) {
-        var t = k(e, 3),
+        var t = I(e, 3),
             n = t[1],
             r = t[2];
         return {
-            type: F,
+            type: N,
             chatId: n,
             self: r
         }
     }
 
     function p(e) {
-        var t = k(e, 2),
+        var t = I(e, 2),
             n = t[1];
         return {
-            type: N,
+            type: R,
             userId: n,
             peerId: n
         }
     }
 
     function _(e) {
-        var t = k(e, 3),
+        var t = I(e, 3),
             n = t[1],
             r = t[2];
         return {
-            type: N,
+            type: R,
             userId: n,
             peerId: r + 2e9
         }
     }
 
     function v(e) {
-        var t = k(e, 3),
+        var t = I(e, 3),
             n = t[1],
             r = t[2];
         return {
-            type: R,
+            type: j,
             userId: n,
             callId: r
         }
     }
 
     function h(e) {
-        var t = k(e, 2),
+        var t = I(e, 2),
             n = t[1];
         return {
-            type: j,
+            type: U,
             count: n
         }
     }
 
     function b(e) {
-        var t = k(e, 2),
+        var t = I(e, 2),
             n = t[1],
             r = void 0 === n ? {} : n;
         return {
-            type: U,
+            type: H,
             peerId: r.peer_id,
             sound: r.sound,
             disabledUntil: r.disabled_until
@@ -4688,27 +4708,27 @@
 
     function y(e) {
         return {
-            type: H,
+            type: G,
             params: e
         }
     }
 
     function C(e) {
         return {
-            type: Q,
+            type: W,
             state: e
         }
     }
 
     function E() {
         return {
-            type: K
+            type: Q
         }
     }
 
     function T() {
         return {
-            type: W
+            type: V
         }
     }
 
@@ -4717,7 +4737,7 @@
             n = arguments.length <= 2 || void 0 === arguments[2] ? !1 : arguments[2],
             r = arguments.length <= 3 || void 0 === arguments[3] ? !1 : arguments[3];
         return {
-            type: Y,
+            type: Z,
             peerId: e,
             msgid: t,
             forward: n,
@@ -4726,14 +4746,21 @@
     }
 
     function S(e) {
-        var t = k(e, 6),
+        return {
+            type: $,
+            tab: e
+        }
+    }
+
+    function k(e) {
+        var t = I(e, 6),
             n = (t[0], t[1]),
             r = t[2],
             a = t[3],
             i = t[4],
             s = t[5];
         return {
-            type: V,
+            type: Y,
             free: !!intval(n) || intval(i) === vk.id,
             resource: r,
             peerId: intval(a),
@@ -4744,7 +4771,7 @@
     Object.defineProperty(t, "__esModule", {
         value: !0
     });
-    var k = function() {
+    var I = function() {
         function e(e, t) {
             var n = [],
                 r = !0,
@@ -4767,36 +4794,37 @@
         return function(t, n) {
             if (Array.isArray(t)) return t;
             if (Symbol.iterator in Object(t)) return e(t, n);
-            throw new TypeError("Invalid attempt to destructure non-iterable instance")
+            throw new TypeError("Invalid attempt to destructure non-iterable instance");
         }
     }();
     t.deleteEvent = n, t.replaceFlagsEvent = r, t.setFlagsEvent = a, t.resetFlagsEvent = i, t.addMessageEvent = s, t.readInboundEvent = o, t.readOutboundEvent = l, t.gotOnlineEvent =
         u, t.gotOfflineEvent = c, t.resetDirectoriesEvent = d, t.replaceDirectoriesEvent = g, t.setDirectoriesEvent = f, t.chatChangedEvent = m, t.typingUserEvent = p, t.typingChatEvent =
-        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b,
-        t.emptyEvent = y, t.transitionEvent = C, t.resyncEvent = E, t.resetPeer = T, t.changePeer = w, t.mutexEvent = S;
-    var I = t.DELETE = "event_delete",
-        P = t.SET_FLAGS = "event_set_flags",
-        L = t.REPLACE_FLAGS = "event_replace_flags",
-        A = t.RESET_FLAGS = "event_reset_flags",
-        D = t.ADD_MESSAGE = "event_add_message",
-        M = t.READ_INBOUND = "event_read_inbound",
-        x = t.READ_OUTBOUND = "event_read_outbound",
-        O = t.GOT_ONLINE = "event_got_online",
-        B = t.GOT_OFFLINE = "event_got_offline",
-        F = t.CHAT_CHANGED = "event_chat_changed",
-        N = t.TYPING = "event_typing",
-        R = t.VIDEO_CALL = "event_video_call",
-        j = t.UNREAD_COUNT = "event_unread_count",
-        U = t.NOTIFY_SETTINGS_CHANGED = "event_notify_settings_changed",
-        H = t.EMPTY = "event_empty",
-        G = t.RESET_DIRECTORIES = "event_reset_directories",
-        z = t.REPLACE_DIRECTORIES = "event_replace_directories",
-        q = t.SET_DIRECTORIES = "event_set_directories",
-        K = t.RESYNC = "event_resync",
-        Q = t.TRANSITION = "transition_event",
-        W = t.RESET_PEER = "reset_peer",
-        V = t.MUTEX = "mutex",
-        Y = t.CHANGE_PEER = "change_peer";
+        _, t.videoCallEvent = v, t.unreadCountEvent = h, t.notifySettingsChangedEvent = b, t.emptyEvent = y, t.transitionEvent = C, t.resyncEvent = E, t.resetPeer = T, t.changePeer =
+        w, t.changeTab = S, t.mutexEvent = k;
+    var P = t.DELETE = "event_delete",
+        L = t.SET_FLAGS = "event_set_flags",
+        A = t.REPLACE_FLAGS = "event_replace_flags",
+        D = t.RESET_FLAGS = "event_reset_flags",
+        M = t.ADD_MESSAGE = "event_add_message",
+        x = t.READ_INBOUND = "event_read_inbound",
+        O = t.READ_OUTBOUND = "event_read_outbound",
+        B = t.GOT_ONLINE = "event_got_online",
+        F = t.GOT_OFFLINE = "event_got_offline",
+        N = t.CHAT_CHANGED = "event_chat_changed",
+        R = t.TYPING = "event_typing",
+        j = t.VIDEO_CALL = "event_video_call",
+        U = t.UNREAD_COUNT = "event_unread_count",
+        H = t.NOTIFY_SETTINGS_CHANGED = "event_notify_settings_changed",
+        G = t.EMPTY = "event_empty",
+        z = t.RESET_DIRECTORIES = "event_reset_directories",
+        q = t.REPLACE_DIRECTORIES = "event_replace_directories",
+        K = t.SET_DIRECTORIES = "event_set_directories",
+        Q = t.RESYNC = "event_resync",
+        W = t.TRANSITION = "transition_event",
+        V = t.RESET_PEER = "reset_peer",
+        Y = t.MUTEX = "mutex",
+        Z = t.CHANGE_PEER = "change_peer",
+        $ = t.CHANGE_TAB = "evnt_change_tab";
     t.FLAG_UNREAD = 1, t.FLAG_OUTBOUND = 2, t.FLAG_IMPORTANT = 8, t.FLAG_CHAT = 16, t.FLAG_FRIENDS = 32, t.FLAG_SPAM = 64, t.FLAG_DELETED = 128, t.FLAG_MEDIA = 512, t.FOLDER_IMPORTANT =
         1, t.FOLDER_UNRESPOND = 2
 }, function(e, t) {
@@ -6230,8 +6258,7 @@
                 return l + o > i.length ? s = n()
                     .more(o, l)
                     .then(function(t) {
-                        return t === !1 ? [] : (0 === t.length && e.set(g),
-                            t)
+                        return t === !1 ? [] : (0 === t.length && e.set(g), t)
                     })
                     .then(P.bind(null, e, t, a, n, e.get()
                         .pipeId)) : (s = Promise.resolve(), E(t, a, n, e)), s
@@ -6568,7 +6595,8 @@
     function d(e, t, n, r, a, i) {
         if (0 !== e.get()
             .peer && (0, M.isFullyLoadedTab)(e.get(), e.get()
-                .peer) && !layers.visible) {
+                .peer) && !(layers.visible || e.get()
+                .showed && (0, M.isClassicInterface)(e))) {
             var s = (0, M.wrapLoading)(n);
             if ((0, D.isSearchingInplace)(e.get()
                     .peer, e.get()) || r(i), !ee && i.scrollTop() < z) {
@@ -6801,8 +6829,8 @@
         })
     }
 
-    function L(e, t, n, i, s, c, d, g, f, v, C, E, T, S, k, P, L, A) {
-        var B;
+    function L(e, t, n, i, s, d, g, f, v, C, E, T, S, k, P, L, A, B) {
+        var F;
         return {
             changePeer: function(a) {
                 var o = arguments.length <= 1 || void 0 === arguments[1] ? !0 : arguments[1],
@@ -6820,28 +6848,31 @@
                         .updateTyping({
                             peerId: d
                         }, a), h(a, e), (0, M.isClassicInterface)(a) && (p(e), _(a, e)), 0 !== g || (0, M.isReservedPeer)(d) ? (0, M.isReservedPeer)(g) || (0, M.isReservedPeer)
-                        (d) ? void 0 : u(e, a, d, t, s, n, v, c) : r(e, a, d, t, s, n, v, c)
+                        (d) ? void 0 : u(e, a, d, t, s, n, C, c) : r(e, a, d, t, s, n, C, c)
                 }
+            },
+            saveScroll: function(e) {
+                return c(e, t)
             },
             loadingPeer: function(t) {
                 (0, D.isAnythingLoading)(t.get()) || (removeClass(e, "im-page--history_empty"), addClass(e, "im-page--history_loading"))
             },
             deselectDialog: function(e) {
-                c()
+                d()
                     .removeSelection(e)
             },
             replaceMessageAttrs: function(t, n) {
                 (0, M.replaceMessageAttrs)(n.get(), o(e), t)
             },
             cleanSelection: function(e) {
-                E.cleanSelection(e)
+                T.cleanSelection(e)
             },
             updateDialogFilters: function(e) {
-                c()
+                d()
                     .updateDialogFilters(e)
             },
             getSearchResulstModule: function() {
-                return B
+                return F
             },
             insertSearch: function(n, r) {
                 addClass(e, "im-page--history_search"), n ? (removeClass(e, "im-page--history_search-empty"), o(e)
@@ -6849,7 +6880,7 @@
                     .innerHTML = (0, M.renderEmptySearch)()), I(r, t, e), t.scrollBottom(0), h(r, e)
             },
             updateChatTopic: function(e, t) {
-                c()
+                d()
                     .updateDialog(e, t), e === t.get()
                     .peer && n.renderPeer(t)
             },
@@ -6864,7 +6895,7 @@
             },
             markImportant: function(t, r, a) {
                 var i = geByClass1("_im_mess_" + t, e);
-                i && (n.changedMessageSelection(a), C.markImportant(t, r, a))
+                i && (n.changedMessageSelection(a), E.markImportant(t, r, a))
             },
             loadHistory: function(n, r, a) {
                 var i = arguments.length <= 3 || void 0 === arguments[3] ? !1 : arguments[3],
@@ -6930,7 +6961,7 @@
                 (0, M.isPeerActive)(n, e.get()) && y(t, r) && t.scrollBottom(q)
             },
             newMessage: function(e, t) {
-                c()
+                d()
                     .newMessage(e, t)
             },
             scroll: function(e, n) {
@@ -6939,16 +6970,16 @@
                     .peer) {
                     var a = r ? t.getScrollHeight() : 40;
                     a = "up" === n ? -a : a, r ? t.smoothScroll(a, function() {
-                        k(a, t)
-                    }) : (t.scrollTop(t.scrollTop() + a), k(a, t))
+                        P(a, t)
+                    }) : (t.scrollTop(t.scrollTop() + a), P(a, t))
                 }
             },
             showCreation: function(e, t) {
-                c()
+                d()
                     .showCreation(e, t)
             },
             updateScroll: function() {
-                return I(P, t, e)
+                return I(L, t, e)
             },
             changedMessageSelection: function(e) {
                 n.changedMessageSelection(e)
@@ -6979,7 +7010,7 @@
                     .peer === n && (0, M.removeMessagesWithRestore)(t, n, r, o(e))
             },
             updateState: function(e, t) {
-                c()
+                d()
                     .updateState(e, t)
             },
             updateChat: function(t, r) {
@@ -6994,12 +7025,12 @@
                 i.focusOn(e)
             },
             showSearch: function(t) {
-                addClass(e, "im-page--hisory_search-open"), v.focus(t), B = (0, j.mount)(e, t, s)
+                addClass(e, "im-page--hisory_search-open"), C.focus(t), F = (0, j.mount)(e, t, s)
             },
             cancelSearch: function(n) {
                 var r = arguments.length <= 1 || void 0 === arguments[1] ? !0 : arguments[1];
-                if (removeClass(e, "im-page--hisory_search-open"), removeClass(e, "im-page--history_search"), removeClass(e, "im-page--history_search-empty"), B && (B.unmount(),
-                        B = !1), r && !(0, M.isReservedPeer)(n.get()
+                if (removeClass(e, "im-page--hisory_search-open"), removeClass(e, "im-page--history_search"), removeClass(e, "im-page--history_search-empty"), F && (F.unmount(),
+                        F = !1), r && !(0, M.isReservedPeer)(n.get()
                         .peer)) {
                     var a = n.get()
                         .tabs[n.get()
@@ -7007,17 +7038,22 @@
                     o(e)
                         .innerHTML = (0, D.strHistory)(a.history), I(n, t, e), t.scrollBottom(0), n.get()
                         .msgid && (m(t, e, n.get()
-                            .msgid), h(n, e)), L(t)
+                            .msgid), h(n, e)), A(t)
                 }
             },
             unmount: function() {
-                (0, O.removeDelegateEvent)(e, "click", M.FAILED_CLASS, d), (0, O.removeDelegateEvent)(e, "click", M.RESTORE_CLASS, g), (0, O.removeDelegateEvent)(e,
-                    "click", W, f), removeEvent(geByClass1("_im_start_new", e), "click", T), removeEvent(geByClass1(V, e), "click", S), t.destroy(), clearInterval(A),
-                    i.unmount(), n.unmount(), C.unmount(), E.unmount()
+                (0, O.removeDelegateEvent)(e, "click", M.FAILED_CLASS, g), (0, O.removeDelegateEvent)(e, "click", M.RESTORE_CLASS, f), (0, O.removeDelegateEvent)(e,
+                    "click", W, v), removeEvent(geByClass1("_im_start_new", e), "click", S), removeEvent(geByClass1(V, e), "click", k), t.destroy(), clearInterval(B),
+                    i.unmount(), n.unmount(), E.unmount(), T.unmount()
             },
             removePeer: function(e, t) {
-                c()
+                d()
                     .removePeer(e, t)
+            },
+            restoreScroll: function(e, n) {
+                var r = e.get()
+                    .tabs[n];
+                t.scrollBottom(r.scrollBottom || 0)
             },
             respond: function(e, n) {
                 i.attachMessages(e, n), i.focusOn(e), t.scrollBottom(q)
@@ -7025,12 +7061,12 @@
             startForward: function(t) {
                 addClass(e, "im-page--history_fwd"), geByClass1("_im_explain_fwd", e)
                     .textContent = getLang("mail_explain_fwd", t.get()
-                        .pendingForward.length), c()
+                        .pendingForward.length), d()
                     .removeSelection(t);
                 var n = (0, x.executionStackPush)(t.get()
                     .stack, "forward",
                     function() {
-                        return w(t, c, e)
+                        return w(t, d, e)
                     });
                 t.set(D.setExecStack.bind(null, n))
             }
@@ -7701,7 +7737,8 @@
             .tabs[e.get()
                 .peer];
         return r.skipped > 0 ? (t()
-            .loadingPeer(e), e.set(O.changePeer.bind(null, e.get()
+            .loadingPeer(e),
+            e.set(O.changePeer.bind(null, e.get()
                 .peer, !1))
             .then(function(t) {
                 return e.set(O.loadPeer.bind(null, e.get()

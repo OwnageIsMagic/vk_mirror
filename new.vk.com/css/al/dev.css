@@ -1679,7 +1679,7 @@ input.dev_section_search {
 }
 
 .dev_method_page_access_row_icon {
-    margin: 3px 0 0;
+    margin: 2px 0 0;
     width: 20px;
     height: 19px;
     background: url(/images/icons/dev_method_access_icons.png) no-repeat
@@ -2153,5 +2153,5 @@ input.dev_wrong_val {
 }
 
 .dev_similar_methods_wrap .dev_methods_list_desc {
-    width: 505px!important
+    width: 465px!important
 }

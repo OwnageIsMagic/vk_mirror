@@ -2188,6 +2188,7 @@ if (!window.Emoji) {
                     return;
                 }
 
+
                 var opt = {
                     index: tt_index,
                     className: tt_classname,
@@ -2218,6 +2219,10 @@ if (!window.Emoji) {
                         el_top = el_cur_top + el_diff;
                         setStyle(el, 'top', el_top);
                     }
+                }
+
+                if (gpeByClass('_im_mess_stack', el)) {
+                    opt.appendParentCls = '_im_mess_stack';
                 }
 
                 showTooltip(el, opt);

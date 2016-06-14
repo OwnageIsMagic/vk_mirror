@@ -636,30 +636,30 @@ var Friends = {
                     }
         }
     },
-    actionPossible: function(e, r, s, n) {
+    actionPossible: function(e, r, s, n, i) {
         if (window.tooltips && tooltips.hide(n), cur.possibleAdded || (cur.possibleAdded = {}), !cur.possibleAdded[e]) {
-            cur.possibleAdded[e] = 1;
-            var i = gpeByClass("right_list_row", n);
-            if (s) var t = {
+            cur.possibleAdded[e] = 1, i || (i = cur.module);
+            var t = gpeByClass("right_list_row", n);
+            if (s) var o = {
                 act: "add",
                 mid: e,
                 hash: r,
-                ref: cur.module,
+                from: i,
                 request: 1
             };
-            else var t = {
+            else var o = {
                 act: "hide_possible",
                 mid: e,
                 hash: r,
-                ref: cur.module
+                from: i
             };
-            return ajax.post("al_friends.php", t, {
+            return ajax.post("al_friends.php", o, {
                 onDone: function(e) {
                     s && showDoneBox(e);
-                    var r = i.parentNode,
+                    var r = t.parentNode,
                         n = geByClass1("unshown", r);
-                    n && domInsertBefore(n, i), fadeOut(i, 500, function() {
-                        re(i), n || geByClass1("right_list_row", r) || slideUp("friends_possible_block", 100)
+                    n && domInsertBefore(n, t), fadeOut(t, 500, function() {
+                        re(t), n || geByClass1("right_list_row", r) || slideUp("friends_possible_block", 100)
                     }), n && setTimeout(fadeIn.pbind(n, 200, removeClass.pbind(n, "unshown")), 500)
                 },
                 onFail: function(e) {

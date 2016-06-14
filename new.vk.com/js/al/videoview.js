@@ -838,7 +838,7 @@ var Videoview = {
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
                 hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script)
+                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
             }
         },
         commAction: function(e, i, o, t, a) {
@@ -1474,8 +1474,8 @@ var Videoview = {
                             break;
                         case "like_reply":
                             var a = (e[2], +e[3]),
-                                r = e[4],
-                                d = e[5],
+                                r = +e[4],
+                                d = +e[5],
                                 t = ge("wpe_bottom" + e[2]);
                             if (t) {
                                 var n = domByClass(t, "_like_wrap"),
