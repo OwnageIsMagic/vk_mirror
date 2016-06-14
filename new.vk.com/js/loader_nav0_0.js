@@ -114,10 +114,10 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 707556478630,
+    'nav': 705419768957,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
-    'common.css': 2812298637,
+    'common.css': 2446226229,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -126,12 +126,12 @@ var stVersions = {
     'filebutton.css': 2582548248,
     'filebutton.js': 1457823047,
     'lite.js': 2562742284,
-    'lite.css': 4092141447,
+    'lite.css': 1766001456,
     'ie6.css': 1054141387,
     'ie7.css': 532233945,
     'rtl.css': 836314285,
     'pagination.js': 46926455,
-    'blog.css': 2381338003,
+    'blog.css': 190866129,
     'blog.js': 2004066111,
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
@@ -163,8 +163,8 @@ var stVersions = {
     'fullscreen_pv.css': 4174249355,
     'friendsphotos.js': 3869757571,
     'friendsphotos.css': 3816436303,
-    'friends.js': 1395049243,
-    'friends.css': 2197882364,
+    'friends.js': 1420777660,
+    'friends.css': 1659675445,
     'friends_search.js': 1498932479,
     'friends_search.css': 204916655,
     'board.js': 1462376027,
@@ -254,7 +254,7 @@ var stVersions = {
     'feed.css': 3945987478,
     'privacy.js': 3873593331,
     'privacy.css': 328635716,
-    'apps.css': 2016510290,
+    'apps.css': 2657603653,
     'apps.js': 4128471812,
     'apps_edit.js': 807186031,
     'apps_edit.css': 1794020803,
@@ -312,7 +312,7 @@ var stVersions = {
     'tasks.css': 1669297652,
     'helpdesk.js': 3935987249,
     'tickets.js': 4219734666,
-    'tickets.css': 701396073,
+    'tickets.css': 196829977,
     'faq.js': 1087455888,
     'faq.css': 3063353021,
     'meminfo.css': 1273313007,
@@ -374,7 +374,7 @@ var stVersions = {
     'pe.js': 2387291388,
     'pe.css': 660979626,
     'dev.js': 536046694,
-    'dev.css': 1611233804,
+    'dev.css': 2313844771,
     'share.css': 3743589396,
     'stickers_office.css': 2865554295,
     'stickers_office.js': 2247906357,
@@ -389,7 +389,7 @@ var stVersions = {
     'ui.css': 849758697,
     'ui.js': 3053181925,
     'ui_common.js': 262683571,
-    'ui_common.css': 1355289357,
+    'ui_common.css': 3774604225,
     'ui_media_selector.js': 1784290467,
     'ui_media_selector.css': 428428390,
     'admin.js': 1614876408,
@@ -493,4 +493,4 @@ var stTypes = {
         'snapster/main.js': 1
     }
 };
-var _rnd = 5800;
+var _rnd = 5318;

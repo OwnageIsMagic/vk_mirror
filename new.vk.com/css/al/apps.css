@@ -1587,11 +1587,15 @@ a.page_block_header:hover .apps_cat_header_link:after {
 }
 
 .app_header_with_moderation .apps_admin_info {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
     position: absolute;
     font-size: 11px;
-    line-height: 11px;
+    line-height: 12px;
     left: 0;
-    top: 37.5px
+    top: 37px
 }
 
 .app_header_with_moderation .apps_options_bar_left>div {
@@ -1654,14 +1658,6 @@ a.page_block_header:hover .apps_cat_header_link:after {
 
 .apps_divided_links .divider:first-child {
     display: none
-}
-
-.apps_divided_link_w_lim {
-    max-width: 90px;
-    overflow: hidden;
-    display: inline-block;
-    vertical-align: top;
-    text-overflow: ellipsis
 }
 
 .apps_main {

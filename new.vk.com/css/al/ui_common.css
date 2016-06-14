@@ -1751,20 +1751,20 @@ a.ui_search_custom_link {
 
 .right_list_photo {
     float: left;
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
     overflow: hidden;
     margin-right: 8px
 }
 
 .right_list_img {
-    width: 34px;
-    height: 34px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%
 }
 
 .right_list_info {
-    padding-top: 2px;
+    padding-top: 0;
     font-size: 12px
 }
 

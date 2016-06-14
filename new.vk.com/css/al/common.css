@@ -3401,7 +3401,7 @@ body.no_stl #stl_bg {
     border-width: 0 0 1px;
     margin: -20px -25px 0;
     padding: 15px 25px 16px;
-    color: #2b2f33;
+    color: #000;
     font-size: 12px;
     background: none;
     background-color: #fafbfc

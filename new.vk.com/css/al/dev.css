@@ -1554,14 +1554,14 @@ input.dev_section_search {
 
 .dev_methods_list_access_icon {
     width: 20px;
-    height: 19px;
+    height: 21px;
     margin: 5px 10px 0;
     display: inline-block
 }
 
 .dev_methods_list_access_group_icon {
     background: url(/images/icons/dev_method_access_icons.png) no-repeat;
-    background-position: left -19px
+    background-position: left -21px
 }
 
 .dev_methods_list_name {
@@ -1681,7 +1681,7 @@ input.dev_section_search {
 .dev_method_page_access_row_icon {
     margin: 2px 0 0;
     width: 20px;
-    height: 19px;
+    height: 21px;
     background: url(/images/icons/dev_method_access_icons.png) no-repeat
 }
 
@@ -1690,15 +1690,15 @@ input.dev_section_search {
 }
 
 .dev_method_page_access_row_group_icon {
-    background-position: left -19px
+    background-position: left -21px
 }
 
 .dev_method_page_access_row_open_icon {
-    background-position: left -38px
+    background-position: left -42px
 }
 
 .dev_method_page_access_row_server_icon {
-    background-position: left -57px
+    background-position: left -63px
 }
 
 .dev_method_page_access_row_desc {

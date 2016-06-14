@@ -252,7 +252,7 @@ var Friends = {
                 var s = (cur.requestsCount || cur.suggCount ? 1 : 0) + (cur.allRequestsCount ? 1 : 0) + (cur.outRequestsCount ? 1 : 0);
                 toggle(geByClass1("friends_section_requests", "narrow_column"), s >= 1), toggle("friends_tab_requests", cur.requestsCount > 0 || cur.suggCount > 0), toggle(
                     "friends_tab_all_requests", cur.allRequestsCount > 0), toggle("friends_tab_out_requests", cur.outRequestsCount > 0), addClass("friends",
-                    "friends_requests")
+                    "friends_requests"), val(geByClass1("_friends_list", "friends_req_block"), "")
             } else if ("phonebook" == cur.section) show("friends_search_input_wrap", cur.fSearchFilterLnk), Friends.showListHeader(cur.summaryLang.friends_filter_phonebook),
                 addClass("friends", "friends_phonebook");
             else if ("recent" == cur.section) show("friends_search_input_wrap", cur.fSearchFilterLnk), Friends.showListHeader(cur.summaryLang.friends_tab_recently_added);
@@ -927,7 +927,8 @@ var Friends = {
             })
         }
         25 > r && (geByClass1("friends_section_list" + r, "narrow_column")
-            .innerHTML = s, cur.userLists[r] = s);
+            .innerHTML = s,
+            cur.userLists[r] = s);
         var c = 1 << r;
         cur.friendsList[i] = [];
         for (var a in cur.friends) {
