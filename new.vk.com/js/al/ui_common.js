@@ -109,10 +109,10 @@ var uiTabs = {
                 if (r != t && addClass(r, "ui_tab_group_sel"), addClass(t, "ui_tab_sel"), n && removeClass(n, "ui_tab_hide_separator"), o) {
                     i = geByClass1("ui_tab_group_items", o, "div")
                         .children;
-                    var c = null;
+                    var d = null;
                     each(i, function(t, e) {
-                        "SPAN" === e.tagName ? c = e : hasClass(domFC(e), "ui_tab_sel") || (c = null)
-                    }), c && addClass(o, "ui_tab_hide_separator")
+                        "SPAN" === e.tagName ? d = e : hasClass(domFC(e), "ui_tab_sel") || (d = null)
+                    }), d && addClass(o, "ui_tab_hide_separator")
                 }
             }
             return !1
@@ -178,15 +178,15 @@ var uiTabs = {
                         u = se('<div class="' + l.className +
                             ' ui_actions_menu_dummy_wrap" onmouseover="uiActionsMenu.show(this);" onmouseout="uiActionsMenu.hide(this);"></div>');
                     u.appendChild(n), r.appendChild(u), data(t, "dummyMenu", u), data(u, "origMenu", t), t = u;
-                    var c = intval(getStyle(n, "top")),
-                        d = intval(getStyle(n, "left")),
+                    var d = intval(getStyle(n, "top")),
+                        c = intval(getStyle(n, "left")),
                         p = intval(getStyle(n, "right")),
-                        v = {
-                            top: h[1] - a[1] + c
+                        _ = {
+                            top: h[1] - a[1] + d
                         };
-                    if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + d, setStyle(n, v), i.processHoverCls) {
-                        var _ = domClosest(i.processHoverCls, l);
-                        addEvent(t, "mouseover", addClass.pbind(_, "hover")), addEvent(t, "mouseout", removeClass.pbind(_, "hover"))
+                    if (p ? _.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : _.left = h[0] - a[0] + c, setStyle(n, _), i.processHoverCls) {
+                        var v = domClosest(i.processHoverCls, l);
+                        addEvent(t, "mouseover", addClass.pbind(v, "hover")), addEvent(t, "mouseout", removeClass.pbind(v, "hover"))
                     }
                 }
             }
@@ -246,12 +246,12 @@ var uiTabs = {
                     hide(this)
                 })
             }
-            var c = geByClass1("_ui_rmenu_slider", e),
-                d = intval(c.style.top),
+            var d = geByClass1("_ui_rmenu_slider", e),
+                c = intval(d.style.top),
                 p = {
                     height: o
                 };
-            return browser.msie_edge ? p.marginTop = n - d + "px" : p[cssTransformProp] = "translateY(" + (n - d) + "px)", setStyle(c, p), removeClass(i, "ui_rmenu_item_sel"),
+            return browser.msie_edge ? p.marginTop = n - c + "px" : p[cssTransformProp] = "translateY(" + (n - c) + "px)", setStyle(d, p), removeClass(i, "ui_rmenu_item_sel"),
                 addClass(t, "ui_rmenu_item_sel"), hasClass(e, "_ui_rmenu_auto_expand") ? each(l.concat(r), function() {
                     uiRightMenu.toggleSubmenu(this)
                 }) : hasClass(t, "_ui_rmenu_subitem") && !isVisible(domPN(t)) && uiRightMenu.toggleSubmenu(domPN(t)), !1
@@ -261,6 +261,9 @@ var uiTabs = {
         },
         hideSliding: function(t) {
             removeClass(t, "ui_rmenu_sliding")
+        },
+        showSliding: function(t) {
+            addClass(t, "ui_rmenu_sliding")
         },
         showProgress: function(t) {
             hasClass(t, "ui_rmenu") || (t = gpeByClass("ui_rmenu", t));
@@ -412,8 +415,8 @@ var uiTabs = {
                         if (setStyle(i, {
                                 marginLeft: u
                             }), n) {
-                            var c = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
-                            e = Math.min(l, Math.max(-t.offsetHeight, c)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
+                            var d = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
+                            e = Math.min(l, Math.max(-t.offsetHeight, d)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
                         }
                     } else o && (setStyle(s, "height", ""), setStyle(i, {
                         top: "",
@@ -714,14 +717,14 @@ window.Scrollbar = window.Scrollbar || function() {
                                 this.shown !== !1 && this.update(!0)) : (cur.touchDiff = cur.touchY - (cur.touchY = t.touches[0].pageY), o.scrollTop += cur.touchDiff,
                                 o.scrollTop > 0 && this.shown !== !1 && this.update(!0)), cancelEvent(t)
                         }.bind(this),
-                        c = function() {
+                        d = function() {
                             cur.animateInt = setInterval(function() {
                                 cur.touchDiff = .9 * cur.touchDiff, cur.touchDiff < 1 && cur.touchDiff > -1 ? clearInterval(cur.animateInt) : (o[self.scrollProp] +=
                                     cur.touchDiff, this.update(!0))
                             }.bind(this), 0)
                         }.bind(this);
-                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", u), addEvent(o, "touchend", c), this.destroyList.push(function() {
-                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", u), removeEvent(o, "touchend", c)
+                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", u), addEvent(o, "touchend", d), this.destroyList.push(function() {
+                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", u), removeEvent(o, "touchend", d)
                     })
                 }
                 addEvent(this.inner, "mousedown", this.mouseDown), this.options.nokeys ? this.onkeydown = l : addEvent(window, "keydown", l), this.destroyList.push(
@@ -965,15 +968,15 @@ window.Scrollbar = window.Scrollbar || function() {
         }
         var u = s.length;
         s = s.slice(e, e + l);
-        var c = [];
+        var d = [];
         if (t) {
             t = clean(t);
-            var d = escapeRE(t),
+            var c = escapeRE(t),
                 p = parseLatin(t);
-            null != p && (d = d + "|" + escapeRE(p));
-            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d + "))(?![^<>]*>)(?![^&;]+;)", "gi")
+            null != p && (c = c + "|" + escapeRE(p));
+            var _ = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + c + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var _ = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
+        var v = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
                 l = t[1];
             if (e) {
@@ -991,9 +994,9 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                c.push(rs(n, _(this, t, r.invertedSelection, o, v)))
-            }), e || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
-                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), e ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), u > e +
+                d.push(rs(n, v(this, t, r.invertedSelection, o, _)))
+            }), e || d.length || d.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
+                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), d = d.join(" "), e ? this.olistEl.appendChild(cf(d)) : val(this.olistEl, d), u > e +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {
                 return r.renderList(t, e + l), cancelEvent(i)
             }), r.box && r.box.scroll && r.box.scroll.update(!1, !0), r.onScroll()

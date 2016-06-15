@@ -2221,13 +2221,13 @@ var Videoview = {
             if (t) {
                 var a = data(t, "playlist");
                 if (a) {
+                    e && (a.current = e);
                     var r = !1;
                     if (each(geByClass("video_plb_video", t), function() {
                             var i = this.getAttribute("data-vid");
                             if (e) i == e && (r = this), toggleClass(this, "video_plb_active", i == e);
                             else if (hasClass(this, "video_plb_active")) return r = this, !1
                         }), r) {
-                        e && (a.current = e);
                         var d = geByClass1("video_plb_list", t),
                             n = getXY(r)[1],
                             v = getSize(r)[1],
@@ -2267,9 +2267,12 @@ var Videoview = {
                             var l = r[s];
                             if (l[0] + "_" + l[1] == i) break
                         } else s = 0;
-                    var c = positive(s - VideoPlaylist.VIDEOS_LIMIT / 2),
-                        m = c + VideoPlaylist.VIDEOS_LIMIT;
-                    return m > r.length && (c = r.length - VideoPlaylist.VIDEOS_LIMIT, m = r.length), r = r.slice(c, m), {
+                    if (r.length > VideoPlaylist.VIDEOS_LIMIT) {
+                        var c = positive(s - VideoPlaylist.VIDEOS_LIMIT / 2),
+                            m = c + VideoPlaylist.VIDEOS_LIMIT;
+                        m > r.length && (c = positive(r.length - VideoPlaylist.VIDEOS_LIMIT), m = r.length), r = r.slice(c, m)
+                    }
+                    return {
                         id: e,
                         title: a,
                         list: r

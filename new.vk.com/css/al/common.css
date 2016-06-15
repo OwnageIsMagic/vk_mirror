@@ -5733,6 +5733,7 @@ button.ui_load_more_btn {
 
 .audio_row.canedit .audio_act#edit,
 .audio_row.canedit .audio_act#delete,
+.audio_current_rows .audio_row .audio_act#add,
 .audio_row.canadd .audio_act#add,
 .audio_row.recoms .audio_act#add,
 .audio_row.recoms .audio_act#delete,

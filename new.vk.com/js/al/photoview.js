@@ -70,18 +70,22 @@ var Photoview = {
         emojiHideTT: function(o, e) {
             return void 0 === cur.pvEmoji ? !1 : Emoji.ttHide(cur.pvEmoji, o, e)
         },
+        onHHOut: function(o) {
+            return Photoview.onHHMouseMove(o, !0)
+        },
         onHHLikeClick: function(o) {
             var e = geByClass1("pv_hh_like");
             return toggleClass(e, "pv_liked"), 2 != o.button ? (Photoview.like(), cancelEvent(o)) : void 0
         },
-        onHHMouseMove: throttle(function(o) {
-            var e = getSize(cur.pvHH),
-                t = getXY(cur.pvHH);
-            t[0] += e[0] / 2, t[1] += e[1] / 2;
-            var r = Math.sqrt((t[0] - o.pageX) * (t[0] - o.pageX) + (t[1] - o.pageY) * (t[1] - o.pageY)),
-                a = 220 / r - 1;
-            a = Math.min(1, Math.max(0, a)), setStyle(cur.pvHH, "opacity", Math.min(1, Math.max(0, a)))
-        }, 60),
+        onHHMouseMove: function(o, e) {
+            var t = getSize(cur.pvHH),
+                r = getXY(cur.pvHH);
+            r[0] += t[0] / 2, r[1] += t[1] / 2;
+            var a = Math.sqrt((r[0] - o.pageX) * (r[0] - o.pageX) + (r[1] - o.pageY) * (r[1] - o.pageY)),
+                i = 200,
+                p = 0;
+            i > a && !e && (p = .3 + (1 - a / i)), p = Math.min(1, Math.max(0, p)), setStyle(cur.pvHH, "opacity", p)
+        },
         toggleLightModeClass: function(o) {
             o = o ? cur.pvIsLightMode : !1, toggleClass(cur.pvBox, "pv_light_mode", !!o), o = o ? cur.pvShowBottomActions : !1, toggleClass(cur.pvBox, "pv_show_bottom_actions", !
                 !o)
@@ -115,7 +119,7 @@ var Photoview = {
                 d +
                 '>         <div class="pv_nav_panel_btn pv_nav_arrow" id="pv_nav_left" onmousedown="cur.pvClicked = true; Photoview.show(false, cur.pvIndex - 1, event);"><div></div></div>       </div>     ',
                 g = cur.pvIsLightMode ? "" : '      <div class="pv_hh_like_wrap" ' + r +
-                ' onclick="return Photoview.show(false, cur.pvIndex + 1, event);" >         <div class="pv_hh_like" onclick="return Photoview.onHHLikeClick(event)">           <div class="pv_hh_like_base"></div>           <div class="pv_hh_like_liked"></div>         </div>       </div>     ',
+                ' onclick="return Photoview.show(false, cur.pvIndex + 1, event);">         <div class="pv_hh_like" onclick="return Photoview.onHHLikeClick(event)">           <div class="pv_hh_like_base"></div>           <div class="pv_hh_like_liked"></div>         </div>       </div>     ',
                 _ = cur.pvIsLightMode ? "" :
                 '      <div class="pv_fs_wrap" onclick="return Photoview.show(false, cur.pvIndex + 1, event);">         <div class="pv_fs_btn" onclick="return Photoview.fullscreen(event);"><div></div></div>       </div>     ',
                 m =
@@ -127,7 +131,7 @@ var Photoview = {
             layer.innerHTML = '    <div class="pv_cont">    ' + h +
                 '       <div id="pv_box" class="_scroll_node" tabindex="0" onclick="cur.pvClicked = true;" onmouseenter="removeClass(layer, \'pv_mouse_over_close\')" onmouseleave="addClass(layer, \'pv_mouse_over_close\')">         ' +
                 l + '        <div id="pv_photo_wrap" class="clear_fix pv_photo_wrap" style="' + v +
-                '">           <div class="no_select pv_data" onmousemove="Photoview.onHHMouseMove(event)">                      <div id="pv_tag_info" class="clear_fix">               <div class="pv_tag_info_buttons_wrap"></div>               <div class="pv_tag_info_text"></div>             </div>            <div id="pv_tag_frame"></div>            <div id="pv_tag_faded"></div>            <div id="pv_tag_person" onmouseout="Photoview.hideTag()"></div>            <div class="pv_img_area_wrap">               <div class="pv_img_progress_wrap">' +
+                '">           <div class="no_select pv_data" onmousemove="Photoview.onHHMouseMove(event)" onmouseleave="return Photoview.onHHOut(event)">                      <div id="pv_tag_info" class="clear_fix">               <div class="pv_tag_info_buttons_wrap"></div>               <div class="pv_tag_info_text"></div>             </div>            <div id="pv_tag_frame"></div>            <div id="pv_tag_faded"></div>            <div id="pv_tag_person" onmouseout="Photoview.hideTag()"></div>            <div class="pv_img_area_wrap">               <div class="pv_img_progress_wrap">' +
                 f +
                 '</div>               <a onmouseout="Photoview.hideTag()" onmousedown="if (!cur.pvTagger && checkEvent(event) === false) return Photoview.show(false, cur.pvIndex + 1, event);" onselectstart="return cancelEvent(event);" onclick="return checkEvent(event)" href="" id="pv_photo"></a>            </div>             ' +
                 g + _ + m + "          </div>" + w + '        </div>        <div id="pv_albums_wrap" class="pv_white_bg photos_container_albums" style="' + s + '">' + a +
@@ -1699,7 +1703,7 @@ var Photoview = {
                         o.innerHTML = "", showProgress(o)
                     },
                     hideProgress: function() {
-                        re(Photoview.actionInfo())
+                        re(Photoview.actionInfo());
                     }
                 })
             }
