@@ -1825,14 +1825,16 @@ var Wall = {
     suggestUpdate: function(delta) {
         var c = ge('page_suggests_count'),
             v = intval(val(c));
-        if (c && (delta === -1 || delta === 1)) {
-            val(c, v += delta);
+        if (c) {
+            if (delta === -1 || delta === 1) {
+                val(c, v += delta);
+            }
             if (ge('page_wall_suggested_cnt')) {
                 val('page_wall_suggested_cnt', v ? langNumeric(v, '%s', true) : '');
             }
         }
     },
-    suggestPublished: function(post, text) {
+    suggestPublished: function(post, text, postponed) {
         if (cur.onepost) {
             return nav.go('/wall' + cur.oid);
         }
@@ -1844,6 +1846,11 @@ var Wall = {
         if (cur.wallType == 'full_own' || cur.wallType == 'full_all') {
             Pagination.recache(-1);
             FullWall.updateSummary(cur.pgCount);
+        }
+
+        if (postponed) {
+            val('page_postponed_posts', postponed);
+            wall.postponeUpdateCount();
         }
 
         if (!intval(val('page_suggests_count'))) {
@@ -1912,8 +1919,9 @@ var Wall = {
     postponeUpdateCount: function() {
         var wrapEl = ge('page_postponed_posts'),
             countEl = ge('page_wall_postponed_cnt'),
-            count = wrapEl && geByClass('post', wrapEl)
-            .length || 0;
+            count = wrapEl && (geByClass('post', wrapEl)
+                .length - geByClass('dld', wrapEl)
+                .length) || 0;
         if (!wrapEl || !countEl) return;
 
         val(countEl, count ? langNumeric(count, '%s', true) : '');
@@ -3877,7 +3885,9 @@ var Wall = {
 
                 if (hasClass(r, 'suggest')) {
                     Wall.suggestUpdate(-1);
-                } else if (hasClass(r, 'postponed')) {} else if (cur.wallType == 'own' || cur.wallType == 'all') {
+                } else if (hasClass(r, 'postponed')) {
+                    wall.postponeUpdateCount();
+                } else if (cur.wallType == 'own' || cur.wallType == 'all') {
                     if (hasClass(r, 'own')) ++cur.deletedCnts.own;
                     if (hasClass(r, 'all')) ++cur.deletedCnts.all;
                     Wall.update();
@@ -3985,7 +3995,7 @@ var Wall = {
                 show(t);
                 if (domNS(t)
                     .className == 'post_publish') show(domNS(t));
-                hide(pd);
+                re(pd);
 
                 if (cur.wallType == 'full_own' || cur.wallType == 'full_all') {
                     Pagination.recache(1);
@@ -4000,7 +4010,9 @@ var Wall = {
 
                 if (hasClass(r, 'suggest')) {
                     Wall.suggestUpdate(1);
-                } else if (hasClass(r, 'postponed')) {} else if (cur.wallType == 'own' || cur.wallType == 'all') {
+                } else if (hasClass(r, 'postponed')) {
+                    wall.postponeUpdateCount();
+                } else if (cur.wallType == 'own' || cur.wallType == 'all') {
                     if (hasClass(r, 'own')) --cur.deletedCnts.own;
                     if (hasClass(r, 'all')) --cur.deletedCnts.all;
                     Wall.update();
