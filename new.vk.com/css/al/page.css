@@ -280,7 +280,7 @@ div.wall_module .ext_video div {
 
 .post_header_info .explain,
 .post_author {
-    color: #939699
+    color: #939393
 }
 
 .post_author {
@@ -296,14 +296,14 @@ div.wall_module .ext_video div {
 }
 
 .post_date {
-    font-size: 12px;
-    padding-top: 3px
+    font-size: 12.5px;
+    padding-top: 2px
 }
 
 .post_date,
 .post_date .post_link,
 .post_date .wall_text_name_explain_promoted_post {
-    color: #939699
+    color: #939393
 }
 
 .wall_fixed .post_header {
@@ -328,7 +328,7 @@ div.wall_module .ext_video div {
 
 .wall_module .dld {
     padding: 22px 25px;
-    color: #939699
+    color: #939393
 }
 
 .wall_module .reply .dld {
@@ -391,7 +391,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .copy_post_author {
-    color: #939699;
+    color: #939393;
     line-height: 16px;
     white-space: nowrap;
     overflow: hidden;
@@ -399,13 +399,13 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .copy_post_date {
-    font-size: 12px;
-    padding-top: 3px;
-    color: #939699
+    font-size: 12.5px;
+    padding-top: 2px;
+    color: #939393
 }
 
 .wall_module .copy_post_date .post_link {
-    color: #939699
+    color: #939393
 }
 
 .wall_module .wall_text {
@@ -424,7 +424,7 @@ div.wall_module .ext_video div {
 
 .wall_module .published_by_date,
 .wall_module .wall_post_source {
-    color: #939699
+    color: #939393
 }
 
 .wall_post_source_icon {
@@ -504,7 +504,7 @@ div.wall_module .ext_video div {
     margin-top: 5px;
     padding: 0;
     background: none;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .wall_signed_by {
@@ -567,7 +567,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .like_wrap {
-    font-size: 12px;
+    font-size: 12.5px;
     color: #4a7099;
     cursor: pointer
 }
@@ -593,7 +593,7 @@ div.wall_module .ext_video div {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #7996b5;
-    font-size: 11px
+    font-size: 11.5px
 }
 
 .wall_module .like_count .counter_anim_wrap {
@@ -625,7 +625,7 @@ div.wall_module .ext_video div {
 
 .replies_open,
 .wr_header {
-    font-size: 12px;
+    font-size: 12.5px;
     display: block;
     cursor: pointer;
     color: #55677d;
@@ -653,7 +653,7 @@ div.wall_module .ext_video div {
 }
 
 .wd_lnk {
-    color: #939699
+    color: #939393
 }
 
 .wall_module .replies_list {
@@ -705,7 +705,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .reply_author {
-    font-size: 12px;
+    font-size: 12.5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
@@ -714,7 +714,7 @@ div.wall_module .ext_video div {
 .wall_module .reply_date {
     float: left;
     padding-right: 8px;
-    color: #939699
+    color: #939393
 }
 
 .wall_reply_text {
@@ -751,13 +751,13 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .reply_footer {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 4px 0 0;
     margin-bottom: -1px
 }
 
 .wall_module .reply_to {
-    color: #939699
+    color: #939393
 }
 
 .wall_module .reply .reply_link_wrap {
@@ -845,7 +845,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .reply_hint_text {
-    color: #65686c;
+    color: #656565;
     cursor: default;
     white-space: nowrap;
     overflow: hidden;
@@ -855,7 +855,7 @@ div.wall_module .ext_video div {
 .wall_module .reply_to_title {
     display: none;
     margin-top: 6px;
-    color: #7c7f82;
+    color: #828282;
     white-space: nowrap;
     overflow: hidden;
     float: none!important
@@ -921,7 +921,7 @@ div.wall_module .ext_video div {
 
 .page_group_info {
     overflow: hidden;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 16px
 }
 
@@ -944,12 +944,12 @@ div.wall_module .ext_video div {
 }
 
 .page_group_desc {
-    color: #65686c
+    color: #656565
 }
 
 .page_group_where,
 .page_group_when {
-    color: #939699
+    color: #939393
 }
 
 .page_group_desc,
@@ -992,8 +992,8 @@ div.wall_module .ext_video div {
     white-space: nowrap;
     text-overflow: ellipsis;
     text-align: left;
-    font-size: 12px;
-    color: #65686c
+    font-size: 12.5px;
+    color: #656565
 }
 
 .page_market_price {
@@ -1002,7 +1002,7 @@ div.wall_module .ext_video div {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: left;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .reply_submit_hint_tt_point {
@@ -1063,7 +1063,7 @@ div.wall_module .ext_video div {
 .wall_module .reply_warn {
     display: none;
     padding-top: 5px;
-    color: #65686c
+    color: #656565
 }
 
 .wall_module .reply_warn {
@@ -1319,7 +1319,7 @@ div.wall_module .ext_video div {
 .page_media_link_addr a {
     display: block;
     padding: 2px 0;
-    color: #65686c
+    color: #656565
 }
 
 .page_media_link_addr:empty,
@@ -1435,13 +1435,13 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .page_media_market .page_media_link_desc_td .page_media_link_desc {
-    color: #65686c
+    color: #656565
 }
 
 .wall_module div.page_media_link_desc_wrap {
     padding: 10px 15px 11px;
     line-height: 17px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .wall_module .page_media_link_desc_td .page_media_link_desc_wrap {
@@ -1570,7 +1570,7 @@ a.page_media_link_desc {
 }
 
 .post_media_link_preview_loading {
-    color: #65686c;
+    color: #656565;
     display: none
 }
 
@@ -1696,7 +1696,7 @@ a.page_media_link_desc {
 }
 
 .post_video_views_count {
-    color: #939699
+    color: #939393
 }
 
 .wall_module .video {
@@ -1753,7 +1753,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .mention_rich_ta a {
-    color: #33567f!important;
+    color: #285473!important;
     cursor: text!important;
     text-decoration: none!important
 }
@@ -1786,7 +1786,7 @@ a.page_media_link_desc {
 
 .no_posts {
     padding: 37px 20px 49px;
-    color: #65686c;
+    color: #656565;
     text-align: center
 }
 
@@ -1810,7 +1810,7 @@ a.page_media_link_desc {
 .add_media_head {
     background: #edf1f5;
     padding: 7px 27px;
-    color: #33567f
+    color: #285473
 }
 
 .add_media_pointer {
@@ -2008,7 +2008,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .poll span span {
-    color: #33567f
+    color: #285473
 }
 
 .wall_module .media_desc {
@@ -2033,9 +2033,9 @@ a.page_media_link_desc {
 }
 
 .wall_module .media_desc .lnk {
-    color: #65686c;
+    color: #656565;
     cursor: pointer;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .wall_module .media_desc .lnk:hover {
@@ -2043,7 +2043,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .media_desc .a {
-    color: #33567f
+    color: #285473
 }
 
 .wall_module .media_desc .lnk:hover .a {
@@ -2080,7 +2080,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .media_desc .lnk .lnk_mail_domain {
-    color: #65686c
+    color: #656565
 }
 
 .wall_module .media_desc .comment {
@@ -2134,7 +2134,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .media_desc .page_media_geo {
-    color: #33567f
+    color: #285473
 }
 
 .wall_module .media_desc .page_media_geo:hover {
@@ -2393,7 +2393,7 @@ a.page_media_link_desc {
 
 #choose_video_rows .no_results {
     text-align: center;
-    color: #65686c;
+    color: #656565;
     line-height: 150%
 }
 
@@ -2471,7 +2471,7 @@ a.page_media_link_desc {
 }
 
 .attach_label {
-    color: #65686c;
+    color: #656565;
     margin: 0 0 0 6px
 }
 
@@ -2579,7 +2579,7 @@ a.choose:hover {
 }
 
 .audio_choose_added_label {
-    color: #939699
+    color: #939393
 }
 
 .choose_audio_row .pr {
@@ -2787,7 +2787,7 @@ a.choose:hover {
 .mem_no_list {
     background: #fff;
     border: 1px solid #dae2e8;
-    color: #65686c;
+    color: #656565;
     font-size: 1.18em;
     margin: 0 0 3px;
     padding: 80px 0;
@@ -2857,7 +2857,7 @@ a.choose:hover {
 }
 
 #own_reply .your_reply {
-    color: #65686c;
+    color: #656565;
     padding-bottom: 10px
 }
 
@@ -2868,7 +2868,7 @@ a.choose:hover {
 #own_reply_in_news,
 #own_reply_no_news,
 #own_reply_warn {
-    color: #65686c;
+    color: #656565;
     padding-top: 10px
 }
 
@@ -2907,7 +2907,7 @@ a.choose:hover {
 }
 
 .group_checkin .desc {
-    color: #65686c;
+    color: #656565;
     padding: 3px 0 0;
     line-height: 140%
 }
@@ -2922,7 +2922,7 @@ a.choose:hover {
     width: 160px;
     line-height: 16px;
     padding: 6px 10px 7px 0;
-    color: #65686c
+    color: #656565
 }
 
 .page_add_place_box .labeled {
@@ -2930,8 +2930,8 @@ a.choose:hover {
 }
 
 .page_add_place_box .details {
-    color: #65686c;
-    font-size: 12px
+    color: #656565;
+    font-size: 12.5px
 }
 
 .page_add_place_box .dark {
@@ -2980,7 +2980,7 @@ a.choose:hover {
 }
 
 .page_add_event_info .tip {
-    color: #65686c;
+    color: #656565;
     padding: 0 0 3px 23px
 }
 
@@ -3133,7 +3133,7 @@ img.page_preview_video {
 }
 
 .page_preview_doc_photo_hint {
-    font-size: 12px;
+    font-size: 12.5px;
     color: #fff;
     line-height: 1.25
 }
@@ -3193,7 +3193,7 @@ img.page_preview_video {
 .doc_size {
     float: right;
     margin-left: 5px;
-    font-size: 11px;
+    font-size: 11.5px;
     margin-top: 1px
 }
 
@@ -3258,7 +3258,7 @@ img.page_preview_video {
     line-height: 1.462;
     background: #fff;
     box-sizing: border-box;
-    color: #7c7f82;
+    color: #828282;
     cursor: text;
     resize: none
 }
@@ -3365,7 +3365,7 @@ div.submit_post_field~.placeholder .ph_content {
 div.submit_post_field[contenteditable=true]:empty:not(.submit_post_inited):not(.reply_field):before,
 div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.submit_post_inited):not(.reply_field):before {
     content: attr(placeholder);
-    color: #7c7f82;
+    color: #828282;
     -o-transition: color 0.2s ease;
     transition: color 0.2s ease;
     display: block
@@ -3665,7 +3665,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
     left: 0;
     right: 0;
     background: #fff;
-    color: #33567f;
+    color: #285473;
     text-align: center;
     z-index: 119
 }
@@ -3725,7 +3725,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 .wpe_auth,
 .wpe_auth_lnk,
 #wpe_warn {
-    color: #65686c
+    color: #656565
 }
 
 #wpe_warn {
@@ -3739,7 +3739,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 }
 
 .wpe_info {
-    color: #939699
+    color: #939393
 }
 
 .wpe_text_cont {
@@ -4077,7 +4077,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 }
 
 .like_to_about {
-    color: #65686c;
+    color: #656565;
     padding: 3px 25px
 }
 
@@ -4210,7 +4210,7 @@ span.page_post_thumb_unsized.page_post_thumb_unsized_single {
 }
 
 .no_current_info {
-    color: #939699
+    color: #939393
 }
 
 .my_current_info,
@@ -4254,7 +4254,7 @@ span.page_post_thumb_unsized.page_post_thumb_unsized_single {
 }
 
 .current_audio {
-    color: #33567f;
+    color: #285473;
     white-space: nowrap
 }
 
@@ -4276,7 +4276,7 @@ span.page_post_thumb_unsized.page_post_thumb_unsized_single {
     float: right;
     opacity: 0.7;
     filter: alpha(opacity=70);
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -4390,7 +4390,7 @@ div.page_status_input {
     white-space: nowrap;
     padding: 3px 10px 0 0;
     width: 90px;
-    color: #65686c
+    color: #656565
 }
 
 textarea.page_poll_export_code {
@@ -4403,7 +4403,7 @@ textarea.page_poll_export_code {
 .page_poll_export_desc {
     vertical-align: top;
     padding: 0;
-    color: #65686c
+    color: #656565
 }
 
 #page_suggested_posts {
@@ -4496,7 +4496,7 @@ textarea.page_poll_export_code {
 }
 
 .owner_photo_bubble_action {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 5px 10px;
     height: 13px;
     white-space: nowrap;
@@ -4835,7 +4835,7 @@ textarea.page_poll_export_code {
 }
 
 .like_share_warn {
-    color: #65686c;
+    color: #656565;
     display: none
 }
 
@@ -4909,7 +4909,7 @@ textarea.page_poll_export_code {
 
 .like_share_widget_label {
     float: right;
-    color: #65686c;
+    color: #656565;
     padding: 0 13px;
     margin-top: 7px
 }
@@ -5097,7 +5097,7 @@ textarea.page_poll_export_code {
 
 .wall_module .submit_post div.create_poll_cb,
 div.create_poll_cb {
-    color: #65686c;
+    color: #656565;
     margin: 0 0 10px
 }
 
@@ -5121,8 +5121,8 @@ div.create_poll_cb {
 
 .medadd_c_pollh,
 .medadd_h {
-    font-size: 12px;
-    color: #54595e;
+    font-size: 12.5px;
+    color: #5c5c5c;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
@@ -5196,7 +5196,7 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_linkdomain {
-    color: #65686c
+    color: #656565
 }
 
 .medadd_c_linkimg_loader {
@@ -5478,7 +5478,7 @@ div.medadd_c_linkprg {
     -moz-osx-font-smoothing: grayscale;
     display: inline-block;
     vertical-align: top;
-    font-size: 12px;
+    font-size: 12.5px;
     color: #2b2f33
 }
 
@@ -5508,7 +5508,7 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_timer {
-    color: #7c7f82
+    color: #828282
 }
 
 .medadd_c_timerat {
@@ -5527,7 +5527,7 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_mail {
-    color: #33567f
+    color: #285473
 }
 
 button.wall_block_app_btn {
@@ -5588,13 +5588,13 @@ button.wall_block_app_btn {
 .status_audio_shared {
     padding: 8px 2px 2px;
     font-size: 0.9em;
-    color: #65686c;
+    color: #656565;
     overflow: hidden;
     text-overflow: ellipsis
 }
 
 .status_audio_shared_lnk {
-    color: #65686c
+    color: #656565
 }
 
 #choose_query_reset.shown {
@@ -5697,7 +5697,7 @@ button.wall_block_app_btn {
 .page_media_place_label_inline {
     display: inline-block;
     padding: 4px 0 0 15px;
-    font-size: 12px;
+    font-size: 12.5px;
     position: relative
 }
 
@@ -5713,7 +5713,7 @@ button.wall_block_app_btn {
 }
 
 .no_interact .page_media_place_label_inline {
-    color: #65686c;
+    color: #656565;
     text-decoration: none;
     cursor: text
 }
@@ -5798,7 +5798,7 @@ button.wall_block_app_btn {
 }
 
 .wall_error_hint {
-    color: #65686c;
+    color: #656565;
     cursor: pointer
 }
 
@@ -5839,7 +5839,7 @@ button.wall_block_app_btn {
     border-radius: 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
     border: 1px solid #c5d0db;
-    font-size: 12px;
+    font-size: 12.5px;
     z-index: 20
 }
 
@@ -5905,7 +5905,7 @@ button.wall_block_app_btn {
 }
 
 .page_actions_item.disabled {
-    color: #65686c
+    color: #656565
 }
 
 .page_actions_item:hover {
@@ -5990,7 +5990,7 @@ button.wall_block_app_btn {
 
 .page_photo {
     padding: 15px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .page_photo .flat_button,
@@ -6053,7 +6053,7 @@ button.wall_block_app_btn {
 }
 
 .page_actions_info {
-    color: #65686c;
+    color: #656565;
     cursor: default;
     line-height: 17px;
     padding: 14px 0 1px;
@@ -6176,5 +6176,5 @@ button.wall_block_app_btn {
 
 .videos_edit_main_album_description {
     margin-bottom: 10px;
-    color: #65686c
+    color: #656565
 }

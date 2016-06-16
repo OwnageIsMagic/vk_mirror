@@ -104,7 +104,7 @@ div.wdd.wdd_focused.wdd_toup {
 
 .wddi_data {
     padding: 8px 12px;
-    font-size: 12px;
+    font-size: 12.5px;
     box-sizing: border-box;
     min-height: 50px;
     _height: 50px
@@ -171,7 +171,7 @@ div.wdd.wdd_focused.wdd_toup {
 .wddi_sub {
     padding-top: 3px;
     line-height: 14px;
-    color: #65686c
+    color: #656565
 }
 
 .wddi_no {
@@ -186,7 +186,7 @@ div.wdd.wdd_focused.wdd_toup {
 
 .wdd_add {
     padding: 1px 2px 2px 1px;
-    font-size: 12px;
+    font-size: 12.5px;
     cursor: pointer;
     display: none
 }

@@ -13,7 +13,7 @@
 }
 
 .profile_no_info .labeled {
-    color: #7c7f82
+    color: #828282
 }
 
 .profile_info {
@@ -22,7 +22,7 @@
 
 .profile_info .label {
     width: 165px;
-    color: #7c7f82
+    color: #828282
 }
 
 .profile_info .labeled {
@@ -313,14 +313,14 @@
 }
 
 .guest_action_link {
-    color: #65686c
+    color: #656565
 }
 
 .guest_actions {
     line-height: 160%;
     text-align: center;
     padding: 11px 0 0;
-    color: #65686c
+    color: #656565
 }
 
 .profile_action_btn button {
@@ -580,7 +580,7 @@
 .profile_status .no_current_info,
 .profile_status .page_current_audio {
     line-height: 18px;
-    color: #65686c
+    color: #656565
 }
 
 .profile_status .current_audio_cnt {
@@ -595,10 +595,10 @@
 
 .profile_online {
     float: right;
-    font-size: 12px;
+    font-size: 12.5px;
     margin-top: 5px;
     line-height: 18px;
-    color: #939699;
+    color: #939393;
     text-align: center
 }
 
@@ -646,14 +646,14 @@
 }
 
 .profile_deleted {
-    color: #65686c;
+    color: #656565;
     padding-top: 2px;
     line-height: 18px
 }
 
 .profile_deleted_text {
     text-align: center;
-    color: #65686c;
+    color: #656565;
     padding: 50px 0 40px;
     line-height: 165%
 }
@@ -950,7 +950,7 @@
 }
 
 .gift_tt_show_all:hover {
-    background-color: #f1f2f4;
+    background-color: #edeef0;
     text-decoration: none
 }
 

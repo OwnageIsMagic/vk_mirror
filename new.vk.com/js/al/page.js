@@ -5727,7 +5727,7 @@ var Wall = {
                     getLang('global_on_behalf_group') + '</div> \
           </div>',
                 appendToParent: true,
-                offset: [-9, -5],
+                offset: [-10, -5],
                 onFirstTimeShow: function(ttel) {
                     var btns = geByClass('radiobtn', ttel);
 

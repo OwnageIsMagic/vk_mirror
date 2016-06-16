@@ -3,7 +3,7 @@
 }
 
 body.dev {
-    background: #f1f2f4
+    background: #edeef0
 }
 
 body.dev .ui_tabs {
@@ -311,7 +311,7 @@ body.dev .priv_h_arrow img {
 .dev_page_block {
     background: #fff;
     border-radius: 2px;
-    box-shadow: 0 1px 0 0 #e1e2e6, 0 0 0 1px #e6e7eb;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
     margin-top: 20px;
     color: #000
 }
@@ -363,8 +363,8 @@ body.dev .priv_h_arrow img {
 #dev_top_nav a.dev_top_link {
     color: #fff;
     display: block;
-    height: 46px;
-    line-height: 44px;
+    height: 42px;
+    line-height: 40px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
 }
@@ -377,14 +377,14 @@ body.dev input.dev_top_input {
     border: 0;
     box-sizing: border-box;
     padding: 6px 6px 6px 19px;
-    margin: 9px 0;
+    margin: 7px 0;
     height: 28px;
     line-height: 16px;
-    width: 170;
+    width: 170px;
     border-radius: 14px;
     -o-transition: background-color 0.05s, color 0.05s;
     transition: background-color 0.05s, color 0.05s;
-    background: #47698f url(/images/icons/dev_head_magglass.png) no-repeat;
+    background: #31537a url(/images/icons/dev_head_magglass.png) no-repeat;
     padding-left: 19px;
     border-left: 8px solid transparent;
     background-position: left 8px;
@@ -463,11 +463,11 @@ input.dev_wide_input~.placeholder .ph_content,
 .dev_home_link:before {
     content: ' ';
     display: inline-block;
-    background: url(/images/icons/head_icons.png?2) no-repeat;
-    background-position: 0px -98px;
+    background: url(/images/icons/head_icons.png?3) no-repeat;
+    background-position: 0 -98px;
     height: 19px;
     width: 32px;
-    margin: 13px 10px 0 0;
+    margin: 11px 10px 0 0;
     vertical-align: top
 }
 
@@ -478,15 +478,12 @@ input.dev_wide_input~.placeholder .ph_content,
 
 .dev_top_link.sel,
 .dev_top_link.sel:hover {
-    background-color: #4b6d94
+    background-color: #43648c
 }
 
+.dev_home_link:hover,
 .dev_top_link:hover {
-    background-color: #51759b
-}
-
-.dev_home_link:hover {
-    background-color: rgba(80, 116, 154, .9)
+    background-color: #486991
 }
 
 #dev_top_nav_wrap {
@@ -495,8 +492,8 @@ input.dev_wide_input~.placeholder .ph_content,
     left: 0;
     width: 100%;
     z-index: 125;
-    height: 46px;
-    background: #567ca4
+    height: 42px;
+    background: #507299
 }
 
 #dev_top_nav_wrap .input_back_content {
@@ -514,7 +511,7 @@ input.dev_wide_input~.placeholder .ph_content,
 }
 
 .dev_top_profile {
-    margin: 9px 0;
+    margin: 7px 0;
     margin-left: 10px;
     margin-right: 10px
 }
@@ -567,7 +564,7 @@ input.dev_wide_input~.placeholder .ph_content,
     margin-top: 25px;
     background: #fff;
     border-radius: 2px;
-    box-shadow: 0 1px 0 0 #e1e2e6, 0 0 0 1px #e6e7eb
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
 }
 
 #dev_left_nav.apps_edit {
@@ -1185,11 +1182,11 @@ input.dev_input_simular {
     display: inline-block;
     *display: inline;
     zoom: 1;
-    color: #939699
+    color: #939393
 }
 
 .dev_history_date {
-    color: #939699;
+    color: #939393;
     padding-top: 3px
 }
 

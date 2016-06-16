@@ -37,7 +37,7 @@
 
 .new_public_type .tip {
     padding: 4px 21px 13px;
-    color: #939699
+    color: #939393
 }
 
 .new_public_submit_wrap {
@@ -74,7 +74,7 @@
 }
 
 .public_add_event_row .datepicker_container {
-    color: #7c7f82
+    color: #828282
 }
 
 .public_add_event_at {
@@ -125,7 +125,7 @@
 }
 
 .public_help_step_desc {
-    color: #65686c
+    color: #656565
 }
 
 .public_help_steps_module .public_help_step_image {

@@ -50,7 +50,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -163,7 +163,7 @@
 }
 
 body {
-    background: #f1f2f4;
+    background: #edeef0;
     color: #000;
     margin: 0;
     padding: 0;
@@ -197,7 +197,7 @@ body.firefox #page_wrap {
 }
 
 a {
-    color: #33567f;
+    color: #285473;
     text-decoration: none;
     cursor: pointer
 }
@@ -227,7 +227,7 @@ form {
 }
 
 small {
-    font-size: 12px
+    font-size: 12.5px
 }
 
 textarea.ashelper {
@@ -281,7 +281,7 @@ textarea.ashelper {
 }
 
 .summary_wrap {
-    color: #54595e;
+    color: #5c5c5c;
     padding: 20px 20px 0
 }
 
@@ -721,7 +721,7 @@ input.dark::-webkit-input-placeholder,
 input.search::-webkit-input-placeholder,
 input.text::-webkit-input-placeholder,
 textarea::-webkit-input-placeholder {
-    color: #7c7f82;
+    color: #828282;
     -o-transition: color 0.2s ease;
     transition: color 0.2s ease;
     padding: 1px;
@@ -744,7 +744,7 @@ input.dark:-moz-placeholder,
 input.search:-moz-placeholder,
 input.text:-moz-placeholder,
 textarea:-moz-placeholder {
-    color: #7c7f82;
+    color: #828282;
     -o-transition: color 0.2s ease;
     transition: color 0.2s ease;
     padding: 1px;
@@ -759,7 +759,7 @@ input.dark:-ms-input-placeholder,
 input.search:-ms-input-placeholder,
 input.text:-ms-input-placeholder,
 textarea:-ms-input-placeholder {
-    color: #7c7f82;
+    color: #828282;
     -o-transition: color 0.2s ease;
     transition: color 0.2s ease;
     padding: 1px;
@@ -774,7 +774,7 @@ input.dark~.placeholder .ph_content,
 input.search~.placeholder .ph_content,
 input.text~.placeholder .ph_content,
 textarea~.placeholder .ph_content {
-    color: #7c7f82;
+    color: #828282;
     -o-transition: color 0.2s ease;
     transition: color 0.2s ease;
     padding: 1px;
@@ -862,8 +862,8 @@ input.file {
 
 input.disabled,
 textarea.disabled {
-    color: #7c7f82;
-    -webkit-text-fill-color: #7c7f82;
+    color: #828282;
+    -webkit-text-fill-color: #828282;
     -webkit-opacity: 1;
     background-color: #f2f4f7;
     border-color: #d3d9de
@@ -904,7 +904,7 @@ h3 {
 
 h3 {
     font-size: 13px;
-    color: #7c7f82;
+    color: #828282;
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
@@ -966,7 +966,7 @@ a.button_link:hover {
 
 .as_button {
     padding: 7px 16px 8px;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 15px
 }
 
@@ -976,7 +976,7 @@ a.button_link:hover {
 .flat_button {
     padding: 7px 16px 8px;
     margin: 0;
-    font-size: 12px;
+    font-size: 12.5px;
     display: inline-block;
     zoom: 1;
     cursor: pointer;
@@ -988,7 +988,7 @@ a.button_link:hover {
     text-align: center;
     text-decoration: none;
     background: none;
-    background-color: #6287ae;
+    background-color: #5e81a8;
     color: #fff;
     border: 0;
     border-radius: 2px;
@@ -1006,7 +1006,7 @@ a.button_link:hover {
 .button_blue button:hover,
 .flat_button.hover,
 .flat_button:hover {
-    background-color: #678eb4;
+    background-color: #6888ad;
     text-decoration: none
 }
 
@@ -1043,7 +1043,7 @@ a.button_link:hover {
 .button_blue button:active,
 .flat_button.active,
 .flat_button:active {
-    background-color: #5d7fa4;
+    background-color: #5779a1;
     padding-top: 8px;
     padding-bottom: 7px
 }
@@ -1083,7 +1083,7 @@ a.button_link:hover {
 .box_controls .flat_button.secondary,
 .flat_button.secondary.button_light {
     background-color: transparent;
-    color: #33567f
+    color: #285473
 }
 
 .box_controls .flat_button.secondary:hover,
@@ -1174,7 +1174,7 @@ button.flat_btn_lock {
 
 .flat_button.button_disabled:active,
 .flat_button.button_disabled:hover {
-    background-color: #6287ae;
+    background-color: #5e81a8;
     cursor: default;
     pointer-events: none
 }
@@ -1200,7 +1200,7 @@ button.flat_btn_lock {
     cursor: pointer;
     width: auto;
     height: auto;
-    color: #33567f
+    color: #285473
 }
 
 .button_cancel .button,
@@ -1235,7 +1235,7 @@ div#utils {
 
 #page_header_cont {
     position: fixed;
-    height: 46px;
+    height: 42px;
     width: 100%;
     left: 0;
     top: 0;
@@ -1251,34 +1251,34 @@ div#utils {
 
 #page_header {
     position: relative;
-    height: 46px;
+    height: 42px;
     margin: 0 auto;
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 0 15px
 }
 
 #page_header_cont .back {
     position: absolute;
     width: 100%;
-    background: #597da3;
-    height: 46px;
-    border-bottom: 1px solid #4e7199;
+    background: #507299;
+    height: 42px;
+    border-bottom: 1px solid #507299;
     box-sizing: border-box
 }
 
 .top_home_link {
     width: 165px;
-    height: 46px;
+    height: 42px;
     display: block;
     outline: none
 }
 
 .top_home_link .top_home_logo {
-    background: url(/images/icons/head_icons.png?2) no-repeat;
+    background: url(/images/icons/head_icons.png?3) no-repeat;
     background-position: 0 -98px;
     height: 19px;
     width: 32px;
-    margin: 13px 0 0
+    margin: 11px 10px 0 0
 }
 
 .top_home_link:active {
@@ -1301,6 +1301,7 @@ div#utils {
     display: inline-block;
     color: #000;
     opacity: 1;
+    outline: none;
     -o-transition: opacity 100ms linear;
     transition: opacity 100ms linear
 }
@@ -1314,26 +1315,26 @@ div#utils {
 }
 
 .top_nav_btn .top_nav_btn_icon {
-    margin: 13px auto 12px;
-    background: url(/images/icons/head_icons.png?2) no-repeat;
+    margin: 11px auto;
+    background: url(/images/icons/head_icons.png?3) no-repeat;
     height: 20px;
     width: 20px
 }
 
 .top_nav_btn:hover {
-    background-color: rgba(75, 109, 148, .65)
+    background-color: #486991
 }
 
 .top_nav_btn:hover .top_notify_count {
-    border-color: #507299
+    border-color: #486991
 }
 
 .top_nav_btn.active {
-    background-color: #4b6d94
+    background-color: #43648c
 }
 
 .top_nav_btn.active .top_notify_count {
-    border-color: #4b6d94
+    border-color: #43648c
 }
 
 .top_nav_btn#top_audio .top_nav_btn_icon {
@@ -1377,16 +1378,24 @@ div#utils {
     opacity: 0
 }
 
+.blind_label {
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    opacity: 0;
+    overflow: hidden
+}
+
 .top_notify_count {
     display: none;
     padding: 1px 4px;
-    border: 2px solid #597da3;
+    border: 2px solid #507299;
     border-radius: 12px;
     color: #fff;
     font-size: 9px;
     height: 11px;
-    line-height: 11px;
-    top: 8px;
+    line-height: 12px;
+    top: 6px;
     left: 21px;
     background-color: #ff734c;
     text-align: center;
@@ -1402,17 +1411,18 @@ div#utils {
     line-height: 11px
 }
 
-.top_audio_layer {
+.eltt.top_audio_layer {
     border-top-width: 0;
     border-top-left-radius: 0;
-    border-top-right-radius: 0
+    border-top-right-radius: 0;
+    border-radius: 3px
 }
 
-.top_audio_layer:before {
+.eltt.top_audio_layer:before {
     display: none
 }
 
-.top_audio_layer:after {
+.eltt.top_audio_layer:after {
     border-bottom-color: #fafbfc;
     border-width: 6px
 }
@@ -1505,8 +1515,8 @@ a.unl:hover {
 .top_nav_link {
     display: inline-block;
     white-space: nowrap;
-    line-height: 46px;
-    height: 46px;
+    line-height: 42px;
+    height: 42px;
     overflow: hidden;
     padding: 0 10px;
     color: #fff;
@@ -1516,12 +1526,12 @@ a.unl:hover {
 }
 
 .top_nav_link:hover {
-    background-color: rgba(75, 109, 148, .65);
+    background-color: #486991;
     text-decoration: none
 }
 
 .top_nav_link.active {
-    background-color: #4b6d94;
+    background-color: #43648c;
     text-decoration: none
 }
 
@@ -1538,7 +1548,7 @@ a.unl:hover {
     width: 28px;
     height: 28px;
     border-radius: 14px;
-    margin: 9px 0
+    margin: 7px 0
 }
 
 .top_profile_img,
@@ -1550,7 +1560,7 @@ a.unl:hover {
 .top_profile_arrow {
     background: url(/images/icons/head_arrow.png) no-repeat;
     background-position: right 0;
-    margin: 22px 8px 0 7px;
+    margin: 20px 8px 0 7px;
     width: 8px;
     height: 4px;
     opacity: 0.45;
@@ -1568,7 +1578,7 @@ a.unl:hover {
     position: absolute;
     visibility: hidden;
     width: 160px;
-    top: 62px;
+    top: 58px;
     right: 9px;
     background: #fff;
     z-index: 800;
@@ -1612,7 +1622,7 @@ a.unl:hover {
     opacity: 1;
     -webkit-filter: none;
     filter: none;
-    top: 52px;
+    top: 48px;
     pointer-events: auto
 }
 
@@ -1649,7 +1659,7 @@ a.unl:hover {
 #page_body {
     font-size: 13px;
     width: 631px;
-    margin-top: 46px
+    margin-top: 42px
 }
 
 #wrap_between {
@@ -1841,7 +1851,7 @@ a.ad_box_new:hover {
 }
 
 .footer_nav {
-    color: #7c7f82
+    color: #828282
 }
 
 .footer_copy {
@@ -1881,7 +1891,7 @@ a.ad_box_new:hover {
     z-index: 10;
     width: 149px;
     padding: 15px 0 10px;
-    margin-top: 46px
+    margin-top: 42px
 }
 
 .body_im #side_bar {
@@ -1924,148 +1934,148 @@ body.body_im.firefox.layers_shown #page_wrap {
     height: 25px;
     opacity: 0.75;
     filter: alpha(opacity=75);
-    background: url(/images/icons/menu_icon.png?2) no-repeat 8px -441px
+    background: url(/images/icons/menu_icon.png?3) no-repeat 7px -441px
 }
 
 #side_bar #l_pr .left_icon {
-    background-position: 8px 6px
+    background-position: 7px 6px
 }
 
 #side_bar #l_nwsf .left_icon {
-    background-position: 8px -917px
+    background-position: 7px -917px
 }
 
 #side_bar #l_msg .left_icon {
-    background-position: 8px -21px
+    background-position: 7px -21px
 }
 
 #side_bar #l_nws .left_icon {
-    background-position: 8px -49px
+    background-position: 7px -49px
 }
 
 #side_bar #l_fr .left_icon {
-    background-position: 8px -77px
+    background-position: 7px -77px
 }
 
 #side_bar #l_gr .left_icon,
 #side_bar .l_comm .left_icon {
-    background-position: 8px -105px
+    background-position: 7px -105px
 }
 
 #side_bar #l_ph .left_icon {
-    background-position: 8px -133px
+    background-position: 7px -133px
 }
 
 #side_bar #l_aud .left_icon {
-    background-position: 8px -161px
+    background-position: 7px -161px
 }
 
 #side_bar #l_vid .left_icon {
-    background-position: 8px -189px
+    background-position: 7px -189px
 }
 
 #side_bar #l_ap .left_icon,
 #side_bar #l_apm .left_icon {
-    background-position: 8px -217px
+    background-position: 7px -217px
 }
 
 #side_bar #l_oth .left_icon {
-    background-position: 8px -245px
+    background-position: 7px -245px
 }
 
 #side_bar #l_doc .left_icon {
-    background-position: 8px -273px
+    background-position: 7px -273px
 }
 
 #side_bar #l_fav .left_icon {
-    background-position: 8px -301px
+    background-position: 7px -301px
 }
 
 #side_bar #l_ads .left_icon {
-    background-position: 8px -329px
+    background-position: 7px -329px
 }
 
 #side_bar #l_spr .left_icon {
-    background-position: 8px -357px
+    background-position: 7px -357px
 }
 
 #side_bar #l_tlm .left_icon {
-    background-position: 8px -385px
+    background-position: 7px -385px
 }
 
 #side_bar .l_stat .left_icon {
-    background-position: 8px -413px
+    background-position: 7px -413px
 }
 
 #side_bar #l_tr .left_icon {
-    background-position: 8px -469px
+    background-position: 7px -469px
 }
 
 #side_bar .genre10 .left_icon {
-    background-position: 8px -525px
+    background-position: 7px -525px
 }
 
 #side_bar .genre11 .left_icon {
-    background-position: 8px -497px
+    background-position: 7px -497px
 }
 
 #side_bar .genre17 .left_icon {
-    background-position: 8px -553px
+    background-position: 7px -553px
 }
 
 #side_bar .genre12 .left_icon {
-    background-position: 8px -581px
+    background-position: 7px -581px
 }
 
 #side_bar .genre16 .left_icon {
-    background-position: 8px -609px
+    background-position: 7px -609px
 }
 
 #side_bar .genre14 .left_icon {
-    background-position: 8px -637px
+    background-position: 7px -637px
 }
 
 #side_bar .genre15 .left_icon {
-    background-position: 8px -665px
+    background-position: 7px -665px
 }
 
 #side_bar .genre18 .left_icon {
-    background-position: 8px -749px
+    background-position: 7px -749px
 }
 
 #side_bar .genre19 .left_icon {
-    background-position: 8px -721px
+    background-position: 7px -721px
 }
 
 #side_bar .genre20 .left_icon {
-    background-position: 8px -805px
+    background-position: 7px -805px
 }
 
 #side_bar .genre21 .left_icon {
-    background-position: 8px -777px
+    background-position: 7px -777px
 }
 
 #side_bar .genre22 .left_icon {
-    background-position: 8px -861px
+    background-position: 7px -861px
 }
 
 #side_bar .genre23 .left_icon {
-    background-position: 8px -833px
+    background-position: 7px -833px
 }
 
 #side_bar .genre24 .left_icon {
-    background-position: 8px -889px
+    background-position: 7px -889px
 }
 
 #side_bar .genre5 .left_icon,
 #side_bar .genre_app .left_icon {
-    background-position: 8px -693px
+    background-position: 7px -693px
 }
 
 #side_bar .left_label {
     height: 28px;
-    line-height: 28px;
-    font-size: 12px;
+    line-height: 27px;
+    font-size: 12.5px;
     overflow: hidden;
     text-overflow: ellipsis
 }
@@ -2087,7 +2097,7 @@ body.body_im.firefox.layers_shown #page_wrap {
 }
 
 #side_bar ol li .left_row:hover {
-    background: #dee3ea;
+    background: #e1e5eb;
     text-decoration: none;
     border-radius: 2px
 }
@@ -2166,8 +2176,8 @@ body.body_im.firefox.layers_shown #page_wrap {
     zoom: 1;
     padding: 4px 6px;
     vertical-align: top;
-    color: #65788f;
-    background: #d5dde5;
+    color: #5b6e85;
+    background: #d1d9e0;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -2193,10 +2203,6 @@ body.body_im.firefox.layers_shown #page_wrap {
     top: 0;
     left: 0;
     right: 0
-}
-
-a:hover .left_count_wrap {
-    background: #d5dde5
 }
 
 .left_void {
@@ -2232,7 +2238,7 @@ a:hover .left_count_persist .left_void {
 }
 
 .leave_redesign a {
-    color: #939699
+    color: #939393
 }
 
 #leave_redesign_wrap .radiobtn {
@@ -2389,7 +2395,7 @@ body.no_stl #stl_bg {
     display: block;
     height: 15px;
     color: #466a94;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -2410,7 +2416,7 @@ body.no_stl #stl_bg {
 #stl_bg {
     height: 100%;
     width: 114px;
-    padding-top: 64px;
+    padding-top: 60px;
     opacity: 0.5;
     filter: alpha(opacity=50);
     -o-transition: background-color 200ms linear, opacity 200ms linear;
@@ -2483,7 +2489,7 @@ body.no_stl #stl_bg {
 }
 
 #layer_stl_text {
-    top: 64px;
+    top: 60px;
     left: 0;
     background: url(/images/layer_toplink.png) no-repeat;
     background-position: left 0;
@@ -2494,7 +2500,7 @@ body.no_stl #stl_bg {
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 12px;
+    font-size: 12.5px;
     color: #fff;
     opacity: 0.5;
     filter: alpha(opacity=50);
@@ -3107,8 +3113,8 @@ body.no_stl #stl_bg {
 }
 
 .__audio_duration {
-    font-size: 12px;
-    color: #939699;
+    font-size: 12.5px;
+    color: #939393;
     padding: 0 6px 0 4px;
     float: right;
     max-width: 40px
@@ -3262,8 +3268,8 @@ body.no_stl #stl_bg {
 
 .quick_login .label {
     padding: 0 0 8px;
-    color: #65686c;
-    font-size: 12px;
+    color: #656565;
+    font-size: 12.5px;
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
@@ -3402,7 +3408,7 @@ body.no_stl #stl_bg {
     margin: -20px -25px 0;
     padding: 15px 25px 16px;
     color: #000;
-    font-size: 12px;
+    font-size: 12.5px;
     background: none;
     background-color: #fafbfc
 }
@@ -3424,7 +3430,7 @@ body.no_stl #stl_bg {
 
 .no_rows {
     overflow: hidden;
-    color: #939699;
+    color: #939393;
     padding: 100px 50px;
     font-size: 14px;
     text-align: center;
@@ -3432,7 +3438,7 @@ body.no_stl #stl_bg {
 }
 
 .no_rows b {
-    color: #65686c;
+    color: #656565;
     max-width: 300px;
     white-space: nowrap;
     overflow: hidden;
@@ -3577,7 +3583,7 @@ body.no_stl #stl_bg {
 .summary_tab,
 .summary_tab_plain,
 .summary_tab_sel {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 4px;
     position: relative
 }
@@ -3601,7 +3607,7 @@ body.no_stl #stl_bg {
     max-width: 230px;
     height: 15px;
     overflow: hidden;
-    color: #33567f;
+    color: #285473;
     text-overflow: ellipsis;
     line-height: 120%;
     padding: 0 3px
@@ -3625,7 +3631,7 @@ body.no_stl #stl_bg {
 }
 
 .summary_tab_count {
-    font-size: 11px;
+    font-size: 11.5px;
     padding-left: 6px
 }
 
@@ -3775,7 +3781,7 @@ ul.t0 li.active_link a b {
 
 ul.t0 li a:hover {
     background: #e1e7ed;
-    color: #33567f;
+    color: #285473;
     text-decoration: none
 }
 
@@ -3789,7 +3795,7 @@ ul.t0 a {
 }
 
 ul.t0 a span.count {
-    color: #33567f;
+    color: #285473;
     margin-bottom: -1px;
     padding: 0 10px 0 4px;
     font-weight: 700;
@@ -3890,7 +3896,7 @@ ul.t0 li.active_link a b.tl2 {
 }
 
 .side_filter {
-    color: #33567f;
+    color: #285473;
     cursor: pointer;
     padding: 6px 6px 7px 10px;
     background-color: #f7f7f7;
@@ -3899,7 +3905,7 @@ ul.t0 li.active_link a b.tl2 {
 }
 
 .side_filter_over {
-    color: #33567f;
+    color: #285473;
     background-color: #dae1e8
 }
 
@@ -3948,8 +3954,8 @@ ul.t0 li.active_link a b.tl2 {
 
 .pg_in {
     padding: 3px 5px 7px;
-    color: #939699;
-    font-size: 12px
+    color: #939393;
+    font-size: 12.5px
 }
 
 .pg_lnk {
@@ -4012,7 +4018,7 @@ ul.t0 li.active_link a b.tl2 {
 }
 
 #pg_fixed {
-    top: 61px;
+    top: 57px;
     z-index: 119;
     display: none
 }
@@ -4169,7 +4175,7 @@ div.top_result_baloon a {
 .left_restore_link {
     padding-top: 8px;
     line-height: 160%;
-    color: #65686c
+    color: #656565
 }
 
 .piechart_table {
@@ -4251,14 +4257,14 @@ input.text.ts_input {
     border: 0;
     box-sizing: border-box;
     padding: 6px 6px 6px 19px;
-    margin: 9px 0;
+    margin: 7px 0;
     height: 28px;
     line-height: 16px;
     width: 230px;
     border-radius: 14px;
     -o-transition: background-color 0.05s, color 0.05s;
     transition: background-color 0.05s, color 0.05s;
-    background: #47698f url(/images/icons/dev_head_magglass.png) no-repeat;
+    background: #31537a url(/images/icons/dev_head_magglass.png) no-repeat;
     padding-left: 19px;
     border-left: 8px solid transparent;
     background-position: left 8px;
@@ -4295,7 +4301,7 @@ input.text.ts_input:focus {
 
 .ts_cont_wrap {
     position: absolute;
-    top: 41px;
+    top: 39px;
     left: 173px;
     background: #fff;
     width: 248px;
@@ -4309,8 +4315,8 @@ input.text.ts_input:focus {
 .ts_search_sep {
     border-top: 1px solid #e6eaef;
     padding: 8px 10px 5px;
-    color: #65686c;
-    font-size: 11px;
+    color: #656565;
+    font-size: 11.5px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
@@ -4449,8 +4455,8 @@ em.ts_clist_hl {
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    font-size: 11px;
-    color: #939699;
+    font-size: 11.5px;
+    color: #939393;
     padding-top: 1px;
     line-height: 14px;
     overflow: hidden;
@@ -4509,7 +4515,7 @@ em.highlight {
 .round_tab.selected,
 .round_tab.selected:hover {
     color: #fff;
-    background: #597da3
+    background: #507299
 }
 
 .round_tab.visible {
@@ -4674,7 +4680,7 @@ em.highlight {
     border-radius: 3px 3px 0 0;
     margin-right: 5px;
     cursor: pointer;
-    color: #33567f
+    color: #285473
 }
 
 .tabs_pane>.tab:hover {
@@ -4721,7 +4727,7 @@ em.highlight {
     position: relative;
     background: #fff;
     border-radius: 2px;
-    box-shadow: 0 1px 0 0 #e1e2e6, 0 0 0 1px #e6e7eb;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
     margin: 15px 0 0
 }
 
@@ -4810,7 +4816,7 @@ em.highlight {
 
 .header_side_link,
 .header_side_link a {
-    color: #33567f
+    color: #285473
 }
 
 a.page_block_header:hover .header_side_link {
@@ -4834,14 +4840,14 @@ a.page_block_header:hover .header_side_link {
 .page_block_header_count {
     display: inline-block;
     font-size: 14px;
-    color: #939699;
+    color: #939393;
     padding: 0 7px
 }
 
 .page_block_sub_header_count {
     display: inline-block;
     font-size: 13px;
-    color: #939699;
+    color: #939393;
     padding: 0 6px
 }
 
@@ -4859,7 +4865,7 @@ a.page_block_header:hover .header_side_link {
 
 .page_block_saved {
     float: right;
-    color: #65686c;
+    color: #656565;
     opacity: 0;
     filter: alpha(opacity=0);
     font-size: 13px;
@@ -4948,7 +4954,7 @@ a.page_block_header:hover .header_side_link {
     color: #fff;
     background: rgba(0, 0, 0, .5);
     border-radius: 2px;
-    font-size: 12px;
+    font-size: 12.5px;
     cursor: default
 }
 
@@ -5144,6 +5150,14 @@ button.flat_button .pr {
     margin-right: 4px
 }
 
+.pr_big .pr_bt {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 4px
+}
+
+.pr_big .pr_bt:last-child,
 .pr_bt:last-child {
     margin-right: 0
 }
@@ -5229,7 +5243,7 @@ button.flat_button .pr {
     display: block;
     padding: 13px 0 14px;
     cursor: pointer;
-    color: #33567f;
+    color: #285473;
     background-color: #fff;
     border-top: 1px solid #ebedf0;
     border-radius: 0 0 2px 2px;
@@ -5388,12 +5402,12 @@ button.ui_load_more_btn {
 
 .head_nav_player_wrap {
     position: relative;
-    height: 46px;
+    height: 42px;
     cursor: pointer
 }
 
 .head_nav_player_wrap.top_audio_player_enabled:hover {
-    background-color: rgba(75, 109, 148, .65)
+    background-color: #486991
 }
 
 .top_audio_player {
@@ -5410,11 +5424,11 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player:hover {
-    background-color: rgba(75, 109, 148, .65)
+    background-color: #486991
 }
 
 .top_audio_player.audio_top_btn_active {
-    background-color: #4b6d94
+    background-color: #43648c
 }
 
 .top_audio_player.top_audio_player_enabled {
@@ -5427,14 +5441,14 @@ button.ui_load_more_btn {
 .top_audio_player .top_audio_player_btn {
     display: inline;
     float: left;
-    padding: 18px 4px 14px;
+    padding: 16px 4px 12px;
     cursor: pointer
 }
 
 .top_audio_player .top_audio_player_btn>div {
     width: 14px;
     height: 14px;
-    background-image: url(/images/icons/head_icons.png?2);
+    background-image: url(/images/icons/head_icons.png?3);
     opacity: 0.65;
     -o-transition: opacity 60ms linear;
     transition: opacity 60ms linear
@@ -5453,7 +5467,7 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player .top_audio_player_play {
-    padding: 16px 4px
+    padding: 14px 4px
 }
 
 .top_audio_player .top_audio_player_play>div {
@@ -5473,7 +5487,7 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player .top_audio_player_title_wrap {
-    margin: 16px 0 13px;
+    margin: 13px 0;
     position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -5630,7 +5644,7 @@ button.ui_load_more_btn {
 .audio_row .audio_duration_wrap {
     float: right;
     font-size: 12px;
-    color: #939699;
+    color: #939393;
     line-height: 13px
 }
 
@@ -5647,7 +5661,7 @@ button.ui_load_more_btn {
 }
 
 .audio_row.lyrics .audio_title_inner {
-    color: #33567f
+    color: #285473
 }
 
 .audio_row.lyrics .audio_title_inner:hover {
@@ -5840,7 +5854,7 @@ button.ui_load_more_btn {
 }
 
 .slider_hint.audio_player_hint {
-    font-size: 11px;
+    font-size: 11.5px;
     color: #4d627d
 }
 
@@ -5927,12 +5941,12 @@ button.ui_load_more_btn {
 
 .eltt:after {
     border-color: hsla(0, 0%, 100%, 0);
-    border-width: 5px
+    border-width: 6px
 }
 
 .eltt:before {
     border-color: rgba(188, 202, 215, 0);
-    border-width: 6px
+    border-width: 7px
 }
 
 .eltt.eltt_bottom {

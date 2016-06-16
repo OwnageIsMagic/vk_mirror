@@ -684,7 +684,7 @@ body.dev .app_author {
 }
 
 .apps_admin_info {
-    color: #939699;
+    color: #939393;
     cursor: default
 }
 
@@ -868,7 +868,7 @@ body.dev .app_author {
 .apps_edit_summary {
     padding-left: 6px;
     font-size: 13px;
-    color: #939699
+    color: #939393
 }
 
 #apps_edit_create_cont #app_edit_error_wrap {

@@ -31,7 +31,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -180,7 +180,7 @@
 }
 
 .video_sort_dd_wrap .video_sort_dd {
-    color: #33567f;
+    color: #285473;
     text-decoration: none;
     cursor: pointer
 }
@@ -201,7 +201,7 @@
 }
 
 .video_subtitle {
-    color: #7c7f82;
+    color: #828282;
     font-size: 13px;
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -326,9 +326,9 @@
 }
 
 .video_item_info {
-    color: #939699;
+    color: #939393;
     padding: 8px 0 0;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .video_item_info .video_item_title {
@@ -610,7 +610,7 @@
 #video_choose_box .video_playlist_item_counter_text,
 #video_review_box .video_playlist_item_counter_text {
     top: 40px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 #video_choose_box .video_subtab_pane_album,
@@ -680,7 +680,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -928,7 +928,7 @@
 }
 
 .video_info_bottom {
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 130%;
     position: absolute;
     bottom: 0;

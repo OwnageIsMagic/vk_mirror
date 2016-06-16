@@ -38,7 +38,7 @@
     width: 18px;
     height: 8px;
     margin: 0 6px;
-    background: url(/images/icons/menu_icon.png?2) no-repeat 0 -255px;
+    background: url(/images/icons/menu_icon.png?3) no-repeat 0 -255px;
     opacity: 0.6;
     filter: alpha(opacity=60)
 }
@@ -56,7 +56,7 @@
 .friends_not_found {
     padding: 150px 20px;
     text-align: center;
-    color: #65686c;
+    color: #656565;
     line-height: 21px
 }
 
@@ -238,11 +238,11 @@
 
 .friends_field {
     margin-bottom: 9px;
-    color: #65686c
+    color: #656565
 }
 
 .friends_field .group_link {
-    color: #65686c
+    color: #656565
 }
 
 .friends_field_title {
@@ -264,7 +264,7 @@
 }
 
 .friends_user_row .friends_req_sended {
-    color: #65686c
+    color: #656565
 }
 
 .friends_act {
@@ -288,7 +288,7 @@
     height: 21px;
     line-height: 21px;
     cursor: pointer;
-    font-size: 12px;
+    font-size: 12.5px;
     border-radius: 11px;
     max-width: 120px;
     overflow: hidden;
@@ -334,7 +334,7 @@
 }
 
 .friends_phonebook .friends_user_info {
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .friends_phonebook .friends_phonebook_alt_phone,
@@ -490,7 +490,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 }
 
 .friends_common_label {
-    color: #65686c;
+    color: #656565;
     margin-top: 9px
 }
 
@@ -516,7 +516,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 }
 
 .friends_added_text {
-    color: #65686c;
+    color: #656565;
     line-height: 150%
 }
 
@@ -580,7 +580,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
     line-height: 23px;
     background-color: #dae2ea;
     color: #55677d;
-    font-size: 12px;
+    font-size: 12.5px;
     border-radius: 2px;
     cursor: pointer
 }
@@ -766,7 +766,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
     text-align: center;
     border-radius: 2px;
     color: hsla(0, 0%, 100%, .8);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 130%
 }
 
@@ -780,7 +780,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 
 .friends_find_user_info {
     padding: 10px 0 21px;
-    font-size: 12px;
+    font-size: 12.5px;
     height: 32px;
     overflow: hidden
 }
@@ -802,7 +802,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 }
 
 .friends_find_user_label {
-    color: #65686c
+    color: #656565
 }
 
 .friends_import_block {
@@ -812,7 +812,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 .friends_import_row {
     padding: 10px 15px;
     display: block;
-    color: #939699
+    color: #939393
 }
 
 .friends_import_row:hover {
@@ -864,7 +864,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
     margin: 0 0 2px;
     padding: 0;
     color: #42648b;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -897,7 +897,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
     padding: 50px 0;
     font-size: 14px;
     text-align: center;
-    color: #65686c;
+    color: #656565;
     line-height: 21px
 }
 
@@ -930,8 +930,8 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 
 .friends_imp_r_info {
     padding: 0 12px;
-    color: #939699;
-    font-size: 12px;
+    color: #939393;
+    font-size: 12.5px;
     overflow: hidden;
     text-overflow: ellipsis;
     width: 280px
@@ -955,7 +955,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 }
 
 .friends_imp_status {
-    color: #939699;
+    color: #939393;
     padding-top: 5px;
     font-size: 12px
 }
@@ -972,7 +972,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
     background: #fff url(/images/search_integration.png) no-repeat;
     height: 21px;
     line-height: 20px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .friends_search_import {

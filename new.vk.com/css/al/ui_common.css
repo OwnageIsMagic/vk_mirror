@@ -90,7 +90,7 @@ a.ui_box_header_link {
 
 .ui_tab,
 .ui_tabs .ui_tab {
-    color: #65686c;
+    color: #656565;
     float: left;
     -o-transition: color 0.2s ease;
     transition: color 0.2s ease;
@@ -105,7 +105,7 @@ a.ui_box_header_link {
 }
 
 .ui_tabs_box .ui_tab {
-    color: #7c7f82
+    color: #828282
 }
 
 .ui_tab_sel,
@@ -126,7 +126,7 @@ a.ui_box_header_link {
 
 .ui_tab_plain {
     float: right;
-    color: #33567f
+    color: #285473
 }
 
 .ui_tab_search {
@@ -394,7 +394,7 @@ a.ui_box_header_link {
 .ui_tab_count {
     padding-left: 6px;
     font-size: 13px;
-    color: #939699
+    color: #939393
 }
 
 .ui_tab_count.ui_tab_count_red {
@@ -414,7 +414,7 @@ a.ui_box_header_link {
 }
 
 .ui_tabs_box .ui_tab_count {
-    color: #65686c
+    color: #656565
 }
 
 .ui_tabs_box .ui_tab_sel .ui_tab_count {
@@ -431,7 +431,7 @@ a.ui_box_header_link {
 }
 
 a.ui_crumb {
-    color: #65686c
+    color: #656565
 }
 
 .ui_crumb_sep {
@@ -445,7 +445,7 @@ a.ui_crumb {
 .ui_crumb_count {
     padding-left: 7px;
     font-size: 14px;
-    color: #939699;
+    color: #939393;
     display: inline-block
 }
 
@@ -472,7 +472,7 @@ a.ui_crumb {
     height: 32px;
     line-height: 30px;
     padding: 0 5px 0 20px;
-    color: #33567f;
+    color: #285473;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -522,7 +522,7 @@ a.ui_crumb {
 
 .ui_rmenu_subitem {
     padding: 0 5px 0 28px;
-    color: #65686c
+    color: #656565
 }
 
 .ui_rmenu_subitem.ui_rmenu_item_sel,
@@ -597,7 +597,7 @@ a.ui_crumb {
 .ui_rmenu_count.ui_rmenu_count_grey {
     background: none;
     border-radius: 0;
-    color: #939699;
+    color: #939393;
     font-size: 13px
 }
 
@@ -643,12 +643,12 @@ a.ui_crumb {
 
 .ui_ownblock_info {
     white-space: nowrap;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 16px
 }
 
 .ui_ownblock_label {
-    color: #33567f;
+    color: #285473;
     padding-top: 2px
 }
 
@@ -659,7 +659,7 @@ a.ui_crumb {
 }
 
 .ui_ownblock_hint {
-    color: #939699
+    color: #939393
 }
 
 .ui_filters_block {
@@ -692,7 +692,7 @@ a.ui_crumb {
 }
 
 .page_block .ui_search.ui_search_fixed {
-    top: 46px
+    top: 42px
 }
 
 .page_block>.ui_search:first-child {
@@ -883,7 +883,7 @@ input.ui_search_field:focus~.placeholder .ph_content {
 }
 
 .ui_search_custom_link {
-    color: #33567f
+    color: #285473
 }
 
 .ui_search_custom_link .idd_selected_value:hover {
@@ -908,7 +908,7 @@ a.ui_search_custom_link {
 .ui_search_fltr_control {
     padding: 14px 15px 13px;
     line-height: 19px;
-    font-size: 12px;
+    font-size: 12.5px;
     display: block;
     background: url(/images/icons/profile_arrow.png) no-repeat;
     background-position: right 21px
@@ -1052,7 +1052,7 @@ a.ui_search_custom_link {
     display: inline-block;
     vertical-align: top;
     color: #55677d;
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 5px 6px 6px 11px;
     text-transform: lowercase
 }
@@ -1143,7 +1143,7 @@ a.ui_search_custom_link {
     position: relative;
     float: left;
     z-index: 2;
-    color: #7c7f82;
+    color: #828282;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -1541,7 +1541,7 @@ a.ui_search_custom_link {
 
 .ui_toggler_wrap {
     padding: 13px 15px;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 15px;
     cursor: pointer;
     -webkit-user-select: none;
@@ -1715,8 +1715,8 @@ a.ui_search_custom_link {
     overflow: hidden;
     padding: 0 15px;
     height: 32px;
-    line-height: 40px;
-    font-size: 12px;
+    line-height: 39px;
+    font-size: 12.5px;
     letter-spacing: 0;
     color: #000
 }
@@ -1765,7 +1765,7 @@ a.ui_search_custom_link {
 
 .right_list_info {
     padding-top: 0;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .right_list_field {
@@ -1773,12 +1773,12 @@ a.ui_search_custom_link {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-    color: #939699
+    color: #939393
 }
 
 .right_list_field .group_link,
 .right_list_link {
-    color: #939699
+    color: #939393
 }
 
 .right_list_controls {
@@ -1819,7 +1819,7 @@ a.ui_search_custom_link {
 .olist_filter_label {
     padding: 14px 15px 13px;
     line-height: 19px;
-    font-size: 12px;
+    font-size: 12.5px;
     display: block;
     background: url(/images/icons/profile_arrow.png) no-repeat;
     background-position: right 21px
@@ -1914,7 +1914,7 @@ a.ui_search_custom_link {
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    color: #33567f;
+    color: #285473;
     overflow: hidden;
     width: 300px;
     height: 34px;
@@ -1958,7 +1958,7 @@ a.ui_search_custom_link {
     width: 18px;
     height: 8px;
     margin: 0 6px;
-    background: url(/images/icons/menu_icon.png?2) no-repeat 0 -255px;
+    background: url(/images/icons/menu_icon.png?3) no-repeat 0 -255px;
     opacity: 0.6;
     filter: alpha(opacity=60)
 }

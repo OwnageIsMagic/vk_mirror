@@ -384,7 +384,7 @@
     vertical-align: top;
     overflow: hidden;
     text-align: left;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .ads_ad_box_wrap.app_in_news,
@@ -850,15 +850,15 @@ a.ads_ad_box2:hover {
 
 .ads_ad_domain.apps_only,
 .ads_ad_domain.groups_only {
-    color: #939699;
+    color: #939393;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
 }
 
 .ads_ad_domain.apps_only {
-    color: #65686c;
-    font-size: 12px;
+    color: #656565;
+    font-size: 12.5px;
     padding-top: 5px
 }
 

@@ -121,7 +121,7 @@
 }
 
 .feed_updates .wall_module .post_date {
-    padding-top: 4px
+    padding-top: 3px
 }
 
 .feed_updates .wall_module .post_author {
@@ -215,7 +215,7 @@
 .feed_friend_name {
     text-align: center;
     padding: 8px 0 0;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 15px;
     white-space: nowrap;
     overflow: hidden;
@@ -392,7 +392,7 @@
     width: 170px;
     box-sizing: border-box;
     padding: 6px 12px 8px;
-    color: #65686c;
+    color: #656565;
     line-height: 16px
 }
 
@@ -443,7 +443,7 @@
 #all_shown {
     margin: 15px auto 0;
     line-height: 30px;
-    color: #65686c;
+    color: #656565;
     text-align: center
 }
 
@@ -493,7 +493,7 @@
     padding: 12px 0;
     min-height: 57px;
     line-height: 49px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .wall_module .feedback_row_wrap .dld:before {
@@ -646,7 +646,7 @@
 
 .feedback_header {
     padding: 2px 0 0;
-    color: #65686c;
+    color: #656565;
     line-height: 17px
 }
 
@@ -660,14 +660,14 @@
 }
 
 .feedback_header b {
-    color: #65686c
+    color: #656565
 }
 
 .feedback_content {
     margin: 0 0 0 62px;
     word-wrap: break-word;
     min-height: 50px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .feedback_content .feedback_text {
@@ -742,9 +742,9 @@
 }
 
 .feedback_footer {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 2px 0;
-    color: #939699;
+    color: #939393;
     overflow: hidden
 }
 
@@ -759,13 +759,13 @@
 }
 
 .feedback_date {
-    color: #939699;
+    color: #939393;
     padding-right: 20px;
     line-height: 1.417
 }
 
 .feedback_date .post_link {
-    color: #939699
+    color: #939393
 }
 
 .feedback_rphoto {
@@ -1282,7 +1282,7 @@
     margin: 0;
     padding: 13px 0 14px;
     cursor: pointer;
-    color: #33567f;
+    color: #285473;
     background-color: #fff;
     border-top: 1px solid #ebedf0;
     display: block;

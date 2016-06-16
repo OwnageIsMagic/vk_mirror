@@ -97,7 +97,7 @@
 
 .flist_empty {
     margin: 100px 20px;
-    color: #65686c;
+    color: #656565;
     font-size: 14px;
     text-align: center
 }
@@ -147,7 +147,7 @@
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .flist_summary_sep .clear {
@@ -206,7 +206,7 @@
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 12px;
+    font-size: 12.5px;
     color: #42648b;
     width: 170px;
     overflow: hidden;
@@ -287,7 +287,7 @@
     border-radius: 23px;
     border: 2px solid #6287ae;
     color: #6287ae;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -317,8 +317,8 @@
     opacity: 1;
     -webkit-filter: none;
     filter: none;
-    background-color: #678eb4;
-    border-color: #678eb4
+    background-color: #6888ad;
+    border-color: #6888ad
 }
 
 .flist_full .flist_item_wrap {
@@ -366,7 +366,7 @@
 .flist_search_toggler_label {
     padding: 0 12px 0 0;
     float: left;
-    color: #939699;
+    color: #939393;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -551,5 +551,5 @@
 }
 
 .privacy_custom_box .cp_plus_friends_type {
-    color: #33567f
+    color: #285473
 }

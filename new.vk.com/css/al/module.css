@@ -4,7 +4,7 @@
 
 .module_body {
     padding: 12px 15px 15px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .wide_column .module_body {
@@ -30,7 +30,7 @@
     border-width: 1px 0 0;
     overflow: hidden;
     padding: 0 15px;
-    font-size: 12px;
+    font-size: 12.5px;
     letter-spacing: 0;
     outline: none;
     color: #000
@@ -44,11 +44,12 @@
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    color: #939699
+    color: #939393
 }
 
 .wide_column .module_header .header_top {
-    padding: 0 20px
+    padding: 4px 20px 0;
+    font-size: 13px
 }
 
 .no_post_header .wide_column .module_header .header_top {
@@ -56,13 +57,8 @@
 }
 
 .module_header .header_count {
-    color: #939699;
+    color: #939393;
     padding: 0 6px
-}
-
-.wide_column .module_header .header_top {
-    font-size: 13px;
-    padding-top: 4px
 }
 
 .module_header .header_top .fl_r:hover {
@@ -167,7 +163,7 @@
 }
 
 .topics_module .topic_inner_link {
-    color: #33567f
+    color: #285473
 }
 
 .topics_module .topic_inner_link:hover {
@@ -176,18 +172,16 @@
 
 .topics_module .topic_info_wrap {
     position: relative;
-    padding-left: 25px
+    padding-left: 24px
 }
 
 .topics_module .topic_icon {
     position: absolute;
-    top: 2px;
+    top: 4px;
     left: 0;
-    width: 15px;
-    height: 14px;
-    opacity: 0.6;
-    filter: alpha(opacity=60);
-    background: url(/images/icons/menu_icon.png?2) no-repeat 0 -28px
+    width: 12px;
+    height: 12px;
+    background: url(/images/icons/topic_icon.png) no-repeat 0 0
 }
 
 .topics_module .topic_title {
@@ -202,7 +196,7 @@
 
 .topics_module .topic_info {
     padding-top: 4px;
-    color: #939699
+    color: #939393
 }
 
 .topics_module .topic_row {
@@ -238,12 +232,12 @@
 
 .wide_column .topics_module .topic_info {
     padding-top: 5px;
-    color: #65686c;
+    color: #656565;
     display: block
 }
 
 .wide_column .topics_module .topic_date {
-    color: #939699
+    color: #939393
 }
 
 .wide_column .topics_module .topic_row {
@@ -275,7 +269,7 @@
 
 .places_module .place_info {
     overflow: hidden;
-    color: #939699;
+    color: #939393;
     line-height: 15px
 }
 
@@ -383,7 +377,7 @@
 }
 
 .video_module .video div.page_video_duration {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 3px 6px;
     margin: 8px;
     background: rgba(0, 0, 0, .5);
@@ -529,19 +523,19 @@
 .page_list_module .group_desc,
 .page_list_module .people_desc,
 .page_list_module .people_extra {
-    font-size: 11.5px;
+    font-size: 12px;
     max-height: 45px;
     overflow: hidden;
-    color: #65686c
+    color: #656565
 }
 
 .page_list_module .people_extra {
     padding-bottom: 0;
-    color: #939699
+    color: #939393
 }
 
 .page_list_module .people_extra_lnk {
-    color: #939699
+    color: #939393
 }
 
 .page_list_module .thumb {
@@ -581,7 +575,7 @@
     width: 147px;
     overflow: hidden;
     word-wrap: break-word;
-    padding: 4px 0 0 13px
+    padding: 4px 0 0 12px
 }
 
 .page_list_module .line_cell .info {
@@ -623,7 +617,7 @@
 }
 
 .page_counter .label {
-    color: #7c7f82;
+    color: #828282;
     line-height: 15px
 }
 

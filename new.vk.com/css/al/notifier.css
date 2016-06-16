@@ -44,7 +44,7 @@ span.fc_contact_photo.online.mobile:after {
     background: rgba(54, 56, 59, .96);
     border-radius: 4px;
     box-shadow: 0 2px 3px rgba(0, 0, 0, .2);
-    font-size: 12px;
+    font-size: 12.5px;
     cursor: pointer
 }
 
@@ -158,7 +158,7 @@ span.fc_contact_photo.online.mobile:after {
 .fc_tab_wrap {
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
     border-radius: 3px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .fc_tab_wrap.fc_tobottom {
@@ -285,7 +285,7 @@ span.fc_contact_photo.online.mobile:after {
     left: 0;
     right: 0;
     text-align: center;
-    color: #939699
+    color: #939393
 }
 
 .fc_contact {
@@ -390,7 +390,7 @@ div.fc_clist_filter_wrap .input_back {
 
 div.fc_clist_filter {
     overflow: hidden;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .chats_sp.fc_clist_search_icon {
@@ -409,7 +409,7 @@ div.fc_clist_filter {
 #fc_clist_filter~.placeholder .ph_input {
     border: 0;
     padding: 5px 7px 7px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 #fc_clist_filter::-webkit-input-placeholder {
@@ -525,7 +525,7 @@ em.fc_clist_hl {
 }
 
 .fc_tab_typing {
-    color: #939699;
+    color: #939393;
     opacity: 0;
     filter: alpha(opacity=0);
     min-height: 1.2em;
@@ -586,7 +586,7 @@ div.fc_tab_txt {
 div.fc_editable {
     min-height: 28px;
     overflow-x: hidden;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 140%;
     word-wrap: break-word
 }
@@ -636,14 +636,14 @@ div.fc_editable:focus~.placeholder .ph_content {
 }
 
 .fc_srv_msg {
-    color: #939699
+    color: #939393
 }
 
 .fc_srv_msg .im_srv_lnk {
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    color: #939699
+    color: #939393
 }
 
 .fc_msgs_wrap {
@@ -657,7 +657,7 @@ div.fc_editable:focus~.placeholder .ph_content {
 }
 
 .fc_msgs_date {
-    color: #939699;
+    color: #939393;
     font-size: 11px;
     padding: 4px 0 6px;
     opacity: 0.8;
@@ -2033,7 +2033,7 @@ div.chat_tab_img {
     position: absolute;
     visibility: hidden;
     width: 470px;
-    top: 56px;
+    top: 52px;
     left: -1px;
     background: #fff;
     z-index: 800;
@@ -2078,7 +2078,7 @@ div.chat_tab_img {
     opacity: 1;
     -webkit-filter: none;
     filter: none;
-    top: 46px;
+    top: 42px;
     pointer-events: auto
 }
 
@@ -2106,7 +2106,7 @@ div.chat_tab_img {
     width: 470px;
     max-height: 400px;
     overflow-y: scroll;
-    font-size: 12px;
+    font-size: 12.5px;
     color: #000;
     white-space: normal
 }
@@ -2129,7 +2129,7 @@ div.chat_tab_img {
 
 .top_notify_empty {
     padding: 45px 50px 44px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .top_notify_show_all {
@@ -2142,7 +2142,7 @@ div.chat_tab_img {
 }
 
 .top_notify_show_all:hover {
-    background-color: #f1f2f4;
+    background-color: #edeef0;
     text-decoration: none
 }
 
@@ -2388,7 +2388,7 @@ div.chat_tab_img {
 }
 
 .fc_snapster_invite_room_followers {
-    color: #939699;
+    color: #939393;
     margin-top: 3px
 }
 
@@ -2409,7 +2409,7 @@ div.chat_tab_img {
 }
 
 .fc_snapster_invite_room_install {
-    color: #939699;
+    color: #939393;
     font-size: 11px;
     line-height: 140%;
     margin-bottom: 7px
@@ -2456,5 +2456,5 @@ div.chat_tab_img {
 
 .fc_msgs_out_inner .fc_snapster_invite_room_followers,
 .fc_msgs_out_inner .fc_snapster_invite_room_install {
-    color: #65686c
+    color: #656565
 }

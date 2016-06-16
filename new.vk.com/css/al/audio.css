@@ -77,7 +77,7 @@
     height: 46px;
     border-top: 1px solid #e4e6e9;
     padding: 16px 0 0 22px;
-    color: #7c7f82;
+    color: #828282;
     box-sizing: border-box;
     border-radius: 0 0 2px 2px
 }
@@ -92,6 +92,10 @@
     background-color: #fafbfc;
     border-bottom: 1px solid #ebedf0;
     box-sizing: border-box
+}
+
+.eltt.top_audio_layer .audio_page_player {
+    border-radius: 3px 3px 0 0
 }
 
 .audio_page_player .audio_page_player_ctrl {
@@ -228,7 +232,7 @@
 }
 
 .audio_page_player .audio_page_player_track_info_wrap {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 0 0 1px;
     line-height: 14px;
     height: 17px
@@ -398,7 +402,7 @@
     left: 100px;
     right: 75px;
     margin-top: 10px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .audio_page_player .__audio_page_player {
@@ -406,7 +410,7 @@
     top: 0;
     left: 100px;
     right: 120px;
-    font-size: 12px;
+    font-size: 12.5px;
     padding-top: 18px
 }
 
@@ -417,15 +421,15 @@
 }
 
 .audio_page_player .__audio_page_player_duration {
-    font-size: 11px;
-    color: #939699
+    font-size: 11.5px;
+    color: #939393
 }
 
 #audio_status_tt .audio_status_wrap {
     max-height: 260px;
     overflow: hidden;
     padding: 15px 30px 10px 15px;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 #audio_status_tt .hint_title {
@@ -452,7 +456,7 @@
 }
 
 #audio_status_tt .audio_share_link {
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .audio_page_player .audio_page_player_left {
@@ -486,7 +490,7 @@
 
 .audio_page_player .audio_page_player_duration {
     float: right;
-    color: #939699;
+    color: #939393;
     cursor: pointer
 }
 
@@ -573,7 +577,7 @@
     font-weight: 600;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    font-size: 12px;
+    font-size: 12.5px;
     text-shadow: 0px 1px 2px rgba(0, 0, 0, .46)
 }
 
@@ -664,7 +668,7 @@
     float: left;
     margin-left: 12px;
     color: #999;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .audio_feed_post .audio_feed_author {
@@ -722,6 +726,10 @@
     filter: alpha(opacity=75)
 }
 
+.eltt .audio_edit_feed_btn {
+    display: none!important
+}
+
 .audio_delete_current_btn {
     background-image: url(/images/icons/common.png?5);
     background-position: 0px -29px;
@@ -761,7 +769,7 @@
 }
 
 .audio_author {
-    font-size: 12px;
+    font-size: 12.5px;
     margin-left: 5px
 }
 
@@ -779,7 +787,7 @@
     padding-left: 15px;
     line-height: 20px;
     margin: -6px 0 0;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .audio_add_upload_btn {
@@ -2055,7 +2063,7 @@
     padding: 5px 15px;
     white-space: nowrap;
     clear: both;
-    font-size: 12px;
+    font-size: 12.5px;
     position: relative
 }
 
@@ -2088,8 +2096,8 @@
 
 .audio_friend_audios_count,
 .audio_friend_now {
-    color: #939699;
-    padding: 2px 0px 0px 10px;
+    color: #939393;
+    padding: 0 0 0 10px;
     max-width: 150px;
     white-space: nowrap;
     overflow: hidden;
@@ -2100,7 +2108,7 @@
 }
 
 .audio_friend_status .audio_friend_audios_count {
-    color: #65686c
+    color: #656565
 }
 
 .audio_friend_status .audio_friend_audios_count:hover {

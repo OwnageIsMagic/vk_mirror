@@ -57,7 +57,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -302,7 +302,7 @@
 
 .apps_notification_row {
     word-break: break-word;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 142%;
     display: table;
     table-layout: fixed;
@@ -389,7 +389,7 @@
 }
 
 .apps_notification_info.apps_notification_action {
-    color: #65686c
+    color: #656565
 }
 
 .apps_section_not .apps_notification_info {
@@ -424,7 +424,7 @@
 
 .apps_notification_service_wrap {
     padding: 0 0 0 60px;
-    color: #65686c;
+    color: #656565;
     display: table-cell;
     vertical-align: middle;
     width: 100%
@@ -501,12 +501,12 @@
 
 .apps_feed_info {
     word-break: break-word;
-    color: #65686c;
+    color: #656565;
     margin: 0 40px;
     padding: 3px 10px;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 142%;
-    height: 34.08px;
+    height: 35.5px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
@@ -771,7 +771,7 @@ a.apps_header_progress:before {
     text-align: center;
     border-radius: 2px;
     color: hsla(0, 0%, 100%, .8);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 130%
 }
 
@@ -858,8 +858,8 @@ a.apps_header_progress:before {
 }
 
 .apps_cat_users {
-    color: #65686c;
-    font-size: 12px
+    color: #656565;
+    font-size: 12.5px
 }
 
 .app_best_sticker,
@@ -1140,7 +1140,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -1298,7 +1298,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
 }
 
 .apps_manage_layout .app_settings_data {
-    color: #7c7f82;
+    color: #828282;
     font-size: 0.92em
 }
 
@@ -1334,7 +1334,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
 }
 
 .apps_settings_status.disabled {
-    color: #7c7f82
+    color: #828282
 }
 
 .apps_settings_icons {
@@ -1455,7 +1455,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding: 3px 0 7px;
-    color: #65686c
+    color: #656565
 }
 
 .app_rate_stats_row {
@@ -1498,13 +1498,13 @@ a.page_block_header:hover .apps_cat_header_link:after {
     width: 30px;
     font-size: 11px;
     line-height: 15px;
-    color: #939699
+    color: #939393
 }
 
 .app_actions_menu_wrap {
     display: inline-block;
     position: relative;
-    color: #33567f
+    color: #285473
 }
 
 .app_actions_menu_wrap .ui_actions_menu {
@@ -1617,7 +1617,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
     width: 100%;
     position: relative;
     display: table-cell;
-    color: #7c7f82
+    color: #828282
 }
 
 .apps_footer .apps_footer_left>div {
@@ -1696,7 +1696,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
 
 .apps_access_item {
     margin-top: 12px;
-    color: #65686c;
+    color: #656565;
     min-height: 40px
 }
 
@@ -1709,7 +1709,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
 }
 
 .apps_access_item_info {
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 17px;
     padding-left: 52px
 }
@@ -1904,7 +1904,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 
 .apps_standalone_availability,
 .apps_win_availability {
-    color: #65686c;
+    color: #656565;
     font-size: 11px;
     line-height: 130%;
     text-align: center
@@ -1925,8 +1925,8 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 
 .apps_i_users,
 .apps_ss_playing {
-    color: #65686c;
-    font-size: 12px
+    color: #656565;
+    font-size: 12.5px
 }
 
 .apps_ss_playing {
@@ -1985,7 +1985,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
     background: #fafbfc;
     text-align: center;
     border-top: 1px solid #eef0f3;
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 14px 25px;
     margin: 18px -25px 0
 }
@@ -2001,8 +2001,8 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 }
 
 .apps_i_group .apps_i_group_info {
-    font-size: 12px;
-    color: #65686c;
+    font-size: 12.5px;
+    color: #656565;
     line-height: 17px;
     padding: 2px 0 0 52px
 }
@@ -2342,7 +2342,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 }
 
 .apps_win_instr_head {
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 17px;
     position: relative;
     height: 40px;
@@ -2362,7 +2362,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 }
 
 .apps_win_instr_screens {
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 17px;
     margin: 20px 0;
     width: 750px;
@@ -2419,7 +2419,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
     background: #fafbfc;
     text-align: center;
     border-top: 1px solid #eef0f3;
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 14px 25px;
     margin: 0 -25px -20px;
     border-radius: 0 0 2px 2px

@@ -130,7 +130,7 @@
 }
 
 .selector_container td.selector input.ph {
-    color: #7c7f82
+    color: #828282
 }
 
 .selector_container td.selector input.focused,
@@ -301,7 +301,7 @@
 .result_list ul li span {
     display: block;
     padding-top: 2px;
-    color: #939699;
+    color: #939393;
     font-size: 7pt
 }
 
@@ -908,7 +908,7 @@ x:-moz-any-link {
 
 .idd_popup .idd_header {
     padding: 7px 9px;
-    color: #33567f;
+    color: #285473;
     display: inline-block;
     line-height: 1em
 }
@@ -931,7 +931,7 @@ x:-moz-any-link {
 
 .idd_popup .idd_item {
     padding: 7px 9px;
-    color: #33567f;
+    color: #285473;
     cursor: pointer;
     line-height: 1em;
     overflow: hidden;

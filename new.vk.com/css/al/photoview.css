@@ -35,7 +35,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -517,7 +517,7 @@
     padding: 15px 20px;
     height: 60px;
     box-sizing: border-box;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 #pv_tag_info a {
@@ -592,7 +592,7 @@
 .pv_desc_more {
     display: block;
     margin-top: 3px;
-    color: #33567f
+    color: #285473
 }
 
 .pv_narrow_column_wrap {
@@ -644,7 +644,7 @@
 }
 
 .pv_comments_list .dld {
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .pv_comments {
@@ -660,8 +660,8 @@
     margin: 16px 20px 0;
     cursor: pointer;
     text-align: center;
-    font-size: 12px;
-    line-height: 13px;
+    font-size: 12.5px;
+    line-height: 13.5px;
     border-radius: 2px
 }
 
@@ -708,7 +708,7 @@
 }
 
 #pv_comments_data .pv_info {
-    color: #939699
+    color: #939393
 }
 
 #pv_comments_data .wide_column {
@@ -779,7 +779,7 @@
 }
 
 .pv_comment .dld {
-    color: #939699;
+    color: #939393;
     width: 325px;
     padding: 11px 4px 12px 65px
 }
@@ -798,7 +798,7 @@
 }
 
 #pv_action_info {
-    color: #939699;
+    color: #939393;
     height: 15px
 }
 
@@ -815,7 +815,7 @@
 
 #pv_album,
 #pv_author {
-    color: #939699;
+    color: #939393;
     padding-bottom: 10px
 }
 
@@ -976,7 +976,7 @@
 }
 
 #pv_rotate {
-    color: #939699
+    color: #939393
 }
 
 #pv_actions div.progress {
@@ -1186,11 +1186,11 @@
 
 #pv_date_wrap {
     padding: 0px 0px 8px;
-    color: #939699
+    color: #939393
 }
 
 #pv_tags {
-    color: #939699;
+    color: #939393;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 1.4em
@@ -1335,7 +1335,7 @@
 .pv_like {
     display: inline-block;
     cursor: pointer;
-    color: #33567f;
+    color: #285473;
     white-space: nowrap;
     overflow: hidden;
     margin: 16px 0px 0px 11px;
@@ -1457,7 +1457,7 @@
 #pv_desc_warn {
     display: none;
     margin-top: 14px;
-    color: #939699
+    color: #939393
 }
 
 #pv_move_to {
@@ -1487,7 +1487,7 @@
 }
 
 .pv_desc_edit {
-    color: #939699
+    color: #939393
 }
 
 #pv_desc .input_back_content,
@@ -1948,7 +1948,7 @@
 }
 
 #pv_box .box_title_wrap a {
-    color: #65686c
+    color: #656565
 }
 
 #pv_box.photos_is_albums_view #pv_albums_wrap {
@@ -2189,7 +2189,7 @@
 }
 
 #pv_edit_place {
-    color: #939699
+    color: #939393
 }
 
 .pv_place_pregress {

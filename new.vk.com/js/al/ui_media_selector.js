@@ -59,7 +59,7 @@ function MediaSelector(e, a, i, o) {
                             }), c = m.appendChild(ce("a", {
                                 className: "ms_item_more",
                                 innerHTML: '<span class="ms_item_more_label">' + n + "</span>"
-                            }));
+                            })), c.setAttribute("tabindex", 0);
                             var u = ce("div", {
                                 className: "ms_items_more_helper"
                             });
@@ -69,9 +69,9 @@ function MediaSelector(e, a, i, o) {
                         }
                         c = (t ? t : d)
                             .appendChild(ce("a", {
-                                innerHTML: t ? _ : "",
+                                innerHTML: t ? _ : '<span class="blind_label">' + _ + "</span>",
                                 className: "ms_item ms_item_" + h + " _type_" + h
-                            })), t || (c.setAttribute("data-title", _), addEvent(c, "mouseover", function() {
+                            })), c.setAttribute("tabindex", 0), t || (c.setAttribute("data-title", _), addEvent(c, "mouseover", function() {
                                 showTitle(this, !1, !1, {
                                     noZIndex: !0
                                 })
@@ -902,14 +902,13 @@ function MediaSelector(e, a, i, o) {
                             visibility: "hidden"
                         })),
                         P = getSize(S)[1];
-                    re(S), val(domFC(r), l), shortCurrency(),
-                        cur.animateUpdateInterval = setInterval(function() {
-                            o.onChangedSize && o.onChangedSize()
-                        }, 100), cur.preventShareAnim = animate(domFC(r), {
-                            height: P
-                        }, 200, function() {
-                            clearInterval(cur.animateUpdateInterval)
-                        }), re(geByClass1("medadd_c_linkprg", b))
+                    re(S), val(domFC(r), l), shortCurrency(), cur.animateUpdateInterval = setInterval(function() {
+                        o.onChangedSize && o.onChangedSize()
+                    }, 100), cur.preventShareAnim = animate(domFC(r), {
+                        height: P
+                    }, 200, function() {
+                        clearInterval(cur.animateUpdateInterval)
+                    }), re(geByClass1("medadd_c_linkprg", b))
                 }
                 t && addClass(geByClass1("medadd_c_linkcon", b), t)
             },

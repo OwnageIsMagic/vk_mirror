@@ -35,7 +35,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -196,7 +196,7 @@
 }
 
 .photos_albums {
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .photos_container_albums {
@@ -231,7 +231,7 @@
 
 .photos_container_albums .photos_album_title {
     font-weight: 700;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 1.2em;
     overflow: hidden;
     white-space: nowrap;
@@ -335,14 +335,14 @@
 
 .photos_container .photos_period_delimiter {
     clear: both;
-    color: #939699;
+    color: #939393;
     padding: 20px 0 10px;
     font-size: 13px;
     font-weight: 600
 }
 
 .photos_header_fixed {
-    top: 46px;
+    top: 42px;
     border-radius: 0;
     border-bottom: 1px solid #e4e6e9;
     box-shadow: 0px 2px 3px -1px rgba(0, 0, 0, .12)
@@ -363,14 +363,14 @@
 
 .photos_period_delimiter_fixed {
     position: fixed;
-    color: #939699;
+    color: #939393;
     padding: 20px 20px 10px;
     font-size: 13px;
     font-weight: 600;
     z-index: 100;
     width: inherit;
     background-color: #fff;
-    margin: 46px 0 0 -20px;
+    margin: 42px 0 0 -20px;
     top: 0;
     box-sizing: border-box
 }
@@ -381,7 +381,7 @@
 
 .photos_album_page,
 .photos_tag_page {
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .photos_album_page .photos_row,
@@ -493,7 +493,7 @@
 
 #photos_box_edit_data .photos_changes_saved,
 .photos_edit_album .photos_changes_saved {
-    color: #939699;
+    color: #939393;
     padding: 8px 0px 0 24px;
     opacity: 0;
     filter: alpha(opacity=0);
@@ -538,7 +538,7 @@
 }
 
 .photos_no_content {
-    color: #7c7f82;
+    color: #828282;
     padding: 60px 20px;
     text-align: center;
     font-size: 13px
@@ -700,7 +700,7 @@
     z-index: 3;
     color: #000;
     display: none;
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 7px 9px;
     border: 1px solid #dce2e8;
     border-top: none;
@@ -714,8 +714,8 @@
 }
 
 .photos_container_edit_grid .photos_photo_edit_row_desc_placeholder {
-    color: #7c7f82;
-    font-size: 12px;
+    color: #828282;
+    font-size: 12.5px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -840,7 +840,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -964,7 +964,7 @@
 
 .pv_move_to_album_nothing_found {
     display: none;
-    color: #7c7f82;
+    color: #828282;
     text-align: center;
     padding: 62px 0 94px
 }
@@ -1027,15 +1027,15 @@
 }
 
 .photos_album_intro .photos_album_intro_info {
-    color: #939699;
-    font-size: 12px;
+    color: #939393;
+    font-size: 12.5px;
     padding: 5px 0;
     text-align: center
 }
 
 .photos_container_grid .author,
 .photos_container_grid .pv_commdata {
-    font-size: 12px;
+    font-size: 12.5px;
     vertical-align: top
 }
 
@@ -2076,7 +2076,7 @@ a.photos_tt_edit:hover {
     background: #f0f2f5;
     padding: 8.5px 10px;
     text-align: center;
-    color: #42648b;
+    color: #285473;
     display: block;
     float: left;
     width: 70%;
@@ -2146,7 +2146,7 @@ a.photos_tt_edit:hover {
     width: 30%;
     height: 100%;
     cursor: pointer;
-    color: #42648b;
+    color: #285473;
     position: relative;
     padding: 8.5px 10px;
     padding-left: 0;

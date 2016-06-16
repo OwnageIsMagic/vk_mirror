@@ -35,7 +35,7 @@
     z-index: 2;
     color: #fff;
     background: rgba(0, 0, 0, .5);
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 0;
     opacity: 0;
     cursor: default
@@ -148,7 +148,7 @@
 }
 
 #photos_uploaded_progress {
-    color: #65686c;
+    color: #656565;
     float: right;
     font-size: 13px;
     opacity: 1;

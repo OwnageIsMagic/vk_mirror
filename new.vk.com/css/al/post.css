@@ -63,7 +63,7 @@
 
 .post_moder_info {
     margin: 9px 0 -9px;
-    color: #939699;
+    color: #939393;
     line-height: 1.462
 }
 
@@ -178,7 +178,7 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_album_title {
-    font-size: 12px;
+    font-size: 12.5px;
     background: url(/images/album_top_shadow.png);
     color: #fff;
     position: absolute;
@@ -204,7 +204,7 @@ a.page_post_thumb_wrap:hover {
 
 .page_album_size {
     float: right;
-    font-size: 13px;
+    font-size: 13.5px;
     opacity: 0.9;
     filter: alpha(opacity=90);
     margin: -1px 0 0 5px
@@ -297,7 +297,7 @@ a.page_post_thumb_wrap:hover {
 .page_market_album_title {
     display: block;
     padding: 9px 15px 11px;
-    font-size: 12px;
+    font-size: 12.5px;
     line-height: 17px;
     overflow: hidden
 }
@@ -314,7 +314,7 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_market_album_size {
-    color: #939699
+    color: #939393
 }
 
 .page_market_album_nocover {
@@ -328,8 +328,8 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_doc_row {
-    font-size: 12px;
-    color: #33567f;
+    font-size: 12.5px;
+    color: #285473;
     line-height: 14px;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -392,7 +392,7 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_doc_row .page_doc_size {
-    color: #939699;
+    color: #939393;
     pointer-events: none
 }
 
@@ -424,7 +424,7 @@ a.page_post_thumb_wrap:hover {
 }
 
 .page_media_poll_title_wrap {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 11px 0 2px;
     line-height: 16px
 }
@@ -443,7 +443,7 @@ a.page_post_thumb_wrap:hover {
 
 .page_media_poll_desc {
     float: right;
-    color: #939699
+    color: #939393
 }
 
 .page_poll_stats {
@@ -455,7 +455,7 @@ a.page_post_thumb_wrap:hover {
 }
 
 a.page_poll_code {
-    color: #939699
+    color: #939393
 }
 
 .page_poll_radio {
@@ -494,7 +494,7 @@ a.page_poll_code {
 }
 
 .page_media_poll .page_poll_row_count {
-    font-size: 11px;
+    font-size: 11.5px;
     color: #55677d;
     line-height: 20px;
     text-align: center;
@@ -502,7 +502,7 @@ a.page_poll_code {
 }
 
 .page_media_poll .page_poll_row_percent {
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -539,7 +539,7 @@ a.page_poll_code {
 }
 
 .page_poll_total {
-    font-size: 12px;
+    font-size: 12.5px;
     padding: 2px 0 0
 }
 
@@ -644,7 +644,7 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_polladd {
-    color: #7c7f82
+    color: #828282
 }
 
 .medadd_c_polla_wr,
