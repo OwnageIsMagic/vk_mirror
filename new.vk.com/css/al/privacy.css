@@ -114,7 +114,7 @@
 .flist_sel {
     background-color: #fafbfc;
     padding: 15px 25px;
-    border-bottom: 1px solid #ebedf0
+    border-bottom: 1px solid #e7e8ec
 }
 
 #box_layer .privacy_friends {
@@ -151,7 +151,7 @@
 }
 
 .flist_summary_sep .clear {
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     padding-top: 15px
 }
 
@@ -164,7 +164,7 @@
 
 .flist_item_wrap {
     margin: 0 25px;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -179,7 +179,7 @@
 .flist_item_wrap:hover {
     margin: -1px 0 0;
     padding: 0 25px;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     background-color: #fafbfc
 }
 
@@ -537,7 +537,7 @@
 }
 
 .privacy_custom_box .plus_friends {
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     padding-bottom: 20px;
     margin-bottom: 17px
 }

@@ -1508,10 +1508,15 @@ div.chat_tab_img {
     border: 1px solid #e3e6ec
 }
 
-.emojo_scroll_progress {
-    padding: 105px 0;
-    height: 20px;
-    background: url(/images/progress7.gif) 50% 50% no-repeat
+.emoji_scroll_progress {
+    padding: 115px 0;
+    text-align: center
+}
+
+.emoji_scroll_progress .pr {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
 }
 
 .emoji_smile_animation .emoji_smile_icon {
@@ -2088,7 +2093,7 @@ div.chat_tab_img {
     background-color: #fafbfc;
     color: #000;
     font-size: 13px;
-    border-bottom: 1px solid #ebedf0
+    border-bottom: 1px solid #e7e8ec
 }
 
 .top_notify_header,
@@ -2136,7 +2141,7 @@ div.chat_tab_img {
     display: block;
     padding: 10px 0 12px;
     background-color: #fafbfc;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     text-align: center;
     border-radius: 0 0 3px 3px
 }

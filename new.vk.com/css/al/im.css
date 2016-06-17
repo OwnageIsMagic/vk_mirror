@@ -686,7 +686,7 @@ img.im_photo_thumb {
 }
 
 .im_stickers_my_row~.im_stickers_my_row {
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .im_stickers_my_row.sort_taken,
@@ -1936,8 +1936,8 @@ img.im_photo_thumb {
     text-align: center;
     position: fixed;
     color: #285473;
-    border-top: solid 1px #ebedf0;
-    border-bottom: solid 1px #ebedf0;
+    border-top: solid 1px #e7e8ec;
+    border-bottom: solid 1px #e7e8ec;
     cursor: pointer;
     width: 316px;
     background: #fff;
@@ -2915,7 +2915,7 @@ img.im_photo_thumb {
     padding-right: 15px;
     margin-left: 57px;
     position: relative;
-    border-top: solid 1px #ebedf0
+    border-top: solid 1px #e7e8ec
 }
 
 .nim-dialog .nim-dialog--daction {
@@ -3207,7 +3207,7 @@ img.im_photo_thumb {
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog,
 .nim-dialog:not(.nim-dialog_deleted):hover,
 .nim-dialog:not(.nim-dialog_deleted):hover+.nim-dialog {
-    border-top: solid 1px #ebedf0
+    border-top: solid 1px #e7e8ec
 }
 
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog:before,
@@ -3798,7 +3798,7 @@ img.im_photo_thumb {
 .im-member-item {
     clear: both;
     padding: 15px 0;
-    border-bottom: solid 1px #ebedf0;
+    border-bottom: solid 1px #e7e8ec;
     position: relative
 }
 

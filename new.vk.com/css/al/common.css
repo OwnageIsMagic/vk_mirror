@@ -2811,7 +2811,7 @@ body.no_stl #stl_bg {
     height: 29px;
     background-color: #fafbfc;
     border-radius: 0 0 2px 2px;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     white-space: nowrap
 }
 
@@ -2997,7 +2997,7 @@ body.no_stl #stl_bg {
 }
 
 .flat_tab a {
-    border-bottom: 2px solid #ebedf0;
+    border-bottom: 2px solid #e7e8ec;
     float: left;
     padding: 5px 10px 3px;
     text-decoration: none
@@ -3577,7 +3577,7 @@ body.no_stl #stl_bg {
 
 .summary_tabs {
     padding: 11px 16px;
-    border-bottom: 1px solid #ebedf0
+    border-bottom: 1px solid #e7e8ec
 }
 
 .summary_tab,
@@ -4313,7 +4313,7 @@ input.text.ts_input:focus {
 }
 
 .ts_search_sep {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     padding: 8px 10px 5px;
     color: #656565;
     font-size: 11.5px;
@@ -4771,7 +4771,7 @@ em.highlight {
     padding: 0 20px;
     height: 54px;
     line-height: 54px;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     border-radius: 2px 2px 0 0;
     font-size: 16px;
     outline: none;
@@ -4854,7 +4854,7 @@ a.page_block_header:hover .header_side_link {
 .page_block_info {
     background: #fafbfc;
     line-height: 140%;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     border-radius: 0 0 2px 2px;
     overflow: hidden;
     padding: 15px 20px;
@@ -5245,7 +5245,7 @@ button.flat_button .pr {
     cursor: pointer;
     color: #285473;
     background-color: #fff;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     border-radius: 0 0 2px 2px;
     -o-transition: background-color 40ms linear;
     transition: background-color 40ms linear

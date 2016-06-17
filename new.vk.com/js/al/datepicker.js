@@ -418,7 +418,7 @@
                     onChange: u
                 }),
                 f = new Dropdown(ge(n + "_month_input"), v, {
-                    width: 90,
+                    width: 120,
                     dark: 1,
                     zeroPlaceholder: d.zeroPlaceholder,
                     onChange: u

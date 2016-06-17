@@ -19,7 +19,7 @@
 
 .ui_tabs {
     position: relative;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     padding: 0 10px;
     margin: 0;
     list-style: none;
@@ -570,7 +570,7 @@ a.ui_crumb {
 }
 
 .ui_rmenu_sep {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     margin: 6px 15px
 }
 
@@ -672,7 +672,7 @@ a.ui_crumb {
 }
 
 .ui_search {
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     background-color: #fff;
     position: relative
 }
@@ -1092,7 +1092,7 @@ a.ui_search_custom_link {
     padding-top: 0;
     padding-bottom: 0;
     position: relative;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     display: none;
     opacity: 0;
     filter: alpha(opacity=0);
@@ -1484,7 +1484,7 @@ a.ui_search_custom_link {
 
 .ui_grey_block {
     background: #fafbfc;
-    border-top: solid 1px #ebedf0
+    border-top: solid 1px #e7e8ec
 }
 
 .ui_clean_list {
@@ -1830,7 +1830,7 @@ a.ui_search_custom_link {
     margin: 0 25px;
     line-height: 0;
     zoom: 1;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -1840,7 +1840,7 @@ a.ui_search_custom_link {
 .olist_item_wrap:hover {
     margin: -1px 0 0;
     padding: 0 25px;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     background-color: #fafbfc;
     text-decoration: none
 }

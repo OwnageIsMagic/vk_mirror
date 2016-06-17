@@ -10,7 +10,7 @@
 .apps_edit_nav_header {
     padding: 10px 23px;
     background: #fafbfc;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     margin-bottom: 14px
 }
 
@@ -1084,7 +1084,7 @@ td.apps_edit_label {
 .app_edit_block_header {
     background: #fafbfc;
     height: 54px;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     border-radius: 2px 2px 0 0;
     outline: none;
     color: #000;
@@ -1240,7 +1240,7 @@ td.apps_edit_info_save {
 }
 
 .apps_edit_screen_line {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     margin: 20px -30px 5px;
     padding: 26px 30px 0px;
     color: #222;
@@ -2629,7 +2629,7 @@ input.execute_field_input {
 
 #app_stat_main_blocks {
     border-width: 0 0px 1px;
-    border-color: #ebedf0;
+    border-color: #e7e8ec;
     border-style: solid;
     padding-top: 9px;
     margin-bottom: 20px
@@ -2722,7 +2722,7 @@ input.execute_field_input {
 .app_stat_question_mark_hint {
     display: inline;
     padding: 1px 3px;
-    background: #ebedf0;
+    background: #e7e8ec;
     border-radius: 2px;
     font-size: 10px;
     cursor: default
@@ -2797,7 +2797,7 @@ input.execute_field_input {
 
 .apps_edit_platform_status {
     padding: 15px 0;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     line-height: 150%
 }
 

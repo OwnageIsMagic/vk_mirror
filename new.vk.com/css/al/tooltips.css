@@ -446,7 +446,7 @@
 
 .wall_tt .like_tt_bottom {
     background: #fafbfc;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     padding: 10px 20px 12px
 }
 
@@ -936,7 +936,7 @@ div.own_reply_tt .content {
 .mention_tt_actions {
     background-color: #fafbfc;
     padding: 12px 14px;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     white-space: nowrap
 }
 

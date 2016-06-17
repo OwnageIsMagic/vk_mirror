@@ -24,7 +24,7 @@
     display: block;
     padding: 10px 11px 11px;
     margin: 0 0 20px;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     text-align: center
 }
 
@@ -145,7 +145,7 @@
 }
 
 .friends_user_row {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     padding: 12px 0;
     clear: both;
     position: relative
@@ -172,7 +172,7 @@
 }
 
 .friends_list_bl {
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .friends_list_bl:first-child {
@@ -568,7 +568,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 
 .friends_cur_filters {
     padding: 4px 20px 10px;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     display: none
 }
 
@@ -911,7 +911,7 @@ body[data-useragent*=msie_edge] .friends_actions_menu .ui_actions_menu {
 
 .friends_imp_r {
     padding: 15px 0;
-    border-top: solid 1px #ebedf0
+    border-top: solid 1px #e7e8ec
 }
 
 .friends_imp_r_first {

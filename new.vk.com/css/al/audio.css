@@ -90,7 +90,7 @@
 
 .audio_page_player {
     background-color: #fafbfc;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     box-sizing: border-box
 }
 
@@ -451,7 +451,7 @@
 #audio_status_tt .audio_share_cont {
     padding: 10px 17px;
     background-color: #fafbfc;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     border-radius: 2px
 }
 

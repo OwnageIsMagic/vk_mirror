@@ -148,7 +148,7 @@ div.wall_module .ext_video div {
 
 .big_wall_cards .post:first-child,
 .big_wall_phone_info .post:first-child {
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .wall_module .delete_post_wrap {
@@ -658,7 +658,7 @@ div.wall_module .ext_video div {
 
 .wall_module .replies_list {
     padding: 0;
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .wall_module .replies_list:empty {
@@ -682,14 +682,14 @@ div.wall_module .ext_video div {
 
 .wall_module .reply~.reply .dld,
 .wall_module .reply~.reply .reply_wrap {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     margin-top: -1px
 }
 
 .wall_module .reply.reply_highlighted {
     background: #f2f4f7;
-    border-top: 1px solid #ebedf0;
-    border-bottom: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec;
+    border-bottom: 1px solid #e7e8ec
 }
 
 .wall_module .reply_image {
@@ -810,7 +810,7 @@ div.wall_module .ext_video div {
 
 .wall_module .reply_box,
 .wall_module .reply_fakebox_wrap {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     border-radius: 0 0 2px 2px;
     margin-top: -1px
 }
@@ -3268,7 +3268,7 @@ img.page_preview_video {
 }
 
 .submit_post_box_bordered .post_field_wrap {
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 div.submit_post_field,
@@ -3379,7 +3379,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 .submit_post {
     display: none;
     background: #fafbfc;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     padding: 15px 20px;
     border-radius: 0 0 2px 2px
 }
@@ -4024,7 +4024,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 .post_full_like_wrap {
     padding: 10px 0 11px;
     margin: 0 20px;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     border-radius: 0 0 2px 2px
 }
 
@@ -4194,7 +4194,7 @@ span.page_post_thumb_unsized.page_post_thumb_unsized_single {
 
 .page_top {
     padding-bottom: 15px;
-    border-bottom: 1px solid #ebedf0
+    border-bottom: 1px solid #e7e8ec
 }
 
 .page_info_wrap {
@@ -4413,7 +4413,7 @@ textarea.page_poll_export_code {
 .post_publish {
     text-align: center;
     padding: 15px;
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .post_publish .flat_button {
@@ -6063,7 +6063,7 @@ button.wall_block_app_btn {
 
 .page_wall_search {
     display: none;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     position: relative
 }
 

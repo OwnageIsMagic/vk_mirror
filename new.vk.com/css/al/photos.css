@@ -574,8 +574,8 @@
     background-color: #fafbfc;
     padding: 13px 20px;
     color: #222;
-    border-top: 1px solid #ebedf0;
-    border-bottom: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
+    border-bottom: 1px solid #e7e8ec;
     white-space: nowrap;
     box-sizing: border-box
 }
@@ -2279,7 +2279,7 @@ a.photos_tt_edit:hover {
     z-index: 20;
     display: none;
     background-color: #fafbfc;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     box-sizing: border-box
 }
 

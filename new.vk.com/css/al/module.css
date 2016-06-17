@@ -26,7 +26,7 @@
 .module_header .header_top {
     height: 32px;
     line-height: 40px;
-    border: solid #ebedf0;
+    border: solid #e7e8ec;
     border-width: 1px 0 0;
     overflow: hidden;
     padding: 0 15px;
@@ -67,7 +67,7 @@
 
 .module.empty .module_body {
     padding: 0;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     font-size: 1em
 }
 
@@ -242,7 +242,7 @@
 
 .wide_column .topics_module .topic_row {
     padding: 12px 0 13px;
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .wide_column .topics_module .topic_row:first-child {
@@ -596,7 +596,7 @@
 
 .counts_module {
     text-align: center;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     max-height: 69px
 }
 

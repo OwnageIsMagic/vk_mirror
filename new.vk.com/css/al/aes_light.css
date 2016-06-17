@@ -1353,7 +1353,8 @@ a.ads_ad_box2:hover {
 
 .ads_ad_box.redesign {
     font-size: 12px;
-    font-family: Open Sans, Helvetica Neue, sans-serif
+    font-family: Open Sans, Helvetica Neue, sans-serif;
+    overflow: hidden
 }
 
 .ads_ad_box.redesign.ver.repeat_ver.size_site {
@@ -1368,15 +1369,12 @@ a.ads_ad_box2:hover {
     border-top-width: 0
 }
 
-.ads_ad_box.redesign .ads_ad_box_border.repeat_ver.last {
-    border-bottom-width: 0
-}
-
 .ads_ad_box.redesign .ads_ad_box2.ver.repeat_ver.size_site {
     width: 145px;
     display: block;
     text-align: left;
-    padding: 15px 0 13px
+    margin: 15px 0 13px;
+    padding: 0
 }
 
 .ads_ad_box.redesign .ads_ad_photo_box {

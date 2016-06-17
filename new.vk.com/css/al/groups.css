@@ -250,7 +250,7 @@ a.groups_messages_block .ui_rmenu_count {
 
 .group_list_row {
     position: relative;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     padding: 15px 0
 }
 
@@ -584,7 +584,7 @@ a.groups_catalog_comm_title_link {
 }
 
 .group_box_list .sort_helper {
-    border-bottom: 1px solid #ebedf0
+    border-bottom: 1px solid #e7e8ec
 }
 
 .group_box_list .sort_helper.sort_helper_last {
@@ -593,7 +593,7 @@ a.groups_catalog_comm_title_link {
 
 .group_box_row {
     padding: 15px 0;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     line-height: 21px
 }
 

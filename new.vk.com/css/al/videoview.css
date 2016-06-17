@@ -156,7 +156,7 @@ body.mobfixed #mv_layer_wrap {
 
 .mv_actions_panel {
     padding-bottom: 15px;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     line-height: 1.5
 }
 
@@ -490,7 +490,7 @@ body.mobfixed #mv_layer_wrap {
 
 .mv_wide_column {
     width: 655px;
-    border-right: 1px solid #ebedf0
+    border-right: 1px solid #e7e8ec
 }
 
 .mv_container_has_pl .mv_wide_column {
@@ -565,7 +565,7 @@ body.mobfixed #mv_layer_wrap {
 .mv_comments_summary {
     margin: 0 20px;
     padding: 8px 0;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     color: #2b2f33;
     font-size: 16px;
     cursor: default;
@@ -1046,7 +1046,7 @@ embed#video_player {
 .mv_comments_restricted_msg {
     margin: 20px;
     padding: 20px 60px 0;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     font-size: 13px
 }
 
@@ -1057,7 +1057,7 @@ embed#video_player {
 
 .mv_narrow_column {
     width: 240px;
-    border-left: 1px solid #ebedf0;
+    border-left: 1px solid #e7e8ec;
     margin-left: -1px
 }
 
@@ -1153,7 +1153,7 @@ embed#video_player {
 
 #mv_pl_tt .mv_tt_add_playlist {
     background-color: #f7f8fa;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     padding: 8px 10px;
     text-align: left;
     cursor: pointer

@@ -173,7 +173,7 @@
 }
 
 .feed_updates .wall_module .feed_row .post {
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .feed_updates .wall_module .feed_row:first-child .post {
@@ -351,7 +351,7 @@
 .feed_new_posts {
     border-radius: 2px 2px 0 0;
     color: #42648b;
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     text-align: center;
     padding: 16px 15px 14px;
     cursor: pointer;
@@ -382,7 +382,7 @@
 }
 
 .feed_list_name_wrap {
-    border-bottom: 1px solid #ebedf0;
+    border-bottom: 1px solid #e7e8ec;
     padding: 20px
 }
 
@@ -448,7 +448,7 @@
 }
 
 .page_block #all_shown {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     padding: 5px 0
 }
 
@@ -485,7 +485,7 @@
 .feed_row~.feed_row .feedback_row,
 .feed_row~.feed_row .feedback_sticky_row,
 .feedback_sticky_rows:not(:empty)+.feed_row .feedback_row {
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     margin-top: -1px
 }
 
@@ -548,11 +548,11 @@
 
 .feedback_row_clickable:not(.feedback_row_touched):hover {
     background-color: #fafbfc;
-    border-bottom: 1px solid #ebedf0
+    border-bottom: 1px solid #e7e8ec
 }
 
 .feed_row~.feed_row .feedback_row_clickable:not(.feedback_row_touched):hover {
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .feedback_row_wrap.unread {
@@ -561,11 +561,11 @@
 
 .feedback_row_wrap.reply_box_open {
     background-color: #f7f8fa;
-    border-bottom: 1px solid #ebedf0
+    border-bottom: 1px solid #e7e8ec
 }
 
 .feed_row~.feed_row .feedback_row_wrap.reply_box_open {
-    border-top: 1px solid #ebedf0
+    border-top: 1px solid #e7e8ec
 }
 
 .feedback_row_wrap.reply_box_open .submit_post,
@@ -594,7 +594,7 @@
 .feedback_row_wrap.reply_box_open .reply_box:before {
     border-width: 6px;
     margin: 0 -6px;
-    border-bottom-color: #ebedf0
+    border-bottom-color: #e7e8ec
 }
 
 .feedback_row_wrap.reply_box_open .reply_box:after {
@@ -1264,8 +1264,8 @@
 }
 
 .feedback_unread_bar {
-    border-top: 1px solid #ebedf0;
-    border-bottom: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
+    border-bottom: 1px solid #e7e8ec;
     margin-bottom: -1px;
     height: 38px;
     line-height: 38px;
@@ -1284,7 +1284,7 @@
     cursor: pointer;
     color: #285473;
     background-color: #fff;
-    border-top: 1px solid #ebedf0;
+    border-top: 1px solid #e7e8ec;
     display: block;
     border-radius: 0 0 2px 2px;
     -o-transition: background-color 40ms linear;
