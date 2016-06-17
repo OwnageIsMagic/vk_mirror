@@ -1240,7 +1240,7 @@ td.apps_edit_info_save {
 }
 
 .apps_edit_screen_line {
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     margin: 20px -30px 5px;
     padding: 26px 30px 0px;
     color: #222;
@@ -2722,7 +2722,7 @@ input.execute_field_input {
 .app_stat_question_mark_hint {
     display: inline;
     padding: 1px 3px;
-    background: #eef0f3;
+    background: #ebedf0;
     border-radius: 2px;
     font-size: 10px;
     cursor: default
@@ -2797,7 +2797,7 @@ input.execute_field_input {
 
 .apps_edit_platform_status {
     padding: 15px 0;
-    border-bottom: 1px solid #eef0f3;
+    border-bottom: 1px solid #ebedf0;
     line-height: 150%
 }
 

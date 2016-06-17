@@ -648,7 +648,7 @@
 }
 
 .pv_comments {
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     margin-top: 17px
 }
 
@@ -810,7 +810,7 @@
     padding: 13px 20px 10px;
     background-color: #fafbfc;
     white-space: nowrap;
-    border-bottom: 1px solid #eef0f3
+    border-bottom: 1px solid #ebedf0
 }
 
 #pv_album,

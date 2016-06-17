@@ -682,14 +682,14 @@ div.wall_module .ext_video div {
 
 .wall_module .reply~.reply .dld,
 .wall_module .reply~.reply .reply_wrap {
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     margin-top: -1px
 }
 
 .wall_module .reply.reply_highlighted {
     background: #f2f4f7;
-    border-top: 1px solid #eef0f3;
-    border-bottom: 1px solid #eef0f3
+    border-top: 1px solid #ebedf0;
+    border-bottom: 1px solid #ebedf0
 }
 
 .wall_module .reply_image {
@@ -810,7 +810,7 @@ div.wall_module .ext_video div {
 
 .wall_module .reply_box,
 .wall_module .reply_fakebox_wrap {
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     border-radius: 0 0 2px 2px;
     margin-top: -1px
 }
@@ -4024,7 +4024,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 .post_full_like_wrap {
     padding: 10px 0 11px;
     margin: 0 20px;
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     border-radius: 0 0 2px 2px
 }
 
@@ -5853,7 +5853,7 @@ button.wall_block_app_btn {
 
 .page_actions_dd_label,
 .page_actions_header_inner {
-    color: #556a80;
+    color: #55677d;
     padding-right: 13px;
     background: url(/images/icons/profile_arrow.png) no-repeat;
     background-position: right 6px

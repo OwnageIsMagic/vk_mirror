@@ -1984,7 +1984,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 .apps_i_policy {
     background: #fafbfc;
     text-align: center;
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     font-size: 12.5px;
     padding: 14px 25px;
     margin: 18px -25px 0
@@ -2418,7 +2418,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 .apps_win_instr_try {
     background: #fafbfc;
     text-align: center;
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     font-size: 12.5px;
     padding: 14px 25px;
     margin: 0 -25px -20px;

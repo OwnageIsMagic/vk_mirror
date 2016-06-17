@@ -485,7 +485,7 @@
 .feed_row~.feed_row .feedback_row,
 .feed_row~.feed_row .feedback_sticky_row,
 .feedback_sticky_rows:not(:empty)+.feed_row .feedback_row {
-    border-top: 1px solid #eef0f3;
+    border-top: 1px solid #ebedf0;
     margin-top: -1px
 }
 
@@ -594,7 +594,7 @@
 .feedback_row_wrap.reply_box_open .reply_box:before {
     border-width: 6px;
     margin: 0 -6px;
-    border-bottom-color: #eef0f3
+    border-bottom-color: #ebedf0
 }
 
 .feedback_row_wrap.reply_box_open .reply_box:after {

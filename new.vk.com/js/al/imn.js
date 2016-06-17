@@ -963,8 +963,8 @@
             f = [];
         return r.search && f.push("_im_search", "nim-dialog_search"), inArray(t.peerId, e.get()
                 .mutedPeers) && f.push("nim-dialog_muted"), t.verified && f.push("nim-dialog_verified"), -1 === o.messageId && f.push("nim-dialog_empty"), (0, z.isClassicInterface)
-            (e) && f.push("nim-dialog_classic"), t.folders & Y.eventTypes.FOLDER_IMPORTANT && f.push("nim-dialog_starred"), (0, z.isUnrespond)(e, t.peerId) && f.push(
-                "nim-dialog_unrespond"), getTemplate("im_drow", {
+            (e) && f.push("nim-dialog_classic"), t.folders & Y.eventTypes.FOLDER_IMPORTANT && f.push("nim-dialog_starred"), !r.search && (0, z.isUnrespond)(e, t.peerId, t) &&
+            f.push("nim-dialog_unrespond"), getTemplate("im_drow", {
                 peer: t.peerId,
                 msg_id: o.messageId,
                 photo: i,
@@ -993,8 +993,8 @@
             val(geByClass1("_dialog_body", e), o), val(geByClass1("_im_dialog_date", e), d), val(geByClass1("_im_dialog_unread_ct", e), t.unread ? t.unread : ""), val(
                     geByClass1("_im_dialog_link", e), t.tab), val(geByClass1("_im_dialog_photo", e), c), toggleClass(e, "nim-dialog_verified", !!t.verified), toggleClass(e,
                     "nim-dialog_starred", t.folders & Y.eventTypes.FOLDER_IMPORTANT), toggleClass(e, "nim-dialog_muted", inArray(t.peerId, n.get()
-                    .mutedPeers)), toggleClass(e, "nim-dialog_unrespond", (0, z.isUnrespond)(n, t.peerId)), toggleClass(e, "nim-dialog_classic", (0, z.isClassicInterface)(
-                    n)), toggleOnline(geByClass1("_im_peer_online", e), t.online), t.unread > 0 && s & Y.eventTypes.FLAG_UNREAD && addClass(e, "nim-dialog_unread"), -1 ===
+                    .mutedPeers)), toggleClass(e, "nim-dialog_unrespond", (0, z.isUnrespond)(n, t.peerId, t)), toggleClass(e, "nim-dialog_classic", (0, z.isClassicInterface)
+                    (n)), toggleOnline(geByClass1("_im_peer_online", e), t.online), t.unread > 0 && s & Y.eventTypes.FLAG_UNREAD && addClass(e, "nim-dialog_unread"), -1 ===
                 i.messageId && addClass(e, "nim-dialog_empty"), s & Y.eventTypes.FLAG_UNREAD && s & Y.eventTypes.FLAG_OUTBOUND && !(0, z.isSelfMessage)(t.peerId, n.get()
                     .gid) && addClass(e, "nim-dialog_unread-out"), a && setTimeout(function() {
                     addClass(geByClass1("_im_dialog_" + t.peerId, r), "nim-dialog_injected")
@@ -1319,8 +1319,9 @@
                         if (!(!n || (0, z.isClassicInterface)(t) && t.get()
                                 .peer)) {
                             var r = A(s, l, t);
-                            return s.toTop(), r
-                        }(0, z.isClassicInterface)(t) || s.restoreScroll("list");
+                            return s.toTop(),
+                                r
+                        }(0, z.isClassicInterface)(t) || s.restoreScroll("list")
                     })
             },
             appendDialogs: function(t, n) {
@@ -2987,7 +2988,7 @@
         return e.set(q.bind(null, t))
             .then(function(e) {
                 return (0, wt.isFullyLoadedTab)(e.get(), t) ? e.get()
-                    .tabs[t].attaches : [];
+                    .tabs[t].attaches : []
             })
     }
 
@@ -4794,7 +4795,7 @@
         return function(t, n) {
             if (Array.isArray(t)) return t;
             if (Symbol.iterator in Object(t)) return e(t, n);
-            throw new TypeError("Invalid attempt to destructure non-iterable instance");
+            throw new TypeError("Invalid attempt to destructure non-iterable instance")
         }
     }();
     t.deleteEvent = n, t.replaceFlagsEvent = r, t.setFlagsEvent = a, t.resetFlagsEvent = i, t.addMessageEvent = s, t.readInboundEvent = o, t.readOutboundEvent = l, t.gotOnlineEvent =
@@ -5875,11 +5876,12 @@
     }
 
     function ce(e, t) {
+        var n = arguments.length <= 2 || void 0 === arguments[2] ? !1 : arguments[2];
         if ("undefined" == typeof t && (t = e.get()
                 .peer), !Ee(e)) return !1;
-        var n = e.get()
+        var r = n || e.get()
             .tabs[t];
-        return !(Ze[Ve] & n.folders)
+        return !(Ze[Ve] & r.folders)
     }
 
     function de(e, t) {
@@ -7737,8 +7739,7 @@
             .tabs[e.get()
                 .peer];
         return r.skipped > 0 ? (t()
-            .loadingPeer(e),
-            e.set(O.changePeer.bind(null, e.get()
+            .loadingPeer(e), e.set(O.changePeer.bind(null, e.get()
                 .peer, !1))
             .then(function(t) {
                 return e.set(O.loadPeer.bind(null, e.get()

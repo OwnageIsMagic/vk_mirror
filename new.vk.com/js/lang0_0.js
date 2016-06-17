@@ -20,6 +20,7 @@ datepicker_month_format = '{month} {year}';
 functions_sure_delete = '�� ������������� ������ ������� ��� ������?';
 global_add = '��������';
 global_add_media_more = '������..';
+global_audio_flash_required = '��� ������������� ������ ��������� Flash �����. <br>�� ������ ���������� ��� {link}�����{/link}.';
 global_back = '�����';
 global_Complain_video = '������������';
 global_cancel = '������';
@@ -223,7 +224,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 430;
+// section = 0; version = 431;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;
