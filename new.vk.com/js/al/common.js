@@ -149,6 +149,7 @@ var cur = {
 var browser = {
     version: (_ua.match(/.+(?:me|ox|on|rv|it|era|opr|ie)[\/: ]([\d.]+)/) || [0, '0'])[1],
     opera: (/opera/i.test(_ua) || /opr/i.test(_ua)),
+    vivaldi: /vivaldi/i.test(_ua),
     msie: (/msie/i.test(_ua) && !/opera/i.test(_ua) || /trident\//i.test(_ua)) || /edge/i.test(_ua),
     msie6: (/msie 6/i.test(_ua) && !/opera/i.test(_ua)),
     msie7: (/msie 7/i.test(_ua) && !/opera/i.test(_ua)),
@@ -5892,12 +5893,6 @@ var nav = {
 
                 getAudioPlayer()
                     .updateCurrentPlaying();
-
-                if (TopSearch && TopSearch.tsNeedsClear) {
-                    TopSearch.clear();
-                    TopSearch.toggleInput(false);
-                    delete TopSearch.tsNeedsClear;
-                }
                 TopMenu.toggle(false);
             }, browser.chrome ? 100 : 50);
         }
@@ -9287,8 +9282,8 @@ TopSearch = {
                         var q = trim(val(this));
                         if (q) {
                             tsInput.blur();
-                            if (vk.id) hide(tsWrap);
-                            TopSearch.tsNeedsClear = true;
+                            TopSearch.clear();
+                            topHeaderClose();
                             nav.go('/search?c[section]=auto&c[q]=' + encodeURIComponent(q));
                         }
                     }
@@ -9355,9 +9350,10 @@ TopSearch = {
             tsInputLength = trim(val(tsInput))
             .length,
             hintType = el.getAttribute('hinttype');
+        this.clear();
+        topHeaderClose();
         if (!tsInputLength) {
             tsInput.blur();
-            this.toggleInput(false);
         }
         if (peer && hasClass(event.target, 'ts_contact_status')) {
             ajax.post('al_search.php', {
@@ -9366,12 +9362,8 @@ TopSearch = {
                 mk: 'chat_box'
             });
             this.writeBox(peer);
-            this.clear();
-            this.toggleInput(false);
             return false;
         }
-        hide(tsWrap);
-        this.tsNeedsClear = true;
 
         var res = nav.go(el, event);
         ajax.post('al_search.php', {
@@ -9434,10 +9426,7 @@ TopSearch = {
             toggle('ts_cont_wrap', s);
 
             if (s) {
-                topHeaderClose(function() {
-                    TopSearch.clear();
-                    TopSearch.toggleInput(false);
-                });
+                topHeaderClose(TopSearch.toggleInput.pbind(false));
             }
         }
     },
@@ -10737,7 +10726,7 @@ function audioShowActionTooltip(btn) {
             if (hasClass(audioRow, 'recoms')) {
                 text = getLang('audio_dont_show');
             } else {
-                var restores = cur._restores && cur._restores[audioFullId];
+                var restores = cur._audioAddRestoreInfo && cur._audioAddRestoreInfo[audioFullId];
                 if (restores && restores.deleteAll) {
                     text = restores.deleteAll.text;
                 } else {
@@ -10789,7 +10778,7 @@ function audioShowActionTooltip(btn) {
             return text;
         },
         black: 1,
-        shift: [8, 5, 0],
+        shift: [7, 5, 0],
         needLeft: true
     };
 

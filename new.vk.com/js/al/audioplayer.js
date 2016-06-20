@@ -101,7 +101,7 @@ var AudioUtils = {
     ACT_ADDRESS: "/audio",
     AUDIO_LAYER_HEIGHT: 550,
     AUDIO_LAYER_MIN_WIDTH: 400,
-    AUDIO_LAYER_MAX_WIDTH: 800,
+    AUDIO_LAYER_MAX_WIDTH: 1e3,
     AUDIO_STATE_ADDED: "added",
     AUDIO_STATE_REMOVED: "removed",
     toggleAudioHQBodyClass: function() {
@@ -112,7 +112,20 @@ var AudioUtils = {
     hasAudioHQBodyClass: function() {
         return hasClass(document.body, "audio_hq_label_show")
     },
-    showNeedFlashBox: function() {},
+    showNeedFlashBox: function() {
+        var t = getLang("global_audio_flash_required")
+            .replace("{link}", '<a target=_blank href="https://get.adobe.com/flashplayer">')
+            .replace("{/link}", "</a>");
+        new MessageBox({
+                title: getLang("audio_need_flash_title")
+            })
+            .content(t)
+            .setButtons("Ok", function() {
+                curBox()
+                    .hide()
+            })
+            .show()
+    },
     addAudio: function(t) {
         function i() {
             return intval(domData(o, "in-progress"))
@@ -325,7 +338,7 @@ var AudioUtils = {
                             n = i ? t.left : u - a / 2;
                         o <= AudioUtils.AUDIO_LAYER_MAX_WIDTH && o >= AudioUtils.AUDIO_LAYER_MIN_WIDTH && (n = e[0]);
                         var d = 37,
-                            _ = s - n + Math.min(r / 2, d);
+                            _ = s - n + Math.min(r / 2, d) - 2;
                         return setPseudoStyle(this.getContent(), "after", {
                             left: _ + "px"
                         }), {
@@ -909,7 +922,11 @@ AudioPlayer.tabIcons = {
                 var o = geByClass1("audio_duration", t);
                 o && (o.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
                     .duration))
-            }(e ? toggleClassDelayed : toggleClass)(t, AudioUtils.AUDIO_CURRENT_CLS, i)
+            }
+            e ? setTimeout(function() {
+                var i = intval(domData(t, "is-current"));
+                toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, !!i)
+            }) : toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, i)
         }
         var a = !!intval(domData(t, "is-current"));
         if (a != i) {
@@ -956,7 +973,7 @@ AudioPlayer.tabIcons = {
                     withBackLine: !0,
                     formatHint: function(t) {
                         var i = AudioUtils.asObject(e.getCurrentAudio());
-                        return formatTime(Math.round(t * i.duration));
+                        return formatTime(Math.round(t * i.duration))
                     },
                     onEndDragging: function(t) {
                         e.seek(t)
@@ -1447,10 +1464,13 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype._onFailedUrl = function(t) {
         this.notify(AudioPlayer.EVENT_FAILED), this.isPlaying() && (this.pause(), this.playNext(!0))
     }, AudioPlayer.prototype.switchToPrevPlaylist = function() {
-        this._prevPlaylist && (this.pause(), this._currentPlaylist = this._prevPlaylist, this._currentAudio = this._prevAudio, this._prevPlaylist = this._prevAudio = null, this.notify(
-            AudioPlayer.EVENT_PLAYLIST_CHANGED, this._currentPlaylist), this.notify(AudioPlayer.EVENT_UPDATE), this.updateCurrentPlaying())
+        this._prevPlaylist && (this.pause(), setTimeout(function() {
+            this._currentPlaylist = this._prevPlaylist, this._currentAudio = this._prevAudio, this._prevPlaylist = this._prevAudio = null, this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED,
+                this._currentPlaylist), this.notify(AudioPlayer.EVENT_UPDATE), this.updateCurrentPlaying()
+        }.bind(this), 1))
     }, AudioPlayer.prototype.play = function(t, i, e, o) {
         if (!cur.loggingOff) {
+            if (!this._impl) return void AudioUtils.showNeedFlashBox();
             (isObject(t) || isArray(t)) && (t = AudioUtils.asObject(t), t && (t = t.fullId));
             var a = AudioUtils.asObject(this._currentAudio),
                 l = this.getCurrentPlaylist();
@@ -1563,6 +1583,8 @@ AudioPlayer.tabIcons = {
         return this._currProgress || 0
     }, AudioPlayerFlash.prototype.getCurrentBuffered = function() {
         return this._currBuffered || 0
+    }, AudioPlayerFlash.prototype.stop = function() {
+        this._player && this._player.stopAudio()
     }, AudioPlayerFlash.prototype._checkFlashLoaded = function() {
         var t = ge("player");
         if (this._checks = this._checks || 0, this._checks++, this._checks > 10) {
@@ -1583,7 +1605,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.STATE_HAVE_NOTHING = 0, AudioPlayerHTML5.STATE_HAVE_FUTURE_DATA = 3, AudioPlayerHTML5.HAVE_ENOUGH_DATA = 4,
     AudioPlayerHTML5.SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=", AudioPlayerHTML5.isSupported = function() {
         var t = "undefined" != typeof navigator ? navigator.userAgent : "";
-        if (t && /vivaldi/i.test(t) && (/(Windows 7|Windows NT 6.1)/.test(t) || /(Windows NT 5.1|Windows XP)/.test(t))) return !1;
+        if (t && (browser.vivaldi || browser.opera) && (/(Windows 7|Windows NT 6.1)/.test(t) || /(Windows NT 5.1|Windows XP)/.test(t))) return !1;
         var i = document.createElement("audio");
         return !(!i.canPlayType || !i.canPlayType('audio/mpeg; codecs="mp3"')
             .replace(/no/, ""))

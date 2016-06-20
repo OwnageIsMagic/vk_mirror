@@ -5724,7 +5724,8 @@ button.ui_load_more_btn {
     display: none!important
 }
 
-.audio_row.audio_deleted .audio_info {
+.audio_row.audio_deleted .audio_info,
+.audio_row.claimed .audio_info {
     opacity: 0.5;
     filter: alpha(opacity=50)
 }
@@ -5745,20 +5746,36 @@ button.ui_load_more_btn {
     right: 14px
 }
 
-.audio_row.canedit .audio_act#edit,
-.audio_row.canedit .audio_act#delete,
-.audio_current_rows .audio_row .audio_act#add,
-.audio_row.canadd .audio_act#add,
-.audio_row.recoms .audio_act#add,
-.audio_row.recoms .audio_act#delete,
-.audio_row.recoms.audio_deleted #add {
+.audio_current_rows .audio_row #add,
+.audio_row #next,
+.audio_row.audio_deleted #add,
+.audio_row.audio_deleted.audio_delete_all #delete,
+.audio_row.canadd #add,
+.audio_row.canedit #delete,
+.audio_row.canedit #edit,
+.audio_row.recoms #add,
+.audio_row.recoms #delete {
     display: block
 }
 
-.audio_row.recoms.audio_deleted #delete,
-.audio_row.recoms.audio_deleted #next,
-.audio_row.recoms.audio_deleted #recom {
+.audio_row.audio_deleted #delete,
+.audio_row.audio_deleted #next,
+.audio_row.audio_deleted #recom,
+.audio_row.audio_row_current #next,
+.audio_row.audio_row_playing #next,
+.audio_row.claimed #add,
+.audio_row.claimed #next,
+.audio_row.inlined #recom {
     display: none
+}
+
+.audio_row.audio_deleted .audio_acts {
+    display: block
+}
+
+.audio_row.audio_deleted .audio_duration,
+.audio_row.audio_deleted .audio_hq_label {
+    display: none!important
 }
 
 .audio_row.added .audio_act#add {
@@ -5767,25 +5784,6 @@ button.ui_load_more_btn {
 
 .audio_row.added .audio_act#add>div {
     background-position: 0 -15px
-}
-
-.audio_row .audio_act#next {
-    display: block
-}
-
-.audio_row.audio_row_current .audio_act#next,
-.audio_row.audio_row_playing .audio_act#next,
-.audio_row.inlined #recom {
-    display: none
-}
-
-.audio_row.claimed {
-    opacity: 0.7;
-    filter: alpha(opacity=70)
-}
-
-.audio_row.claimed .audio_act#next {
-    display: none!important
 }
 
 .audio_row.audio_added_next #next>div {

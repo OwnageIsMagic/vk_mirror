@@ -90,8 +90,7 @@ var slide_show = function(e) {
                                 n = document.URL == a ? "" : document.URL;
                             setTimeout(updateOtherCounters.pbind(a, n), 10)
                         }
-                        searcher.applyOptions(t, s), TopSearch && TopSearch.tsNeedsClear && (TopSearch.clear(), TopSearch.toggleInput(!1, !0), delete TopSearch.tsNeedsClear),
-                            uiSearch.hideProgress("search_query"), show("search_clear_params");
+                        searcher.applyOptions(t, s), uiSearch.hideProgress("search_query"), show("search_clear_params");
                         var u = window.audioPlayer;
                         u && u.showCurrentTrack && u.showCurrentTrack(), cur.onSearchFinish && cur.onSearchFinish(), shortCurrency(), setTimeout(checkPageBlocks, 200),
                             cur.onSearchDone && cur.onSearchDone()

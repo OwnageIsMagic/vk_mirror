@@ -596,8 +596,8 @@ var Photoview = {
                             .src + '">' + getLang("photos_pv_act_open_original") + "</a>"), m = m.join('<span class="divider"></span>'), cur.pvIsLightMode && (m +=
                             '<div id="pv_rotate" style="display:none;"><form method="POST" target="pv_rotate_frame" name="pv_rotate_form" id="pv_rotate_form"></form></div></div>'
                         ), cur.pvBottomActions.innerHTML = m;
-                    var L = geByClass1("pv_actions_more");
-                    L && (cur.pvMoreActionsTooltip = new ElementTooltip(L, {
+                    var C = geByClass1("pv_actions_more");
+                    C && (cur.pvMoreActionsTooltip = new ElementTooltip(C, {
                         id: "pv_more_acts_tt",
                         forceSide: "top",
                         elClassWhenTooltip: "pv_more_shown",
@@ -1293,12 +1293,16 @@ var Photoview = {
         },
         onKeyDown: function(o) {
             if (o.returnValue === !1) return !1;
+            if (inArray(o.keyCode, [KEY.DOWN, KEY.UP]) && cur.pvNarrowScrollbar) {
+                var e = cur.pvNarrowScrollbar.scrollTop();
+                return e += o.keyCode == KEY.DOWN ? 70 : -70, cur.pvNarrowScrollbar.scrollTop(e), cancelEvent(o)
+            }
             if (o.keyCode == KEY.ESC && cur.pvEditing) return Photoview.cancelInline(), cancelEvent(o);
             o.altKey && o.keyCode == KEY.RETURN && Photoview.canFullscreen() && (cur.pvCanvas ? Photoview.fullscreenStop() : Photoview.fullscreen()), o.keyCode == KEY.SPACE &&
                 cur.pvCanvas && window.FullscreenPV && (FullscreenPV.startSlide(), FullscreenPV.showControls(!0));
-            var e = o.target.contentEditable;
-            return window.Emoji && Emoji.shown || o.target && ("INPUT" == o.target.tagName || "TEXTAREA" == o.target.tagName || "DIV" == o.target.tagName && e && "inherit" !=
-                e) ? !0 : o.keyCode == KEY.ESC ? (cur.pvCanvas ? Photoview.fullscreenStop() : cur.pvTagger ? Phototag.stopTag() : o.vkCanceled || curBox() || Photoview.hide(
+            var t = o.target.contentEditable;
+            return window.Emoji && Emoji.shown || o.target && ("INPUT" == o.target.tagName || "TEXTAREA" == o.target.tagName || "DIV" == o.target.tagName && t && "inherit" !=
+                t) ? !0 : o.keyCode == KEY.ESC ? (cur.pvCanvas ? Photoview.fullscreenStop() : cur.pvTagger ? Phototag.stopTag() : o.vkCanceled || curBox() || Photoview.hide(
                 0), cancelEvent(o)) : (cur.pvTagger || boxQueue.count() || cur.pvComment && cur.pvComment.focused || (o.keyCode == KEY.RIGHT ? Photoview.show(cur.pvListId,
                 cur.pvIndex + 1) : o.keyCode == KEY.LEFT && Photoview.show(cur.pvListId, cur.pvIndex - 1)), cur.pvCanvas && window.FullscreenPV ? !1 : void 0)
         },
@@ -1703,7 +1707,7 @@ var Photoview = {
                         o.innerHTML = "", showProgress(o)
                     },
                     hideProgress: function() {
-                        re(Photoview.actionInfo());
+                        re(Photoview.actionInfo())
                     }
                 })
             }

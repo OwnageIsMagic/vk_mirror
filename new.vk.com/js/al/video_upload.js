@@ -495,7 +495,7 @@ var VideoUpload = {
     setPublished: function(e) {
         data(e, "published", !0), VideoUpload.setStatusHeader(getLang("video_upload_published_title"), e), VideoUpload.setUploadStatus(getLang(
             "video_upload_ready_link_text"), e);
-        var o = geByClass1("video_upload_progress_element", e);
+        var o = geByClass1("video_upload_progress_wrap", e);
         isVisible(o) && slideUp(o, {
             duration: 150,
             transition: Fx.Transitions.swiftOut
