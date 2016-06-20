@@ -597,7 +597,8 @@
 .counts_module {
     text-align: center;
     border-top: 1px solid #e7e8ec;
-    max-height: 69px
+    max-height: 69px;
+    overflow: hidden
 }
 
 .counts_module:first-child {

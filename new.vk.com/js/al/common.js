@@ -3004,7 +3004,7 @@ function updateSTL() {
         de = document.documentElement,
         dwidth = Math.max(intval(w.innerWidth), intval(de.clientWidth));
 
-    toggleClass(bodyNode, 'no_stl', dwidth < vk.width + 230);
+    toggleClass(bodyNode, 'no_stl', dwidth < vk.width + 280);
     toggleClass(bodyNode, 'no_sett', dwidth < vk.width + 62);
 }
 
@@ -9323,10 +9323,10 @@ TopSearch = {
         });
 
         addEvent(document, 'mousedown', function(e) { // removed touchstart because of feed lags @izhukov
-            // todo: seems that is not necessary because of topHeaderClose function was added
             tsInput.blur();
+            // todo: seems that these call are not necessary because of topHeaderClose function was added
             //TopSearch.toggleInput(false);
-            //TopMenu.toggle(false); // commented since it triggers topHeaderClearClose() which clears needed close function
+            //TopMenu.toggle(false);
 
             if (!domClosest('_audio_layer', e.target) && !domClosest('layer_wrap', e.target)) {
                 topHeaderClose();

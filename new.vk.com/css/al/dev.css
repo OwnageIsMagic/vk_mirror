@@ -463,7 +463,7 @@ input.dev_wide_input~.placeholder .ph_content,
 .dev_home_link:before {
     content: ' ';
     display: inline-block;
-    background: url(/images/icons/head_icons.png?3) no-repeat;
+    background: url(/images/icons/head_icons.png?4) no-repeat;
     background-position: 0 -98px;
     height: 19px;
     width: 32px;
@@ -2151,4 +2151,63 @@ input.dev_wrong_val {
 
 .dev_similar_methods_wrap .dev_methods_list_desc {
     width: 465px!important
+}
+
+.dev_roadmap_timeline {
+    font-weight: 600;
+    font-size: 14px;
+    color: #a1b1c6;
+    margin-top: 45px
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_time {
+    margin-top: 57px;
+    width: 150px;
+    text-align: right
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text {
+    margin-top: 57px;
+    width: 400px
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text:before {
+    content: '';
+    border-left: 2px solid #d5dfe8;
+    height: 63px;
+    position: absolute;
+    margin: -58px 0px 0px -33px
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_marker {
+    background: #d5dfe8;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    margin: 60px 24px 0
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_text,
+.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_time {
+    margin-top: 0px
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_marker {
+    margin-top: 3px
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_text:before {
+    content: none
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_time {
+    color: #33567f
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_text:before {
+    border-color: #7195b5
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_marker {
+    background: #7195b5
 }

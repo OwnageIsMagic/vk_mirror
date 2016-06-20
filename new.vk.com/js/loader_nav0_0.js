@@ -114,10 +114,10 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 676779214359,
+    'nav': 672396187541,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
-    'common.css': 1688227734,
+    'common.css': 283306770,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -136,7 +136,7 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 1123122687,
+    'audioplayer.js': 183436092,
     'audioplayer.css': 701892504,
     'audio_html5.js': 3586987067,
     'audio.js': 999280344,
@@ -204,7 +204,7 @@ var stVersions = {
     'join.js': 748178609,
     'intro.css': 632121273,
     'post.css': 1934802493,
-    'module.css': 408774699,
+    'module.css': 754207587,
     'owner_photo.js': 777617564,
     'owner_photo.css': 2482930139,
     'page.js': 1685705015,
@@ -299,7 +299,7 @@ var stVersions = {
     'developers.css': 2192083352,
     'touch.css': 1524784846,
     'notifier.js': 756842989,
-    'notifier.css': 1324884506,
+    'notifier.css': 846231684,
     'earthday.js': 1302273681,
     'earthday.css': 190978924,
     'restore.js': 1578098959,
@@ -331,7 +331,7 @@ var stVersions = {
     'abuse.js': 1131069015,
     'abuse.css': 3360978448,
     'verify.css': 262281192,
-    'away.css': 1987482608,
+    'away.css': 2183599519,
     'stats.css': 1255497389,
     'payments.css': 2011888271,
     'payments.js': 3222309665,
@@ -376,7 +376,7 @@ var stVersions = {
     'pe.js': 2387291388,
     'pe.css': 1075612736,
     'dev.js': 231126814,
-    'dev.css': 479817475,
+    'dev.css': 606616872,
     'share.css': 3743589396,
     'stickers_office.css': 2865554295,
     'stickers_office.js': 2247906357,
@@ -514,4 +514,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 7542;
+var _rnd = 7366;

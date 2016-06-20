@@ -261,105 +261,103 @@ var AudioUtils = {
         return e || (e = JSON.parse(domData(t, "audio"))), i ? AudioUtils.asObject(e) : e
     },
     showAudioLayer: function(btn) {
-        stManager.add(["audio.css"], function() {
-            function initLayer(html, playlist, options, firstSong, script) {
-                eval(script);
-                var telContent = ap.layer.getContent();
-                addClass(telContent, "no_transition"), removeClass(telContent, "top_audio_loading"), telContent.innerHTML = html;
-                var layerScrollNode = geByClass1("audio_layer_rows_wrap", telContent);
-                setStyle(layerScrollNode, "height", AudioUtils.AUDIO_LAYER_HEIGHT), options.layer = ap.layer, options.layer.sb = new Scrollbar(layerScrollNode, {
-                    nomargin: !0,
-                    right: vk.rtl ? "auto" : 0,
-                    left: vk.rtl ? 0 : "auto",
-                    global: !0,
-                    nokeys: !0,
-                    scrollElements: [geByClass1("audio_layer_menu_wrap", telContent)]
-                }), data(layerScrollNode, "sb", options.layerScrollbar);
-                var audioPage = new AudioPage(geByClass1("_audio_layout", telContent), playlist, options, firstSong);
-                data(ap.layer, "audio-page", audioPage), setTimeout(function() {
-                    removeClass(telContent, "no_transition")
-                })
-            }
+        function initLayer(html, playlist, options, firstSong, script) {
+            eval(script);
+            var telContent = ap.layer.getContent();
+            addClass(telContent, "no_transition"), removeClass(telContent, "top_audio_loading"), telContent.innerHTML = html;
+            var layerScrollNode = geByClass1("audio_layer_rows_wrap", telContent);
+            setStyle(layerScrollNode, "height", AudioUtils.AUDIO_LAYER_HEIGHT), options.layer = ap.layer, options.layer.sb = new Scrollbar(layerScrollNode, {
+                nomargin: !0,
+                right: vk.rtl ? "auto" : 0,
+                left: vk.rtl ? 0 : "auto",
+                global: !0,
+                nokeys: !0,
+                scrollElements: [geByClass1("audio_layer_menu_wrap", telContent)]
+            }), data(layerScrollNode, "sb", options.layerScrollbar);
+            var audioPage = new AudioPage(geByClass1("_audio_layout", telContent), playlist, options, firstSong);
+            data(ap.layer, "audio-page", audioPage), setTimeout(function() {
+                removeClass(telContent, "no_transition")
+            })
+        }
 
-            function getPageEl() {
-                return geByClass1("_im-page-wrap") || ge("page_body")
-            }
+        function getPageEl() {
+            return geByClass1("_im-page-wrap") || ge("page_body")
+        }
 
-            function getLayerWidth() {
-                return Math.max(AudioUtils.AUDIO_LAYER_MIN_WIDTH, Math.min(AudioUtils.AUDIO_LAYER_MAX_WIDTH, getSize(getPageEl())[0] - BORDER_COMPENSATION))
-            }
+        function getLayerWidth() {
+            return Math.max(AudioUtils.AUDIO_LAYER_MIN_WIDTH, Math.min(AudioUtils.AUDIO_LAYER_MAX_WIDTH, getSize(getPageEl())[0] - BORDER_COMPENSATION))
+        }
 
-            function getAudioBtn() {
-                var t = geByClass1("_top_nav_audio_btn");
-                return hasClass(t, "top_audio_player_enabled") && (t = geByClass1("top_audio_player")), t
-            }
-            var ap = getAudioPlayer(),
-                currentPlaylist = ap.getCurrentPlaylist();
-            if (ap.layer)
-                if (hasClass(btn, "active")) ap.layer.hide(), removeClass(btn, "active"), topHeaderClearClose();
-                else {
-                    ap.layer.show();
-                    var initFunc = data(ap.layer, "init-func");
-                    if (initFunc) data(ap.layer, "init-func", null), initFunc();
-                    else {
-                        var audioPage = data(ap.layer, "audio-page");
-                        audioPage && audioPage.onShow()
-                    }
-                    addClass(btn, "active"), topHeaderClose(function() {
-                        ap.layer.hide()
-                    })
-                }
+        function getAudioBtn() {
+            var t = geByClass1("_top_nav_audio_btn");
+            return hasClass(t, "top_audio_player_enabled") && (t = geByClass1("top_audio_player")), t
+        }
+        var ap = getAudioPlayer(),
+            currentPlaylist = ap.getCurrentPlaylist();
+        if (ap.layer)
+            if (ap.layer.isShown()) ap.layer.hide(), topHeaderClearClose();
             else {
-                var BORDER_COMPENSATION = 2;
-                ap.layer = new ElementTooltip(btn, {
-                    delay: 0,
-                    content: rs(vk.pr_tpl, {
-                        id: "",
-                        cls: "pr_big"
-                    }),
-                    cls: "top_audio_loading top_audio_layer",
-                    autoShow: !1,
-                    appendTo: document.body,
-                    elClassWhenTooltip: "audio_top_btn_active",
-                    forceSide: "bottom",
-                    onHide: function(t, i) {
-                        audioPage = data(ap.layer, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), i && topHeaderClearClose()
-                    },
-                    width: getLayerWidth,
-                    setPos: function(t) {
-                        var i = this.isShown(),
-                            e = getXY(getPageEl()),
-                            o = getSize(getPageEl())[0] - BORDER_COMPENSATION,
-                            a = getLayerWidth(),
-                            l = getAudioBtn(),
-                            s = getXY(l)[0],
-                            r = getSize(l)[0],
-                            u = s + r / 2,
-                            n = i ? t.left : u - a / 2;
-                        o <= AudioUtils.AUDIO_LAYER_MAX_WIDTH && o >= AudioUtils.AUDIO_LAYER_MIN_WIDTH && (n = e[0]);
-                        var d = 37,
-                            _ = s - n + Math.min(r / 2, d) - 2;
-                        return setPseudoStyle(this.getContent(), "after", {
-                            left: _ + "px"
-                        }), {
-                            left: n,
-                            top: getSize(ge("page_header_cont"))[1],
-                            position: "fixed"
-                        }
-                    }
-                }), ap.layer.show(), addClass(btn, "active"), ajax.post("al_audio.php", {
-                    act: "show_layer",
-                    my: currentPlaylist ? 0 : 1
-                }, {
-                    onDone: function(t, i, e, o, a) {
-                        var l = i;
-                        ap.layer.isShown() ? initLayer(t, l, e, o, a) : data(ap.layer, "init-func", initLayer.pbind(t, l, e, o, a))
-                    }
-                }), topHeaderClose(function() {
+                ap.layer.show();
+                var initFunc = data(ap.layer, "init-func");
+                if (initFunc) data(ap.layer, "init-func", null), initFunc();
+                else {
+                    var audioPage = data(ap.layer, "audio-page");
+                    audioPage && audioPage.onShow()
+                }
+                addClass(btn, "active"), topHeaderClose(function() {
                     ap.layer.hide()
                 })
             }
-        })
+        else {
+            var BORDER_COMPENSATION = 2;
+            ap.layer = new ElementTooltip(btn, {
+                delay: 0,
+                content: rs(vk.pr_tpl, {
+                    id: "",
+                    cls: "pr_big"
+                }),
+                cls: "top_audio_loading top_audio_layer",
+                autoShow: !1,
+                appendTo: document.body,
+                elClassWhenTooltip: "audio_top_btn_active",
+                forceSide: "bottom",
+                onHide: function(t, i) {
+                    audioPage = data(ap.layer, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), i && topHeaderClearClose()
+                },
+                width: getLayerWidth,
+                setPos: function(t) {
+                    var i = this.isShown(),
+                        e = getXY(getPageEl()),
+                        o = getSize(getPageEl())[0] - BORDER_COMPENSATION,
+                        a = getLayerWidth(),
+                        l = getAudioBtn(),
+                        s = getXY(l)[0],
+                        r = getSize(l)[0],
+                        u = s + r / 2,
+                        n = i ? t.left : u - a / 2;
+                    o <= AudioUtils.AUDIO_LAYER_MAX_WIDTH && o >= AudioUtils.AUDIO_LAYER_MIN_WIDTH && (n = e[0]);
+                    var d = 37,
+                        _ = s - n + Math.min(r / 2, d) - 2;
+                    return setPseudoStyle(this.getContent(), "after", {
+                        left: _ + "px"
+                    }), {
+                        left: n,
+                        top: getSize(ge("page_header_cont"))[1],
+                        position: "fixed"
+                    }
+                }
+            }), ap.layer.show(), addClass(btn, "active"), ajax.post("al_audio.php", {
+                act: "show_layer",
+                my: currentPlaylist ? 0 : 1
+            }, {
+                onDone: function(t, i, e, o, a) {
+                    var l = i;
+                    ap.layer.isShown() ? initLayer(t, l, e, o, a) : data(ap.layer, "init-func", initLayer.pbind(t, l, e, o, a))
+                }
+            }), topHeaderClose(function() {
+                ap.layer.hide()
+            })
+        }
     },
     filterClaimedAudios: function(t) {
         t.list = t.list.filter(function(t) {
