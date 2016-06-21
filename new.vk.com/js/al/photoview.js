@@ -478,6 +478,7 @@ var Photoview = {
             show(geByClass1("pv_more_acts_hidden")), cur.pvMoreActionsTooltip.updatePosition()
         },
         doShow: function() {
+            show(cur.pvImgProgress);
             var o = cur.pvCurData;
             if ((!o.width || !o.height) && cur.pvTimerPassed < 5e3) return clearTimeout(cur.pvTimer), cur.pvTimerPassed += 100, void(cur.pvTimer = setTimeout(Photoview.doShow,
                 100));
@@ -485,9 +486,12 @@ var Photoview = {
                 if (cur.pvCanvas) return void Photoview.pvCanvasSet();
                 if (Photoview.toggleLightModeClass(!0), isVisible(cur.pvAlbumsWrap) && (val("pva_scroll", layerWrap.scrollTop), hide(cur.pvAlbumsWrap), show(cur.pvPhotoWrap),
                         Photoview.updateSize()), isVisible(cur.pvAlbumWrap) && (val("pvsa_scroll", layerWrap.scrollTop), hide(cur.pvAlbumWrap), show(cur.pvPhotoWrap),
-                        Photoview.updateSize()), uiScrollBox.hide(), hide(cur.pvTitle), cur.pvPhoto.innerHTML = '<img src="' + o.src + '" />', Photoview.updatePhotoDimensions(),
-                    window.tooltips && tooltips.destroyAll(cur.pvBox), "temp" == cur.pvListId) return hide(cur.pvCommentsData), Photoview.toggleOnPhotoControls(!1), void Photoview
-                    .updateVerticalPosition();
+                        Photoview.updateSize()), uiScrollBox.hide(), hide(cur.pvTitle), cur.pvPhoto.innerHTML = '<img src="' + o.src + '" />', addEvent(domFC(cur.pvPhoto),
+                        "load",
+                        function() {
+                            hide(cur.pvImgProgress)
+                        }), Photoview.updatePhotoDimensions(), window.tooltips && tooltips.destroyAll(cur.pvBox), "temp" == cur.pvListId) return hide(cur.pvCommentsData),
+                    Photoview.toggleOnPhotoControls(!1), void Photoview.updateVerticalPosition();
                 Photoview.toggleOnPhotoControls(!0);
                 var e = cur.pvCurPhoto,
                     t = e.commshown >= 0 ? !1 : -e.commshown;
@@ -665,8 +669,8 @@ var Photoview = {
                     p = ge("pv_fs_img_fade") || ge("pv_fs_img_wrap"),
                     v = p && domFC(p);
                 t = cur.pvScrWidth / a, i * t > cur.pvScrHeight && (t = cur.pvScrHeight / i), t > 1.25 && (t = 1.25), a = Math.floor(a * t), i = Math.floor(i * t), r = Math.floor(
-                    (cur.pvScrHeight - i) / 2), (cur.pvFSWidth != a || cur.pvFSHeight != i || cur.pvFSTop != r || o) && (cur.pvFSWidth = a, cur.pvFSHeight = i, cur.pvFSTop =
-                    r, v && setStyle(v, {
+                    (cur.pvScrHeight - i) / 2), (cur.pvFSWidth != a || cur.pvFSHeight != i || cur.pvFSTop != r || o) && (cur.pvFSWidth = a,
+                    cur.pvFSHeight = i, cur.pvFSTop = r, v && setStyle(v, {
                         marginTop: r,
                         width: a,
                         height: i
@@ -1695,7 +1699,8 @@ var Photoview = {
                 }, {
                     onDone: function(o, a, i, p) {
                         void 0 !== a && (r.tags = a, r.tagged = i, r.tagshtml = p, cur.pvListId == e && cur.pvIndex == t && (Photoview.setTags(p), (!r.taginfo && r
-                                .actions.tag && a[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink))), Photoview.actionInfo()
+                                .actions.tag && a[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink))),
+                            Photoview.actionInfo()
                             .innerHTML = o
                     },
                     onFail: function(o) {

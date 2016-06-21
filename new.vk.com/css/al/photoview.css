@@ -1061,6 +1061,7 @@
 .pv_img_progress_wrap .pr {
     opacity: 1;
     left: 50%;
+    margin-left: -13px;
     position: absolute
 }
 
@@ -1204,7 +1205,7 @@
 }
 
 .pv_tag_span {
-    max-width: 375px;
+    max-width: 288px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block

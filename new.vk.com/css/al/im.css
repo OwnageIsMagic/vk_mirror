@@ -805,10 +805,13 @@ img.im_photo_thumb {
     position: fixed;
     top: 0;
     z-index: 200;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .08);
     border-color: #e3e7ef
+}
+
+body.mac .im_stickerpack_fixed {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0)
 }
 
 .im_stickerpack_list {

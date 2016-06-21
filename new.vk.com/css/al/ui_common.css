@@ -59,7 +59,10 @@
 .ui_tabs_fixed {
     position: fixed;
     top: 0;
-    z-index: 200;
+    z-index: 200
+}
+
+body.mac .ui_tabs_fixed {
     -webkit-transform: translateZ(0);
     transform: translateZ(0)
 }
@@ -681,10 +684,13 @@ a.ui_crumb {
     position: fixed;
     top: 0;
     z-index: 119;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
     box-shadow: 0 2px 3px -1px rgba(0, 0, 0, .12);
     border-color: #fff
+}
+
+body.mac .ui_search.ui_search_fixed {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0)
 }
 
 .ui_search_input_block {

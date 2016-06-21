@@ -576,15 +576,24 @@
 .apps_featured_thumb .apps_featured_thumb_content {
     white-space: initial;
     position: absolute;
-    padding: 0 120px 20px 20px
-}
-
-.apps_featured_thumb .apps_featured_thumb_content,
-.apps_featured_thumb .ads_ad_big_app_info_box {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
+    padding: 0 120px 20px 20px;
     opacity: 0;
     filter: alpha(opacity=0)
+}
+
+body.mac .apps_featured_thumb .apps_featured_thumb_content {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0)
+}
+
+.apps_featured_thumb .ads_ad_big_app_info_box {
+    opacity: 0;
+    filter: alpha(opacity=0)
+}
+
+body.mac .apps_featured_thumb .ads_ad_big_app_info_box {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0)
 }
 
 .apps_featured_thumb.selected {

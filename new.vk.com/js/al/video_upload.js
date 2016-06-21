@@ -165,14 +165,18 @@ var VideoUpload = {
                         if (ge("video_upload_tab")) d();
                         else {
                             var i = cur.privacy,
-                                t = cur.videoHashs;
+                                t = cur.videoHashs,
+                                r = cur.videoThumbUploadOpts,
+                                l = cur.videoUploadThumbBtnTpl,
+                                s = cur.videoPlaylists;
                             curBox()
                                 .hide(), nav.go("videos" + vars.oid, !1, {
                                     nocur: !0,
                                     onDone: function() {
                                         setTimeout(function() {
                                             cur.lang = extend(cur.lang || {}, uiLang), cur.privacy = extend(cur.privacy || {}, i), cur.videoHashs =
-                                                extend(cur.videoHashs || {}, t), d()
+                                                extend(cur.videoHashs || {}, t), cur.videoThumbUploadOpts = r, cur.videoUploadThumbBtnTpl =
+                                                l, cur.videoPlaylists = s, d()
                                         })
                                     },
                                     params: {

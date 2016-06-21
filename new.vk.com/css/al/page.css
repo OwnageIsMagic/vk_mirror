@@ -3242,7 +3242,10 @@ img.page_preview_video {
 
 .reply_box_inner_wrap.fixed {
     z-index: 20;
-    box-shadow: 0 -1px 3px rgba(0, 0, 0, .06);
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, .06)
+}
+
+body.mac .reply_box_inner_wrap.fixed {
     -webkit-transform: translateZ(0);
     transform: translateZ(0)
 }

@@ -1050,6 +1050,11 @@ a.fc_msg_att_lnk:hover .fc_msg_att_text {
     z-index: 1500
 }
 
+body.mac .chat_onl_wrap {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0)
+}
+
 .chat_onl_inner {
     position: relative;
     background-color: #dae1e8;

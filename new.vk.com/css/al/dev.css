@@ -463,7 +463,7 @@ input.dev_wide_input~.placeholder .ph_content,
 .dev_home_link:before {
     content: ' ';
     display: inline-block;
-    background: url(/images/icons/head_icons.png?4) no-repeat;
+    background: url(/images/icons/head_icons.png?5) no-repeat;
     background-position: 0 -98px;
     height: 19px;
     width: 32px;
@@ -2157,7 +2157,8 @@ input.dev_wrong_val {
     font-weight: 600;
     font-size: 14px;
     color: #a1b1c6;
-    margin-top: 45px
+    margin-top: 45px;
+    margin-bottom: 20px
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_time {
@@ -2169,6 +2170,10 @@ input.dev_wrong_val {
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text {
     margin-top: 57px;
     width: 400px
+}
+
+.dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text a {
+    color: #a1b1c6
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text:before {
@@ -2200,7 +2205,8 @@ input.dev_wrong_val {
     content: none
 }
 
-.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_time {
+.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_time,
+.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_text a {
     color: #33567f
 }
 

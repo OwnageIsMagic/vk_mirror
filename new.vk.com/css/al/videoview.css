@@ -1723,12 +1723,15 @@ embed#video_player {
     text-align: left;
     text-decoration: none;
     cursor: pointer;
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
     transition: -webkit-transform 0.2s;
     -o-transition: transform 0.2s, -o-transform 0.2s;
     transition: transform 0.2s;
     transition: transform 0.2s, -webkit-transform 0.2s, -o-transform 0.2s
+}
+
+body.mac #mv_external_finish .mv_finish_suggestions_item {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0)
 }
 
 #mv_external_finish .mv_finish_suggestions_item:hover {
