@@ -1024,7 +1024,9 @@
         var t = e.lastmsg_meta;
         if (isArray(t) && (t = (0, W.addMessageEvent)([4].concat(t))), !t) {
             var n = "";
-            return (0, z.isChatPeer)(e.peer) || (n = e.online ? "online" : "offline"), (0, W.addMessageEvent)([4, -1, 0, e.peer, "", "", n, {}, -1])
+            return (0, z.isChatPeer)(e.peer) || (n = e.online ? getLang("global_online_sm") : getLang("mail_offline")), (0, W.addMessageEvent)([4, -1, 0, e.peer, "", "", n, {}, -
+                1
+            ])
         }
         return t
     }
@@ -1319,8 +1321,7 @@
                         if (!(!n || (0, z.isClassicInterface)(t) && t.get()
                                 .peer)) {
                             var r = A(s, l, t);
-                            return s.toTop(),
-                                r
+                            return s.toTop(), r
                         }(0, z.isClassicInterface)(t) || s.restoreScroll("list")
                     })
             },
@@ -4787,7 +4788,7 @@
                 try {
                     !r && o["return"] && o["return"]()
                 } finally {
-                    if (a) throw i
+                    if (a) throw i;
                 }
             }
             return n

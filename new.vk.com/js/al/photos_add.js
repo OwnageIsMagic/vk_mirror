@@ -327,9 +327,9 @@ var PhotosAdd = {
                     d = ge("photos_go_to_album");
                 if (!r.pageNode) return;
                 var i = getXY(d.parentNode),
-                    s = getSize(d),
-                    n = Math.max(intval(r.innerHeight), intval(a.clientHeight));
-                e < i[1] + s[1] - n && !cur.scrollFooterFixed && (addClass(d, "fixed"), cur.scrollFooterFixed = !0), e > i[1] + s[1] - n && cur.scrollFooterFixed && (
+                    n = getSize(d),
+                    s = Math.max(intval(r.innerHeight), intval(a.clientHeight));
+                e < i[1] + n[1] - s && !cur.scrollFooterFixed && (addClass(d, "fixed"), cur.scrollFooterFixed = !0), e > i[1] + n[1] - s && cur.scrollFooterFixed && (
                     removeClass(d, "fixed"), cur.scrollFooterFixed = !1)
             }
         }
@@ -390,10 +390,10 @@ var PhotosAdd = {
                 PhotosAdd.rotateDone()
             }
         });
-        for (var s in d) 0 != s && form.appendChild(ce("input", {
+        for (var n in d) 0 != n && form.appendChild(ce("input", {
             type: "hidden",
-            name: s,
-            value: d[s]
+            name: n,
+            value: d[n]
         }));
         form.submit(), ajaxCache = {}, delete cur.pvList, delete cur.pvData
     },
@@ -526,10 +526,7 @@ var PhotosAdd = {
                 PhotosAdd.initFixedHeader()
         }
         var r = "";
-        cur.photosAddFirst || (cur.photosAddFirst = !0, r = " photos_add_first_child"), o.prepareCont = ce("div", {
-            className: "photos_add_upl_row" + r,
-            innerHTML: '<div class="photos_add_s_loading"></div>'
-        }), o.prepareCont = se(rs(cur.uploadRowTpl, {
+        cur.photosAddFirst || (cur.photosAddFirst = !0, r = " photos_add_first_child"), o.prepareCont = se(rs(cur.uploadRowTpl, {
             photo_raw: "",
             thumb: "",
             description: "",
@@ -563,10 +560,10 @@ var PhotosAdd = {
         var i = geByClass1("ui_progress_bar", a);
         if (setStyle(i, "width", o * getSize(a)[0]), e || t) {
             e = e || 0, t = t || 0;
-            var s = langNumeric(e, cur.uploaderLang.photos_upload_progress)
+            var n = langNumeric(e, cur.uploaderLang.photos_upload_progress)
                 .replace("{count}", e)
                 .replace("{total}", t);
-            val(ge("photos_total_progress_text"), s)
+            val(ge("photos_total_progress_text"), n)
         }
     },
     hideUploadProgress: function() {
@@ -601,9 +598,9 @@ var PhotosAdd = {
         cur.lastPhotoRow = info.prepareCont, cur.photoSaveQ = cur.photoSaveQ || [], cur.photoSaveQ.push(function() {
             ajax.post("al_photos.php", params, {
                 onDone: function(html, js, photoRaw, thumb, editHash) {
-                    hide("photos_upload_error"), cur.count++, eval(js), cur.savedPhotos = cur.savedPhotos || [], cur.savedPhotos.push(photoRaw), cur.savedThumbs =
-                        cur.savedThumbs || {}, cur.savedThumbs[photoRaw] = thumb, info.prepareCont.id = "photo_edit_row_" + photoRaw, info.prepareCont.setAttribute(
-                            "data-edit-hash", editHash), info.prepareCont.setAttribute("data-id", photoRaw);
+                    hide("photos_upload_error"), cur.count++, info.prepareCont = domReplaceEl(info.prepareCont, html), re(geByClass1(
+                        "photos_photo_edit_row_selector", info.prepareCont)), eval(js), cur.savedPhotos = cur.savedPhotos || [], cur.savedPhotos.push(
+                        photoRaw), cur.savedThumbs = cur.savedThumbs || {}, cur.savedThumbs[photoRaw] = thumb;
                     var thumbEl = geByClass1("photos_photo_edit_row_thumb", info.prepareCont),
                         thumbImage = vkImage();
                     thumbImage.onload = function() {

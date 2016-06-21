@@ -2563,7 +2563,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-mess.im-mess_fwd-top.im-mess_fwd .im-mess--text {
-    margin-left: 54px
+    margin-left: 49px
 }
 
 .im-mess.im-mess_fwd-top,
@@ -4302,7 +4302,8 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-create.im-create_classic .im-create--btn {
-    margin-top: 7px
+    margin-top: 7px;
+    margin-left: 0
 }
 
 .im-create.im-create_classic .im-creation--item {
@@ -4379,7 +4380,6 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-to-end {
-    width: 205px;
     border-radius: 102.5px;
     background: #fff url(/images/icons/history_end.png) no-repeat 14px;
     position: absolute;
@@ -4389,7 +4389,10 @@ body.mac .im_stickerpack_fixed {
     box-sizing: border-box;
     display: none;
     padding: 8px 14px 8px 33px;
-    margin-left: -102.5px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
     color: #285473;
     border: solid 1px #cfd9e1;
     font-size: 12.5px;

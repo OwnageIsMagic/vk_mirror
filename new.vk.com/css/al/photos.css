@@ -613,7 +613,8 @@
     background-size: cover;
     background-position: center 35%;
     background-color: #ecf1f5;
-    box-sizing: border-box
+    box-sizing: border-box;
+    cursor: pointer
 }
 
 .photos_container_edit_grid .photos_photo_edit_row_thumb.no_thumb {
@@ -658,8 +659,7 @@
     user-select: none;
     opacity: 0.7;
     -o-transition: opacity 60ms linear;
-    transition: opacity 60ms linear;
-    cursor: move
+    transition: opacity 60ms linear
 }
 
 .photos_container_edit_grid .photos_photo_edit_row_selector:hover {

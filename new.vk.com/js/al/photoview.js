@@ -84,7 +84,8 @@ var Photoview = {
             var a = Math.sqrt((r[0] - o.pageX) * (r[0] - o.pageX) + (r[1] - o.pageY) * (r[1] - o.pageY)),
                 i = 200,
                 p = 0;
-            i > a && !e && (p = .3 + (1 - a / i)), p = Math.min(1, Math.max(0, p)), setStyle(cur.pvHH, "opacity", p)
+            i > a && !e && (p = .3 + (1 - a / i)), p = Math.min(1, Math.max(0, p))
+                .toFixed(1), setStyle(cur.pvHH, "opacity", p)
         },
         toggleLightModeClass: function(o) {
             o = o ? cur.pvIsLightMode : !1, toggleClass(cur.pvBox, "pv_light_mode", !!o), o = o ? cur.pvShowBottomActions : !1, toggleClass(cur.pvBox, "pv_show_bottom_actions", !

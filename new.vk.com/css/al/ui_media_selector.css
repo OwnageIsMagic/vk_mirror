@@ -4,7 +4,8 @@
 
 .media_selector .ms_item {
     position: relative;
-    display: block
+    display: block;
+    outline: none
 }
 
 .media_selector .ms_item:hover {

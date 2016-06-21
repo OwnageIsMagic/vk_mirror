@@ -683,8 +683,9 @@ function domReplaceEl(oldEl, newEl) {
     if (isString(newEl)) {
         newEl = se(newEl);
     }
-    return domPN(oldEl)
+    domPN(oldEl)
         .replaceChild(newEl, oldEl);
+    return newEl;
 }
 
 function domEL(el, p) {
@@ -8443,6 +8444,8 @@ function showPhoto(photoId, listId, options, ev) {
             hideProgress(options.img);
         };
     }
+
+    if (!photoId) return false;
 
     if (phv && (phv.showPhoto(photoId, listId, options) === false)) {
         return false;

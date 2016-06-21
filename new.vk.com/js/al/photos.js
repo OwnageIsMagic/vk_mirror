@@ -15,7 +15,7 @@ var photos = {
     },
     editInitSorter: function() {
         var o = ge("photos_container_photos");
-        cur.photosEditSorter = new GridSorter(o, "photos_photo_edit_row_selector", {
+        cur.photosEditSorter = new GridSorter(o, "photos_photo_edit_row_thumb", {
             onReorder: photos.reorderPhotos
         })
     },
@@ -62,7 +62,7 @@ var photos = {
         if (o.shiftKey && cur.photoEditPrevSelectedRowEl && cur.photoEditPrevSelectedRowEl != t)
             for (var r = gpeByClass("photos_edit_photos_container", e), i = domFC(r), s = 0; 2 > s && i;)(i == cur.photoEditPrevSelectedRowEl || i == t) && s++, s &&
                 toggleClass(i, "photos_edit_selected", a), i = domNS(i);
-        return cur.photoEditPrevSelectedRowEl = t, photos._editUpdateSelectedCounter(), !1
+        return cur.photoEditPrevSelectedRowEl = t, photos._editUpdateSelectedCounter(), cancelEvent(o), !1
     },
     MAX_DESC_INPUT_HEIGHT: 600,
     startEditPhotoDescription: function(o, e) {
@@ -537,22 +537,22 @@ var photos = {
     _hideProgressPanel: function(o) {
         re(geByClass1("_photo_delete_progress", o))
     },
-    deletePhoto: function(o, e, t) {
-        var a;
-        if ("" === o && t && (a = gpeByClass("photos_photo_edit_row", t), o = attr(a, "data-id"), e = attr(a, "data-edit-hash")), a = a || ge("photo_edit_row_" + o)) {
-            var r = photos._showProgressPanel(a);
-            addClass(a, "photos_deleted"), ajax.post("al_photos.php", {
+    deletePhoto: function(o, e, t, a) {
+        var r;
+        if ("" === o && t && (r = gpeByClass("photos_photo_edit_row", t), o = attr(r, "data-id"), e = attr(r, "data-edit-hash")), r = r || ge("photo_edit_row_" + o)) {
+            var i = photos._showProgressPanel(r);
+            return addClass(r, "photos_deleted"), ajax.post("al_photos.php", {
                 act: "delete_photo",
                 photo: o,
                 hash: e,
                 edit: 1
             }, {
                 onDone: function(o) {
-                    re(r), a.appendChild(se(o)), photos.recache(cur.offset, -1), cur.count -= 1, photos._editUpdateSelectedCounter(), cur.count < 2 && hide(
+                    re(i), r.appendChild(se(o)), photos.recache(cur.offset, -1), cur.count -= 1, photos._editUpdateSelectedCounter(), cur.count < 2 && hide(
                         "album_thumb_action"), ge("photos_go_to_album_cont") && !cur.count && hide("photos_go_to_album_cont"), cur.photoAddUpdate && cur.photoAddUpdate(
-                        a), cur.introTooltipHide && cur.introTooltipHide(!0)
+                        r), cur.introTooltipHide && cur.introTooltipHide(!0)
                 }
-            })
+            }), cancelEvent(a)
         }
     },
     restorePhoto: function(o, e, t) {
@@ -1002,8 +1002,8 @@ var photos = {
             };
         t ? (cur.hideTO = cur.hideTO || {}, cur.hideTO[e] = setTimeout(i, 150)) : i()
     },
-    openEditor: function(o) {
-        stManager.add(["photoview.js", "photoview.css"], function() {
+    openEditor: function(o, e) {
+        return stManager.add(["photoview.js", "photoview.css"], function() {
             var e = gpeByClass("photos_photo_edit_row", o);
             cur.onPESave = function(o) {
                 curBox()
@@ -1012,28 +1012,28 @@ var photos = {
             };
             var t = e.getAttribute("data-id");
             Photoview.openEditor(t, cur.savedThumbs ? cur.savedThumbs[t] : e.getAttribute("data-thumb"))
-        })
+        }), cancelEvent(e)
     },
     addToAlbum: function() {
         cur.isPhotoUpload = !0, photos.movePhotosBox(cur.savedPhotos || [], !1)
     },
-    movePhotosBox: function(o, e, t) {
-        var a = [],
-            r = !1;
-        isArray(o) ? a = o : ("" === o && e && (o = gpeByClass("photos_photo_edit_row", e)
-            .getAttribute("data-id")), o ? a.push(o) : each(geByClass("photos_edit_selected"), function() {
-            a.push(this.getAttribute("data-id"))
-        }), r = intval(photos._editGetSelectedCount() > a.length));
-        var i = cur.album ? cur.album.split("_") : [vk.id, -7];
-        showBox("/al_photos.php", {
+    movePhotosBox: function(o, e, t, a) {
+        var r = [],
+            i = !1;
+        isArray(o) ? r = o : ("" === o && e && (o = gpeByClass("photos_photo_edit_row", e)
+            .getAttribute("data-id")), o ? r.push(o) : each(geByClass("photos_edit_selected"), function() {
+            r.push(this.getAttribute("data-id"))
+        }), i = intval(photos._editGetSelectedCount() > r.length));
+        var s = cur.album ? cur.album.split("_") : [vk.id, -7];
+        return showBox("/al_photos.php", {
             act: "a_move_to_album_box",
-            photo_ids: r ? "" : a.join(","),
-            owner_id: i[0],
-            from_album_id: i[1],
-            all: r
+            photo_ids: i ? "" : r.join(","),
+            owner_id: s[0],
+            from_album_id: s[1],
+            all: i
         }, {
             onDone: t
-        })
+        }), cancelEvent(a)
     },
     cancelMove: function(o, e, t, a, r, i, s) {
         var n = gpeByClass("photos_photo_edit_row", e);
@@ -1123,7 +1123,7 @@ var photos = {
         }), addEvent(document, "drop", function(e) {
             return o.un(e, !0), o.drop(e.dataTransfer.files), cancelEvent(e)
         }), cur.destroy.push(function() {
-            removeEvent(document, "dragenter dragover"), removeEvent(document, "dragleave"), removeEvent(document, "drop")
+            removeEvent(document, "dragenter dragover"), removeEvent(document, "dragleave"), removeEvent(document, "drop");
         })
     },
     openWebcamPhoto: function() {
