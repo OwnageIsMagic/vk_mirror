@@ -457,8 +457,8 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
             this.onPause.bind(this)), this.ap.top = this, each(["prev", "play", "next"], function(e, o) {
             addEvent(geByClass1("top_audio_player_" + o, i._el), "click", t)
         }), addEvent(this._el, "mousedown", function(t) {
-            return cancelEvent(t), 1 != t.which || hasClass(t.target, "top_audio_player_btn") || hasClass(t.target, "top_audio_player_act_icon") ? void 0 : showAudioLayer(
-                t, ge("top_audio"))
+            return cancelEvent(t), hasClass(domPN(t.target), "top_audio_player_btn") ? void 0 : 1 != t.which || hasClass(t.target, "top_audio_player_btn") || hasClass(t.target,
+                "top_audio_player_act_icon") ? void 0 : showAudioLayer(t, ge("top_audio"))
         }), this.onPlay(this.ap.getCurrentAudio())
     }, TopAudioPlayer.prototype.onPlay = function(t, i, e) {
         function o() {
