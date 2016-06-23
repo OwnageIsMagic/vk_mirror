@@ -114,7 +114,7 @@ var navMap = {
     'landings$': ['landings.php', []]
 };
 var stVersions = {
-    'nav': 688842015997,
+    'nav': 688526011392,
     'fonts_cnt.css': 2307916144,
     'common.js': 1133,
     'common.css': 2548524611,
@@ -216,7 +216,7 @@ var stVersions = {
     'pages.js': 3347413999,
     'groups.css': 668994614,
     'groups.js': 1974784014,
-    'groups_list.js': 3778021720,
+    'groups_list.js': 3462017115,
     'groups_edit.css': 1095625093,
     'groups_edit.js': 1395100425,
     'profile.css': 1027250692,
@@ -514,4 +514,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 4738;
+var _rnd = 5150;

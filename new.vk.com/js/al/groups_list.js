@@ -347,7 +347,8 @@ var GroupsList = {
                     admin: {},
                     inv: {},
                     future: {},
-                    past: {}
+                    past: {},
+                    events_concerts: {}
                 },
                 filtered: {},
                 queries: {},
