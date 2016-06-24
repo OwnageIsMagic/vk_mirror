@@ -524,7 +524,8 @@
                                     P.transition(s.state);
                                     break;
                                 case H.eventTypes.RESET_PEER:
-                                    u(i, e, t, a), (0, W.isClassicInterface)(i) && B.updateMenu(i), (0, W.isPendingForward)(i) && n.focusInput(i);
+                                    u(i, e, t, a), s.cancelSearch && E(i, n, e), (0, W.isClassicInterface)(i) && B.updateMenu(i), (0, W.isPendingForward)(i) &&
+                                        n.focusInput(i);
                                     break;
                                 case H.eventTypes.CHANGE_TAB:
                                     (0, W.changeTab)(s.tab, i, T, Q.changeDialogsTab);
@@ -4729,8 +4730,10 @@
     }
 
     function T() {
+        var e = arguments.length <= 0 || void 0 === arguments[0] ? !1 : arguments[0];
         return {
-            type: V
+            type: V,
+            cancelSearch: e
         }
     }
 
@@ -4788,7 +4791,7 @@
                 try {
                     !r && o["return"] && o["return"]()
                 } finally {
-                    if (a) throw i;
+                    if (a) throw i
                 }
             }
             return n
@@ -6210,7 +6213,7 @@
         s = s.slice(0, i + a);
         var o = (0, M.toArray)(e.children)
             .map(function(e) {
-                return domData(e, "list-id")
+                return domData(e, "list-id");
             }),
             l = s.map(function(e) {
                 return n()
@@ -7065,6 +7068,7 @@
                 addClass(e, "im-page--history_fwd"), geByClass1("_im_explain_fwd", e)
                     .textContent = getLang("mail_explain_fwd", t.get()
                         .pendingForward.length), d()
+                    .cancelSearch(t), d()
                     .removeSelection(t);
                 var n = (0, x.executionStackPush)(t.get()
                     .stack, "forward",
@@ -7325,7 +7329,7 @@
                                 }.bind(null, e.get()
                                     .peer));
                             e.set(b.setExecStack.bind(null, n)), e.get()
-                                .longpoll.push([(0, C.resetPeer)()])
+                                .longpoll.push([(0, C.resetPeer)(!0)])
                         } else t()
                             .startForward(e)
                     });
@@ -7873,7 +7877,7 @@
         var n = e.get()
             .ctrl_submit ? 1 : 0;
         return showTooltip(t.target, {
-            content: getTemplate("ctrl_submit_hint", {
+            text: getTemplate("ctrl_submit_hint", {
                 enter_on: n ? "" : "on",
                 ctrl_on: n ? "on" : ""
             }),
@@ -9295,7 +9299,8 @@
 
     function f(e, t, n) {
         var r = ge("box_layer_wrap"),
-            f = (0, h.createMutations)(g),
+            f = (0,
+                h.createMutations)(g),
             m = f.callMutations,
             p = f.bindMutations,
             y = (0, C["default"])({
