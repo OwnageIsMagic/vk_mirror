@@ -5766,6 +5766,7 @@ button.ui_load_more_btn {
     display: block
 }
 
+.audio_current_rows .audio_row.claimed,
 .audio_row.audio_deleted #delete,
 .audio_row.audio_deleted #next,
 .audio_row.audio_deleted #recom,

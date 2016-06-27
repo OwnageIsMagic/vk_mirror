@@ -703,17 +703,15 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         }
     }, AudioPlaylist.prototype.addAudio = function(t, i) {
         function e(t) {
-            if (!AudioUtils.isClaimedAudio(t)) {
-                var e = o.indexOfAudio(t);
-                if (e >= 0) {
-                    if (a) return;
-                    o._list.splice(e, 1)
-                }
-                t = clone(t), t[AudioUtils.AUDIO_ITEM_INDEX_TITLE] = clean(replaceEntities(t[AudioUtils.AUDIO_ITEM_INDEX_TITLE])
-                        .replace(/(<em>|<\/em>)/g, "")), t[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER] = clean(replaceEntities(t[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER])
-                        .replace(/(<em>|<\/em>)/g, "")), t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS] &= ~AudioUtils.AUDIO_ITEM_INLINED_BIT, a ? o._list.push(t) : o._list.splice(i, 0, t),
-                    o._index && o._index.remove(t)
+            var e = o.indexOfAudio(t);
+            if (e >= 0) {
+                if (a) return;
+                o._list.splice(e, 1)
             }
+            t = clone(t), t[AudioUtils.AUDIO_ITEM_INDEX_TITLE] = clean(replaceEntities(t[AudioUtils.AUDIO_ITEM_INDEX_TITLE])
+                    .replace(/(<em>|<\/em>)/g, "")), t[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER] = clean(replaceEntities(t[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER])
+                    .replace(/(<em>|<\/em>)/g, "")), t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS] &= ~AudioUtils.AUDIO_ITEM_INLINED_BIT, a ? o._list.push(t) : o._list.splice(i, 0, t), o._index &&
+                o._index.remove(t)
         }
         this._unref();
         var o = this,
@@ -1062,7 +1060,7 @@ AudioPlayer.tabIcons = {
         }
     }, AudioPlayer.prototype._ensureImplReady = function(t) {
         this._impl && this._impl.onReady(function(i) {
-            return i ? t() : void AudioUtils.showNeedFlashBox()
+            return i ? t() : void 0
         })
     }, AudioPlayer.prototype._implNewTask = function(t, i) {
         this._taskIDCounter = this._taskIDCounter || 1, this._tasks = this._tasks || [], this._tasks.push({
