@@ -253,19 +253,23 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
 }, AudioPage.prototype.createAlbum = function(e) {
     return this.editAlbum(0)
 }, AudioPage.prototype.editAlbum = function(e, i, t) {
-    var o = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL),
-        a = this,
-        s = i ? gpeByClass("_audio_album_btns", i) : null;
-    s && (addClass(s, "in_progress"), showProgress(s)), o.loadSilent(function(i) {
-        s && (removeClass(s, "in_progress"), hideProgress(s));
+    function o() {
+        n && (removeClass(n, "in_progress"), hideProgress(n));
         showTabbedBox("al_audio.php", {
             act: "edit_album_box",
             album_id: e || 0,
-            oid: a.options.oid
+            oid: r.options.oid
         }, {
             stat: ["privacy.js", "privacy.css", "ui_controls.js", "ui_controls.css", "indexer.js"],
             dark: 1
         })
+    }
+    var a = getAudioPlayer(),
+        s = a.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL),
+        r = this,
+        n = i ? gpeByClass("_audio_album_btns", i) : null;
+    n && (addClass(n, "in_progress"), showProgress(n)), s.loadSilent(function(i) {
+        i.isComplete() ? o() : (i = a.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, e), i.loadSilent(o))
     }), cancelEvent(t)
 }, AudioPage.prototype.onHide = function() {
     var e = this;
@@ -969,9 +973,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 var a = geByClass1("_audio_additional_blocks_wrap_" + o, t._container),
                     s = geByClass1("_audio_additional_block_" + i, t._container);
                 !s && t._blocks[i] && (s = se(rs(t.options.additionalBlockSectionTpl, {
-                        block_id: i
-                    })), val(s, t._blocks[i]), a.appendChild(s)),
-                    show(s), show(a)
+                    block_id: i
+                })), val(s, t._blocks[i]), a.appendChild(s)), show(s), show(a)
             }
         }), uiSearch.init("audio_friends_search"), this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype.onSubmenuToggle = function() {

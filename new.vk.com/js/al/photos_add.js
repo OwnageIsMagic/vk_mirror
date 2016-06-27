@@ -474,15 +474,17 @@ var PhotosAdd = {
     _onScroll: function() {
         if (null !== cur.pageBlockHeader && (cur.pageBlockHeader = cur.pageBlockHeader || geByClass1("page_block_header", ge("photos_add_block")), cur.pageBlockHeader)) {
             var o = getSize(ge("page_header_cont"))[1];
-            cur.photoAddHeaderElOffset = cur.photoAddHeaderElOffset || getXY(cur.pageBlockHeader)[1] - o, scrollGetY() >= cur.photoAddHeaderElOffset ? hasClass(cur.pageBlockHeader,
-                "photos_header_fixed") || (addClass(cur.pageBlockHeader, "photos_header_fixed"), setStyle(cur.pageBlockHeader, {
-                width: getSize(ge("page_body"))[0]
-            }), setStyle(domNS(cur.pageBlockHeader), {
-                "margin-top": getSize(cur.pageBlockHeader)[1] + "px"
+            cur.photoAddHeaderElOffset = cur.photoAddHeaderElOffset || getXY(cur.pageBlockHeader)[1] - o;
+            var e = (geByClass1("photos_container_edit_grid", domPN(cur.pageBlockHeader)), ge("photos_add_block"));
+            scrollGetY() >= cur.photoAddHeaderElOffset ? (addClass(cur.pageBlockHeader, "photos_header_fixed"), setStyle(cur.pageBlockHeader, {
+                width: getSize(ge("page_body"))[0],
+                top: getSize("page_header")[1]
+            }), setStyle(e, {
+                "padding-top": getSize(cur.pageBlockHeader)[1] + "px"
             })) : (removeClass(cur.pageBlockHeader, "photos_header_fixed"), setStyle(cur.pageBlockHeader, {
                 width: ""
-            }), setStyle(domNS(cur.pageBlockHeader), {
-                "margin-top": 0
+            }), setStyle(e, {
+                "padding-top": ""
             })), PhotosAdd.updateBottomFixedPanel()
         }
     },
@@ -492,15 +494,14 @@ var PhotosAdd = {
             if (o) {
                 var e = getXY(o)[1],
                     t = getSize(o)[1];
-                clientHeight() + scrollGetY() < e + t ? hasClass(cur.fixedBottomPanel, "photos_bottom_fixed") || (addClass(cur.fixedBottomPanel, "photos_bottom_fixed"),
-                    setStyle(cur.fixedBottomPanel, {
-                        width: getSize(ge("page_body"))[0]
-                    }), setStyle(domPS(cur.fixedBottomPanel), {
-                        "margin-bottom": getSize(cur.fixedBottomPanel)[1] + "px"
-                    })) : (removeClass(cur.fixedBottomPanel, "photos_bottom_fixed"), setStyle(cur.fixedBottomPanel, {
+                clientHeight() + scrollGetY() < e + t ? (addClass(cur.fixedBottomPanel, "photos_bottom_fixed"), setStyle(cur.fixedBottomPanel, {
+                    width: getSize(ge("page_body"))[0]
+                }), setStyle(domPS(cur.fixedBottomPanel), {
+                    "padding-bottom": 10 + getSize(cur.fixedBottomPanel)[1] + "px"
+                })) : (removeClass(cur.fixedBottomPanel, "photos_bottom_fixed"), setStyle(cur.fixedBottomPanel, {
                     width: ""
                 }), setStyle(domPS(cur.fixedBottomPanel), {
-                    "margin-bottom": ""
+                    "padding-bottom": ""
                 }))
             }
         }

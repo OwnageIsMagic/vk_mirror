@@ -528,8 +528,10 @@
 #pv_tag_info .pv_info,
 #pv_tag_info .pv_tag_info_text {
     margin-top: 8px;
-    float: left;
-    color: #fff
+    color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis
 }
 
 #pv_tag_info .pv_tag_info_buttons_wrap {
@@ -1683,8 +1685,12 @@
     margin-left: -12px
 }
 
-.pv_top_panel_shown {
-    margin-top: 60px
+.pv_top_panel_shown .pv_hh_like {
+    margin-top: 40px
+}
+
+.pv_top_panel_shown.pv_fs_wrap {
+    margin-top: 50px
 }
 
 .pv_fs_wrap {

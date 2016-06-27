@@ -5755,7 +5755,6 @@ button.ui_load_more_btn {
     right: 14px
 }
 
-.audio_current_rows .audio_row #add,
 .audio_row #next,
 .audio_row.audio_deleted #add,
 .audio_row.audio_deleted.audio_delete_all #delete,

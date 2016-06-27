@@ -3,7 +3,7 @@ var Photoview = {
         MIN_HEIGHT: 450,
         SIDE_COLUMN_WIDTH: 350,
         SIDE_MIN_GAP: 90,
-        VERTICAL_MIN_GAP: 30,
+        VERTICAL_MIN_GAP: 40,
         BOTTOM_BAR_HEIGHT: 52,
         SIDE_NAV_PANELS_MAX_WIDTH: 120,
         SIDE_NAV_PANELS_MIN_WIDTH: 25,
@@ -1298,7 +1298,7 @@ var Photoview = {
         },
         onKeyDown: function(o) {
             if (o.returnValue === !1) return !1;
-            if (inArray(o.keyCode, [KEY.DOWN, KEY.UP]) && cur.pvNarrowScrollbar) {
+            if (inArray(o.keyCode, [KEY.DOWN, KEY.UP]) && cur.pvNarrowScrollbar && !hasClass(o.target, "reply_field")) {
                 var e = cur.pvNarrowScrollbar.scrollTop();
                 return e += o.keyCode == KEY.DOWN ? 70 : -70, cur.pvNarrowScrollbar.scrollTop(e), cancelEvent(o)
             }
@@ -1326,54 +1326,57 @@ var Photoview = {
         },
         updatePhotoDimensions: function(o) {
             removeClass(cur.pvBottomInfo, "pv_with_line_break");
-            var e = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
-                t = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
-                r = getSize(cur.pvBottomInfo)[1],
-                a = Photoview.MIN_WIDTH,
-                i = Photoview.MIN_HEIGHT,
-                p = Math.max(a, e - Photoview.SIDE_COLUMN_WIDTH - 2 * Photoview.SIDE_MIN_GAP),
-                v = t - r - 2 * Photoview.VERTICAL_MIN_GAP;
+            var e = isVisible(cur.pvTagInfo),
+                t = Math.max(document.documentElement.clientWidth, window.innerWidth || 0),
+                r = Math.max(document.documentElement.clientHeight, window.innerHeight || 0),
+                a = getSize(cur.pvBottomInfo)[1],
+                i = Photoview.MIN_WIDTH,
+                p = Photoview.MIN_HEIGHT,
+                v = Math.max(i, t - Photoview.SIDE_COLUMN_WIDTH - 2 * Photoview.SIDE_MIN_GAP),
+                n = r - a - 2 * Photoview.VERTICAL_MIN_GAP;
             Photoview.calculateVeryBig();
-            var n = clone(cur.pvCurData || {
-                width: a,
-                height: i
+            var s = clone(cur.pvCurData || {
+                width: i,
+                height: p
             });
-            n.width = n.width || a, n.height = n.height || i;
-            var s = n.width / n.height,
-                c = Math.min(p, n.width),
-                u = c / s;
-            u = Math.min(v, u), c = Math.ceil(u * s);
-            var l = getXY(cur.pvBottomLeft)[0] + getSize(cur.pvBottomLeft)[0] > getXY(cur.pvBottomActions)[0] - 20;
-            toggleClass(cur.pvBottomInfo, "pv_with_line_break", l), o && (cur.prevPhotoWidth = cur.prevPhotoHeight = 0);
-            var d = cur.prevPhotoWidth = Math.max(c, a, cur.prevPhotoWidth || 0),
-                h = cur.prevPhotoHeight = Math.max(u, i, cur.prevPhotoHeight || 0),
-                g = h / 2 - u / 2;
-            if (g > 0 && !isVisible(cur.pvTagInfo)) {
-                var _ = getSize(cur.pvPhoto)[1] + r,
-                    m = _ / 2 - u / 2;
-                m > r && (g = m)
+            s.width = s.width || i, s.height = s.height || p;
+            var c = s.width / s.height,
+                u = Math.min(v, s.width),
+                l = u / c;
+            l = Math.min(n, l), u = Math.ceil(l * c);
+            var d = getXY(cur.pvBottomLeft)[0] + getSize(cur.pvBottomLeft)[0] > getXY(cur.pvBottomActions)[0] - 20;
+            toggleClass(cur.pvBottomInfo, "pv_with_line_break", d), o && (cur.prevPhotoWidth = cur.prevPhotoHeight = 0);
+            var h = cur.prevPhotoWidth = Math.max(u, i, cur.prevPhotoWidth || 0),
+                g = cur.prevPhotoHeight = Math.max(l, p, cur.prevPhotoHeight || 0),
+                _ = g / 2 - l / 2;
+            if (_ > 0 && !e) {
+                var m = getSize(cur.pvPhoto)[1] + a,
+                    w = m / 2 - l / 2;
+                w > a && (_ = w)
             }
-            setStyle(domFC(cur.pvPhoto), {
-                width: c,
-                height: u,
-                marginTop: g
+            setStyle(cur.pvPhoto, {
+                width: h,
+                height: g
+            }), setStyle(domFC(cur.pvPhoto), {
+                width: u,
+                height: l,
+                marginTop: _
+            }), setStyle(cur.pvTagInfo, {
+                width: h
             }), cur.pvTagFrame && setStyle(domFC(cur.pvTagFrame), {
-                width: c,
-                height: u,
-                marginTop: g
-            }), setStyle(cur.pvImgProgress, "marginTop", g + u / 2), setStyle(cur.pvPhoto, {
-                width: d,
-                height: h
-            });
-            var w = (cur.pvIsLightMode ? 0 : Photoview.SIDE_COLUMN_WIDTH) + d;
-            setStyle(cur.pvCont, "width", w);
-            var f = getXY(cur.pvBox),
-                P = f[0],
-                b = e - f[0] - getSize(cur.pvBox)[0];
-            setStyle(cur.pvNavPanels[1], "width", P), setStyle(cur.pvNavPanels[0], "width", b);
-            var T = 100 > P;
-            toggleClass(cur.pvNavPanels[0], "pv_nav_panel_icon_centered", T), toggleClass(cur.pvNavPanels[1], "pv_nav_panel_icon_centered", T), Photoview.updateRightBlock(),
-                Photoview.updateVerticalPosition(), cur.pvPhWidth = c, cur.pvPhHeight = u
+                width: u,
+                height: l,
+                marginTop: _
+            }), setStyle(cur.pvImgProgress, "marginTop", _ + l / 2);
+            var f = (cur.pvIsLightMode ? 0 : Photoview.SIDE_COLUMN_WIDTH) + h;
+            setStyle(cur.pvCont, "width", f);
+            var P = getXY(cur.pvBox),
+                b = P[0],
+                T = t - P[0] - getSize(cur.pvBox)[0];
+            setStyle(cur.pvNavPanels[1], "width", b), setStyle(cur.pvNavPanels[0], "width", T);
+            var C = 100 > b;
+            toggleClass(cur.pvNavPanels[0], "pv_nav_panel_icon_centered", C), toggleClass(cur.pvNavPanels[1], "pv_nav_panel_icon_centered", C), Photoview.updateRightBlock(),
+                Photoview.updateVerticalPosition(), cur.pvPhWidth = u, cur.pvPhHeight = l
         },
         onResize: function() {
             lastWindowWidth,
@@ -1699,9 +1702,8 @@ var Photoview = {
                     hash: r.hash
                 }, {
                     onDone: function(o, a, i, p) {
-                        void 0 !== a && (r.tags = a, r.tagged = i, r.tagshtml = p, cur.pvListId == e && cur.pvIndex == t && (Photoview.setTags(p), (!r.taginfo && r
-                                .actions.tag && a[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink))),
-                            Photoview.actionInfo()
+                        void 0 !== a && (r.tags = a, r.tagged = i, r.tagshtml = p, cur.pvListId == e && cur.pvIndex == t && (Photoview.setTags(p),
+                                (!r.taginfo && r.actions.tag && a[0] < cur.pvMaxTags ? show : hide)(cur.pvTagLink))), Photoview.actionInfo()
                             .innerHTML = o
                     },
                     onFail: function(o) {

@@ -7221,7 +7221,9 @@
                             .peer) && t.get()
                         .tabs[t.get()
                             .peer].offset;
-                    toggleClass(e, "im-page-header-icon_search-shown", r)
+                    setStyle(e, {
+                        display: "inline-block"
+                    }), toggleClass(e, "im-page-header-icon_search-shown", r)
                 }
             })
     }
@@ -9292,15 +9294,14 @@
             unmount: function() {
                 removeEvent(o, "scroll", t), removeEvent(geByClass1(w, e.bodyNode), "click", n), removeEvent(geByClass1(T, e.bodyNode), "click", r), removeEvent(
                         geByClass1("_im_spam_flush", e.bodyNode), "click", l), (0, v.removeDelegateEvent)(e.bodyNode, "click", "_im_mess_restore", a), (0, v.removeDelegateEvent)
-                    (e.bodyNode, "click", "_im_go_to", i), (0, v.removeDelegateEvent)(e.bodyNode, "click", _.DESLECT_ALL_CLASS, u), s.unmount()
+                    (e.bodyNode, "click", "_im_go_to", i), (0, v.removeDelegateEvent)(e.bodyNode, "click", _.DESLECT_ALL_CLASS, u), s.unmount();
             }
         }
     }
 
     function f(e, t, n) {
         var r = ge("box_layer_wrap"),
-            f = (0,
-                h.createMutations)(g),
+            f = (0, h.createMutations)(g),
             m = f.callMutations,
             p = f.bindMutations,
             y = (0, C["default"])({

@@ -987,7 +987,7 @@ var Video = {
         cur.nav.push(function(e, o, i, t) {
             if (!t.filtersChanged && 1 == Object.keys(i)
                 .length && i[0] && 0 != i[0].indexOf("video") && !t.fromSearch) return !0;
-            if (e[0]) return !0;
+            if (e[0] && !e.section) return !0;
             hide("global_prg");
             var r = geByClass1("video_default_tabs", u.bodyNode),
                 d = geByClass1("video_subtab_pane_album", u.bodyNode),
