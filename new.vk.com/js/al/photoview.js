@@ -1307,8 +1307,9 @@ var Photoview = {
             var t = o.target.contentEditable;
             return window.Emoji && Emoji.shown || o.target && ("INPUT" == o.target.tagName || "TEXTAREA" == o.target.tagName || "DIV" == o.target.tagName && t && "inherit" !=
                 t) ? !0 : o.keyCode == KEY.ESC ? (cur.pvCanvas ? Photoview.fullscreenStop() : cur.pvTagger ? Phototag.stopTag() : o.vkCanceled || curBox() || Photoview.hide(
-                0), cancelEvent(o)) : (cur.pvTagger || boxQueue.count() || cur.pvComment && cur.pvComment.focused || (o.keyCode == KEY.RIGHT ? Photoview.show(cur.pvListId,
-                cur.pvIndex + 1) : o.keyCode == KEY.LEFT && Photoview.show(cur.pvListId, cur.pvIndex - 1)), cur.pvCanvas && window.FullscreenPV ? !1 : void 0)
+                0), cancelEvent(o)) : (cur.pvTagger || boxQueue.count() || cur.pvComment && cur.pvComment.focused || o.ctrlKey || (o.keyCode == KEY.RIGHT ? Photoview.show(
+                    cur.pvListId, cur.pvIndex + 1) : o.keyCode == KEY.LEFT && Photoview.show(cur.pvListId, cur.pvIndex - 1)), cur.pvCanvas && window.FullscreenPV ? !1 :
+                void 0)
         },
         updateVerticalPosition: function() {
             if (cur.pvCont) {

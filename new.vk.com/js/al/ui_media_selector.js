@@ -323,8 +323,8 @@ function MediaSelector(e, a, i, o) {
                         break;
                     case "audio":
                         if (!t.info) return !1;
-                        var B = geByClass1("_audio_row_" + i);
-                        B && (t = AudioUtils.getAudioFromEl(B)), P = Page.addAudioPreview(i, t), T = ' id="pam' + m + "_audio" + i + '"';
+                        var U = geByClass1("_audio_row_" + i);
+                        U && (t = AudioUtils.getAudioFromEl(U)), P = Page.addAudioPreview(i, t), T = ' id="pam' + m + "_audio" + i + '"';
                         break;
                     case "doc":
                         if (!t.lang) return !1;
@@ -360,11 +360,11 @@ function MediaSelector(e, a, i, o) {
                         P = '<div class="medadd_h medadd_h_poll inl_bl">' + t.lang.q + "</div>", hide(domByClass(_.menuNode, "_type_poll")), N = f;
                         break;
                     case "map":
-                        var U = 340,
+                        var B = 340,
                             q = 127;
                         P = "<div class=\"fl_l\"><a onclick=\"return showBox('al_places.php', {act: 'geo_box', lat: " + t[0] + ", long: " + t[1] + ", provider: " + intval(
-                                t[3]) + '}, {dark: 1});"><div class="page_media_map_point"></div><img class="page_preview_map" width="' + U + '" height="' + q +
-                            '" src="/maps?lat=' + t[0] + "&lng=" + t[1] + "&z=11&" + (window.devicePixelRatio >= 2, "w=" + 2 * U + "&h=" + 2 * q) + '" /></a></div>', N = L =
+                                t[3]) + '}, {dark: 1});"><div class="page_media_map_point"></div><img class="page_preview_map" width="' + B + '" height="' + q +
+                            '" src="/maps?lat=' + t[0] + "&lng=" + t[1] + "&z=11&" + (window.devicePixelRatio >= 2, "w=" + 2 * B + "&h=" + 2 * q) + '" /></a></div>', N = L =
                             k, hide(domByClass(_.menuNode, "_type_map"));
                         break;
                     case "page":
@@ -767,47 +767,51 @@ function MediaSelector(e, a, i, o) {
             },
             urlsCancelled: [],
             shareData: {},
-            checkMessageURLs: function(e, a) {
+            checkMessageURLs: function(e, a, i) {
                 if (!(s.chosenMedia || s.urlAttachmentLoading && s.urlAttachmentLoading[0] > vkNow() - 1e4 || s.attachCount() >= l)) {
                     if (cur.reply_to && cur.reply_to[0]) {
-                        var i = Wall.getReplyName(cur.reply_to[0]);
-                        if (i && isArray(i) && i[1] && (i = i[1]), i) {
-                            var o = extractUrls(i, a);
-                            for (var t in o) {
-                                var d = o[t].url;
-                                d.match(/^https?:\/\//) || (d = "http://" + d), inArray(d, s.urlsCancelled) || s.urlsCancelled.push(d)
+                        var o = Wall.getReplyName(cur.reply_to[0]);
+                        if (o && isArray(o) && o[1] && (o = o[1]), o) {
+                            var t = extractUrls(o, a);
+                            for (var d in t) {
+                                var r = t[d].url;
+                                r.match(/^https?:\/\//) || (r = "http://" + r), inArray(r, s.urlsCancelled) || s.urlsCancelled.push(r)
                             }
                         }
                     }
-                    var r = extractUrls(e, a);
-                    for (var t in r) {
-                        var n = r[t],
-                            d = n.url,
-                            c = n.query,
-                            h = n.domain,
-                            _ = d;
-                        if (d.match(/^https?:\/\//) || (d = "http://" + d), !inArray(d, s.urlsCancelled) && !inArray(_, s.urlsCancelled)) {
-                            var p = !0;
-                            if (h.match(/(^|\.|\/\/)(vkontakte\.ru|vk\.com)/) && (p = c.match(
+                    var n = extractUrls(e, a);
+                    for (var d in n) {
+                        var c = n[d],
+                            r = c.url,
+                            h = c.query,
+                            _ = c.domain,
+                            p = r;
+                        if (r.match(/^https?:\/\//) || (r = "http://" + r), !inArray(r, s.urlsCancelled) && !inArray(p, s.urlsCancelled)) {
+                            var m = !0;
+                            if (_.match(/(^|\.|\/\/)(vkontakte\.ru|vk\.com)/) && (m = h.match(
                                     /(#photo|^\/(photo|video|album|page|audio|doc)|z=(album|photo|video)|w=(page|product))(-?\d+_)?\d+|\.(jpg|png|gif)$|market-?\d+\?section=album_\d+|^\/stickers\/.+$|^\/blog\/.+$|^http:\/\/instagram\.com\/p\/.+/
-                                ) ? !0 : !1), p) return void s.checkURL(_)
+                                ) ? !0 : !1), m) return void s.checkURL(p, i)
                         }
                     }
                 }
             },
+            clearCheckURL: function() {
+                clearTimeout(cur.checkURLTO), re(s.urlAttachmentLoading[2]), n ? toggle(p, p.childNodes > 0) : toggleClass(u, "med_no_attach", !u.childNodes), s.urlAttachmentLoading = !
+                    1, setStyle(bodyNode, {
+                        cursor: "default"
+                    })
+            },
             onCheckURLDone: function(e, a) {
                 var i = "";
-                s.urlAttachmentLoading && (re(s.urlAttachmentLoading[2]), n ? toggle(p, p.childNodes > 0) : toggleClass(u, "med_no_attach", !u.childNodes), i = s.urlAttachmentLoading[
-                    1], s.urlAttachmentLoading = !1, setStyle(bodyNode, {
-                    cursor: "default"
-                })), e ? s.chooseMedia(a[0], a[1], a[2], i, !0) : o.onCheckURLDone && o.onCheckURLDone(e, a)
+                s.urlAttachmentLoading && (i = s.urlAttachmentLoading[1], s.clearCheckURL()), e ? s.chooseMedia(a[0], a[1], a[2], i, !0) : o.onCheckURLDone && o.onCheckURLDone(
+                    e, a)
             },
-            checkURL: function(e) {
+            checkURL: function(e, a) {
                 if (e) {
                     s.urlsCancelled.push(e), s.urlAttachmentLoading = [vkNow(), e], re(s.checkURLForm), s.checkURLForm = ce("div", {
                         innerHTML: '<iframe name="share_parse_iframe' + m + '"></iframe>'
                     }), utilsNode.appendChild(s.checkURLForm);
-                    var a = s.checkURLForm.appendChild(ce("form", {
+                    var i = s.checkURLForm.appendChild(ce("form", {
                         action: "share.php?act=url_attachment",
                         method: "post",
                         target: "share_parse_iframe" + m
@@ -817,15 +821,17 @@ function MediaSelector(e, a, i, o) {
                         index: m,
                         url: e,
                         to_mail: o.mail ? 1 : ""
-                    }, function(e, i) {
-                        a.appendChild(ce("input", {
+                    }, function(e, a) {
+                        i.appendChild(ce("input", {
                             type: "hidden",
                             name: e,
-                            value: i
+                            value: a
                         }))
                     }), setStyle(bodyNode, {
                         cursor: "wait"
-                    }), window.onUploadDone = s.onCheckURLDone.pbind(!0), window.onUploadFail = s.onCheckURLDone.pbind(!1), a.submit()
+                    }), window.onUploadDone = s.onCheckURLDone.pbind(!0), window.onUploadFail = s.onCheckURLDone.pbind(!1), a && (cur.checkURLTO = setTimeout(function() {
+                        s.urlAttachmentLoading.length > 0 && s.clearCheckURL()
+                    }, a)), i.submit()
                 }
             },
             addPreview: function(e) {
@@ -889,7 +895,8 @@ function MediaSelector(e, a, i, o) {
                         '<div class="clear"></div>'
                 }
                 if (e) cur.preventShareAnim && (cur.preventShareAnim.stop(), clearInterval(cur.animateUpdateInterval)), val(domFC(r), l), domFC(r)
-                    .style.height = "auto", shortCurrency();
+                    .style.height = "auto",
+                    shortCurrency();
                 else {
                     !isVisible(b);
                     show(b);

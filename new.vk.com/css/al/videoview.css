@@ -582,6 +582,7 @@ body.mobfixed #mv_layer_wrap {
     border-radius: 2px;
     background: #f0f2f5;
     font-size: 12.5px;
+    line-height: 15px;
     text-align: center;
     color: #55677d;
     cursor: pointer
@@ -596,7 +597,8 @@ body.mobfixed #mv_layer_wrap {
 }
 
 #mv_comments_header .pr {
-    margin: 5px 0
+    display: inline-block;
+    vertical-align: middle
 }
 
 .mv_reply_greeting {

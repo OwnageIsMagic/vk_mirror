@@ -56,21 +56,25 @@ var Videoview = {
                     videos: e
                 }, {
                     onDone: function(e) {
-                        e && window.mvcur && mvcur.mvData && (mvcur.mvData.playerSuggestions = e)
+                        var i = Videoview.getMvData();
+                        i.playerSuggestions = e
                     }
                 })
             },
-            onSuggestionsShown: function(e) {
-                if (Videoview.sendPlayerStats(e ? 14 : 12, 0), e) {
-                    var i = "";
-                    each(mvcur.mvData.playerSuggestions, function(e, o) {
-                            i += "&vid=" + o.vid
+            onSuggestionsShown: function(e, i, o) {
+                var t = o ? 16 : e ? 14 : 12;
+                if (Videoview.sendPlayerStats(t, 0), e) {
+                    var a = "",
+                        r = Videoview.getMvData();
+                    each(r.playerSuggestions, function(e, o) {
+                            o.vid != i && (a += "&vid=" + o.vid)
                         }), vkImage()
-                        .src = "//go.imgsmail.ru/vk?pxn=vs&qid=" + e + i
+                        .src = "//go.imgsmail.ru/vk?pxn=vs&qid=" + e + a
                 }
             },
-            onSuggestionClick: function(e, i, o, t) {
-                Videoview.sendPlayerStats(i ? 13 : 11, 0), showVideo(e, "", {
+            onSuggestionClick: function(e, i, o, t, a) {
+                var r = a ? 15 : i ? 13 : 11;
+                Videoview.sendPlayerStats(r, 0), showVideo(e, "", {
                     autoplay: 1,
                     module: Videoview.getVideoModule(e),
                     addParams: {
@@ -82,6 +86,9 @@ var Videoview = {
             onSuggestionQuarterWatched: function(e, i, o) {
                 vkImage()
                     .src = "//go.imgsmail.ru/vk?pxn=vt25&qid=" + e + "&vid=" + i + "&t=" + o
+            },
+            onSuggestionsReplayClicked: function() {
+                Videoview.sendPlayerStats(17, 0)
             },
             onOpenInPopup: function(e, i, o) {
                 Videoview.sendPlayerStats(8, 0), showVideo(e, i, {
@@ -297,8 +304,9 @@ var Videoview = {
                 Videoview.share(), Videoview.sendPlayerStats(2, e)
             },
             onSubscribe: function(e, i, o, t) {
-                var a = mvcur && mvcur.mvData ? mvcur.mvData.isClosed : !1;
-                Videoview.subscribeToAuthor(null, null, e, i, o, a, !0, "player"), Videoview.sendPlayerStats(o ? 9 : 10, t)
+                var a = Videoview.getMvData(),
+                    r = a.isClosedGroup || !1;
+                Videoview.subscribeToAuthor(null, null, e, i, o, r, !0, "player"), Videoview.sendPlayerStats(o ? 9 : 10, t)
             }
         },
         cleanUpStoredVSegs: function() {
@@ -838,7 +846,7 @@ var Videoview = {
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
                 hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
+                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos();
             }
         },
         commAction: function(e, i, o, t, a) {
@@ -2076,7 +2084,7 @@ var Videoview = {
             var e = Videoview.getMvData();
             if (e) {
                 var i = !e.subscribed,
-                    o = e.isClosed;
+                    o = e.isClosedGroup;
                 Videoview.subscribeToAuthor(null, null, e.oid, e.subscribeHash, i, o, !1, "external_player"), Videoview.sendPlayerStats(i ? 9 : 10, 4)
             }
         },

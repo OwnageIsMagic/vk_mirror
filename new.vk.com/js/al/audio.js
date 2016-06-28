@@ -667,8 +667,11 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             s = geByClass1("_audio_layer_rows_wrap", this._container),
             r = getSize(s)[1],
             l = Math.max(a, r);
-        l > i ? setStyle(e, "padding-bottom", l - i + t - 1) : setStyle(e, "padding-bottom", null), this.getLayer()
-            .sb.update()
+        l > i ? setStyle(e, "padding-bottom", l - i + t - 1) : setStyle(e, "padding-bottom", null), setTimeout(function() {
+            var e = getAudioPlayer()
+                .layer;
+            e && e.sb.update()
+        }, 1)
     }
 }, AudioPage.prototype._initAutoList = function(e, i, t) {
     var o = geByClass1("_audio_playlist", this._container),

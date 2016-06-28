@@ -4800,3 +4800,7 @@ a.apps_new_action:hover {
     height: 35px;
     vertical-align: middle
 }
+
+.page_block_header_extra .apps_options_bar_right {
+    font-size: 13px
+}

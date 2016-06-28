@@ -176,18 +176,22 @@ var Video = {
             var e = trim(val(cur.searchInputEl));
             e && (cur.vSearchInputBlurred = !0)
         }
-        Video.initFilters(), cur.searchInputEl = ge("video_search_input"), (Video.isInCatalog() || cur.getOwnerId() == vk.id) && new Suggester(cur.searchInputEl, {
-            section: "video",
-            sidePadding: "43px",
-            onSelect: function(e) {
-                val(cur.searchInputEl, e[3])
-            },
-            onChoose: function(o) {
-                val(cur.searchInputEl, o[3]), e()
-            }
-        }), cur.searchInputEl && (data(cur.searchInputEl, "opts")
-            .onChange = e, data(cur.searchInputEl, "opts")
-            .onBlur = o, cur.searchInputEl.focus())
+        if (Video.initFilters(), cur.searchInputEl = ge("video_search_input"), (Video.isInCatalog() || cur.getOwnerId() == vk.id) && new Suggester(cur.searchInputEl, {
+                section: "video",
+                sidePadding: "43px",
+                onSelect: function(e) {
+                    val(cur.searchInputEl, e[3])
+                },
+                onChoose: function(o) {
+                    val(cur.searchInputEl, o[3]), e()
+                }
+            }), cur.searchInputEl) {
+            data(cur.searchInputEl, "opts")
+                .onChange = e, data(cur.searchInputEl, "opts")
+                .onBlur = o;
+            var i = browser.msie && intval(browser.version) <= 10;
+            i || cur.searchInputEl.focus()
+        }
     },
     _sortVideos: function(e) {
         window.tooltips && tooltips.hideAll();

@@ -1610,6 +1610,223 @@ a.ui_search_custom_link {
     margin-top: 6px
 }
 
+.ui_scroll_container {
+    overflow: visible!important;
+    position: relative
+}
+
+.ui_scroll_outer {
+    width: inherit;
+    height: inherit;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding-right: 100px
+}
+
+.ui_scroll_no_bar .ui_scroll_outer {
+    padding-right: 0
+}
+
+.ui_scroll_container:not(.ui_scroll_no_bar) .ui_scroll_outer::-webkit-scrollbar {
+    display: none
+}
+
+.ui_scroll_overflow {
+    overflow: hidden;
+    position: relative;
+    width: inherit;
+    height: inherit
+}
+
+.ui_scroll_dragging .ui_scroll_overflow {
+    pointer-events: none
+}
+
+.ui_scroll_inner {
+    position: relative;
+    width: inherit;
+    box-sizing: border-box
+}
+
+.ui_scroll_inner::-webkit-scrollbar {
+    display: initial
+}
+
+.ui_scroll_bar_container {
+    z-index: 100;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0
+}
+
+.ui_scroll_disabled .ui_scroll_bar_container,
+.ui_scroll_unnecessary .ui_scroll_bar_container {
+    opacity: 0!important;
+    filter: alpha(opacity=0)!important;
+    pointer-events: none
+}
+
+.ui_scroll_bar_outer {
+    position: relative;
+    width: 100%;
+    height: 100%
+}
+
+.ui_scroll_bar_inner {
+    position: relative;
+    cursor: pointer
+}
+
+.ui_scroll_hidden .ui_scroll_bar_container {
+    opacity: 0;
+    filter: alpha(opacity=0)
+}
+
+.ui_scroll_hidden .ui_scroll_bar_container:hover,
+.ui_scroll_hidden.ui_scroll_dragging .ui_scroll_bar_container,
+.ui_scroll_hidden.ui_scroll_scrolled .ui_scroll_bar_container {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.ui_scroll_resize_sensor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+    z-index: -1000;
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0
+}
+
+.ui_scroll_resize_sensor::-webkit-scrollbar {
+    display: none
+}
+
+.ui_scroll_resize_expand div,
+.ui_scroll_resize_shrink div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    -o-transition: 0s;
+    transition: 0s
+}
+
+.ui_scroll_resize_shrink div {
+    width: 200%;
+    height: 200%
+}
+
+.ui_scroll_resize_object {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    z-index: -1000;
+    pointer-events: none
+}
+
+.ui_scroll_resize_object::-webkit-scrollbar {
+    display: none
+}
+
+.ui_scroll_shadow_bottom,
+.ui_scroll_shadow_top {
+    position: absolute;
+    z-index: 99;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+    opacity: 0;
+    filter: alpha(opacity=0)
+}
+
+.ui_scroll_shadow_top {
+    top: 0
+}
+
+.ui_scroll_shadow_top_visible .ui_scroll_shadow_top {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.ui_scroll_shadow_bottom {
+    bottom: 0
+}
+
+.ui_scroll_shadow_bottom_visible .ui_scroll_shadow_bottom {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.ui_scroll_disabled .ui_scroll_outer {
+    overflow: hidden!important;
+    padding: 0!important
+}
+
+.ui_scroll_default_theme .ui_scroll_bar_outer {
+    -o-transition: background-color 200ms linear;
+    transition: background-color 200ms linear
+}
+
+.ui_scroll_default_theme .ui_scroll_bar_inner {
+    -o-transition: background-color 200ms linear, width 150ms linear;
+    transition: background-color 200ms linear, width 150ms linear;
+    background: #dae1e8;
+    border-radius: 3px;
+    width: 6px
+}
+
+.ui_scroll_default_theme .ui_scroll_bar_container {
+    -o-transition: opacity 250ms linear;
+    transition: opacity 250ms linear;
+    border: 3px solid transparent
+}
+
+.ui_scroll_default_theme .ui_scroll_shadow_bottom,
+.ui_scroll_default_theme .ui_scroll_shadow_top {
+    -o-transition: opacity 250ms linear;
+    transition: opacity 250ms linear;
+    box-shadow: 0 2px 3px -1px rgba(0, 0, 0, .12);
+    height: 3px
+}
+
+.ui_scroll_default_theme .ui_scroll_shadow_top {
+    top: -3px
+}
+
+.ui_scroll_default_theme .ui_scroll_shadow_bottom {
+    bottom: -3px;
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    -o-transform: rotate(180deg);
+    transform: rotate(180deg)
+}
+
+.ui_scroll_default_theme .ui_scroll_bar_container:hover .ui_scroll_bar_inner,
+.ui_scroll_default_theme.ui_scroll_dragging .ui_scroll_bar_inner {
+    width: 8px;
+    background: #bec8d3;
+    border-radius: 4px
+}
+
+.ui_scroll_default_theme.ui_scroll_scrolled .ui_scroll_bar_inner {
+    background: #bec8d3
+}
+
 .scrollbar_cont {
     width: 10px;
     height: 100%;

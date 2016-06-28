@@ -100,19 +100,19 @@ var uiTabs = {
                         removeClass.pbind(i, "ui_tabs_sliding"), 300));
                     var a = geByClass1("_ui_tabs_slider", i),
                         h = intval(a.style.marginLeft),
-                        u = {
+                        d = {
                             width: getSize(r)[0] + "px"
                         };
-                    u[cssTransformProp] = "translateX(" + (r.offsetLeft - h) + "px)", setStyle(a, u), s != l && r != l && uiTabs.resetLabel(l), l != s && removeClass(l,
+                    d[cssTransformProp] = "translateX(" + (r.offsetLeft - h) + "px)", setStyle(a, d), s != l && r != l && uiTabs.resetLabel(l), l != s && removeClass(l,
                         "ui_tab_group_sel"), removeClass(s, "ui_tab_sel")
                 }
                 if (r != t && addClass(r, "ui_tab_group_sel"), addClass(t, "ui_tab_sel"), n && removeClass(n, "ui_tab_hide_separator"), o) {
                     i = geByClass1("ui_tab_group_items", o, "div")
                         .children;
-                    var d = null;
+                    var c = null;
                     each(i, function(t, e) {
-                        "SPAN" === e.tagName ? d = e : hasClass(domFC(e), "ui_tab_sel") || (d = null)
-                    }), d && addClass(o, "ui_tab_hide_separator")
+                        "SPAN" === e.tagName ? c = e : hasClass(domFC(e), "ui_tab_sel") || (c = null)
+                    }), c && addClass(o, "ui_tab_hide_separator")
                 }
             }
             return !1
@@ -175,18 +175,18 @@ var uiTabs = {
                     var r = domClosest(i.appendParentCls, n),
                         a = getXY(r),
                         h = getXY(l),
-                        u = se('<div class="' + l.className +
+                        d = se('<div class="' + l.className +
                             ' ui_actions_menu_dummy_wrap" onmouseover="uiActionsMenu.show(this);" onmouseout="uiActionsMenu.hide(this);"></div>');
-                    u.appendChild(n), r.appendChild(u), data(t, "dummyMenu", u), data(u, "origMenu", t), t = u;
-                    var d = intval(getStyle(n, "top")),
-                        c = intval(getStyle(n, "left")),
+                    d.appendChild(n), r.appendChild(d), data(t, "dummyMenu", d), data(d, "origMenu", t), t = d;
+                    var c = intval(getStyle(n, "top")),
+                        u = intval(getStyle(n, "left")),
                         p = intval(getStyle(n, "right")),
-                        _ = {
-                            top: h[1] - a[1] + d
+                        v = {
+                            top: h[1] - a[1] + c
                         };
-                    if (p ? _.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : _.left = h[0] - a[0] + c, setStyle(n, _), i.processHoverCls) {
-                        var v = domClosest(i.processHoverCls, l);
-                        addEvent(t, "mouseover", addClass.pbind(v, "hover")), addEvent(t, "mouseout", removeClass.pbind(v, "hover"))
+                    if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + u, setStyle(n, v), i.processHoverCls) {
+                        var m = domClosest(i.processHoverCls, l);
+                        addEvent(t, "mouseover", addClass.pbind(m, "hover")), addEvent(t, "mouseout", removeClass.pbind(m, "hover"))
                     }
                 }
             }
@@ -237,21 +237,21 @@ var uiTabs = {
                 a = domPN(t);
             if (s && (n += getXY(a)[1] - getXY(e)[1]), hasClass(e, "_ui_rmenu_auto_expand")) {
                 var h = geByClass("_ui_rmenu_sublist", e),
-                    u = hasClass(t, "_ui_rmenu_subitem") ? gpeByClass("_ui_rmenu_sublist", t) : hasClass(domNS(t), "_ui_rmenu_sublist") ? domNS(t) : !1;
+                    d = hasClass(t, "_ui_rmenu_subitem") ? gpeByClass("_ui_rmenu_sublist", t) : hasClass(domNS(t), "_ui_rmenu_sublist") ? domNS(t) : !1;
                 each(h, function() {
-                    isVisible(this) && this !== u && (l.push(this), hide(this))
-                }), u && !isVisible(u) && (r.push(u), show(u)), n = t.offsetTop, each(l, function() {
+                    isVisible(this) && this !== d && (l.push(this), hide(this))
+                }), d && !isVisible(d) && (r.push(d), show(d)), n = t.offsetTop, each(l, function() {
                     show(this)
                 }), each(r, function() {
                     hide(this)
                 })
             }
-            var d = geByClass1("_ui_rmenu_slider", e),
-                c = intval(d.style.top),
+            var c = geByClass1("_ui_rmenu_slider", e),
+                u = intval(c.style.top),
                 p = {
                     height: o
                 };
-            return browser.msie_edge ? p.marginTop = n - c + "px" : p[cssTransformProp] = "translateY(" + (n - c) + "px)", setStyle(d, p), removeClass(i, "ui_rmenu_item_sel"),
+            return browser.msie_edge ? p.marginTop = n - u + "px" : p[cssTransformProp] = "translateY(" + (n - u) + "px)", setStyle(c, p), removeClass(i, "ui_rmenu_item_sel"),
                 addClass(t, "ui_rmenu_item_sel"), hasClass(e, "_ui_rmenu_auto_expand") ? each(l.concat(r), function() {
                     uiRightMenu.toggleSubmenu(this)
                 }) : hasClass(t, "_ui_rmenu_subitem") && !isVisible(domPN(t)) && uiRightMenu.toggleSubmenu(domPN(t)), !1
@@ -411,12 +411,12 @@ var uiTabs = {
                     if (a) {
                         var h = intval(getStyle(t, "width"));
                         !o && h && (setStyle(s, "height", getSize(i)[1]), setStyle(i, "width", h), addClass(i, "ui_search_fixed"));
-                        var u = Math.min(0, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(ge("page_layout"))[0]));
+                        var d = Math.min(0, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(ge("page_layout"))[0]));
                         if (setStyle(i, {
-                                marginLeft: u
+                                marginLeft: d
                             }), n) {
-                            var d = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
-                            e = Math.min(l, Math.max(-t.offsetHeight, d)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
+                            var c = getXY(n)[1] + getSize(n)[1] - scrollGetY() - t.offsetHeight;
+                            e = Math.min(l, Math.max(-t.offsetHeight, c)), e != cur.lastUISearchPos && (setStyle(i, "top", e), cur.lastUISearchPos = e)
                         }
                     } else o && (setStyle(s, "height", ""), setStyle(i, {
                         top: "",
@@ -622,7 +622,287 @@ var uiTabs = {
                 }
             }))
         }
-    };
+    },
+    uiScroll = function() {
+        var t = function(t, e) {
+            if (t = isString(t) && "_" === t[0] ? geByClass1(t) : ge(t), !t) throw new Error("uiScroll container is undefined");
+            this.options = extend({
+                    "native": !1,
+                    theme: "default",
+                    reversed: !1,
+                    autoresize: !0,
+                    preserveEdgeBelow: !1,
+                    barMinHeight: 30,
+                    preserveEdgeBelowThreshold: 20,
+                    stopScrollPropagation: !0,
+                    minContentHeight: 0,
+                    hidden: !1,
+                    shadows: !1,
+                    onresize: null,
+                    onscroll: null,
+                    onscrollstart: null,
+                    onscrollstop: null,
+                    onupdate: null,
+                    onmore: null
+                }, e), this.options["native"] && (this.options.shadows = !1), this.removeEvents = [], this.removeElements = [], this.dragging = !1, this.released = !0, this.noMore = !
+                1, this.dragY = null, this.dragScroll = null, this.shadowTop = !1, this.shadowBottom = !1, this.unnecessary = !1, this.disabled = !1, this.stopped = !0, this.stoppedTimeout =
+                null, this.emitter = new EventEmitter, isFunction(this.options.onresize) && this.emitter.addListener("resize", this.options.onresize), isFunction(this.options.onscroll) &&
+                this.emitter.addListener("scroll", this.options.onscroll), isFunction(this.options.onscrollstart) && this.emitter.addListener("scrollstart", this.options.onscrollstart),
+                isFunction(this.options.onscrollstop) && this.emitter.addListener("scrollstop", this.options.onscrollstop), isFunction(this.options.onupdate) && this.emitter.addListener(
+                    "update", this.options.onupdate), isFunction(this.options.onmore) && this.emitter.addListener("more", this.options.onmore), this.el = {
+                    container: t,
+                    overflow: ce("div", {
+                        className: "ui_scroll_overflow"
+                    }),
+                    outer: ce("div", {
+                        className: "ui_scroll_outer"
+                    }),
+                    inner: ce("div", {
+                        className: "ui_scroll_inner"
+                    }),
+                    shadowTop: ce("div", {
+                        className: "ui_scroll_shadow_top"
+                    }),
+                    shadowBottom: ce("div", {
+                        className: "ui_scroll_shadow_bottom"
+                    }),
+                    content: ce("div", {
+                        className: "ui_scroll_content"
+                    }),
+                    barContainer: ce("div", {
+                        className: "ui_scroll_bar_container"
+                    }),
+                    barOuter: ce("div", {
+                        className: "ui_scroll_bar_outer"
+                    }),
+                    barInner: ce("div", {
+                        className: "ui_scroll_bar_inner"
+                    })
+                };
+            var i = cf();
+            for (addClass(this.el.container, "ui_scroll_container ui_scroll_" + this.options.theme + "_theme"), this.options.hidden && addClass(this.el.container,
+                    "ui_scroll_hidden"); this.el.container.firstChild;) this.el.content.appendChild(this.el.container.firstChild);
+            if (this.el.outer.appendChild(this.el.inner), this.el.inner.appendChild(this.el.content), this.el.overflow.appendChild(this.el.outer), i.appendChild(this.el.overflow),
+                this.options["native"] ? addClass(this.el.container, "ui_scroll_no_bar") : (this.el.barOuter.appendChild(this.el.barInner), this.el.barContainer.appendChild(
+                    this.el.barOuter), i.appendChild(this.el.barContainer), this.options.shadows && (this.el.overflow.appendChild(this.el.shadowTop), this.el.overflow.appendChild(
+                    this.el.shadowBottom))), this.options.autoresize) {
+                var s = this.addResizeSensor(this.el.inner),
+                    o = this.addResizeSensor(i);
+                this.startResizeListening = function() {
+                    s(), o()
+                }
+            }
+            this.el.container.appendChild(i), this.options.reversed && (this.el.outer.scrollTop = this.el.outer.scrollHeight), this.api = {
+                container: this.el.container,
+                content: this.el.content,
+                emitter: this.emitter,
+                ondragstart: this.dragstart.bind(this),
+                ondragstop: this.dragstop.bind(this),
+                ondrag: this.drag.bind(this),
+                destroy: this.destroy.bind(this),
+                disable: this.disable.bind(this),
+                scrollTop: this.scrollTop.bind(this),
+                scrollBottom: this.scrollBottom.bind(this),
+                scrollBy: this.scrollBy.bind(this),
+                update: function() {
+                    return this.inited ? this.update() : this.init()
+                }.bind(this),
+                updateAbove: this.updateAbove.bind(this),
+                updateBelow: this.updateBelow.bind(this),
+                data: {
+                    scrollTop: null,
+                    scrollBottom: null,
+                    scrollHeight: null,
+                    viewportHeight: null
+                }
+            }, this.init();
+            var n = "onwheel" in this.el.outer ? "wheel" : void 0 !== document.onmousewheel ? "mousewheel" : browser.mozilla ? "MozMousePixelScroll" : "DOMMouseScroll";
+            return this.options.stopScrollPropagation && this.addEvent(this.el.container, n, function(t) {
+                !this.disabled && this.isScrollEventUnused(t) && cancelEvent(t)
+            }.bind(this)), this.options["native"] || (this.addEvent(this.el.barInner, "mousedown", this.dragstart.bind(this)), this.addEvent(this.el.barContainer, n,
+                function(t) {
+                    this.disabled || (this.scrollBy(this.scrollEventDelta(t)), (this.options.stopScrollPropagation || !this.isScrollEventUnused(t)) && cancelEvent(t))
+                }.bind(this))), this.options.reversed && this.addEvent(this.el.container, "mousedown touchstart pointerdown", function(t) {
+                this.released = !1, this.noMore = !0;
+                var e = this.addEvent(document, "mouseup contextmenu touchend pointerup", function(t) {
+                    removeEvent(e), this.released = !0, this.noMore && this.stopped && !this.dragging && (this.noMore = !1, this.more())
+                }.bind(this))
+            }.bind(this)), this.addEvent(this.el.outer, "scroll", function() {
+                this.update() && (this.stopped && (this.emitEvent("scrollstart"), this.options["native"] || addClass(this.el.container, "ui_scroll_scrolled")), this.emitEvent(
+                    "scroll"), this.stoppedTimeout && clearTimeout(this.stoppedTimeout), this.stoppedTimeout = setTimeout(function() {
+                    this.stopped || (this.stopped = !0, this.options["native"] || removeClass(this.el.container, "ui_scroll_scrolled"), this.emitEvent(
+                        "scrollstop"), this.noMore && this.released && !this.dragging && (this.noMore = !1, this.more()))
+                }.bind(this), 200), this.stopped = !1)
+            }.bind(this)), this.api
+        };
+        return t.prototype = {
+            init: function() {
+                return this.el.container.scrollWidth && !this.disabled ? (this.fixSize(!0), this.options.autoresize && this.startResizeListening(), this.options.global ||
+                    cur.destroy.push(this.destroy.bind(this)), this.inited = !0, this.update()) : void 0
+            },
+            addEvent: function(t, e, i) {
+                return this.removeEvents.push([t, e, i]), addEvent(t, e, i), i
+            },
+            destroy: function() {
+                this.disabled = !0, this.fixSize(), this.moreTimeout && clearTimeout(this.moreTimeout), this.dragstopHandler && removeEvent(document, "mouseup contextmenu",
+                    this.dragstopHandler), this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), each(this.removeEvents, function(t, e) {
+                    removeEvent.apply(null, e)
+                }), each(this.removeElements, function(t, e) {
+                    re(e)
+                }), this.el.container.className = this.el.container.className.replace(/\bui_scroll_.+?\b/g, " ");
+                for (var t = cf(); this.el.content.firstChild;) t.appendChild(this.el.content.firstChild);
+                val(this.el.container, ""), this.el.container.appendChild(t), this.el.container.scrollTop = this.api.data.scrollTop
+            },
+            updateAbove: function(t) {
+                if (isFunction(t)) {
+                    var e = this.el.outer.scrollHeight - this.el.outer.scrollTop - this.el.overflow.offsetHeight;
+                    t(), this.el.outer.scrollTop = this.el.outer.scrollHeight - this.el.overflow.offsetHeight - e
+                }
+            },
+            updateBelow: function(t) {
+                isFunction(t) && (t(), this.options.preserveEdgeBelow && this.el.outer.scrollHeight - this.el.outer.scrollTop - this.el.overflow.offsetHeight <= this.options
+                    .preserveEdgeBelowThreshold && this.scrollBottom())
+            },
+            fixSize: function(t) {
+                this.options["native"] || setStyle(this.el.container, "width", t ? getSize(this.el.container, !0)[0] || "" : "")
+            },
+            emitEvent: function(t) {
+                !this.disabled && this.inited && this.emitter.emitEvent(t, [this.api])
+            },
+            scrollEventDelta: function(t) {
+                var e = 0,
+                    i = void 0 !== t.deltaMode ? t.deltaMode : "MozMousePixelScroll" == t.type ? 0 : 1,
+                    s = 15,
+                    o = 30 * s;
+                return "wheel" == t.type ? e = t.deltaY : void 0 !== t.wheelDeltaX && void 0 !== t.wheelDeltaY ? (e = .025 * -t.wheelDeltaY, browser.mac && browser.opera &&
+                    (e *= .1)) : void 0 !== t.wheelDelta ? e = .025 * -t.wheelDelta : t.detail && 2 === t.axis && (e = t.detail), e * (1 == i ? s : 2 == i ? o : 1)
+            },
+            isScrollEventUnused: function(t, e) {
+                var e = this.scrollEventDelta(t);
+                if (e > 0) {
+                    if (e > this.api.data.scrollBottom) return this.api.data.scrollBottom && this.scrollBottom(), !0
+                } else if (-e > this.api.data.scrollTop) return this.api.data.scrollTop && this.scrollTop(), !0;
+                return !1
+            },
+            addResizeSensor: function(t) {
+                if (browser.msie9 || browser.opera && browser.version <= 12.16) {
+                    var e = !1,
+                        i = !1,
+                        s = function() {
+                            return o.contentDocument ? (o.contentDocument.defaultView.addEventListener("resize", function() {
+                                this.update() && this.emitEvent("resize")
+                            }.bind(this)), void(this.update() && this.emitEvent("resize"))) : setTimeout(s, 100)
+                        }.bind(this),
+                        o = ce("object", {
+                            type: "text/html",
+                            className: "ui_scroll_resize_object",
+                            data: browser.msie9 ? "javascript: '<script>window.onload = function(){document.write(\\'<script>document.domain=\\\"" + document.domain +
+                                "\\\"<\\\\/script>\\');document.close()}</script>'" : "about:blank",
+                            onload: function() {
+                                i = !0, e && s()
+                            }
+                        });
+                    return t.appendChild(o), this.removeElements.push(o),
+                        function() {
+                            e = !0, i && s()
+                        }.bind(this)
+                }
+                var o = ce("div", {
+                        className: "ui_scroll_resize_sensor"
+                    }),
+                    n = ce("div", {
+                        className: "ui_scroll_resize_sensor ui_scroll_resize_expand"
+                    }),
+                    l = ce("div", {
+                        className: "ui_scroll_resize_sensor ui_scroll_resize_shrink"
+                    }),
+                    r = ce("div"),
+                    a = ce("div"),
+                    h = null;
+                return n.appendChild(r), l.appendChild(a), o.appendChild(n), o.appendChild(l), t.appendChild(o), this.removeElements.push(o), n.onscroll = l.onscroll =
+                    function() {
+                        r.style.width = 1e5 + "px", r.style.height = 1e5 + "px", n.scrollLeft = 1e5, n.scrollTop = 1e5, l.scrollLeft = 1e5, l.scrollTop = 1e5, h !== (h = t
+                            .scrollHeight + " " + t.scrollWidth) && this.update() && this.emitEvent("resize")
+                    }.bind(this)
+            },
+            disable: function(t) {
+                this.disabled = !!t, t ? this.fixSize() : (this.fixSize(!0), this.update()), toggleClass(this.el.container, "ui_scroll_disabled", this.disabled)
+            },
+            dragstart: function(t) {
+                this.disabled || this.dragging || this.options["native"] || (t || (t = window.event), this.dragging = !0, this.options.reversed && (this.noMore = !0),
+                    setStyle(bodyNode, "cursor", "pointer"), addEvent(document, "mouseup contextmenu", this.dragstartHandler = this.dragstop.bind(this)), addEvent(
+                        document, "mousemove", this.dragHandler = this.drag.bind(this)), addClass(this.el.container, "ui_scroll_dragging"), this.dragScroll = this.options
+                    .reversed ? this.api.data.scrollBottom : this.api.data.scrollTop, this.dragY = t.screenY, cancelEvent(t))
+            },
+            dragstop: function(t) {
+                this.disabled || !this.dragging || this.options["native"] || (t || (t = window.event), this.dragging = !1, this.dragstopHandler && removeEvent(document,
+                        "mouseup contextmenu", this.dragstopHandler), this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), setStyle(bodyNode,
+                        "cursor", ""), removeClass(this.el.container, "ui_scroll_dragging"), this.noMore && (this.noMore = !1, this.more()), "contextmenu" !== t.type &&
+                    cancelEvent(t))
+            },
+            drag: function(t) {
+                if (!this.disabled && this.dragging && !this.options["native"]) {
+                    t || (t = window.event);
+                    var e = (t.screenY - this.dragY) * (this.api.data.scrollHeight / this.el.barOuter.scrollHeight);
+                    this.el.outer.scrollTop = this.options.reversed ? this.el.outer.scrollHeight - this.el.overflow.offsetHeight - this.dragScroll + e : this.dragScroll +
+                        e, cancelEvent(t)
+                }
+            },
+            scroll: function(t, e, i) {
+                e ? (e = "number" != typeof e || !Number.isFinite(e) || e % 1 ? 300 : Math.abs(e), new Fx.Base({
+                        scrollTop: this.el.outer.scrollTop
+                    }, {
+                        transition: Fx.Transitions.easeOutCubic,
+                        onStep: function(t) {
+                            this.el.outer.scrollTop = t.scrollTop
+                        }.bind(this),
+                        duration: e,
+                        onComplete: isFunction(i) && i.pbind(this.api)
+                    })
+                    .start({
+                        scrollTop: this.el.outer.scrollTop
+                    }, {
+                        scrollTop: t
+                    })) : (this.el.outer.scrollTop = t, isFunction(i) && i(this.api))
+            },
+            scrollTop: function(t, e, i) {
+                this.disabled || this.dragging || this.scroll(intval(t), e, i)
+            },
+            scrollBottom: function(t, e, i) {
+                this.disabled || this.dragging || this.scroll(this.el.outer.scrollHeight - this.el.overflow.offsetHeight - intval(t), e, i)
+            },
+            scrollBy: function(t, e, i) {
+                this.disabled || this.dragging || this.scroll(this.el.outer.scrollTop + intval(t), e, i)
+            },
+            update: function() {
+                if (!this.inited || this.disabled) return !1;
+                var t = this.el.overflow.offsetHeight,
+                    e = this.el.inner.scrollHeight,
+                    i = this.el.outer.scrollTop,
+                    s = Math.max(0, e - i - t);
+                if (t !== this.api.data.viewportHeight || e !== this.api.data.scrollHeight || i !== this.api.data.scrollTop || s !== this.api.data.scrollBottom) {
+                    if (this.api.data.viewportHeight = t, this.api.data.scrollHeight = e, this.api.data.scrollTop = i, this.api.data.scrollBottom = s, !this.options[
+                            "native"]) {
+                        var o = Math.max(this.options.minContentHeight, e),
+                            n = t >= o;
+                        if (!n) {
+                            var l = Math.max(this.options.barMinHeight, this.el.barOuter.scrollHeight * t / o);
+                            this.el.barInner.style.top = Math.max(0, (this.el.barOuter.scrollHeight - l) * Math.min(1, i / (o - t))) + "px", this.el.barInner.style.height =
+                                l + "px"
+                        }
+                        this.options.shadows && (this.shadowTop != (i && !n) && toggleClass(this.el.container, "ui_scroll_shadow_top_visible", this.shadowTop = i && !n),
+                                this.shadowBottom != (s && !n) && toggleClass(this.el.container, "ui_scroll_shadow_bottom_visible", this.shadowBottom = s && !n)), this.unnecessary !==
+                            n && (toggleClass(this.el.container, "ui_scroll_unnecessary", n), this.unnecessary = n)
+                    }
+                    return this.emitEvent("update"), this.more(), !0
+                }
+                return !1
+            },
+            more: function() {
+                !this.noMore && (this.options.reversed ? this.api.data.scrollTop : this.api.data.scrollBottom) < 2 * this.api.data.viewportHeight && this.emitEvent("more")
+            }
+        }, t
+    }();
 window.Scrollbar = window.Scrollbar || function() {
     function t(t) {
         if (t || (t = window.event), this.isHorizontal) {
@@ -712,19 +992,19 @@ window.Scrollbar = window.Scrollbar || function() {
                     var h = function(t) {
                             this.isHorizontal ? cur.touchX = t.touches[0].pageX : cur.touchY = t.touches[0].pageY
                         }.bind(this),
-                        u = function(t) {
+                        d = function(t) {
                             return this.isHorizontal ? (cur.touchDiff = cur.touchX - (cur.touchX = t.touches[0].pageX), o.scrollLeft += cur.touchDiff, o.scrollLeft > 0 &&
                                 this.shown !== !1 && this.update(!0)) : (cur.touchDiff = cur.touchY - (cur.touchY = t.touches[0].pageY), o.scrollTop += cur.touchDiff,
                                 o.scrollTop > 0 && this.shown !== !1 && this.update(!0)), cancelEvent(t)
                         }.bind(this),
-                        d = function() {
+                        c = function() {
                             cur.animateInt = setInterval(function() {
                                 cur.touchDiff = .9 * cur.touchDiff, cur.touchDiff < 1 && cur.touchDiff > -1 ? clearInterval(cur.animateInt) : (o[self.scrollProp] +=
                                     cur.touchDiff, this.update(!0))
                             }.bind(this), 0)
                         }.bind(this);
-                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", u), addEvent(o, "touchend", d), this.destroyList.push(function() {
-                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", u), removeEvent(o, "touchend", d)
+                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", d), addEvent(o, "touchend", c), this.destroyList.push(function() {
+                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", d), removeEvent(o, "touchend", c)
                     })
                 }
                 addEvent(this.inner, "mousedown", this.mouseDown), this.options.nokeys ? this.onkeydown = l : addEvent(window, "keydown", l), this.destroyList.push(
@@ -966,17 +1246,17 @@ window.Scrollbar = window.Scrollbar || function() {
                 return (!a && o[t] || a && !o[t]) && (h.push(this), h.length > e + l) ? !1 : void 0
             }), s = h
         }
-        var u = s.length;
+        var d = s.length;
         s = s.slice(e, e + l);
-        var d = [];
+        var c = [];
         if (t) {
             t = clean(t);
-            var c = escapeRE(t),
+            var u = escapeRE(t),
                 p = parseLatin(t);
-            null != p && (c = c + "|" + escapeRE(p));
-            var _ = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + c + "))(?![^<>]*>)(?![^&;]+;)", "gi")
+            null != p && (u = u + "|" + escapeRE(p));
+            var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + u + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var v = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
+        var m = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
                 l = t[1];
             if (e) {
@@ -994,9 +1274,9 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                d.push(rs(n, v(this, t, r.invertedSelection, o, _)))
-            }), e || d.length || d.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
-                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), d = d.join(" "), e ? this.olistEl.appendChild(cf(d)) : val(this.olistEl, d), u > e +
+                c.push(rs(n, m(this, t, r.invertedSelection, o, v)))
+            }), e || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
+                .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), e ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), d > e +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {
                 return r.renderList(t, e + l), cancelEvent(i)
             }), r.box && r.box.scroll && r.box.scroll.update(!1, !0), r.onScroll()
