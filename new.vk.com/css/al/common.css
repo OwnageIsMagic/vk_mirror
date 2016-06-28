@@ -5591,6 +5591,11 @@ button.ui_load_more_btn {
     width: 14px
 }
 
+.audio_row .audio_acts #add_md>div {
+    background-position: 0 -44px;
+    background-color: #ff0
+}
+
 .audio_row.inlined.audio_row_current .audio_acts {
     top: 7px
 }
@@ -5755,6 +5760,7 @@ button.ui_load_more_btn {
     right: 14px
 }
 
+.audio_md_rows .audio_row #add_md,
 .audio_row #next,
 .audio_row.audio_deleted #add,
 .audio_row.audio_deleted.audio_delete_all #delete,

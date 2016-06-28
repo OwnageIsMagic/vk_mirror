@@ -1482,7 +1482,9 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--messages-search {
-    padding: 15px;
+    padding: 14px;
+    border-top: solid 1px transparent;
+    border-bottom: solid 1px transparent;
     color: #939393;
     font-size: 12.5px
 }
@@ -1969,8 +1971,9 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--mess-search-w+.nim-dialog:hover,
-.im-page .im-page--mess-search-w+.nim-dialog_hovered {
-    border-top-color: transparent
+.im-page .im-page--mess-search-w+.nim-dialog_hovered,
+.im-page .im-page--mess-search-w+.nim-dialog_unread.nim-dialog_classic {
+    border-top-color: transparent!important
 }
 
 .im-page .im-page--peer-online_mute-only.im-page--peer-online_mute {
@@ -2980,7 +2983,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .nim-dialog {
-    height: 64px;
+    height: 63px;
     box-sizing: border-box;
     padding: 0 0 0 15px;
     display: block;
@@ -3019,7 +3022,7 @@ body.mac .im_stickerpack_fixed {
 
 .nim-dialog .nim-dialog--photo {
     border-color: #fff;
-    padding: 10px 7px 8px 0;
+    padding: 9px 7px 8px 0;
     float: left
 }
 
@@ -3206,17 +3209,17 @@ body.mac .im_stickerpack_fixed {
     width: 70%
 }
 
-.nim-dialog.nim-dialog_empty .nim-dialog--date,
-.nim-dialog.nim-dialog_empty:hover .nim-dialog--date,
-.nim-dialog.nim-dialog_search .nim-dialog--date,
-.nim-dialog.nim-dialog_search:hover .nim-dialog--date {
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_empty .nim-dialog--date,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_empty:hover .nim-dialog--date,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_search .nim-dialog--date,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_search:hover .nim-dialog--date {
     display: block
 }
 
-.nim-dialog.nim-dialog_empty .nim-dialog--close,
-.nim-dialog.nim-dialog_empty:hover .nim-dialog--close,
-.nim-dialog.nim-dialog_search .nim-dialog--close,
-.nim-dialog.nim-dialog_search:hover .nim-dialog--close {
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_empty .nim-dialog--close,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_empty:hover .nim-dialog--close,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_search .nim-dialog--close,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_search:hover .nim-dialog--close {
     display: none
 }
 
@@ -3287,8 +3290,13 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_classic.nim-dialog_unread,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_hovered,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog:hover,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.im-page--messages-search,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.im-page--messages-search,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.nim-dialog,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.im-page--messages-search,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.nim-dialog,
+.nim-dialog:not(.nim-dialog_deleted):hover+.im-page--messages-search,
 .nim-dialog:not(.nim-dialog_deleted):hover+.nim-dialog {
     border-top: solid 1px #e7e8ec
 }
@@ -3296,8 +3304,13 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_classic.nim-dialog_unread:before,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_hovered:before,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog:hover:before,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.im-page--messages-search:before,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog:before,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.im-page--messages-search:before,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.nim-dialog:before,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.im-page--messages-search:before,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.nim-dialog:before,
+.nim-dialog:not(.nim-dialog_deleted):hover+.im-page--messages-search:before,
 .nim-dialog:not(.nim-dialog_deleted):hover+.nim-dialog:before,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_classic.nim-dialog_unread .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_classic.nim-dialog_unread .nim-dialog--photo,
@@ -3305,10 +3318,20 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_hovered .nim-dialog--photo,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog:hover .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog:hover .nim-dialog--photo,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.im-page--messages-search .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.im-page--messages-search .nim-dialog--photo,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog .nim-dialog--photo,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.im-page--messages-search .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.im-page--messages-search .nim-dialog--photo,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.nim-dialog .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.nim-dialog .nim-dialog--photo,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.im-page--messages-search .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.im-page--messages-search .nim-dialog--photo,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.nim-dialog .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.nim-dialog .nim-dialog--photo,
+.nim-dialog:not(.nim-dialog_deleted):hover+.im-page--messages-search .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted):hover+.im-page--messages-search .nim-dialog--photo,
 .nim-dialog:not(.nim-dialog_deleted):hover+.nim-dialog .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted):hover+.nim-dialog .nim-dialog--photo {
     margin-top: -1px
@@ -3317,8 +3340,13 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_classic.nim-dialog_unread .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_hovered .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog:hover .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.im-page--messages-search .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.im-page--messages-search .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.nim-dialog .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.im-page--messages-search .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.nim-dialog .nim-dialog--content,
+.nim-dialog:not(.nim-dialog_deleted):hover+.im-page--messages-search .nim-dialog--content,
 .nim-dialog:not(.nim-dialog_deleted):hover+.nim-dialog .nim-dialog--content {
     border-color: transparent
 }
@@ -3327,7 +3355,12 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_selected.nim-dialog_hovered,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog.nim-dialog_selected:hover,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered+.nim-dialog.nim-dialog_selected,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered.nim-dialog_selected+.im-page--messages-search,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.im-page--messages-search,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected+.nim-dialog,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected:hover+.im-page--messages-search,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic+.nim-dialog.nim-dialog_selected,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic.nim-dialog_selected+.im-page--messages-search,
 .nim-dialog:not(.nim-dialog_deleted):hover+.nim-dialog.nim-dialog_selected {
     border-top: solid 1px #7293b6
 }
@@ -3341,18 +3374,21 @@ body.mac .im_stickerpack_fixed {
 }
 
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic,
 .nim-dialog:not(.nim-dialog_deleted):hover {
     background: #f5f7fa
 }
 
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered .nim-dialog--photo,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected .nim-dialog--photo,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic .nim-dialog--photo,
 .nim-dialog:not(.nim-dialog_deleted):hover .nim-dialog--photo {
     border-color: #f5f7fa
 }
 
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_hovered .nim-dialog--photo .online.mobile:after,
+.nim-dialog:not(.nim-dialog_deleted).nim-dialog_selected .nim-dialog--photo .online.mobile:after,
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic .nim-dialog--photo .online.mobile:after,
 .nim-dialog:not(.nim-dialog_deleted):hover .nim-dialog--photo .online.mobile:after {
     background-color: #f5f7fa
@@ -3992,14 +4028,48 @@ body.mac .im_stickerpack_fixed {
 .im-member-item .im-member-item--photo {
     float: left;
     margin-right: 20px;
-    overflow: hidden
-}
-
-.im-member-item .im-member-item--photo,
-.im-member-item .im-member-item--photo img {
+    overflow: hidden;
+    position: relative;
     width: 46px;
     height: 46px;
     border-radius: 50%
+}
+
+.im-member-item .im-member-item--photo>a {
+    display: block
+}
+
+.im-member-item .im-member-item--photo img {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    -moz-force-broken-image-icon: 0;
+    background-color: #fafbfc
+}
+
+.im-member-item .im-member-item--photo img:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 46px;
+    height: 46px;
+    background-color: #fff
+}
+
+.im-member-item .im-member-item--photo img:after {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fafbfc;
+    background-image: url(/images/camera_100.png);
+    background-size: cover
 }
 
 .im-important-box {
