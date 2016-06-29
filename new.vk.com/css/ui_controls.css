@@ -138,50 +138,87 @@
     color: #000
 }
 
-.selector_container td.selector .token {
+.selector_container td.selector .token_inner,
+.selector_container td.selector .token_prefix {
     font-size: 1em;
     line-height: 1em;
-    color: #000;
+    color: #55677d;
     cursor: default;
     background: #dae2e8;
-    display: block;
-    white-space: nowrap;
-    float: left;
+    display: inline-block;
     margin: 0;
     border: solid #fff;
     border-width: 0 2px 2px 0;
     padding: 2px 2px 3px 4px!important
 }
 
-.big.selector_container td.selector .token {
+.big.selector_container td.selector .token_inner,
+.big.selector_container td.selector .token_prefix {
     border-width: 0;
     margin: 0 3px 3px 0;
     border-radius: 2px;
     padding: 4px 3px 5px 7px!important
 }
 
-.selector_container td.selector .token_hover {
-    background: #587da1;
-    color: #fff
+.selector_container td.selector .token_prefix {
+    background: #fff;
+    padding-left: 2px!important
 }
 
-.selector_container td.selector .token_selected {
-    background: #2a5883;
+.big.selector_container td.selector .token_prefix {
+    padding-left: 3.5px!important
+}
+
+.selector_container td.selector .token:first-child .token_prefix {
+    display: none
+}
+
+.selector_container td.selector .token {
+    float: left;
+    white-space: nowrap;
+    display: block
+}
+
+.selector_container td.selector .token_selected .token_inner {
+    background: #6287ae;
     color: #fff
 }
 
 .selector_container td.selector .token span.x,
 .selector_container td.selector .token span.x_hover {
-    background: url(/images/tag_remove.png) 50% no-repeat;
-    background-size: 8px 8px;
+    background: url(/images/icons/tag_cross.png) 50% no-repeat;
+    background-size: 10px 10px;
     display: inline-block;
-    width: 16px;
-    height: 8px!important;
+    width: 20px;
+    height: 10px!important;
     cursor: pointer;
     vertical-align: top;
     padding: 0;
-    margin: 3px 0 0 2px!important;
+    margin: 2px 0 0 2px!important;
+    opacity: 0.6;
+    -o-transition: opacity 0.2s ease;
+    transition: opacity 0.2s ease;
     margin: 0
+}
+
+.selector_container td.selector .token_hover span.x,
+.selector_container td.selector .token span.x_hover {
+    opacity: 1
+}
+
+.selector_container td.selector .token_selected span.x,
+.selector_container td.selector .token_selected span.x_hover {
+    background-image: url(/images/icons/tag_delete.png)
+}
+
+.is_2x .selector_container td.selector .token span.x,
+.is_2x .selector_container td.selector .token span.x_hover {
+    background-image: url(/images/icons/tag_cross_2x.png)
+}
+
+.is_2x .selector_container td.selector .token_selected span.x,
+.is_2x .selector_container td.selector .token_selected span.x_hover {
+    background-image: url(/images/icons/tag_delete_2x.png)
 }
 
 .selector_container td.selector_dropdown {
@@ -223,7 +260,7 @@
     color: #abaeb1
 }
 
-.disabled.selector_container td.selector .token {
+.disabled.selector_container td.selector .token .token_inner {
     color: #777;
     background: #e7e7e7
 }

@@ -1276,6 +1276,10 @@ body.mac #page_header_cont {
     outline: none
 }
 
+.top_home_link_ads {
+    width: 245px
+}
+
 .top_home_link .top_home_logo {
     background: url(/images/icons/head_icons.png?5) no-repeat;
     background-position: 0 -98px;

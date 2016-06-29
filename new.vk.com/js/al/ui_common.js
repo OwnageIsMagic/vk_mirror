@@ -626,7 +626,8 @@ var uiTabs = {
     uiScroll = function() {
         var t = function(t, e) {
             if (t = isString(t) && "_" === t[0] ? geByClass1(t) : ge(t), !t) throw new Error("uiScroll container is undefined");
-            this.options = extend({
+            t.__uiScroll__ && t.__uiScroll__.destroy(), this.options = extend({
+                    global: !1,
                     "native": !1,
                     theme: "default",
                     reversed: !1,
@@ -679,20 +680,23 @@ var uiTabs = {
                         className: "ui_scroll_bar_inner"
                     })
                 };
-            var i = cf();
-            for (addClass(this.el.container, "ui_scroll_container ui_scroll_" + this.options.theme + "_theme"), this.options.hidden && addClass(this.el.container,
-                    "ui_scroll_hidden"); this.el.container.firstChild;) this.el.content.appendChild(this.el.container.firstChild);
+            var i = cf(),
+                s = ["ui_scroll_container"];
+            for (each(isArray(this.options.theme) ? this.options.theme : [this.options.theme], function(t, e) {
+                    s.push("ui_scroll_" + e + "_theme")
+                }), addClass(this.el.container, s.join(" ")), this.options.hidden && addClass(this.el.container, "ui_scroll_hidden"); this.el.container.firstChild;) this.el.content
+                .appendChild(this.el.container.firstChild);
             if (this.el.outer.appendChild(this.el.inner), this.el.inner.appendChild(this.el.content), this.el.overflow.appendChild(this.el.outer), i.appendChild(this.el.overflow),
                 this.options["native"] ? addClass(this.el.container, "ui_scroll_no_bar") : (this.el.barOuter.appendChild(this.el.barInner), this.el.barContainer.appendChild(
                     this.el.barOuter), i.appendChild(this.el.barContainer), this.options.shadows && (this.el.overflow.appendChild(this.el.shadowTop), this.el.overflow.appendChild(
                     this.el.shadowBottom))), this.options.autoresize) {
-                var s = this.addResizeSensor(this.el.inner),
-                    o = this.addResizeSensor(i);
+                var o = this.addResizeSensor(this.el.inner),
+                    n = this.addResizeSensor(this.el.overflow);
                 this.startResizeListening = function() {
-                    s(), o()
+                    o(), n()
                 }
             }
-            this.el.container.appendChild(i), this.options.reversed && (this.el.outer.scrollTop = this.el.outer.scrollHeight), this.api = {
+            this.el.container.appendChild(i), this.options.reversed && (this.el.outer.scrollTop = this.el.outer.scrollHeight), this.el.container.__uiScroll__ = this.api = {
                 container: this.el.container,
                 content: this.el.content,
                 emitter: this.emitter,
@@ -714,12 +718,13 @@ var uiTabs = {
                     scrollBottom: null,
                     scrollHeight: null,
                     viewportHeight: null
-                }
+                },
+                db: this
             }, this.init();
-            var n = "onwheel" in this.el.outer ? "wheel" : void 0 !== document.onmousewheel ? "mousewheel" : browser.mozilla ? "MozMousePixelScroll" : "DOMMouseScroll";
-            return this.options.stopScrollPropagation && this.addEvent(this.el.container, n, function(t) {
+            var l = "onwheel" in this.el.outer ? "wheel" : void 0 !== document.onmousewheel ? "mousewheel" : browser.mozilla ? "MozMousePixelScroll" : "DOMMouseScroll";
+            return this.options.stopScrollPropagation && this.addEvent(this.el.container, l, function(t) {
                 !this.disabled && this.isScrollEventUnused(t) && cancelEvent(t)
-            }.bind(this)), this.options["native"] || (this.addEvent(this.el.barInner, "mousedown", this.dragstart.bind(this)), this.addEvent(this.el.barContainer, n,
+            }.bind(this)), this.options["native"] || (this.addEvent(this.el.barInner, "mousedown", this.dragstart.bind(this)), this.addEvent(this.el.barContainer, l,
                 function(t) {
                     this.disabled || (this.scrollBy(this.scrollEventDelta(t)), (this.options.stopScrollPropagation || !this.isScrollEventUnused(t)) && cancelEvent(t))
                 }.bind(this))), this.options.reversed && this.addEvent(this.el.container, "mousedown touchstart pointerdown", function(t) {
@@ -760,8 +765,10 @@ var uiTabs = {
                 }
             },
             updateBelow: function(t) {
-                isFunction(t) && (t(), this.options.preserveEdgeBelow && this.el.outer.scrollHeight - this.el.outer.scrollTop - this.el.overflow.offsetHeight <= this.options
-                    .preserveEdgeBelowThreshold && this.scrollBottom())
+                if (isFunction(t)) {
+                    var e = this.options.preserveEdgeBelow && this.api.data.scrollBottom <= this.options.preserveEdgeBelowThreshold;
+                    t(), e && this.scrollBottom()
+                }
             },
             fixSize: function(t) {
                 this.options["native"] || setStyle(this.el.container, "width", t ? getSize(this.el.container, !0)[0] || "" : "")
@@ -822,7 +829,7 @@ var uiTabs = {
                 return n.appendChild(r), l.appendChild(a), o.appendChild(n), o.appendChild(l), t.appendChild(o), this.removeElements.push(o), n.onscroll = l.onscroll =
                     function() {
                         r.style.width = 1e5 + "px", r.style.height = 1e5 + "px", n.scrollLeft = 1e5, n.scrollTop = 1e5, l.scrollLeft = 1e5, l.scrollTop = 1e5, h !== (h = t
-                            .scrollHeight + " " + t.scrollWidth) && this.update() && this.emitEvent("resize")
+                            .offsetHeight + " " + t.offsetWidth) && this.update() && this.emitEvent("resize")
                     }.bind(this)
             },
             disable: function(t) {
@@ -886,8 +893,8 @@ var uiTabs = {
                         var o = Math.max(this.options.minContentHeight, e),
                             n = t >= o;
                         if (!n) {
-                            var l = Math.max(this.options.barMinHeight, this.el.barOuter.scrollHeight * t / o);
-                            this.el.barInner.style.top = Math.max(0, (this.el.barOuter.scrollHeight - l) * Math.min(1, i / (o - t))) + "px", this.el.barInner.style.height =
+                            var l = Math.max(this.options.barMinHeight, this.el.barOuter.offsetHeight * t / o);
+                            this.el.barInner.style.top = Math.max(0, (this.el.barOuter.offsetHeight - l) * Math.min(1, i / (o - t))) + "px", this.el.barInner.style.height =
                                 l + "px"
                         }
                         this.options.shadows && (this.shadowTop != (i && !n) && toggleClass(this.el.container, "ui_scroll_shadow_top_visible", this.shadowTop = i && !n),

@@ -1643,8 +1643,9 @@ a.ui_search_custom_link {
 }
 
 .ui_scroll_inner {
-    position: relative;
     width: inherit;
+    overflow: hidden;
+    position: relative;
     box-sizing: border-box
 }
 

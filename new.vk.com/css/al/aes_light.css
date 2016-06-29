@@ -617,6 +617,7 @@ a.ads_ad_box2:hover {
 .ads_ad_photo_box.big_app {
     width: 560px;
     height: 315px;
+    line-height: 315px;
     max-height: none;
     padding: 0
 }

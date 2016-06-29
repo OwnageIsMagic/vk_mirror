@@ -1469,9 +1469,9 @@ div.wall_module .ext_video div {
 .wall_module div.page_media_link_desc {
     color: #000;
     padding-top: 2px;
-    max-height: 4.3em;
+    max-height: 2.9em;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;

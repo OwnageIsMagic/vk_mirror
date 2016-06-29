@@ -203,6 +203,8 @@ extend(UiControl.prototype, {
         customArrowWidth: 0,
         big: !1,
         withIcons: !1,
+        tokenPrefix: !1,
+        addCustomTokenOnKeys: [],
         placeholder: "",
         placeholderColor: "#7C7F82",
         placeholderColorBack: "#7C7F82",
@@ -496,7 +498,7 @@ extend(UiControl.prototype, {
                 }, 0));
                 break;
             case "keydown":
-                switch (t.keyCode) {
+                switch (e.options.addCustomTokenOnKeys && inArray(t.which, e.options.addCustomTokenOnKeys) && (t.keyCode = KEY.RETURN), t.keyCode) {
                     case KEY.DOWN:
                         if (!e.select.isVisible()) return setTimeout(e.showDefaultList.bind(e), 0), !1;
                         break;
@@ -664,35 +666,37 @@ extend(UiControl.prototype, {
             var i = [];
             for (e in this._selectedItems) i.push(this._selectedItems[e][0]);
             this.resultField.value = i.join(","), this.input.style.width = "1px";
-            var s = ce("div", {
+            var s, o = ce("div", {
                     id: "bit_" + this.guid + "_" + t[0],
                     className: "token"
                 }),
-                o = Math.max(this.selector.clientWidth, getSize(s)[0]),
-                n = this;
-            s.innerHTML = '<span class="l">' + stripHTML(t[1]) + '</span><span class="x" />', addEvent(s, "click", function() {
-                return n.selectToken(t[0]), !1
-            }), addEvent(s, "dblclick", function() {
-                return t[4] && (n.removeTagData(t[0]), each(t[4], function(t, e) {
-                    n._selectItem(e, !1)
-                })), !1
-            }), addEvent(s, "mouseover", function(e) {
-                addClass(s, "token_hover"), n.showImage(t[0], t)
-            }), addEvent(s, "mouseout", function(t) {
-                removeClass(s, "token_hover"), n.showImage(n.activeItemValue ? n.activeItemValue : n.selectedTokenId)
-            });
-            var h = s.firstChild.nextSibling;
-            addEvent(h, "mousedown", function() {
-                return n.select.hide(), n.removeTagData(t[0]), !n.readOnly && n.hasFocus && n.input.focus(), !1
-            }), n.selectedItemsContainer.appendChild(s);
-            for (var l = s.firstChild, r = l.innerHTML; s.offsetWidth > o && r.length > 3;) r = r.substr(0, r.length - 2), l.innerHTML = r + "..."
+                n = Math.max(this.selector.clientWidth, getSize(o)[0]),
+                h = this;
+            s = this.options.tokenPrefix ? '<span class="token_prefix">' + this.options.tokenPrefix + "</span>" : "<span></span>", o.innerHTML = s +
+                '<span class="token_inner"><span class="l">' + stripHTML(t[1]) + '</span><span class="x" /></span>', addEvent(o, "click", function() {
+                    return h.selectToken(t[0]), !1
+                }), addEvent(o, "dblclick", function() {
+                    return t[4] && (h.removeTagData(t[0]), each(t[4], function(t, e) {
+                        h._selectItem(e, !1)
+                    })), !1
+                }), addEvent(o, "mouseover", function(e) {
+                    addClass(o, "token_hover"), h.showImage(t[0], t)
+                }), addEvent(o, "mouseout", function(t) {
+                    removeClass(o, "token_hover"), h.showImage(h.activeItemValue ? h.activeItemValue : h.selectedTokenId)
+                });
+            var l = o.firstChild.nextSibling.firstChild.nextSibling;
+            addEvent(l, "mousedown", function() {
+                return h.select.hide(), h.removeTagData(t[0]), !h.readOnly && h.hasFocus && h.input.focus(), !1
+            }), h.selectedItemsContainer.appendChild(o);
+            for (var r = o.firstChild.nextSibling.firstChild, a = r.innerHTML; o.offsetWidth > n && a.length > 3;) a = a.substr(0, a.length - 2), r.innerHTML = a +
+                "..."
         }
     },
     removeTagData: function(t) {
         this.selectedTokenId = 0;
         var e = ge("bit_" + this.guid + "_" + t);
         if (!e) return !1;
-        var s = e.firstChild.nextSibling;
+        var s = e.firstChild.nextSibling.firstChild.nextSibling;
         vk.al && cleanElems(e, s), e.parentNode.removeChild(e);
         var o, n = [];
         for (i in this._selectedItems) this._selectedItems[i][0] != t ? n.push(this._selectedItems[i][0]) : o = i;
@@ -1775,7 +1779,7 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
         createButton(this.buttonOk, function() {
             t.options.onConfirm && t.options.onConfirm.apply(t) === !1 || t.hide()
         }), createButton(this.buttonCancel, function() {
-            t.options.onCancel && t.options.onCancel.apply(t) === !1 || t.hide();
+            t.options.onCancel && t.options.onCancel.apply(t) === !1 || t.hide()
         }), addEvent(this.target, "click", function() {
             return t.show(), !1
         }), this.onEvent = function(t) {}
@@ -1866,26 +1870,25 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
             o.pageYOffset - s.clientTop
         ]
     }
-    if (!isVisible(this._els.popupEl)) {
-        InlineDropdown._currIDD && InlineDropdown._currIDD._hide(), InlineDropdown._currIDD = this, window.tooltips && tooltips.hideAll();
-        var s = this,
-            o = this._els.popupEl = se('<div class="idd_popup"></div>');
-        this.openToUp = 1 == this._opts.forceDir || "up" == this._opts.forceDir || -1 != this._opts.forceDir && "down" != this._opts.forceDir && e(), this.openToUp ? (o.appendChild(
-            this._els.popupItems), o.appendChild(this._els.popupHeader)) : (o.appendChild(this._els.popupHeader), o.appendChild(this._els.popupItems));
-        var n = geByClass1("idd_header", this._els.popupHeader);
-        this._opts.keepTitle ? n.innerHTML = this._title : n.innerHTML = this._selected ? this._selected[1] : "", o.id = "idd_" + this._iddEl.id, this._iddEl.appendChild(o);
-        var h = getSize(o),
-            l = 0;
-        getSize(this._els.popupItems.childNodes[0])[1] > h[1] && (l = sbWidth()), this._opts.checkable && (l += 30);
-        var r = (i(geByClass1("idd_selected_value", this._iddEl)), getSize(this._els.valueEl)),
-            a = (this._opts.withIcon ? 20 : 0, 0);
-        this.openToUp && (a = -getSize(this._els.popupItems)[1]), setStyle(o, {
-            marginLeft: (this._opts.headerLeft || InlineDropdown.IDD_HEADER_CORRECTION_LEFT) - (this._opts.withIcon ? 20 : 0),
-            marginTop: (this._opts.headerTop || InlineDropdown.IDD_HEADER_CORRECTION_TOP) - r[1] + a,
-            width: h[0] + 8,
-            opacity: 1
-        }), this._unhoverItem(), this._highlightItem(), this._initOutEvent(), this._initKeypressEvent(), this._opts.onShow && this._opts.onShow(this.ddEl), cancelEvent(t)
-    }
+    if (isVisible(this._els.popupEl)) return void this._hide();
+    InlineDropdown._currIDD && InlineDropdown._currIDD._hide(), InlineDropdown._currIDD = this, window.tooltips && tooltips.hideAll();
+    var s = this,
+        o = this._els.popupEl = se('<div class="idd_popup"></div>');
+    this.openToUp = 1 == this._opts.forceDir || "up" == this._opts.forceDir || -1 != this._opts.forceDir && "down" != this._opts.forceDir && e(), this.openToUp ? (o.appendChild(
+        this._els.popupItems), o.appendChild(this._els.popupHeader)) : (o.appendChild(this._els.popupHeader), o.appendChild(this._els.popupItems));
+    var n = geByClass1("idd_header", this._els.popupHeader);
+    this._opts.keepTitle ? n.innerHTML = this._title : n.innerHTML = this._selected ? this._selected[1] : "", o.id = "idd_" + this._iddEl.id, this._iddEl.appendChild(o);
+    var h = getSize(o),
+        l = 0;
+    getSize(this._els.popupItems.childNodes[0])[1] > h[1] && (l = sbWidth()), this._opts.checkable && (l += 30);
+    var r = (i(geByClass1("idd_selected_value", this._iddEl)), getSize(this._els.valueEl)),
+        a = (this._opts.withIcon ? 20 : 0, 0);
+    this.openToUp && (a = -getSize(this._els.popupItems)[1]), setStyle(o, {
+        marginLeft: (this._opts.headerLeft || InlineDropdown.IDD_HEADER_CORRECTION_LEFT) - (this._opts.withIcon ? 20 : 0),
+        marginTop: (this._opts.headerTop || InlineDropdown.IDD_HEADER_CORRECTION_TOP) - r[1] + a,
+        width: h[0] + 8,
+        opacity: 1
+    }), this._unhoverItem(), this._highlightItem(), this._initOutEvent(), this._initKeypressEvent(), this._opts.onShow && this._opts.onShow(this.ddEl), cancelEvent(t)
 }, InlineDropdown.prototype._hide = function() {
     re(this._els.popupEl), this._els.popupEl = null, removeClass(this._hoveredItem, "idd_hover"), this._hoveredItem = null, this._deinitEvents(), this._hideSubmenu(),
         clearTimeout(this._hideSubmenuTimeout), this._opts.onHide && this._opts.onHide()

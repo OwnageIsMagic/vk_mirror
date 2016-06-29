@@ -2121,19 +2121,19 @@ div.chat_tab_img {
     white-space: normal
 }
 
-.top_notify_cont .pr {
+.top_notify_cont>.pr {
     padding: 50px 0;
     text-align: center
 }
 
-.top_notify_cont .pr .pr_bt {
+.top_notify_cont>.pr .pr_bt {
     width: 8px;
     height: 8px;
     border-radius: 4px;
     margin-right: 4px
 }
 
-.top_notify_cont .pr .pr_bt:last-child {
+.top_notify_cont>.pr .pr_bt:last-child {
     margin-right: 0
 }
 
@@ -2303,7 +2303,9 @@ div.chat_tab_img {
 }
 
 .top_notify_cont .feedback_row .post_actions {
-    width: 19px
+    width: 19px;
+    margin-left: 4px;
+    margin-right: -4px
 }
 
 .top_notify_cont .feedback_img {
