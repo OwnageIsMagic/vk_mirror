@@ -3363,7 +3363,9 @@ a.app_decline:hover {
 
 #flash_api_external_cont {
     position: absolute;
-    height: 1px
+    height: 1px;
+    top: 3px;
+    left: 3px
 }
 
 .apps_paymentbox_close_lnk {

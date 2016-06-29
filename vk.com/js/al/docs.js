@@ -675,18 +675,7 @@ var Docs = {
         }
     },
 
-    openItem: function(oid, did, hash) {
-        showBox('docs.php', {
-            act: 'open_box',
-            oid: oid,
-            did: did,
-            hash: hash
-        }, {
-            params: {
-                dark: 1
-            }
-        });
-    },
+    openItem: function(oid, did, hash) {},
 
     initMenu: function() {
         var html = ['<div id="lists_menu" onmouseout="Friends.ddHide(this, ', uid, ');" onmouseover="Friends.ddActive(this, ', uid,

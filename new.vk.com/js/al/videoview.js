@@ -662,18 +662,15 @@ var Videoview = {
             val("mv_controls", "")
         },
         initPlaylistBlock: function(e, i, o) {
-            if (/^wall_/.test(i) && VideoPlaylist.lists[i] && cur.wallVideos && cur.wallVideos[i]) {
-                VideoPlaylist.extendList(i, cur.wallVideos[i].list);
-                var t = !0
-            }
-            var a = !!VideoPlaylist.getBlock(),
-                r = VideoPlaylist.buildBlock(i, e, t);
-            if (toggleClass("mv_container", "mv_container_has_pl", !!r && !mvcur.minimized), r) {
+            var t = !!VideoPlaylist.getBlock(),
+                a = VideoPlaylist.buildBlock(i, e);
+            if (toggleClass("mv_container", "mv_container_has_pl", !!a && !mvcur.minimized), a && /^wall_/.test(i) && VideoPlaylist.lists[i] && cur.wallVideos && cur.wallVideos[
+                    i] && (VideoPlaylist.extendList(i, cur.wallVideos[i].list), VideoPlaylist.updateBlockList(i)), a) {
                 domByClass(mvLayer, "mv_data")
-                    .appendChild(r), VideoPlaylist.restoreScrollPos(), VideoPlaylist.updateScrollbar(), VideoPlaylist.setCurVideo(e, a);
-                var d = VideoPlaylist.getCurList()
+                    .appendChild(a), VideoPlaylist.restoreScrollPos(), VideoPlaylist.updateScrollbar(), VideoPlaylist.setCurVideo(e, t);
+                var r = VideoPlaylist.getCurList()
                     .list.length;
-                (window.Video && Video.isInVideosList() && vk.id == cur.oid || 5 > d) && (a || VideoPlaylist.toggle(!1))
+                (window.Video && Video.isInVideosList() && vk.id == cur.oid || 5 > r) && (t || VideoPlaylist.toggle(!1))
             }
             VideoPlaylist.toggleStateClasses(), isFunction(o) && o(VideoPlaylist.updateBlockList.pbind(i))
         },
@@ -846,7 +843,8 @@ var Videoview = {
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
                 hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos();
+                        Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script),
+                    Videoview.updateReplyFormPos()
             }
         },
         commAction: function(e, i, o, t, a) {
@@ -2176,11 +2174,13 @@ var Videoview = {
             return data(n, "playlist", a), this._block = n, n
         },
         buildBlockList: function(e) {
-            for (var i = trim(VideoPlaylist.blockItemTpl), o = "", t = e.reversed ? e.list.length - 1 : 0, a = function(i) {
+            for (var i = trim(VideoPlaylist.blockItemTpl), o = "", t = function() {
+                    return e.reversed ? e.list.length - 1 : 0
+                }, a = function(i) {
                     return e.reversed ? i >= 0 : i < e.list.length
                 }, r = function(i) {
                     return e.reversed ? --i : ++i
-                }, d = t; a(d); d = r(d)) {
+                }, d = t(); a(d); d = r(d)) {
                 var n, v = e.list[d];
                 if (isArray(v)) {
                     var s = v[VideoConstants.VIDEO_ITEM_INDEX_OWNER_ID] + "_" + v[VideoConstants.VIDEO_ITEM_INDEX_ID];

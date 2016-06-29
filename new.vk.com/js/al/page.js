@@ -1125,7 +1125,7 @@ var Page = {
         },
         addGif: function(obj, doc, hash, addHash, ev) {
             cur.gifAdded = cur.gifAdded || {};
-            if (obj.tt) obj.tt.hide();
+            if (isObject(obj.tt)) obj.tt.hide();
 
             var wrap = gpeByClass('page_gif_large', obj) || domPN(obj);
 
@@ -1166,7 +1166,7 @@ var Page = {
         },
 
         shareGif: function(obj, doc, hash, ev) {
-            if (obj.tt) obj.tt.hide();
+            if (isObject(obj.tt)) obj.tt.hide();
             showBox('like.php', {
                 act: 'publish_box',
                 object: 'doc' + doc,
@@ -1183,7 +1183,7 @@ var Page = {
 
             var scrollHandler = debounce(function() {
                 var autoplayGifs;
-                autoplayGifs = geByClass('page_gif_large');
+                autoplayGifs = geByClass('page_gif_autoplay');
                 if (!autoplayGifs.length || window.wkcur && wkcur.shown) return;
 
                 var fixedHeaderHeight = 46;
