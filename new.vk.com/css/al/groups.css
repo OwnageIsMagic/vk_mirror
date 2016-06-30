@@ -150,7 +150,7 @@
 }
 
 #group_voting_action {
-    color: #285473
+    color: #2a5885
 }
 
 .group_block_module {
@@ -812,4 +812,25 @@ a.groups_catalog_comm_title_link {
 
 .group_send_msg a:hover {
     text-decoration: none
+}
+
+.group_app_button {
+    border-top: 1px solid #e7e8ec;
+    border-radius: 0 0 2px 2px;
+    padding: 15px 0;
+    text-align: center
+}
+
+.group_app_button button {
+    padding: 7px 24px
+}
+
+.group_app_button button:before {
+    display: block;
+    content: ' ';
+    float: left;
+    width: 17px;
+    height: 14px;
+    margin: 0 8px 0 -2px;
+    background: url(/images/icons/menu_icon.png?3) no-repeat 0 -28px
 }

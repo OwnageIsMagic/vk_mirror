@@ -696,7 +696,8 @@ var uiTabs = {
                     o(), n()
                 }
             }
-            this.el.container.appendChild(i), this.options.reversed && (this.el.outer.scrollTop = this.el.outer.scrollHeight), this.el.container.__uiScroll__ = this.api = {
+            this.removeElements.push(this.el.overflow, this.el.barContainer), this.el.container.appendChild(i), this.options.reversed && (this.el.outer.scrollTop = this.el.outer
+                .scrollHeight), this.el.container.__uiScroll__ = this.api = {
                 container: this.el.container,
                 content: this.el.content,
                 emitter: this.emitter,
@@ -749,14 +750,17 @@ var uiTabs = {
                 return this.removeEvents.push([t, e, i]), addEvent(t, e, i), i
             },
             destroy: function() {
-                this.disabled = !0, this.fixSize(), this.moreTimeout && clearTimeout(this.moreTimeout), this.dragstopHandler && removeEvent(document, "mouseup contextmenu",
-                    this.dragstopHandler), this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), each(this.removeEvents, function(t, e) {
-                    removeEvent.apply(null, e)
-                }), each(this.removeElements, function(t, e) {
+                if (this.disabled = !0, this.fixSize(), this.moreTimeout && clearTimeout(this.moreTimeout), this.dragstopHandler && removeEvent(document,
+                        "mouseup contextmenu", this.dragstopHandler), this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), each(this.removeEvents,
+                        function(t, e) {
+                            removeEvent.apply(null, e)
+                        }), this.el.overflow.parentNode == this.el.container) {
+                    for (var t = cf(); this.el.content.firstChild;) t.appendChild(this.el.content.firstChild);
+                    this.el.container.appendChild(t)
+                }
+                this.el.container.className = this.el.container.className.replace(/\bui_scroll_.+?\b/g, " "), each(this.removeElements, function(t, e) {
                     re(e)
-                }), this.el.container.className = this.el.container.className.replace(/\bui_scroll_.+?\b/g, " ");
-                for (var t = cf(); this.el.content.firstChild;) t.appendChild(this.el.content.firstChild);
-                val(this.el.container, ""), this.el.container.appendChild(t), this.el.container.scrollTop = this.api.data.scrollTop
+                }), this.el.container.scrollTop = this.api.data.scrollTop, this.el.container.__uiScroll__ = null
             },
             updateAbove: function(t) {
                 if (isFunction(t)) {
@@ -792,7 +796,7 @@ var uiTabs = {
                 return !1
             },
             addResizeSensor: function(t) {
-                if (browser.msie9 || browser.opera && browser.version <= 12.16) {
+                if (browser.msie9 || browser.opera && browser.version < 13) {
                     var e = !1,
                         i = !1,
                         s = function() {

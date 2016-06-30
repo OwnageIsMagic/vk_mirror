@@ -522,7 +522,7 @@
 
 #pv_tag_info a {
     color: #fff;
-    font-weight: 600
+    font-weight: 500
 }
 
 #pv_tag_info .pv_info,
@@ -594,7 +594,7 @@
 .pv_desc_more {
     display: block;
     margin-top: 3px;
-    color: #285473
+    color: #2a5885
 }
 
 .pv_narrow_column_wrap {
@@ -836,7 +836,7 @@
 }
 
 #pv_author_info .mem_link {
-    font-weight: 600
+    font-weight: 500
 }
 
 #pv_author_name {
@@ -1288,7 +1288,7 @@
 
 #pv_tag_person {
     display: none;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     z-index: 623;
@@ -1337,7 +1337,7 @@
 .pv_like {
     display: inline-block;
     cursor: pointer;
-    color: #285473;
+    color: #2a5885;
     white-space: nowrap;
     overflow: hidden;
     margin: 16px 0px 0px 11px;
@@ -1447,7 +1447,7 @@
 
 #pv_like_wrap #pv_like_count {
     color: #708ba9;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -2849,7 +2849,9 @@ img.pv_movebox_thumb {
 .pva_period,
 .pva_period_fixed {
     color: #898888;
-    font-weight: 600;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
     padding: 18px 2px 10px 0;
     background: #fff;
     z-index: 10;

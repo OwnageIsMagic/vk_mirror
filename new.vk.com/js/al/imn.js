@@ -7257,7 +7257,7 @@
     }
 
     function o(e, t, n) {
-        var a = (0, y.isClassicInterface)(n) ? "mail_selected_shorted" : "mail_selected",
+        var a = "mail_selected_shorted",
             i = getLang(a, t.length);
         val(geByClass1("_im_name_el", e), getTemplate("im_simple_name", {
             name: i.replace("{count}", t.length) + y.selectionRemove,
@@ -7271,9 +7271,9 @@
                 .peer],
             c = r(t, u);
         toggleClass(o, "im-page--mess-actions_all-sel", !c), removeClass(e, "im-page--header-chat_verified");
-        var d = (0, y.isClassicInterface)(n) ? 60 : 35;
-        setStyle(l, {
-            "max-width": l.parentNode.parentNode.offsetWidth - o.offsetWidth - d
+        var d = 55;
+        (0, y.isClassicInterface)(n) && (d = 53), isCommunityInterface(n) && (d = 40), setStyle(l, {
+            "max-width": l.parentNode.offsetWidth - o.offsetWidth - d
         })
     }
 
@@ -7710,8 +7710,7 @@
         var o = arguments.length <= 6 || void 0 === arguments[6] ? !0 : arguments[6];
         r.get()
             .tabs[t];
-        return T(t, r) ? void 0 : (0,
-                B.getBindAttachToUrl)(t, r.get())
+        return T(t, r) ? void 0 : (0, B.getBindAttachToUrl)(t, r.get())
             .then(function(l) {
                 var u = Object.keys(l)
                     .filter(function(e) {

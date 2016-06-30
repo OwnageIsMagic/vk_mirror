@@ -180,7 +180,7 @@
 }
 
 .video_sort_dd_wrap .video_sort_dd {
-    color: #285473;
+    color: #2a5885;
     text-decoration: none;
     cursor: pointer
 }
@@ -203,7 +203,7 @@
 .video_subtitle {
     color: #828282;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     margin: 20px 0 15px;
@@ -823,7 +823,7 @@
     display: inline-block;
     max-width: 200px;
     color: #000;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     white-space: nowrap;
@@ -939,7 +939,7 @@
 
 .video_thumb_title {
     color: #fff;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     padding: 3px 0

@@ -2885,7 +2885,7 @@ var Feed = {
         if (!vk.id ||
             !cur.topRow ||
             cur.topRow.id == 'feed_rows_next' ||
-            cur.section != 'news' && cur.section != 'recommended' && cur.section != 'search' ||
+            cur.section != 'news' && cur.section != 'recommended' && cur.section != 'search' && cur.section != 'photos' ||
             (((window.curNotifier || {})
                     .idle_manager || {})
                 .is_idle && (params || {})
@@ -2931,7 +2931,7 @@ var Feed = {
         var index = indexOf(domPN(el)
             .children, el);
         var f = domFC(el);
-        var r = /^post(-?\d+_\d+)$/;
+        var r = /^post(-?\d+_p?\d+)$/;
         var res = {};
         var c, m, p;
         if (!f) return res;

@@ -338,7 +338,7 @@
     color: #939393;
     padding: 20px 0 10px;
     font-size: 13px;
-    font-weight: 600
+    font-weight: 500
 }
 
 .photos_header_fixed {
@@ -364,7 +364,7 @@
     color: #939393;
     padding: 20px 20px 10px;
     font-size: 13px;
-    font-weight: 600;
+    font-weight: 500;
     z-index: 100;
     width: inherit;
     background-color: #fff;
@@ -2074,7 +2074,7 @@ a.photos_tt_edit:hover {
     background: #f0f2f5;
     padding: 8.5px 10px;
     text-align: center;
-    color: #285473;
+    color: #2a5885;
     display: block;
     float: left;
     width: 70%;
@@ -2144,7 +2144,7 @@ a.photos_tt_edit:hover {
     width: 30%;
     height: 100%;
     cursor: pointer;
-    color: #285473;
+    color: #2a5885;
     position: relative;
     padding: 8.5px 10px;
     padding-left: 0;

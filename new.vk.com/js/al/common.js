@@ -5246,6 +5246,7 @@ function handlePageParams(params) {
         bodyNode.className = params.body_class || '';
     }
     updateSTL();
+    updateLeftMenu();
     if (params.pvbig !== undefined) vk.pvbig = params.pvbig;
     if (params.pvdark !== undefined) vk.pvdark = params.pvdark;
     cur._level = params.level;
@@ -5864,6 +5865,7 @@ var nav = {
             }
             checkPageBlocks();
             updateSTL();
+            updateLeftMenu();
 
             handlePageParams(params);
 

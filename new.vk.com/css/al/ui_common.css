@@ -129,7 +129,7 @@ a.ui_box_header_link {
 
 .ui_tab_plain {
     float: right;
-    color: #285473
+    color: #2a5885
 }
 
 .ui_tab_search {
@@ -475,7 +475,7 @@ a.ui_crumb {
     height: 32px;
     line-height: 30px;
     padding: 0 5px 0 20px;
-    color: #285473;
+    color: #2a5885;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -500,7 +500,7 @@ a.ui_crumb {
 .ui_rmenu_item_sel,
 .ui_rmenu_item_sel:hover {
     color: #000;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     padding-left: 18px;
@@ -651,7 +651,7 @@ a.ui_crumb {
 }
 
 .ui_ownblock_label {
-    color: #285473;
+    color: #2a5885;
     padding-top: 2px
 }
 
@@ -889,7 +889,7 @@ input.ui_search_field:focus~.placeholder .ph_content {
 }
 
 .ui_search_custom_link {
-    color: #285473
+    color: #2a5885
 }
 
 .ui_search_custom_link .idd_selected_value:hover {
@@ -997,7 +997,7 @@ a.ui_search_custom_link {
 .ui_search_fltr_label {
     cursor: default;
     color: #222;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     padding-bottom: 9px
@@ -2135,10 +2135,10 @@ a.ui_search_custom_link {
 
 .olist_item_name {
     float: left;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    color: #285473;
+    color: #2a5885;
     overflow: hidden;
     width: 300px;
     height: 34px;
@@ -2296,7 +2296,7 @@ a.ui_search_custom_link {
     overflow: hidden;
     text-align: left;
     line-height: 16px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }

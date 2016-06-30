@@ -1513,7 +1513,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
 .app_actions_menu_wrap {
     display: inline-block;
     position: relative;
-    color: #285473
+    color: #2a5885
 }
 
 .app_actions_menu_wrap .ui_actions_menu {
@@ -1724,7 +1724,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
 }
 
 .apps_access_item_info b {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     display: block;
@@ -1966,7 +1966,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 }
 
 .apps_i_description_show_more {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     color: #42648b;

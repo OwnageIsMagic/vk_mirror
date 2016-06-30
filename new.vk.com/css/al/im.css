@@ -871,8 +871,8 @@ body.mac .im_stickerpack_fixed {
 .im_cal_clear_lnk {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -1788,8 +1788,8 @@ body.mac .im_stickerpack_fixed {
 .im-page .im-page--btn {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -1839,7 +1839,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--peer {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     display: inline-block;
@@ -1871,7 +1871,7 @@ body.mac .im_stickerpack_fixed {
     border: none;
     background: none;
     outline: 0;
-    font-family: Open Sans, Helvetica Neue, sans-serif
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif
 }
 
 .im-page .im-page--members .im_status_mob_onl,
@@ -1940,7 +1940,7 @@ body.mac .im_stickerpack_fixed {
     box-sizing: border-box;
     text-align: center;
     position: fixed;
-    color: #285473;
+    color: #2a5885;
     border-top: solid 1px #e7e8ec;
     border-bottom: solid 1px #e7e8ec;
     cursor: pointer;
@@ -1956,7 +1956,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--mess-search span {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     word-wrap: break-word
@@ -2031,8 +2031,8 @@ body.mac .im_stickerpack_fixed {
 .im-page-btn {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -2511,8 +2511,8 @@ body.mac .im_stickerpack_fixed {
 .im-mess .im-mess--btn {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -3005,8 +3005,8 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog .nim-dialog--daction {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -3035,7 +3035,7 @@ body.mac .im_stickerpack_fixed {
 
 .nim-dialog .nim-dialog--name {
     font-size: 12.5px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     margin-bottom: 7px;
@@ -3113,7 +3113,7 @@ body.mac .im_stickerpack_fixed {
     right: 0;
     color: #fff;
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     text-align: center;
@@ -3131,8 +3131,8 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog .nim-dialog--close {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -3157,8 +3157,8 @@ body.mac .im_stickerpack_fixed {
 .nim-dialog .nim-dialog--markre {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -3841,8 +3841,8 @@ body.mac .im_stickerpack_fixed {
 .im-fwd .im-fwd--messages {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;
@@ -3859,7 +3859,7 @@ body.mac .im_stickerpack_fixed {
 
 .im-fwd .im-fwd--title {
     font-size: 12.5px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -4421,7 +4421,7 @@ body.mac .im_stickerpack_fixed {
 
 .im-create .im-create--title {
     display: block;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     padding-top: 16px;
@@ -4593,7 +4593,7 @@ body.mac .im_stickerpack_fixed {
     -ms-transform: translateX(-50%);
     -o-transform: translateX(-50%);
     transform: translateX(-50%);
-    color: #285473;
+    color: #2a5885;
     border: solid 1px #cfd9e1;
     font-size: 12.5px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
@@ -4640,7 +4640,7 @@ body.mac .im_stickerpack_fixed {
     bottom: 0;
     right: 0;
     background: #fff;
-    color: #285473;
+    color: #2a5885;
     text-align: center;
     display: none;
     z-index: 119
@@ -4779,7 +4779,7 @@ body.mac .im_stickerpack_fixed {
 
 .im-right-menu.ui_rmenu .im-right-menu--count {
     color: #42648b;
-    font-weight: 600;
+    font-weight: 500;
     vertical-align: top;
     background: none;
     border-radius: 0;
@@ -4814,8 +4814,8 @@ body.mac .im_stickerpack_fixed {
 .im-right-menu.ui_rmenu .im-right-menu--close {
     border: none;
     background: none;
-    color: #285473;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    color: #2a5885;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     font-size: 13px;
     outline: 0;
     padding: 0;

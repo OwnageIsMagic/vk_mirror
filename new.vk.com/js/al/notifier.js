@@ -6272,6 +6272,7 @@ var TopNotifier = {
                     return;
                 }
                 if (tt) tt.hide();
+                Notifier.lcSend('hide_notify_tt');
             }, 6000);
         }
         showTooltip(el, extend(options, {
@@ -6292,6 +6293,7 @@ var TopNotifier = {
                     return cancelEvent(ev);
                 });
                 _ttHide(tt);
+                Notifier.setRecvClbk('hide_notify_tt', tt.hide);
             }
         }));
     },

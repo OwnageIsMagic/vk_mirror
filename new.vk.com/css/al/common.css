@@ -169,7 +169,7 @@ body {
     padding: 0;
     direction: ltr;
     font-size: 13px;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     line-height: 1.154;
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
@@ -197,7 +197,7 @@ body.firefox #page_wrap {
 }
 
 a {
-    color: #285473;
+    color: #2a5885;
     text-decoration: none;
     cursor: pointer
 }
@@ -600,7 +600,7 @@ input[type~=search],
 input[type~=text],
 textarea {
     font-size: 13px;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     outline: none;
     box-shadow: none
 }
@@ -905,7 +905,7 @@ h3 {
 h3 {
     font-size: 13px;
     color: #828282;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -935,7 +935,7 @@ h4 span,
 
 .subheader {
     color: #222;
-    font-weight: 600;
+    font-weight: 500;
     margin: 18px 0 12px
 }
 
@@ -982,7 +982,7 @@ a.button_link:hover {
     cursor: pointer;
     white-space: nowrap;
     outline: none;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     vertical-align: top;
     line-height: 15px;
     text-align: center;
@@ -1083,7 +1083,7 @@ a.button_link:hover {
 .box_controls .flat_button.secondary,
 .flat_button.secondary.button_light {
     background-color: transparent;
-    color: #285473
+    color: #2a5885
 }
 
 .box_controls .flat_button.secondary:hover,
@@ -1200,7 +1200,7 @@ button.flat_btn_lock {
     cursor: pointer;
     width: auto;
     height: auto;
-    color: #285473
+    color: #2a5885
 }
 
 .button_cancel .button,
@@ -3113,7 +3113,7 @@ body.mac #layer_stl .fixed {
     display: inline-block;
     vertical-align: top;
     max-width: 65%;
-    font-weight: 600
+    font-weight: 500
 }
 
 .__audio_performer,
@@ -3280,7 +3280,7 @@ body.mac #layer_stl .fixed {
     padding: 0 0 8px;
     color: #656565;
     font-size: 12.5px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -3617,9 +3617,9 @@ body.mac #layer_stl .fixed {
     max-width: 230px;
     height: 15px;
     overflow: hidden;
-    color: #285473;
+    color: #2a5885;
     text-overflow: ellipsis;
-    line-height: 120%;
+    line-height: 110%;
     padding: 0 3px
 }
 
@@ -3791,7 +3791,7 @@ ul.t0 li.active_link a b {
 
 ul.t0 li a:hover {
     background: #e1e7ed;
-    color: #285473;
+    color: #2a5885;
     text-decoration: none
 }
 
@@ -3805,7 +3805,7 @@ ul.t0 a {
 }
 
 ul.t0 a span.count {
-    color: #285473;
+    color: #2a5885;
     margin-bottom: -1px;
     padding: 0 10px 0 4px;
     font-weight: 700;
@@ -3906,7 +3906,7 @@ ul.t0 li.active_link a b.tl2 {
 }
 
 .side_filter {
-    color: #285473;
+    color: #2a5885;
     cursor: pointer;
     padding: 6px 6px 7px 10px;
     background-color: #f7f7f7;
@@ -3915,7 +3915,7 @@ ul.t0 li.active_link a b.tl2 {
 }
 
 .side_filter_over {
-    color: #285473;
+    color: #2a5885;
     background-color: #dae1e8
 }
 
@@ -4690,7 +4690,7 @@ em.highlight {
     border-radius: 3px 3px 0 0;
     margin-right: 5px;
     cursor: pointer;
-    color: #285473
+    color: #2a5885
 }
 
 .tabs_pane>.tab:hover {
@@ -4826,7 +4826,7 @@ em.highlight {
 
 .header_side_link,
 .header_side_link a {
-    color: #285473
+    color: #2a5885
 }
 
 a.page_block_header:hover .header_side_link {
@@ -5256,7 +5256,7 @@ body.mac .pr_bt {
     display: block;
     padding: 13px 0 14px;
     cursor: pointer;
-    color: #285473;
+    color: #2a5885;
     background-color: #fff;
     border-top: 1px solid #e7e8ec;
     border-radius: 0 0 2px 2px;
@@ -5648,7 +5648,7 @@ button.ui_load_more_btn {
 }
 
 .audio_row .audio_performer {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     max-width: 60%;
@@ -5679,7 +5679,7 @@ button.ui_load_more_btn {
 }
 
 .audio_row.lyrics .audio_title_inner {
-    color: #285473
+    color: #2a5885
 }
 
 .audio_row.lyrics .audio_title_inner:hover {

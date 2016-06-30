@@ -83,7 +83,7 @@
 }
 
 .audio_layer_bottom strong {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -255,7 +255,7 @@
 
 .audio_page_player .audio_page_player_title_performer {
     max-width: 45%;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -433,7 +433,7 @@
 }
 
 #audio_status_tt .hint_title {
-    font-weight: 600
+    font-weight: 500
 }
 
 #audio_status_tt .hint_description {
@@ -483,7 +483,7 @@
 }
 
 .audio_page_player ._audio_page_player_title .audio_performer {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -574,7 +574,7 @@
     display: inline-block;
     vertical-align: top;
     border-radius: 2px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     font-size: 12.5px;
@@ -675,7 +675,7 @@ body.mac .audio_rows_header.fixed {
 }
 
 .audio_feed_post .audio_feed_author {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -2645,7 +2645,7 @@ body.mac .audio_rows_header.fixed {
 }
 
 .olist.audio_album .olist_item_performer {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     color: #42648b;
@@ -3081,7 +3081,7 @@ body.mac .audio_rows_header.fixed {
 }
 
 .audio_owner_info_name a {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     font-size: 14px;

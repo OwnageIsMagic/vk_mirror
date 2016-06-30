@@ -1303,7 +1303,7 @@ img.fc_inline_chatter_half {
     padding: 2px 4px;
     background-color: #e63917;
     color: #fff;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     font-size: 11px
@@ -2280,7 +2280,7 @@ div.chat_tab_img {
 .notify_tt_text b,
 .notify_tt_text .group_link,
 .notify_tt_text .mem_link {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -2394,7 +2394,7 @@ div.chat_tab_img {
 }
 
 .fc_snapster_invite_room_title {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }

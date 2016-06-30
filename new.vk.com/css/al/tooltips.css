@@ -886,7 +886,7 @@ div.own_reply_tt .content {
 
 .mention_tt_title {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     line-height: 140%

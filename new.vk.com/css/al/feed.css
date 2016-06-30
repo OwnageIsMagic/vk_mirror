@@ -255,7 +255,7 @@
 }
 
 .feed_article_title {
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     color: #42648b
@@ -1311,7 +1311,7 @@
     margin: 0;
     padding: 13px 0 14px;
     cursor: pointer;
-    color: #285473;
+    color: #2a5885;
     background-color: #fff;
     border-top: 1px solid #e7e8ec;
     display: block;
@@ -1822,7 +1822,7 @@ div.feed_recom {
 
 .smartfeed_notification .notification_info .notification_title {
     color: #000;
-    font-weight: 600;
+    font-weight: 500;
     font-size: 1.1em
 }
 

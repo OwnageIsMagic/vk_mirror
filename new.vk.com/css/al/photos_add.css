@@ -167,7 +167,7 @@
 }
 
 #photos_total_progress_text b {
-    font-weight: 600
+    font-weight: 500
 }
 
 .photos_progress_hidden {
@@ -214,7 +214,7 @@
     position: relative;
     margin: -140px 0 0;
     text-align: center;
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }

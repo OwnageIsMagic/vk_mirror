@@ -363,9 +363,9 @@ div.wall_module .ext_video div {
 .post_author .author,
 .wall_module .author,
 .wall_module .copy_author {
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
     color: #42648b
 }
 
@@ -510,7 +510,7 @@ div.wall_module .ext_video div {
 .wall_signed_by {
     padding: 0 15px;
     background: url(/images/attach_icons.png?2) no-repeat;
-    background-position: left -145px
+    background-position: left -146px
 }
 
 .wall_module .ui_tabs {
@@ -527,7 +527,7 @@ div.wall_module .ext_video div {
     color: #42648b;
     opacity: 0.8;
     filter: alpha(opacity=80);
-    font-weight: 600;
+    font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
@@ -1720,7 +1720,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .mention_rich_ta a {
-    color: #285473!important;
+    color: #2a5885!important;
     cursor: text!important;
     text-decoration: none!important
 }
@@ -1777,7 +1777,7 @@ a.page_media_link_desc {
 .add_media_head {
     background: #edf1f5;
     padding: 7px 27px;
-    color: #285473
+    color: #2a5885
 }
 
 .add_media_pointer {
@@ -1975,7 +1975,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .poll span span {
-    color: #285473
+    color: #2a5885
 }
 
 .wall_module .media_desc {
@@ -2010,7 +2010,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .media_desc .a {
-    color: #285473
+    color: #2a5885
 }
 
 .wall_module .media_desc .lnk:hover .a {
@@ -2101,7 +2101,7 @@ a.page_media_link_desc {
 }
 
 .wall_module .media_desc .page_media_geo {
-    color: #285473
+    color: #2a5885
 }
 
 .wall_module .media_desc .page_media_geo:hover {
@@ -3635,7 +3635,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
     left: 0;
     right: 0;
     background: #fff;
-    color: #285473;
+    color: #2a5885;
     text-align: center;
     z-index: 119
 }
@@ -4224,7 +4224,7 @@ span.page_post_thumb_unsized.page_post_thumb_unsized_single {
 }
 
 .current_audio {
-    color: #285473;
+    color: #2a5885;
     white-space: nowrap
 }
 
@@ -5497,7 +5497,7 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_mail {
-    color: #285473
+    color: #2a5885
 }
 
 button.wall_block_app_btn {
@@ -6147,9 +6147,4 @@ button.wall_block_app_btn {
 .videos_edit_main_album_description {
     margin-bottom: 10px;
     color: #656565
-}
-
-.page_info_wrap .page_main_info_open_app {
-    margin: 20px -20px -20px;
-    box-sizing: content-box
 }

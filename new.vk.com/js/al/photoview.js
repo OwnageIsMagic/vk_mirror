@@ -543,13 +543,8 @@ var Photoview = {
                         domPN(_)
                             .replaceChild(s, _)
                     }
-                    if (cur.pvNarrowScrollbar && (cur.pvNarrowScrollbar.destroy(), re(cur.pvNarrowScrollbar.scrollbar)), cur.pvNarrowScrollbar = new Scrollbar(cur.pvNarrow, {
-                            global: !0,
-                            nokeys: !0,
-                            prefix: "pv_",
-                            right: vk.rtl ? "auto" : 0,
-                            left: vk.rtl ? 0 : "auto",
-                            nomargin: !0
+                    if (cur.pvNarrowScrollbar = new uiScroll(cur.pvNarrow, {
+                            global: !0
                         }), e.reply_form) {
                         var m = geByClass1("reply_field", cur.pvNarrowColumn);
                         data(m, "send", Photoview.sendComment), placeholderInit(m, {
@@ -577,18 +572,18 @@ var Photoview = {
                         ]), e.actions.dialog && f.push(["to_dialog", getLang("photos_load_to_dialog"), "showBox('al_page.php', {act: 'owner_photo_edit', photo: '" + e.id +
                             "', oid: " + e.actions.dialog + ", list: '" + cur.pvListId + "'}, {stat: ['owner_photo.css', 'owner_photo.js', 'tagger.css', 'tagger.js']});"
                         ]), e.actions.move) {
-                        var b = e.id.split("_")[0];
+                        var T = e.id.split("_")[0];
                         f.push(["move_to", getLang("photos_pv_act_move_to_album"), "showBox('al_photos.php', {act: 'a_move_to_album_box', photo_id: '" + e.id + "', owner_id: " +
-                            b + "}, {stat: ['page.js', 'page.css', 'wide_dd.js', 'wide_dd.css']})"
+                            T + "}, {stat: ['page.js', 'page.css', 'wide_dd.js', 'wide_dd.css']})"
                         ]), e.actions.cover && f.push(["as_title", getLang("photos_album_to_cover"), "ajax.post('al_photos.php', {act: 'a_set_as_album_title', photo: '" +
                             e.id + "', hash: '" + e.hash + "'}, {onDone: showDoneBox})"
                         ])
                     }
-                    var T = "";
+                    var b = "";
                     each(P, function(o, t) {
                         var r = "Photoview.report('" + e.hash + "', '" + t[0] + "')";
-                        T += '<div onclick="' + r + '" class="pv_more_act_item pv_more_spam_act_item" id="pv_more_spam_act_' + t[0] + '">' + t[1] + "</div>"
-                    }), T = T ? '<div class="pv_more_acts_hidden">' + T + "</div>" : "";
+                        b += '<div onclick="' + r + '" class="pv_more_act_item pv_more_spam_act_item" id="pv_more_spam_act_' + t[0] + '">' + t[1] + "</div>"
+                    }), b = b ? '<div class="pv_more_acts_hidden">' + b + "</div>" : "";
                     var C = "";
                     each(f, function(o, e) {
                             C += "sep" == e ? '<div class="pv_more_act_item_sep"></div>' : '<div class="pv_more_act_item" onmouseover="' + (e[3] || "") + '" onclick="' + (
@@ -605,7 +600,7 @@ var Photoview = {
                         id: "pv_more_acts_tt",
                         forceSide: "top",
                         elClassWhenTooltip: "pv_more_shown",
-                        content: T + C,
+                        content: b + C,
                         offset: [0, -5]
                     }))
                 }
@@ -669,8 +664,8 @@ var Photoview = {
                     p = ge("pv_fs_img_fade") || ge("pv_fs_img_wrap"),
                     v = p && domFC(p);
                 t = cur.pvScrWidth / a, i * t > cur.pvScrHeight && (t = cur.pvScrHeight / i), t > 1.25 && (t = 1.25), a = Math.floor(a * t), i = Math.floor(i * t), r = Math.floor(
-                        (cur.pvScrHeight - i) / 2),
-                    (cur.pvFSWidth != a || cur.pvFSHeight != i || cur.pvFSTop != r || o) && (cur.pvFSWidth = a, cur.pvFSHeight = i, cur.pvFSTop = r, v && setStyle(v, {
+                    (cur.pvScrHeight - i) / 2), (cur.pvFSWidth != a || cur.pvFSHeight != i || cur.pvFSTop != r || o) && (cur.pvFSWidth = a, cur.pvFSHeight = i, cur.pvFSTop =
+                    r, v && setStyle(v, {
                         marginTop: r,
                         width: a,
                         height: i
@@ -1053,8 +1048,7 @@ var Photoview = {
                     current && !Photoview.cmp(current.id, u.id) ? (v.replaceChild(u, current), current = u) : (current && domNS(current) ? v.insertBefore(u, domNS(current)) :
                         !current && domFC(v) ? a === !0 ? (--c.commshown, p.removeChild(u)) : v.insertBefore(u, domFC(v)) : v.appendChild(u), ++c.commshown)
                 }
-                i && n && (layerWrap.scrollTop += getXY(n, !0)[1] - s), cur.pvCommsLikes[c.id][0] = ge("pv_comments"), extend(cur.pvReplyNames, r), Photoview.updateComms(),
-                    cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.update()
+                i && n && (layerWrap.scrollTop += getXY(n, !0)[1] - s), cur.pvCommsLikes[c.id][0] = ge("pv_comments"), extend(cur.pvReplyNames, r), Photoview.updateComms()
             }
         },
         commSaved: function(o) {
@@ -1146,7 +1140,6 @@ var Photoview = {
                     p = e - i.offsetTop - a;
                 setStyle(t, "margin-top", Math.max(0, p / 2 - r / 2))
             }
-            cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.update(!0, !0)
         },
         getReplyAsGroupEl: function() {
             return ge("pv_reply_as_group")
@@ -1185,7 +1178,7 @@ var Photoview = {
                 onDone: function(t, n) {
                     ++i.commcount, Photoview.receiveComms(r, a, t, n, !0), c || (v ? Composer.reset(v) : Emoji.val(p, "")), p.autosize && p.autosize.update(),
                         browser.mobile ? Wall.hideEditReply(o) : (Emoji.editableFocus(p, !1, !0), Wall.cancelReplyTo(o, e)), re("reply_link" + o), cur.pvNarrowScrollbar &&
-                        cur.pvNarrowScrollbar.scrollTop(cur.pvNarrowScrollbar.obj.scrollHeight), Photoview.updateRightBlock()
+                        cur.pvNarrowScrollbar.scrollBottom(), Photoview.updateRightBlock()
                 },
                 showProgress: function() {
                     lockButton(s)
@@ -1297,16 +1290,14 @@ var Photoview = {
         },
         onKeyDown: function(o) {
             if (o.returnValue === !1) return !1;
-            if (inArray(o.keyCode, [KEY.DOWN, KEY.UP]) && cur.pvNarrowScrollbar && !hasClass(o.target, "reply_field")) {
-                var e = cur.pvNarrowScrollbar.scrollTop();
-                return e += o.keyCode == KEY.DOWN ? 70 : -70, cur.pvNarrowScrollbar.scrollTop(e), cancelEvent(o)
-            }
+            if (inArray(o.keyCode, [KEY.DOWN, KEY.UP]) && cur.pvNarrowScrollbar && !hasClass(o.target, "reply_field")) return cur.pvNarrowScrollbar.scrollBy(o.keyCode == KEY.DOWN ?
+                70 : -70), cancelEvent(o);
             if (o.keyCode == KEY.ESC && cur.pvEditing) return Photoview.cancelInline(), cancelEvent(o);
             o.altKey && o.keyCode == KEY.RETURN && Photoview.canFullscreen() && (cur.pvCanvas ? Photoview.fullscreenStop() : Photoview.fullscreen()), o.keyCode == KEY.SPACE &&
                 cur.pvCanvas && window.FullscreenPV && (FullscreenPV.startSlide(), FullscreenPV.showControls(!0));
-            var t = o.target.contentEditable;
-            return window.Emoji && Emoji.shown || o.target && ("INPUT" == o.target.tagName || "TEXTAREA" == o.target.tagName || "DIV" == o.target.tagName && t && "inherit" !=
-                t) ? !0 : o.keyCode == KEY.ESC ? (cur.pvCanvas ? Photoview.fullscreenStop() : cur.pvTagger ? Phototag.stopTag() : o.vkCanceled || curBox() || Photoview.hide(
+            var e = o.target.contentEditable;
+            return window.Emoji && Emoji.shown || o.target && ("INPUT" == o.target.tagName || "TEXTAREA" == o.target.tagName || "DIV" == o.target.tagName && e && "inherit" !=
+                e) ? !0 : o.keyCode == KEY.ESC ? (cur.pvCanvas ? Photoview.fullscreenStop() : cur.pvTagger ? Phototag.stopTag() : o.vkCanceled || curBox() || Photoview.hide(
                 0), cancelEvent(o)) : (cur.pvTagger || boxQueue.count() || cur.pvComment && cur.pvComment.focused || o.ctrlKey || (o.keyCode == KEY.RIGHT ? Photoview.show(
                     cur.pvListId, cur.pvIndex + 1) : o.keyCode == KEY.LEFT && Photoview.show(cur.pvListId, cur.pvIndex - 1)), cur.pvCanvas && window.FullscreenPV ? !1 :
                 void 0)
@@ -1371,10 +1362,10 @@ var Photoview = {
             var f = (cur.pvIsLightMode ? 0 : Photoview.SIDE_COLUMN_WIDTH) + h;
             setStyle(cur.pvCont, "width", f);
             var P = getXY(cur.pvBox),
-                b = P[0],
-                T = t - P[0] - getSize(cur.pvBox)[0];
-            setStyle(cur.pvNavPanels[1], "width", b), setStyle(cur.pvNavPanels[0], "width", T);
-            var C = 100 > b;
+                T = P[0],
+                b = t - P[0] - getSize(cur.pvBox)[0];
+            setStyle(cur.pvNavPanels[1], "width", T), setStyle(cur.pvNavPanels[0], "width", b);
+            var C = 100 > T;
             toggleClass(cur.pvNavPanels[0], "pv_nav_panel_icon_centered", C), toggleClass(cur.pvNavPanels[1], "pv_nav_panel_icon_centered", C), Photoview.updateRightBlock(),
                 Photoview.updateVerticalPosition(), cur.pvPhWidth = u, cur.pvPhHeight = l
         },
@@ -1712,7 +1703,8 @@ var Photoview = {
                     },
                     showProgress: function() {
                         var o = Photoview.actionInfo();
-                        o.innerHTML = "", showProgress(o)
+                        o.innerHTML = "",
+                            showProgress(o)
                     },
                     hideProgress: function() {
                         re(Photoview.actionInfo())
