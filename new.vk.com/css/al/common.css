@@ -5524,7 +5524,7 @@ button.ui_load_more_btn {
 }
 
 .audio_row {
-    padding: 7px 10px;
+    padding: 6px 10px;
     cursor: pointer;
     position: relative;
     border-radius: 3px
@@ -5871,8 +5871,9 @@ button.ui_load_more_btn {
 }
 
 .slider_hint.audio_player_hint {
-    font-size: 11.5px;
-    color: #4d627d
+    font-size: 11px;
+    color: #4d627d;
+    padding: 4px 6px 3px
 }
 
 .audio_inline_player {

@@ -1146,7 +1146,7 @@ var Feed = {
                     c = [];
                 if (n + i + 1e3 > t.offsetTop && feed.showMore(), (domPN(cur.topRow) != cur.rowsCont || "feed_rows_next" == (cur.topRow || {})
                         .id) && (cur.topRow = domFC(cur.rowsCont)), !(!vk.id || !cur.topRow || "feed_rows_next" == cur.topRow.id || "news" != cur.section && "recommended" !=
-                        cur.section && "search" != cur.section && "photos" != cur.section || ((window.curNotifier || {})
+                        cur.section && "search" != cur.section || ((window.curNotifier || {})
                             .idle_manager || {})
                         .is_idle && "init" != (e || {})
                         .type)) {
@@ -1164,7 +1164,7 @@ var Feed = {
         var t, s, o, r = indexOf(domPN(e)
                 .children, e),
             i = domFC(e),
-            n = /^post(-?\d+_p?\d+)$/,
+            n = /^post(-?\d+_\d+)$/,
             a = {};
         if (!i) return a;
         a.module = cur.module, a.index = r, "feed" == cur.module && ("search" == cur.section ? (a.module = "feed_search", a.q = cur.q) : "news" == cur.section ? a.module =
