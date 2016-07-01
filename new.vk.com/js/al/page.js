@@ -1,4 +1,125 @@
 var Page = {
+
+        // mainly used in image paste from clipboard (see Emoji)
+        initUploadForImagePaste: function(txtEl, addMedia, blob) {
+            stManager.add(['upload.js'], function() {
+                addMedia.menu && addMedia.menu.activate();
+
+                var uploadEl;
+
+                domInsertBefore(uploadEl = ce('div', {
+                    className: 'post_upload_wrap fl_r',
+                    innerHTML: '<div id="page_field_upload" class="post_upload"></div>'
+                }), txtEl);
+
+                // get upload params from already existed data on page
+                var uploadData = cur.wallUploadOpts;
+
+                if (addMedia.clipboardImageUploadIndex !== undefined) {
+                    Upload.onFileApiSend(addMedia.clipboardImageUploadIndex, [blob]);
+
+                } else {
+                    addMedia.clipboardImageUploadIndex = Upload.init(domFC(uploadEl), uploadData.url, uploadData.params, {
+                        file_name: 'photo',
+                        file_size_limit: 1024 * 1024 * 5, // 5Mb
+                        file_types_description: 'Image files (*.jpg, *.jpeg, *.png, *.gif)',
+                        file_types: '*.jpg;*.JPG;*.jpeg;*.JPEG;*.png;*.PNG;*.gif;*.GIF',
+                        file_input: null,
+                        accept: 'image/jpeg,image/png',
+                        file_match: uploadData.opts.ext_re,
+                        lang: uploadData.opts.lang,
+                        wiki_editor: 0,
+
+                        onUploadStart: function(info, res) {
+                            var i = info.ind !== undefined ? info.ind : info,
+                                options = Upload.options[i];
+                            if (Upload.types[i] == 'form') {
+                                geByClass1('file', ge('choose_photo_upload'))
+                                    .disabled = true;
+                            }
+                            if (Upload.types[i] == 'fileApi') {
+                                if (cur.notStarted) {
+                                    boxQueue.hideLast();
+                                    delete cur.notStarted;
+                                }
+                                if (options.multi_progress) this.onUploadProgress(info, 0, 0);
+                            }
+                        },
+                        onUploadComplete: function(info, res) {
+                            var params, i = info.ind !== undefined ? info.ind : info,
+                                fileName = (info.fileName ? info.fileName : info)
+                                .replace(/[&<>"']/g, '');
+
+                            try {
+                                params = eval('(' + res + ')');
+                            } catch (e) {
+                                params = q2ajx(res);
+                            }
+                            if (!params.photos) {
+                                Upload.onUploadError(info);
+                                return;
+                            }
+
+                            ajax.post('al_photos.php', extend({
+                                act: 'choose_uploaded'
+                            }, params), {
+                                onDone: function(media, data) {
+                                    data.uploadNum = i;
+                                    addMedia.chooseMedia('photo', media, extend(data, {
+                                        upload_ind: i + '_' + fileName
+                                    }));
+                                },
+                                onFail: function() {},
+                                progress: (Upload.types[i] == 'form') ? box.progress : null
+                            });
+                        },
+                        onUploadProgress: function(info, bytesLoaded, bytesTotal) {
+                            var i = info.ind !== undefined ? info.ind : info;
+                            if (Upload.types[i] == 'fileApi') {
+                                var lnkId = (cur.attachMediaIndexes || {})[i];
+                                if (lnkId === undefined || lnkId && cur.addMedia[lnkId].chosenMedia || cur.imMedia) {
+                                    var loadData = {
+                                        loaded: bytesLoaded,
+                                        total: bytesTotal
+                                    };
+                                    if (info.fileName) loadData.fileName = info.fileName.replace(/[&<>"']/g, '');
+                                    addMedia.showMediaProgress('photo', i, loadData);
+                                }
+                            }
+                        },
+                        onUploadError: WallUpload.uploadFailed,
+                        onCheckServerFailed: function() {
+                            delete cur.uploadInited;
+                            WallUpload.hide();
+                        },
+                        onUploadCompleteAll: function(i) {
+                            if (Upload.types[i] == 'form') {
+                                Upload.embed(i);
+                            }
+                        },
+                        onCheckComplete: function(ind) {
+                            Upload.types[ind] = 'fileApi';
+                            Upload.onFileApiSend(ind, [blob]);
+                        },
+                        customShowProgress: function() {},
+
+                        noFlash: 1,
+                        multiple: 1,
+                        multi_progress: 1,
+                        max_files: 2,
+                        chooseBox: 1,
+                        clear: 1,
+                        type: 'photo',
+                        max_attempts: 3,
+                        server: uploadData.opts.server,
+                        error: uploadData.opts.default_error,
+                        error_hash: uploadData.opts.error_hash
+                    });
+                }
+            });
+
+        },
+
         buildMediaLinkEl: function(url) {
             return '<div class="page_media_link_url"><div class="page_media_link_icon"></div><div class="page_media_link_text">' + url + '</div></div>';
         },
@@ -424,7 +545,9 @@ var Page = {
                 p = i.split('_');
                 if (p[0] !== 'ad' && p[0] !== 'posthashtag') {
                     p[0] = intval(p[0]);
-                    p[1] = intval(p[1]);
+                    if (!p[1] || p[1].substr(0, 1) != 'p') {
+                        p[1] = intval(p[1]);
+                    }
                 }
                 snt = (sent[p[0]] || {})[p[1]];
                 if (p[0] != vk.id && (!snt || sn == -1 && snt > 0)) {
@@ -466,7 +589,7 @@ var Page = {
                 case 'feed_other':
                     return 'o';
                 default:
-                    return '';
+                    return 'u';
             }
         },
         postsSend: function() {
@@ -486,7 +609,9 @@ var Page = {
                     p = i.split('_');
                     if (p[0] !== 'ad' && p[0] !== 'posthashtag') {
                         p[0] = intval(p[0]);
-                        p[1] = intval(p[1]);
+                        if (p[1].substr(0, 1) != 'p') {
+                            p[1] = intval(p[1]);
+                        }
                     }
                     if (!seen[p[0]]) {
                         seen[p[0]] = {};
@@ -1498,6 +1623,7 @@ var Page = {
     },
     page = Page;
 
+
 var Wall = {
     deleteAll: function(el, post, hash) {
         ajax.post('al_wall.php', {
@@ -2452,7 +2578,9 @@ var Wall = {
         if (!txt || txt.emojiInited) {
             return false;
         }
+
         txt.emojiInited = true;
+
         stManager.add(['emoji.js', 'notifier.css'], function() {
             Emoji.init(txt, {
                 ttDiff: -42,
@@ -2461,7 +2589,12 @@ var Wall = {
                 noStickers: true,
                 onSend: Wall.sendPost,
                 noEnterSend: true,
-                checkEditable: Wall.postChanged
+                checkEditable: Wall.postChanged,
+                initUploadForImagePasteCallback: function(txt, addMedia, blob) {
+                    if (window.Upload) {
+                        Upload.onFileApiSend(cur.wallUploadInd, [blob]);
+                    }
+                }
             });
             addClass(txt, 'submit_post_inited')
 
@@ -3210,7 +3343,8 @@ var Wall = {
                         stickerId: stNum,
                         sticker_referrer: sticker_referrer
                     });
-                }
+                },
+                initUploadForImagePasteCallback: Page.initUploadForImagePaste
             });
             Wall.emojiOpts[post] = optId;
             if (cur.afterEmojiInit && cur.afterEmojiInit[post]) {
@@ -5530,7 +5664,8 @@ var Wall = {
             wallMyOpened: {},
             wallMyReplied: {},
             wallMentions: [],
-            wallMyRepliesCnt: 0
+            wallMyRepliesCnt: 0,
+            wallUploadOpts: opts.upload
         });
         if (opts.wall_tpl && opts.wall_tpl.lang) {
             cur.lang = extend(cur.lang || {}, opts.wall_tpl.lang);
@@ -5624,8 +5759,8 @@ var Wall = {
                 sortable: 1
             }, opts.media_opts || {}));
         }
-        cur.withUpload = window.WallUpload && !browser.safari_mobile && (cur.wallType == 'all' || cur.wallType == 'own' || cur.wallType == 'feed') && Wall.withMentions &&
-            cur.wallUploadOpts;
+
+        cur.withUpload = window.WallUpload && !browser.safari_mobile && inArray(cur.wallType, ['all', 'own', 'feed', 'full_all']) && Wall.withMentions && cur.wallUploadOpts;
         if (cur.withUpload && WallUpload.checkDragDrop()) {
             var clean = function() {
                     removeEvent(document, 'dragover dragenter drop dragleave', cb);
@@ -5998,6 +6133,7 @@ WallUpload = {
             WallUpload.show();
         }
     },
+
     initLoader: function() {
         removeEvent(bodyNode, 'dragover dragenter');
         var data = cur.wallUploadOpts,
@@ -6018,7 +6154,7 @@ WallUpload = {
                 'Release button to attach files') + '</div></div>'
         }), submitBox.firstChild);
 
-        Upload.init('post_field_upload', data.url, data.params, {
+        cur.wallUploadInd = Upload.init('post_field_upload', data.url, data.params, {
             file_name: 'photo',
             file_size_limit: 1024 * 1024 * 5, // 5Mb
             file_types_description: 'Image files (*.jpg, *.jpeg, *.png, *.gif)',

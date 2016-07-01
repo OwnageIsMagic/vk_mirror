@@ -1401,7 +1401,8 @@ body.mac #page_header_cont {
     color: #fff;
     font-size: 9px;
     height: 11px;
-    line-height: 12px;
+    line-height: 11px;
+    min-width: 5px;
     top: 6px;
     left: 21px;
     background-color: #ff734c;
@@ -2098,6 +2099,7 @@ body.body_im.firefox.layers_shown #page_wrap {
 }
 
 #side_bar ol li .left_row {
+    color: #285473;
     border: 0;
     display: block;
     white-space: nowrap
@@ -2189,11 +2191,15 @@ body.body_im.firefox.layers_shown #page_wrap {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-size: 11px;
-    line-height: 16px;
+    line-height: 17px;
     height: 16px;
     border-radius: 2px;
     -o-transition: background-color 200ms linear, color 200ms linear;
     transition: background-color 200ms linear, color 200ms linear
+}
+
+body.sf .left_count_wrap {
+    line-height: 16px
 }
 
 .left_count_wrap.left_count_wrap_hovered:hover {

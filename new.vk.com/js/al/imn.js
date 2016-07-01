@@ -7272,7 +7272,7 @@
             c = r(t, u);
         toggleClass(o, "im-page--mess-actions_all-sel", !c), removeClass(e, "im-page--header-chat_verified");
         var d = 55;
-        (0, y.isClassicInterface)(n) && (d = 53), isCommunityInterface(n) && (d = 40), setStyle(l, {
+        (0, y.isClassicInterface)(n) && (d = 53), (0, y.isCommunityInterface)(n) && (d = 40), setStyle(l, {
             "max-width": l.parentNode.offsetWidth - o.offsetWidth - d
         })
     }
@@ -7643,9 +7643,9 @@
 
     function r(e, t) {
         if (0 === e.length) return [""];
-        for (var n = []; e.length > q;) {
-            var r = e.substr(0, q)
-                .lastIndexOf(" "); - 1 == r && (r = q), n.push(e.substr(0, r)), e = e.substr(r)
+        for (var n = []; e.length > z;) {
+            var r = e.substr(0, z)
+                .lastIndexOf(" "); - 1 == r && (r = z), n.push(e.substr(0, r)), e = e.substr(r)
         }
         return e.length > 0 && n.push(e), n
     }
@@ -7790,7 +7790,7 @@
     }
 
     function u(e, t) {
-        var n = gpeByClass(V, t.target),
+        var n = gpeByClass(W, t.target),
             r = !!intval(domData(n, "val"));
         r !== cur.ctrl_submit && (cur.ctrl_submit = r, e.set(B.changeSubmitSettings.bind(null, r)))
     }
@@ -7806,7 +7806,7 @@
         var d = arguments.length <= 6 || void 0 === arguments[6] ? [] : arguments[6],
             g = geByClass1("_im_send", i);
         if ((0, B.isAnythingLoading)(e.get())) {
-            var f = c(e, z, (0, H.toArray)(arguments));
+            var f = c(e, G, (0, U.toArray)(arguments));
             return e.set(B.setDelayedMessage.bind(null, !0, f))
                 .then(function() {
                     lockButton(g)
@@ -7857,16 +7857,16 @@
                 .setMessageErrored.bind(null, n, r.mess))
     }
 
-    function m(e, t, n, r, a, i) {
-        var s = geByClass1("_im_text", e);
-        return addEvent(s, "paste", i), addEvent(s, "focus", function() {
+    function m(e, t, n, r, a, i, s) {
+        var o = geByClass1("_im_text", e);
+        return addEvent(o, "paste", i), addEvent(o, "focus", function() {
             t.get()
                 .longpoll.push([x.eventTypes.transitionEvent("message")]), cur.focused = t.get()
                 .peer
-        }), addEvent(s, "blur", function() {
+        }), addEvent(o, "blur", function() {
             t.get()
                 .longpoll.push([x.eventTypes.transitionEvent("default")]), cur.focused = !1
-        }), Emoji.init(s, {
+        }), Emoji.init(o, {
             ttDiff: 93,
             rPointer: !0,
             onSend: r.bind(null, []),
@@ -7878,7 +7878,8 @@
                 a([
                     ["sticker", e]
                 ], t)
-            }
+            },
+            uploadActions: s
         })
     }
 
@@ -7930,7 +7931,7 @@
             appendParentCls: "_page_wrap",
             onCreate: function() {
                 radioBtns.im_submit = {
-                    els: (0, H.toArray)(geByClass(V)),
+                    els: (0, U.toArray)(geByClass(W)),
                     val: n
                 }
             }
@@ -7942,7 +7943,7 @@
     }
 
     function h(e, t) {
-        var n = geByClass1(Q, t);
+        var n = geByClass1(K, t);
         n.innerHTML = getTemplate("im_attach_mess", {
             messages: getLang("mail_title_X_msgs", e.length)
         })
@@ -7952,7 +7953,7 @@
         e.set(B.forwardMessages.bind(null, [], e.get()
                 .peer))
             .then(function() {
-                var r = geByClass1(Q, t);
+                var r = geByClass1(K, t);
                 if (r && r.children.length) {
                     r.innerHTML = "";
                     var a = n()
@@ -7993,7 +7994,7 @@
                                 if (!i) {
                                     l.length > 0 && show(ge("_im_media_preview"));
                                     for (var o = 0; o < l.length; o++) e.chooseMedia.apply(e, l[o]);
-                                    c.length > 0 ? h(c, n) : geByClass1(Q, n)
+                                    c.length > 0 ? h(c, n) : geByClass1(K, n)
                                         .innerHTML = "", v(t, u);
                                     var d = a()
                                         .updateScroll();
@@ -8050,8 +8051,8 @@
             unmount: function() {
                 var a = geByClass1("_im_send", n);
                 removeEvent(t, "paste", c), removeEvent(a, "click", r), (0, j.removeDelegateEvent)(n, "click", "_im_rc_emoji", i), (0, j.removeDelegateEvent)(n,
-                    "click", W, o), (0, j.removeDelegateEvent)(n, "click", "_im_will_fwd", l), e.destroy(), u.unmount(), (0, j.removeDelegateEvent)(bodyNode,
-                    "click", V, d)
+                    "click", Q, o), (0, j.removeDelegateEvent)(n, "click", "_im_will_fwd", l), e.destroy(), u.unmount(), (0, j.removeDelegateEvent)(bodyNode,
+                    "click", W, d)
             }
         }
     }
@@ -8077,19 +8078,10 @@
             .peer,
             i = Emoji.val(r);
         (0, F.isReservedPeer)(a) || e.get()
-            .tabs[a].imdraft == i || T(a, e) || (t.checkMessageURLs(i, !0, z), e.set(B.saveTextDraft.bind(null, a, i)))
+            .tabs[a].imdraft == i || T(a, e) || (t.checkMessageURLs(i, !0, G), e.set(B.saveTextDraft.bind(null, a, i)))
     }
 
-    function S(e, t) {
-        var n = (0, U.getFiles)(t);
-        if (n.length > 0) {
-            var n = n.map(function(e) {
-                return e.name = e.filename = "upload_" + (new Date)
-                    .toISOString() + rand(0, 100) + ".png", e
-            });
-            e.paste(n)
-        }
-    }
+    function S(e, t) {}
 
     function k(e, t, n, r, a, i) {
         var s = domData(i, "emoji");
@@ -8155,7 +8147,7 @@
         var r = (0, O.createMutations)(y),
             a = r.callMutations,
             i = r.bindMutations,
-            s = (0, G.mount)(e, t, a),
+            s = (0, H.mount)(e, t, a),
             l = g.bind(null, t, n),
             c = (0, N.initQueue)(l, f.bind(null, t, n), {
                 store: "ls",
@@ -8169,7 +8161,7 @@
             A = L.bind(null, t),
             D = S.bind(null, s);
         hide(geByClass1("ms_items_more_helper", e));
-        var M, x = new MediaSelector(geByClass1(K, e), "_im_media_preview", [
+        var M, x = new MediaSelector(geByClass1(q, e), "_im_media_preview", [
             ["photo", getLang("profile_wall_photo")],
             ["gift", getLang("profile_wall_gift")],
             ["video", getLang("profile_wall_video")],
@@ -8206,21 +8198,21 @@
                     from: "from_gim"
                 } : {}
         });
-        hide(geByClass1("ms_items_more_helper", e)), addEvent(geByClass1(K, e), "mouseover", function() {
+        hide(geByClass1("ms_items_more_helper", e)), addEvent(geByClass1(q, e), "mouseover", function() {
             M && clearTimeout(M), show(geByClass1("ms_items_more_helper", e))
-        }), addEvent(geByClass1(K, e), "mouseout", function() {
+        }), addEvent(geByClass1(q, e), "mouseout", function() {
             M = setTimeout(function() {
                 hide(geByClass1("ms_items_more_helper", e))
             }, 500)
         });
         var R, U = d.bind(null, t, n, v, e, a, x),
-            H = debounce(w.bind(null, t, x), 500),
+            G = debounce(w.bind(null, t, x), 500),
             z = m(e, t, function(r, a) {
                 var i = t.get()
                     .peer,
                     s = Emoji.val(a);
                 (0, F.isReservedPeer)(i) || T(i, t) || t.get()
-                    .tabs[i].imdraft == s || !s || I(t), H(r, a);
+                    .tabs[i].imdraft == s || !s || I(t), G(r, a);
                 var o = e.offsetHeight;
                 if (R && R !== o) {
                     var l = n()
@@ -8230,11 +8222,11 @@
                             .peer, l)
                 }
                 R = o
-            }, U, P, D),
-            q = U.bind(null, []),
-            Q = _.bind(null, t),
+            }, U, P, D, s),
+            K = U.bind(null, []),
+            V = _.bind(null, t),
             Y = geByClass1("_im_send", e);
-        addEvent(Y, "click", q), addEvent(Y, "mouseover", Q), t.get()
+        addEvent(Y, "click", K), addEvent(Y, "mouseover", V), t.get()
             .textMediaSelector = x, t.set(B.initTextStore.bind(null, h, C, E));
         var Z = (ge("_im_media_preview"), geByClass1("_im_text", e));
         setTimeout(function() {
@@ -8246,8 +8238,8 @@
             J = u.bind(null, t);
         return addEvent(geByClass1("_im_text_wrap", e), "click", function() {
                 Z !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)(Z)
-            }), (0, j.addDelegateEvent)(e, "click", "_im_rc_emoji", $), (0, j.addDelegateEvent)(e, "click", W, X), (0, j.addDelegateEvent)(e, "click", "_im_will_fwd", A),
-            (0, j.addDelegateEvent)(bodyNode, "click", V, J), i(x, Z, e, q, n, $, h, X, A, s, D, J)
+            }), (0, j.addDelegateEvent)(e, "click", "_im_rc_emoji", $), (0, j.addDelegateEvent)(e, "click", Q, X), (0, j.addDelegateEvent)(e, "click", "_im_will_fwd", A),
+            (0, j.addDelegateEvent)(bodyNode, "click", W, J), i(x, Z, e, K, n, $, h, X, A, s, D, J)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0
@@ -8286,15 +8278,14 @@
         N = n(79),
         R = n(89),
         j = n(5),
-        U = n(90),
-        H = n(80),
-        G = n(91),
-        z = 4e3,
-        q = 3980,
-        K = "_im_media_selector",
-        Q = "_im_media_fwd",
-        W = "_im_fwd_close",
-        V = "_im_submit_btn"
+        U = (n(90), n(80)),
+        H = n(91),
+        G = 4e3,
+        z = 3980,
+        q = "_im_media_selector",
+        K = "_im_media_fwd",
+        Q = "_im_fwd_close",
+        W = "_im_submit_btn"
 }, function(e, t) {
     "use strict";
 
@@ -9321,7 +9312,7 @@
             .then(function(e) {
                     var t = m(e, 2),
                         n = (t[0], t[1]);
-                    showDoneBox(n)
+                    showDoneBox(n);
                 }), a.hide(), t.hide(), n()
                 .unmount()
         }, getLang("mail_close"), function(e) {

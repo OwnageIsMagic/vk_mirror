@@ -854,7 +854,7 @@ div.wall_module .ext_video div {
 
 .wall_module .reply_to_title {
     display: none;
-    margin-top: 6px;
+    padding-top: 6px;
     color: #828282;
     white-space: nowrap;
     overflow: hidden;
@@ -2425,16 +2425,11 @@ a.page_media_link_desc {
     width: 110px;
     height: 8px;
     margin: auto;
-    margin-bottom: 6px;
-    background: #fff;
-    border: 1px solid #ccc
+    margin-bottom: 6px
 }
 
 .page_attach_progress {
-    height: 8px;
-    background: #597da3 url(/images/progress_grad.gif) repeat;
-    border: 1px solid #45688e;
-    margin: -1px
+    height: 10px!important
 }
 
 .attach_label {
@@ -2445,7 +2440,7 @@ a.page_media_link_desc {
 .media_preview .progress_x {
     cursor: pointer;
     margin: 3px 5px 0;
-    background: url(/images/hide_to.gif) no-repeat -2px -2px;
+    background-image: url(/images/attach_icons.png?2);
     opacity: 0.6;
     filter: alpha(opacity=60);
     height: 10px;

@@ -642,21 +642,20 @@ function MediaSelector(e, a, i, o) {
                     h = c ? i + "_" + c : i,
                     _ = c ? c.length > 33 ? c.substr(0, 30) + "..." : c : "",
                     u = ge("upload" + h + "_progress");
-                if (u)
-                    if (show(u), u.full) {
-                        var g = data(u, "tween"),
-                            v = intval(u.full * d);
-                        g && g.isTweening ? g.to.width = v : animate(u, {
-                            width: v + "px"
-                        }, 500)
-                    } else setStyle(u, {
+                if (u) {
+                    show(u);
+                    var g = geByClass1("ui_progress_bar", u);
+                    setStyle(g, {
                         width: r + "%"
-                    });
-                else {
+                    })
+                } else {
                     cur.attachMediaIndexes || (cur.attachMediaIndexes = {}), cur.attachMediaIndexes[h] = m;
-                    var w = '<div class="fl_l"><div class="page_attach_progress_wrap" style="margin-top: 3px; margin-bottom: 4px;">  <div id="upload' + h +
-                        '_progress" class="page_attach_progress"></div></div></div></div>' + (_ ? '<div class="attach_label fl_l">' + _ + "</div>" : "") +
-                        '<div class="progress_x fl_l" onmouseover="animate(this, {opacity: 1}, 200); showTooltip(this, {text: \'' + getLang("dont_attach") +
+                    var v = _ ? '<div class="attach_label fl_l">' + _ + "</div>" : "",
+                        w =
+                        '          <div class="fl_l">             <div class="page_attach_progress_wrap" style="margin-top: 3px; margin-bottom: 4px;">               <div id="upload' +
+                        h +
+                        '_progress" class="page_attach_progress ui_progress">                 <div class="ui_progress_back"></div>                 <div class="ui_progress_bar"></div>               </div>             </div>           </div>' +
+                        v + '<div class="progress_x fl_l" onmouseover="animate(this, {opacity: 1}, 200); showTooltip(this, {text: \'' + getLang("dont_attach") +
                         '\', shift: [6, 3, 3]})" onmouseout="animate(this, {opacity: 0.6}, 200);" onclick="Upload.terminateUpload(' + i + ", '" + (c || i) +
                         "', this);\"></div>";
                     if (n) p.appendChild(ce("div", {
@@ -674,9 +673,11 @@ function MediaSelector(e, a, i, o) {
                         });
                         s.chosenMedia = "progress", s.singleAdded(f, "progress")
                     }
-                    o.onChangedSize && o.onChangedSize(), u = ge("upload" + h + "_progress"), u.full = !1, r ? setStyle(u, {
-                        width: u.full ? intval(u.full * d) + "px" : r + "%"
-                    }) : (setStyle(u, {
+                    o.onChangedSize && o.onChangedSize(), u = ge("upload" + h + "_progress");
+                    var g = geByClass1("ui_progress_bar", u);
+                    r ? setStyle(g, {
+                        width: r + "%"
+                    }) : (setStyle(g, {
                         width: "1px"
                     }), hide(u))
                 }
@@ -894,9 +895,9 @@ function MediaSelector(e, a, i, o) {
                             "</div>" : "") + (x ? '<div class="medadd_c_linkmicrodata">' + x + "</div>" : "") + (y ? '<div class="medadd_c_linkdsc">' + y + "</div>" : "") +
                         '<div class="clear"></div>'
                 }
-                if (e) cur.preventShareAnim && (cur.preventShareAnim.stop(), clearInterval(cur.animateUpdateInterval)), val(domFC(r), l), domFC(r)
-                    .style.height = "auto",
-                    shortCurrency();
+                if (e) cur.preventShareAnim && (cur.preventShareAnim.stop(),
+                        clearInterval(cur.animateUpdateInterval)), val(domFC(r), l), domFC(r)
+                    .style.height = "auto", shortCurrency();
                 else {
                     !isVisible(b);
                     show(b);

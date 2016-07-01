@@ -473,7 +473,7 @@ a.ui_crumb {
     text-overflow: ellipsis;
     white-space: nowrap;
     height: 32px;
-    line-height: 30px;
+    line-height: 31px;
     padding: 0 5px 0 20px;
     color: #2a5885;
     -webkit-user-select: none;
@@ -583,16 +583,23 @@ a.ui_crumb {
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
+    text-align: center;
     margin: 7px 10px 0 0;
     padding: 1px 6px;
-    border-radius: 9px;
+    border-radius: 10px;
     background-color: #7394b5;
     font-size: 11px;
     height: 16px;
-    line-height: 15px;
+    line-height: 17px;
+    min-width: 6px;
     color: #fff
 }
 
+body.sf .ui_rmenu_count {
+    line-height: 16px
+}
+
+.ui_rmenu_count.unshown,
 .ui_rmenu_count:empty {
     display: none
 }
@@ -2239,12 +2246,12 @@ a.ui_search_custom_link {
     background-image: url(/images/small_progress_bkg.png);
     background-position-x: 0;
     background-position-y: 0;
-    -webkit-animation: photoUploadProgressAnimation 1s linear infinite;
-    -o-animation: photoUploadProgressAnimation 1s linear infinite;
-    animation: photoUploadProgressAnimation 1s linear infinite
+    -webkit-animation: uploadProgressAnimation 1s linear infinite;
+    -o-animation: uploadProgressAnimation 1s linear infinite;
+    animation: uploadProgressAnimation 1s linear infinite
 }
 
-@-webkit-keyframes photoUploadProgressAnimation {
+@-webkit-keyframes uploadProgressAnimation {
     0% {
         background-position-x: 0
     }
@@ -2253,7 +2260,7 @@ a.ui_search_custom_link {
     }
 }
 
-@-o-keyframes photoUploadProgressAnimation {
+@-o-keyframes uploadProgressAnimation {
     0% {
         background-position-x: 0
     }
@@ -2262,7 +2269,7 @@ a.ui_search_custom_link {
     }
 }
 
-@keyframes photoUploadProgressAnimation {
+@keyframes uploadProgressAnimation {
     0% {
         background-position-x: 0
     }

@@ -4362,7 +4362,9 @@ FastChat = {
                     FastChat.movePointer(curFastChat.activeBox.options.peer, true);
                 }
             }
+            var oldTop = Chat.scrollNode.scrollTop;
             FastChat.checkChatHeight();
+            Chat.scrollNode.scrollTop = oldTop;
         };
         animate(tabEl, {
             height: 0,

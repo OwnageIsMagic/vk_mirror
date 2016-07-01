@@ -1354,7 +1354,7 @@ a.ads_ad_box2:hover {
 
 .ads_ad_box.redesign {
     font-size: 12px;
-    font-family: Open Sans, Helvetica Neue, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     overflow: hidden
 }
 
@@ -1485,9 +1485,7 @@ a.ads_ad_box2:hover {
     color: #939699;
     font-size: 12px;
     line-height: 15px;
-    padding-top: 1px;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+    padding-top: 1px
 }
 
 .ads_ad_box.redesign .ads_ad_disclaimers {

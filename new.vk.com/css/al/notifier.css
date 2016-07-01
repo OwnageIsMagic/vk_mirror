@@ -1317,7 +1317,8 @@ img.fc_inline_chatter_half {
     background-color: rgba(216, 223, 230, 0);
     background: -o-linear-gradient(270deg, rgba(216, 223, 230, 0), #d8dfe6 80%);
     background: linear-gradient(180deg, rgba(216, 223, 230, 0), #d8dfe6 80%);
-    display: none
+    display: none;
+    pointer-events: none
 }
 
 .layers_shown .chat_cont_sh_bottom,

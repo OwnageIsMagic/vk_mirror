@@ -266,15 +266,15 @@ var Feed = {
                         R = i.offsetHeight,
                         d = r.split("_")[0],
                         l = 0 > d ? 8 & a ? 2 : 2 & a ? 1 : 0 : 0,
-                        D = wall.getNewReplyHTML(e, l),
+                        F = wall.getNewReplyHTML(e, l),
                         u = !1,
-                        F = !1;
+                        D = !1;
                     if (isVisible(M) && isVisible(j) && !isVisible("reply_link" + r)) {
                         var q = M.nextSibling,
                             I = geByClass("new_reply", M, "div")
                             .length + 1;
                         if (cur.wallMyOpened[r]) {
-                            q && "replies_open" == q.className && re(q), F = !0;
+                            q && "replies_open" == q.className && re(q), D = !0;
                             var U = geByClass1("wr_header", M, "a"),
                                 A = geByClass("reply", M, "div")
                                 .length + 1,
@@ -283,12 +283,12 @@ var Feed = {
                                 .split("/")[1]) + 1), (V > 5 || V > A) && (U || M.insertBefore(U = ce("a", {
                                 className: "wr_header"
                             }), M.firstChild), wall.updateRepliesHeader(r, U, A, V))
-                        } else D = wall.updatePostImages(D), u = se(D), addClass(u, "new_reply"), q && "replies_open" == q.className || (q = ce("div", {
+                        } else F = wall.updatePostImages(F), u = se(F), addClass(u, "new_reply"), q && "replies_open" == q.className || (q = ce("div", {
                             className: "replies_open",
                             onclick: wall.openNewComments.pbind(r)
                         }), M.parentNode.insertBefore(q, M.nextSibling)), q.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, I)), q.newCnt = I
-                    } else re("reply_link" + r), show(j, M), F = !0;
-                    r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(D)), M.appendChild(u), t > getXY(F ? u : q)[1] && (c += i.offsetHeight - R), F &&
+                    } else re("reply_link" + r), show(j, M), D = !0;
+                    r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(F)), M.appendChild(u), t > getXY(D ? u : q)[1] && (c += i.offsetHeight - R), D &&
                         nodeUpdated(u), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
                     break;
                 case "del_reply":
@@ -1175,7 +1175,12 @@ var Feed = {
             if (o = domFC(i), hasClass(domFC(o), "post_copy") && (a[s[1]] = -1), (s = domFC(o)
                     .id.match(n)) && (a[s[1]] = 1), isVisible(o = domNS(o)))
                 for (o = domFC(o); o; o = domNS(o))(s = o.id.match(n)) && (a[s[1]] = 1)
-        } else(s = t.match(/feed_repost(-?\d+_\d+)/)) ? (o = domFC(i), hasClass(o, "post_copy") && (a[s[1]] = -1), (s = o.id.match(n)) && (a[s[1]] = 1)) : a[i.id] = 1;
+        } else if (s = t.match(/feed_repost(-?\d+_\d+)/)) o = domFC(i), hasClass(o, "post_copy") && (a[s[1]] = -1), (s = o.id.match(n)) && (a[s[1]] = 1);
+        else {
+            var l = i.id;
+            hasClass(i, "post_photos") && (o = geByClass1("post_image", i, "a"), o && (o = domFC(o), o && (s = o.getAttribute("data-post-id")
+                .match(/^(-?\d+_p?\d+)$/)) && (l = s[1]))), a[l] = 1
+        }
         return a
     },
     searchUpdate: function() {
