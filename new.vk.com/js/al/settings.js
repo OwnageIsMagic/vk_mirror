@@ -460,8 +460,9 @@ var Settings = {
         var o = cur.menuSettings[t] || {},
             n = Settings.getAdminSelectShowCt(o),
             i = o[s];
-        return (1 == t || 2 == t) && (toggleClass(gpeByClass("olist_section", e), "settings_menu_rows_disabled", !i && n >= Settings.MAX_LEFT_GROUPS - 1), !i && n >=
-            Settings.MAX_LEFT_GROUPS) ? !1 : (toggleClass(e, "olist_item_wrap_on", !i), o[s] = i ? 0 : 1, Settings.updateMenuBoxCount(t), !1)
+        return curBox()
+            .changed = !0, (1 == t || 2 == t) && (toggleClass(gpeByClass("olist_section", e), "settings_menu_rows_disabled", !i && n >= Settings.MAX_LEFT_GROUPS - 1), !i &&
+                n >= Settings.MAX_LEFT_GROUPS) ? !1 : (toggleClass(e, "olist_item_wrap_on", !i), o[s] = i ? 0 : 1, Settings.updateMenuBoxCount(t), !1)
     },
     switchMenuBoxSection: function(e, t) {
         var s = curBox();
@@ -1171,8 +1172,8 @@ var Settings = {
                 .slice(0, cur.defaultCount), s.length && cur.appTpl) {
                 var n = [];
                 each(s, function(e, t) {
-                    t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)),
-                        n.push(cur.appTpl(t, e == s.length - 1, !1))
+                    t = clone(t),
+                        cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), n.push(cur.appTpl(t, e == s.length - 1, !1))
                 }.bind(this)), t = n.join("")
             }
             if (cur.shownApps) t && cur.lContent.appendChild(cf(t));

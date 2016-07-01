@@ -609,7 +609,7 @@
             c !== t ? a = u.slice()
                 .concat([e]) : n !== d && (a = [e]), c = t, d = n, a.length > 0 && a.forEach(function(a) {
                     var i = e === a && n ? 0 : -t;
-                    setStyle(a, r({}, cssTransformProp, "translateX(" + i + "px)"))
+                    setStyle(a, r({}, cssTransformProp, 0 === i ? "unset" : "translateX(" + i + "px)"))
                 })
         }
         if (browser.mobile) return !1;
