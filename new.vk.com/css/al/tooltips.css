@@ -855,6 +855,14 @@ div.own_reply_tt .content {
     transform: translate3d(0, -0.5px, 0)
 }
 
+.mention_tt.toleft.tt_down:after,
+.mention_tt.toleft.tt_down:before,
+.mention_tt.toleft.tt_up:after,
+.mention_tt.toleft.tt_up:before {
+    left: auto;
+    right: 55px
+}
+
 .mention_tt.mention_has_actions.tt_default.tt_down:after {
     border-top-color: #fafbfc
 }
