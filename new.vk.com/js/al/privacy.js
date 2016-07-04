@@ -432,7 +432,8 @@ var Privacy = {
             }
             f.push("</div>"), cur.privRows.innerHTML = f.join(""), cur.privSel = r;
             var S = data(cur.privEl, "tween");
-            if (S && S.stop(!0), show(cur.privEl), a[Privacy.listsType] && h && hide("privacy_lists"), Privacy.toup = !1, getClientRectOffsetY(cur.privEl)) {
+            if (S && S.stop(!0), show(cur.privEl), a[Privacy.listsType] && h && hide("privacy_lists"), Privacy.toup = !1, getClientRectOffsetY(cur.privEl) > 0 &&
+                getClientRectOffsetY(cur.privEl, !1, getSize(cur.privEl)[1]) > 0) {
                 Privacy.toup = !0;
                 var g = cur.privRows;
                 g.appendChild(g.firstChild);

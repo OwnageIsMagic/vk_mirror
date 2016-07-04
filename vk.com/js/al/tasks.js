@@ -1347,6 +1347,19 @@ Tasks = {
         }, cur.lang['delete_ticket_text'], cur.lang['delete'], doUnbind, getLang('global_cancel'));
     },
 
+    toggleRedesignTask: function(bid, hash, el) {
+        var onDone = function(result) {
+            el.innerHTML = result;
+        };
+        ajax.post(Tasks.address, {
+            act: 'toggle_redesign_task',
+            bid: bid,
+            hash: hash
+        }, {
+            onDone: onDone
+        });
+    },
+
     _eof: 1
 };
 try {

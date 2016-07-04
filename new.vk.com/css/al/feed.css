@@ -932,7 +932,7 @@
 .feedback_sticky_icon {
     position: absolute;
     top: 12px;
-    left: 13px;
+    left: 15px;
     background: url(/images/icons/notifications_icons.png?4) no-repeat;
     width: 40px;
     height: 40px;
@@ -994,7 +994,7 @@
 }
 
 .feedback_sticky_text {
-    padding: 8px 35px 10px 65px;
+    padding: 8px 35px 10px 67px;
     line-height: 20px;
     display: inline-block;
     vertical-align: middle
@@ -1018,15 +1018,23 @@
     right: 12px
 }
 
-.feedback_row_menu {
+.feedback_sticky_rows .feedback_sticky_icon {
+    left: 13px
+}
+
+.feedback_sticky_rows .feedback_sticky_text {
+    padding-left: 65px
+}
+
+.feedback_row_menu:not(.ui_actions_menu_dummy_wrap) {
     float: left;
     opacity: 0;
     filter: alpha(opacity=0);
     visibility: hidden
 }
 
-.feedback_row_menu:last-child .ui_actions_menu,
-.post_actions_progress .feedback_row_menu {
+.feedback_row_menu:not(.ui_actions_menu_dummy_wrap):last-child .ui_actions_menu,
+.post_actions_progress .feedback_row_menu:not(.ui_actions_menu_dummy_wrap) {
     display: none
 }
 
@@ -1143,14 +1151,17 @@
     border: none!important
 }
 
+.top_notify_cont .feedback_row:not(.dld).hover,
 .top_notify_cont .feedback_row:not(.dld):hover {
     background-color: #fafbfc
 }
 
+.top_notify_cont .feedback_row:not(.dld).hover .feedback_photo_icon,
 .top_notify_cont .feedback_row:not(.dld):hover .feedback_photo_icon {
     border-color: #fafbfc
 }
 
+.top_notify_cont .feedback_row:not(.dld).hover .feedback_row_menu,
 .top_notify_cont .feedback_row:not(.dld):hover .feedback_row_menu {
     opacity: 1;
     -webkit-filter: none;
@@ -1158,10 +1169,12 @@
     visibility: visible
 }
 
+.top_notify_cont .feedback_row:not(.dld).unread.hover,
 .top_notify_cont .feedback_row:not(.dld).unread:hover {
     background-color: #f0f3f7
 }
 
+.top_notify_cont .feedback_row:not(.dld).unread.hover .feedback_photo_icon,
 .top_notify_cont .feedback_row:not(.dld).unread:hover .feedback_photo_icon {
     border-color: #f0f3f7
 }
