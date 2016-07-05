@@ -145,7 +145,8 @@ var Index = {
             act: 'start',
             fname: fname,
             lname: lname,
-            sex: sex
+            sex: sex,
+            frm: 1
         }, {
             onDone: function(result, data) {
                 if (result == 1 || result == 2) {

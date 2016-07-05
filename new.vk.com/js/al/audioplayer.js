@@ -371,7 +371,7 @@ var AudioUtils = {
             s = AudioUtils.getAudioFromEl(t, !0),
             r = null,
             u = gpeByClass("_audio_playlist", t);
-        if (u) return data(u, "playlist");
+        if (u) return e = data(u, "playlist");
         if (!cur.pid && inArray(cur.module, ["public", "wall", "groups", "profile"]) && (r = domClosest("_wall_audio_rows", t))) {
             var n = gpeByClass("_replies_list", t);
             n && (o = o.concat(i([n])));
@@ -660,8 +660,9 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         if (i >= 0) {
             this._unref();
             var e = this._list.splice(i, 1);
-            this._index && this._index.remove(e[0])
+            return this._index && this._index.remove(e[0]), i
         }
+        return -1
     }, AudioPlaylist.prototype.addAudio = function(t, i) {
         function e(t) {
             var e = o.indexOfAudio(t);

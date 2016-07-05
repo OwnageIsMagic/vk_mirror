@@ -524,7 +524,7 @@
 .page_list_module .people_desc,
 .page_list_module .people_extra {
     font-size: 12px;
-    max-height: 45px;
+    max-height: 48px;
     overflow: hidden;
     color: #656565
 }
