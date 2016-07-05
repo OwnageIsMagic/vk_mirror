@@ -734,7 +734,7 @@ body.mac .audio_rows_header.fixed {
 }
 
 .audio_delete_current_btn {
-    background-image: url(/images/icons/common.png?5);
+    background-image: url(/images/icons/common.png?6);
     background-position: 0px -29px;
     height: 13px;
     width: 13px;
@@ -2022,7 +2022,7 @@ body.mac .audio_rows_header.fixed {
 }
 
 .audio_album_edit_btn .audio_album_edit_btn_icon {
-    background-image: url(/images/icons/common.png?5);
+    background-image: url(/images/icons/common.png?6);
     height: 13px;
     width: 13px;
     background-position: 0px -43px

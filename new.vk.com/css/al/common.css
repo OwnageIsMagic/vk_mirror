@@ -1758,7 +1758,7 @@ a.ad_box_new:hover {
     margin: -3px 0 0 145px;
     width: 19px;
     height: 14px;
-    background: url(/images/icons/common.png?5) no-repeat 5px -26px;
+    background: url(/images/icons/common.png?6) no-repeat 5px -26px;
     opacity: 0;
     filter: alpha(opacity=0);
     cursor: pointer;
@@ -2177,7 +2177,7 @@ body.body_im.firefox.layers_shown #page_wrap {
     left: 0;
     right: 0;
     margin: auto;
-    background: url(/images/icons/common.png?5) no-repeat 0 -60px
+    background: url(/images/icons/common.png?6) no-repeat 0 -60px
 }
 
 .left_count_wrap {
@@ -3633,7 +3633,7 @@ body.mac #layer_stl .fixed {
     width: 12px;
     height: 12px;
     margin-left: 3px;
-    background: url(/images/icons/common.png?5) no-repeat 0 0;
+    background: url(/images/icons/common.png?6) no-repeat 0 0;
     opacity: 0.12;
     filter: alpha(opacity=12);
     cursor: pointer;
@@ -4037,6 +4037,11 @@ ul.t0 li.active_link a b.tl2 {
     top: 57px;
     z-index: 119;
     display: none
+}
+
+body.mac #pg_fixed {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0)
 }
 
 .pg_fixed_back {
@@ -5571,7 +5576,7 @@ button.ui_load_more_btn {
 .audio_row .audio_acts .audio_act>div {
     height: 13px;
     width: 13px;
-    background-image: url(/images/icons/common.png?5);
+    background-image: url(/images/icons/common.png?6);
     -o-transition: background-position 200ms ease;
     transition: background-position 200ms ease
 }
@@ -5601,9 +5606,12 @@ button.ui_load_more_btn {
     width: 14px
 }
 
-.audio_row .audio_acts #add_md>div {
-    background-position: 0 -44px;
-    background-color: #ff0
+.audio_row .audio_acts #edit_moder>div {
+    background-position: 0 -220px
+}
+
+.audio_row .audio_acts #remove_moder>div {
+    background-position: 0 -205px
 }
 
 .audio_row.inlined.audio_row_current .audio_acts {
@@ -5770,7 +5778,8 @@ button.ui_load_more_btn {
     right: 14px
 }
 
-.audio_md_rows .audio_row #add_md,
+.audio_md_rows.audio_popular_rows .audio_row #remove_moder,
+.audio_md_rows .audio_row #edit_moder,
 .audio_row #next,
 .audio_row.audio_deleted #add,
 .audio_row.audio_deleted.audio_delete_all #delete,
