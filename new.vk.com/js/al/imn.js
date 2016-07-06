@@ -2915,10 +2915,10 @@
         return Promise.resolve(t)
     }
 
-    function U(e, t, n, r) {
-        return r.text = {
+    function U(e, t, n, r, a) {
+        return a.text = {
             attachedFiles: 0
-        }, r.imQueue = e, r.imQueueResend = t, r.imQueueSet = n, Promise.resolve(r)
+        }, a.imQueue = e, a.imQueueResend = t, a.imQueueSet = n, a.imQueueComplete = r, Promise.resolve(a)
     }
 
     function H(e, t) {
@@ -3079,7 +3079,8 @@
                 .filter(function(t) {
                     return t.failed && t.rid !== e.randomId
                 });
-            t.imQueueSet(e.peerId, r), n.history = (0, wt.replaceMessageAttrs)(t, l(n.history), e), n.lastmsg_meta = e, n.lastmsg = e.messageId;
+            t.imQueueSet(e.peerId, r), t.imQueueComplete(e.peerId, e.randomId), n.history = (0, wt.replaceMessageAttrs)(t, l(n.history), e), n.lastmsg_meta = e, n.lastmsg =
+                e.messageId;
             var a = n.msgs["rid" + e.randomId];
             a && (n.msgs[e.messageId] = a, delete n.msgs["rid" + e.randomId])
         }
@@ -4967,9 +4968,9 @@
         var r = (0, _["default"])({
                 queues: {}
             }, n),
-            a = Object.keys(r.get()
+            o = Object.keys(r.get()
                 .queues);
-        return a.forEach(function(e) {
+        return o.forEach(function(e) {
             r.set(i.bind(null, e)), r.set(s.bind(null, e, !1))
         }), {
             pushMessage: function(n, a) {
@@ -5002,6 +5003,10 @@
             isPaused: function(e) {
                 return !!d(e, r.get())
                     .pause
+            },
+            complete: function(e, t) {
+                var n = r.get();
+                n.queues[e].currEv && n.queues[e].currEv.rid === t && r.set(a.bind(null, e))
             },
             resume: function(n) {
                 r.set(g.bind(null, n, !1))
@@ -8157,11 +8162,12 @@
             h = c.inspectQueue,
             C = c.resend,
             E = c.setErrored,
-            P = o.bind(null, t, n, v, a),
-            A = L.bind(null, t),
-            D = S.bind(null, s);
+            P = c.complete,
+            A = o.bind(null, t, n, v, a),
+            D = L.bind(null, t),
+            M = S.bind(null, s);
         hide(geByClass1("ms_items_more_helper", e));
-        var M, x = new MediaSelector(geByClass1(q, e), "_im_media_preview", [
+        var x, R = new MediaSelector(geByClass1(q, e), "_im_media_preview", [
             ["photo", getLang("profile_wall_photo")],
             ["gift", getLang("profile_wall_gift")],
             ["video", getLang("profile_wall_video")],
@@ -8171,7 +8177,7 @@
         ], {
             maxShown: 1,
             onAddMediaChange: function(r, a, i, s) {
-                return p(n, t, U, e, r, a, i, s, x)
+                return p(n, t, G, e, r, a, i, s, R)
             },
             editable: 1,
             onChangedSize: function() {
@@ -8199,47 +8205,47 @@
                 } : {}
         });
         hide(geByClass1("ms_items_more_helper", e)), addEvent(geByClass1(q, e), "mouseover", function() {
-            M && clearTimeout(M), show(geByClass1("ms_items_more_helper", e))
+            x && clearTimeout(x), show(geByClass1("ms_items_more_helper", e))
         }), addEvent(geByClass1(q, e), "mouseout", function() {
-            M = setTimeout(function() {
+            x = setTimeout(function() {
                 hide(geByClass1("ms_items_more_helper", e))
             }, 500)
         });
-        var R, U = d.bind(null, t, n, v, e, a, x),
-            G = debounce(w.bind(null, t, x), 500),
-            z = m(e, t, function(r, a) {
+        var U, G = d.bind(null, t, n, v, e, a, R),
+            z = debounce(w.bind(null, t, R), 500),
+            K = m(e, t, function(r, a) {
                 var i = t.get()
                     .peer,
                     s = Emoji.val(a);
                 (0, F.isReservedPeer)(i) || T(i, t) || t.get()
-                    .tabs[i].imdraft == s || !s || I(t), G(r, a);
+                    .tabs[i].imdraft == s || !s || I(t), z(r, a);
                 var o = e.offsetHeight;
-                if (R && R !== o) {
+                if (U && U !== o) {
                     var l = n()
                         .updateScroll();
                     n()
                         .scrollFix(t, t.get()
                             .peer, l)
                 }
-                R = o
-            }, U, P, D, s),
-            K = U.bind(null, []),
-            V = _.bind(null, t),
-            Y = geByClass1("_im_send", e);
-        addEvent(Y, "click", K), addEvent(Y, "mouseover", V), t.get()
-            .textMediaSelector = x, t.set(B.initTextStore.bind(null, h, C, E));
-        var Z = (ge("_im_media_preview"), geByClass1("_im_text", e));
+                U = o
+            }, G, A, M, s),
+            V = G.bind(null, []),
+            Y = _.bind(null, t),
+            Z = geByClass1("_im_send", e);
+        addEvent(Z, "click", V), addEvent(Z, "mouseover", Y), t.get()
+            .textMediaSelector = R, t.set(B.initTextStore.bind(null, h, C, E, P));
+        var $ = (ge("_im_media_preview"), geByClass1("_im_text", e));
         setTimeout(function() {
             a()
                 .restoreDraft(t)
         }, 0);
-        var $ = k.bind(null, z, t, Z, x),
-            X = b.bind(null, t, e, n),
-            J = u.bind(null, t);
+        var X = k.bind(null, K, t, $, R),
+            J = b.bind(null, t, e, n),
+            ee = u.bind(null, t);
         return addEvent(geByClass1("_im_text_wrap", e), "click", function() {
-                Z !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)(Z)
-            }), (0, j.addDelegateEvent)(e, "click", "_im_rc_emoji", $), (0, j.addDelegateEvent)(e, "click", Q, X), (0, j.addDelegateEvent)(e, "click", "_im_will_fwd", A),
-            (0, j.addDelegateEvent)(bodyNode, "click", W, J), i(x, Z, e, K, n, $, h, X, A, s, D, J)
+                $ !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)($)
+            }), (0, j.addDelegateEvent)(e, "click", "_im_rc_emoji", X), (0, j.addDelegateEvent)(e, "click", Q, J), (0, j.addDelegateEvent)(e, "click", "_im_will_fwd", D),
+            (0, j.addDelegateEvent)(bodyNode, "click", W, ee), i(R, $, e, V, n, X, h, J, D, s, M, ee)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0
@@ -9312,7 +9318,7 @@
             .then(function(e) {
                     var t = m(e, 2),
                         n = (t[0], t[1]);
-                    showDoneBox(n);
+                    showDoneBox(n)
                 }), a.hide(), t.hide(), n()
                 .unmount()
         }, getLang("mail_close"), function(e) {

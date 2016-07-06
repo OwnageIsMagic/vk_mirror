@@ -111,10 +111,11 @@ var navMap = {
     'autoreg(\\d+)?$': ['patterns_info.php', ['dyn-patterns_info.css', 'dyn-patterns_info.js', 'page.css']],
     'statlogs($|/)': ['statlogs_view.php', ['statlogs.css']],
     'market(-?\\d+)?(_\\d+)?$': ['al_market.php', ['market.css', 'market.js']],
-    'landings$': ['landings.php', []]
+    'landings$': ['landings.php', []],
+    'ach($|/)': ['achievements.php', ['achievements.css', 'achievements.js']]
 };
 var stVersions = {
-    'nav': 702712034423,
+    'nav': 702978857249,
     'fonts_cnt.css': 2157913508,
     'common.js': 1133,
     'common.css': 468136611,
@@ -239,7 +240,7 @@ var stVersions = {
     'mail.js': 4232525143,
     'email.css': 3625468312,
     'im.css': 3454128522,
-    'imn.js': 1548360510,
+    'imn.js': 3134555705,
     'im.js': 4271552496,
     'emoji.js': 2689379515,
     'wide_dd.css': 2440348481,
@@ -347,7 +348,7 @@ var stVersions = {
     'ads.js': 3590369524,
     'ads_payments.js': 899652112,
     'ads_edit.css': 813027418,
-    'ads_edit.js': 3708117178,
+    'ads_edit.js': 2388744809,
     'ads_moder.css': 3228585745,
     'ads_moder.js': 1730410251,
     'ads_tagger.js': 468647748,
@@ -517,4 +518,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 43;
+var _rnd = 185;
