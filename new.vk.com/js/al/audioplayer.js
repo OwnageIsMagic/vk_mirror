@@ -1510,7 +1510,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.getCurrentPlaylist = function() {
         return this._currentPlaylist
     }, AudioPlayer.prototype.getPlaylists = function() {
-        return this._playlists
+        return clone(this._playlists)
     }, AudioPlayer.prototype.pause = function() {
         this._isPlaying = !1, this.notify(AudioPlayer.EVENT_PAUSE), this._implSetVolume(0, !0), this._implPause()
     }, AudioPlayer.prototype.stop = function() {

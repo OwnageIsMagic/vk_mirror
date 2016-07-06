@@ -839,25 +839,33 @@ if (!window.Upload) {
                 for (var index in files) {
                     var file = files[index];
                     if (file.size && file.size > options['file_size_limit']) {
-                        if (options.lang.filesize_error) {
+                        var fileSizeErrorText = options.lang.filesize_error;
+                        if (fileSizeErrorText && fileSizeErrorText.indexOf('{count}') >= 0) {
+                            fileSizeErrorText = fileSizeErrorText.replace('{count}', intval(options['file_size_limit'] / (1024 * 1024)));
+                        }
+
+                        if (fileSizeErrorText) {
                             showFastBox({
-                                title: getLang('global_error'),
-                                width: 430,
-                                dark: 1,
-                                bodyStyle: 'padding: 20px; line-height: 160%;',
-                                onHide: function() {
-                                    Upload.embed(i);
-                                    delete cur.notStarted;
-                                }
-                            }, options.lang.filesize_error, getLang('global_continue'), function() {
-                                Upload.uploadFiles(i, files, max_files);
-                                if (options.filesize_hide_last) {
-                                    curBox()
-                                        .hide();
-                                } else {
-                                    boxQueue.hideAll();
-                                }
-                            }, getLang('global_cancel'));
+                                    title: getLang('global_error'),
+                                    width: 430,
+                                    dark: 1,
+                                    bodyStyle: 'padding: 20px; line-height: 160%;',
+                                    onHide: function() {
+                                        Upload.embed(i);
+                                        delete cur.notStarted;
+                                    }
+                                },
+                                fileSizeErrorText,
+                                getLang('global_continue'),
+                                function() {
+                                    Upload.uploadFiles(i, files, max_files);
+                                    if (options.filesize_hide_last) {
+                                        curBox()
+                                            .hide();
+                                    } else {
+                                        boxQueue.hideAll();
+                                    }
+                                }, getLang('global_cancel'));
                         }
                         return;
                     }

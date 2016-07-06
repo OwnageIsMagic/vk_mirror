@@ -894,7 +894,8 @@ a.fc_msg_att_lnk:hover .fc_msg_att_text {
 }
 
 .fc_tab_attach .ms_items_more {
-    right: -73px
+    right: auto;
+    left: -62px
 }
 
 .fc_tab_attach .ms_items_more_wrap {

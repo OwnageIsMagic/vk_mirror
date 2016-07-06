@@ -4310,7 +4310,7 @@ var Wall = {
     },
     postFull: function(post, event, opts) {
         if (post.match(/^wall-?\d+_\d+$/) && !(opts || {})
-            .nolist) {
+            .nolist && !nav.objLoc.owners_only && !nav.objLoc.q) {
             switch (cur.wallType) {
                 case 'all':
                 case 'full_all':

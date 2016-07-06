@@ -221,7 +221,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 var t = {};
                 t[AudioUtils.AUDIO_ITEM_INDEX_ALBUM_ID] = i, l.updateAudio(s + "_" + i, t)
             }), each(l.getPlaylists(), function(e, i) {
-                i.getType() == AudioPlaylist.TYPE_ALBUM && i.getOwnerId() == s && i.clean()
+                i.getType() == AudioPlaylist.TYPE_ALBUM && i.getOwnerId() == s && l.deletePlaylist(i)
             });
             var d = geByClass1("ui_rmenu", cur.audioPage._container),
                 u = geByClass1("ui_rmenu_item_sel", d),
@@ -254,22 +254,21 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     return this.editAlbum(0)
 }, AudioPage.prototype.editAlbum = function(e, i, t) {
     function o() {
-        l && (removeClass(l, "in_progress"), hideProgress(l));
-        showTabbedBox("al_audio.php", {
+        l && (removeClass(l, "in_progress"), hideProgress(l)), showTabbedBox("al_audio.php", {
             act: "edit_album_box",
             album_id: e || 0,
-            oid: r.options.oid
+            oid: a.options.oid
         }, {
             stat: ["privacy.js", "privacy.css", "ui_controls.js", "ui_controls.css", "indexer.js"],
             dark: 1
         })
     }
-    var a = getAudioPlayer(),
-        s = a.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL),
-        r = this,
+    var a = this,
+        s = getAudioPlayer(),
+        r = s.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL),
         l = i ? gpeByClass("_audio_album_btns", i) : null;
-    l && (addClass(l, "in_progress"), showProgress(l)), s.loadSilent(function(i) {
-        i.isComplete() ? o() : (i = a.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, e), i.loadSilent(o))
+    l && (addClass(l, "in_progress"), showProgress(l)), r.loadSilent(function(i) {
+        i.isComplete() ? o() : (i = s.getPlaylist(AudioPlaylist.TYPE_ALBUM, a.options.oid, e), i.loadSilent(o))
     }), cancelEvent(t)
 }, AudioPage.prototype.onHide = function() {
     var e = this;

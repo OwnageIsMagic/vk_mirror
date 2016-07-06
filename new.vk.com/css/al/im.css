@@ -925,6 +925,18 @@ body.mac .im_stickerpack_fixed {
     width: 100%
 }
 
+.im-page.im-page_classic .im-page--typing {
+    margin-left: 34px
+}
+
+.im-page.im-page_classic .im-page--top-date-bar-wrap {
+    width: 550px
+}
+
+.im-page.im-page_classic .im-page--lastact {
+    padding-left: 83px
+}
+
 .im-page.im-page_classic .im-page--dialogs-settings {
     margin-top: -3px;
     margin-right: 0
@@ -1093,7 +1105,7 @@ body.mac .im_stickerpack_fixed {
     margin-top: -17px;
     top: 57px;
     border-top: solid 17px #edeef0;
-    height: 65px;
+    height: 63px;
     margin-left: -1px;
     border-left: solid 1px #edeef0;
     border-right: solid 1px #edeef0;
@@ -1109,14 +1121,14 @@ body.mac .im_stickerpack_fixed {
 .im-page.im-page_classic .im-page--peer-online_right {
     float: right;
     margin-top: 2px;
-    margin-right: 15px
+    margin-right: 15px;
+    padding: 15px 0
 }
 
 .im-page.im-page_classic .im-page--header-icon {
     display: inline-block;
-    height: 47px;
-    margin-top: 0;
-    top: -11px
+    height: 45px;
+    margin-top: 0
 }
 
 .im-page.im-page_classic .im-page--header-icon_star {
@@ -1144,14 +1156,6 @@ body.mac .im_stickerpack_fixed {
     display: inline-block
 }
 
-.im-page.im-page_classic .im-mess--text {
-    max-width: 347px
-}
-
-.im-page.im-page_classic .im-mess--text .page_post_sized_thumbs {
-    max-width: 347px!important
-}
-
 .im-page.im-page_classic .im-page--history_search .im-mess--text {
     max-width: 320px
 }
@@ -1168,8 +1172,65 @@ body.mac .im_stickerpack_fixed {
     padding-top: 10px
 }
 
-.im-page.im-page_classic .im-page-action_star {
-    display: none
+.im-page.im-page_classic .im-mess-stack {
+    max-width: 550px
+}
+
+.im-page.im-page_classic .im-mess-stack--photo {
+    left: 36px
+}
+
+.im-page.im-page_classic .im-mess-stack--content .im-mess-stack--pname {
+    left: 82px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd)>.im-mess--text {
+    margin-left: 78px
+}
+
+.im-page.im-page_classic .im-mess-stack--mess li:last-of-type {
+    margin-bottom: 4px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd) {
+    margin: 0 4px;
+    max-width: 542px;
+    box-sizing: border-box;
+    padding-right: 57px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread {
+    margin: 0 28px;
+    padding-right: 33px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread .im-mess--marker {
+    left: -17px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread.im-mess_failed .im-mess--marker {
+    left: -18px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread.im-mess_selected {
+    margin: 0 4px;
+    padding-right: 57px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread.im-mess_selected .im-mess--check {
+    left: 6px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread.im-mess_selected>.im-mess--text {
+    margin-left: 78px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread>.im-mess--text {
+    margin-left: 54px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread>.im-mess--check {
+    left: 11px
 }
 
 .im-page.im-page_classic .im-page--hisory_search-open .im-page--header-inner {
@@ -1177,12 +1238,11 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page.im-page_classic .im-page--hisory_search-open .im-page--search-header {
-    padding: 2px 1px 0;
+    padding: 0 1px;
     box-sizing: border-box;
     border: none;
     box-shadow: none;
-    border-radius: 2px 2px 0 0;
-    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
+    border-radius: 2px 2px 0 0
 }
 
 .im-page.im-page_classic.im-page_history-show .im-page--history {
@@ -1217,6 +1277,7 @@ body.mac .im_stickerpack_fixed {
     display: inline-block
 }
 
+.im-page.im-page_classic.im-page_group .im-page-action_star,
 .im-page.im-page_classic.im-page_group .im-page--header-icon_search.im-page-header-icon_search-shown,
 .im-page.im-page_classic.im-page_group .ui_search_field.im-page--dialogs-search_fill+.ui_search_custom_ctrl {
     display: none
@@ -1262,6 +1323,33 @@ body.mac .im_stickerpack_fixed {
     display: none;
     margin-top: 8px;
     position: absolute
+}
+
+.im-page .im-page--top-date-bar-wrap {
+    position: absolute;
+    width: 594px;
+    top: 46px;
+    margin-top: -14px;
+    z-index: 2;
+    text-align: center;
+    pointer-events: none
+}
+
+.im-page .im-page--top-date-bar {
+    font-size: 12.5px;
+    color: #939393;
+    overflow: hidden;
+    display: inline-block
+}
+
+.im-page .im-page--top-date-bar-inner {
+    line-height: 1.5;
+    padding: 3px 15px;
+    border-radius: 25px;
+    background: #fff;
+    position: relative;
+    z-index: 2;
+    visibility: hidden
 }
 
 .im-page .im-page--typing_vis {
@@ -1380,7 +1468,6 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--toolsw {
-    margin-top: -1px;
     vertical-align: top
 }
 
@@ -1403,15 +1490,27 @@ body.mac .im_stickerpack_fixed {
     display: inline-block;
     vertical-align: middle;
     padding-right: 13px;
-    margin-top: -16px;
     padding-top: 15px;
-    padding-bottom: 15px;
-    margin-bottom: -16px;
-    margin-left: -20px
+    padding-bottom: 13px;
+    position: relative;
+    z-index: 2
 }
 
-.im-page a.im-page--back-button:hover {
-    background: #f5f7fa
+.im-page a.im-page--back-button:before {
+    z-index: 0;
+    position: absolute;
+    display: block;
+    content: "";
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 120%;
+    max-width: 240px
+}
+
+.im-page a.im-page--back-button:hover:before {
+    background: -o-linear-gradient(right, #fff, #f5f7fa 20%);
+    background: linear-gradient(270deg, #fff, #f5f7fa 20%)
 }
 
 .im-page .im-page--hisory_search-open .im-page--search-hist {
@@ -1562,6 +1661,17 @@ body.mac .im_stickerpack_fixed {
     right: 0
 }
 
+.im-page .im-page--history-new-bar_days>span {
+    line-height: 1.5;
+    border-radius: 20px;
+    padding: 3px 15px
+}
+
+.im-page .im-page--history-new-bar_days.im-page--history-new-bar_hide {
+    position: absolute;
+    visibility: hidden
+}
+
 .im-page .ui_search_field.im-page--dialogs-search_fill {
     padding-right: 95px
 }
@@ -1596,11 +1706,19 @@ body.mac .im_stickerpack_fixed {
     border-bottom: solid 1px #e4e6e9
 }
 
+.im-page .im-page--simple-name {
+    padding-left: 20px
+}
+
+.im-page .im-page--simple-name>div,
+.im-page .im-page--simple-name>span {
+    padding: 16px 0
+}
+
 .im-page .im-page--header-icon {
     display: none;
     vertical-align: top;
     position: relative;
-    margin-top: -11px;
     border: none;
     outline: 0;
     width: 34px;
@@ -1652,7 +1770,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--header-inner {
-    padding: 16px 20px
+    height: 45px
 }
 
 .im-page .im-page--chat-body {
@@ -1712,10 +1830,6 @@ body.mac .im_stickerpack_fixed {
     width: 100%
 }
 
-.im-page .im-page--header-tools {
-    margin-top: -4px
-}
-
 .im-page .im-page--header-star {
     background: url(/images/icons/fav_mark.png) no-repeat;
     width: 14px;
@@ -1734,7 +1848,7 @@ body.mac .im_stickerpack_fixed {
 .im-page .im-page--mess-actions {
     display: none;
     position: relative;
-    top: -1px
+    padding: 10px 12px 10px 0
 }
 
 .im-page .im-page--mess-actions .im-page-action {
@@ -1805,15 +1919,9 @@ body.mac .im_stickerpack_fixed {
     margin-top: 37px
 }
 
-.im-page .im-page--mess-actions {
-    margin-right: -8px
-}
-
 .im-page .im-page--header-more {
     width: 48px;
-    margin-right: -20px;
     height: 46px;
-    margin-top: -12px;
     display: inline-block;
     cursor: pointer;
     vertical-align: middle;
@@ -1825,7 +1933,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--header-more .ui_actions_menu_icons {
-    margin-top: -17px;
+    margin-top: -18px;
     background: url(/images/icons/m_more.png) no-repeat 2px;
     height: 46px;
     opacity: 0.7;
@@ -1854,11 +1962,16 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--peer.im-page--peer_actions {
-    padding-right: 30px
+    padding-right: 30px;
+    cursor: pointer
+}
+
+.im-page .im-page--peer.im-page--peer_actions:hover .im-deselect {
+    opacity: 1
 }
 
 .im-page .im-page--peer .im-deselect {
-    right: 10px
+    right: 5px
 }
 
 .im-page .im-page--members,
@@ -2045,7 +2158,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-chat-input {
-    padding: 15px 33px 17px;
+    padding: 12px 33px 17px;
     box-sizing: border-box;
     border-top: solid 1px #e4e6e9
 }
@@ -2062,7 +2175,7 @@ body.mac .im_stickerpack_fixed {
     position: relative;
     margin-top: -15px;
     cursor: text;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-top: solid 15px transparent
 }
 
@@ -2175,8 +2288,8 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-chat-input.im-chat-input_classic {
-    padding-left: 33px;
-    padding-right: 33px;
+    padding-left: 26px;
+    padding-right: 26px;
     border-top: 0;
     border-radius: 0 0 2px 2px;
     box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
@@ -2188,7 +2301,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-chat-input.im-chat-input_classic .im-chat-input--textarea {
-    width: 364px
+    width: 378px
 }
 
 .im-chat-input.im-chat-input_classic .im-chat-input--rcemoji {
@@ -2200,13 +2313,28 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-mess-stack .im-mess-stack--content .im-mess-stack--lnk {
-    max-width: 180px;
+    max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block;
     vertical-align: top;
     line-height: 1.23
+}
+
+.im-mess-stack .im-mess-stack--content .im-mess-stack--tools {
+    color: hsla(0, 0%, 58%, .6);
+    font-size: 12.5px;
+    z-index: 2;
+    margin-left: 4px;
+    line-height: 1.23
+}
+
+.im-mess-stack .im-mess-stack--content .im-mess-stack--tools a {
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    color: hsla(0, 0%, 58%, .6)
 }
 
 .im-mess-stack .im-mess-stack--content .im-mess-stack--pname {
@@ -2226,7 +2354,7 @@ body.mac .im_stickerpack_fixed {
     background: none
 }
 
-.im-mess-stack .im-mess-stack--content .im-mess-stack--pname a {
+.im-mess-stack .im-mess-stack--content .im-mess-stack--pname>a {
     color: #42648b;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
@@ -2244,20 +2372,6 @@ body.mac .im_stickerpack_fixed {
     z-index: 2
 }
 
-.im-mess-stack .im-mess-stack--tools {
-    position: absolute;
-    right: 43px;
-    color: #939393;
-    font-size: 12.5px;
-    z-index: 2;
-    line-height: 1.154;
-    top: 11px
-}
-
-.im-mess-stack .im-mess-stack--tools a {
-    color: #939393
-}
-
 .im-mess-stack .im-mess-stack--mess .im-mess:first-child>.im-mess--text {
     padding-top: 21px
 }
@@ -2267,7 +2381,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-mess-stack .im-mess-stack--mess .im-mess:first-child>.im-mess--fav {
-    margin-top: 4px
+    margin-top: 5px
 }
 
 .im-mess-stack .im-mess-stack--mess .im-mess.im-mess_unread:first-child .im-mess--marker {
@@ -2286,15 +2400,26 @@ body.mac .im_stickerpack_fixed {
     position: static;
     display: inline;
     top: auto;
-    right: auto
+    right: auto;
+    margin-left: 4px
+}
+
+.im-mess-stack.im-mess-stack_fwd.im-mess-stack_fwd-top>.im-mess-stack--content>.im-mess-stack--info {
+    line-height: 1.23
 }
 
 .im-mess-stack.im-mess-stack_fwd-top>.im-mess-stack--content>.im-mess-stack--info>.im-mess-stack--tools {
     margin-left: 5px
 }
 
-.im-mess-stack.im-mess-stack_search .im-mess-stack--tools {
-    right: 70px
+.im-mess-stack.im-mess-stack_full-date {
+    line-height: 1.23
+}
+
+.im-mess-stack.im-mess-stack_full-date .im-mess-stack--tools {
+    position: absolute;
+    right: 60px;
+    margin-top: 11px
 }
 
 .im-mess-stack.im-mess-stack_no-tools .im-mess-stack--tools {
@@ -2323,8 +2448,7 @@ body.mac .im_stickerpack_fixed {
 .im-mess-stack.im-mess-stack_fwd .im-mess-stack--tools {
     position: static;
     display: block;
-    margin-bottom: 2px;
-    margin-top: 2px
+    margin-left: 0
 }
 
 .im-mess-stack.im-mess-stack_fwd-top .im-mess-stack_fwd .im-mess:first-child>.im-mess--text,
@@ -2354,34 +2478,37 @@ body.mac .im_stickerpack_fixed {
     margin-bottom: 3px
 }
 
+.im-search--date-input {
+    float: right;
+    position: relative;
+    left: -257px;
+    top: -10px
+}
+
+.im-search--date-input .cal_box {
+    display: none
+}
+
+.im-search--date-input .cal_table .day {
+    color: #939393;
+    pointer-events: none
+}
+
+.im-search--date-input .cal_table .past_day.day,
+.im-search--date-input .cal_table .today.day {
+    color: #000;
+    pointer-events: all
+}
+
+.im-search--date-input .datepicker_control {
+    display: none
+}
+
 .im-search {
     padding-right: 11px;
     box-sizing: border-box;
     position: relative;
     z-index: 10
-}
-
-.im-search .cal_table .day {
-    color: #939393;
-    pointer-events: none
-}
-
-.im-search .cal_table .past_day.day,
-.im-search .cal_table .today.day {
-    color: #000;
-    pointer-events: all
-}
-
-.im-search .im-search--date-input {
-    float: right;
-    position: relative;
-    left: -55px;
-    top: 35px
-}
-
-.im-search .im-search--date-input .cal_box,
-.im-search .im-search--date-input .datepicker_control {
-    display: none
 }
 
 .im-search .im-search--wrap {
@@ -2419,6 +2546,10 @@ body.mac .im_stickerpack_fixed {
     padding: 6px 83px 7px 0;
     position: relative;
     margin: 0 7px
+}
+
+.im-mess .im-mess--del-attach {
+    color: #939393
 }
 
 .im-mess .im-mess--text {
@@ -2483,7 +2614,7 @@ body.mac .im_stickerpack_fixed {
     height: 17px;
     display: block;
     top: 8px;
-    left: 7px;
+    left: 6px;
     display: none;
     position: absolute;
     background: url(/images/icons/msg_check.png) no-repeat
@@ -2656,7 +2787,7 @@ body.mac .im_stickerpack_fixed {
     width: 16px;
     height: 16px;
     background: url(/images/icons/msg_fail.png);
-    left: -22px;
+    left: -23px;
     top: 8px;
     position: absolute
 }
@@ -2749,7 +2880,7 @@ body.mac .im_stickerpack_fixed {
     width: 14px;
     height: 14px;
     background: url(/images/icons/im_clock.png);
-    left: -22px;
+    left: -23px;
     top: 10px;
     position: absolute;
     opacity: 1
@@ -4209,7 +4340,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-settings {
-    width: 260px;
+    width: 270px;
     padding: 4px 0;
     font-size: 13px
 }
@@ -4239,19 +4370,29 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-deselect {
-    background: url(/images/icons/box_acts.png) no-repeat 0 -14px;
-    width: 14px;
-    height: 14px;
+    width: 24px;
+    height: 24px;
     display: inline-block;
     position: absolute;
-    margin-top: 2px;
-    margin-left: 8px;
-    opacity: 0.7
+    margin-left: 12px;
+    margin-top: -3px;
+    opacity: 0.7;
+    cursor: pointer
+}
+
+.im-deselect:before {
+    content: "";
+    display: block;
+    position: absolute;
+    margin-left: 5px;
+    margin-top: 5px;
+    width: 14px;
+    height: 14px;
+    background: url(/images/icons/box_acts.png) no-repeat 0 -14px
 }
 
 .im-deselect:hover {
-    opacity: 1;
-    cursor: pointer
+    opacity: 1
 }
 
 .im-create {
@@ -4410,7 +4551,8 @@ body.sf .nim-dialog .nim-dialog--unread {
 .im-create .ui_search_field {
     background: none;
     padding-left: 0;
-    border-left-width: 0
+    border-left-width: 0;
+    margin-bottom: 1px
 }
 
 .im-create .ui_multiselect_has_selection .ui_search_field {
@@ -4710,7 +4852,11 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-star-tt.tt_w.tt_black.tt_down:after {
-    left: 56px
+    left: 46px
+}
+
+.im-star-tt_long.tt_w.tt_black.tt_down:after {
+    left: 81px
 }
 
 .im_msg_media_gift .im-gift {
