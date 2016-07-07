@@ -270,6 +270,9 @@ var stVersions = {
     'profile_edit_mil.js': 200684846,
     'search.js': 1316350637,
     'search.css': 1227212287,
+    'grid_sorter.js': 3541649883,
+    'auto_list.js': 2426348809,
+    'suggester.js': 446460383,
     'datepicker.js': 741866923,
     'datepicker.css': 456151918,
     'oauth_popup.css': 2783037447,
@@ -344,8 +347,8 @@ var stVersions = {
     'call.css': 1208034002,
     'aes_light.css': 1511176461,
     'aes_light.js': 3884708224,
-    'ads.css': 306263073,
-    'ads.js': 3590369524,
+    'ads.css': 3661315251,
+    'ads.js': 3283986967,
     'ads_payments.js': 899652112,
     'ads_edit.css': 12388220,
     'ads_edit.js': 4020796185,
@@ -393,7 +396,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 3334348817,
     'ui.js': 3425210242,
-    'ui_common.js': 737111512,
+    'ui_common.js': 1802267164,
     'ui_common.css': 1579730146,
     'ui_media_selector.js': 1834362560,
     'ui_media_selector.css': 718299077,
@@ -419,9 +422,6 @@ var stVersions = {
     'vkme.css': 703161760,
     'ui_controls.js': 3806767471,
     'highcharts.js': 607702664,
-    'grid_sorter.js': 3937644316,
-    'suggester.js': 446460284,
-    'auto_list.js': 2426348710,
     'ui_controls.css': 2603924485,
     'selects.js': 1852657841,
     'mentions.js': 3686976691,
@@ -472,9 +472,6 @@ var stTypes = {
         'md5.js': 1,
         'clipboard.js': 1,
         'ui_controls.js': 1,
-        'grid_sorter.js': 1,
-        'suggester.js': 1,
-        'auto_list.js': 1,
         'highcharts.js': 1,
         'selects.js': 1,
         'sort.js': 1,
@@ -518,4 +515,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 5363;
+var _rnd = 178;

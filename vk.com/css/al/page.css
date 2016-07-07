@@ -1176,6 +1176,13 @@ div.wall_module .ext_video div {
     background-position: 0px -240px;
 }
 
+.wall_post_source_ads_mark {
+    cursor: default;
+    background-image: url(/images/icons/post_ad_tag_gray.png);
+    background-size: 10px 10px;
+    background-position: 1px 1px;
+}
+
 
 /*.published_a_quote:hover .wall_post_source_default {
   background-position: 0px -209px;
@@ -1375,7 +1382,7 @@ textarea#post_field {
 }
 
 .wall_text_name {
-    width: 305px;
+    width: 290px;
     overflow: hidden;
 }
 
@@ -7283,6 +7290,12 @@ div.create_poll_cb,
 
 .medadd_h_timer {
     background-position: 0 -332px;
+}
+
+.medadd_h_mark_as_ads {
+    background-image: url(/images/icons/post_ad_tag.png);
+    background-size: 11px 11px;
+    background-position: 0 2px;
 }
 
 .medadd_h_mail {

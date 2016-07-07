@@ -181,6 +181,7 @@ var parseJSON = (window.JSON && JSON.parse) ? function(obj) {
     return eval('(' + obj + ')');
 }
 window.vkLastNav = Date.now();
+window.vkTabLoaded = Date.now();
 
 var cur = {
     destroy: [],
@@ -11491,9 +11492,25 @@ function isFullScreen() {
         cur.pvPartScreen);
 }
 
+function extractPercentile(value, percentiles) {
+    for (var i = 0; i < percentiles.length; i++) {
+        var percnt = percentiles[i];
+        if (percnt === '>') {
+            percnt = '>' + percentiles[i - 1];
+        } else if (percnt * 1000 > value) {
+            percnt = '<' + percnt;
+            break;
+        } else {
+            percnt = false;
+        }
+    }
+    return percnt;
+}
+
 function collectMemtoryStats() {
     var collectedPeriods = {};
-    var percentiles = [15, 60, 300, 1500];
+    var percentiles = [15, 60, 300, 1500, 5000, 10000, 15000, 20000, 25000, 30000];
+    var uptimePercentiles = [300, 1500, 5000, 30000, 60000, 120000, '>'];
     var prevModule = false;
 
     setInterval(function() {
@@ -11507,18 +11524,12 @@ function collectMemtoryStats() {
         var lastNav = window.vkLastNav;
         if (curModule && lastNav) {
             var ellapsed = Date.now() - lastNav;
-            for (var i = 0; i < percentiles.length; i++) {
-                var percnt = percentiles[i];
-                if (percnt * 1000 > ellapsed) {
-                    break;
-                } else {
-                    percnt = false;
-                }
-            }
+            var percnt = extractPercentile(Date.now() - lastNav, percentiles);
             if (percnt && !collectedPeriods[percnt]) {
+                var uptime = extractPercentile(Date.now() - window.vkTabLoaded, uptimePercentiles);
                 collectedPeriods[percnt] = true;
                 var perf = performance.memory.usedJSHeapSize;
-                statlogsValueEvent('js_memory_stats_modules', perf, curModule, percnt);
+                statlogsValueEvent('js_memory_stats_modules', perf, curModule, percnt, uptime);
             }
         }
     }, 5000);

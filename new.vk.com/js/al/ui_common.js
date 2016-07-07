@@ -185,8 +185,8 @@ var uiTabs = {
                             top: h[1] - a[1] + c
                         };
                     if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + u, setStyle(n, v), i.processHoverCls) {
-                        var g = domClosest(i.processHoverCls, l);
-                        addEvent(t, "mouseover", addClass.pbind(g, "hover")), addEvent(t, "mouseout", removeClass.pbind(g, "hover"))
+                        var m = domClosest(i.processHoverCls, l);
+                        addEvent(t, "mouseover", addClass.pbind(m, "hover")), addEvent(t, "mouseout", removeClass.pbind(m, "hover"))
                     }
                 }
             }
@@ -281,7 +281,7 @@ var uiTabs = {
             if ("string" == typeof name ? submenu = geByClass1("_ui_rmenu_" + name + "_list", menu) : (submenu = name, name = submenu.getAttribute("data-sublist-id")), el =
                 geByClass1("_ui_rmenu_" + name + "_toggle", menu), !submenu) return !1;
             void 0 !== ref && uiRightMenu.hideSliding(menu), el && toggleClass(el, "ui_rmenu_item_expanded", !isVisible(submenu)), slideToggle(submenu, submenu && getSize(
-                submenu)[1] ? 100 : 0);
+                submenu)[1] ? 100 : 0), setTimeout(updateNarrow, 100);
             var onToggle = domData(el, "on-toggle");
             return onToggle && setTimeout(function() {
                 eval(onToggle)
@@ -1279,7 +1279,7 @@ window.Scrollbar = window.Scrollbar || function() {
             null != p && (u = u + "|" + escapeRE(p));
             var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + u + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var g = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
+        var m = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
                 l = t[1];
             if (e) {
@@ -1297,7 +1297,7 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                c.push(rs(n, g(this, t, r.invertedSelection, o, v)))
+                c.push(rs(n, m(this, t, r.invertedSelection, o, v)))
             }), e || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
                 .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), e ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), d > e +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {
