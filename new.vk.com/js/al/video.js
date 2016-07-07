@@ -1045,7 +1045,7 @@ var Video = {
         }), d()
     },
     doAttachSelectedVideos: function(e) {
-        return hasClass(e, "flat_button") ? lockButton(e) : showGlobalPrg(e, {
+        return hasClass(e, "flat_button") ? lockButton(e) : showGlobalPrg(geByClass1("video_item_thumb_wrap", e) || e, {
             cls: "progress_inv_img",
             w: 46,
             h: 16,

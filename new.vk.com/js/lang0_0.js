@@ -36,6 +36,7 @@ global_continue = '����������';
 global_date = ['', '{day} {month} {year}', '�����', '�������', '������'];
 global_day_label = '����:';
 global_delete = '�������';
+global_delete_audio = '������� �����������';
 global_done = '������';
 global_dont_delete = '�� �������';
 global_edit = '�������������';
@@ -227,7 +228,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 437;
+// section = 0; version = 439;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;

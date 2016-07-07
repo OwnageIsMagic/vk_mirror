@@ -1688,34 +1688,13 @@ div.chat_tab_img {
     visibility: visible
 }
 
-.emoji_list_cont .emoji_scrollbar_cont {
-    width: 7px;
-    margin-top: 3px;
-    background-color: none;
-    -o-transition: none;
-    transition: none
+.emoji_list_cont .scrollbar_cont.scrollbar_c_overed {
+    width: 10px
 }
 
-.emoji_list_cont .emoji_scrollbar_cont.scrollbar_c_overed {
-    background: none!important;
-    width: 7px!important
-}
-
-.emoji_list_cont .emoji_scrollbar_cont.scrollbar_c_overed .scrollbar_inner {
-    width: 6px
-}
-
-.emoji_list_cont .emoji_scrollbar_cont .scrollbar_inner {
-    background: #a0a0a0;
-    opacity: 0.4;
-    filter: alpha(opacity=40);
-    margin-left: 6px
-}
-
-.emoji_list_cont .emoji_scrollbar_cont .scrollbar_inner.scrollbar_hovered,
-.emoji_list_cont .emoji_scrollbar_cont .scrollbar_inner:hover {
-    opacity: 0.6;
-    filter: alpha(opacity=60)
+.emoji_list_cont .scrollbar_c_overed .scrollbar_inner {
+    width: 6px;
+    border-radius: 3px
 }
 
 .emoji_list {
@@ -2408,7 +2387,7 @@ div.chat_tab_img {
 
 .fc_snapster_invite_room_desc {
     margin-top: 2px;
-    line-height: 160%
+    line-height: 22px
 }
 
 .fc_snapster_invite_room_sep {
@@ -2464,7 +2443,7 @@ div.chat_tab_img {
 }
 
 .fc_snapster_invite_about {
-    line-height: 160%;
+    line-height: 22px;
     margin: 5px 0px
 }
 

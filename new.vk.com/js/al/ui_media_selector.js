@@ -288,7 +288,7 @@ function MediaSelector(e, a, i, o) {
                         hide(this._addMediaLink), vkImage()
                             .src = t[1];
                         var A = t[3].replace(/^{|}$/g, "");
-                        A && (A += ","), A += "queue:1", S = o.nocl ? "" : " onclick=\"return showPhoto('" + t[4] + "', '" + t[2] + "', " + A.replace(/"/g, "&quot;") +
+                        A && (A += ","), A += '"queue":1', S = o.nocl ? "" : " onclick=\"return showPhoto('" + t[4] + "', '" + t[2] + "', " + A.replace(/"/g, "&quot;") +
                             ');"', P = "<div" + S + ' class="fl_l page_preview_photo"><img class="page_preview_photo" src="' + t[1] + '" /></div>', N = L = g;
                         break;
                     case "photo":
@@ -301,7 +301,7 @@ function MediaSelector(e, a, i, o) {
                             }), vkImage()
                             .src = t.thumb_m;
                         var A = t.view_opts.replace(/^{|}$/g, "");
-                        if (A && (A += ","), A += "queue:1", s.phLists[i] = t.list, c) {
+                        if (A && (A += ","), A += '"queue":1', s.phLists[i] = t.list, c) {
                             if (!t.editable) return !1;
                             o.nocl || (t.editable.click = s.showPhoto.pbind(i, t.list, parseJSON("{" + A + "}")))
                         }
@@ -769,7 +769,7 @@ function MediaSelector(e, a, i, o) {
             urlsCancelled: [],
             shareData: {},
             checkMessageURLs: function(e, a, i) {
-                if (!(s.chosenMedia || s.urlAttachmentLoading && s.urlAttachmentLoading[0] > vkNow() - 1e4 || s.attachCount() >= l)) {
+                if (!(cur.noCheckMessageURLs || s.chosenMedia || s.urlAttachmentLoading && s.urlAttachmentLoading[0] > vkNow() - 1e4 || s.attachCount() >= l)) {
                     if (cur.reply_to && cur.reply_to[0]) {
                         var o = Wall.getReplyName(cur.reply_to[0]);
                         if (o && isArray(o) && o[1] && (o = o[1]), o) {
@@ -893,10 +893,9 @@ function MediaSelector(e, a, i, o) {
                     var y = d.description_short || d.description,
                         l = c + (d.title ? '<h4 class="medadd_c_linkhead">' + d.title + "</h4>" : "") + (!t && d.domain ? '<div class="page_media_link_addr">' + d.domain +
                             "</div>" : "") + (x ? '<div class="medadd_c_linkmicrodata">' + x + "</div>" : "") + (y ? '<div class="medadd_c_linkdsc">' + y + "</div>" : "") +
-                        '<div class="clear"></div>'
+                        '<div class="clear"></div>';
                 }
-                if (e) cur.preventShareAnim && (cur.preventShareAnim.stop(),
-                        clearInterval(cur.animateUpdateInterval)), val(domFC(r), l), domFC(r)
+                if (e) cur.preventShareAnim && (cur.preventShareAnim.stop(), clearInterval(cur.animateUpdateInterval)), val(domFC(r), l), domFC(r)
                     .style.height = "auto", shortCurrency();
                 else {
                     !isVisible(b);

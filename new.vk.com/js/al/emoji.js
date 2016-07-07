@@ -1772,7 +1772,7 @@ if (!window.Emoji) {
                 toUp = (upSpace >= ttH);
             }
             space = (toUp ? upSpace : downSpace);
-            while (space < ttH && rowsCnt > 4) {
+            while (space < ttH && rowsCnt > 3) {
                 rowsCnt--;
                 ttH -= smileH;
             }
@@ -1842,10 +1842,11 @@ if (!window.Emoji) {
                 opts.emojiScroll = new Scrollbar(list, {
                     prefix: 'emoji_',
                     nomargin: true,
+                    padding: 7,
                     global: true,
                     nokeys: true,
-                    right: vk.rtl ? 'auto' : 9,
-                    left: !vk.rtl ? 'auto' : 9,
+                    right: vk.rtl ? 'auto' : 4,
+                    left: !vk.rtl ? 'auto' : 4,
                     startDrag: function() {
                         opts.scrolling = true;
                     },
@@ -2621,6 +2622,9 @@ if (!window.Emoji) {
                     showDoneBox(text);
                     if (newStickers) {
                         Emoji.updateTabs(newStickers, keywords, true);
+                        try {
+                            vk.widget && Rpc.callMethod('proxy', 'updateStickers');
+                        } catch (e) {} // for widget_comments.js
                     }
                     var box = cur.tabbedStickersBox;
                     if (box && box.tbUpdate) {

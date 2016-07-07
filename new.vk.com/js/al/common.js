@@ -180,6 +180,7 @@ var parseJSON = (window.JSON && JSON.parse) ? function(obj) {
 } : function(obj) {
     return eval('(' + obj + ')');
 }
+window.vkLastNav = Date.now();
 
 var cur = {
     destroy: [],
@@ -4609,7 +4610,7 @@ var ajax = {
             }
 
             // Static managing function
-            if (navVersion <= stVersions['nav']) {
+            if (navVersion == stVersions['nav']) {
                 return waitResponseStatic();
             }
             headNode.appendChild(ce('script', {
@@ -4617,7 +4618,7 @@ var ajax = {
                 src: '/js/loader_nav' + navVersion + '_' + vk.lang + '.js'
             }));
             setTimeout(function() {
-                if (navVersion <= stVersions['nav']) {
+                if (navVersion == stVersions['nav']) {
                     return waitResponseStatic();
                 }
                 setTimeout(arguments.callee, 100);
@@ -5948,6 +5949,10 @@ var nav = {
             }
 
             nav.setLoc(params.loc || '');
+
+            if (changed[0]) {
+                window.vkLastNav = Date.now();
+            }
 
             lTimeout(function() {
                 //nav.setLoc(params.loc || ''); // moved out of this scope (see above)
@@ -10820,7 +10825,7 @@ function audioShowActionTooltip(btn) {
                 if (restores && restores.deleteAll) {
                     text = restores.deleteAll.text;
                 } else {
-                    text = getLang('audio_delete_audio');
+                    text = getLang('global_delete_audio');
                 }
             }
             break;
@@ -10837,7 +10842,7 @@ function audioShowActionTooltip(btn) {
                     text = getLang('audio_restore_audio');
 
                 } else if (info && info.state == AudioUtils.AUDIO_STATE_ADDED) {
-                    text = getLang('audio_delete_audio');
+                    text = getLang('global_delete_audio');
 
                 } else {
                     var audioPage = window.AudioPage ? AudioPage(btn) : false;
@@ -11484,6 +11489,43 @@ function isFullScreen() {
         document.mozFullScreen ||
         document.webkitIsFullScreen ||
         cur.pvPartScreen);
+}
+
+function collectMemtoryStats() {
+    var collectedPeriods = {};
+    var percentiles = [15, 60, 300, 1500];
+    var prevModule = false;
+
+    setInterval(function() {
+        var curModule = window.cur && window.cur.module;
+
+        if (curModule !== prevModule) {
+            collectedPeriods = {};
+            prevModule = curModule;
+        }
+
+        var lastNav = window.vkLastNav;
+        if (curModule && lastNav) {
+            var ellapsed = Date.now() - lastNav;
+            for (var i = 0; i < percentiles.length; i++) {
+                var percnt = percentiles[i];
+                if (percnt * 1000 > ellapsed) {
+                    break;
+                } else {
+                    percnt = false;
+                }
+            }
+            if (percnt && !collectedPeriods[percnt]) {
+                collectedPeriods[percnt] = true;
+                var perf = performance.memory.usedJSHeapSize;
+                statlogsValueEvent('js_memory_stats_modules', perf, curModule, percnt);
+            }
+        }
+    }, 5000);
+}
+
+if (window.performance && window.performance.memory && rand(0, 100) < 1) {
+    collectMemtoryStats();
 }
 
 try {

@@ -1625,6 +1625,8 @@ a.ui_search_custom_link {
 .ui_scroll_outer {
     width: inherit;
     height: inherit;
+    min-height: inherit;
+    max-height: inherit;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
     padding-right: 100px
@@ -1642,7 +1644,9 @@ a.ui_search_custom_link {
     overflow: hidden;
     position: relative;
     width: inherit;
-    height: inherit
+    height: inherit;
+    min-height: inherit;
+    max-height: inherit
 }
 
 .ui_scroll_dragging .ui_scroll_overflow {

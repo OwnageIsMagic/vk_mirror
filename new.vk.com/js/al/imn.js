@@ -27,9 +27,9 @@
         l = n(77);
     window.IM = {
         init: function(e) {
-            window.Promise || (window.Promise = o.Promise), window.cur.lang.dont_attach = getLang("mail_dont_add_media"), cur.ctrl_submit = e.ctrl_submit, cur.module =
-                "im", cur.mutedPeers = e.mutedPeers, cur.gid = e.gid, cur.peer = e.peer, e.blockedFlagUpdates = {}, e.msgid = intval(nav.objLoc.msgid), e.unread_dialogs =
-                Object.keys(e.tabs)
+            window.Promise || (window.Promise = o.Promise), console.log(1111), window.cur.lang.dont_attach = getLang("mail_dont_add_media"), cur.ctrl_submit = e.ctrl_submit,
+                cur.module = "im", cur.mutedPeers = e.mutedPeers, cur.gid = e.gid, cur.peer = e.peer, e.blockedFlagUpdates = {}, e.msgid = intval(nav.objLoc.msgid),
+                e.unread_dialogs = Object.keys(e.tabs)
                 .filter(function(t) {
                     return e.tabs[t].unread > 0
                 })

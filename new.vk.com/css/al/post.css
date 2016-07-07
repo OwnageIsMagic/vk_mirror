@@ -319,8 +319,8 @@ a.page_post_thumb_wrap:hover {
 
 .page_market_album_nocover {
     background: #ecf1f5 url(/images/icons/mall_icon.png?2) no-repeat 50% 45%;
-    width: 508px;
-    height: 282px
+    width: 100%;
+    padding-top: 55.51181102%
 }
 
 .page_market_album_nocover .page-market_album_thumb_wrap {
@@ -634,6 +634,7 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_linkdsc {
+    word-wrap: break-word;
     padding: 0 5px 5px
 }
 

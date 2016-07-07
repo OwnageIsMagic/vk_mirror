@@ -650,12 +650,13 @@ var uiTabs = {
                     onmore: null
                 }, e), this.options["native"] && (this.options.shadows = !1), this.removeEvents = [], this.removeElements = [], this.dragging = !1, this.released = !0, this.noMore = !
                 1, this.dragY = null, this.dragScroll = null, this.shadowTop = !1, this.shadowBottom = !1, this.unnecessary = !1, this.disabled = !1, this.stopped = !0, this.stoppedTimeout =
-                null, this.emitter = new EventEmitter, isFunction(this.options.onresize) && this.emitter.addListener("resize", this.options.onresize), isFunction(this.options.onscroll) &&
-                this.emitter.addListener("scroll", this.options.onscroll), isFunction(this.options.onscrollstart) && this.emitter.addListener("scrollstart", this.options.onscrollstart),
-                isFunction(this.options.onscrollstop) && this.emitter.addListener("scrollstop", this.options.onscrollstop), isFunction(this.options.ondrag) && this.emitter.addListener(
-                    "drag", this.options.ondrag), isFunction(this.options.ondragstart) && this.emitter.addListener("dragstart", this.options.ondragstart), isFunction(this.options
-                    .ondragstop) && this.emitter.addListener("dragstop", this.options.ondragstop), isFunction(this.options.onupdate) && this.emitter.addListener("update", this
-                    .options.onupdate), isFunction(this.options.onmore) && this.emitter.addListener("more", this.options.onmore), this.el = {
+                null, this.fixSizeDefault = null, this.emitter = new EventEmitter, isFunction(this.options.onresize) && this.emitter.addListener("resize", this.options.onresize),
+                isFunction(this.options.onscroll) && this.emitter.addListener("scroll", this.options.onscroll), isFunction(this.options.onscrollstart) && this.emitter.addListener(
+                    "scrollstart", this.options.onscrollstart), isFunction(this.options.onscrollstop) && this.emitter.addListener("scrollstop", this.options.onscrollstop),
+                isFunction(this.options.ondrag) && this.emitter.addListener("drag", this.options.ondrag), isFunction(this.options.ondragstart) && this.emitter.addListener(
+                    "dragstart", this.options.ondragstart), isFunction(this.options.ondragstop) && this.emitter.addListener("dragstop", this.options.ondragstop), isFunction(
+                    this.options.onupdate) && this.emitter.addListener("update", this.options.onupdate), isFunction(this.options.onmore) && this.emitter.addListener("more",
+                    this.options.onmore), this.el = {
                     container: t,
                     overflow: ce("div", {
                         className: "ui_scroll_overflow"
@@ -741,11 +742,12 @@ var uiTabs = {
                     removeEvent(e), this.released = !0, this.noMore && this.stopped && !this.dragging && (this.noMore = !1, this.more())
                 }.bind(this))
             }.bind(this)), this.addEvent(this.el.outer, "scroll", function() {
-                this.update() && (this.stopped && (this.emitEvent("scrollstart"), this.options["native"] || addClass(this.el.container, "ui_scroll_scrolled")), this.emitEvent(
-                    "scroll"), this.stoppedTimeout && clearTimeout(this.stoppedTimeout), this.stoppedTimeout = setTimeout(function() {
-                    this.stopped || (this.stopped = !0, this.options["native"] || removeClass(this.el.container, "ui_scroll_scrolled"), this.emitEvent(
-                        "scrollstop"), this.noMore && this.released && !this.dragging && (this.noMore = !1, this.more()))
-                }.bind(this), 200), this.stopped = !1)
+                this.update() && (this.stopped ? (this.stopped = !1, this.emitEvent("scrollstart")) : this.options["native"] || this.stopped !== !1 || (this.stopped =
+                        0, addClass(this.el.container, "ui_scroll_scrolled")), this.emitEvent("scroll"), this.stoppedTimeout && clearTimeout(this.stoppedTimeout),
+                    this.stoppedTimeout = setTimeout(function() {
+                        this.stopped || (this.stopped = !0, this.options["native"] || removeClass(this.el.container, "ui_scroll_scrolled"), this.emitEvent(
+                            "scrollstop"), this.noMore && this.released && !this.dragging && (this.noMore = !1, this.more()))
+                    }.bind(this), 200))
             }.bind(this)), this.api
         };
         return t.prototype = {
@@ -782,7 +784,8 @@ var uiTabs = {
                 }
             },
             fixSize: function(t) {
-                this.options["native"] || setStyle(this.el.container, "width", t ? getSize(this.el.container, !0)[0] || "" : "")
+                this.options["native"] || (t && null == this.fixSizeDefault && (this.fixSizeDefault = this.el.container.style.width), setStyle(this.el.container, "width",
+                    t ? getSize(this.el.container, !0)[0] || this.fixSizeDefault || "" : this.fixSizeDefault || ""))
             },
             emitEvent: function(t) {
                 !this.disabled && this.inited && this.emitter.emitEvent(t, [this.api])
@@ -856,7 +859,7 @@ var uiTabs = {
                 this.disabled || !this.dragging || this.options["native"] || (t || (t = window.event), this.dragging = !1, this.dragstopHandler && removeEvent(document,
                         "mouseup contextmenu", this.dragstopHandler), this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), setStyle(bodyNode,
                         "cursor", ""), removeClass(this.el.container, "ui_scroll_dragging"), this.noMore && (this.noMore = !1, this.more()), this.emitEvent("dragstop"),
-                    "contextmenu" !== t.type && cancelEvent(t))
+                    t && "contextmenu" !== t.type && cancelEvent(t))
             },
             drag: function(t) {
                 if (!this.disabled && this.dragging && !this.options["native"]) {
@@ -875,7 +878,7 @@ var uiTabs = {
                             this.el.outer.scrollTop = t.scrollTop
                         }.bind(this),
                         duration: e,
-                        onComplete: isFunction(i) && i.pbind(this.api)
+                        onComplete: isFunction(i) ? i.pbind(this.api) : void 0
                     })
                     .start({
                         scrollTop: this.el.outer.scrollTop
@@ -887,7 +890,7 @@ var uiTabs = {
                 this.disabled || this.dragging || this.scroll(intval(t), e, i)
             },
             scrollBottom: function(t, e, i) {
-                this.disabled || this.dragging || this.scroll(this.el.outer.scrollHeight - this.el.overflow.offsetHeight - intval(t), e, i)
+                this.disabled || this.dragging || this.scroll(this.el.outer.scrollHeight - this.el.overflow.offsetHeight - intval(t), e, i);
             },
             scrollBy: function(t, e, i) {
                 this.disabled || this.dragging || this.scroll(this.el.outer.scrollTop + intval(t), e, i)
@@ -895,7 +898,7 @@ var uiTabs = {
             update: function() {
                 if (!this.inited || this.disabled) return !1;
                 var t = this.el.overflow.offsetHeight,
-                    e = this.el.inner.scrollHeight,
+                    e = this.el.inner.offsetHeight,
                     i = this.el.outer.scrollTop,
                     s = Math.max(0, e - i - t);
                 if (t !== this.api.data.viewportHeight || e !== this.api.data.scrollHeight || i !== this.api.data.scrollTop || s !== this.api.data.scrollBottom) {
@@ -923,6 +926,7 @@ var uiTabs = {
     }();
 window.Scrollbar = window.Scrollbar || function() {
     function t(t) {
+        if (!this.inited) return !1;
         if (t || (t = window.event), this.isHorizontal) {
             var e = Math.floor((this.contWidth() - this.scrollWidth) * Math.min(1, (t.screenX - this.moveX) / (this.scrollbarSize - this.innerWidth - 6)));
             isFunction(this.options.onScroll) && this.options.onScroll(this.obj.scrollLeft - e, this), this.obj.scrollLeft = e
@@ -934,20 +938,21 @@ window.Scrollbar = window.Scrollbar || function() {
     }
 
     function e() {
-        return this.moveY = this.moveX = this.isDown = !1, this.isOut && this.contOut(), removeEvent(document, "mousemove", this.mouseMove), removeEvent(document, "mouseup",
-            this.mouseUp), setStyle(document.body, "cursor", "default"), setStyle(this.obj, {
-            pointerEvents: ""
-        }), removeClass(this.inner, "scrollbar_hovered"), isFunction(this.options.stopDrag) && this.options.stopDrag(), isFunction(this.options.onHold) && this.options.onHold(!
-            1), !1
+        return this.inited ? (this.moveY = this.moveX = this.isDown = !1, this.isOut && this.contOut(), removeEvent(document, "mousemove", this.mouseMove), removeEvent(
+                document, "mouseup", this.mouseUp), setStyle(document.body, "cursor", "default"), setStyle(this.obj, {
+                pointerEvents: ""
+            }), removeClass(this.inner, "scrollbar_hovered"), isFunction(this.options.stopDrag) && this.options.stopDrag(), isFunction(this.options.onHold) && this.options
+            .onHold(!1), !1) : !1
     }
 
     function i(t) {
-        return this.moveY || checkEvent(t) ? void 0 : (t || (t = window.event), addEvent(document, "mousemove", this.mouseMove), addEvent(document, "mouseup", this.mouseUp),
+        if (!this.inited) return !1;
+        if (!this.moveY && !checkEvent(t)) return t || (t = window.event), addEvent(document, "mousemove", this.mouseMove), addEvent(document, "mouseup", this.mouseUp),
             setStyle(document.body, "cursor", "pointer"), setStyle(this.obj, {
                 pointerEvents: "none"
             }), this.isHorizontal ? this.moveX = t.screenX - (this.inner.offsetLeft || 0) : this.moveY = t.screenY - (this.inner.offsetTop || 0), addClass(this.inner,
                 "scrollbar_hovered"), isFunction(this.options.startDrag) && this.options.startDrag(), isFunction(this.options.onHold) && this.options.onHold(!0), this.isDown = !
-            0, cancelEvent(t))
+            0, cancelEvent(t)
     }
 
     function s(t) {
@@ -980,7 +985,8 @@ window.Scrollbar = window.Scrollbar || function() {
                 prefix: "",
                 hidden: 0
             }, n || {}), this.isHorizontal = this.options.horizontal, this.scrollProp = this.isHorizontal ? "scrollLeft" : "scrollTop", this.scrollDimensionProp = this.isHorizontal ?
-            "scrollWidth" : "scrollHeight", this.topShadow = !1, this.bottomShadow = !1, this[this.scrollProp + "Last"] = this.obj[this.scrollProp], setTimeout(function() {
+            "scrollWidth" : "scrollHeight", this.topShadow = !1, this.bottomShadow = !1, this[this.scrollProp + "Last"] = this.obj[this.scrollProp], this.destroyList = [],
+            this.mouseDown = i.bind(this), this.mouseMove = t.bind(this), this.mouseUp = e.bind(this), setTimeout(function() {
                 setStyle(o, {
                     overflow: "hidden"
                 }), this.scrollbar = ce("div", {
@@ -989,47 +995,46 @@ window.Scrollbar = window.Scrollbar || function() {
                 }), this.inner = ce("div", {
                     className: (this.options.prefix ? this.options.prefix + "scrollbar_inner " : "") + "scrollbar_inner"
                 }), this.scrollbar.appendChild(this.inner);
-                var n = this.widthUpdated();
+                var t = this.widthUpdated();
                 this.options.shadows && (o.parentNode.insertBefore(this.topShadowDiv = ce("div", {
-                        className: (this.options.prefix ? this.options.prefix + "scrollbar_top " : "") + "scrollbar_top"
-                    }, {
-                        width: n[0]
-                    }), o), o.parentNode.insertBefore(this.bottomShadowDiv = ce("div", {
-                        className: (this.options.prefix ? this.options.prefix + "scrollbar_bottom " : "") + "scrollbar_bottom"
-                    }, {
-                        width: n[0]
-                    }), o.nextSibling)), o.parentNode.insertBefore(this.scrollbar, o), this.destroyList = [], this.mouseDown = i.bind(this), this.mouseMove = t.bind(this),
-                    this.mouseUp = e.bind(this);
-                var l = s.bind(this),
-                    r = this.wheel.bind(this),
-                    a = "onwheel" in ce("div") ? "wheel" : void 0 !== document.onmousewheel ? "mousewheel" : browser.mozilla ? "MozMousePixelScroll" : "DOMMouseScroll";
-                if (addEvent(o, a, r), addEvent(this.scrollbar, a, r), this.options.scrollElements && each(this.options.scrollElements, function(t, e) {
-                        addEvent(e, a, r)
+                    className: (this.options.prefix ? this.options.prefix + "scrollbar_top " : "") + "scrollbar_top"
+                }, {
+                    width: t[0]
+                }), o), o.parentNode.insertBefore(this.bottomShadowDiv = ce("div", {
+                    className: (this.options.prefix ? this.options.prefix + "scrollbar_bottom " : "") + "scrollbar_bottom"
+                }, {
+                    width: t[0]
+                }), o.nextSibling)), o.parentNode.insertBefore(this.scrollbar, o);
+                var e = s.bind(this),
+                    i = this.wheel.bind(this),
+                    n = "onwheel" in ce("div") ? "wheel" : void 0 !== document.onmousewheel ? "mousewheel" : browser.mozilla ? "MozMousePixelScroll" : "DOMMouseScroll";
+                if (addEvent(o, n, i), addEvent(this.scrollbar, n, i), this.options.scrollElements && each(this.options.scrollElements, function(t, e) {
+                        addEvent(e, n, i)
                     }), addEvent(this.scrollbar, "mouseover", this.contOver.bind(this)), addEvent(this.scrollbar, "mouseout", this.contOut.bind(this)), addEvent(this.scrollbar,
                         "mousedown", this.contDown.bind(this)), browser.safari_mobile) {
-                    var h = function(t) {
+                    var l = function(t) {
                             this.isHorizontal ? cur.touchX = t.touches[0].pageX : cur.touchY = t.touches[0].pageY
                         }.bind(this),
-                        d = function(t) {
+                        r = function(t) {
                             return this.isHorizontal ? (cur.touchDiff = cur.touchX - (cur.touchX = t.touches[0].pageX), o.scrollLeft += cur.touchDiff, o.scrollLeft > 0 &&
                                 this.shown !== !1 && this.update(!0)) : (cur.touchDiff = cur.touchY - (cur.touchY = t.touches[0].pageY), o.scrollTop += cur.touchDiff,
                                 o.scrollTop > 0 && this.shown !== !1 && this.update(!0)), cancelEvent(t)
                         }.bind(this),
-                        c = function() {
+                        a = function() {
                             cur.animateInt = setInterval(function() {
                                 cur.touchDiff = .9 * cur.touchDiff, cur.touchDiff < 1 && cur.touchDiff > -1 ? clearInterval(cur.animateInt) : (o[self.scrollProp] +=
                                     cur.touchDiff, this.update(!0))
                             }.bind(this), 0)
                         }.bind(this);
-                    addEvent(o, "touchstart", h), addEvent(o, "touchmove", d), addEvent(o, "touchend", c), this.destroyList.push(function() {
-                        removeEvent(o, "touchstart", h), removeEvent(o, "touchmove", d), removeEvent(o, "touchend", c)
+                    addEvent(o, "touchstart", l), addEvent(o, "touchmove", r), addEvent(o, "touchend", a), this.destroyList.push(function() {
+                        removeEvent(o, "touchstart", l), removeEvent(o, "touchmove", r), removeEvent(o, "touchend", a)
                     })
                 }
-                addEvent(this.inner, "mousedown", this.mouseDown), this.options.nokeys ? this.onkeydown = l : addEvent(window, "keydown", l), this.destroyList.push(
+                addEvent(this.inner, "mousedown", this.mouseDown), this.options.nokeys ? this.onkeydown = e : addEvent(window, "keydown", e), this.destroyList.push(
                         function() {
-                            removeEvent(o, a, r), this.options.scrollElements && each(this.options.scrollElements, function(t, e) {
-                                removeEvent(e, a, r)
-                            }), removeEvent(this.inner, "mousedown", this.mouseDown), removeEvent(window, "keydown", l), re(this.scrollbar)
+                            removeEvent(o, n, i), this.options.scrollElements && each(this.options.scrollElements, function(t, e) {
+                                removeEvent(e, n, i)
+                            }), removeEvent(this.inner, "mousedown", this.mouseDown), removeEvent(window, "keydown", e), re(this.scrollbar)
                         }.bind(this)), this.isHorizontal || (this.contHeight() <= this.scrollHeight ? hide(this.bottomShadowDiv) : this.bottomShadow = !0), this.options.onInit &&
                     this.options.onInit(), this.inited = !0, this.update(!0), this.options.global || cur.destroy.push(this.destroy.bind(this))
             }.bind(this), 0)
