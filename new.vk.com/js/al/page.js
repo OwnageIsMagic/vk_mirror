@@ -2552,6 +2552,11 @@ var Wall = {
                             postpone: ts
                         });
                         return;
+                    case 'mark_as_ads':
+                        params = extend(params, {
+                            mark_as_ads: 1
+                        });
+                        return;
                 }
                 if (this[3] && trim(msg) == this[3]) {
                     params.message = '';
@@ -2871,6 +2876,11 @@ var Wall = {
                         });
                         cur.postponedLastDate = ts;
                         postponePost = true;
+                        return;
+                    case 'mark_as_ads':
+                        params = extend(params, {
+                            mark_as_ads: 1
+                        });
                         return;
                 }
                 if (this[3] && trim(msg) == this[3]) {
@@ -3969,6 +3979,16 @@ var Wall = {
         }, tooltipOpts || {}));
     },
 
+    adsMarkTooltip: function(el) {
+        if (cur.viewAsBox) return;
+
+        showTooltip(el, {
+            black: 1,
+            shift: [13, 6, 0],
+            text: el.getAttribute('data-tooltip')
+        });
+    },
+
     hideEditPostReply: function(e) {
         if (cur.editing === false || isVisible(boxLayerBG) || isVisible(layerBG)) return;
         var el = (e && e.target) ? e.target : {};
@@ -4128,6 +4148,19 @@ var Wall = {
         if (btn && btn.tt && btn.tt.el) {
             btn.tt.destroy();
         }
+    },
+    markAsAds: function(post, hash, el, fullPost) {
+        ajax.post('al_wall.php', {
+            act: 'mark_as_ads',
+            post: post,
+            hash: hash,
+            full: intval(fullPost)
+        }, {
+            onDone: function(msg) {
+                ge('ui_actions_menu_item_mark_as_ads' + post)
+                    .innerHTML = msg;
+            }
+        });
     },
     restorePost: function(post, hash, root) {
         (cur.wallLayer ? wkcur : cur)
@@ -4327,7 +4360,7 @@ var Wall = {
     },
     postFull: function(post, event, opts) {
         if (post.match(/^wall-?\d+_\d+$/) && !(opts || {})
-            .nolist && !nav.objLoc.owners_only && !nav.objLoc.q) {
+            .nolist && !(cur.pgParams && (cur.pgParams.owners_only || cur.pgParams.q))) {
             switch (cur.wallType) {
                 case 'all':
                 case 'full_all':
@@ -6800,6 +6833,11 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                     addMedia.chooseMedia('postpone', v[1], v[2])
                 };
                 break;
+            case 'mark_as_ads':
+                handler = function() {
+                    addMedia.chooseMedia('mark_as_ads', v[1], v[2])
+                };
+                break;
             case 'gift':
                 handler = function() {
                     var mid = (cur.peer < 2e9) ? cur.peer : 0;
@@ -8762,6 +8800,9 @@ Composer = {
                         break;
                     case 'postpone':
                         params.postpone = cur.postponedLastDate = val('postpone_date' + addMedia.lnkId);
+                        return;
+                    case 'mark_as_ads':
+                        params.mark_as_ads = 1;
                         return;
                 }
                 if (this[3] && trim(message) == this[3]) {

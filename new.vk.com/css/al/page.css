@@ -187,7 +187,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .reply_action {
-    background: url(/images/post_icon.png?3) no-repeat 1px -52px;
+    background: url(/images/post_icon.png?4) no-repeat 1px -52px;
     opacity: 0;
     filter: alpha(opacity=0);
     cursor: pointer;
@@ -467,6 +467,13 @@ div.wall_module .ext_video div {
     background-position: 0 -240px
 }
 
+.wall_post_source_ads_mark {
+    cursor: default;
+    background: url(/images/icons/post_ad_tag_gray.png) no-repeat;
+    background-size: 10px 10px;
+    background-position: 1px 1px
+}
+
 .wall_module .published_by_quote,
 .wall_module .published_sec_quote {
     margin: 5px 0;
@@ -577,7 +584,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .like_icon {
-    background: url(/images/post_icon.png?3) no-repeat 0 -29px;
+    background: url(/images/post_icon.png?4) no-repeat 0 -29px;
     width: 12px;
     height: 10px;
     margin: 2px 0 0;
@@ -872,7 +879,7 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .reply_to_title .reply_to_cancel {
-    background: url(/images/post_icon.png?3) no-repeat 1px -52px;
+    background: url(/images/post_icon.png?4) no-repeat 1px -52px;
     width: 13px;
     height: 13px;
     margin: 2px 0 0 3px;
@@ -3776,7 +3783,7 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
 
 .wall_module .post_like_icon,
 .wall_module .post_share_icon {
-    background: url(/images/post_icon.png?3) no-repeat 0 0;
+    background: url(/images/post_icon.png?4) no-repeat 0 0;
     display: inline-block;
     width: 16px;
     height: 13px;

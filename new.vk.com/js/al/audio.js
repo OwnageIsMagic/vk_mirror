@@ -265,7 +265,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }
     var a = this,
         s = getAudioPlayer(),
-        r = s.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioUtils.AUDIO_ALBUM_ID_ALL),
+        r = s.getPlaylist(AudioPlaylist.TYPE_ALBUM, this.options.oid, AudioPlaylist.ALBUM_ALL),
         d = t ? gpeByClass("_audio_album_btns", t) : null;
     d && (addClass(d, "in_progress"), showProgress(d)), r.loadSilent(function(t) {
         t.isComplete() ? o() : (t = s.getPlaylist(AudioPlaylist.TYPE_ALBUM, a.options.oid, e), t.loadSilent(o))
@@ -1031,12 +1031,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             u = this.ap.getPlaylist(AudioPlaylist.TYPE_POPULAR, vk.id, p + intval(a.genre))
         } else if (a.friend) {
             var y = intval(a.friend),
-                A = geByClass1("_audio_friend_" + y, this._container);
-            addClass(A, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioPlaylist.ALBUM_ALL), geByClass1("_audio_friend_" + y) ||
+                P = geByClass1("_audio_friend_" + y, this._container);
+            addClass(P, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioPlaylist.ALBUM_ALL), geByClass1("_audio_friend_" + y) ||
                 this.showMoreFriends(!1, y), o.q && 0 > y && !cur.prevSearchPlaylist && (cur.prevSearchPlaylist = this.getCurrentPlaylist())
         } else if (a.section == AudioPlaylist.TYPE_RECOM) {
-            var P = AudioPlaylist.ALBUM_ALL;
-            a.audio_id ? P = "audio" + a.audio_id : a.album_id && (P = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, P)
+            var A = AudioPlaylist.ALBUM_ALL;
+            a.audio_id ? A = "audio" + a.audio_id : a.album_id && (A = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, A)
         } else a.section == AudioPlaylist.TYPE_FEED ? u = this.ap.getPlaylist(AudioPlaylist.TYPE_FEED, vk.id, 0) : a.section == AudioPlaylist.TYPE_CURRENT ? u = this.ap
             .getCurrentPlaylist() : a.band ? (u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, intval(a.band), AudioPlaylist.ALBUM_ALL), u.mergeWith({
                 band: 1
