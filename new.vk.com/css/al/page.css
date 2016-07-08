@@ -770,17 +770,19 @@ div.wall_module .ext_video div {
     margin: -10px
 }
 
-.wall_module .reply .no_likes .like_icon,
 .wall_module .reply .reply_action {
     visibility: hidden;
     opacity: 0;
-    filter: alpha(opacity=0);
+    filter: alpha(opacity=0)
+}
+
+.wall_module .reply .reply_action,
+.wall_module .reply .no_likes .like_icon {
     -o-transition: visibility 100ms ease, opacity 100ms ease;
     transition: visibility 100ms ease, opacity 100ms ease
 }
 
-.wall_module .reply:hover .like_wrap.no_likes .like_icon {
-    visibility: visible;
+.wall_module .reply .no_likes .like_icon {
     opacity: 0.4;
     filter: alpha(opacity=40)
 }
@@ -2975,6 +2977,17 @@ a.wall_reply_greeting {
 }
 
 .new_reply {
+    display: none
+}
+
+.new_reply:last-of-type {
+    display: block;
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 15px
+}
+
+.reply:not(.new_reply)~.new_reply:last-of-type {
     display: none
 }
 

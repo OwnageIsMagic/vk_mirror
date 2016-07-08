@@ -368,34 +368,30 @@ var PhotosAdd = {
     transformAvailable: function() {
         return !1
     },
-    rotateAngle: function(o, e, t) {
-        var r = gpeByClass("photos_photo_edit_row", t);
-        o = attr(r, "data-id");
-        photos._showProgressPanel(r);
-        window.tooltips && tooltips.hideAll();
-        var a = cur.photoData[o];
-        form = geByClass1("ge_photo_rotate_form", r), form.innerHTML = "", form.action = a.rotate[0];
-        var d = extend({
+    rotateAngle: function(o, e, t, r) {
+        var a = gpeByClass("photos_photo_edit_row", t);
+        o = attr(a, "data-id");
+        photos._showProgressPanel(a);
+        window.tooltips && tooltips.hideAll(), cancelEvent(r);
+        var d = cur.photoData[o];
+        form = ge("photo_rotate_form" + o), form.innerHTML = "", form.action = d.rotate[0];
+        var i = extend({
             act: "do_rotate",
             to: 90 == e ? 1 : -1,
             fid: o
-        }, a.rotate);
-        "rotate_photo" == d.act && (d.angle = (d.angle + d.to + 4) % 4);
-        var i = (d.to + 4) % 4;
-        if (d["rot" + i]) return d.act = "done_rotate", d.complete = 1, void ajax.post("/al_photos.php", d, {
-            onDone: function() {
-                PhotosAdd.rotateDone()
-            },
-            onFail: function() {
-                PhotosAdd.rotateDone()
-            }
-        });
-        for (var n in d) 0 != n && form.appendChild(ce("input", {
+        }, d.rotate);
+        "rotate_photo" == i.act && (i.angle = (i.angle + i.to + 4) % 4);
+        var n = (i.to + 4) % 4;
+        if (i["rot" + n]) return i.act = "done_rotate", i.complete = 1, ajax.post("/al_photos.php", i, {
+            onDone: PhotosAdd.rotateDone,
+            onFail: PhotosAdd.rotateDone
+        }), !1;
+        for (var s in i) 0 != s && form.appendChild(ce("input", {
             type: "hidden",
-            name: n,
-            value: d[n]
+            name: s,
+            value: i[s]
         }));
-        form.submit(), ajaxCache = {}, delete cur.pvList, delete cur.pvData
+        return form.submit(), ajaxCache = {}, delete cur.pvList, delete cur.pvData, !1
     },
     rotateDone: function(o) {
         if (o) {
@@ -534,8 +530,8 @@ var PhotosAdd = {
             hash: ""
         })), re(geByClass1("photos_photo_edit_row_selector", o.prepareCont)), setStyle(o.prepareCont, {
             display: "none"
-        }), cur.flash_lite && (cur.flashPrepareCont = cur.flashPrepareCont || {}, cur.flashPrepareCont[o.num] = cur.flashPrepareCont[o.num] || {}, cur.flashPrepareCont[
-            o.num][o.filename] = o.prepareCont);
+        }), photos._showProgressPanel(o.prepareCont), cur.flash_lite && (cur.flashPrepareCont = cur.flashPrepareCont || {}, cur.flashPrepareCont[o.num] = cur.flashPrepareCont[
+            o.num] || {}, cur.flashPrepareCont[o.num][o.filename] = o.prepareCont);
         var a = ge("photos_add_list");
         a.appendChild(o.prepareCont), cur.lastPhotoRow = o.prepareCont, PhotosAdd.makeTask(function() {
             return show(o.prepareCont), show(geByClass1("photos_photo_edit_row_progress", o.prepareCont)), PhotosAdd.scrollToBottom(), !0

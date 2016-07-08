@@ -531,11 +531,11 @@ var photos = {
         r(0, !1, [], 0, d), s(0)
     },
     _showProgressPanel: function(o) {
-        var e = se('<div class="photo_delete_progress _photo_delete_progress"><div class="round_spinner"></div></div>');
+        var e = se('<div class="photo_mask_progress _photo_mask_progress"><div class="round_spinner"></div></div>');
         return o.appendChild(e), e
     },
     _hideProgressPanel: function(o) {
-        re(geByClass1("_photo_delete_progress", o))
+        re(geByClass1("_photo_mask_progress", o))
     },
     deletePhoto: function(o, e, t, a) {
         var r;

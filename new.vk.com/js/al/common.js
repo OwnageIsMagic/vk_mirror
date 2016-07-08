@@ -1180,7 +1180,7 @@ function isUndefined(obj) {
 };
 
 function isFunction(obj) {
-    return Object.prototype.toString.call(obj) === '[object Function]';
+    return obj && Object.prototype.toString.call(obj) === '[object Function]';
 }
 
 function isArray(obj) {
@@ -3161,11 +3161,14 @@ function onBodyResize(force) {
     }
     setTimeout(updSeenAdsInfo, 0);
 
-    getAudioPlayer(function(ap) {
-        if (ap.audioLayer && ap.audioLayer.isShown()) {
-            ap.audioLayer.updatePosition();
-        }
-    });
+    var ap = getAudioPlayer();
+    if (ap.audioLayer && ap.audioLayer.isShown()) {
+        ap.audioLayer.updatePosition();
+    }
+
+    if (cur.pvShown && window.Photoview) {
+        setTimeout(Photoview.updatePhotoDimensions);
+    }
 
     if (window.tooltips) {
         tooltips.rePositionAll();
@@ -10462,9 +10465,15 @@ function aquireLock(name, fn, noretry) {
 
 function statNavigationTiming() {
     if (window.clientStatsInitedNT) return false;
-    if (Math.random() < 0.001 && window.performance && performance.timing) {
+    if (window.performance && performance.timing) {
+
+        if (Math.random() > 0.001 && !__dev) {
+            return false;
+        }
 
         var perTiming = {};
+        var curModule = window.cur && window.cur.module;
+
         if (performance.timing.redirectStart && performance.timing.redirectEnd) {
             perTiming['redirect'] = performance.timing.redirectEnd - performance.timing.redirectStart;
         }
@@ -10496,9 +10505,10 @@ function statNavigationTiming() {
             perTiming['loadEvent'] = performance.timing.loadEventEnd - performance.timing.loadEventStart;
         }
         for (var key in perTiming) {
-            statlogsValueEvent('navigation_timing', perTiming[key], key);
+            statlogsValueEvent('navigation_timing', perTiming[key], key, curModule);
         }
         window.clientStatsInitedNT = true;
+        debugLog(curModule, perTiming['response']);
     }
 }
 
@@ -11535,7 +11545,7 @@ function collectMemtoryStats() {
     }, 5000);
 }
 
-if (window.performance && window.performance.memory && rand(0, 100) < 1) {
+if (window.performance && window.performance.memory && rand(0, 100) < 5) {
     collectMemtoryStats();
 }
 

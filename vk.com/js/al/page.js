@@ -6039,7 +6039,7 @@ function initCustomMedia(lnk, types, opts) {
                         setStyle(el, {
                             position: 'absolute',
                             bottom: -reverseMargin,
-                            width: getSize(el.firstChild)[0]
+                            minWidth: getSize(el.firstChild)[0]
                         });
                         setStyle(el.firstChild, {
                             position: 'absolute',

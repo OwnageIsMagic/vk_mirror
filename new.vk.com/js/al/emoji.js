@@ -1758,12 +1758,15 @@ if (!window.Emoji) {
                 height: rowsCnt * smileH + listPadding
             });
 
-            var closestOverflowHiddenEl = domClosestOverflowHidden(obj);
-            var closestOverflowHiddenY = getXY(closestOverflowHiddenEl)[1];
+            var overflowHiddenWrapY = 0,
+                el = obj;
+            while (el !== bodyNode && (el = domClosestOverflowHidden(el))) {
+                overflowHiddenWrapY = Math.max(overflowHiddenWrapY, getXY(el)[1]);
+            }
 
             var ttH = getSize(tt)[1];
             var toUp, space;
-            var upSpace = objY - offsetH - headSpace - scrollY - closestOverflowHiddenY;
+            var upSpace = objY - offsetH - headSpace - scrollY - overflowHiddenWrapY;
             var downSpace = wh + scrollY - objY - objH - offsetH;
 
             if (upSpace < ttH && downSpace < ttH) {
