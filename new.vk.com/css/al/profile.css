@@ -386,6 +386,7 @@
 }
 
 .profile_gifts_cont {
+    position: relative;
     display: block;
     height: 64px;
     overflow: hidden;

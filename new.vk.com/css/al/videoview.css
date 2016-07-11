@@ -787,7 +787,28 @@ embed#video_player {
 
 .mv_controls {
     min-height: 70px;
-    background: #fff
+    background: #fff;
+    position: relative
+}
+
+.mv_controls:before {
+    content: '';
+    position: absolute;
+    z-index: 999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    -o-transition: visibility .2s, opacity .2s;
+    transition: visibility .2s, opacity .2s
+}
+
+.mv_controls_disabled:before {
+    visibility: visible;
+    opacity: .8
 }
 
 #mv_inline_edit_pr {
@@ -1219,7 +1240,8 @@ embed#video_player {
 }
 
 #mv_service_btns_wrap {
-    position: relative
+    position: relative;
+    z-index: 300
 }
 
 #mv_service_btns {

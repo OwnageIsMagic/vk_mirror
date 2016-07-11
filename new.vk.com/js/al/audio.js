@@ -997,7 +997,9 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             }), s.searchPerformer && (a = extend({}, this._prevLoc, a)), this.isLayer()) {
             if (this._prevLoc !== !1) {
                 o = clone(this._prevLoc), i = clone(a);
-                for (var r in o) o[r] && void 0 === a[r] ? i[r] = !1 : o[r] == a[r] && delete i[r]
+                for (var r in o) o[r] && void 0 === a[r] ? i[r] = !1 : o[r] == a[r] && delete i[r];
+                (this._prevLoc.friend && i.friend === !1 || this._prevLoc.band && i.band === !1) && i.q && (a.friend = this._prevLoc.friend, a.band = this._prevLoc.band,
+                    delete i.friend, delete i.band)
             }
             t === !1 && (t = o[0]), 0 != a[0].indexOf("audio") && t == a[0] && delete i[0]
         }

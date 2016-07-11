@@ -394,12 +394,10 @@ var Profile = {
                     var e = t[0],
                         i = e.parentNode,
                         o = t.length;
-                    e && (addClass(s, "profile_gift_img"), setStyle(i, {
-                        marginLeft: -getSize(e)[0] + "px"
-                    }), e.parentNode.insertBefore(s, e), animate(i, {
-                        marginLeft: "0px"
+                    e && (addClass(s, "profile_gift_img"), e.parentNode.insertBefore(s, e), i.scrollLeft = e.offsetLeft, animate(i, {
+                        scrollLeft: 0
                     }, 200, function() {
-                        o >= 4 && re(t[t.length - 1])
+                        o >= 3 && re(t[t.length - 1])
                     }))
                 };
                 s.width ? r() : addEvent(s, "load", r)

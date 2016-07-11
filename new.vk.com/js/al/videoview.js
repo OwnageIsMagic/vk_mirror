@@ -641,7 +641,7 @@ var Videoview = {
                     mvOldX: e.pageX,
                     mvOldY: e.pageY,
                     mvOldT: vkNow()
-                }), r ? Videoview.cleanLayerContent() : Videoview.buildLayerContent(), toggle("mv_controls", !t.hideInfo), t.player && (mvcur.player = t.player, t.player = 1,
+                }), r ? Videoview.disableLayerContent() : Videoview.buildLayerContent(), toggle("mv_controls", !t.hideInfo), t.player && (mvcur.player = t.player, t.player = 1,
                     val("mv_content", '<div class="video_box">  <div class="wrap">    <div id="video_box_wrap' + i +
                         '" class="video_box_wrap">      <div id="video_player"></div>    </div>  </div></div>    '), ge("video_player")
                     .appendChild(mvcur.player.el), hide("mv_progress"), show("mv_content"), mvcur.player.onExpanded()), t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId,
@@ -658,8 +658,8 @@ var Videoview = {
                     paddingTop: intval(window.pageYOffset) + 10 + "px"
                 }), Videoview.updateSize()
         },
-        cleanLayerContent: function() {
-            val("mv_controls", "")
+        disableLayerContent: function() {
+            addClass("mv_controls", "mv_controls_disabled")
         },
         initPlaylistBlock: function(e, i, o) {
             var t = !!VideoPlaylist.getBlock(),
@@ -843,8 +843,8 @@ var Videoview = {
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
                 hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                        Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script),
-                    Videoview.updateReplyFormPos()
+                        Videoview.updateComms(from)) : "mv" == from && Videoview.recache(),
+                    script && eval(script), Videoview.updateReplyFormPos()
             }
         },
         commAction: function(e, i, o, t, a) {
@@ -998,9 +998,8 @@ var Videoview = {
             }
             return accessHash && (params.access_hash = accessHash), ajax.post(url, params, {
                 onDone: function(text, row, hash, shareHash) {
-                    obj && (obj.parentNode.innerHTML = text);
-                    try {
-                        isArray(row) || (row = eval("(" + row + ")"))
+                    if (obj && (obj.parentNode.innerHTML = text), !isArray(row)) try {
+                        row = eval("(" + row + ")")
                     } catch (e) {}
                     window.mvcur && (mvcur.mvData && mvcur.mvData.afterAdd ? mvcur.mvData.afterAdd(row[0] + "_" + row[1], shareHash) : row && (mvcur.mvData.addedVideo =
                         row[0] + "_" + row[1], mvcur.mvData.addedVideoHash = hash, mvcur.mvData.addedVideoShareHash = shareHash));
@@ -1317,9 +1316,11 @@ var Videoview = {
                             c.showProgress(), Videoview.spamVideo(e, i, o, t, a, !0, c.hide)
                         }, "yes")
                     } else if ("result" == r) {
-                        if (d && d(), "videoviewer" == a && window.Video && Video.removeFromLists(e + "_" + i), "list" == a) return ge("video_row" + e + "_" + i)
-                            .innerHTML = '<div class="video_row">' + v + "</div>", Video.removeFromLists(e + "_" + i, !0), !0
-                    } else t.parentNode.innerHTML = r
+                        if (d && d(), window.Video)
+                            if ("videoviewer" == a) Video.removeFromLists(e + "_" + i);
+                            else if ("list" == a) return val("video_row" + e + "_" + i, '<div class="video_row">' + v + "</div>"), Video.removeFromLists(e + "_" +
+                            i, !0), !0
+                    } else val(domPN(t), r)
                 }
             })
         },
@@ -1394,7 +1395,7 @@ var Videoview = {
                     } else mvcur.player && re(mvcur.player.el), val("mv_content", html);
                     hide("mv_progress")
                 }
-                val("mv_controls", desc), val("mv_service_btns", serviceBtns);
+                val("mv_controls", desc), val("mv_service_btns", serviceBtns), removeClass("mv_controls", "mv_controls_disabled");
                 var rf = ge("reply_field" + mvcur.post);
                 if (rf && placeholderInit(rf, {
                         editable: 1
@@ -1420,9 +1421,9 @@ var Videoview = {
                     mvcur.mvData.publishToGroups && items.push(["_onAddToCommunity", getLang("video_add_to_group")]), mvcur.mvData.canExport && items.push(["_onExport",
                             getLang("video_export_action")
                         ]), mvcur.mvData.stats && items.push(["_onViewStats", getLang("video_statistics")]), mvcur.mvData.oid != vk.id && mvcur.mvData.reportReasons && mvcur.mvData
-                        .reportReasons.length && items.push(["_onReport", getLang("video_complain")]), mvcur.mvData.deleteHash && !mvcur.mvData.hideEdit && items.push([
-                            "_onDelete", getLang("video_menu_delete")
-                        ]), items.length ? new InlineDropdown("mv_more", {
+                        .reportReasons.length && items.push(["_onReport", getLang("video_complain")]), mvcur.mvData.editHash && mvcur.mvData.editFromDropdown && !mvcur.mvData.hideEdit &&
+                        items.push(["_onEdit", getLang("video_edit")]), mvcur.mvData.deleteHash && !mvcur.mvData.hideEdit && items.push(["_onDelete", getLang(
+                            "video_menu_delete")]), items.length ? new InlineDropdown("mv_more", {
                             items: items,
                             withArrow: !0,
                             keepTitle: !0,
@@ -1441,7 +1442,7 @@ var Videoview = {
                             onSelect: function(e) {
                                 Videoview[e]()
                             }
-                        }) : re("mv_more"), toggle(ge("mv_edit_button"), mvcur.mvData.editHash && !mvcur.mvData.hideEdit)
+                        }) : re("mv_more"), toggle(ge("mv_edit_button"), mvcur.mvData.editHash && !mvcur.mvData.hideEdit && !mvcur.mvData.editFromDropdown)
                 }
                 mvcur.mvData.uploaded || Videoview.recache(), Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData && stManager.add("notifier.js",
                     function() {
@@ -1536,6 +1537,11 @@ var Videoview = {
                 },
                 onDone: function(e) {}
             })
+        },
+        _onEdit: function() {
+            var e = mvcur.mvData.oid,
+                i = mvcur.mvData.vid;
+            Videoview.showEditBox(i, e)
         },
         _onDelete: function() {
             var e = mvcur.mvData.oid,
@@ -1840,8 +1846,9 @@ var Videoview = {
             if (e > 0) return void(cur.hideShareTimer = setTimeout(Videoview.hideDD.pbind(0), e));
             var i = cur.ddShown;
             i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"), fadeOut(i, 200, function() {
-                removeClass(i, "mv_dd_hiding")
-            })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
+                    removeClass(i, "mv_dd_hiding")
+                })), removeEvent(document, "click", Videoview.hideDD),
+                cur.ddShown = !1)
         },
         reportFromDD: function(e, i) {
             ajax.post("reports.php", {
