@@ -157,7 +157,8 @@
     background-position: -3px 0px;
     opacity: 0.5;
     -o-transition: opacity 100ms linear;
-    transition: opacity 100ms linear
+    transition: opacity 100ms linear;
+    cursor: pointer
 }
 
 .pv_cont .pv_close_btn:hover,

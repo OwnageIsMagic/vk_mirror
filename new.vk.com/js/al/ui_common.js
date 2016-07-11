@@ -185,8 +185,8 @@ var uiTabs = {
                             top: h[1] - a[1] + c
                         };
                     if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + u, setStyle(n, v), i.processHoverCls) {
-                        var m = domClosest(i.processHoverCls, l);
-                        addEvent(t, "mouseover", addClass.pbind(m, "hover")), addEvent(t, "mouseout", removeClass.pbind(m, "hover"))
+                        var g = domClosest(i.processHoverCls, l);
+                        addEvent(t, "mouseover", addClass.pbind(g, "hover")), addEvent(t, "mouseout", removeClass.pbind(g, "hover"))
                     }
                 }
             }
@@ -717,6 +717,7 @@ var uiTabs = {
                 scrollTop: this.scrollTop.bind(this),
                 scrollBottom: this.scrollBottom.bind(this),
                 scrollBy: this.scrollBy.bind(this),
+                scrollIntoView: this.scrollIntoView.bind(this),
                 update: function() {
                     return this.inited ? this.update() : this.init()
                 }.bind(this),
@@ -842,8 +843,10 @@ var uiTabs = {
                     h = null;
                 return n.appendChild(r), l.appendChild(a), o.appendChild(n), o.appendChild(l), t.appendChild(o), this.removeElements.push(o), n.onscroll = l.onscroll =
                     function() {
-                        r.style.width = 1e5 + "px", r.style.height = 1e5 + "px", n.scrollLeft = 1e5, n.scrollTop = 1e5, l.scrollLeft = 1e5, l.scrollTop = 1e5, h !== (h = t
-                            .offsetHeight + " " + t.offsetWidth) && this.update() && this.emitEvent("resize")
+                        var e = (t.offsetWidth || 1e4) + 10,
+                            i = (t.offsetHeight || 1e4) + 10;
+                        r.style.width = e + "px", r.style.height = i + "px", n.scrollLeft = e, n.scrollTop = i, l.scrollLeft = e, l.scrollTop = i, h !== (h = e + " " + i) &&
+                            this.update() && this.emitEvent("resize")
                     }.bind(this)
             },
             disable: function(t) {
@@ -887,13 +890,17 @@ var uiTabs = {
                     })) : (this.el.outer.scrollTop = t, isFunction(i) && i(this.api))
             },
             scrollTop: function(t, e, i) {
-                this.disabled || this.dragging || this.scroll(intval(t), e, i)
+                this.disabled || this.dragging || this.scroll(intval(t), e, i);
             },
             scrollBottom: function(t, e, i) {
-                this.disabled || this.dragging || this.scroll(this.el.outer.scrollHeight - this.el.overflow.offsetHeight - intval(t), e, i);
+                this.disabled || this.dragging || this.scroll(this.el.outer.scrollHeight - this.el.overflow.offsetHeight - intval(t), e, i)
             },
             scrollBy: function(t, e, i) {
                 this.disabled || this.dragging || this.scroll(this.el.outer.scrollTop + intval(t), e, i)
+            },
+            scrollIntoView: function(t, e, i) {
+                (t = ge(t)) && t.compareDocumentPosition(this.el.content) & Node.DOCUMENT_POSITION_CONTAINS && this.scrollTop(getXY(t)[1] - getXY(this.el.container)[1] +
+                    this.api.data.scrollTop, e, i)
             },
             update: function() {
                 if (!this.inited || this.disabled) return !1;
@@ -1279,7 +1286,7 @@ window.Scrollbar = window.Scrollbar || function() {
             null != p && (u = u + "|" + escapeRE(p));
             var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + u + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var m = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
+        var g = r.rsTpl ? r.rsTpl : function(t, e, i, s, o) {
             var n = !i && s[t[0]] || i && !s[t[0]],
                 l = t[1];
             if (e) {
@@ -1297,7 +1304,7 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                c.push(rs(n, m(this, t, r.invertedSelection, o, v)))
+                c.push(rs(n, g(this, t, r.invertedSelection, o, v)))
             }), e || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
                 .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), e ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), d > e +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(i) {
