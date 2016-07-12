@@ -1143,7 +1143,7 @@ var Photoview = {
                 photo: i.id,
                 hash: i.hash,
                 fromview: 1,
-                from_group: l ? isChecked(l) : "",
+                from_group: l && hasClass(domClosest("_submit_post_box", l), "as_group") ? 1 : "",
                 reply_to: (cur.reply_to || {})[1]
             })), {
                 onDone: function(t, n) {
@@ -1739,8 +1739,7 @@ var Photoview = {
             }
         },
         showDynTag: function(o) {
-            if (clearTimeout(cur.pvHidingTag),
-                cur.pvShowingTag != o) {
+            if (clearTimeout(cur.pvHidingTag), cur.pvShowingTag != o) {
                 var e = clone(cur.pvData[cur.pvListId][cur.pvIndex].tags[o]),
                     t = ge("pv_tag" + o);
                 if (t) {

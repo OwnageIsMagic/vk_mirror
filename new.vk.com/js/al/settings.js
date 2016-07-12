@@ -158,15 +158,17 @@ var Settings = {
         }, {
             onDone: function(e, t, s) {
                 curBox()
-                    .hide(), e && -1 != e && (ge("settings_bl_summary")
-                        .innerHTML = langNumeric(e, "%s", !0));
-                var o = ce("div", {
+                    .emit("success", s), curBox()
+                    .hide();
+                var o = ge("settings_bl_summary");
+                e && -1 != e && o && (o.innerHTML = langNumeric(e, "%s", !0));
+                var n = ce("div", {
                         innerHTML: t
                     })
                     .firstChild,
-                    n = ge("settings_bl_list");
-                re(o.id), n.insertBefore(o, n.firstChild), show("settings_bl_noempty"), hide("settings_bl_empty"), showMsg("settings_bl_result", s, "ok_msg", !
-                    0)
+                    i = ge("settings_bl_list");
+                re(n.id), i && (i.insertBefore(n, i.firstChild), show("settings_bl_noempty"), hide("settings_bl_empty"), showMsg("settings_bl_result", s,
+                    "ok_msg", !0))
             },
             onFail: function(e) {
                 return showMsg("settings_search_rows", e, "error", !0), !0
@@ -1172,8 +1174,7 @@ var Settings = {
                 .slice(0, cur.defaultCount), s.length && cur.appTpl) {
                 var n = [];
                 each(s, function(e, t) {
-                    t = clone(t),
-                        cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), n.push(cur.appTpl(t, e == s.length - 1, !1))
+                    t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), n.push(cur.appTpl(t, e == s.length - 1, !1))
                 }.bind(this)), t = n.join("")
             }
             if (cur.shownApps) t && cur.lContent.appendChild(cf(t));

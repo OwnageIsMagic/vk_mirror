@@ -821,12 +821,14 @@ div.wall_module .ext_video div {
 .wall_module .reply_fakebox_wrap {
     border-top: 1px solid #e7e8ec;
     border-radius: 0 0 2px 2px;
-    margin-top: -1px
+    margin-top: -1px;
+    background-color: #fff
 }
 
 .wall_module .reply_form {
     zoom: 1;
-    position: relative
+    position: relative;
+    background-color: #fff
 }
 
 #wl_post .emoji_tt_wrap {
@@ -3235,12 +3237,12 @@ body.mac .reply_box_inner_wrap.fixed {
 .wall_module .reply_fakebox {
     vertical-align: top;
     overflow: hidden;
-    width: 100%;
     max-height: 48px;
-    padding: 14px 20px 16px;
+    padding: 14px 20px 16px 12px;
     border: 0;
     border-radius: 0 0 2px 2px;
     line-height: 1.462;
+    margin-left: 43px;
     background: #fff;
     box-sizing: border-box;
     color: #828282;
@@ -3250,6 +3252,59 @@ body.mac .reply_box_inner_wrap.fixed {
 
 .post_field_wrap {
     position: relative
+}
+
+.post_field_wrap,
+.reply_field_wrap {
+    margin-left: 43px
+}
+
+.post_field_group,
+.post_field_user {
+    float: left;
+    position: relative
+}
+
+.post_field_user_image {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
+    transition: -webkit-transform 0.3s ease;
+    -o-transition: transform 0.3s ease, -o-transform 0.3s ease;
+    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, -webkit-transform 0.3s ease, -o-transform 0.3s ease;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    position: absolute;
+    top: 10px;
+    left: 15px
+}
+
+.pv_reply_form .post_field_user_image {
+    -o-transition: none;
+    transition: none
+}
+
+.post_field_user_link {
+    display: block;
+    height: 28px
+}
+
+.as_group .post_field_user .post_field_user_image,
+.post_field_group .post_field_user_image {
+    -webkit-transform: rotateY(180deg);
+    transform: rotateY(180deg)
+}
+
+.as_group .post_field_group .post_field_user_image,
+.post_field_user .post_field_user_image {
+    -webkit-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+    z-index: 1
 }
 
 .submit_post_box_bordered .post_field_wrap {
@@ -3265,7 +3320,7 @@ div.submit_post_field~.placeholder .ph_input {
     width: 100%;
     min-height: 48px;
     max-height: 48px;
-    padding: 14px 20px 16px;
+    padding: 14px 20px 16px 12px;
     border: 0;
     border-radius: 2px;
     line-height: 1.462;
@@ -3501,14 +3556,14 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
     left: 0
 }
 
-.checkbox_official.on .thumb_on,
+.as_group .checkbox_official .thumb_on,
 .checkbox_official .thumb_off {
     -webkit-transform: rotateY(0deg);
     transform: rotateY(0deg);
     z-index: 1
 }
 
-.checkbox_official.on .thumb_off,
+.as_group .checkbox_official .thumb_off,
 .checkbox_official .thumb_on {
     -webkit-transform: rotateY(180deg);
     transform: rotateY(180deg)

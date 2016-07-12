@@ -943,7 +943,7 @@ var Videoview = {
                 hash: mvcur.mvData.hash,
                 fromview: 1,
                 videoviewer: 1,
-                from_group: isChecked(ge("reply_as_group" + mvcur.post)),
+                from_group: hasClass(domClosest("_submit_post_box", ge("reply_as_group" + mvcur.post)), "as_group") ? 1 : "",
                 reply_to: (mvcur.mvReplyTo || {})[1]
             })), {
                 onDone: function(i, o) {
@@ -1846,9 +1846,8 @@ var Videoview = {
             if (e > 0) return void(cur.hideShareTimer = setTimeout(Videoview.hideDD.pbind(0), e));
             var i = cur.ddShown;
             i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"), fadeOut(i, 200, function() {
-                    removeClass(i, "mv_dd_hiding")
-                })), removeEvent(document, "click", Videoview.hideDD),
-                cur.ddShown = !1)
+                removeClass(i, "mv_dd_hiding");
+            })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
         },
         reportFromDD: function(e, i) {
             ajax.post("reports.php", {

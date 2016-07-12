@@ -1215,7 +1215,8 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread.im-mess_selected {
-    margin: 0 4px;
+    margin-left: 4px;
+    margin-right: 4px;
     padding-right: 57px
 }
 
@@ -1345,7 +1346,23 @@ body.mac .im_stickerpack_fixed {
     font-size: 12.5px;
     color: #939393;
     overflow: hidden;
-    display: inline-block
+    display: inline-block;
+    position: relative
+}
+
+.im-page .im-page--top-date-bar:before {
+    content: "";
+    display: block;
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 13px;
+    height: 1px;
+    background: #fff
+}
+
+.im-page .im-page--top-date-bar.im-page--top-date-bar_no-b:before {
+    display: none
 }
 
 .im-page .im-page--top-date-bar-inner {
@@ -3322,11 +3339,13 @@ body.sf .nim-dialog .nim-dialog--unread {
     font-size: 12.5px
 }
 
+.nim-dialog.nim-dialog_failed.nim-dialog_muted .nim-dialog--unread,
 .nim-dialog.nim-dialog_unread.nim-dialog_muted .nim-dialog--unread,
 .nim-dialog.nim-dialog_unread.nim-dialog_prep-injected.nim-dialog_muted .nim-dialog--unread {
     background: #bbc2c9
 }
 
+.nim-dialog.nim-dialog_failed .nim-dialog--unread,
 .nim-dialog.nim-dialog_unread .nim-dialog--unread,
 .nim-dialog.nim-dialog_unread.nim-dialog_prep-injected .nim-dialog--unread {
     display: block;
@@ -3337,9 +3356,14 @@ body.sf .nim-dialog .nim-dialog--unread {
     background: #7293b6
 }
 
+.nim-dialog.nim-dialog_failed .nim-dialog--text-preview,
 .nim-dialog.nim-dialog_unread .nim-dialog--text-preview,
 .nim-dialog.nim-dialog_unread.nim-dialog_prep-injected .nim-dialog--text-preview {
     width: 70%
+}
+
+.nim-dialog.nim-dialog_failed .nim-dialog--unread {
+    background: rgba(252, 61, 57, .6)
 }
 
 .nim-dialog:not(.nim-dialog_deleted).nim-dialog_empty .nim-dialog--date,
@@ -3380,9 +3404,9 @@ body.sf .nim-dialog .nim-dialog--unread {
     display: none
 }
 
-.nim-dialog.nim-dialog_unread-out .nim-dialog--unread,
-.nim-dialog.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--unread,
-.nim-dialog.nim-dialog_unread.nim-dialog_unread-out .nim-dialog--unread {
+.nim-dialog.nim-dialog_unread-out.nim-dialog_muted:not(.nim-dialog_failed) .nim-dialog--unread,
+.nim-dialog.nim-dialog_unread-out:not(.nim-dialog_failed) .nim-dialog--unread,
+.nim-dialog.nim-dialog_unread.nim-dialog_unread-out:not(.nim-dialog_failed) .nim-dialog--unread {
     display: block;
     overflow: hidden;
     border-radius: 50%;
@@ -3395,9 +3419,9 @@ body.sf .nim-dialog .nim-dialog--unread {
     text-indent: -99px
 }
 
-.nim-dialog.nim-dialog_unread-out .nim-dialog--text-preview,
-.nim-dialog.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--text-preview,
-.nim-dialog.nim-dialog_unread.nim-dialog_unread-out .nim-dialog--text-preview {
+.nim-dialog.nim-dialog_unread-out.nim-dialog_muted:not(.nim-dialog_failed) .nim-dialog--text-preview,
+.nim-dialog.nim-dialog_unread-out:not(.nim-dialog_failed) .nim-dialog--text-preview,
+.nim-dialog.nim-dialog_unread.nim-dialog_unread-out:not(.nim-dialog_failed) .nim-dialog--text-preview {
     width: 93%
 }
 
@@ -3718,7 +3742,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--unread {
-    bottom: 16px
+    bottom: 15px
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--cw {
@@ -3727,7 +3751,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     padding: 10px 0
 }
 
-.nim-dialog.nim-dialog_classic.nim-dialog_unread-out .nim-dialog--unread {
+.nim-dialog.nim-dialog_classic.nim-dialog_unread-out:not(.nim-dialog_failed) .nim-dialog--unread {
     bottom: 19px
 }
 
