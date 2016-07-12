@@ -7374,8 +7374,7 @@
         var l = geByClass1(k, e);
         show(geByClass1(P, e)), setStyle(l, {
             display: "inline-block"
-        }), removeClass(e, "im-page--header-chat_short"), removeClass(geByClass1(L, e), "im-page--mess-actions_visible"), removeClass(geByClass1(L, e),
-            "im-page--mess-actions_all-sel"), s(e, t, []);
+        }), removeClass(geByClass1(L, e), "im-page--mess-actions_visible"), removeClass(geByClass1(L, e), "im-page--mess-actions_all-sel"), s(e, t, []);
         var u = t.get()
             .peer,
             n = t.get()
@@ -7396,7 +7395,7 @@
                 attr(d, "href", (0, y.getBaseLink)(t) + "?tab=" + t.get()
                     .active_tab)
             }
-            removeClass(l, "im-page--peer-online_mute"), val(l, a(t, u)), n.online || (0, y.isClassicInterface)(t) || addClass(e, "im-page--header-chat_short")
+            removeClass(l, "im-page--peer-online_mute"), val(l, a(t, u))
         }
         var g = geByClass1(O, e);
         toggleClass(g, "im-page--peer-online_mute", inArray(u, t.get()
@@ -7684,13 +7683,12 @@
             T = m.bind(null, t, e),
             S = p.bind(null, t, e, n);
         (0, E.addDelegateEvent)(e, "click", A, o), (0, E.addDelegateEvent)(e, "click", w, l), (0, E.addDelegateEvent)(e, "click", M, c), (0, E.addDelegateEvent)(e, "click",
-            y.DESLECT_ALL_CLASS, d), (0, E.addDelegateEvent)(e, "mouseover", x, v),
-        (0, E.addDelegateEvent)(e, "mouseover", "_im_header_icon", T), (0, E.addDelegateEvent)(e, "click", "_im_header_icon", S), (0, E.addDelegateEvent)(e, "click",
-            "_im_page_back",
-            function(e) {
-                checkEvent(e) || (t.get()
-                    .longpoll.push([(0, C.resetPeer)()]), cancelEvent(e))
-            });
+            y.DESLECT_ALL_CLASS, d), (0, E.addDelegateEvent)(e, "mouseover", x, v), (0, E.addDelegateEvent)(e, "mouseover", "_im_header_icon", T), (0, E.addDelegateEvent)(
+            e, "click", "_im_header_icon", S),
+        (0, E.addDelegateEvent)(e, "click", "_im_page_back", function(e) {
+            checkEvent(e) || (t.get()
+                .longpoll.push([(0, C.resetPeer)()]), cancelEvent(e))
+        });
         var k = setInterval(i.bind(null, t, e), 1e3);
         return (0, y.isReservedPeer)(t.get()
             .peer) || setTimeout(function() {

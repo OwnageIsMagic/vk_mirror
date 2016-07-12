@@ -2026,18 +2026,6 @@ body.mac .im_stickerpack_fixed {
     padding: 0
 }
 
-.im-page .im-page--header-chat_short.im-page--header-chat_verified .im-page--peer {
-    margin-right: 0
-}
-
-.im-page .im-page--header-chat_short.im-page--header-chat_verified .im-page--header-verified {
-    margin: 0 0 0 5px
-}
-
-.im-page .im-page--header-chat_short.im-page--header-chat_verified .im-page--peer-online {
-    display: none!important
-}
-
 .im-page .im-page--members {
     cursor: pointer;
     padding: 0;
