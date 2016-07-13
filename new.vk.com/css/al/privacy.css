@@ -433,14 +433,14 @@
 .privacy_dropdown .item_sel,
 .privacy_dropdown .item_sel_plus {
     padding: 6px 26px 7px 12px;
-    color: #41658c;
+    color: #2a5885;
     overflow: hidden
 }
 
 .privacy_dropdown .item_sel,
 .privacy_dropdown .item_sel_plus {
     background-color: #e7edf2;
-    color: #41658c
+    color: #2a5885
 }
 
 .privacy_dropdown .item_sel_plus {
@@ -471,7 +471,7 @@
 .privacy_dropdown .l_header .l_header_label {
     padding: 6px 6px 7px 12px;
     background-color: #e7edf2;
-    color: #41658c;
+    color: #2a5885;
     float: left
 }
 
@@ -489,7 +489,7 @@
 .privacy_dropdown .l_item_sel {
     padding: 6px 6px 7px 24px;
     background: #fff;
-    color: #41658c;
+    color: #2a5885;
     clear: both
 }
 
@@ -504,7 +504,7 @@
 .privacy_dropdown .l_item:hover,
 .privacy_dropdown .l_item_sel:hover {
     background-color: #f5f7fa;
-    color: #41658c
+    color: #2a5885
 }
 
 .privacy_dropdown.pdd_to_up {

@@ -430,7 +430,7 @@ div.wall_module .ext_video div {
 .wall_post_source_icon {
     display: inline-block;
     margin: 0 0 -1px 5px;
-    background: url(/images/profile_icons.png?14) no-repeat;
+    background: url(/images/profile_icons.png?15) no-repeat;
     width: 11px;
     height: 11px
 }
@@ -465,6 +465,10 @@ div.wall_module .ext_video div {
 
 .wall_post_source_instagram {
     background-position: 0 -240px
+}
+
+.wall_post_source_prisma {
+    background-position: 0 -288px
 }
 
 .wall_post_source_ads_mark {
@@ -4943,7 +4947,7 @@ textarea.page_poll_export_code {
 
 .like_share_widget_width {
     float: right;
-    width: 43px;
+    width: 45px;
     margin: 3px 0 10px
 }
 
@@ -5142,7 +5146,7 @@ div.create_poll_cb {
 }
 
 .page_fronly {
-    background: url(/images/profile_icons.png?14) no-repeat;
+    background: url(/images/profile_icons.png?15) no-repeat;
     background-position: 0 -163px;
     width: 8px;
     height: 11px;
@@ -5910,7 +5914,7 @@ button.wall_block_app_btn {
     padding: 0 13px;
     height: 28px;
     line-height: 28px;
-    color: #41658c;
+    color: #2a5885;
     white-space: nowrap
 }
 
@@ -5933,7 +5937,7 @@ button.wall_block_app_btn {
     left: 0;
     right: 29px;
     padding: inherit;
-    color: #41658c;
+    color: #2a5885;
     overflow: hidden;
     text-overflow: ellipsis
 }

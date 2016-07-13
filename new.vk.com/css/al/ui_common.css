@@ -247,7 +247,7 @@ a.ui_box_header_link {
     height: 30px;
     line-height: 30px;
     padding: 0 15px;
-    color: #41658c
+    color: #2a5885
 }
 
 .ui_tabs .ui_tab_group_item:hover {
@@ -1354,7 +1354,7 @@ a.ui_search_custom_link {
     height: 30px;
     line-height: 30px;
     padding: 0 15px;
-    color: #41658c
+    color: #2a5885
 }
 
 .ui_actions_menu_item:hover {
@@ -1380,7 +1380,7 @@ a.ui_search_custom_link {
     left: 0;
     right: 31px;
     padding: inherit;
-    color: #41658c;
+    color: #2a5885;
     overflow: hidden;
     text-overflow: ellipsis
 }

@@ -89,16 +89,6 @@ body.dev .stl_active.over_fast #stl_bg {
     background-color: #dce2e8
 }
 
-body.dev .chat_onl_wrap,
-body.dev .chat_active,
-body.dev .chat_expand {
-    background: #d8dfe6
-}
-
-body.dev .chat_tab_wrap:hover {
-    background: #d0d9e1
-}
-
 body.dev #page_wrap .selector_container td.selector input {
     padding: 2px 0 1px 7px!important;
     line-height: 1.23em
@@ -1742,8 +1732,20 @@ input.dev_section_search {
     padding: 6px
 }
 
-#dev_widget_preview {
-    margin: 20px 0
+.dev_widget_preview,
+.dev_widget_preview_button {
+    margin: 20px auto;
+    box-sizing: border-box
+}
+
+.dev_widget_preview_button {
+    padding: 0 180px
+}
+
+.dev_widget_preview_button_wide {
+    margin: 20px auto;
+    padding: 0 0 0 180px;
+    box-sizing: border-box
 }
 
 #dev_edit_form {
