@@ -1038,7 +1038,7 @@ body.mac .im_stickerpack_fixed {
     left: 50%;
     top: 50%;
     margin-left: -10px;
-    margin-top: -7.5px;
+    margin-top: -8.5px;
     background: url(/images/icons/im_actions.png?3) no-repeat 2px -324px
 }
 
@@ -1687,7 +1687,14 @@ body.mac .im_stickerpack_fixed {
 .im-page .im-page--history-new-bar_days>span {
     line-height: 1.5;
     border-radius: 20px;
-    padding: 3px 15px
+    padding: 3px 15px;
+    position: relative;
+    top: 7px
+}
+
+.im-page .im-page--history-new-bar_days:after,
+.im-page .im-page--history-new-bar_days:before {
+    display: none
 }
 
 .im-page .im-page--history-new-bar_days.im-page--history-new-bar_hide {

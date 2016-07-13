@@ -27,7 +27,7 @@ global_audio_flash_required = '��� �������������
 global_back = '�����';
 global_Complain_video = '������������';
 global_cancel = '������';
-global_captcha_input_here = '������� ��� ����';
+global_captcha_input_here = '������� ���';
 global_changes_saved = '��������� ���������';
 global_charged_zone_continue = '����������';
 global_charged_zone_title = '��������������';
@@ -228,7 +228,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 439;
+// section = 0; version = 440;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;

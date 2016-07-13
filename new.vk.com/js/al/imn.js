@@ -23,36 +23,42 @@
     var a = n(2),
         i = n(76),
         s = r(i),
-        o = n(106),
+        o = n(107),
         l = n(77);
     window.IM = {
         init: function(e) {
             window.Promise || (window.Promise = o.Promise), window.cur.lang.dont_attach = getLang("mail_dont_add_media"), cur.ctrl_submit = e.ctrl_submit, cur.module =
                 "im", cur.mutedPeers = e.mutedPeers, cur.gid = e.gid, cur.peer = e.peer, e.blockedFlagUpdates = {}, e.msgid = intval(nav.objLoc.msgid), cur.options = {
                     blacklist_hash: e.thash
-                }, e.unread_dialogs = Object.keys(e.tabs)
+                };
+            var t = 60 * (new Date)
+                .getTimezoneOffset(),
+                n = -10800,
+                r = n - t,
+                i = e.timeshift;
+            e.timeshift = i - r, e.unread_dialogs = Object.keys(e.tabs)
                 .filter(function(t) {
                     return e.tabs[t].unread > 0
                 })
                 .map(intval);
-            var t = (0, s["default"])(e),
-                n = (0, a.mount)(geByClass1("js-im-page", ge("page_body")), t);
+            var u = (0, s["default"])(e),
+                c = (0, a.mount)(geByClass1("js-im-page", ge("page_body")), u);
             IM.chatPhotoSaved = function(e) {
                 curBox() && curBox()
                     .hide();
-                var n = (e || {})[1];
-                return n ? (cur.pvShown && layers.fullhide(!0, !0), "im" != cur.module || t.get()
-                    .peer != n ? nav.go("/im?sel=c" + (n - 2e9)) : void 0) : nav.reload()
+                var t = (e || {})[1];
+                return t ? (cur.pvShown && layers.fullhide(!0, !0), "im" != cur.module || u.get()
+                    .peer != t ? nav.go("/im?sel=c" + (t - 2e9)) : void 0) : nav.reload()
             };
-            var r = !1;
+            var d = !1;
             Notifier.addRecvClbk("logged_off", "im", function() {
-                r || (n.unmount(), Notifier.addRecvClbk("logged_off", "im", function() {}, !0), nav.go("/login"), r = !0)
+                d || (c.unmount(), Notifier.addRecvClbk("logged_off", "im", function() {}, !0), nav.go("/login"), d = !0)
             }, !0), IM.activateTab = function(e) {
-                t.get()
+                u.get()
                     .longpoll.push([(0, l.changePeer)(intval(e), !1, !1, !0)])
             }, cur.nav.push(function() {
-                var e = n.route.apply(null, arguments);
-                return e === !1 || r || (n.unmount(), Notifier.addRecvClbk("logged_off", "im", function() {}, !0), r = !0), e
+                var e = c.route.apply(null, arguments);
+                return e === !1 || d || (c.unmount(), Notifier.addRecvClbk("logged_off", "im", function() {}, !0), d = !0), e
             })
         }
     };
@@ -769,21 +775,21 @@
     t.mount = A;
     var M = n(3),
         x = n(86),
-        O = n(97),
-        B = n(99),
-        F = n(101),
+        O = n(98),
+        B = n(100),
+        F = n(102),
         N = n(74),
         R = n(84),
         j = n(85),
-        U = n(103),
+        U = n(104),
         H = n(75),
-        G = (n(77), n(104)),
-        z = n(100),
-        q = n(105),
+        G = (n(77), n(105)),
+        z = n(101),
+        q = n(106),
         K = n(80),
         Q = n(73),
         W = n(81),
-        Y = n(98),
+        Y = n(99),
         Z = 30,
         V = 400,
         $ = 250
@@ -1308,7 +1314,7 @@
                 if (a) {
                     addClass(a, "_im_dialog_hovered"), addClass(a, "nim-dialog_hovered");
                     var l = geByClass1("_im_mess_search", e);
-                    s.scrollTo(intval(domData(a, "peer")), !1, l ? $ + 37 : $, l ? 37 : 0)
+                    s.scrollTo(intval(domData(a, "peer")), !1, l ? $ + 37 : $, l ? 37 : 0);
                 }
             },
             selectHoveredDialog: function(t) {
@@ -2943,14 +2949,13 @@
                 r = l(n.history);
             n.history = (0, St.markMessagesAsRead)(t, e.peerId, r)
         }
-        return Promise.resolve(t)
+        return Promise.resolve(t);
     }
 
     function U(e, t, n, r, a) {
         return a.text = {
-                attachedFiles: 0
-            },
-            a.imQueue = e, a.imQueueResend = t, a.imQueueSet = n, a.imQueueComplete = r, Promise.resolve(a)
+            attachedFiles: 0
+        }, a.imQueue = e, a.imQueueResend = t, a.imQueueSet = n, a.imQueueComplete = r, Promise.resolve(a)
     }
 
     function H(e, t) {
@@ -7224,8 +7229,8 @@
             },
             unmount: function() {
                 (0, N.removeDelegateEvent)(e, "click", O.FAILED_CLASS, g), (0, N.removeDelegateEvent)(e, "click", O.RESTORE_CLASS, f), (0, N.removeDelegateEvent)(e,
-                    "click", X, v), removeEvent(geByClass1("_im_start_new", e), "click", S), removeEvent(geByClass1(J, e), "click", k), removeEvent(document, j, B.screenfull
-                    .raw.fullscreenchange), t.destroy(), clearInterval(M), i.unmount(), n.unmount(), E.unmount(), T.unmount()
+                    "click", X, v), removeEvent(geByClass1("_im_start_new", e), "click", S), removeEvent(geByClass1(J, e), "click", k), removeEvent(document, B.screenfull
+                    .raw.fullscreenchange, j), t.destroy(), clearInterval(M), i.unmount(), n.unmount(), E.unmount(), T.unmount()
             },
             removePeer: function(e, t) {
                 d()
@@ -7333,18 +7338,18 @@
     }), t.mount = M;
     var x = n(73),
         O = n(81),
-        B = n(116),
+        B = n(87),
         F = n(80),
         N = n(5),
         R = n(85),
-        j = n(87),
-        U = n(88),
-        H = n(92),
-        G = n(93),
-        z = n(94),
-        q = n(95),
+        j = n(88),
+        U = n(89),
+        H = n(93),
+        G = n(94),
+        z = n(95),
+        q = n(96),
         K = n(84),
-        Q = n(96),
+        Q = n(97),
         W = n(77),
         Y = 1e3,
         Z = -30,
@@ -7358,6 +7363,64 @@
         re = "_im_typer_c",
         ae = "_im_last_hist_act",
         ie = !1
+}, function(e, t) {
+    "use strict";
+    Object.defineProperty(t, "__esModule", {
+        value: !0
+    });
+    t.screenfull = function() {
+        var e = "undefined" != typeof Element && "ALLOW_KEYBOARD_INPUT" in Element,
+            t = function() {
+                for (var e, t, n = [
+                        ["requestFullscreen", "exitFullscreen", "fullscreenElement", "fullscreenEnabled", "fullscreenchange", "fullscreenerror"],
+                        ["webkitRequestFullscreen", "webkitExitFullscreen", "webkitFullscreenElement", "webkitFullscreenEnabled", "webkitfullscreenchange",
+                            "webkitfullscreenerror"
+                        ],
+                        ["webkitRequestFullScreen", "webkitCancelFullScreen", "webkitCurrentFullScreenElement", "webkitCancelFullScreen", "webkitfullscreenchange",
+                            "webkitfullscreenerror"
+                        ],
+                        ["mozRequestFullScreen", "mozCancelFullScreen", "mozFullScreenElement", "mozFullScreenEnabled", "mozfullscreenchange", "mozfullscreenerror"],
+                        ["msRequestFullscreen", "msExitFullscreen", "msFullscreenElement", "msFullscreenEnabled", "MSFullscreenChange", "MSFullscreenError"]
+                    ], r = 0, a = n.length, i = {}; a > r; r++)
+                    if (e = n[r], e && e[1] in document) {
+                        for (r = 0, t = e.length; t > r; r++) i[n[0][r]] = e[r];
+                        return i
+                    }
+                return !1
+            }(),
+            n = {
+                request: function r(n) {
+                    var r = t.requestFullscreen;
+                    n = n || document.documentElement, /5\.1[\.\d]* Safari/.test(navigator.userAgent) ? n[r]() : n[r](e && Element.ALLOW_KEYBOARD_INPUT)
+                },
+                exit: function() {
+                    document[t.exitFullscreen]()
+                },
+                toggle: function(e) {
+                    this.isFullscreen ? this.exit() : this.request(e)
+                },
+                raw: t
+            };
+        return t ? (Object.defineProperties(n, {
+            isFullscreen: {
+                get: function() {
+                    return Boolean(document[t.fullscreenElement])
+                }
+            },
+            element: {
+                enumerable: !0,
+                get: function() {
+                    return document[t.fullscreenElement]
+                }
+            },
+            enabled: {
+                enumerable: !0,
+                get: function() {
+                    return Boolean(document[t.fullscreenEnabled])
+                }
+            }
+        }), n) : !1
+    }()
 }, function(e, t, n) {
     "use strict";
 
@@ -8439,10 +8502,10 @@
         B = n(73),
         F = n(81),
         N = n(79),
-        R = n(89),
+        R = n(90),
         j = n(5),
-        U = (n(90), n(80)),
-        H = n(91),
+        U = (n(91), n(80)),
+        H = n(92),
         G = 4e3,
         z = 3980,
         q = "_im_media_selector",
@@ -8982,7 +9045,7 @@
     function l(e, t, n, r) {
         var a = e.get()
             .barMap[t];
-        return n - (a[0] + n - a[1]) + r
+        return n - (a[0] + n - a[1]) + r - T
     }
 
     function u(e, t) {
@@ -9140,7 +9203,8 @@
         b = 46,
         y = 24,
         C = 300,
-        E = -7
+        E = -7,
+        T = 7
 }, function(e, t, n) {
     "use strict";
 
@@ -9373,7 +9437,7 @@
         y = n(76),
         C = (r(y), n(77)),
         E = n(80),
-        T = n(98),
+        T = n(99),
         w = "_im_important_counter",
         S = "_im_gim_mute"
 }, function(e, t, n) {
@@ -9478,8 +9542,8 @@
     }();
     t.mount = s;
     var l = n(73),
-        u = n(93),
-        c = n(94),
+        u = n(94),
+        c = n(95),
         d = n(81),
         g = n(76),
         f = r(g),
@@ -9573,7 +9637,7 @@
         value: !0
     }), t.mount = l;
     var u = n(5),
-        c = n(100),
+        c = n(101),
         d = n(73),
         g = n(81),
         f = "_im_dialogs_cog_settings",
@@ -9770,7 +9834,7 @@
         _ = n(81),
         v = n(5),
         h = n(85),
-        b = n(95),
+        b = n(96),
         y = n(76),
         C = r(y),
         E = n(77),
@@ -10114,7 +10178,7 @@
         S = n(80),
         k = n(83),
         I = n(81),
-        P = n(102),
+        P = n(103),
         L = n(5),
         A = n(76),
         D = r(A),
@@ -10688,7 +10752,7 @@
 
             function _() {
                 try {
-                    var e = n(109);
+                    var e = n(110);
                     return Q = e.runOnLoop || e.runOnContext, d()
                 } catch (t) {
                     return m()
@@ -10958,7 +11022,7 @@
                     Promise: pe,
                     polyfill: ve
                 };
-            n(110)
+            n(111)
                 .amd ? (r = function() {
                     return he
                 }.call(t, n, t, i), !(void 0 !== r && (i.exports = r))) : "undefined" != typeof i && i.exports ? i.exports = he : "undefined" != typeof this && (
@@ -10966,9 +11030,9 @@
         })
         .call(this)
     })
-    .call(t, n(107), function() {
+    .call(t, n(108), function() {
         return this
-    }(), n(108)(e))
+    }(), n(109)(e))
 }, function(e, t) {
     function n() {
         u = !1, s.length ? l = s.concat(l) : c = -1, l.length && r()
@@ -11020,62 +11084,4 @@
     e.exports = function() {
         throw new Error("define cannot be used indirect")
     }
-}, , , , , , function(e, t) {
-    "use strict";
-    Object.defineProperty(t, "__esModule", {
-        value: !0
-    });
-    t.screenfull = function() {
-        var e = "undefined" != typeof Element && "ALLOW_KEYBOARD_INPUT" in Element,
-            t = function() {
-                for (var e, t, n = [
-                        ["requestFullscreen", "exitFullscreen", "fullscreenElement", "fullscreenEnabled", "fullscreenchange", "fullscreenerror"],
-                        ["webkitRequestFullscreen", "webkitExitFullscreen", "webkitFullscreenElement", "webkitFullscreenEnabled", "webkitfullscreenchange",
-                            "webkitfullscreenerror"
-                        ],
-                        ["webkitRequestFullScreen", "webkitCancelFullScreen", "webkitCurrentFullScreenElement", "webkitCancelFullScreen", "webkitfullscreenchange",
-                            "webkitfullscreenerror"
-                        ],
-                        ["mozRequestFullScreen", "mozCancelFullScreen", "mozFullScreenElement", "mozFullScreenEnabled", "mozfullscreenchange", "mozfullscreenerror"],
-                        ["msRequestFullscreen", "msExitFullscreen", "msFullscreenElement", "msFullscreenEnabled", "MSFullscreenChange", "MSFullscreenError"]
-                    ], r = 0, a = n.length, i = {}; a > r; r++)
-                    if (e = n[r], e && e[1] in document) {
-                        for (r = 0, t = e.length; t > r; r++) i[n[0][r]] = e[r];
-                        return i
-                    }
-                return !1
-            }(),
-            n = {
-                request: function r(n) {
-                    var r = t.requestFullscreen;
-                    n = n || document.documentElement, /5\.1[\.\d]* Safari/.test(navigator.userAgent) ? n[r]() : n[r](e && Element.ALLOW_KEYBOARD_INPUT)
-                },
-                exit: function() {
-                    document[t.exitFullscreen]()
-                },
-                toggle: function(e) {
-                    this.isFullscreen ? this.exit() : this.request(e)
-                },
-                raw: t
-            };
-        return t ? (Object.defineProperties(n, {
-            isFullscreen: {
-                get: function() {
-                    return Boolean(document[t.fullscreenElement])
-                }
-            },
-            element: {
-                enumerable: !0,
-                get: function() {
-                    return document[t.fullscreenElement]
-                }
-            },
-            enabled: {
-                enumerable: !0,
-                get: function() {
-                    return Boolean(document[t.fullscreenEnabled])
-                }
-            }
-        }), n) : !1
-    }()
 }]);
