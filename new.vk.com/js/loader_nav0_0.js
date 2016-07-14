@@ -190,7 +190,7 @@ var stVersions = {
     'video_upload.js': 3349478794,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 2304065205,
+    'videoplayer.js': 333581228,
     'videoplayer.css': 324260572,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
@@ -208,8 +208,8 @@ var stVersions = {
     'module.css': 2820130765,
     'owner_photo.js': 777617564,
     'owner_photo.css': 2482930139,
-    'page.js': 1390799734,
-    'page.css': 788420519,
+    'page.js': 281579270,
+    'page.css': 2888021900,
     'page_help.css': 2370291310,
     'public.css': 4066778842,
     'public.js': 1370745423,
@@ -240,7 +240,7 @@ var stVersions = {
     'mail.js': 4232525143,
     'email.css': 3625468312,
     'im.css': 829233285,
-    'imn.js': 332637495,
+    'imn.js': 4264682110,
     'im.js': 4271552496,
     'emoji.js': 1702836788,
     'wide_dd.css': 2440348481,
@@ -465,7 +465,7 @@ var stVersions = {
     'snapster/notifier.js': 1904376904,
     'snapster/snapster_ui.css': 3351071103,
     'favicon': 5,
-    'lang': 6719
+    'lang': 6720
 };
 var stTypes = {
     fromLib: {
@@ -515,4 +515,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 1684;
+var _rnd = 622;

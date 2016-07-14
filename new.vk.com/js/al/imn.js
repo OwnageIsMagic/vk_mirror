@@ -7229,8 +7229,8 @@
             },
             unmount: function() {
                 (0, N.removeDelegateEvent)(e, "click", O.FAILED_CLASS, g), (0, N.removeDelegateEvent)(e, "click", O.RESTORE_CLASS, f), (0, N.removeDelegateEvent)(e,
-                    "click", X, v), removeEvent(geByClass1("_im_start_new", e), "click", S), removeEvent(geByClass1(J, e), "click", k), removeEvent(document, B.screenfull
-                    .raw.fullscreenchange, j), t.destroy(), clearInterval(M), i.unmount(), n.unmount(), E.unmount(), T.unmount()
+                    "click", X, v), removeEvent(geByClass1("_im_start_new", e), "click", S), removeEvent(geByClass1(J, e), "click", k), B.screenfull.raw && removeEvent(
+                    document, B.screenfull.raw.fullscreenchange, j), t.destroy(), clearInterval(M), i.unmount(), n.unmount(), E.unmount(), T.unmount()
             },
             removePeer: function(e, t) {
                 d()
@@ -7328,8 +7328,8 @@
             ue = A.bind(null, u, t);
         (0, N.addDelegateEvent)(e, "click", O.RESTORE_CLASS, V), (0, N.addDelegateEvent)(e, "mouseover", O.FAILED_CLASS, ie), (0, N.addDelegateEvent)(e, "click", X, $), (0,
             N.addDelegateEvent)(e, "click", ee, se), (0, N.addDelegateEvent)(e, "click", O.SHOW_CHAT_MEMBERS_CLASS, oe), (0, N.addDelegateEvent)(e, "click", te, le), (0, N
-            .addDelegateEvent)(e, "mouseover", ne, L), addEvent(geByClass1("_im_start_new", e), "click", re), addEvent(geByClass1(J, e), "click", ae), addEvent(document, B
-            .screenfull.raw.fullscreenchange, ue);
+            .addDelegateEvent)(e, "mouseover", ne, L), addEvent(geByClass1("_im_start_new", e), "click", re), addEvent(geByClass1(J, e), "click", ae), B.screenfull.raw &&
+            addEvent(document, B.screenfull.raw.fullscreenchange, ue);
         var ce = setInterval(_.bind(null, t, e), 1e3);
         return g(e, S, P, M, u, n, Y, V, $, F, G, W, re, ae, y, t, p, ce, b, ue)
     }
@@ -7673,7 +7673,8 @@
                 var l = (0, y.showBlacklistBox)(o, e);
                 l.once("success", function(t) {
                     t.delta && (showDoneBox(t.msg), e.get()
-                        .longpoll.push([(0, C.resetPeer)()]))
+                        .longpoll.push([(0,
+                            C.resetPeer)()]))
                 });
                 break;
             case "leave":
@@ -9343,7 +9344,7 @@
                     .parentNode)
             },
             createCanceled: function(e, t) {
-                removeClass(s, "im-dialog-select_rotated")
+                removeClass(s, "im-dialog-select_rotated");
             },
             rotateCross: function(e) {
                 addClass(s, "im-dialog-select_rotated")

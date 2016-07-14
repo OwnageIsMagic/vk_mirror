@@ -4976,6 +4976,13 @@ textarea.page_poll_export_code {
     top: 0
 }
 
+.post_field_wrap .composer_wdd .wdd_lwrap,
+.reply_field_wrap .composer_wdd .wdd_lwrap {
+    left: -43px;
+    right: 0;
+    width: auto!important
+}
+
 .share_parse_progress {
     height: 10px;
     background-image: url(/images/upload_gray.gif);
