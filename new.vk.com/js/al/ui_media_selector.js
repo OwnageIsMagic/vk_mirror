@@ -220,7 +220,7 @@ function MediaSelector(e, a, i, o) {
                 cur.chooseMedia = t.chooseMedia, cur.showMediaProgress = t.showMediaProgress, cur.attachCount = t.attachCount, cur.lastAddMedia = t
             },
             onItemClick: function(e) {
-                return n && t.attachCount() >= l && "postpone" !== e ? (vk.widget ? showBox("blank.php", {
+                return n && t.attachCount() >= l && "postpone" !== e && "mark_as_ads" !== e ? (vk.widget ? showBox("blank.php", {
                     code: 1900,
                     limit: l
                 }) : showFastBox(getLang("global_error"), getLang("attachments_limit", l)), !1) : !0
@@ -248,9 +248,9 @@ function MediaSelector(e, a, i, o) {
                 v = domNS(g),
                 w = domNS(v),
                 f = domNS(w),
-                b = domNS(f),
-                k = domNS(b),
-                C = domNS(k),
+                k = domNS(f),
+                b = domNS(k),
+                C = domNS(b),
                 p = domNS(C);
             removeClass(u, "media_preview"), addClass(u, "multi_media_preview")
         } else addClass(u, "med_no_attach"), show(u);
@@ -271,32 +271,32 @@ function MediaSelector(e, a, i, o) {
             chooseMedia: function(a, i, s, d, r, p) {
                 if (t.onChange && t.onChange(a, i, s, d) === !1) return void 0 !== s.upload_ind && re("upload" + s.upload_ind + "_progress_wrap"), !1;
                 if ("note" == a && (cur.pbNoteAdded = !1), inArray(a, o.disabledTypes || [])) return !1;
-                if (t.attachCount() >= l && void 0 === s.upload_ind && "postpone" !== a || geByClass1("medadd_c_market", w)) {
+                if (t.attachCount() >= l && void 0 === s.upload_ind && "postpone" !== a && "mark_as_ads" !== a || geByClass1("medadd_c_market", w)) {
                     if (n) return !1;
                     t.unchooseMedia()
                 }
-                var x = !1,
-                    y = {};
+                var y = !1,
+                    x = {};
                 if (n && (each(t.chosenMedias, function() {
-                        return this[0] == a && this[1] == i ? (x = !0, !1) : void(y[this[0]] = y[this[0]] ? y[this[0]] + 1 : 1)
-                    }), x)) return !1;
+                        return this[0] == a && this[1] == i ? (y = !0, !1) : void(x[this[0]] = x[this[0]] ? x[this[0]] + 1 : 1)
+                    }), y)) return !1;
                 var S, P = "",
                     M = "",
                     I = "",
                     L = !1,
                     N = w,
-                    T = "";
+                    A = "";
                 switch (a) {
                     case "graffiti":
                         isObject(s) || (s = {
                             thumb: s || ""
-                        }), P = '<div class="fl_l page_preview_graffiti"><img class="page_preview_graffiti" src="' + s.thumb + '" /></div>', N = L = k;
+                        }), P = '<div class="fl_l page_preview_graffiti"><img class="page_preview_graffiti" src="' + s.thumb + '" /></div>', N = L = b;
                         break;
                     case "photos_list":
                         hide(this._addMediaLink), vkImage()
                             .src = s[1];
-                        var A = s[3].replace(/^{|}$/g, "");
-                        A && (A += ","), A += '"queue":1', S = o.nocl ? "" : " onclick=\"return showPhoto('" + s[4] + "', '" + s[2] + "', " + A.replace(/"/g, "&quot;") +
+                        var T = s[3].replace(/^{|}$/g, "");
+                        T && (T += ","), T += '"queue":1', S = o.nocl ? "" : " onclick=\"return showPhoto('" + s[4] + "', '" + s[2] + "', " + T.replace(/"/g, "&quot;") +
                             ');"', P = "<div" + S + ' class="fl_l page_preview_photo"><img class="page_preview_photo" src="' + s[1] + '" /></div>', N = L = g;
                         break;
                     case "photo":
@@ -308,12 +308,12 @@ function MediaSelector(e, a, i, o) {
                                 upload_ind: s.upload_ind || void 0
                             }), vkImage()
                             .src = s.thumb_m;
-                        var A = s.view_opts.replace(/^{|}$/g, "");
-                        if (A && (A += ","), A += '"queue":1', t.phLists[i] = s.list, c) {
+                        var T = s.view_opts.replace(/^{|}$/g, "");
+                        if (T && (T += ","), T += '"queue":1', t.phLists[i] = s.list, c) {
                             if (!s.editable) return !1;
-                            o.nocl || (s.editable.click = t.showPhoto.pbind(i, s.list, parseJSON("{" + A + "}")))
+                            o.nocl || (s.editable.click = t.showPhoto.pbind(i, s.list, parseJSON("{" + T + "}")))
                         }
-                        S = o.nocl ? "" : ' onclick="return cur.addMedia[' + t.lnkId + "].showPhoto('" + i + "', '" + s.list + "', {" + A.replace(/"/g, "&quot;") + '});"',
+                        S = o.nocl ? "" : ' onclick="return cur.addMedia[' + t.lnkId + "].showPhoto('" + i + "', '" + s.list + "', {" + T.replace(/"/g, "&quot;") + '});"',
                             P = "<div " + S + ' class="fl_l page_preview_photo' + (p ? " page_preview_ph_graff" : "") + '"><img class="page_preview_photo" src="' + s.thumb_m +
                             '" /></div>', L = 1, N = g;
                         break;
@@ -332,7 +332,7 @@ function MediaSelector(e, a, i, o) {
                     case "audio":
                         if (!s.info) return !1;
                         var B = geByClass1("_audio_row_" + i);
-                        B && (s = AudioUtils.getAudioFromEl(B)), P = Page.addAudioPreview(i, s), T = ' id="pam' + m + "_audio" + i + '"';
+                        B && (s = AudioUtils.getAudioFromEl(B)), P = Page.addAudioPreview(i, s), A = ' id="pam' + m + "_audio" + i + '"';
                         break;
                     case "doc":
                         if (!s.lang) return !1;
@@ -342,12 +342,12 @@ function MediaSelector(e, a, i, o) {
                             '<a onclick="if (cur.cancelClick) return (cur.cancelClick = false);" target="_blank" href="' + s.href +
                             '" class="pam_dpic"><div class="page_preview_doc_photo"><img src="' + s.thumb +
                             '" align="center" /></div><div class="page_preview_doc_photo_hint">' + s.title + "</div>", M = '</a><div class="pam_bg"></div>', N = L = v,
-                            T = ' id="pam' + m + "_doc" + i + '"') : (P = "", M = '<div class="page_doc_row"><a target="_blank" href="' + s.href +
+                            A = ' id="pam' + m + "_doc" + i + '"') : (P = "", M = '<div class="page_doc_row"><a target="_blank" href="' + s.href +
                             '" class="page_doc_icon page_doc_icon' + intval(s.type) + '"></a><a target="_blank" href="' + s.href + '" class="page_doc_title">' + s.title +
-                            '</a><div class="page_doc_size">' + s.size_str + "</div></div>", T = ' id="pam' + m + "_doc" + i + '"');
+                            '</a><div class="page_doc_size">' + s.size_str + "</div></div>", A = ' id="pam' + m + "_doc" + i + '"');
                         break;
                     case "share":
-                        if (y.share || y.page || !s.lang) return !1;
+                        if (x.share || x.page || !s.lang) return !1;
                         if (isArray(s) && (s = {
                                 domain: s[0],
                                 url: s[1],
@@ -361,7 +361,7 @@ function MediaSelector(e, a, i, o) {
                         P = '<a target="_blank" href="/away.php?to=' + encodeURIComponent(s.url) + '" class="medadd_h medadd_h_link inl_bl">' + s.lang.profile_choose_link +
                             "</a>", t.shareData = extend(t.shareData || {}, s, {
                                 imagesStyles: [""]
-                            }), N = b;
+                            }), N = k;
                         break;
                     case "poll":
                         if (!s.lang) return !1;
@@ -373,13 +373,13 @@ function MediaSelector(e, a, i, o) {
                         P = "<div class=\"fl_l\"><a onclick=\"return showBox('al_places.php', {act: 'geo_box', lat: " + s[0] + ", long: " + s[1] + ", provider: " + intval(
                                 s[3]) + '}, {dark: 1});"><div class="page_media_map_point"></div><img class="page_preview_map" width="' + U + '" height="' + q +
                             '" src="/maps?lat=' + s[0] + "&lng=" + s[1] + "&z=11&" + (window.devicePixelRatio >= 2, "w=" + 2 * U + "&h=" + 2 * q) + '" /></a></div>', N = L =
-                            k, hide(domByClass(_.menuNode, "_type_map"));
+                            b, hide(domByClass(_.menuNode, "_type_map"));
                         break;
                     case "page":
-                        if (y.share || y.page || !s.lang) return !1;
+                        if (x.share || x.page || !s.lang) return !1;
                         var D = s.media.split("_");
                         P = '<a href="/page' + s.media + '" onclick="return showWiki({oid: ' + D[0] + ", id: " + D[1] +
-                            '}, false, event, {queue: 1})" class="medadd_h medadd_h_page inl_bl">' + s.lang.profile_choose_page + "</a>", N = b;
+                            '}, false, event, {queue: 1})" class="medadd_h medadd_h_page inl_bl">' + s.lang.profile_choose_page + "</a>", N = k;
                         break;
                     case "album":
                         if (s.thumb.match(/^\/images\//) && (s.thumb = ""), c) {
@@ -392,11 +392,11 @@ function MediaSelector(e, a, i, o) {
                                 })
                             })
                         }
-                        var z = s.thumb;
+                        var F = s.thumb;
                         vkImage()
-                            .src = z, S = o.nocl ? "" : ' href="/album' + i + '" onclick="return nav.change({z: \'album' + i + "'}, event)\"";
-                        var F = "fl_l page_album_link" + (z ? "" : " page_album_nocover");
-                        P = '<a class="' + F + '" ' + S + ">" + (z ? '<div class="page_album_thumb_wrap"><img class="page_album_thumb" src="' + z + '"/></div>' : "") +
+                            .src = F, S = o.nocl ? "" : ' href="/album' + i + '" onclick="return nav.change({z: \'album' + i + "'}, event)\"";
+                        var z = "fl_l page_album_link" + (F ? "" : " page_album_nocover");
+                        P = '<a class="' + z + '" ' + S + ">" + (F ? '<div class="page_album_thumb_wrap"><img class="page_album_thumb" src="' + F + '"/></div>' : "") +
                             '  <div class="page_album_title">    <div class="page_album_size">' + s.count + '</div>    <div class="page_album_title_text">' + s.title +
                             "</div>  </div></a>", L = 1, N = g;
                         break;
@@ -404,7 +404,7 @@ function MediaSelector(e, a, i, o) {
                         if (!s.lang) return !1;
                         P = "<a onclick=\"showWiki({w: 'note" + s.raw + '\', edit: 1}, true, event, {queue: 1})" class="medadd_h medadd_h_note inl_bl">' + s.lang.profile_choose_note +
                             "</a>", M = '<div class="medadd_c medadd_c_note"><a onclick="showWiki({w: \'note' + s.raw +
-                            '\', edit: 1}, true, event, {queue: 1})" id="share_note_title' + s.raw + '">' + s.title + "</a></div>", N = b;
+                            '\', edit: 1}, true, event, {queue: 1})" id="share_note_title' + s.raw + '">' + s.title + "</a></div>", N = k;
                         break;
                     case "market":
                         P = '<div class="medadd_c_market fl_l"><a target="_blank" href="' + s.href + '"><img class="medadd_c_market_thumb fl_l" src="' + s.thumb +
@@ -423,8 +423,8 @@ function MediaSelector(e, a, i, o) {
                         var D = i.split("_");
                         vkImage()
                             .src = s.thumb, S = o.nocl ? "" : ' href="/market' + D[0] + "?section=album_" + D[1] + '"';
-                        var F = "fl_l page_preview_album wall_album_cover_wrap wall_market_album_cover" + (s.thumb ? "" : " page_album_nocover");
-                        P = '<a class="' + F + '" ' + S + ">" + (s.thumb ? '<img class="wall_album_cover" src="' + s.thumb + '"/>' : "") +
+                        var z = "fl_l page_preview_album wall_album_cover_wrap wall_market_album_cover" + (s.thumb ? "" : " page_album_nocover");
+                        P = '<a class="' + z + '" ' + S + ">" + (s.thumb ? '<img class="wall_album_cover" src="' + s.thumb + '"/>' : "") +
                             '  <div class="wall_album_caption">    <div class="wall_album_title_wrap clear_fix">      <div class="wall_album_count fl_r">' + s.count +
                             '</div>      <div class="wall_album_title">' + s.title + "</div>    </div>  </div></a>", L = 1, N = g;
                         break;
@@ -455,14 +455,14 @@ function MediaSelector(e, a, i, o) {
                         break;
                     case "mark_as_ads":
                         P = '<div class="medadd_h medadd_h_mark_as_ads inl_bl">' + s.lang.global_ads_wall_post_mark_as_ads_action + "</div>", hide(domByClass(_.menuNode,
-                            "_type_mark_as_ads"))
+                            "_type_mark_as_ads")), N = C
                 }
                 if (n) {
                     var O = t.chosenMedias,
                         V = O.length,
                         $ = c && 1 === L ? !1 : "photos_list" == a ? se('<div class="page_preview_' + a + "_wrap" + I + '" style="position: relative">' + P +
                             '<div class="page_photos_count">' + i.split(",")
-                            .length + "</div></div>") : se('<div class="page_preview_' + a + "_wrap" + I + '"' + (o.nocl ? ' style="cursor: default"' : "") + T + ">" + P +
+                            .length + "</div></div>") : se('<div class="page_preview_' + a + "_wrap" + I + '"' + (o.nocl ? ' style="cursor: default"' : "") + A + ">" + P +
                             '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' + getLang("dont_attach") +
                             '" onmouseover="showTitle(this)" onclick="cur.addMedia[' + t.lnkId + "].unchooseMedia(" + V +
                             '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + M + "</div>");
@@ -498,24 +498,24 @@ function MediaSelector(e, a, i, o) {
                         v.qsorter ? qsorter.added(v) : N.childNodes.length > 1 && qsorter.init(v, t.qsorterOpts()), o.onChangedSize && o.onChangedSize()
                     }, !0)), o.onChangedSize && o.onChangedSize()), O.push([a, i, $, d])
                 } else {
-                    var V = "postpone" === a ? 1 : 0,
-                        $ = se('<div class="' + (L === !1 ? "page_docs_preview" : "page_pics_preview") + (V ? "" : " post_thumbed_media") + '"><div class="page_preview_' +
-                            a + '_wrap"' + (o.nocl ? ' style="cursor: default"' : "") + T + ">" + P + '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' +
-                            getLang("dont_attach") + '" onmouseover="showTitle(this)" onclick="cur.addMedia[' + t.lnkId + "].unchooseMedia(" + V +
-                            '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + M + "</div></div>");
-                    addClass($, L ? "fl_l" : "clear_fix"), void 0 !== s.upload_ind && re("upload" + s.upload_ind + "_progress_wrap"), "postpone" !== a && (t.chosenMedia = [
-                        a, i
-                    ], t.chosenMediaData = s), t.singleAdded($, a)
+                    var V = 0;
+                    "postpone" === a ? V = 1 : "mark_as_ads" === a && (V = 2);
+                    var $ = se('<div class="' + (L === !1 ? "page_docs_preview" : "page_pics_preview") + (V ? "" : " post_thumbed_media") + '"><div class="page_preview_' +
+                        a + '_wrap"' + (o.nocl ? ' style="cursor: default"' : "") + A + ">" + P + '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' +
+                        getLang("dont_attach") + '" onmouseover="showTitle(this)" onclick="cur.addMedia[' + t.lnkId + "].unchooseMedia(" + V +
+                        '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + M + "</div></div>");
+                    addClass($, L ? "fl_l" : "clear_fix"), void 0 !== s.upload_ind && re("upload" + s.upload_ind + "_progress_wrap"), "postpone" !== a && "mark_as_ads" !==
+                        a && (t.chosenMedia = [a, i], t.chosenMediaData = s), t.singleAdded($, a)
                 }
                 "share" == a ? s.title && !d ? (cur.shareShowImg = 0, t.showPreview(!0), t.shareData.images = !1) : t.showExternalPreview() : "page" == a ? s.nopreview ||
                     (cur.shareShowImg = 0, t.shareData = extend(t.shareData || {}, s, {
                         images: !1
-                    }), t.showPreview()) : "poll" == a ? t.createPoll(s) : "postpone" == a && t.setupPostpone(s, E), toggleClass(u, "media_preview_has_medias", t.hasVisibleRows()),
-                    o.onChangedSize && o.onChangedSize();
+                    }), t.showPreview()) : "poll" == a ? t.createPoll(s) : "postpone" == a ? t.setupPostpone(s, E) : "mark_as_ads" == a && (t.markAsAds = 1), toggleClass(u,
+                        "media_preview_has_medias", t.hasVisibleRows()), o.onChangedSize && o.onChangedSize();
                 var K = window.event;
                 return K && "click" == K.type && (K.ctrlKey || K.metaKey || K.shiftKey) && (r = !0), cur.fileApiUploadStarted && void 0 !== s.upload_ind || cur.preventBoxHide ||
-                    r === !0 || inArray(a, ["poll", "share", "page", "postpone"]) || boxQueue.hideLast(), cur.lastPostMsg = !1, o.onMediaAdd && o.onMediaAdd(), cur.onMediaAdded &&
-                    cur.onMediaAdded(), void 0 !== s.upload_ind && delete s.upload_ind, !1
+                    r === !0 || inArray(a, ["poll", "share", "page", "postpone", "mark_as_ads"]) || boxQueue.hideLast(), cur.lastPostMsg = !1, o.onMediaAdd && o.onMediaAdd(),
+                    cur.onMediaAdded && cur.onMediaAdded(), void 0 !== s.upload_ind && delete s.upload_ind, !1
             },
             unchooseMedia: function(a) {
                 if (t.onChange && t.onChange(!1, a) === !1) return !1;
@@ -570,27 +570,39 @@ function MediaSelector(e, a, i, o) {
                         s[a] = !1
                     }
                     o.toggleLnk && toggle(e, t.attachCount() < l), toggle(g, !!(c ? geByClass1("thumb_wrap", g) : domFC(g))), toggle(v, !!domFC(v)), toggle(w, !!domFC(w)),
-                        toggle(f, !!domFC(f)), toggle(b, !!domFC(b)), toggle(k, !!domFC(k)), toggle(C, !!domFC(C)), toggle(p, !!domFC(p))
+                        toggle(f, !!domFC(f)), toggle(k, !!domFC(k)), toggle(b, !!domFC(b)), toggle(C, !!domFC(C)), toggle(p, !!domFC(p))
                 } else {
                     var r, i;
-                    if (void 0 == a && (a = 0), (i = geByClass("page_media_x_wrap", u, "div")[a]) && i.tt && i.tt.el && i.tt.destroy(), a && t.postponePreview) {
+                    if (void 0 == a && (a = 0), (i = geByClass("page_media_x_wrap", u, "div")[a]) && i.tt && i.tt.el && i.tt.destroy(), 1 == a && t.postponePreview) {
                         show(geByClass1("add_media_type_" + m + "_postpone", _.menuNode, "a"));
                         var h = domPN(t.postponePreview);
                         window.tooltips && tooltips.destroyAll(h), re(h), t.postponePreview = !1;
-                        var x = _.lastTypes;
+                        var y = _.lastTypes;
                         each(_.types, function(e, a) {
-                            "postpone" === a[0] && x.push(a)
-                        }), _.setItems(x)
+                            "postpone" === a[0] && y.push(a)
+                        }), _.setItems(y)
+                    } else if (2 == a && t.markAsAds) {
+                        t.markAsAds = !1;
+                        var x = geByClass1("page_preview_mark_as_ads_wrap", u);
+                        window.tooltips && x && tooltips.destroyAll(x), re(x);
+                        var y = _.lastTypes;
+                        each(_.types, function(e, a) {
+                            "mark_as_ads" === a[0] && y.push(a)
+                        }), _.setItems(y)
                     } else {
-                        if (t.postponePreview) {
-                            for (var h = domPN(t.postponePreview), y = 0; y < u.childNodes.length; y++) {
-                                var S = u.childNodes[y];
-                                "DIV" == S.nodeName && S != h && re(S)
+                        if (t.postponePreview || t.markAsAds) {
+                            for (var h = t.postponePreview && domPN(t.postponePreview), x = t.markAsAds && domPN(geByClass1("page_preview_mark_as_ads_wrap", u)), S = [], P =
+                                    0; P < u.childNodes.length; P++) {
+                                var M = u.childNodes[P];
+                                "DIV" == M.nodeName && M != h && M != x && S.push(M)
                             }
-                            var x = [];
+                            each(S, function(e, a) {
+                                re(a)
+                            });
+                            var y = [];
                             each(_.types, function(e, a) {
-                                "postpone" !== a[0] && x.push(a)
-                            }), _.setItems(x)
+                                "postpone" === a[0] && t.postponePreview || "mark_as_ads" === a[0] && t.markAsAds || y.push(a)
+                            }), _.setItems(y)
                         } else val(u, ""), addClass(u, "med_no_attach"), _.setItems(_.types);
                         t.chosenMedia && (t.chosenMedia = !1, t.chosenMediaData = !1), (r = t.shareData) && (r.url && t.urlsCancelled.push(r.url), r.initialPattern && t.urlsCancelled
                             .push(r.initialPattern), t.shareData = {}), each([t.sharePreview, t.pollPreview], function() {
@@ -602,10 +614,12 @@ function MediaSelector(e, a, i, o) {
                 toggleClass(u, "media_preview_has_medias", t.hasVisibleRows()), cur.onMediaAdded && cur.onMediaAdded(), cur.lastPostMsg = !1, t.onChange && t.onChange(!1)
             },
             singleAdded: function(a, i) {
-                t.postponePreview ? u.insertBefore(a, domFC(u)) : u.appendChild(a), removeClass(u, "med_no_attach");
+                "postpone" === i ? u.appendChild(a) : "mark_as_ads" === i ? t.postponePreview ? u.insertBefore(a, domLC(u)) : u.appendChild(a) : domFC(u) ? u.insertBefore(
+                    a, domFC(u)) : u.appendChild(a), removeClass(u, "med_no_attach");
                 var s = [];
                 each(_.lastTypes, function(e, a) {
-                    ("postpone" === i && "postpone" !== a[0] || "postpone" !== i && "postpone" === a[0]) && s.push(a)
+                    ("postpone" !== a[0] || !t.postponePreview && "postpone" !== i) && ("mark_as_ads" !== a[0] || !t.markAsAds && "mark_as_ads" !== i) && (inArray(
+                        i, ["postpone", "mark_as_ads"]) || inArray(a[0], ["postpone", "mark_as_ads"])) && s.push(a)
                 }), _.setItems(s), o.toggleLnk && !s.length && hide(e)
             },
             getMedias: function() {
@@ -706,10 +720,10 @@ function MediaSelector(e, a, i, o) {
             attachCount: function() {
                 if (t.attachedCount) return t.attachedCount();
                 if (!u) return 0;
-                if (!n) return u.childNodes.length - (t.postponePreview ? 1 : 0);
+                if (!n) return u.childNodes.length - (t.postponePreview ? 1 : 0) - (t.markAsAds ? 1 : 0);
                 var e = (c && window.ThumbsEdit ? (ThumbsEdit.cache()["thumbs_edit" + m] || {})
                         .previews || [] : g.childNodes)
-                    .length + v.childNodes.length + k.childNodes.length + w.childNodes.length / (w.sorter ? 2 : 1) + p.childNodes.length;
+                    .length + v.childNodes.length + b.childNodes.length + w.childNodes.length / (w.sorter ? 2 : 1) + p.childNodes.length;
                 return t.sharePreview && ++e, t.pollPreview && ++e, e
             },
             createPoll: function(e) {
@@ -851,7 +865,7 @@ function MediaSelector(e, a, i, o) {
                 }
             },
             addPreview: function(e) {
-                return t.sharePreview = b.appendChild(ce("div", {
+                return t.sharePreview = k.appendChild(ce("div", {
                     className: "medadd_c medadd_c_link",
                     innerHTML: '<div class="medadd_c_linkcon"><div></div>' + (e ? '<div class="progress medadd_c_linkprg"></div>' : "") + "</div>"
                 }))
@@ -891,7 +905,7 @@ function MediaSelector(e, a, i, o) {
                                 "', black: 1, shift: [7, 11, 8], appendParentCls: 'post'})\"",
                                 f = "onmouseover=\"showTooltip(this, {text: '" + getLang("global_link_remove_photo") +
                                 "', black: 1, shift: [7, 11, 8], appendParentCls: 'post'})\"",
-                                k = d.media && "_" != d.media ? '<div class="medadd_c_linkimg_controls">  <div class="medadd_c_linkimg_controls_btn_group clear_fix fl_l">' +
+                                b = d.media && "_" != d.media ? '<div class="medadd_c_linkimg_controls">  <div class="medadd_c_linkimg_controls_btn_group clear_fix fl_l">' +
                                 (v > 1 ?
                                     '    <div class="medadd_c_linkimg_controls_btn_arrows_group">      <div class="medadd_c_linkimg_controls_btn" id="medadd_ctrl_left" onclick="cur.shareShowNext(true);"></div>      <div class="medadd_c_linkimg_controls_btn" id="medadd_ctrl_right" onclick="cur.shareShowNext();"></div>    </div>' :
                                     "") + '    <div class="medadd_c_linkimg_controls_btn ' + (v > 1 ? "medadd_c_btn_side_padd" : "") + '" id="medadd_ctrl_upload" ' + w +
@@ -899,22 +913,22 @@ function MediaSelector(e, a, i, o) {
                                 '\');"></div>  </div>  <div class="medadd_c_linkimg_controls_btn_group clear_fix fl_r">    <div class="medadd_c_linkimg_controls_btn" id="medadd_ctrl_remove" ' +
                                 f + ' onclick="tooltips.hide(this);cur.removeLinkImage(this)"></div>  </div></div>' : "",
                                 C = i ? "" : "display: none";
-                            c = '<div class="medadd_c_linkimg_container fl_l" style="' + C + '">' + c + k + u +
+                            c = '<div class="medadd_c_linkimg_container fl_l" style="' + C + '">' + c + b + u +
                                 '<div id="medadd_c_linkimg_loader" class="medadd_c_linkimg_loader"></div></div>'
                         }
                     }
-                    var x = "";
-                    d.microdata && d.microdata_preview_html && (x = d.microdata_preview_html);
-                    var y = d.description_short || d.description,
+                    var y = "";
+                    d.microdata && d.microdata_preview_html && (y = d.microdata_preview_html);
+                    var x = d.description_short || d.description,
                         l = c + (d.title ? '<h4 class="medadd_c_linkhead">' + d.title + "</h4>" : "") + (!s && d.domain ? '<div class="page_media_link_addr">' + d.domain +
-                            "</div>" : "") + (x ? '<div class="medadd_c_linkmicrodata">' + x + "</div>" : "") + (y ? '<div class="medadd_c_linkdsc">' + y + "</div>" : "") +
+                            "</div>" : "") + (y ? '<div class="medadd_c_linkmicrodata">' + y + "</div>" : "") + (x ? '<div class="medadd_c_linkdsc">' + x + "</div>" : "") +
                         '<div class="clear"></div>'
                 }
                 if (e) cur.preventShareAnim && (cur.preventShareAnim.stop(), clearInterval(cur.animateUpdateInterval)), val(domFC(r), l), domFC(r)
                     .style.height = "auto", shortCurrency();
                 else {
-                    !isVisible(b);
-                    show(b);
+                    !isVisible(k);
+                    show(k);
                     var S = ge(a)
                         .appendChild(ce("div", {
                             innerHTML: '<div class="medadd_c_linkcon ' + s + '">' + l + "</div>"
@@ -930,9 +944,9 @@ function MediaSelector(e, a, i, o) {
                         height: P
                     }, 200, function() {
                         clearInterval(cur.animateUpdateInterval)
-                    }), re(geByClass1("medadd_c_linkprg", b))
+                    }), re(geByClass1("medadd_c_linkprg", k))
                 }
-                s && addClass(geByClass1("medadd_c_linkcon", b), s)
+                s && addClass(geByClass1("medadd_c_linkcon", k), s)
             },
             showExternalPreview: function() {
                 var e = t.shareData;

@@ -6518,7 +6518,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
             cur.attachCount = addMedia.attachCount;
         },
         onItemClick: function(type) {
-            if (multi && addMedia.attachCount() >= limit && type !== 'postpone') {
+            if (multi && addMedia.attachCount() >= limit && type !== 'postpone' && type !== 'mark_as_ads') {
                 showFastBox(getLang('global_error'), getLang('attachments_limit', limit));
                 return false;
             }
@@ -6581,7 +6581,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
             if (inArray(type, opts.disabledTypes || [])) {
                 return false;
             }
-            if (addMedia.attachCount() >= limit && data.upload_ind === undefined && type !== 'postpone' || geByClass1('medadd_c_market', docsEl)) {
+            if (addMedia.attachCount() >= limit && data.upload_ind === undefined && type !== 'postpone' && type !== 'mark_as_ads' || geByClass1('medadd_c_market', docsEl)) {
                 if (multi) {
                     return false;
                 } else {
@@ -6896,6 +6896,11 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 case 'mark_as_ads':
                     preview = '<div class="medadd_h medadd_h_mark_as_ads inl_bl">' + data.lang.global_ads_wall_post_mark_as_ads_action + '</div>';
                     hide(geByClass1('add_media_type_' + lnkId + '_mark_as_ads', menu.menuNode, 'a'));
+                    toEl = ppdocsEl;
+                    if (ppdocsEl) {
+                        toEl = ce('div');
+                        ppdocsEl.insertBefore(toEl, domFC(ppdocsEl));
+                    }
                     break;
             }
 
@@ -6980,7 +6985,12 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 }
                 medias.push([type, media, mediaEl, url]);
             } else {
-                var ind = (type === 'postpone' ? 1 : 0);
+                var ind = 0;
+                if (type === 'postpone') {
+                    ind = 1;
+                } else if (type === 'mark_as_ads') {
+                    ind = 2;
+                }
                 var mediaEl = se('<div class="' + (toPics === false ? 'page_docs_preview' : 'page_pics_preview') + '"><div class="page_preview_' + type + '_wrap"' + (opts.nocl ?
                         ' style="cursor: default"' : '') + attrs + '>' + preview + '<div nosorthandle="1" class="page_media_x_wrap inl_bl" ' + (browser.msie && browser
                         .version < 9 ? 'title' : 'tootltip') + '="' + getLang('dont_attach') +
@@ -6988,7 +6998,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                     addMedia.lnkId + '].unchooseMedia(' + ind + '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + postview +
                     '</div></div>');
                 if (data.upload_ind !== undefined) re('upload' + data.upload_ind + '_progress_wrap');
-                if (type !== 'postpone') {
+                if (type !== 'postpone' && type !== 'mark_as_ads') {
                     addMedia.chosenMedia = [type, media];
                     addMedia.chosenMediaData = data;
                 }
@@ -7015,6 +7025,8 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 addMedia.createPoll(data);
             } else if (type == 'postpone') {
                 addMedia.setupPostpone(data, exp);
+            } else if (type == 'mark_as_ads') {
+                addMedia.markAsAds = 1;
             }
 
             var ev = window.event;
@@ -7022,7 +7034,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 noboxhide = true;
             }
             if ((!cur.fileApiUploadStarted || data.upload_ind === undefined) && !cur.preventBoxHide && noboxhide !== true && !inArray(type, ['poll', 'share', 'page',
-                    'postpone'
+                    'postpone', 'mark_as_ads'
                 ])) {
                 boxQueue.hideLast();
             }
@@ -7142,6 +7154,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
 
                         case 'mark_as_ads':
                             show(geByClass1('add_media_type_' + lnkId + '_mark_as_ads', menu.menuNode, 'a'));
+                            addMedia.markAsAds = false;
                             break;
                     }
                     medias[ind] = false;
@@ -7163,21 +7176,37 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 if ((x = geByClass('page_media_x_wrap', previewEl, 'div')[ind]) && x.tt && x.tt.el) {
                     x.tt.destroy();
                 }
-                if (ind && addMedia.postponePreview) {
+                if ((ind == 1) && addMedia.postponePreview) {
                     show(geByClass1('add_media_type_' + lnkId + '_postpone', menu.menuNode, 'a'));
                     re(domPN(addMedia.postponePreview));
                     addMedia.postponePreview = false;
+                } else if ((ind == 2) && addMedia.markAsAds) {
+                    show(geByClass1('add_media_type_' + lnkId + '_mark_as_ads', menu.menuNode, 'a'));
+                    var markAsAdsWrap = geByClass1('page_preview_mark_as_ads_wrap', previewEl);
+                    re(markAsAdsWrap);
+                    addMedia.markAsAds = false;
                 } else {
-                    if (addMedia.postponePreview) {
-                        var postponeWrap = domPN(addMedia.postponePreview);
+                    if (addMedia.postponePreview || addMedia.markAsAds) {
+                        var postponeWrap = addMedia.postponePreview && domPN(addMedia.postponePreview);
+                        var markAsAdsWrap = addMedia.markAsAds && domPN(geByClass1('page_preview_mark_as_ads_wrap', previewEl));
+                        var nodesToDelete = [];
                         for (var i = 0; i < previewEl.childNodes.length; i++) {
                             var v = previewEl.childNodes[i];
-                            if (v.nodeName == 'DIV' && v != postponeWrap) re(v);
-                        };
-                        each(geByClass('add_media_item', menu.menuNode, 'a'), function(i, v) {
-                            if (!hasClass(v, 'add_media_type_' + lnkId + '_postpone')) {
-                                show(v);
+                            if (v.nodeName == 'DIV' && v != postponeWrap && v != markAsAdsWrap) {
+                                nodesToDelete.push(v);
                             }
+                        }
+                        each(nodesToDelete, function(i, v) {
+                            re(v);
+                        });
+                        each(geByClass('add_media_item', menu.menuNode, 'a'), function(i, v) {
+                            if (addMedia.postponePreview && hasClass(v, 'add_media_type_' + lnkId + '_postpone')) {
+                                return;
+                            }
+                            if (addMedia.markAsAds && hasClass(v, 'add_media_type_' + lnkId + '_mark_as_ads')) {
+                                return;
+                            }
+                            show(v);
                         });
                     } else {
                         val(previewEl, '');
@@ -7212,15 +7241,30 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
             if (addMedia.onChange) addMedia.onChange(false);
         },
         singleAdded: function(mediaEl, type) {
-            if (addMedia.postponePreview) {
-                previewEl.insertBefore(mediaEl, domFC(previewEl));
-            } else {
+            if (type === 'postpone') {
                 previewEl.appendChild(mediaEl);
+            } else if (type === 'mark_as_ads') {
+                if (addMedia.postponePreview) {
+                    previewEl.insertBefore(mediaEl, domLC(previewEl));
+                } else {
+                    previewEl.appendChild(mediaEl);
+                }
+            } else {
+                if (domFC(previewEl)) {
+                    previewEl.insertBefore(mediaEl, domFC(previewEl));
+                } else {
+                    previewEl.appendChild(mediaEl);
+                }
             }
             removeClass(previewEl, 'med_no_attach');
             var menuItemsVisible = 0;
             each(geByClass('add_media_item', menu.menuNode, 'a'), function(i, v) {
-                if (type !== 'postpone' && !hasClass(v, 'add_media_type_' + lnkId + '_postpone')) {
+                if (hasClass(v, 'add_media_type_' + lnkId + '_postpone') && (addMedia.postponePreview || type === 'postpone')) {
+                    hide(v);
+                } else if (hasClass(v, 'add_media_type_' + lnkId + '_mark_as_ads') && (addMedia.markAsAds || type === 'mark_as_ads')) {
+                    hide(v);
+                } else if (!inArray(type, ['postpone', 'mark_as_ads']) && !hasClass(v, 'add_media_type_' + lnkId + '_postpone') && !hasClass(v, 'add_media_type_' +
+                        lnkId + '_mark_as_ads')) {
                     hide(v);
                 } else if (isVisible(v)) {
                     menuItemsVisible++;
@@ -7377,7 +7421,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 return 0;
             }
             if (!multi) {
-                return previewEl.childNodes.length - (addMedia.postponePreview ? 1 : 0);
+                return previewEl.childNodes.length - (addMedia.postponePreview ? 1 : 0) - (addMedia.markAsAds ? 1 : 0);
             }
             var num = (editable && window.ThumbsEdit ? ((ThumbsEdit.cache()['thumbs_edit' + lnkId] || {})
                     .previews || []) : picsEl.childNodes)
@@ -8492,6 +8536,9 @@ Composer = {
         }
         if (!addMedia.multi && !params.postpone && addMedia.postponePreview) {
             params.postpone = cur.postponedLastDate = val('postpone_date' + addMedia.lnkId);
+        }
+        if (!addMedia.multi && !params.mark_as_ads && addMedia.markAsAds) {
+            params.mark_as_ads = 1;
         }
 
         return params;

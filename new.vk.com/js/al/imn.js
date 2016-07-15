@@ -5138,20 +5138,22 @@
 
     function s(e, t) {
         var n, r;
-        switch (t) {
-            case "error":
-                n = "color: red", r = "background: red; color: white";
-                break;
-            case "success":
-                n = "color: green", r = "background: green; color: white";
-                break;
-            default:
-                n = "color: blue;", r = "background: #000; color: #fff;"
+        if (window.__debugMode) {
+            switch (t) {
+                case "error":
+                    n = "color: red", r = "background: red; color: white";
+                    break;
+                case "success":
+                    n = "color: green", r = "background: green; color: white";
+                    break;
+                default:
+                    n = "color: blue;", r = "background: #000; color: #fff;"
+            }
+            try {
+                var a = new Date;
+                console.debug("%cLP:[" + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds() + ":" + a.getMilliseconds() + "]%c " + e, r, n)
+            } catch (i) {}
         }
-        try {
-            var a = new Date;
-            console.debug("%cLP:[" + a.getHours() + ":" + a.getMinutes() + ":" + a.getSeconds() + ":" + a.getMilliseconds() + "]%c " + e, r, n)
-        } catch (i) {}
     }
 
     function o(e) {

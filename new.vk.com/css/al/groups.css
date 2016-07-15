@@ -824,13 +824,3 @@ a.groups_catalog_comm_title_link {
 .group_app_button button {
     padding: 7px 24px
 }
-
-.group_app_button button:before {
-    display: block;
-    content: ' ';
-    float: left;
-    width: 17px;
-    height: 14px;
-    margin: 0 8px 0 -2px;
-    background: url(/images/icons/menu_icon.png?3) no-repeat 0 -28px
-}
