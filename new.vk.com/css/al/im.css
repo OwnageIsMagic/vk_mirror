@@ -5056,6 +5056,10 @@ body.sf .nim-dialog .nim-dialog--unread {
     margin-right: 3px
 }
 
+.im-graffiti {
+    margin: 15px 0
+}
+
 .im_rc_emojibtn {
     display: inline-block;
     *display: block;

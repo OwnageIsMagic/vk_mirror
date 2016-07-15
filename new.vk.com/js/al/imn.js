@@ -892,7 +892,7 @@
             case "audio":
                 return getLang("mail_added_audio");
             case "doc":
-                return getLang("mail_added_docs");
+                return "graffiti" === e.kind ? getLang("mail_added_graffiti") : getLang("mail_added_docs");
             case "geo":
             case "map":
                 return getLang("mail_added_geo");
@@ -1314,7 +1314,7 @@
                 if (a) {
                     addClass(a, "_im_dialog_hovered"), addClass(a, "nim-dialog_hovered");
                     var l = geByClass1("_im_mess_search", e);
-                    s.scrollTo(intval(domData(a, "peer")), !1, l ? $ + 37 : $, l ? 37 : 0);
+                    s.scrollTo(intval(domData(a, "peer")), !1, l ? $ + 37 : $, l ? 37 : 0)
                 }
             },
             selectHoveredDialog: function(t) {
@@ -2949,7 +2949,7 @@
                 r = l(n.history);
             n.history = (0, St.markMessagesAsRead)(t, e.peerId, r)
         }
-        return Promise.resolve(t);
+        return Promise.resolve(t)
     }
 
     function U(e, t, n, r, a) {
@@ -4581,7 +4581,8 @@
             type: l["attach" + d + "_type"],
             id: l["attach" + d],
             productId: l["attach" + d + "_product_id"],
-            build: l["attach" + d + "_build"]
+            build: l["attach" + d + "_build"],
+            kind: l["attach" + d + "_kind"]
         }), d++;
         if (l.fwd) {
             var g = l.fwd.split(",")
@@ -5869,10 +5870,11 @@
         var r = n.target || n.srcElement,
             a = 4,
             i = !1,
-            s = /_im_mess|im_log_act|im_log_ract|_im_log_body|im_log_rspacer/;
+            s = /_im_mess|im_log_act|im_log_ract|_im_log_body|im_log_rspacer|_im_graffiti_w/;
         do
-            if (!r || r.onclick || r.onmousedown || "A" == r.tagName || hasClass(r, "im_msg_media_link") || "IMG" == r.tagName && !hasClass(r, "emoji") && !hasClass(r,
-                    "emoji_css") && !hasClass(r, "im_gift") || "TEXTAREA" == r.tagName || hasClass(r, "play_new") || (i = s.test(r.className))) break;
+            if (!r || r.onclick || r.onmousedown || "A" == r.tagName || hasClass(r, "im_msg_media_link") || "IMG" == r.tagName && !hasClass(r, "_im_graffiti") && !hasClass(
+                    r, "emoji") && !hasClass(r, "emoji_css") && !hasClass(r, "im_gift") || "TEXTAREA" == r.tagName || hasClass(r, "play_new") || (i = s.test(r.className)))
+                break;
         while (a-- && (r = r.parentNode));
         if (!i) return !0;
         var o = trim((window.getSelection && window.getSelection() || document.getSelection && document.getSelection() || document.selection && document.selection.createRange()
@@ -6188,7 +6190,7 @@
         /^(?:https?:\/\/)?(?:vk\.com|vkontakte\.ru)?\/([a-zA-Z0-9\._]+)\??$/, t.EMAIL = /([a-zA-Z\-_\.0-9]+@[a-zA-Z\-_0-9]+\.[a-zA-Z\-_\.0-9]+[a-zA-Z\-_0-9]+)/g, t.TOP_DOMAINS =
         "info,name,academy,aero,arpa,coop,media,museum,mobi,travel,xxx,asia,biz,com,net,org,gov,mil,edu,int,tel,ac,ad,ae,af,ag,ai,al,am,an,ao,aq,ar,as,at,au,aw,ax,az,ba,bb,bd,be,bf,bg,bh,bi,bj,bm,bn,bo,br,bs,bt,bv,bw,by,bz,ca,cc,cd,cf,cg,ch,ci,ck,cl,cm,cn,co,cr,cu,cv,cx,cy,cz,de,dj,dk,dm,do,dz,ec,ee,eg,eh,er,es,et,eu,fi,fj,fk,fm,fo,fr,ga,gd,ge,gf,gg,gh,gi,gl,gm,gn,gp,gq,gr,gs,gt,gu,gw,gy,hk,hm,hn,hr,ht,hu,id,ie,il,im,in,io,iq,ir,is,it,je,jm,jo,jp,ke,kg,kh,ki,km,kn,kp,kr,kw,ky,kz,la,lb,lc,li,lk,lr,ls,lt,lu,lv,ly,ma,mc,md,me,mg,mh,mk,ml,mm,mn,mo,mp,mq,mr,ms,mt,mu,mv,mw,mx,my,mz,na,nc,ne,nf,ng,ni,nl,no,np,nr,nu,nz,om,pa,pe,pf,pg,ph,pk,pl,pm,pn,pr,ps,pt,pw,py,qa,re,ro,ru,rs,rw,sa,sb,sc,sd,se,sg,sh,si,sj,sk,sl,sm,sn,so,sr,ss,st,su,sv,sx,sy,sz,tc,td,tf,tg,th,tj,tk,tl,tm,tn,to,tp,tr,tt,tv,tw,tz,ua,ug,uk,um,us,uy,uz,va,vc,ve,vg,vi,vn,vu,wf,ws,ye,yt,yu,za,zm,zw,рф,укр,сайт,онлайн,срб,cat,pro,local",
         t.MESSAGE_REGEXP =
-        /(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#%?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\)))?)?)/gi;
+        /(^|[^A-Za-z0-9А-Яа-яёЁ\-\_])(https?:\/\/)?((?:[A-Za-z\$0-9А-Яа-яёЁ](?:[A-Za-z\$0-9\-\_А-Яа-яёЁ]*[A-Za-z\$0-9А-Яа-яёЁ])?\.){1,5}[A-Za-z\$рфуконлайнстРФУКОНЛАЙНСТ\-\d]{2,22}(?::\d{2,5})?)((?:\/(?:(?:\&amp;|\&#33;|,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.~=;:]+|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\))*(?:,[_%]|[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.~=;:]*[A-Za-z0-9А-Яа-яёЁ\_#%?+\/\$~=]|\[[A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\]|\([A-Za-z0-9А-Яа-яёЁ\-\_#%?+\/\$.,~=;:]*\)))?)?)/gi
 }, function(e, t, n) {
     "use strict";
 
@@ -7675,8 +7677,7 @@
                 var l = (0, y.showBlacklistBox)(o, e);
                 l.once("success", function(t) {
                     t.delta && (showDoneBox(t.msg), e.get()
-                        .longpoll.push([(0,
-                            C.resetPeer)()]))
+                        .longpoll.push([(0, C.resetPeer)()]))
                 });
                 break;
             case "leave":
@@ -9346,7 +9347,7 @@
                     .parentNode)
             },
             createCanceled: function(e, t) {
-                removeClass(s, "im-dialog-select_rotated");
+                removeClass(s, "im-dialog-select_rotated")
             },
             rotateCross: function(e) {
                 addClass(s, "im-dialog-select_rotated")
@@ -10994,7 +10995,7 @@
             z.prototype._validationError = function() {
                 return new Error("Array Methods must be provided an Array")
             }, z.prototype._enumerate = function() {
-                for (var e = this.length, t = this._input, n = 0; this._state === se && e > n; n++) this._eachEntry(t[n], n)
+                for (var e = this.length, t = this._input, n = 0; this._state === se && e > n; n++) this._eachEntry(t[n], n);
             }, z.prototype._eachEntry = function(e, t) {
                 var n = this._instanceConstructor,
                     r = n.resolve;

@@ -190,8 +190,8 @@ var stVersions = {
     'video_upload.js': 3349478794,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3352952199,
-    'videoplayer.js': 2223696962,
-    'videoplayer.css': 3356760987,
+    'videoplayer.js': 3556508464,
+    'videoplayer.css': 3206426932,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
     'reg.css': 1314058211,
@@ -239,8 +239,8 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 829233285,
-    'imn.js': 303730297,
+    'im.css': 3560839189,
+    'imn.js': 213947749,
     'im.js': 4271552496,
     'emoji.js': 1702836788,
     'wide_dd.css': 2440348481,
@@ -353,7 +353,7 @@ var stVersions = {
     'ads_edit.css': 12388220,
     'ads_edit.js': 4020796185,
     'ads_moder.css': 3409928963,
-    'ads_moder.js': 1730410251,
+    'ads_moder.js': 744890646,
     'ads_tagger.js': 468647748,
     'ads_web.css': 1344536113,
     'ads_web.js': 2143800062,
@@ -454,18 +454,18 @@ var stVersions = {
     'snapster/mobile.css': 100872175,
     'snapster/common.js': 1252755421,
     'snapster/main.js': 1262101368,
-    'snapster/snapster.js': 2619454970,
-    'snapster/modules.js': 2033915292,
-    'snapster/snapster.css': 204890028,
+    'snapster/snapster.js': 2136337127,
+    'snapster/modules.js': 3692611842,
+    'snapster/snapster.css': 969414426,
     'snapster/mob_templates.js': 2325638713,
     'snapster/snapster_mobile.js': 2272524840,
     'snapster/snapster_mobile.css': 2880436857,
-    'snapster/templates.js': 3981099978,
+    'snapster/templates.js': 287457476,
     'snapster/snapster_ui.js': 67361843,
     'snapster/notifier.js': 1904376904,
     'snapster/snapster_ui.css': 3351071103,
     'favicon': 5,
-    'lang': 6720
+    'lang': 6722
 };
 var stTypes = {
     fromLib: {
@@ -515,4 +515,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 7088;
+var _rnd = 4123;
