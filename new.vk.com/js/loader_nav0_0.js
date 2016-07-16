@@ -137,7 +137,7 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 1529932203,
-    'audioplayer.js': 1779126531,
+    'audioplayer.js': 524715096,
     'audioplayer.css': 701892504,
     'audio_html5.js': 3586987067,
     'audio.js': 2915867304,
@@ -164,7 +164,7 @@ var stVersions = {
     'fullscreen_pv.css': 4254746541,
     'friendsphotos.js': 3869757571,
     'friendsphotos.css': 3816436303,
-    'spe.js': 3609667901,
+    'spe.js': 2236227578,
     'friends.js': 1204425887,
     'friends.css': 3282760932,
     'friends_search.js': 1498932479,
@@ -294,7 +294,7 @@ var stVersions = {
     'api/widgets/al_poll.js': 507084589,
     'api/widgets/al_community.js': 311752464,
     'api/widgets/al_contactus.js': 3313722516,
-    'api/widgets/al_subscribe.js': 2947008022,
+    'api/widgets/al_subscribe.js': 2947501095,
     'api/widgets/al_like.js': 1445146359,
     'api/widgets/al_post.js': 1579108142,
     'api/widgets/community_messages.js': 102543286,
@@ -436,7 +436,7 @@ var stVersions = {
     'paginated_table.js': 3438566458,
     'paginated_table.css': 500407230,
     'api/share.js': 404756598,
-    'api/openapi.js': 252392066,
+    'api/openapi.js': 4117137550,
     'api/xdm.js': 1965154462,
     'css_clean.js': 824960447,
     'q_frame.php': 7,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 1392;
+var _rnd = 1439;

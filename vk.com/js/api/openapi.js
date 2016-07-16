@@ -1655,7 +1655,7 @@ if (!VK.Widgets) {
 
     VK.Widgets.Community = VK.Widgets.Group = function(objId, options, gid) {
         gid = parseInt(gid, 10);
-        var RPC;
+        var rpc;
         if (!gid) {
             throw Error('No group_id passed');
         }
@@ -1683,12 +1683,12 @@ if (!VK.Widgets) {
         var cursorBack;
 
         function mouseup() {
-            RPC.callMethod('mouseUp');
+            rpc.callMethod('mouseUp');
             return false;
         }
 
         function move(event) {
-            RPC.callMethod('mouseMove', {
+            rpc.callMethod('mouseMove', {
                 screenY: event.screenY
             });
             return false;
@@ -1723,7 +1723,7 @@ if (!VK.Widgets) {
             height: '290',
             startHeight: 200
         }, function(o, i, r) {
-            RPC = r;
+            rpc = r;
         });
     };
 
@@ -1779,7 +1779,7 @@ if (!VK.Widgets) {
 
     VK.Widgets.Subscribe = function(objId, options, oid) {
         oid = parseInt(oid, 10);
-        var RPC;
+        var rpc;
         if (!oid) {
             throw Error('No owner_id passed');
         }
@@ -1810,7 +1810,7 @@ if (!VK.Widgets) {
             startHeight: 22,
             height: options.height || 22
         }, function(o, i, r) {
-            RPC = r;
+            rpc = r;
         });
     };
 
@@ -1820,7 +1820,7 @@ if (!VK.Widgets) {
         if (!options) options = {};
         if (!oid) throw Error('No group or user id passed');
 
-        var RPC,
+        var rpc,
             params = {
                 oid: oid,
                 height: ({
@@ -1836,7 +1836,7 @@ if (!VK.Widgets) {
             startHeight: params.height,
             height: params.height
         }, function(o, i, r) {
-            RPC = r;
+            rpc = r;
         });
     };
 

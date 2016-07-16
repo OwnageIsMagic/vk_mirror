@@ -204,7 +204,8 @@ var AudioUtils = {
         i && a.push(i);
         var r = formatTime(t[AudioUtils.AUDIO_ITEM_INDEX_DURATION]),
             u = clean(JSON.stringify(t))
-            .replace(/\$/, "$$"),
+            .split("$")
+            .join("$$"),
             n = getTemplate("audio_row", t);
         return n = n.replace(/%cls%/, a.join(" ")), n = n.replace(/%duration%/, r), n = n.replace(/%serialized%/, u)
     },
