@@ -4969,7 +4969,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     vertical-align: top;
     background: none;
     border-radius: 0;
-    margin: 7px 6px;
+    margin: 6px;
     font-size: 13px
 }
 
@@ -4994,7 +4994,10 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-right-menu.ui_rmenu .im-right-menu--unread .im-right-menu--text {
-    max-width: 150px
+    max-width: 150px;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
 .im-right-menu.ui_rmenu .im-right-menu--close {

@@ -305,7 +305,8 @@ function MediaSelector(e, a, i, o) {
                                 thumb_s: s[1] || "",
                                 list: s[2] || "",
                                 view_opts: s[3] || "",
-                                upload_ind: s.upload_ind || void 0
+                                upload_ind: s.upload_ind || void 0,
+                                peEditable: s.peEditable
                             }), vkImage()
                             .src = s.thumb_m;
                         var T = s.view_opts.replace(/^{|}$/g, "");
@@ -392,11 +393,11 @@ function MediaSelector(e, a, i, o) {
                                 })
                             })
                         }
-                        var F = s.thumb;
+                        var E = s.thumb;
                         vkImage()
-                            .src = F, S = o.nocl ? "" : ' href="/album' + i + '" onclick="return nav.change({z: \'album' + i + "'}, event)\"";
-                        var z = "fl_l page_album_link" + (F ? "" : " page_album_nocover");
-                        P = '<a class="' + z + '" ' + S + ">" + (F ? '<div class="page_album_thumb_wrap"><img class="page_album_thumb" src="' + F + '"/></div>' : "") +
+                            .src = E, S = o.nocl ? "" : ' href="/album' + i + '" onclick="return nav.change({z: \'album' + i + "'}, event)\"";
+                        var F = "fl_l page_album_link" + (E ? "" : " page_album_nocover");
+                        P = '<a class="' + F + '" ' + S + ">" + (E ? '<div class="page_album_thumb_wrap"><img class="page_album_thumb" src="' + E + '"/></div>' : "") +
                             '  <div class="page_album_title">    <div class="page_album_size">' + s.count + '</div>    <div class="page_album_title_text">' + s.title +
                             "</div>  </div></a>", L = 1, N = g;
                         break;
@@ -423,8 +424,8 @@ function MediaSelector(e, a, i, o) {
                         var D = i.split("_");
                         vkImage()
                             .src = s.thumb, S = o.nocl ? "" : ' href="/market' + D[0] + "?section=album_" + D[1] + '"';
-                        var z = "fl_l page_preview_album wall_album_cover_wrap wall_market_album_cover" + (s.thumb ? "" : " page_album_nocover");
-                        P = '<a class="' + z + '" ' + S + ">" + (s.thumb ? '<img class="wall_album_cover" src="' + s.thumb + '"/>' : "") +
+                        var F = "fl_l page_preview_album wall_album_cover_wrap wall_market_album_cover" + (s.thumb ? "" : " page_album_nocover");
+                        P = '<a class="' + F + '" ' + S + ">" + (s.thumb ? '<img class="wall_album_cover" src="' + s.thumb + '"/>' : "") +
                             '  <div class="wall_album_caption">    <div class="wall_album_title_wrap clear_fix">      <div class="wall_album_count fl_r">' + s.count +
                             '</div>      <div class="wall_album_title">' + s.title + "</div>    </div>  </div></a>", L = 1, N = g;
                         break;
@@ -435,11 +436,11 @@ function MediaSelector(e, a, i, o) {
                         else if (cur.editingPost && "wpe_media_preview" == domPN(C)
                             .id) {
                             i = intval(i), i ? s.date = i : s.date = intval(cur.editingPost[7]);
-                            var E = geByClass1("medadd_c_timersett", C);
-                            if (E) {
-                                var R = domPN(E);
-                                E = R.innerHTML, re(R)
-                            } else E = "";
+                            var z = geByClass1("medadd_c_timersett", C);
+                            if (z) {
+                                var R = domPN(z);
+                                z = R.innerHTML, re(R)
+                            } else z = "";
                             ge("wpe_save")
                                 .innerHTML = getLang("global_save")
                         } else {
@@ -473,8 +474,8 @@ function MediaSelector(e, a, i, o) {
                             className: "editable_thumbs"
                         })), stManager.add(["thumbs_edit.css", "thumbs_edit.js"], function() {
                         o.toggleLnk && toggle(e, t.attachCount() + 1 < l), s.editable.remove = t.unchooseMedia.pbind(V), show(domPN(N));
-                        var d = ThumbsEdit.convert(a, i, s.editable);
-                        domFC(N) ? ThumbsEdit.addMedia(N, d) : o.teWidth && o.teHeight ? ThumbsEdit.init(N, [d], {
+                        var d = ThumbsEdit.convert(a, i, s.editable, s.peEditable);
+                        domFC(N) ? ThumbsEdit.addMedia(N, d, s) : o.teWidth && o.teHeight ? ThumbsEdit.init(N, [d], {
                             width: o.teWidth,
                             height: o.teHeight,
                             force: !0,
@@ -510,7 +511,7 @@ function MediaSelector(e, a, i, o) {
                 "share" == a ? s.title && !d ? (cur.shareShowImg = 0, t.showPreview(!0), t.shareData.images = !1) : t.showExternalPreview() : "page" == a ? s.nopreview ||
                     (cur.shareShowImg = 0, t.shareData = extend(t.shareData || {}, s, {
                         images: !1
-                    }), t.showPreview()) : "poll" == a ? t.createPoll(s) : "postpone" == a ? t.setupPostpone(s, E) : "mark_as_ads" == a && (t.markAsAds = 1), toggleClass(u,
+                    }), t.showPreview()) : "poll" == a ? t.createPoll(s) : "postpone" == a ? t.setupPostpone(s, z) : "mark_as_ads" == a && (t.markAsAds = 1), toggleClass(u,
                         "media_preview_has_medias", t.hasVisibleRows()), o.onChangedSize && o.onChangedSize();
                 var K = window.event;
                 return K && "click" == K.type && (K.ctrlKey || K.metaKey || K.shiftKey) && (r = !0), cur.fileApiUploadStarted && void 0 !== s.upload_ind || cur.preventBoxHide ||

@@ -1388,10 +1388,10 @@ AppsSlider.prototype = {
                     t && val("apps_settings_error", t), show("apps_settings_error"), hide("apps_settings_progress"), scrollToTop(200)
                 },
                 showProgress: function() {
-                    cur.savingSettings = !0, o && i && o.showProgress()
+                    cur.savingSettings = !0, o && o.showProgress()
                 },
                 hideProgress: function() {
-                    cur.savingSettings = !1, o && i && o.hideProgress()
+                    cur.savingSettings = !1, o && o.hideProgress()
                 }
             }, s || {}))
         }

@@ -2602,7 +2602,7 @@ var layers = {
             if (cur.pvShown && cur.pvListId != 'temp') {
                 clayer = ['photo', cur.pvData[cur.pvListId][cur.pvIndex].id, cur.pvListId, {
                     onHide: cur.pvOptions.onHide,
-                    scroll: cur.pvNarrowScrollbar ? cur.pvNarrowScrollbar.scrollTop() : 0,
+                    scroll: cur.pvNarrowScrollbar ? cur.pvNarrowScrollbar.data.scrollTop : 0,
                     onShow: onShow,
                     noHistory: !!cur.pvNoHistory,
                     histLen: cur.pvHistoryLength
@@ -11548,6 +11548,10 @@ function collectMemtoryStats() {
 
 if (window.performance && window.performance.memory && rand(0, 100) < 5) {
     collectMemtoryStats();
+}
+
+function isRetina() {
+    return window.devicePixelRatio >= 2;
 }
 
 try {

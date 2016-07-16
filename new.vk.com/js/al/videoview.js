@@ -1490,6 +1490,9 @@ var Videoview = {
                                 val(v, a > 0 ? a : ""), toggleClass(n, "no_likes", !a), r == vk.id && toggleClass(n, "my_like", !d)
                             }
                             break;
+                        case "end_live":
+                            var s = mvcur.player;
+                            s.onLiveEnded();
                         default:
                             debugLog("unhandled video event")
                     }
@@ -1845,9 +1848,10 @@ var Videoview = {
         hideDD: function(e) {
             if (e > 0) return void(cur.hideShareTimer = setTimeout(Videoview.hideDD.pbind(0), e));
             var i = cur.ddShown;
-            i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"), fadeOut(i, 200, function() {
-                removeClass(i, "mv_dd_hiding");
-            })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
+            i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"),
+                fadeOut(i, 200, function() {
+                    removeClass(i, "mv_dd_hiding")
+                })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
         },
         reportFromDD: function(e, i) {
             ajax.post("reports.php", {
