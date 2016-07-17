@@ -5591,11 +5591,11 @@ button.ui_load_more_btn {
 }
 
 .audio_row .audio_acts #edit_moder>div {
-    background-position: 0 -220px
+    background-position: 0 -219px
 }
 
 .audio_row .audio_acts #remove_moder>div {
-    background-position: 0 -205px
+    background-position: 0 -204px
 }
 
 .audio_row.inlined.audio_row_current .audio_acts {
