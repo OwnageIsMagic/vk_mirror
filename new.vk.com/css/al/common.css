@@ -5677,7 +5677,8 @@ button.ui_load_more_btn {
 }
 
 .audio_row.lyrics .audio_title_inner {
-    color: #2a5885
+    color: #2a5885;
+    padding: 0 5px
 }
 
 .audio_row.lyrics .audio_title_inner:hover {

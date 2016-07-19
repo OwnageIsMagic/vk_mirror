@@ -349,6 +349,7 @@
     text-overflow: ellipsis
 }
 
+.no_creation_info .video_item_add_info,
 .no_owner .video_item_author,
 .no_date .video_item_date_info {
     display: none

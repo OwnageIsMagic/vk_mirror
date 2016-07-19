@@ -204,6 +204,10 @@
     margin-bottom: 0
 }
 
+.video_block_layout>.videocat_row.videocat_row_trends:last-child {
+    padding-bottom: 0
+}
+
 .video_channel_header {
     background: #f7f7f7;
     padding: 12px 17px 10px;

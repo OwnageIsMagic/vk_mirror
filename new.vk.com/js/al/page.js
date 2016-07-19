@@ -1116,6 +1116,7 @@ var Page = {
                     autoplay: true,
                     loop: 'loop',
                     poster: obj.getAttribute('data-thumb'),
+                    src: el_src + '&mp4=1',
                     className: 'pages_gif_img page_gif_big'
                 }, {
                     width: previewWidth ? previewWidth + 'px' : null,
@@ -1123,10 +1124,10 @@ var Page = {
                     background: largeGif ? 'transparent url(' + obj.getAttribute('data-thumb') + ') no-repeat 0 0' : '',
                     backgroundSize: 'cover'
                 });
-                el.appendChild(ce('source', {
-                    type: 'video/mp4',
-                    src: el_src + '&mp4=1'
-                }));
+                attr(el, 'webkit-playsinline', '');
+                if (browser.ipad) {
+                    attr(el, 'controls', '');
+                }
             } else {
                 el = ce('img', {
                     src: el_src,

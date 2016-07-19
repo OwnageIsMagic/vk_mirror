@@ -193,8 +193,8 @@
             var m = t.attaches[0];
             if (m && "fwd" === m.type) u += "\n[" + getLang("mail_added_msgs") + "]";
             else if (m) {
-                "doc" === m.type && "graffiti" === m.kind ? "graffiti" : m.type;
-                u += "\n[" + getLang("mail_added_" + m.type) + "]"
+                var p = "doc" === m.type && "graffiti" === m.kind ? "graffiti" : m.type;
+                u += "\n[" + getLang("mail_added_" + p) + "]"
             }
             s = trim(replaceEntities(stripHTML((s || "")
                 .replace("&nbsp;", " ")))), window.Notifier && Notifier.proxyIm({
@@ -6735,7 +6735,7 @@
     function a(e, t, n, r) {
         var a = geByClass1("_im_peer_photo", n);
         removeClass(a, "nim-peer--photo_hidden"), (0, O.isChatPeer)(t) ? (toggleOnline(geByClass1("_im_peer", n), !1), val(a, '<div class="im-page--chat-photo ' + O.SHOW_CHAT_MEMBERS_CLASS +
-            '">' + (0, O.renderPhotosFromTab)(e) + "</div>"), e.data.kicked && addClass(a, "nim-peer--photo_hidden")) : (toggleOnline(geByClass1("_im_peer", n), e.online),
+            '">' + (0, O.renderPhotosFromTab)(e, !0) + "</div>"), e.data.kicked && addClass(a, "nim-peer--photo_hidden")) : (toggleOnline(geByClass1("_im_peer", n), e.online),
             val(a, rs(r.get()
                 .im_peer_img_tpl, {
                     peer_photo: e.photo,

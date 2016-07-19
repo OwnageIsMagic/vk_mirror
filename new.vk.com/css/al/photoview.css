@@ -135,10 +135,6 @@
     cursor: pointer
 }
 
-.pv_layer_wrap>#layer {
-    cursor: default
-}
-
 #pv_box .box_title .divider {
     margin-left: 9px
 }
@@ -151,6 +147,7 @@
 }
 
 .pv_cont .pv_box {
+    cursor: default;
     border-radius: 5px 3px 3px 3px
 }
 
@@ -169,7 +166,7 @@
 }
 
 .pv_cont .pv_close_btn:hover,
-.pv_mouse_out_layer .pv_cont .pv_close_btn {
+.pv_mouse_out_layer:not(.pv_left_panel_over) .pv_cont .pv_close_btn {
     opacity: 1
 }
 
@@ -214,9 +211,17 @@
     opacity: 0.3
 }
 
-.pv_cont .pv_img_area_wrap.pv_init_hover .pv_nav_btn.pv_nav_btn_show .pv_nav_btn_icon,
-.pv_cont .pv_img_area_wrap:hover .pv_nav_btn.pv_nav_btn_show .pv_nav_btn_icon {
-    opacity: 1
+.pv_cont .pv_nav_btn.pv_nav_btn_show .pv_nav_btn_icon {
+    opacity: 1!important
+}
+
+.pv_cont .pv_nav_btn_layer_left {
+    background-color: #583c67;
+    width: 100px;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0
 }
 
 .pv_cont .pv_left_wrap {
@@ -409,8 +414,12 @@
     width: 310px
 }
 
-.pv_cont .pv_reply_form_wrap .reply_field {
+.pv_cont .pv_reply_form_wrap .reply_form {
     border-radius: 0 0 3px 0
+}
+
+.pv_cont .pv_reply_form_wrap .submit_post_field {
+    border-radius: 3px
 }
 
 .pv_cont .pv_reply_form_wrap .reply_to_title {
@@ -627,7 +636,7 @@
     display: inline-block;
     margin-right: 6px;
     vertical-align: top;
-    background-image: url(/images/icons/pv_actions.png);
+    background-image: url(/images/icons/pv_actions.png?2);
     background-position: 0 -157px
 }
 
@@ -673,6 +682,10 @@
 
 #pv_more_acts_tt #pv_more_act_as_title:before {
     background-position: 0 -60px
+}
+
+#pv_more_acts_tt #pv_more_act_share:before {
+    background-position: 0 -196px
 }
 
 #pv_more_acts_tt .pv_more_acts_hidden {
@@ -1280,7 +1293,7 @@
 
 .pv_comments_list .ms_items_more,
 .pv_reply_form .ms_items_more {
-    right: -82px
+    right: -70px
 }
 
 .pv_like {

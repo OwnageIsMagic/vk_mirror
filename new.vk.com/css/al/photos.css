@@ -327,6 +327,7 @@
 
 .photos_header_fixed {
     box-sizing: border-box;
+    top: 42px;
     position: fixed;
     z-index: 99;
     border-radius: 0;

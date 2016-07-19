@@ -696,7 +696,8 @@ var Videoview = {
                     }
                 }
                 var v = mvcur.minimized;
-                if (v && (Videoview.unminimize(!0, !0, !0), mvcur.minimized = !1, e = !0), Wall.cancelEdit(!0), mvcur.mvData.duration > 60 && !i && !mvcur.finished) {
+                if (v && (Videoview.unminimize(!0, !0, !0), mvcur.minimized = !1, e = !0), Wall.cancelEdit(!0), mvcur.replyFormShown && Wall.hideEditReply(mvcur.post), mvcur.mvData
+                    .duration > 60 && !i && !mvcur.finished) {
                     var s = (new Date)
                         .getTime() - mvcur.showTime,
                         l = getLang("video_are_you_sure_close");
@@ -843,8 +844,7 @@ var Videoview = {
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
                 hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                        Videoview.updateComms(from)) : "mv" == from && Videoview.recache(),
-                    script && eval(script), Videoview.updateReplyFormPos()
+                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
             }
         },
         commAction: function(e, i, o, t, a) {
@@ -903,7 +903,7 @@ var Videoview = {
             mvcur.replyFormShown = !0, Videoview.updateReplyFormPos(), Videoview.playerNextTimerUpdate()
         },
         onHideEditReply: function() {
-            mvcur.replyFormShown = !1, mvcur.mvReplyTo = !1, Videoview.updateReplyFormPos(), setTimeout(Videoview.updateReplyFormPos, 10), Videoview.playerNextTimerUpdate()
+            mvcur.replyFormShown = !1, mvcur.mvReplyTo = !1, Videoview.updateReplyFormPos(), setTimeout(Videoview.updateReplyFormPos, 0), Videoview.playerNextTimerUpdate()
         },
         commentClick: function(e, i, o, t) {
             Wall.checkReplyClick(e, i) || (mvcur.mvReplyTo = [o, t], Wall.replyTo(mvcur.post, t, o))
@@ -1177,7 +1177,7 @@ var Videoview = {
                 oid: i,
                 is_publish: +t
             }, {
-                stat: ["privacy.js", "privacy.css", "video.css"],
+                stat: ["privacy.js", "privacy.css", "video.js", "video.css"],
                 dark: 1
             });
             return a.setOptions({
@@ -1848,10 +1848,9 @@ var Videoview = {
         hideDD: function(e) {
             if (e > 0) return void(cur.hideShareTimer = setTimeout(Videoview.hideDD.pbind(0), e));
             var i = cur.ddShown;
-            i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"),
-                fadeOut(i, 200, function() {
-                    removeClass(i, "mv_dd_hiding")
-                })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
+            i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"), fadeOut(i, 200, function() {
+                removeClass(i, "mv_dd_hiding")
+            })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
         },
         reportFromDD: function(e, i) {
             ajax.post("reports.php", {
