@@ -2040,6 +2040,10 @@ body.mac .audio_rows_header.fixed {
     background-position: 0px -43px
 }
 
+.top_audio_layer #ui_rmenu_audio_album_add {
+    display: none
+}
+
 .audio_album_btns {
     float: right
 }

@@ -204,7 +204,8 @@
     margin-bottom: 0
 }
 
-.videocat_row_ugc_popular .video_item {
+.videocat_row_ugc_popular .video_item,
+.videocat_row_trends .video_item {
     height: auto
 }
 

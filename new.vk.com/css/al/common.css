@@ -2920,6 +2920,13 @@ body.mac #layer_stl .fixed {
     outline: none
 }
 
+.box_textarea {
+    width: 100%;
+    min-height: 80px;
+    resize: vertical;
+    vertical-align: top
+}
+
 .page_list {
     list-style: none;
     margin: 0;
@@ -5677,8 +5684,7 @@ button.ui_load_more_btn {
 }
 
 .audio_row.lyrics .audio_title_inner {
-    color: #2a5885;
-    padding: 0 5px
+    color: #2a5885
 }
 
 .audio_row.lyrics .audio_title_inner:hover {
