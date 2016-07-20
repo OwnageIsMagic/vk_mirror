@@ -204,6 +204,10 @@
     margin-bottom: 0
 }
 
+.videocat_row_ugc_popular .video_item {
+    height: auto
+}
+
 .video_block_layout>.videocat_row.videocat_row_trends:last-child {
     padding-bottom: 0
 }

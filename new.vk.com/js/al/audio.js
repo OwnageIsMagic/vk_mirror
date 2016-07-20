@@ -715,7 +715,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         l = !1;
     this._autoList = new AutoList(s, {
         isLayer: this.isLayer(),
-        scrollNode: this.isLayer() ? geByClass1("audio_layer_rows_wrap", this._container) : window,
+        scrollNode: this.isLayer() ? geByClass1("_audio_layer_rows_wrap", this._container) : window,
+        contentNode: geByClass1("_audio_rows", this._container),
         renderImmediate: !0,
         rowClass: "_audio_row audio_feed_post",
         onNoMore: function() {
@@ -727,7 +728,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         onRendered: function() {
             if (t(!1), o._updateLayerRowsBottomPadding(), a.updateCurrentPlaying(), !l)
                 if (l = !0, o.isLayer()) {
-                    var e = geByClass1("audio_layer_rows_wrap", o._container);
+                    var e = geByClass1("_audio_layer_rows_wrap", o._container);
                     e.scrollTop = 0, o.getLayer()
                         .sb.update()
                 } else scrollToY(0)
@@ -970,9 +971,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 var a = geByClass1("_audio_additional_blocks_wrap_" + o, t._container),
                     s = geByClass1("_audio_additional_block_" + i, t._container);
                 !s && t._blocks[i] && (s = se(rs(t.options.additionalBlockSectionTpl, {
-                        block_id: i
-                    })), val(s, t._blocks[i]), a.appendChild(s)),
-                    show(s), show(a)
+                    block_id: i
+                })), val(s, t._blocks[i]), a.appendChild(s)), show(s), show(a)
             }
         }), uiSearch.init("audio_friends_search"), this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype.onSubmenuToggle = function() {

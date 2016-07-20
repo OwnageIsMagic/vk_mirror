@@ -84,7 +84,7 @@ function MediaSelector(e, a, i, o) {
         return a && r.setItems(a), browser.msie && (removeEvent(e, "MSPointerDown"), addEvent(e, "MSPointerDown", r.activate.pbind(!0))), removeEvent(e, "mouseover"), addEvent(e,
             "mouseover click", r.activate), i.global || cur.destroy.push(function() {
             removeEvent(e, "mouseover click", r.activate)
-        }), r
+        }), i.forceToUp && addClass(geByClass1("ms_items_more_wrap", d), "to_up"), r
     }
     var t, d = [];
     o = o || {};

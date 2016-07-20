@@ -1493,6 +1493,10 @@ div.wall_module .ext_video div {
     cursor: default
 }
 
+.wall_module div.page_media_link_desc:empty {
+    padding: 0
+}
+
 .wall_module .page_media_link_desc_td div.page_media_link_desc {
     padding-top: 5px;
     max-height: 4.3em

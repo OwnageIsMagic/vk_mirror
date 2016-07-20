@@ -402,6 +402,10 @@
     margin-left: 42px
 }
 
+.pv_cont .wall_module .reply .dld {
+    padding-left: 42px
+}
+
 .pv_cont #wpe_text {
     line-height: 1.308
 }
@@ -1192,7 +1196,7 @@
 }
 
 .pv_tag_span {
-    max-width: 288px;
+    max-width: 250px;
     overflow: hidden;
     text-overflow: ellipsis;
     display: inline-block

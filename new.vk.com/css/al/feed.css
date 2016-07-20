@@ -646,7 +646,7 @@
 
 .feedback_header {
     padding: 2px 0 0;
-    color: #656565;
+    color: #222;
     line-height: 17px
 }
 
@@ -660,7 +660,7 @@
 }
 
 .feedback_header b {
-    color: #656565
+    color: #222
 }
 
 .feedback_content {

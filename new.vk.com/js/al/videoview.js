@@ -174,7 +174,7 @@ var Videoview = {
                     a = "";
                 if (window.Video && Video.isInCatalog()) {
                     var r = VideoPlaylist.getCurListId();
-                    a = Videocat.isTop3Playlist(r) ? "featured" : r
+                    r = r.replace("cat_", ""), a = Videocat.isTop3Playlist(r) ? "featured" : r
                 }
                 var d;
                 d = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
@@ -843,8 +843,8 @@ var Videoview = {
                     msg = domByClass(node, "dld");
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateComms(from);
-                hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                    Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
+                hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount,
+                    --cur.commentsShown), Videoview.updateComms(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
             }
         },
         commAction: function(e, i, o, t, a) {

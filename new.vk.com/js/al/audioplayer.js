@@ -944,13 +944,16 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype._removeRowPlayer = function(t) {
         removeClass(t, AudioUtils.AUDIO_CURRENT_CLS);
         var i = data(t, "player_inited");
-        i && (setTimeout(function() {
+        if (i) {
+            setTimeout(function() {
                 re(geByClass1("_audio_inline_player", t))
-            }, 200), geByClass1("audio_duration", t)
-            .innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                .duration), this.off(t), each(i.sliders, function() {
+            }, 200);
+            var e = geByClass1("_audio_duration", t);
+            e && (e.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
+                .duration)), this.off(t), each(i.sliders, function() {
                 this.destroy()
-            }), data(t, "player_inited", !1))
+            }), data(t, "player_inited", !1)
+        }
     }, AudioPlayer.prototype._addRowPlayer = function(t, i) {
         if (!geByClass1("_audio_inline_player", t)) {
             var e = this,

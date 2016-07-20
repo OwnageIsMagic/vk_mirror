@@ -3447,7 +3447,7 @@ var Wall = {
         if (!data(rf, 'composer')) {
             var mediaTypes = [];
             var rawTypes;
-            var maxShown, hideAfterCount;
+            var maxShown, hideAfterCount, forceToUp;
             if (window.mvcur && mvcur.mvShown) {
                 rawTypes = mvcur.mvMediaTypes;
             } else if (cur.wallLayer == post) {
@@ -3456,6 +3456,7 @@ var Wall = {
                 rawTypes = pvcur.rmedia_types;
                 maxShown = 0;
                 hideAfterCount = 0;
+                forceToUp = true;
             } else {
                 rawTypes = cur.options.rmedia_types;
             }
@@ -3475,7 +3476,8 @@ var Wall = {
                         disabledTypes: ['album'],
                         toggleLnk: true,
                         maxShown: maxShown !== undefined ? maxShown : undefined,
-                        hideAfterCount: hideAfterCount !== undefined ? hideAfterCount : undefined
+                        hideAfterCount: hideAfterCount !== undefined ? hideAfterCount : undefined,
+                        forceToUp: forceToUp
                     }
                 };
                 if (post.match(/^-?\d+_topic/)) {

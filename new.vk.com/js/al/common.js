@@ -9423,6 +9423,8 @@ TopSearch = {
     clear: function() {
         window.tooltips && tooltips.destroyAll(ge('ts_cont_wrap'));
         var tsInput = ge('ts_input');
+        if (!tsInput) return;
+
         tsInput.setValue('');
         tsInput.blur();
         tsInput.phonblur();
