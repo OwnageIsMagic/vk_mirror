@@ -78,7 +78,7 @@ var uiTabs = {
         },
         tryInit: function(t) {
             if (!domData(t, "inited")) {
-                var i = geByClass1("ui_tab_sel", t);
+                var i = geByClass1("ui_tab_group_sel", t) || geByClass1("ui_tab_sel", t);
                 i && uiTabs.initTabs(t, i), domData(t, "inited", 1)
             }
         },

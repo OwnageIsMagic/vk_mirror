@@ -210,7 +210,7 @@ var stVersions = {
     'owner_photo.js': 777617564,
     'owner_photo.css': 2482930139,
     'page.js': 3619295263,
-    'page.css': 571012148,
+    'page.css': 2818644269,
     'page_help.css': 2370291310,
     'public.css': 4066778842,
     'public.js': 1370745423,
@@ -338,7 +338,7 @@ var stVersions = {
     'abuse.js': 1131069015,
     'abuse.css': 3360978448,
     'verify.css': 262281192,
-    'away.css': 3487828088,
+    'away.css': 622685030,
     'stats.css': 1801791014,
     'payments.css': 3247100771,
     'payments.js': 3222309665,
@@ -397,7 +397,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 993252443,
     'ui.js': 3425210242,
-    'ui_common.js': 78851646,
+    'ui_common.js': 4268320495,
     'ui_common.css': 3353806905,
     'ui_media_selector.js': 678241831,
     'ui_media_selector.css': 3008550616,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 8814;
+var _rnd = 4741;

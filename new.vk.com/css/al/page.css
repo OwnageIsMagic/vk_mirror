@@ -3424,6 +3424,11 @@ div.submit_post_field[contenteditable=true][contenteditable=true]:empty:not(.sub
     color: #b8b9bb
 }
 
+div.submit_post_field>p,
+div.submit_post_field[contenteditable=true]>p {
+    margin: 0
+}
+
 .submit_post {
     display: none;
     background: #fafbfc;
