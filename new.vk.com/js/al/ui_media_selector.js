@@ -71,7 +71,8 @@ function MediaSelector(e, a, i, s) {
                             .appendChild(ce("a", {
                                 innerHTML: o ? h : '<span class="blind_label">' + h + "</span>",
                                 className: "ms_item ms_item_" + _ + " _type_" + _
-                            })), c.setAttribute("tabindex", 0), o || (c.setAttribute("data-title", h), addEvent(c, "mouseover", function() {
+                            })), c.setAttribute("tabindex", 0), o || (c.setAttribute("data-title", h), c.setAttribute("aria-label", h), c.setAttribute("role",
+                                "link"), addEvent(c, "mouseover", function() {
                                 showTitle(this, !1, !1, {
                                     noZIndex: !0
                                 })

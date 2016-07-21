@@ -912,15 +912,20 @@ h4 span {
 
 h4 .fl_r,
 h4 span,
-.subheader {
+.subheader,
+h4.subheader {
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
 
-.subheader {
+.subheader,
+h4.subheader {
     color: #222;
     font-weight: 500;
-    margin: 18px 0 12px
+    margin: 18px 0 12px;
+    padding: 0;
+    border-bottom: inherit;
+    font-size: inherit
 }
 
 .h2_add {
@@ -1256,8 +1261,7 @@ body.mac #page_header_cont {
 .top_home_link {
     width: 165px;
     height: 42px;
-    display: block;
-    outline: none
+    display: block
 }
 
 .top_home_link_ads {
@@ -1292,7 +1296,6 @@ body.mac #page_header_cont {
     display: inline-block;
     color: #000;
     opacity: 1;
-    outline: none;
     -o-transition: opacity 100ms linear;
     transition: opacity 100ms linear
 }
@@ -1373,6 +1376,7 @@ body.mac #page_header_cont {
     position: absolute;
     height: 1px;
     width: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
     opacity: 0;
     overflow: hidden
 }
@@ -2710,7 +2714,8 @@ body.mac #layer_stl .fixed {
     height: 12px;
     opacity: 0.75;
     filter: alpha(opacity=75);
-    cursor: pointer
+    cursor: pointer;
+    outline: none
 }
 
 .box_x_button:hover {
@@ -4761,6 +4766,13 @@ em.highlight {
 
 .page_block:empty {
     display: none
+}
+
+h2.page_block_h2 {
+    margin: 0px;
+    font-size: inherit;
+    font-weight: inherit;
+    color: inherit
 }
 
 .page_block_header_extra {

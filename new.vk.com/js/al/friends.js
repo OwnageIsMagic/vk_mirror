@@ -409,21 +409,17 @@ var Friends = {
     showListHeader: function(e, s) {
         ge("friends_list_title")
             .innerHTML = e, ge("friends_list_count")
-            .innerHTML = "", each(ge("friends_tabs_wrap")
-                .childNodes,
-                function() {
-                    "friends_tab_list" === this.id ? (removeClass(this, "unshown"), s ? vk.id == cur.oid && ((25 > s ? show : hide)("friends_list_delete_btn"), show(
-                        "friends_list_edit_btn")) : hide("friends_list_edit_btn", "friends_list_delete_btn")) : addClass(this, "unshown")
-                })
+            .innerHTML = "", each(geByClass("_friends_header", ge("friends_tabs_wrap")), function() {
+                "friends_tab_list" === this.id ? (removeClass(this, "unshown"), s ? vk.id == cur.oid && ((25 > s ? show : hide)("friends_list_delete_btn"), show(
+                    "friends_list_edit_btn")) : hide("friends_list_edit_btn", "friends_list_delete_btn")) : addClass(this, "unshown")
+            })
     },
     selectTab: function(e) {
         var e = geByClass1("ui_tab", "friends_tab_" + e),
             s = gpeByClass("ui_tabs", e);
-        each(ge("friends_tabs_wrap")
-            .childNodes,
-            function() {
-                this == s ? removeClass(this, "unshown") : addClass(this, "unshown")
-            }), uiTabs.switchTab(e)
+        each(geByClass("_friends_header", ge("friends_tabs_wrap")), function() {
+            this == s ? removeClass(this, "unshown") : addClass(this, "unshown")
+        }), uiTabs.switchTab(e)
     },
     selectSection: function(e) {
         var s = geByClass1("friends_section_" + e, "narrow_column");
@@ -926,8 +922,7 @@ var Friends = {
                 c = 1 << parseInt(s);
             for (cur.friendsList[i] = []; o--;) {
                 var u = cur.friends[n[o]];
-                u[6] = parseInt(u[6]), u[6] & c || (u[6] += c,
-                    cur.friendsList[i].push(u))
+                u[6] = parseInt(u[6]), u[6] & c || (u[6] += c, cur.friendsList[i].push(u))
             }
             return cur.userLists[s] = r, Friends.indexAll(), removeClass(ge("main_class"), "no_lists"), nav.change({
                 0: "friends",

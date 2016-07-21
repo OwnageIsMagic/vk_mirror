@@ -1345,7 +1345,8 @@ a.ui_search_custom_link {
     height: 24px;
     top: 17px;
     right: 16.5px;
-    cursor: pointer
+    cursor: pointer;
+    outline: none
 }
 
 .ui_actions_menu_item {
@@ -1357,7 +1358,8 @@ a.ui_search_custom_link {
     height: 30px;
     line-height: 30px;
     padding: 0 15px;
-    color: #2a5885
+    color: #2a5885;
+    outline: none
 }
 
 .ui_actions_menu_item:hover {

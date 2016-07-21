@@ -782,9 +782,9 @@ div.wall_module .ext_video div {
 }
 
 .wall_module .reply .reply_action {
-    visibility: hidden;
     opacity: 0;
-    filter: alpha(opacity=0)
+    filter: alpha(opacity=0);
+    outline: none
 }
 
 .wall_module .reply .reply_action,
@@ -4228,15 +4228,19 @@ span.page_post_thumb_unsized.page_post_thumb_unsized_single {
     display: none
 }
 
-.page_post_queue_wide,
-.page_name {
+.page_post_queue_wide {
     overflow: hidden
 }
 
-.page_name {
+.page_name,
+h2.page_name {
     font-size: 19px;
     line-height: 25px;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
     margin: -1px 0;
+    overflow: hidden;
     text-overflow: ellipsis
 }
 

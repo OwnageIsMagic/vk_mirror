@@ -30,6 +30,10 @@
     border-width: 1px 0 0;
     overflow: hidden;
     padding: 0 15px;
+    margin: 0;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
     font-size: 12.5px;
     letter-spacing: 0;
     outline: none;

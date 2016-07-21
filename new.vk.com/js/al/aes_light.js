@@ -706,17 +706,21 @@
         }
     }, AdsLight.overrideClickEvents = function(e, t) {
         function s(e) {
-            return e = normEvent(e), r || ("mouseup" == e.type && (2 == e.which || 1 == e.which && checkEvent(e)) ? (r = !0, setTimeout(function() {
-                r = !1
-            }, 100), a()) : "click" == e.type && 1 == e.which && i()), cancelEvent(e)
+            if (e = normEvent(e), !d)
+                if ("click" == e.type && (2 == e.which || 1 == e.which && checkEvent(e))) {
+                    if ("A" == e.target.nodeName && e.target.hasAttribute("href") && "#" !== e.target.getAttribute("href")) return !0;
+                    d = !0, setTimeout(function() {
+                        d = !1
+                    }, 100), a()
+                } else "click" == e.type && 1 == e.which && i();
+            return cancelEvent(e)
         }
         if (!e) return !1;
         var i = e.getAttribute("onclick_inside"),
             a = e.getAttribute("onclick_outside");
         if (!a) return !1;
         i = new Function(i || a), a = new Function(a);
-        for (var d, o = geByTag("a", e), n = 0; d = o[n]; n++) d.setAttribute("_href", d.href), d.removeAttribute("href");
-        var r = !1;
+        var d = !1;
         return addEvent(e, "click dblclick mousedown mouseup touchstart touchmove touchend", s, !1, !1, !0), t || cur.destroy.push(function(e) {
             cleanElems(e)
         }.pbind(e)), !0

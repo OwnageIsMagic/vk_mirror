@@ -124,12 +124,7 @@ var uiTabs = {
         },
         toggleGroup: function(t, i) {
             var e = data(t, "visibletimer");
-            e && clearTimeout(e), data(t, "visibletimer", setTimeout(toggleClass.pbind(t, "visible", i), i ? 0 : 100)), toggleClass(t, "shown", i), browser.msie8 && (setStyle(
-                t, {
-                    display: "table"
-                }), setTimeout(setStyle.pbind(t, {
-                display: ""
-            }), 0))
+            e && clearTimeout(e), data(t, "visibletimer", setTimeout(toggleClass.pbind(t, "visible", i), i ? 0 : 100)), toggleClass(t, "shown", i)
         },
         showGroup: function(t) {
             var i = data(t, "hidetimer");
@@ -160,6 +155,11 @@ var uiTabs = {
         }
     },
     uiActionsMenu = {
+        keyToggle: function(t, i) {
+            if (!checkKeyboardEvent(i)) return !1;
+            var e = domClosest("_ui_menu_wrap", t);
+            e && uiActionsMenu.toggle(e, !hasClass(e, "shown"))
+        },
         toggle: function(t, i) {
             var e = data(t, "dummyMenu");
             e && (t = e), toggleClass(t, "shown", i)
@@ -427,11 +427,7 @@ var uiTabs = {
         },
         initFilters: function(t, i) {
             function e(t, i) {
-                toggleClass(t, "shown", i), browser.msie8 && (setStyle(t, {
-                    display: "table"
-                }), setTimeout(setStyle.pbind(t, {
-                    display: ""
-                }), 0))
+                toggleClass(t, "shown", i)
             }
             var s = uiSearch.getWrapEl(t),
                 o = geByClass1("ui_search_fltr_control", s),

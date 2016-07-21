@@ -3447,7 +3447,7 @@ var Wall = {
         if (!data(rf, 'composer')) {
             var mediaTypes = [];
             var rawTypes;
-            var maxShown, hideAfterCount, forceToUp;
+            var maxShown, hideAfterCount;
             if (window.mvcur && mvcur.mvShown) {
                 rawTypes = mvcur.mvMediaTypes;
             } else if (cur.wallLayer == post) {
@@ -3456,7 +3456,6 @@ var Wall = {
                 rawTypes = pvcur.rmedia_types;
                 maxShown = 0;
                 hideAfterCount = 0;
-                forceToUp = true;
             } else {
                 rawTypes = cur.options.rmedia_types;
             }
@@ -3476,8 +3475,7 @@ var Wall = {
                         disabledTypes: ['album'],
                         toggleLnk: true,
                         maxShown: maxShown !== undefined ? maxShown : undefined,
-                        hideAfterCount: hideAfterCount !== undefined ? hideAfterCount : undefined,
-                        forceToUp: forceToUp
+                        hideAfterCount: hideAfterCount !== undefined ? hideAfterCount : undefined
                     }
                 };
                 if (post.match(/^-?\d+_topic/)) {
@@ -4212,6 +4210,7 @@ var Wall = {
                 }
             }
         });
+        return false;
     },
     blockPostApp: function(aid, from, hash, obj) {
         ajax.post('al_wall.php', {
@@ -5966,7 +5965,7 @@ var Wall = {
     },
     likeIt: function(el, post_id, hash, ev) {
         stopEvent(ev);
-        if (!vk.id) return;
+        if (!vk.id) return false;
         if (cur.viewAsBox) {
             cur.viewAsBox();
             return cancelEvent(ev);
@@ -6010,6 +6009,7 @@ var Wall = {
         if (cur.onWallLike) {
             cur.onWallLike();
         }
+        return false;
     },
     likesShow: function(el, post_id, opts) {
         opts = opts || {};
@@ -6067,7 +6067,7 @@ var Wall = {
             cur.viewAsBox();
             return cancelEvent(ev);
         }
-        if (!vk.id) return;
+        if (!vk.id) return false;
 
         stopEvent(ev);
         var p = wall.parsePostId(post_id),
@@ -6078,6 +6078,7 @@ var Wall = {
             act: 'publish_box',
             object: like_obj
         }, params));
+        return false;
     },
     customCur: function() {
         if (window.wkcur && wkcur.shown) return wkcur;
