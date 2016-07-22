@@ -2274,6 +2274,7 @@ body.mac .im_stickerpack_fixed {
     line-height: 16px;
     padding-top: 6px;
     margin-bottom: 0;
+    word-wrap: break-word;
     box-sizing: border-box;
     border: none;
     border-bottom: solid 1px #e4e6e9;

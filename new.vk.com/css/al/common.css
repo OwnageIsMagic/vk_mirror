@@ -314,6 +314,16 @@ textarea.ashelper {
     position: relative
 }
 
+.online:before {
+    content: 'online';
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    clip: rect(1px, 1px, 1px, 1px);
+    opacity: 0;
+    overflow: hidden
+}
+
 .online:after {
     content: '';
     position: absolute;
@@ -5872,6 +5882,10 @@ button.ui_load_more_btn {
 .wk_text .audio_row.inlined {
     max-width: 362px;
     margin: 0
+}
+
+.wk_text .post_media .audio_row.inlined {
+    max-width: none
 }
 
 .choose_audio_rows .audio_row .audio_acts,

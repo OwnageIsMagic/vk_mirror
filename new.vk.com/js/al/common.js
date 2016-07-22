@@ -4874,7 +4874,7 @@ function checkEvent(e) {
 }
 
 function checkKeyboardEvent(e) {
-    return ((e = (e || window.event)) && !e.clientX && !e.screenX && !e.offsetX) || false;
+    return ((e = (e || window.event)) && !e.clientX && !e.screenX) || false;
 }
 
 function checkOver(e, target) {

@@ -156,7 +156,6 @@ var uiTabs = {
     },
     uiActionsMenu = {
         keyToggle: function(t, i) {
-            if (!checkKeyboardEvent(i)) return !1;
             var e = domClosest("_ui_menu_wrap", t);
             e && uiActionsMenu.toggle(e, !hasClass(e, "shown"))
         },
@@ -586,7 +585,8 @@ var uiTabs = {
                 var s = domFC(t),
                     o = cur.bigphCache[i];
                 "A" == s.tagName && hasClass(s, "ui_zoom_outer") || (s = t.insertBefore(se('<a class="ui_zoom_outer" href="' + (o && o._id ? "/photo" + o._id + "?all=1" :
-                        "/albums" + i) + '"><div class="ui_zoom_inner"><div class="ui_zoom"><div class="ui_zoom_icon"></div></div></div></a>'), domFC(t)), s._uid = i, s.offsetHeight,
+                            "/albums" + i) + '" aria-label="' + clean(getLang("global_photo_full_size")) +
+                        '"><div class="ui_zoom_inner"><div class="ui_zoom"><div class="ui_zoom_icon"></div></div></div></a>'), domFC(t)), s._uid = i, s.offsetHeight,
                     addClass(s, "ui_zoom_added")), s.onclick = uiPhotoZoom.click.pbind(t, i, e), e.fastLoad && uiPhotoZoom.load(t, i, e)
             }
         },
@@ -877,7 +877,8 @@ var uiTabs = {
                 }
             },
             scroll: function(t, i, e) {
-                this.animation && this.animation.stop(), i ? (i = "number" != typeof i || !Number.isFinite(i) || i % 1 ? 300 : Math.abs(i), this.animation = new Fx.Base({
+                this.animation && this.animation.stop(), i ? (i = "number" != typeof i || !Number.isFinite(i) || i % 1 ? 300 : Math.abs(i),
+                    this.animation = new Fx.Base({
                         scrollTop: this.el.outer.scrollTop
                     }, {
                         transition: Fx.Transitions.easeOutCubic,

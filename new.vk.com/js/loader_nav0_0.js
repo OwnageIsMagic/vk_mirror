@@ -118,7 +118,7 @@ var stVersions = {
     'nav': 0,
     'fonts_cnt.css': 2157913508,
     'common.js': 1133,
-    'common.css': 3789027593,
+    'common.css': 1575398248,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -164,7 +164,7 @@ var stVersions = {
     'fullscreen_pv.css': 4254746541,
     'friendsphotos.js': 3869757571,
     'friendsphotos.css': 3816436303,
-    'spe.js': 2866562171,
+    'spe.js': 2113282182,
     'friends.js': 563774102,
     'friends.css': 3282760932,
     'friends_search.js': 1498932479,
@@ -240,7 +240,7 @@ var stVersions = {
     'mail.css': 3405659547,
     'mail.js': 4232525143,
     'email.css': 3625468312,
-    'im.css': 992963666,
+    'im.css': 1085766449,
     'imn.js': 1013145231,
     'im.js': 4271552496,
     'emoji.js': 1702836788,
@@ -313,7 +313,7 @@ var stVersions = {
     'restore.css': 3063003476,
     'recover.js': 2216623723,
     'recover.css': 1708940698,
-    'docs.js': 388250342,
+    'docs.js': 2903580294,
     'docs.css': 1846648280,
     'tags_dd.js': 2519761220,
     'tags_dd.css': 3629295033,
@@ -397,7 +397,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 993252443,
     'ui.js': 3425210242,
-    'ui_common.js': 4268320495,
+    'ui_common.js': 1029584252,
     'ui_common.css': 3353806905,
     'ui_media_selector.js': 678241831,
     'ui_media_selector.css': 3008550616,
@@ -436,7 +436,7 @@ var stVersions = {
     'paginated_table.js': 3438566458,
     'paginated_table.css': 500407230,
     'api/share.js': 404756598,
-    'api/openapi.js': 4117137550,
+    'api/openapi.js': 3088804372,
     'api/xdm.js': 1965154462,
     'css_clean.js': 824960447,
     'q_frame.php': 7,
@@ -456,7 +456,7 @@ var stVersions = {
     'snapster/common.js': 1252755421,
     'snapster/main.js': 1497766167,
     'snapster/snapster.js': 2136337127,
-    'snapster/modules.js': 3095673088,
+    'snapster/modules.js': 1185976347,
     'snapster/snapster.css': 2205622345,
     'snapster/mob_templates.js': 947523457,
     'snapster/snapster_mobile.js': 2272524840,
@@ -466,7 +466,7 @@ var stVersions = {
     'snapster/notifier.js': 2711093753,
     'snapster/snapster_ui.css': 3351071103,
     'favicon': 5,
-    'lang': 6724
+    'lang': 6726
 };
 var stTypes = {
     fromLib: {
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 4741;
+var _rnd = 4498;
