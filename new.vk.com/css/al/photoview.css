@@ -2,6 +2,40 @@
     display: none
 }
 
+#pv_more_acts_tt .pv_more_act_item:before,
+#pv_tags .delete,
+.media-check-btn-icon,
+.media-photo-thumb-background,
+.media-video-play,
+.media-video-thumb-background,
+.media-video-thumb-wrap-background,
+.pe_editor #pe_stickers_pack_tab_editor,
+.pe_editor #pe_stickers_pack_tab_recent,
+.pe_editor .pe_drawing_color.pe_drawing_color_white.pe_selected,
+.pe_editor .pe_drawing_color.pe_selected,
+.pe_editor .pe_drawing_undo:before,
+.pe_editor .pe_font_sample,
+.pe_editor .pe_new_text_icon,
+.pe_editor .pe_sticker_pack_tab_btn .pe_icon,
+.pe_editor .pe_tabs .pe_tab_icon,
+.pe_editor .pe_text_fonts .radiobtn:before,
+.pv_bottom_info #pv_stickers:before,
+.pv_close,
+.pv_comments_list .ms_item_more,
+.pv_cont .pv_bottom_actions .pv_actions_more:after,
+.pv_cont .pv_close_btn,
+.pv_cont .pv_closed_commments_placeholder,
+.pv_cont .pv_nav_btn .pv_nav_btn_icon,
+.pv_cont .pv_no_commments_placeholder,
+.pv_fs_wrap .pv_fs_btn div,
+.pv_like_icon,
+.pv_movebox_album_thumb_wrap,
+.pv_place_label,
+.pv_reply_form .ms_item_more,
+.pva_no_photos {
+    -ms-high-contrast-adjust: none
+}
+
 .media-photo-thumb-background {
     background-repeat: no-repeat;
     background-size: cover;

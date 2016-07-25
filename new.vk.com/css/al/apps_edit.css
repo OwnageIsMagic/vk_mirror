@@ -2,6 +2,11 @@
     display: none
 }
 
+.apps_edit_bottom_tt_pointer,
+.apps_edit_side_tt_pointer {
+    -ms-high-contrast-adjust: none
+}
+
 .apps_edit_summary {
     -o-transition: opacity 0.15s ease;
     transition: opacity 0.15s ease

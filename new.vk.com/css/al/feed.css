@@ -2,6 +2,20 @@
     display: none
 }
 
+.feed_filter_icon,
+.feed_lists_icon .ui_actions_menu_icons,
+.feedback_grouped_row_wrap .post_actions,
+.feedback_payment_thumb,
+.feedback_photo_icon,
+.feedback_row_menu_icon,
+.feedback_sticky_gift_btn,
+.feedback_sticky_icon,
+.feedback_sticky_progress:before,
+.ui_actions_menu_item.feed_custom_list,
+.ui_actions_menu_item.feed_new_list {
+    -ms-high-contrast-adjust: none
+}
+
 .feed_lists_icon .ui_actions_menu {
     position: relative;
     position: absolute;

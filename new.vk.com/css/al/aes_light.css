@@ -2,6 +2,15 @@
     display: none
 }
 
+.ads_ad_box.redesign .ads_ad_close_button .ads_ad_close_button_x,
+.ads_ad_box.redesign .ads_ad_community_join .ads_ad_community_join_icon,
+.ads_ad_box.redesign .ads_ad_community_join .ads_ad_community_join_icon.join_app,
+.ads_ad_box.redesign .ads_ad_community_join .ads_ad_community_join_icon.join_game,
+.ads_ad_domain.groups_only,
+.ads_ads_news_image {
+    -ms-high-contrast-adjust: none
+}
+
 .ads_ads_box.size_small {
     font-size: 11px
 }

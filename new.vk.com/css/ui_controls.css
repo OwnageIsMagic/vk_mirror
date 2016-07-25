@@ -2,6 +2,21 @@
     display: none
 }
 
+.checkbox_container table td .checkbox_off,
+.checkbox_container table td .checkbox_off_over,
+.checkbox_container table td .checkbox_on,
+.checkbox_container table td .checkbox_on_over,
+.idd_popup .idd_header.idd_arrow,
+.idd_popup .idd_item.idd_sublist,
+.idd_wrap .idd_arrow,
+.radiobtn_container table td .radiobtn_off_over div,
+.radiobtn_container table td .radiobtn_off div,
+.radiobtn_container table td .radiobtn_on_over div,
+.radiobtn_container table td .radiobtn_on div,
+.selector_container td.selector_dropdown {
+    -ms-high-contrast-adjust: none
+}
+
 .checkbox_container,
 .selector_container {
     zoom: 1

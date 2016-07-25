@@ -213,7 +213,7 @@ var Photoview = {
             layer.innerHTML =
                 '    <div class="pv_cont">      <div id="pv_box" class="_scroll_node pv_box" tabindex="0" onclick="cur.pvClicked = true;" onmouseenter="removeClass(layerWrap, \'' +
                 w + "')\" onmouseleave=\"addClass(layerWrap, '" + w + "')\">         " + u + '        <div class="clear_fix pv_photo_wrap" style="' + p +
-                '">           <div class="pv_close_btn" onclick="Photoview.hide(0)"></div>           <div class="no_select pv_left_wrap">                      <div class="no_select pv_image_wrap">              <div id="pv_tag_info" class="clear_fix">                 <div class="pv_tag_info_buttons_wrap"></div>                 <div class="pv_tag_info_text"></div>               </div>              <div id="pv_tag_frame"></div>              <div id="pv_tag_faded"></div>              <div id="pv_tag_person" onmouseout="Photoview.hideTag()"></div>              <div class="pv_img_area_wrap pv_init_hover" onmouseleave="return Photoview.onImageWrapMouseLeave(event)" onmousedown="return Photoview.onImageWrapMouseDown(event)" onmousemove="Photoview.onImageWrapMouseMove(event)">                 <div class="pv_img_progress_wrap">' +
+                '">           <div class="pv_close_btn" onclick="Photoview.hide(0)"></div>           <div class="no_select pv_left_wrap">                      <div class="no_select pv_image_wrap">              <div id="pv_tag_info" class="clear_fix">                 <div class="pv_tag_info_buttons_wrap"></div>                 <div class="pv_tag_info_text" onmouseover="setTitle(this)"></div>               </div>              <div id="pv_tag_frame"></div>              <div id="pv_tag_faded"></div>              <div id="pv_tag_person" onmouseout="Photoview.hideTag()"></div>              <div class="pv_img_area_wrap pv_init_hover" onmouseleave="return Photoview.onImageWrapMouseLeave(event)" onmousedown="return Photoview.onImageWrapMouseDown(event)" onmousemove="Photoview.onImageWrapMouseMove(event)">                 <div class="pv_img_progress_wrap">' +
                 m +
                 '</div>                 <a onmouseout="Photoview.hideTag()"  onselectstart="return cancelEvent(event);" onclick="return checkEvent(event)" href="" id="pv_photo"></a>                 ' +
                 l + '                 <div class="pv_like_fs_wrap">                 ' + d + h + "                </div>               </div>             </div>             " +
@@ -690,7 +690,8 @@ var Photoview = {
                             "photos_delete_tag") + "</button>       </div>"), show(cur.pvCommentsData), Photoview.hhCheck() && show(cur.pvHHWrap)) : (Photoview.toggleTopInfoPanel(!
                         1), Photoview.toggleDeletedState(!1), Photoview.hhCheck() && show(cur.pvHHWrap)), (cur.pvOptions || {})
                     .scroll && cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.scrollTop(cur.pvOptions.scroll), cur.pvBodyScrollTop = bodyNode.scrollTop, setTimeout(function() {
-                        void 0 !== cur.pvBodyScrollTop && (bodyNode.scrollTop = cur.pvBodyScrollTop, delete cur.pvBodyScrollTop);
+                        void 0 !== cur.pvBodyScrollTop && (bodyNode.scrollTop = cur.pvBodyScrollTop,
+                            delete cur.pvBodyScrollTop)
                     }, 0), Photoview.updateVerticalPosition(), setTimeout(Photoview.afterShow, 2)
             }
         },
@@ -1498,10 +1499,9 @@ var Photoview = {
                     onDone: function(o, i) {
                         return cur.deletionProgress[r.id] = !1, a ? (a.hide(), nav.go("/id0", !1, {
                             nocur: !0
-                        })) : i ? showFastBox(o, i, getLang("global_delete"), Photoview.deletePhoto.pbind(1), getLang("global_cancel")) : void(e == cur.pvListId &&
-                            t == cur.pvIndex && (cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel", "pv_prof_done"), Photoview.toggleTopInfoPanel(
-                                getLang("photo_deleted"), o), r.deleted = [cur.pvTagInfoText.innerHTML, cur.pvTagInfoButtons.innerHTML], Photoview.toggleDeletedState(!
-                                0), Photoview.updatePhotoDimensions()))
+                        })) : void(e == cur.pvListId && t == cur.pvIndex && (cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel", "pv_prof_done"),
+                            Photoview.toggleTopInfoPanel(i || getLang("photo_deleted"), o), r.deleted = [cur.pvTagInfoText.innerHTML, cur.pvTagInfoButtons.innerHTML],
+                            Photoview.toggleDeletedState(!0), Photoview.updatePhotoDimensions()))
                     }
                 }))
         },

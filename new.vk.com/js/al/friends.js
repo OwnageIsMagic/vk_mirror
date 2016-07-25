@@ -233,7 +233,7 @@ var Friends = {
             Friends.updateList(e, !0)
         }, void(trim(e) && (hide(cur.showMore), cur.fContent.innerHTML = '<div class="friends_wide_loading"></div>'))) : (clearTimeout(Friends.searchTimout), void(
             Friends.searchTimout = setTimeout(function() {
-                e && cur.searchStr == e || (cur.searchStr = e, e ? ("all" != cur.section && "phonebook" != cur.section && (this.selectTab("all"), this.selectSection(
+                cur.searchStr != e && (cur.searchStr = e, e ? ("all" != cur.section && "phonebook" != cur.section && (this.selectTab("all"), this.selectSection(
                         "all"), cur.curList = cur.section = "all", nav.setLoc(extend(nav.objLoc, {
                         section: "all"
                     }))), this.search(e, cur.section), this.changeSummary()) : cur.section != cur.curList || s ? (this.showSection(), this.changeSummary(),

@@ -2,6 +2,11 @@
     display: none
 }
 
+.mention_tt_subscr_icon,
+.mott_app {
+    -ms-high-contrast-adjust: none
+}
+
 .tt_w {
     z-index: 1501;
     cursor: default;

@@ -2,6 +2,71 @@
     display: none
 }
 
+#page_actions_item_lists,
+.checkbox_official:after,
+.checkbox_pic,
+.choose_more_btn.choose_loading,
+.current_app,
+.current_audio_cnt,
+.current_audio_icon,
+.image_cover,
+.image_cover_top,
+.like_share_widget_icon,
+.like_tt_share:before,
+.medadd_c_linkimg_controls .medadd_c_linkimg_controls_btn,
+.media_audio_icon,
+.media_doc_icon,
+.media_preview .progress_x,
+.microdata_rate,
+.no_posts_cover,
+.owner_photo_bubble_action_in,
+.page_actions_btn.narrow.stats,
+.page_actions_cont.narrow .page_actions_header,
+.page_actions_cont.narrow .page_extra_actions_btn,
+.page_actions_dd_label,
+.page_actions_header_inner,
+.page_actions_item_unfolded,
+.page_actions_subitem.checked,
+.page_avatar.no_avatar,
+.page_coub,
+.page_fronly,
+.page_gif_add_icon,
+.page_gif_added .page_gif_add_icon,
+.page_gif_play_icon,
+.page_gif_progress_icon,
+.page_gif_share_icon,
+.page_media_link_icon,
+.page_media_map_point,
+.page_media_place_img_wrap:before,
+.page_media_place_label_inline:before,
+.page_microdata_logo_aliexpress,
+.page_microdata_logo_asos,
+.page_more_link.loading,
+.page_pladform,
+.page_rutube,
+.page_vimeo,
+.page_wall_search .page_reset_search,
+.page_wall_search .wall_search,
+.page_wm,
+.replies_side,
+.wall_module .like_icon,
+.wall_module .media_desc b,
+.wall_module .media_preview .note b,
+.wall_module .media_preview .poll b,
+.wall_module .media_preview .share b,
+.wall_module .post_actions.post_actions_progress:before,
+.wall_module .post_like_icon,
+.wall_module .post_share_icon,
+.wall_module .reply_action,
+.wall_module .reply_to_title .reply_to_cancel,
+.wall_module td.page_media_link_thumb,
+.wall_post_source_ads_mark,
+.wall_post_source_icon,
+.wall_post_source_icon.wall_post_source_chronicle,
+.wall_signed_by {
+    -ms-high-contrast-adjust: none
+}
+
 .like_tt_share,
 .like_tt_share:before {
     -o-transition: opacity 0.2s ease;
@@ -396,6 +461,15 @@ div.wall_module .ext_video div {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis
+}
+
+h5.copy_post_author,
+h5.post_author {
+    font-size: 13px;
+    margin: 0;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
 .wall_module .copy_post_date {
@@ -5898,6 +5972,7 @@ button.wall_block_app_btn {
 
 .page_actions_wrap {
     position: absolute;
+    top: 0;
     width: 198px;
     background: #fff;
     border-radius: 2px;
@@ -5935,7 +6010,8 @@ button.wall_block_app_btn {
     height: 28px;
     line-height: 28px;
     color: #2a5885;
-    white-space: nowrap
+    white-space: nowrap;
+    outline: none
 }
 
 .page_actions_item,
@@ -6012,7 +6088,8 @@ button.wall_block_app_btn {
 }
 
 .page_actions_btn {
-    overflow: hidden
+    overflow: hidden;
+    outline: none
 }
 
 .page_actions_btn .progress {
@@ -6025,6 +6102,7 @@ button.wall_block_app_btn {
 }
 
 .page_action_left {
+    position: relative;
     width: 157px
 }
 

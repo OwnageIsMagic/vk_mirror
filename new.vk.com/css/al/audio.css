@@ -2,6 +2,27 @@
     display: none
 }
 
+.audio_album_add_btn .audio_album_btn_icon,
+.audio_album_add_btn_icon,
+.audio_album_edit_btn .audio_album_btn_icon,
+.audio_album_recom_btn .audio_album_btn_icon,
+.audio_catalog_performers .audio_catalog_owner_new_en,
+.audio_catalog_performers .audio_catalog_owner_new_ru,
+.audio_catalog_performers .audio_catalog_owner_new_ua,
+.audio_catalog_performers .audio_catalog_performer_name,
+.audio_delete_current_btn,
+.audio_menu_btn.audio_edit_feed_btn,
+.audio_menu_btn.audio_upload_btn,
+.audio_page_player .audio_control_btn .icon,
+.audio_page_player .audio_page_player_btns .icon,
+.audio_page_player .audio_page_player_next .icon,
+.audio_page_player .audio_page_player_play .icon,
+.audio_page_player .audio_page_player_prev .icon,
+.audio_page_player .audio_play,
+.audio_page_player .audio_player_controls .icon {
+    -ms-high-contrast-adjust: none
+}
+
 .audio_layout {
     color: #000;
     line-height: 1.154;
@@ -282,7 +303,8 @@
     background-image: url(/images/icons/audio_player_controls.png);
     height: 28px;
     width: 28px;
-    background-position: 0 0
+    background-position: 0 0;
+    outline: none
 }
 
 .audio_page_player .audio_play.audio_playing {

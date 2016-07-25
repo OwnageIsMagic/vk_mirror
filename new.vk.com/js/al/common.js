@@ -1743,14 +1743,7 @@ function animate(el, params, speed, callback) {
                     setStyle(el, p, 0);
                 }
 
-                var o;
-                if (p == 'height' && browser.msie6) {
-                    o = '0px';
-                    el.style.overflow = '';
-                } else {
-                    o = options.orig[p];
-                }
-
+                var o = options.orig[p];
                 var old = el.style[p];
                 el.style[p] = o;
                 params[p] = parseFloat(getStyle(el, p, true));
@@ -1789,15 +1782,7 @@ function animate(el, params, speed, callback) {
                 }
             }
 
-            if (options.hide && name == 'height' && browser.msie6) {
-                el.style.height = '0px';
-                el.style.overflow = '';
-            }
             from = tween.cur(name, true);
-            if (options.hide && name == 'height' && browser.msie6) {
-                el.style.height = '';
-                el.style.overflow = 'hidden';
-            }
             if (from == 0 && (name == 'width' || name == 'height'))
                 from = 1;
 
@@ -2091,15 +2076,10 @@ function scrollToY(y, speed, anim, noCorrect) {
         y = Math.max(0, y - getSize('page_header_cont')[1]);
     }
 
-    if (browser.msie6) {
-        if (data(pageNode, 'tween')) data(pageNode, 'tween')
-            .stop(false);
-    } else {
-        if (data(bodyNode, 'tween')) data(bodyNode, 'tween')
-            .stop(false);
-        if (data(htmlNode, 'tween')) data(htmlNode, 'tween')
-            .stop(false);
-    }
+    if (data(bodyNode, 'tween')) data(bodyNode, 'tween')
+        .stop(false);
+    if (data(htmlNode, 'tween')) data(htmlNode, 'tween')
+        .stop(false);
     window.scrollAnimation = false;
     if (speed) {
         var updT = function() {
@@ -2112,26 +2092,20 @@ function scrollToY(y, speed, anim, noCorrect) {
             }
         }
         window.scrollAnimation = true;
-        if (browser.msie6) {
-            animate(pageNode, {
-                scrollTop: y
-            }, speed, updT);
-        } else {
-            animate(htmlNode, {
-                scrollTop: y
-            }, {
-                duration: speed,
-                transition: Fx.Transitions.sineInOut,
-                onComplete: updT
-            });
-            animate(bodyNode, {
-                scrollTop: y
-            }, {
-                duration: speed,
-                transition: Fx.Transitions.sineInOut,
-                onComplete: updT
-            });
-        }
+        animate(htmlNode, {
+            scrollTop: y
+        }, {
+            duration: speed,
+            transition: Fx.Transitions.sineInOut,
+            onComplete: updT
+        });
+        animate(bodyNode, {
+            scrollTop: y
+        }, {
+            duration: speed,
+            transition: Fx.Transitions.sineInOut,
+            onComplete: updT
+        });
     } else {
         if (anim && anim !== 2) {
             if ((cur.module == 'profile' || cur.module == 'public' || cur.module == 'group' || cur.module == 'event') && window.Wall) {
@@ -2147,9 +2121,6 @@ function scrollToY(y, speed, anim, noCorrect) {
             return;
         }
         window.scroll(scrollGetX(), y);
-        if (browser.msie6) {
-            pageNode.scrollTop = y;
-        }
         if (!anim) {
             updSideTopLink();
         }
@@ -2554,9 +2525,8 @@ var layers = {
                     window._oldScroll = htmlNode.scrollTop;
                     pageNode.style.height = (_oldScroll + (window.lastWindowHeight || 0)) + 'px';
                     pageNode.style.marginTop = -_oldScroll + 'px';
-                } else if (!browser.msie6) {
-                    (browser.msie7 ? htmlNode : bodyNode)
-                    .style.overflow = 'hidden';
+                } else {
+                    bodyNode.style.overflow = 'hidden';
                 }
             }
             layers.visible = true;
@@ -2590,9 +2560,8 @@ var layers = {
                         if (window._oldScroll) {
                             htmlNode.scrollTop = _oldScroll;
                         }
-                    } else if (!browser.msie6) {
-                        (browser.msie7 ? htmlNode : bodyNode)
-                        .style.overflow = 'auto';
+                    } else {
+                        bodyNode.style.overflow = 'auto';
                     }
                 }
                 window.updateWndVScroll && updateWndVScroll();
@@ -3093,10 +3062,6 @@ function onBodyResize(force) {
     if (browser.mobile) {
         dwidth = Math.max(dwidth, intval(bodyNode.scrollWidth));
         dheight = Math.max(dheight, intval(bodyNode.scrollHeight));
-    } else if (browser.msie7) {
-        if (htmlNode.scrollHeight > htmlNode.offsetHeight && !layers.visible) {
-            dwidth += sbw + 1;
-        }
     }
     if (w.lastWindowWidth != dwidth || force === true) {
         changed = true;
@@ -3119,7 +3084,7 @@ function onBodyResize(force) {
         if (dwidth) {
             for (var el = pageNode.firstChild; el; el = el.nextSibling) {
                 if (!el.tagName) continue;
-                var sfWidth = ((w.lastInnerWidth = (dwidth - sbw * (browser.msie7 ? 2 : 1) - 1)) - 1);
+                var sfWidth = ((w.lastInnerWidth = (dwidth - sbw - 1)) - 1);
                 for (var e = el.firstChild; e; e = e.nextSibling) {
                     if (e.className == 'scroll_fix') {
                         e.style.width = sfWidth + 'px';
@@ -3146,8 +3111,6 @@ function onBodyResize(force) {
         if (_pads.layerBG) _pads.layerBG.style.height = dheight + 'px';
         if (browser.mozilla && layers.visible) {
             pageNode.style.height = (_oldScroll + dheight) + 'px';
-        } else if (browser.msie6) {
-            pageNode.style.height = dheight + 'px';
         }
     }
     if (!vk.noSideTop) {
@@ -3550,7 +3513,7 @@ function domReady() {
         _tbLink: ge('top_back_link')
     });
 
-    window.scrollNode = browser.msie6 ? pageNode : ((browser.chrome || browser.safari) ? bodyNode : htmlNode);
+    window.scrollNode = (browser.chrome || browser.safari) ? bodyNode : htmlNode;
 
     if (vk.al == 1) {
         showTitleProgress();
@@ -4572,11 +4535,6 @@ var ajax = {
             // Wait for attached static files
             var waitResponseStatic = function() {
                 var st = ['common.css'];
-                if (browser.msie6) {
-                    st.push('ie6.css');
-                } else if (browser.msie7) {
-                    st.push('ie7.css');
-                }
                 if (newStatic) {
                     newStatic = newStatic.split(',');
                     for (var i = 0, l = newStatic.length; i < l; ++i) {
@@ -4684,8 +4642,7 @@ function HistoryAndBookmarks(params) {
         return l[0] + (l[1] ? ('?' + ajx2q(q2ajx(l[1]))) : '') + (h[1] ? ('#' + h[1]) : '');
     }
 
-    var frame = null,
-        withFrame = browser.msie6 || browser.msie7;
+    var frame = null;
     var frameDoc = function() {
         return frame.contentDocument || (frame.contentWindow ? frame.contentWindow.document : frame.document);
     }
@@ -4694,28 +4651,15 @@ function HistoryAndBookmarks(params) {
         onLocChange: function() {}
     }, params);
 
-    var getLoc = function(skipFrame) {
+    var getLoc = function() {
         var loc = '';
         if (vk.al == 3) {
             loc = (location.pathname || '') + (location.search || '') + (location.hash || '');
         } else {
-            if (withFrame && !skipFrame) {
-                try {
-                    loc = frameDoc()
-                        .getElementById('loc')
-                        .innerHTML.replace(/&lt;/ig, '<')
-                        .replace(/&gt;/ig, '>')
-                        .replace(/&quot;/ig, '"')
-                        .replace(/&amp;/ig, '&');
-                } catch (e) {
-                    loc = curLoc;
-                }
-            } else {
-                loc = (location.toString()
-                    .match(/#(.*)/) || {})[1] || '';
-                if (loc.substr(0, 1) != vk.navPrefix) {
-                    loc = (location.pathname || '') + (location.search || '') + (location.hash || '');
-                }
+            loc = (location.toString()
+                .match(/#(.*)/) || {})[1] || '';
+            if (loc.substr(0, 1) != vk.navPrefix) {
+                loc = (location.pathname || '') + (location.search || '') + (location.hash || '');
             }
         }
         if (!loc && vk.al > 1) {
@@ -4763,24 +4707,13 @@ function HistoryAndBookmarks(params) {
             }
             window.chHashFlag = true;
             location.hash = '#' + vk.navPrefix + curLoc;
-            if (withFrame && getLoc() != curLoc) {
-                setFrameContent(curLoc);
-            }
         }
     }
 
     var locChecker = function() {
         var loc = getLoc(true);
         if (loc != curLoc) {
-            if (browser.msie6) {
-                if (reloadCheckFlood({
-                        force: true,
-                        from: 6
-                    })) return;
-                location.reload(true);
-            } else {
-                setFrameContent(loc);
-            }
+            setFrameContent(loc);
         }
     }
 
@@ -4792,9 +4725,6 @@ function HistoryAndBookmarks(params) {
         options.onLocChange(l);
 
         curLoc = l;
-        if (withFrame && location.hash.replace('#' + vk.navPrefix, '') != l) {
-            location.hash = '#' + vk.navPrefix + l;
-        }
     }
     var checkTimer;
     var frameChecker = function() {
@@ -4816,16 +4746,6 @@ function HistoryAndBookmarks(params) {
             if (browser.safari) {
                 addEvent(window, 'hashchange', checker);
             }
-        } else if (withFrame) {
-            frame = ce('iframe', {
-                id: 'hab_frame'
-            });
-            frame.attachEvent('onreadystatechange', frameChecker);
-            frame.src = '/al_loader.php?act=hab_frame&loc=' + encodeURIComponent(curLoc);
-
-            utilsNode.appendChild(frame);
-
-            checkTimer = setInterval(locChecker, 200);
         } else if ('onhashchange' in window) {
             addEvent(window, 'hashchange', function() {
                 if (window.chHashFlag) {
@@ -4849,9 +4769,6 @@ function HistoryAndBookmarks(params) {
         stop: function() {
             if (vk.al < 3) {
                 clearInterval(checkTimer);
-                if (withFrame) {
-                    frame.detachEvent('onreadystatechange', frameChecker);
-                }
             } else if (vk.al == 3) {
                 removeEvent(window, 'popstate', checker);
             }
@@ -4874,7 +4791,13 @@ function checkEvent(e) {
 }
 
 function checkKeyboardEvent(e) {
-    return ((e = (e || window.event)) && !e.clientX && !e.screenX) || false;
+    e = normEvent(e);
+    if (!e || !e.target) return false;
+    if (intval(e.pageX) <= 0 && !e.screenX) return true;
+
+    var size = getSize(e.target),
+        xy = getXY(e.target);
+    return (Math.abs(e.pageX - xy[0] - size[0] / 2) < 1 && Math.abs(e.pageY - xy[1] - size[1] / 2) < 1);
 }
 
 function checkOver(e, target) {
@@ -8977,7 +8900,7 @@ function animateCount(el, newCount, opts) {
         newCount = positive(newCount);
     }
     if (!el) return;
-    if (browser.msie6 || browser.mobile && !browser.safari_mobile && !browser.android) {
+    if (browser.mobile && !browser.safari_mobile && !browser.android) {
         val(el, newCount || '');
         return;
     }
@@ -10120,7 +10043,7 @@ var Pads = {
         });
     },
     show: function(id, ev) {
-        if (checkEvent(ev) === true || browser.msie6) return;
+        if (checkEvent(ev) === true) return;
         var st = ['pads.css', 'pads.js', 'notifier.js'];
         if (id == 'msg') st.push('pads_im.css', 'pads_im.js', 'page.css', 'page.js');
         stManager.add(st, function() {

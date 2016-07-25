@@ -2,6 +2,18 @@
     display: none
 }
 
+.app_module .app_container,
+.page_app_run_arr,
+.page_square_photo,
+.page_upload_label,
+.places_module .place_icon,
+.topics_module .topic_icon,
+.video_module .video .page_video_thumb,
+.video_module .video div.page_video_play_icon,
+.wide_column .page_upload_label {
+    -ms-high-contrast-adjust: none
+}
+
 .module_body {
     padding: 12px 15px 15px;
     font-size: 12.5px

@@ -1439,7 +1439,7 @@ if (!VK.Widgets) {
         options = VK.extend(options || {}, {
             allowTransparency: true
         });
-        if (options.type == 'button' || options.type == 'vertical' || options.type == 'mini') delete options.width;
+
         var verticalBtnHeightWidth = {
                 18: 43,
                 20: 47,
@@ -1450,8 +1450,9 @@ if (!VK.Widgets) {
             btnHeight = parseInt(options.height, 10) || 22,
             size = btnHeight && verticalBtnHeightWidth[btnHeight] ? btnHeight : 22,
             type = (options.type == 'full' || options.type == 'button' || options.type == 'vertical' || options.type == 'mini') ? options.type : 'full',
-            width = type == 'full' ? Math.max(200, options.width || 350) : (type == 'button' ? 180 : (options.redesign ? (type == 'mini' ? 115 : verticalBtnHeightWidth[size]) :
-                (type == 'mini' ? 100 : 41))),
+            autoWidth = options.width === 'auto' && options.redesign && (type == 'button' || type == 'mini'),
+            width = autoWidth ? 153 : (type == 'full' ? Math.max(200, options.width || 350) : (type == 'button' ? 180 : (options.redesign ? (type == 'mini' ? 115 :
+                verticalBtnHeightWidth[size]) : (type == 'mini' ? 100 : 41)))),
             height = type == 'vertical' ? (2 * btnHeight + 7) : (options.redesign ? btnHeight : (type == 'full' ? btnHeight + 1 : btnHeight)),
             params = {
                 page: page || 0,
@@ -1470,6 +1471,8 @@ if (!VK.Widgets) {
             isOver = false,
             hideTimeout = null,
             obj, buttonIfr, buttonRpc, tooltipIfr, tooltipRpc, checkTO, statsBox;
+        if (options.type == 'button' || options.type == 'vertical' || options.type == 'mini') delete options.width;
+        if (autoWidth) params.auto_width = 1;
 
         function showTooltip(force) {
             if ((!isOver && !force) || !tooltipRpc) return;

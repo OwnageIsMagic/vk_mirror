@@ -2,6 +2,10 @@
     display: none
 }
 
+.public_help_steps_module .public_help_step_image {
+    -ms-high-contrast-adjust: none
+}
+
 .new_public_header {
     text-align: center;
     border-bottom: 1px solid #e7e8ec;

@@ -2,6 +2,17 @@
     display: none
 }
 
+.dev_home_link:before,
+.dev_method_page_access_row_icon,
+.dev_methods_list_access_group_icon,
+.dev_sect_icon,
+body.dev #page_wrap .big.selector_container td.selector_dropdown,
+body.dev #stl_text,
+body.dev .priv_h_arrow,
+body.dev input.dev_top_input {
+    -ms-high-contrast-adjust: none
+}
+
 body.dev {
     background: #edeef0
 }

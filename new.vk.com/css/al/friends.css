@@ -2,6 +2,31 @@
     display: none
 }
 
+.friends_actions_menu .friends_actions_icons,
+.friends_cur_filters .token .del_icon,
+.friends_find_user_add,
+.friends_find_user_remove,
+.friends_header_load_more a:after,
+.friends_import_box_icon,
+.friends_import_icon,
+.friends_more.load_more,
+.friends_more_icon,
+.friends_phonebook .friends_phonebook_alt_phone,
+.friends_phonebook .friends_phonebook_phone,
+.friends_phonebook .friends_phonebook_skype,
+.friends_phonebook .online:after,
+.friends_possible_add,
+.friends_possible_link,
+.friends_possible_remove,
+.friends_search_filters,
+.friends_search_import,
+.friends_sort_common,
+.friends_sort_date,
+.friends_user_row .online:after,
+.friends_wide_loading {
+    -ms-high-contrast-adjust: none
+}
+
 .friends_find_user_remove {
     -o-transition: opacity 0.15s ease;
     transition: opacity 0.15s ease

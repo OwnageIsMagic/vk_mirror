@@ -2,6 +2,17 @@
     display: none
 }
 
+.page_album_nocover,
+.page_album_title,
+.page_doc_row .page_doc_icon,
+.page_docs_preview .page_media_x_wrap .page_media_x,
+.page_market_album_nocover,
+.page_media_poll .page_poll_row.page_poll_voted:before,
+.page_pics_preview .page_media_x_wrap .page_media_x,
+.page_post_video_play_inline {
+    -ms-high-contrast-adjust: none
+}
+
 .page_docs_preview .page_media_x_wrap .page_media_x,
 .page_pics_preview .page_media_x_wrap .page_media_x {
     -o-transition: opacity 0.15s ease;

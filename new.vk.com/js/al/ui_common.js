@@ -156,6 +156,7 @@ var uiTabs = {
     },
     uiActionsMenu = {
         keyToggle: function(t, i) {
+            if (!checkKeyboardEvent(i)) return !1;
             var e = domClosest("_ui_menu_wrap", t);
             e && uiActionsMenu.toggle(e, !hasClass(e, "shown"))
         },

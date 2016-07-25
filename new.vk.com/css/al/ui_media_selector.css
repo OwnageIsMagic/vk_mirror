@@ -2,6 +2,11 @@
     display: none
 }
 
+.media_selector .ms_item:before,
+.media_selector .ms_item_more_label {
+    -ms-high-contrast-adjust: none
+}
+
 .media_selector .ms_item {
     position: relative;
     display: block;

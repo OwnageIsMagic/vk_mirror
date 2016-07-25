@@ -220,7 +220,7 @@ var Profile = {
             }, {
                 onDone: function(html, js) {
                     sh && (ge("page_actions_wrap") || (html && domPN(el)
-                        .insertBefore(se(html), el), eval(js)))
+                        .appendChild(se(html)), eval(js)))
                 },
                 cache: 1
             })

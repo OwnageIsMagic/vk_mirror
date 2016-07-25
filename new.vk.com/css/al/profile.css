@@ -2,6 +2,16 @@
     display: none
 }
 
+.gift_tt_hide:after,
+.gift_tt_show_all:after,
+.profile_gift_icon,
+.profile_gift_send_btn .send_thumb,
+.profile_photo_progress,
+.profile_warning_hide,
+.profile_warning_img {
+    -ms-high-contrast-adjust: none
+}
+
 .gift_tt_hide,
 .profile_warning_hide_wrap {
     -o-transition: opacity 0.15s ease;

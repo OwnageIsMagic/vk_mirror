@@ -1,3 +1,14 @@
+.media-check-btn-icon,
+.media-photo-thumb-background,
+.media-video-play,
+.media-video-thumb-background,
+.media-video-thumb-wrap-background,
+.videocat_channel_header .videocat_channel_icon,
+.videocat_channel_subscribe .videocat_subscribe_btn .videocat_icon,
+.videocat_row .videocat_row_slider_btn_icon {
+    -ms-high-contrast-adjust: none
+}
+
 .media-photo-thumb-background {
     background-repeat: no-repeat;
     background-size: cover;

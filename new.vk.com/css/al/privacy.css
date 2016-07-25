@@ -2,6 +2,17 @@
     display: none
 }
 
+.flist_item_action,
+.flist_sel_list .flist_item_action,
+.privacy_dropdown .header .header_label:after,
+.privacy_dropdown .item_sel_plus:after,
+.privacy_dropdown .l_header:after,
+.privacy_dropdown .l_item_sel,
+.privacy_locked,
+.privacy_locked .privacy_dropdown .header .header_label {
+    -ms-high-contrast-adjust: none
+}
+
 .privacy_edit_wrap {
     position: relative;
     display: inline-block;

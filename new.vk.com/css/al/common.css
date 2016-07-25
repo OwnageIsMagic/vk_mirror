@@ -2,6 +2,79 @@
     display: none
 }
 
+#box_loader .loader,
+#layer_stl_text,
+#side_bar .left_icon,
+#stl_text,
+.audio_add,
+.audio_hq_label_show .audio_row.hq .audio_hq_label,
+.audio_play,
+.audio_row .audio_acts .audio_act>div,
+.audio_search_rows .audio_row.hq .audio_hq_label,
+.box_body.box_loading .box_x_button,
+.box_body.box_loading_empty:before,
+.box_grey .box_title .back,
+.box_loading .box_x_button,
+.box_title .back,
+.box_title .security,
+.box_title_wrap.box_grey.box_loading .box_x_button,
+.box_title_wrap.box_grey .box_x_button,
+.box_x_button,
+.box_x_button.box_x_tabs,
+.button_gray .button_lock,
+.button_lock,
+.checkbox:before,
+.emoji_css,
+.error,
+.event:after,
+.flat_button.flat_button_loading:before,
+.flat_button.secondary.flat_button_loading:before,
+.flat_button.ui_load_more_btn.with_arrow:after,
+.hide_icon,
+.hint_icon:after,
+.info_msg,
+.left_hide_button,
+.left_settings_inner,
+.link_arrowed_bottom,
+.media-check-btn-icon,
+.media-photo-thumb-background,
+.media-video-play,
+.media-video-thumb-background,
+.media-video-thumb-wrap-background,
+.media_check_btn_wrap .media_check_btn,
+.mob_onl,
+.ok_msg,
+.online:after,
+.ow_ava,
+.page_verified,
+.pages_loading,
+.progress,
+.progress_inline,
+.progress_inv,
+.progress_inv_img,
+.progress_inv_mini,
+.radiobtn:before,
+.round_spinner,
+.round_spinner_big,
+.sort_not_rev_icon,
+.sort_rev_icon,
+.summary_tab_x,
+.top_audio_player .top_audio_player_btn>div,
+.top_home_link .top_home_logo,
+.top_nav_btn .top_nav_btn_icon,
+.top_profile_arrow,
+.ts_cont_wrap .page_verified,
+.ts_contact_photo.online:after,
+.ts_contact_status,
+.upload_progress,
+.video_thumb_play,
+.video_wm,
+.wk_wiki_content.box_loading .box_x_button,
+.wk_wiki_content.box_loading_empty:before,
+input.text.ts_input {
+    -ms-high-contrast-adjust: none
+}
+
 .audio_add_wrap,
 .left_settings,
 .left_settings_inner {
@@ -3098,7 +3171,8 @@ body.mac #layer_stl .fixed {
     width: 24px;
     height: 24px;
     border-radius: 50%;
-    background: #577ca1 url(/images/icons/audio_playpause.png) no-repeat 8px 7px
+    background: #577ca1 url(/images/icons/audio_playpause.png) no-repeat 8px 7px;
+    outline: none
 }
 
 .audio_play.playing,
@@ -5666,7 +5740,8 @@ button.ui_load_more_btn {
 .audio_row .audio_performer,
 .audio_row .audio_title {
     height: 1.25em;
-    vertical-align: top
+    vertical-align: top;
+    outline: none
 }
 
 .audio_row .audio_performer em,
@@ -5694,7 +5769,8 @@ button.ui_load_more_btn {
 }
 
 .audio_row .audio_duration {
-    display: inline-block
+    display: inline-block;
+    vertical-align: top
 }
 
 .audio_row.audio_row_current .audio_duration {
@@ -5703,6 +5779,10 @@ button.ui_load_more_btn {
 
 .audio_row .audio_info_divider {
     padding: 0 5px
+}
+
+.audio_row .audio_title_inner {
+    outline: none
 }
 
 .audio_row.lyrics .audio_title_inner {
@@ -5862,6 +5942,14 @@ button.ui_load_more_btn {
 
 .audio_row .audio_row_current .audio_hq_label {
     opacity: 0.5
+}
+
+.audio_row .audio_act_hidden {
+    width: 1px;
+    height: 1px;
+    display: none;
+    position: absolute;
+    outline: none
 }
 
 .top_audio_layer .audio_author {

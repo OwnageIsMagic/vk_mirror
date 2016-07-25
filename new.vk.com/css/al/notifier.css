@@ -2,6 +2,28 @@
     display: none
 }
 
+.chat_onl:after,
+.chat_tab_close:after,
+.chat_tab_imgcont.online:after,
+.chats_sp,
+.emoji_smile_icon,
+.emoji_sprite,
+.fc_chronicle_icon,
+.fc_contact_over:hover .fc_contact_status,
+.fc_msg_att_icon_doc,
+.fc_msg_att_icon_mail,
+.fc_msg_att_icon_wall,
+.fc_snapster_invite_cover,
+.fc_snapster_invite_ic,
+.fc_snapster_invite_ic_ios,
+.fc_tab_attach .media_selector .ms_item_more,
+.notifier_close,
+.notify_tt_thumb,
+.sticker_hints_arrow,
+span.fc_contact_photo.online:after {
+    -ms-high-contrast-adjust: none
+}
+
 .chat_tab_close,
 .chat_tab_close:after,
 .fc_tab_close,
@@ -100,6 +122,10 @@ span.fc_contact_photo.online.mobile:after {
 
 .notifier_type_app_notify .notifier_image {
     border-radius: 2px
+}
+
+.notifier_type_ach_achieved .notifier_image {
+    border-radius: 0
 }
 
 .notifier_add_image_wrap {

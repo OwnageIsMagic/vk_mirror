@@ -253,11 +253,11 @@ var Feed = {
                 break;
             case "del_post":
                 if (i) {
-                    cur.wallMyDeleted[r] || (feed.needScrollPost(t, i) && (c -= i.offsetHeight + intval(getStyle(domByClass(i, "page_block"), "marginTop"))),
-                        revertLastInlineVideo(i), hide(i)), cur.options.offset--;
                     var H = i.parentNode;
-                    hasClass(H, "feed_row") || (H = H.parentNode), hasClass(cur.feedEls.wrap, "feed_has_new") && !isVisible(H) && (cur.newPostsCount--, cur.newPostsCount ?
-                        cur.feedEls.newPosts.innerHTML = getLang("news_new_posts", cur.newPostsCount) : removeClass(cur.feedEls.wrap, "feed_has_new"))
+                    hasClass(H, "feed_row") || (H = H.parentNode), cur.wallMyDeleted[r] || (feed.needScrollPost(t, i) && (c -= i.offsetHeight + intval(getStyle(domByClass(
+                            i, "page_block"), "marginTop"))), revertLastInlineVideo(i), re(H)), cur.options.offset--, hasClass(cur.feedEls.wrap, "feed_has_new") && !
+                        isVisible(H) && (cur.newPostsCount--, cur.newPostsCount ? cur.feedEls.newPosts.innerHTML = getLang("news_new_posts", cur.newPostsCount) :
+                            removeClass(cur.feedEls.wrap, "feed_has_new"))
                 }
                 break;
             case "res_post":

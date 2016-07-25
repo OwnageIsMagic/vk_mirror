@@ -1,3 +1,24 @@
+#mv_external_finish .mv_finish_icon,
+#mv_min_layer .mv_mini_control .mv_close_control,
+#mv_min_layer .mv_mini_control .mv_max_control,
+#mv_pl_tt .mv_tt_add_playlist .mv_tt_plus_icon,
+#mv_pl_tt .mv_tt_playlist_private_icon,
+.mv_add_button .mv_add_icon,
+.mv_close_icon,
+.mv_delete_button .mv_delete_icon,
+.mv_edit_button .mv_edit_icon,
+.mv_in_moder,
+.mv_like_icon,
+.mv_minimize_icon,
+.mv_monetized,
+.mv_pl_toggle_icon,
+.mv_playlist_controls .mv_playlist_controls_icon,
+.mv_share_button .mv_share_icon,
+.video_plb_wrap .video_plb_header .video_plb_header_autoplay_icon,
+.video_plb_wrap .video_plb_header .video_plb_header_reverse_icon {
+    -ms-high-contrast-adjust: none
+}
+
 #videoview_css {
     display: none
 }

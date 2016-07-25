@@ -1,3 +1,16 @@
+.group_box_extra .info_icon_email,
+.group_box_extra .info_icon_phone,
+.group_box_row .group_box_delete,
+.group_box_row .group_box_edit,
+.group_box_row .group_box_progress,
+.group_contact_image_wrap,
+.group_contacts_list .group_box_image_wrap,
+.group_places_list .group_box_image_wrap,
+.groups_actions_menu .groups_actions_icons,
+a.groups_messages_block:before {
+    -ms-high-contrast-adjust: none
+}
+
 #groups_css {
     display: none
 }

@@ -2,6 +2,15 @@
     display: none
 }
 
+.media-check-btn-icon,
+.media-photo-thumb-background,
+.media-video-play,
+.media-video-thumb-background,
+.media-video-thumb-wrap-background,
+.photos_upload_area_enter.photos_upload_area_drop .photos_upload_area_drop_text>div {
+    -ms-high-contrast-adjust: none
+}
+
 .media-photo-thumb-background {
     background-repeat: no-repeat;
     background-size: cover;

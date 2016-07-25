@@ -2,6 +2,41 @@
     display: none
 }
 
+#photos_albums_container .photo_row .img_link.no_photo,
+#photos_box_edit_data .photos_thumb_preview,
+#photos_box_edit_data .photos_thumb_preview.photos_album_no_cover,
+#pv_move_to_album_cont .photos_album_thumb:before,
+.album_thumb_action,
+.media-check-btn-icon,
+.media-photo-thumb-background,
+.media-video-play,
+.media-video-thumb-background,
+.media-video-thumb-wrap-background,
+.photo_not_rev_icon,
+.photo_rev_icon,
+.photos_album_reverse_btn .photos_album_reverse_icon,
+.photos_choose_album_link.no_photo,
+.photos_choose_more.photos_choose_more_loading,
+.photos_choose_row .photo_row_img,
+.photos_choose_upload_area_drop_label,
+.photos_choose_upload_area_label,
+.photos_container .photos_row,
+.photos_container_albums .photos_album_no_cover .photos_album_privacy,
+.photos_container_albums .photos_album_no_cover .photos_album_thumb,
+.photos_container_albums .photos_album_privacy,
+.photos_container_albums .photos_album_thumb,
+.photos_container_albums .photos_album_title_wrap,
+.photos_container_edit_grid .photos_photo_edit_row_selector .photos_photo_edit_row_selector_icon,
+.photos_container_edit_grid .photos_photo_edit_row_thumb,
+.photos_edit_actions .icon,
+.photos_edit_album .photos_thumb_preview,
+.photos_edit_album .photos_thumb_preview.photos_album_no_cover,
+.photos_row.photos_photo_small,
+.photos_small_photo .photos_album_thumb,
+.web_cam_photo_icon {
+    -ms-high-contrast-adjust: none
+}
+
 .media-photo-thumb-background {
     background-repeat: no-repeat;
     background-size: cover;

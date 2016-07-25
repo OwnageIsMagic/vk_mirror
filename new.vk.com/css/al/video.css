@@ -1,3 +1,23 @@
+#video_playlists_edit_box .pl_private,
+#video_sort_progress,
+.media-check-btn-icon,
+.media-photo-thumb-background,
+.media-video-play,
+.media-video-thumb-background,
+.media-video-thumb-wrap-background,
+.video_empty_placeholder,
+.video_item .media_check_btn,
+.video_item .video_item_thumb,
+.video_item .video_item_thumb_wrap,
+.video_item_private,
+.video_playlist_item .video_drag_over_placeholder div,
+.video_playlist_item .video_playlist_item_thumb,
+.video_playlist_item .video_playlist_item_thumb_wrap,
+.video_thumb_actions .icon,
+.video_thumb_video {
+    -ms-high-contrast-adjust: none
+}
+
 .media-photo-thumb-background {
     background-repeat: no-repeat;
     background-size: cover;
