@@ -915,7 +915,8 @@ x:-moz-any-link {
     margin: 0;
     padding: 0;
     line-height: 1em;
-    display: inline-block
+    display: inline-block;
+    outline: none
 }
 
 .idd_wrap .idd_selected_value:hover {

@@ -771,6 +771,7 @@ input.ui_search_field~.placeholder .ph_input {
 
 input.ui_search_field {
     background: url(/images/search_icon.png) no-repeat;
+    -ms-high-contrast-adjust: auto;
     padding-left: 28px;
     border-left: 20px solid transparent;
     background-position: 0;
@@ -971,6 +972,7 @@ a.ui_search_custom_link {
     font-size: 12.5px;
     display: block;
     background: url(/images/icons/profile_arrow.png) no-repeat;
+    -ms-high-contrast-adjust: auto;
     background-position: right 21px
 }
 

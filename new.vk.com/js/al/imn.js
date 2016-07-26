@@ -7737,79 +7737,79 @@
         }
     }
 
-    function g(e, t, n, r, a) {
-        var i = domData(a, "action"),
-            s = geByClass1(I)
+    function g(e, t, n, r, a, i) {
+        var s = domData(i, "action"),
+            o = geByClass1(I, r)
             .parentNode,
-            o = e.get()
+            l = e.get()
             .peer;
-        switch (i) {
+        switch (s) {
             case "clear":
-                var l = (0, y.showFlushDialog)(o, function(n) {
-                    (0, y.cleanHistory)(e, l, t, b.flushHistory, e.get()
+                var u = (0, y.showFlushDialog)(l, function(n) {
+                    (0, y.cleanHistory)(e, u, t, b.flushHistory, e.get()
                         .peer)
                 });
                 break;
             case "media":
                 showWiki({
-                    w: "history" + (0, y.convertPeerToUrl)(o) + "_photo"
+                    w: "history" + (0, y.convertPeerToUrl)(l) + "_photo"
                 });
                 break;
             case "topic":
-                d(e, o, t);
+                d(e, l, t);
                 break;
             case "avatar":
-                cur.recieveCropResult = void 0, Page.ownerPhoto(o);
+                cur.recieveCropResult = void 0, Page.ownerPhoto(l);
                 break;
             case "search":
                 t()
                     .showSearch(e);
                 break;
             case "block":
-                var l = (0, y.showBlacklistBox)(o, e);
-                l.once("success", function(t) {
+                var u = (0, y.showBlacklistBox)(l, e);
+                u.once("success", function(t) {
                     t.delta && (showDoneBox(t.msg), e.get()
                         .longpoll.push([(0, E.resetPeer)()]))
                 });
                 break;
             case "leave":
-                var l = showFastBox({
+                var u = showFastBox({
                     title: getLang("mail_chat_leave_title"),
                     dark: 1,
                     bodyStyle: "padding: 20px; line-height: 160%;"
                 }, getLang("mail_chat_leave_confirm"), getLang("mail_leave_chat"), function() {
-                    e.set(b.leaveChat.bind(null, o)), l.hide(), e.get()
+                    e.set(b.leaveChat.bind(null, l)), u.hide(), e.get()
                         .longpoll.push([(0, E.resetPeer)()])
                 }, getLang("global_cancel"), function() {
-                    l.hide()
+                    u.hide()
                 });
                 break;
             case "return":
-                e.set(b.returnToChat.bind(null, o));
+                e.set(b.returnToChat.bind(null, l));
                 break;
             case "unmute":
             case "mute":
-                var u = "mute" === i ? 1 : 0;
-                e.set(b.toggleMutePeer.bind(null, o, u))
+                var c = "mute" === s ? 1 : 0;
+                e.set(b.toggleMutePeer.bind(null, l, c))
                     .then(t()
-                        .updateState.bind(null, o));
+                        .updateState.bind(null, l));
                 break;
             case "invite":
-                if ((0, y.isChatPeer)(o))(0, y.inviteUser)(e, o, t, b.setCreationType);
-                else if ((0, y.isUserPeer)(o)) {
-                    var c = e.get()
-                        .tabs[o],
-                        g = [
-                            [o, c.tab]
+                if ((0, y.isChatPeer)(l))(0, y.inviteUser)(e, l, t, b.setCreationType);
+                else if ((0, y.isUserPeer)(l)) {
+                    var g = e.get()
+                        .tabs[l],
+                        f = [
+                            [l, g.tab]
                         ];
                     e.set(b.setCreationType.bind(null, "chat", []))
                         .then(function(n) {
                             return t()
-                                .showCreation(e, g)
+                                .showCreation(e, f)
                         })
                 }
         }
-        uiActionsMenu.toggle(s, !1)
+        uiActionsMenu.toggle(o, !1)
     }
 
     function f(e, t, n) {
@@ -7914,7 +7914,7 @@
             a = r.callMutations,
             s = r.bindMutations,
             o = u.bind(null, t, n, a),
-            l = g.bind(null, t, n, a),
+            l = g.bind(null, t, n, a, e),
             c = y.showChatMembers.bind(null, t, n, b.setCreationType),
             d = f.bind(null, t, n, a),
             v = function(e, n) {
@@ -7949,7 +7949,7 @@
         w = "_im_action",
         S = "_im_page_peer_name",
         k = "_im_page_peer_online",
-        I = "_im_dialog_actions_items",
+        I = "_ui_menu",
         P = "_im_dialog_action_wrapper",
         L = "_im_mess_actions",
         A = "_im_page_action",
@@ -7957,7 +7957,7 @@
         M = "_im_chat_members",
         x = "_im_chat_verified",
         O = "_im_peer_mute",
-        B = '<a class="ui_actions_menu_item ' + w + ' im-action im-action_%icon%" data-action="%icon%">%name%</a>'
+        B = '<a tabindex="0" role="link" class="ui_actions_menu_item ' + w + ' im-action im-action_%icon%" data-action="%icon%">%name%</a>'
 }, function(e, t, n) {
     "use strict";
 
@@ -11019,9 +11019,8 @@
             function B(e, t, n, r) {
                 var a, i, s, l, u = o(n);
                 if (u) {
-                    if (a = O(n, r), a === ce ? (l = !0, i = a.error, a = null) : s = !0, t === a) return void A(t, E())
-                } else a = r,
-                    s = !0;
+                    if (a = O(n, r), a === ce ? (l = !0, i = a.error, a = null) : s = !0, t === a) return void A(t, E());
+                } else a = r, s = !0;
                 t._state !== se || (u && s ? I(t, a) : l ? A(t, i) : e === oe ? L(t, a) : e === le && A(t, a))
             }
 

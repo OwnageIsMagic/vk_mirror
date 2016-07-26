@@ -663,15 +663,23 @@
 }
 
 .profile_deleted_text {
-    text-align: center;
     color: #656565;
     padding: 50px 0 40px;
-    line-height: 165%
+    line-height: 165%;
+    font-size: 13px;
+    margin: 0
+}
+
+.profile_deleted_text,
+.profile_blocked {
+    text-align: center;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
 .profile_blocked {
     padding: 70px 130px 64px;
-    text-align: center;
     font-size: 14px;
     line-height: 160%
 }
