@@ -646,10 +646,10 @@ var Settings = {
     OTPAuthClearTrusted: function(e, t, s) {
         function o() {
             if (!t && cur.options.otp_reset_hash) return cur.onReLoginDoneCallback = function() {
-                    ge("settings_reset_sessions_link")
-                        .parentNode.innerHTML = '<div class="settings_labeled_notice">' + getLang("setting_all_sessions_reset") + "</div>"
-                }, Settings.resetAllSessions(e, '<input name="otp_reset_hash" value="' + cur.options.otp_reset_hash + '" type="hidden" />', e.getAttribute("complete")),
-                void(n && n.hide());
+                ge("settings_reset_sessions_link")
+                    .parentNode.innerHTML = '<div class="settings_labeled_notice">' + getLang("setting_all_sessions_reset") + "</div>"
+            }, Settings.resetAllSessions(e, '<input name="otp_reset_hash" value="' + cur.options.otp_reset_hash + '" type="hidden" />', e.getAttribute("complete"),
+                cur.options.logout_hash), void(n && n.hide());
             var o = ce("img", {
                     src: "/images/upload" + (window.devicePixelRatio >= 2 ? "_2x" : "") + ".gif"
                 }, {
@@ -846,34 +846,34 @@ var Settings = {
         })
     },
     reset_sessions: !1,
-    resetAllSessions: function(e, t, s) {
+    resetAllSessions: function(e, t, s, o) {
         if (Settings.reset_sessions) return !1;
         Settings.reset_sessions = !0;
-        var o = bodyNode.appendChild(ce("div", {
+        var n = bodyNode.appendChild(ce("div", {
                 innerHTML: '<form action="' + vk.loginscheme + '://login.vk.com/" method="POST" target="reset_sessions_frame">  <input name="_origin" value="' + (
                         locProtocol + "//" + locHost) + '" type="hidden" />  <input name="role" value="al_frame" type="hidden" />  <input name="ip_h" value="' + vk
                     .ip_h + '" type="hidden" />  <input name="reset_hash" value="' + cur.options.reset_hash + '" type="hidden" />' + t +
                     '</form><iframe class="upload_frame" name="reset_sessions_frame"></iframe>'
             })),
-            n = o.firstChild,
-            i = n.nextSibling,
-            a = ce("img", {
+            i = n.firstChild,
+            a = i.nextSibling,
+            r = ce("img", {
                 src: "/images/upload" + (window.devicePixelRatio >= 2 ? "_2x" : "") + ".gif"
             }, {
                 width: 32
             });
         return window.onReLoginDone = function() {
                 try {
-                    var t = i.contentWindow.location.href;
-                    if (t.match(/&hash=/) && !t.match(/&hash=[a-z0-9]+/)) return location.href = base_domain + "login.php?op=logout", !1;
-                    re(o)
-                } catch (n) {
+                    var t = a.contentWindow.location.href;
+                    if (t.match(/&hash=/) && !t.match(/&hash=[a-z0-9]+/)) return location.href = base_domain + "login.php?op=logout&hash=" + o, !1;
+                    re(n)
+                } catch (i) {
                     return
                 }
-                e ? e !== !0 && a.parentNode.replaceChild(ce("div", {
+                e ? e !== !0 && r.parentNode.replaceChild(ce("div", {
                     className: "settings_labeled_notice",
                     innerHTML: s ? s : getLang("setting_all_sessions_reset")
-                }), a) : (box = curBox(), box && (box.hideProgress(), box.setControlsText(getLang("setting_all_sessions_reset"))), j = 0, each(ge("activity_history")
+                }), r) : (box = curBox(), box && (box.hideProgress(), box.setControlsText(getLang("setting_all_sessions_reset"))), j = 0, each(ge("activity_history")
                     .lastChild.childNodes,
                     function(e, t) {
                         if (1 == t.nodeType) {
@@ -885,8 +885,8 @@ var Settings = {
                             j++
                         }
                     })), isFunction(cur.onReLoginDoneCallback) && cur.onReLoginDoneCallback()
-            }, e ? e !== !0 && e.parentNode.replaceChild(a, e) : curBox()
-            .showProgress(), n.submit(), !1
+            }, e ? e !== !0 && e.parentNode.replaceChild(r, e) : curBox()
+            .showProgress(), i.submit(), !1
     },
     showUserClientTT: function(e, t) {
         var s = "";
@@ -1171,7 +1171,8 @@ var Settings = {
                 s = cur.appsList[cur.curList] || [],
                 o = s.length;
             if (s = this.filterApps(s.slice(cur.shownApps))
-                .slice(0, cur.defaultCount), s.length && cur.appTpl) {
+                .slice(0, cur.defaultCount),
+                s.length && cur.appTpl) {
                 var n = [];
                 each(s, function(e, t) {
                     t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), n.push(cur.appTpl(t, e == s.length - 1, !1))

@@ -318,7 +318,7 @@
                 case "criteo":
                     return AdsLight.sendExperimentStat(a, "lineup"), AdsLight.tryRenderCriteo(a, e.slice(t + 1)), !0;
                 case "rb":
-                    return AdsLight.sendExperimentStat(a, "lineup"), AdsLight.tryRenderTarget(d[0], a, e.slice(t + 1)), !0;
+                    return AdsLight.sendExperimentStat(a, "lineup"), AdsLight.tryRenderTarget(d[0], d[1], a, e.slice(t + 1)), !0;
                 case "vk":
                     AdsLight.sendExperimentStat(a, "lineup"), AdsLight.sendExperimentStat(a, "try");
                     var o = vk__adsLight.adsParams;
@@ -821,7 +821,7 @@
         }
         var d, o = "__rb" + (new Date)
             .getTime(),
-            n = "13270",
+            n = i.slot_id,
             r = "https://ad.mail.ru/adq/?callback=" + o + "&q%5B%5D=" + n + "%3Fn%3D" + encodeURIComponent(e),
             l = {},
             h = 5e3;
@@ -829,19 +829,21 @@
         var _;
         for (_ in l) r += "&" + _ + "=" + l[_];
         return a(r, t, s), o
-    }, AdsLight.tryRenderTarget = function(e, t, s) {
-        var i = {};
-        e && (i.test_id = e), window.vk && vk.id && (i.vk_id = vk.id), AdsLight.sendExperimentStat(t, "try");
-        var a = !1,
-            d = setTimeout(function() {
-                AdsLight.sendExperimentStat(t, "noresult"), a && window[a] && (window[a] = function() {}), AdsLight.tryExperiment(s)
+    }, AdsLight.tryRenderTarget = function(e, t, s, i) {
+        var a = {
+            slot_id: t
+        };
+        e && (a.test_id = e), window.vk && vk.id && (a.vk_id = vk.id), AdsLight.sendExperimentStat(s, "try");
+        var d = !1,
+            o = setTimeout(function() {
+                AdsLight.sendExperimentStat(s, "noresult"), d && window[d] && (window[d] = function() {}), AdsLight.tryExperiment(i)
             }, 6e3);
         stManager.add(["mrtarg.js", "mrtarg.css"], function() {
-            a = AdsLight.getRBAds("ads_left", function() {
-                clearTimeout(d), AdsLight.sendExperimentStat(t, "success"), window.RB && window.RB.doCheck && window.RB.doCheck()
+            d = AdsLight.getRBAds("ads_left", function() {
+                clearTimeout(o), AdsLight.sendExperimentStat(s, "success"), window.RB && window.RB.doCheck && window.RB.doCheck()
             }, function(e) {
-                clearTimeout(d), AdsLight.sendExperimentStat(t, "fail"), AdsLight.tryExperiment(s)
-            }, i)
+                clearTimeout(o), AdsLight.sendExperimentStat(s, "fail"), AdsLight.tryExperiment(i)
+            }, a)
         })
     }, AdsLight.init()
 }();
