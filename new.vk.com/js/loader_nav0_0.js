@@ -209,7 +209,7 @@ var stVersions = {
     'module.css': 1120627851,
     'owner_photo.js': 777617564,
     'owner_photo.css': 628686323,
-    'page.js': 864133087,
+    'page.js': 3197416601,
     'page.css': 3473916011,
     'page_help.css': 40887916,
     'public.css': 792068511,
@@ -321,10 +321,10 @@ var stVersions = {
     'tasks.css': 2970006707,
     'helpdesk.js': 3156559970,
     'tickets.js': 2175749834,
-    'tickets.css': 462538990,
+    'tickets.css': 4179225901,
     'faq.js': 743323881,
     'faq.css': 431238845,
-    'meminfo.css': 2969290417,
+    'meminfo.css': 1544803540,
     'groupinfo.css': 2377869286,
     'bugs.js': 2994463564,
     'bugs.css': 444001557,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 8959;
+var _rnd = 6060;
