@@ -1268,6 +1268,10 @@ button.flat_btn_lock {
     padding-right: 13px
 }
 
+.flat_button.button_indent+.flat_button {
+    margin-left: 10px
+}
+
 .button_cancel {
     cursor: pointer;
     width: auto;
@@ -1461,7 +1465,8 @@ body.mac #page_header_cont {
     width: 1px;
     clip: rect(1px, 1px, 1px, 1px);
     opacity: 0;
-    overflow: hidden
+    overflow: hidden;
+    outline: none
 }
 
 .top_notify_count {
@@ -5621,6 +5626,13 @@ button.ui_load_more_btn {
     transition: opacity 190ms ease, top 300ms ease
 }
 
+.audio_act_hidden {
+    width: 1px;
+    height: 1px;
+    position: absolute;
+    outline: none
+}
+
 .audio_row {
     padding: 6px 10px;
     cursor: pointer;
@@ -5944,14 +5956,7 @@ button.ui_load_more_btn {
     opacity: 0.5
 }
 
-.audio_row .audio_act_hidden {
-    width: 1px;
-    height: 1px;
-    display: none;
-    position: absolute;
-    outline: none
-}
-
+.audio_row .audio_act_hidden,
 .top_audio_layer .audio_author {
     display: none
 }

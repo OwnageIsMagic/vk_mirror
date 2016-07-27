@@ -3623,7 +3623,8 @@ div.submit_post_field[contenteditable=true]>p {
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none
+    user-select: none;
+    outline: none
 }
 
 .checkbox_official .thumb_off,

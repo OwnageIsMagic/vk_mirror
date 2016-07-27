@@ -118,7 +118,7 @@ var stVersions = {
     'nav': 0,
     'fonts_cnt.css': 2157913508,
     'common.js': 1133,
-    'common.css': 2847818022,
+    'common.css': 3025237924,
     'pads.js': 1601311133,
     'pads.css': 1843379990,
     'retina.css': 1820592869,
@@ -137,11 +137,11 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 521186648,
-    'audioplayer.js': 3781597949,
+    'audioplayer.js': 1233807546,
     'audioplayer.css': 701892504,
     'audio_html5.js': 3586987067,
-    'audio.js': 441283941,
-    'audio.css': 3825178568,
+    'audio.js': 1187520708,
+    'audio.css': 397656768,
     'gifts.css': 874256717,
     'gifts.js': 2778120873,
     'cc.js': 4037201610,
@@ -165,7 +165,7 @@ var stVersions = {
     'friendsphotos.js': 3869757571,
     'friendsphotos.css': 3816436303,
     'spe.js': 1662488390,
-    'friends.js': 2417456129,
+    'friends.js': 3131909692,
     'friends.css': 3014235827,
     'friends_search.js': 1498932479,
     'friends_search.css': 204916655,
@@ -209,8 +209,8 @@ var stVersions = {
     'module.css': 1120627851,
     'owner_photo.js': 777617564,
     'owner_photo.css': 628686323,
-    'page.js': 2985985932,
-    'page.css': 4218303054,
+    'page.js': 864133087,
+    'page.css': 3473916011,
     'page_help.css': 40887916,
     'public.css': 792068511,
     'public.js': 1370745423,
@@ -241,7 +241,7 @@ var stVersions = {
     'mail.js': 4232525143,
     'email.css': 3625468312,
     'im.css': 1278975070,
-    'imn.js': 3988868719,
+    'imn.js': 3314178221,
     'im.js': 6705744,
     'emoji.js': 1702836788,
     'wide_dd.css': 2849633119,
@@ -258,12 +258,12 @@ var stVersions = {
     'privacy.css': 3960111354,
     'apps.css': 910401414,
     'apps.js': 276417409,
-    'apps_edit.js': 807186031,
+    'apps_edit.js': 1555297064,
     'apps_edit.css': 2775945249,
-    'apps_check.js': 698434188,
-    'apps_check.css': 99682381,
+    'apps_check.js': 2946422271,
+    'apps_check.css': 2571624291,
     'settings.js': 2412917648,
-    'settings.css': 2243755692,
+    'settings.css': 1658820390,
     'profile_edit.js': 277721666,
     'profile_edit.css': 3505852501,
     'profile_edit_edu.js': 2317370921,
@@ -398,7 +398,7 @@ var stVersions = {
     'ui.css': 993252443,
     'ui.js': 3425210242,
     'ui_common.js': 3762801915,
-    'ui_common.css': 1786589840,
+    'ui_common.css': 469306915,
     'ui_media_selector.js': 678241831,
     'ui_media_selector.css': 3438437909,
     'admin.js': 1614876408,
@@ -421,7 +421,7 @@ var stVersions = {
     'landings/smartfeed.css': 1217150838,
     'landings/job38.css': 257596551,
     'vkme.css': 308089377,
-    'ui_controls.js': 2606284432,
+    'ui_controls.js': 2560074767,
     'highcharts.js': 607702664,
     'ui_controls.css': 3443277744,
     'selects.js': 1852657841,
@@ -466,7 +466,7 @@ var stVersions = {
     'snapster/notifier.js': 2711093753,
     'snapster/snapster_ui.css': 1171299641,
     'favicon': 5,
-    'lang': 6732
+    'lang': 6733
 };
 var stTypes = {
     fromLib: {
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 6134;
+var _rnd = 8959;

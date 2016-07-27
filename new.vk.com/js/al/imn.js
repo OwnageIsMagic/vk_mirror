@@ -3258,7 +3258,8 @@
                         name: e.tab,
                         photo: e.photo,
                         lastmsg: e.lastmsg,
-                        online: e.online
+                        online: e.online,
+                        is_friend: "friends" === n ? !0 : !1
                     }
                 })
             })
@@ -4560,7 +4561,8 @@
         E = n(78),
         C = n(79),
         T = n(80),
-        w = (t.eventTypes = y, 202),
+        w = (t.eventTypes = y,
+            202),
         S = 4
 }, function(e, t) {
     "use strict";
@@ -9480,7 +9482,7 @@
                     dir: "up",
                     shift: [0, 8]
                 })
-            }), addEvent(r, "mousedown", _), addEvent(r, "mouseover", y), addEvent(geByClass1(w, e), "click", v), (0, b.isClassicInterface)(t)) {
+            }), addEvent(r, "click", _), addEvent(r, "mouseover", y), addEvent(geByClass1(w, e), "click", v), (0, b.isClassicInterface)(t)) {
             var C = f.bind(null, t, !0),
                 T = m.bind(null, t),
                 k = geByClass1(S, e);
@@ -10167,7 +10169,7 @@
                         return l.addSelection(e[0], e[1])
                     }), f(e, r, o, t), setTimeout(function() {
                         t.get()
-                            .longpoll.push([(0, M.transitionEvent)("create")]), l.focus()
+                            .longpoll.push([(0, M.transitionEvent)("create")]), attr(e, "aria-hidden", "false"), l.focus()
                     }, 1)
             },
             focusSearch: function(e) {
@@ -10178,7 +10180,7 @@
             },
             hide: function(n) {
                 n.get()
-                    .showed = !1, a(n, e, t, !1, l, o)
+                    .showed = !1, attr(e, "aria-hidden", "true"), a(n, e, t, !1, l, o)
             },
             updateScroll: function() {
                 (0, I.fixTableCellChildHeight)("_im_create_wrap_safe", e), r.updateScroll()
@@ -11019,7 +11021,7 @@
             function B(e, t, n, r) {
                 var a, i, s, l, u = o(n);
                 if (u) {
-                    if (a = O(n, r), a === ce ? (l = !0, i = a.error, a = null) : s = !0, t === a) return void A(t, E());
+                    if (a = O(n, r), a === ce ? (l = !0, i = a.error, a = null) : s = !0, t === a) return void A(t, E())
                 } else a = r, s = !0;
                 t._state !== se || (u && s ? I(t, a) : l ? A(t, i) : e === oe ? L(t, a) : e === le && A(t, a))
             }

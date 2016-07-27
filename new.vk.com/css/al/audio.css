@@ -120,7 +120,8 @@
 }
 
 .audio_page_player .audio_page_player_ctrl {
-    float: left
+    float: left;
+    outline: none
 }
 
 .audio_page_player .audio_page_player_ctrl.audio_page_player_btns {

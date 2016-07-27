@@ -1075,7 +1075,7 @@ extend(UiControl.prototype, {
             r = t.length;
         for (e = 0; r > e; ++e) i = t[e], s = i[0], o = i[1], n = i[2], h = this.uid + ", " + e, s = void 0 === s || null === s ? "" : s.toString(), o = (void 0 === o ||
             null === o ? "" : o.toString()) || s, l.push("<li ", n ? 'dis="1"' : 'onmousemove="Select.itemMouseMove(' + h +
-            ', this)" onmousedown="Select.itemMouseDown(' + h + ', this)"', ' val="', s.replace(/&/g, "&amp;")
+            ', this)" onmousedown="Select.itemMouseDown(' + h + ', this)" onclick="Select.itemMouseDown(' + h + ', this)"', ' val="', s.replace(/&/g, "&amp;")
             .replace(/"/g, "&quot;"), '" class="', n ? "disabled " : "", e == r - 1 ? this.CSS.LAST + " " : "", (e ? "" : this.CSS.FIRST) + '">', o, "</li>");
         return this.list.innerHTML = l.join(""), this.updateContainer(), !0
     },
@@ -1770,9 +1770,9 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
                     .replace("{yeslabel}", this.options.confirmLabel) + "</table>") + "</table>"
             }), this.mainTable = geByClass("inlMainTable", this.container)[0], this.mainCell = geByClass("inlContent", this.mainTable)[0], this.contentTable =
             geByClass("inlContentTable", this.mainCell)[0], setStyle(this.contentTable, "width", this.options.width), this.input = geByClass("inlInput", this.contentTable)[
-                0], this.buttonOkCell = geByClass("inlButtonOk", this.contentTable)[0], this.buttonCancelCell = geByClass("inlButtonCancel", this.contentTable)[0],
-            this.buttonOk = this.buttonOkCell.firstChild.firstChild, this.buttonCancel = this.buttonCancelCell.firstChild.firstChild, this.container.appendChild(this.mainTable),
-            this.mainCell.appendChild(this.contentTable)
+                0], this.buttonOkCell = geByClass("inlButtonOk", this.contentTable)[0],
+            this.buttonCancelCell = geByClass("inlButtonCancel", this.contentTable)[0], this.buttonOk = this.buttonOkCell.firstChild.firstChild, this.buttonCancel =
+            this.buttonCancelCell.firstChild.firstChild, this.container.appendChild(this.mainTable), this.mainCell.appendChild(this.contentTable)
     },
     initEvents: function() {
         var t = this;
@@ -1817,33 +1817,34 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
 }), InlineDropdown.IDD_HEADER_CORRECTION_LEFT = -10, InlineDropdown.IDD_HEADER_CORRECTION_TOP = -8, InlineDropdown.prototype._rebuildDropdown = function() {
     function t(t, i) {
         i = i || "";
-        var s = h._opts.sublists && h._opts.sublists[t[0]] ? "idd_sublist" : "",
-            o = '<div class="idd_item ' + i + " " + e + " " + s + '" id="idd_item_' + t[0] + '" data-id="' + t[0] + '">' + (h._opts.withIcon ?
-                '<div class="idd_item_icon" id="' + t[0] + '"></div>' : "") + '<div class="idd_item_name">' + (h._opts.html ? h._opts.html(t) : t[1]) + "</div></div>";
-        return o
+        var s = l._opts.sublists && l._opts.sublists[t[0]] ? "idd_sublist" : "",
+            n = '<div class="idd_item ' + i + " " + e + " " + s + '" id="' + o + "idd_item_" + t[0] + '" data-id="' + t[0] + '">' + (l._opts.withIcon ?
+                '<div class="idd_item_icon" id="' + t[0] + '"></div>' : "") + '<div class="idd_item_name">' + (l._opts.html ? l._opts.html(t) : t[1]) + "</div></div>";
+        return n
     }
     var e = this._opts.withIcon ? "idd_with_icon" : "",
         i = this._opts.withArrow ? "idd_arrow" : "",
         s = this._opts.idPrefix ? this._opts.idPrefix : "",
-        o = '<div class="idd_header_wrap ' + e + '"><div class="idd_header ' + i + '" id="' + s + this._items[0][0] + '"></div></div>',
-        n = '<div class="idd_items_wrap"><div class="idd_items_content">',
-        h = this;
+        o = this._opts.idItemPrefix ? this._opts.idItemPrefix : "",
+        n = '<div class="idd_header_wrap ' + e + '"><div class="idd_header ' + i + '" id="' + s + this._items[0][0] + '"></div></div>',
+        h = '<div class="idd_items_wrap"><div class="idd_items_content">',
+        l = this;
     each(this._items, function(e, i) {
-        n += t(i)
-    }), n += "</div></div>", this._els.popupItems = se(n), this._els.popupHeader = se(o);
-    var h = this;
+        h += t(i)
+    }), h += "</div></div>", this._els.popupItems = se(h), this._els.popupHeader = se(n);
+    var l = this;
     addEvent(this._els.popupItems, "click", function(t) {
         var e = t.target;
         if ("a" == e.tagName.toLowerCase()) return void setTimeout(function() {
-            h._hide()
+            l._hide()
         });
         for (; e && !hasClass(e, "idd_item");) e = e.parentNode;
-        e && h.select(e.getAttribute("data-id")) && h._hide(), cancelEvent(t)
+        e && l.select(e.getAttribute("data-id")) && l._hide(), cancelEvent(t)
     }), each(geByClass("idd_item", this._els.popupItems), function(t, e) {
         addEvent(e, "mouseenter", function(t) {
-            InlineDropdown._preventMouseHover || h._hoverItem(t.currentTarget)
+            InlineDropdown._preventMouseHover || l._hoverItem(t.currentTarget)
         }), addEvent(e, "mouseleave", function(t) {
-            InlineDropdown._preventMouseHover || h._unhoverItem(t.currentTarget, t)
+            InlineDropdown._preventMouseHover || l._unhoverItem(t.currentTarget, t)
         })
     }), addEvent(this._els.popupItems, "wheel", this._onWheel.bind(this))
 }, InlineDropdown.prototype._onClick = function(t) {

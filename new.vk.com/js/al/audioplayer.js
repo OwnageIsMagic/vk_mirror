@@ -785,11 +785,28 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         } else t && t(this)
     }, AudioPlayer.prototype._initImpl = function(t) {
         function i(t) {
-            e._repeatCurrent && !t ? (e._implSeekImmediate(0), e._implPlay()) : (e._isPlaying = !1, e.notify(AudioPlayer.EVENT_PAUSE), e.notify(AudioPlayer.EVENT_ENDED), e.playNext(!
-                0))
+            if (e._repeatCurrent && !t) e._implSeekImmediate(0), e._implPlay();
+            else {
+                if (e._isPlaying = !1, e.notify(AudioPlayer.EVENT_PAUSE), e.notify(AudioPlayer.EVENT_ENDED), e._failsCount++, e._failsCount > 3) {
+                    e._failsCount = 0;
+                    var i;
+                    return (i = new MessageBox({
+                            title: getLang("global_error")
+                        }))
+                        .content(getLang("audio_error_loading"))
+                        .setButtons("Ok", function() {
+                            curBox()
+                                .hide()
+                        })
+                        .show(), void setTimeout(function() {
+                            i.hide()
+                        }, 3e3)
+                }
+                e.playNext(!0)
+            }
         }
         var e = this;
-        this._impl && this._impl.destroy();
+        this._impl && this._impl.destroy(), this._failsCount = 0;
         var o = 0,
             a = {
                 onBufferUpdate: function(t) {
@@ -910,20 +927,20 @@ AudioPlayer.tabIcons = {
         this._currentPlayingRows = e
     }, AudioPlayer.prototype.toggleCurrentAudioRow = function(t, i, e) {
         function o() {
-            if (l && (i ? s._addRowPlayer(t, e) : s._removeRowPlayer(t)), i) s.on(t, AudioPlayer.EVENT_PLAY, function(i) {
+            if (s && (i ? r._addRowPlayer(t, e) : r._removeRowPlayer(t)), i) r.on(t, AudioPlayer.EVENT_PLAY, function(i) {
                 AudioUtils.asObject(i)
                     .fullId == AudioUtils.getAudioFromEl(t, !0)
-                    .fullId && addClass(t, AudioUtils.AUDIO_PLAYING_CLS)
-            }), s.on(t, AudioPlayer.EVENT_PROGRESS, function(i, e) {
+                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_pause")))
+            }), r.on(t, AudioPlayer.EVENT_PROGRESS, function(i, e) {
                 i = AudioUtils.asObject(i);
                 var o, a = intval(i.duration);
-                o = s.getDurationType() ? "-" + formatTime(Math.round(a - e * a)) : formatTime(Math.round(e * a)), geByClass1("audio_duration", t)
+                o = r.getDurationType() ? "-" + formatTime(Math.round(a - e * a)) : formatTime(Math.round(e * a)), geByClass1("audio_duration", t)
                     .innerHTML = o
-            }), s.on(t, [AudioPlayer.EVENT_PAUSE, AudioPlayer.EVENT_ENDED], function(i) {
-                removeClass(t, AudioUtils.AUDIO_PLAYING_CLS)
-            }), toggleClass(t, AudioUtils.AUDIO_PLAYING_CLS, s.isPlaying());
+            }), r.on(t, [AudioPlayer.EVENT_PAUSE, AudioPlayer.EVENT_ENDED], function(i) {
+                removeClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_play"))
+            }), toggleClass(t, AudioUtils.AUDIO_PLAYING_CLS, r.isPlaying());
             else {
-                s.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
+                r.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
                 var o = geByClass1("audio_duration", t);
                 o && (o.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
                     .duration))
@@ -936,9 +953,10 @@ AudioPlayer.tabIcons = {
         var a = !!intval(domData(t, "is-current"));
         if (a != i) {
             domData(t, "is-current", intval(i));
-            var l = hasClass(t, "inlined");
-            l && toggleClass(t, "audio_with_transition", e), e = l ? e : !1;
-            var s = this;
+            var l = geByClass1("_audio_play", t),
+                s = hasClass(t, "inlined");
+            s && toggleClass(t, "audio_with_transition", e), e = s ? e : !1;
+            var r = this;
             e ? setTimeout(o) : o()
         }
     }, AudioPlayer.prototype._removeRowPlayer = function(t) {
@@ -950,9 +968,10 @@ AudioPlayer.tabIcons = {
             }, 200);
             var e = geByClass1("_audio_duration", t);
             e && (e.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                .duration)), this.off(t), each(i.sliders, function() {
-                this.destroy()
-            }), data(t, "player_inited", !1)
+                    .duration)),
+                this.off(t), each(i.sliders, function() {
+                    this.destroy()
+                }), data(t, "player_inited", !1)
         }
     }, AudioPlayer.prototype._addRowPlayer = function(t, i) {
         if (!geByClass1("_audio_inline_player", t)) {
@@ -1400,12 +1419,17 @@ AudioPlayer.tabIcons = {
                     AudioUtils.AUDIO_ITEM_INDEX_ID], 1)
             } else this._lsSet(AudioPlayer.LS_TRACK, null), setCookie("remixcurr_audio", null, 1)
         }
+    }, AudioPlayer.prototype.seekCurrentAudio = function(t) {
+        var i = AudioUtils.asObject(this.getCurrentAudio()),
+            e = 10 / i.duration,
+            o = this.getCurrentProgress() + (t ? e : -e);
+        o = Math.max(0, Math.min(1, o)), this.seek(o)
     }, AudioPlayer.prototype._lsGet = function(t) {
         return ls.get(AudioPlayer.LS_PREFIX + t)
     }, AudioPlayer.prototype._lsSet = function(t, i) {
         ls.set(AudioPlayer.LS_PREFIX + t, i)
     }, AudioPlayer.prototype.setVolume = function(t) {
-        this._userVolume = t, this._implSetVolume(t), this.notify(AudioPlayer.EVENT_VOLUME, t)
+        t = Math.min(1, Math.max(0, t)), this._userVolume = t, this._implSetVolume(t), this.notify(AudioPlayer.EVENT_VOLUME, t)
     }, AudioPlayer.prototype.getVolume = function() {
         return void 0 === this._userVolume ? .8 : this._userVolume
     }, AudioPlayer.prototype.seek = function(t) {

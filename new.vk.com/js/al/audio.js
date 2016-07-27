@@ -61,13 +61,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         }
     }), addEvent(window.document, "keydown", this._audioSeekKeyEventHandler = function(i) {
         var t = getAudioPlayer();
-        if ((!i.target || !(inArray(i.target.tagName.toLowerCase(), ["input", "textarea"]) && "" != val(i.target) || hasClass(i.target, "fc_editable"))) && t.isPlaying() &&
-            inArray(i.keyCode, [KEY.RIGHT, KEY.LEFT]) && !e()) {
-            var o = AudioUtils.asObject(t.getCurrentAudio()),
-                a = 10 / o.duration,
-                s = t.getCurrentProgress() + (i.keyCode == KEY.RIGHT ? a : -a);
-            s = Math.max(0, Math.min(1, s)), t.seek(s)
-        }
+        i.target && (inArray(i.target.tagName.toLowerCase(), ["input", "textarea"]) && "" != val(i.target) || hasClass(i.target, "fc_editable")) || t.isPlaying() &&
+            inArray(i.keyCode, [KEY.RIGHT, KEY.LEFT]) && (e() || t.seekCurrentAudio(i.keyCode == KEY.RIGHT))
     }), cur.destroy.push(function() {
         i._deinitKeyEvents()
     })
@@ -974,7 +969,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                     block_id: i
                 })), val(s, t._blocks[i]), a.appendChild(s)), show(s), show(a)
             }
-        }), uiSearch.init("audio_friends_search"), this._updateLayerRowsBottomPadding()
+        }), uiSearch.init("audio_friends_search"),
+        this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype.onSubmenuToggle = function() {
     this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype._updateLayerBottom = function() {}, AudioPage.prototype._hideMenuItemProgress = function() {
@@ -1133,9 +1129,9 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         e = AudioUtils.asObject(e), e && e.fullId == i && removeClass(g, "audio_player_btn_added")
     }), this.ap.on(this, AudioPlayer.EVENT_PLAY, function(e, s, r) {
         delete a._readyAudio, data(d, "audio", e), o(), i(e), addClass(c, "audio_playing"), s && !cur.audioStartReadyAudio && (a._trackSlider.setBackValue(0), a._trackSlider
-            .setValue(0), _.innerHTML = t(e, 0), n.setAttribute("title", ""), n.titleSet = !1)
+            .setValue(0), _.innerHTML = t(e, 0), n.setAttribute("title", ""), n.titleSet = !1), attr(c, "aria-label", getLang("global_audio_pause"))
     }), this.ap.on(this, AudioPlayer.EVENT_PAUSE, function(e) {
-        removeClass(c, "audio_playing")
+        removeClass(c, "audio_playing"), attr(c, "aria-label", getLang("global_audio_play"))
     }), this.ap.on(this, AudioPlayer.EVENT_BUFFERED, function(e, i) {
         a._trackSlider.setBackValue(i)
     }), this.ap.on(this, AudioPlayer.EVENT_VOLUME, function(e, i) {

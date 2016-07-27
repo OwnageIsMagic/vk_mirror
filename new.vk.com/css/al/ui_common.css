@@ -1424,6 +1424,10 @@ a.ui_search_custom_link {
     pointer-events: none
 }
 
+.ui_actions_menu_item.ui_actions_menu_item_lock>b {
+    color: transparent
+}
+
 .ui_actions_menu_item.ui_actions_menu_item_lock .ui_actions_menu_item_lock_text {
     position: absolute;
     top: 0;

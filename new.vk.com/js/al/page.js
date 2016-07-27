@@ -5906,6 +5906,7 @@ var Wall = {
 
         toggleClass(wrap, 'as_group', as == 'group');
         toggleClass('signed', 'shown', as == 'group');
+        obj.setAttribute('aria-label', getLang((as == 'group') ? 'wall_reply_as_group' : 'wall_reply_as_user'))
     },
     replyAsGroupOver: function(obj, tt_user, tt_group) {
         if (!hasClass(obj, 'checkbox_official') || hasClass(obj, 'disabled')) return false;
@@ -6059,8 +6060,32 @@ var Wall = {
             className: opts.cl || ''
         });
     },
+    likesShowList: function(el, post_id, opts) {
+        opts = opts || {};
+        var p = wall.parsePostId(post_id),
+            like_type = p.type,
+            post_raw = p.id,
+            like_obj = like_type + post_raw,
+            postEl = el && gpeByClass('_post_content', el) || wall.domPost(post_raw),
+            wrapClass = opts.share ? '_share_wrap' : '_like_wrap',
+            wrapEl = domByClass(postEl, wrapClass),
+            iconEl = domByClass(wrapEl, '_icon');
+
+        if (!iconEl || cur.viewAsBox) return;
+
+        showWiki({
+            w: (opts.share ? 'shares' : 'likes') + '\/' + clean(like_obj)
+        }, false, false, {
+            queue: 1
+        });
+    },
     sharesShow: function(el, post_id, opts) {
         Wall.likesShow(el, post_id, extend(opts, {
+            share: 1
+        }));
+    },
+    sharesShowList: function(el, post_id, opts) {
+        Wall.likesShowList(el, post_id, extend(opts, {
             share: 1
         }));
     },

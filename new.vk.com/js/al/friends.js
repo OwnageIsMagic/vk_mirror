@@ -985,8 +985,9 @@ var Friends = {
                 f.length > 20 && (f = trim(f.substr(0, 18)) + "..."), a.push('<a class="ui_actions_menu_item' + (u & 1 << parseInt(o) ? " checked" : "") +
                     '" onclick="Friends.checkCat(this, ' + e + ", " + o + ');">' + f + "</a>")
             }
-        a = se('<div class="ui_actions_menu_sublist shown" onmouseover="Friends.showListsDD(' + e + ', this, event);" onmouseout="Friends.hideListsDD(this);">' + a.join("") +
-            "</div>"), n.appendChild(a)
+        a = se('<div class="ui_actions_menu_sublist shown" onmouseover="Friends.showListsDD(' + e +
+            ', this, event);" onmouseout="Friends.hideListsDD(this);" onclick="Friends.showListsDD(' + e + ', this, event);">' + a.join("") + "</div>"), n.appendChild(
+            a)
     },
     hideListsDD: function(e) {
         var s = gpeByClass("ui_actions_menu", e),
