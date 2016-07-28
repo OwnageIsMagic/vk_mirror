@@ -1113,6 +1113,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         value: s.getVolume(),
         size: 1,
         hintClass: "audio_player_hint",
+        log: !0,
         formatHint: function(e) {
             return Math.round(100 * e) + "%"
         },

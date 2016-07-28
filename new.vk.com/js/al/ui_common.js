@@ -59,7 +59,7 @@ function Slider(t, i) {
         }), addClass(this._el, "slider_size_" + this.options.size), this.options.debounce && (this._onValueChangeDebounced = debounce(this._onValueChange, this.options.debounce)),
         i.formatHint && (addEvent(this._el, "mousemove", this._ev_onMouseOver = this._onMouseOver.bind(this)), addEvent(this._el, "mouseleave", this._ev_onMouseLeave = this._onMouseLeave
             .bind(this))), addEvent(this._el, "mousedown", this._ev_onMouseDown = this._onMouseDown.bind(this)), this.setValue(this.options.value || 0, this.options.fireChangeEventOnInit ?
-            !1 : !0, !0), this.setBackValue(this.options.backValue)
+            !1 : !0, !1), this.setBackValue(this.options.backValue)
 }
 var uiTabs = {
         initTabs: function(t, i) {
@@ -185,8 +185,8 @@ var uiTabs = {
                             top: h[1] - a[1] + c
                         };
                     if (p ? v.right = getSize(r)[0] + a[0] - h[0] - getSize(l)[0] + p : v.left = h[0] - a[0] + u, setStyle(n, v), e.processHoverCls) {
-                        var m = domClosest(e.processHoverCls, l);
-                        addEvent(t, "mouseover", addClass.pbind(m, "hover")), addEvent(t, "mouseout", removeClass.pbind(m, "hover"))
+                        var g = domClosest(e.processHoverCls, l);
+                        addEvent(t, "mouseover", addClass.pbind(g, "hover")), addEvent(t, "mouseout", removeClass.pbind(g, "hover"))
                     }
                 }
             }
@@ -1300,7 +1300,7 @@ window.Scrollbar = window.Scrollbar || function() {
             null != p && (u = u + "|" + escapeRE(p));
             var v = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + u + "))(?![^<>]*>)(?![^&;]+;)", "gi")
         }
-        var m = r.rsTpl ? r.rsTpl : function(t, i, e, s, o) {
+        var g = r.rsTpl ? r.rsTpl : function(t, i, e, s, o) {
             var n = !e && s[t[0]] || e && !s[t[0]],
                 l = t[1];
             if (i) {
@@ -1318,7 +1318,7 @@ window.Scrollbar = window.Scrollbar || function() {
             }
         };
         each(s, function() {
-                c.push(rs(n, m(this, t, r.invertedSelection, o, v)))
+                c.push(rs(n, g(this, t, r.invertedSelection, o, v)))
             }), i || c.length || c.push('<div class="no_rows">' + (t ? getLang("global_search_not_found")
                 .replace("{search}", t) : r.noSelMsg) + "</div>"), re(this.moreEl), c = c.join(" "), i ? this.olistEl.appendChild(cf(c)) : val(this.olistEl, c), d > i +
             l && (this.olistEl.appendChild(this.moreEl), this.moreEl.onclick = function(e) {
@@ -1380,14 +1380,29 @@ Slider.prototype.toggleLoading = function(t) {
         this._toggleHint(!0), this._updateHint(t, !0), cancelEvent(t)
 }, Slider.prototype._getPos = function() {
     return this._slidePos = getXY(this._slideEl)
+}, Slider.LOGFBASE = 60, Slider.prototype._logf = function(t) {
+    if (!this.options.log) return t;
+    var i = Slider.LOGFBASE;
+    return (Math.pow(i, t) - 1) / (i - 1)
+}, Slider.prototype._unlogf = function(t) {
+    function i(t, i) {
+        return Math.log(i) / Math.log(t)
+    }
+    if (!this.options.log) return t;
+    var e = Slider.LOGFBASE;
+    return i(e, 1 + t * (e - 1))
 }, Slider.prototype.setValue = function(t, i, e) {
     if (!hasClass(this._el, "active") || e) {
-        var s = 100 * t + "%";
-        setStyle(this._amountEl, {
-            width: s
-        }), setStyle(this._handlerEl, {
-            left: s
-        }), e && (this._currValue = t), !i && this._onValueChange()
+        var s = e ? this._logf(t) : t;
+        if (this._currValue != s) {
+            this._currValue = s;
+            var o = e ? t : this._unlogf(t);
+            o = 100 * o + "%", setStyle(this._amountEl, {
+                width: o
+            }), setStyle(this._handlerEl, {
+                left: o
+            }), !i && this._onValueChange()
+        }
     }
 }, Slider.prototype.setBackValue = function(t) {
     toggleClass(this._backEl, "slider_back_transition", t > this._backValue), this._backValue = t;

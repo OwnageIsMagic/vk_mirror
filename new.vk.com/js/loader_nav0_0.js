@@ -137,10 +137,10 @@ var stVersions = {
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 521186648,
-    'audioplayer.js': 1233807546,
+    'audioplayer.js': 984538879,
     'audioplayer.css': 701892504,
     'audio_html5.js': 3586987067,
-    'audio.js': 1187520708,
+    'audio.js': 1152081752,
     'audio.css': 397656768,
     'gifts.css': 874256717,
     'gifts.js': 2778120873,
@@ -164,7 +164,7 @@ var stVersions = {
     'fullscreen_pv.css': 1399964257,
     'friendsphotos.js': 3869757571,
     'friendsphotos.css': 3816436303,
-    'spe.js': 4103996509,
+    'spe.js': 2980196320,
     'friends.js': 3131909692,
     'friends.css': 3014235827,
     'friends_search.js': 1498932479,
@@ -352,7 +352,7 @@ var stVersions = {
     'ads.js': 3283986967,
     'ads_payments.js': 899652112,
     'ads_edit.css': 4097940182,
-    'ads_edit.js': 2204477167,
+    'ads_edit.js': 1977097421,
     'ads_moder.css': 2947633904,
     'ads_moder.js': 1953263202,
     'ads_tagger.js': 468647748,
@@ -397,7 +397,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 993252443,
     'ui.js': 3425210242,
-    'ui_common.js': 3762801915,
+    'ui_common.js': 520584219,
     'ui_common.css': 1946235173,
     'ui_media_selector.js': 3035011918,
     'ui_media_selector.css': 3438437909,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 7570;
+var _rnd = 8033;

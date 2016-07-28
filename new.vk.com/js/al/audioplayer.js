@@ -985,6 +985,7 @@ AudioPlayer.tabIcons = {
                     size: 1,
                     hintClass: "audio_player_hint",
                     withBackLine: !0,
+                    log: !0,
                     formatHint: function(t) {
                         return Math.round(100 * t) + "%"
                     },
