@@ -280,7 +280,7 @@ a.apps_header_progress:before {
 .apps_cat_row .thumb_x_button .thumb_x,
 .apps_recent_row .thumb_x_button .thumb_x {
     display: block;
-    background: url(/images/attach_icons.png?2) no-repeat 0 -40px;
+    background: url(/images/attach_icons.png?3) no-repeat 0 -40px;
     opacity: 0.85;
     filter: alpha(opacity=85);
     width: 8px;
@@ -1962,7 +1962,8 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
 .apps_i_users,
 .apps_ss_playing {
     color: #656565;
-    font-size: 12.5px
+    font-size: 12.5px;
+    line-height: 13px
 }
 
 .apps_ss_playing {
@@ -4241,6 +4242,16 @@ td.apps_cat_new_h {
 
 .apps_blacklist .olist_item_wrap_on:hover .olist_item_on_label {
     text-decoration: underline
+}
+
+.apps_blacklist .olist_item_name {
+    width: 250px
+}
+
+.apps_blacklist .olist_item_over_label {
+    width: 190px;
+    text-align: right;
+    overflow: hidden
 }
 
 .apps_blacklist .olist_item {

@@ -4187,7 +4187,7 @@ var ajax = {
             if (o._suggest) cleanElems(o._suggest);
             o._suggest = o._captcha = o._box = hideBoxes(o._captcha, o._box);
 
-            if (text.indexOf('The page is temporarily unavailable') != -1 && __dev && vk.id != 529834) {
+            if (text.indexOf('The page is temporarily unavailable') != -1 && __dev && !inArray(vk.id, [529834, 257385015])) {
                 ajax._post(url, q, o);
                 return false;
             }
@@ -8475,6 +8475,12 @@ function showPhoto(photoId, listId, options, ev) {
             Photoview.show('temp', 0);
         });
     }
+
+    var useCache = 1;
+    if (options && options.additional && options.additional.open_pe) {
+        useCache = 0;
+    }
+
     extend(options, {
         onDone: function(lst) {
             Photoview.list(photoId, listId, lst);
@@ -8490,7 +8496,7 @@ function showPhoto(photoId, listId, options, ev) {
             }
         },
         stat: stat,
-        cache: 1
+        cache: useCache
     });
 
     if (options.temp_final) {
@@ -11475,6 +11481,10 @@ if (window.performance && window.performance.memory && rand(0, 100) < 5) {
 
 function isRetina() {
     return window.devicePixelRatio >= 2;
+}
+
+function isPhotoeditor3Available() {
+    return (browser.msie ? parseInt(browser.version) > 10 : true);
 }
 
 try {

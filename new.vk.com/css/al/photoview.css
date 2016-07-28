@@ -593,7 +593,8 @@
 
 .pv_bottom_info_left {
     float: left;
-    margin-right: 10px
+    margin-right: 10px;
+    white-space: nowrap
 }
 
 .pv_bottom_info.pv_with_line_break .pv_bottom_info_left {
@@ -607,7 +608,7 @@
 
 .pv_bottom_info #pv_stickers:before {
     content: " ";
-    background-image: url(/images/attach_icons.png?2);
+    background-image: url(/images/attach_icons.png?3);
     width: 16px;
     height: 16px;
     background-position: 0px -177px;
@@ -674,7 +675,7 @@
     display: inline-block;
     margin-right: 6px;
     vertical-align: top;
-    background-image: url(/images/icons/pv_actions.png?2);
+    background-image: url(/images/icons/pv_actions.png?3);
     background-position: 0 -157px
 }
 
@@ -722,8 +723,8 @@
     background-position: 0 -60px
 }
 
-#pv_more_acts_tt #pv_more_act_share:before {
-    background-position: 0 -196px
+#pv_more_acts_tt #pv_more_act_spe:before {
+    background-position: 0 -197px
 }
 
 #pv_more_acts_tt .pv_more_acts_hidden {
@@ -1000,7 +1001,7 @@
 
 .pv_place_label {
     display: inline-block;
-    background-image: url(/images/attach_icons.png?2);
+    background-image: url(/images/attach_icons.png?3);
     height: 14px;
     width: 10px;
     background-position: 0px -10px;
@@ -1239,7 +1240,7 @@
 #pv_tags .delete {
     display: inline-block;
     height: 13px;
-    background-image: url(/images/attach_icons.png?2);
+    background-image: url(/images/attach_icons.png?3);
     height: 9px;
     width: 9px;
     cursor: pointer;
@@ -2806,6 +2807,11 @@ img.pv_movebox_thumb {
 
 .pe_editor .pe_bottom_actions button {
     margin: 0 5px
+}
+
+.pe_bottom_info {
+    color: #fff;
+    opacity: 0.5
 }
 
 .pe_delete_selected_btn,

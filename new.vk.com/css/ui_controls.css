@@ -988,7 +988,8 @@ x:-moz-any-link {
     cursor: pointer;
     line-height: 1em;
     overflow: hidden;
-    white-space: nowrap
+    white-space: nowrap;
+    outline: none
 }
 
 .idd_popup .idd_item:active {

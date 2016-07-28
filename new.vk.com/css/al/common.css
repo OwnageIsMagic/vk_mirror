@@ -2899,6 +2899,11 @@ body.mac #layer_stl .fixed {
     margin-top: 0
 }
 
+.box_body .subheader_padded,
+.box_body .subheader_padded:first-child {
+    margin: 18px 0 12px
+}
+
 .box_controls {
     padding: 14px 23px 14px 25px;
     height: 29px;

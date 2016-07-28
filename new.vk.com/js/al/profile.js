@@ -121,27 +121,27 @@ var Profile = {
                     .onContinue = Profile.toggleFriend.pbind(e, i, o, !1, !0), cancelEvent(t);
                 stManager.add(["tooltips.css", "tooltips.js"])
             }
-            var r = ce("img", {
+            var n = ce("img", {
                     src: "/images/upload" + (window.devicePixelRatio >= 2 ? "_2x" : "") + ".gif"
                 }, {
                     width: 32
                 }),
-                n = e;
+                r = e;
             ajax.post("al_friends.php", {
                 act: o ? "add" : "remove",
                 mid: cur.oid,
                 hash: i,
                 from: "profile"
             }, {
-                onDone: function(e, i, t, s, r) {
+                onDone: function(e, i, t, s, n) {
                     if (o && cur.onFriendAdd && cur.onFriendAdd(), !e) return nav.reload();
-                    var n = (ge("profile_am_subscribed") || {})
+                    var r = (ge("profile_am_subscribed") || {})
                         .tt;
-                    n && n.hide && (n.hide({
+                    r && r.hide && (r.hide({
                         fasthide: 1
-                    }), n.destroy());
+                    }), r.destroy());
                     var a = ge("friend_status");
-                    cleanElems(a.firstChild), e ? (show(a), val(a, e)) : hide(a), (i ? show : hide)("friend_remove"), r || cur.options.bannedhim ? nav.reload({
+                    cleanElems(a.firstChild), e ? (show(a), val(a, e)) : hide(a), (i ? show : hide)("friend_remove"), n || cur.options.bannedhim ? nav.reload({
                         noscroll: !0
                     }) : t && (ajax.preload("al_friends.php", {
                         act: "friend_tt",
@@ -149,10 +149,12 @@ var Profile = {
                     }, [t, s]), setTimeout(Profile.friendTooltip, 0)), Profile.frDropdownClear()
                 },
                 showProgress: function() {
-                    "BUTTON" == e.tagName ? lockButton(e) : hasClass(domFC(e), "progress") ? show(domFC(e)) : n.replaceChild(r, n.firstChild)
+                    "BUTTON" == e.tagName ? lockButton(e) : hasClass(e, "page_actions_item") ? window.Page && Page.actionsDropdownLock(e) : hasClass(domFC(e),
+                        "progress") ? show(domFC(e)) : r.replaceChild(n, r.firstChild)
                 },
                 hideProgress: function() {
-                    "BUTTON" == e.tagName ? unlockButton(e) : hasClass(domFC(e), "progress") ? hide(domFC(e)) : n.replaceChild(n.firstChild, r)
+                    "BUTTON" == e.tagName ? unlockButton(e) : hasClass(e, "page_actions_item") ? window.Page && Page.actionsDropdownUnlock(e) : hasClass(domFC(e),
+                        "progress") ? hide(domFC(e)) : r.replaceChild(r.firstChild, n)
                 },
                 onFail: function(e) {
                     return e ? (showFastBox({
@@ -235,7 +237,7 @@ var Profile = {
             var i = ge("page_actions_item_lists");
             if (addClass(i, "page_actions_item_unfolded"), ge("page_actions_sublist")) return clearTimeout(cur.frListsDDHide), void show("page_actions_sublist");
             cur.frListsCats || (cur.frListsCats = cur.options.curCats);
-            for (var o, t = [], s = cur.frListsCats, r = [28, 29, 27, 25, 26], n = 0; 5 > n; ++n) o = r[n], cur.options.publicLists[o] && t.push(
+            for (var o, t = [], s = cur.frListsCats, n = [28, 29, 27, 25, 26], r = 0; 5 > r; ++r) o = n[r], cur.options.publicLists[o] && t.push(
                 '<a class="page_actions_item page_actions_subitem' + (s & 1 << parseInt(o) ? " checked" : "") + '" onclick="Profile.frListsCheck(this, ' + o + ');">' + cur
                 .options.publicLists[o] + "</a>");
             for (var o in cur.options.userLists)
@@ -303,22 +305,22 @@ var Profile = {
                                 "\r": 0,
                                 "!": 5,
                                 "'": 5
-                            }, s = 0, r = 0, n = !1, a = 0, c = e.length; c > a; a++) {
+                            }, s = 0, n = 0, r = !1, a = 0, c = e.length; c > a; a++) {
                             var d = t[e.charAt(a)],
                                 l = e.charCodeAt(a);
-                            10 == l && ++r, s += void 0 !== d ? d : l > 128 && 192 > l || l > 1280 ? ("&#" + l + ";")
-                                .length : 1, n === !1 && (i && s > i || o && r > o) && (n = a ? e.substr(0, a) : "")
+                            10 == l && ++n, s += void 0 !== d ? d : l > 128 && 192 > l || l > 1280 ? ("&#" + l + ";")
+                                .length : 1, r === !1 && (i && s > i || o && n > o) && (r = a ? e.substr(0, a) : "")
                         }
-                        return [s, r, n === !1 ? e : n]
+                        return [s, n, r === !1 ? e : r]
                     },
                     s = 240,
-                    r = 4,
-                    n = t(o, s, r),
-                    a = n[0],
-                    c = n[1],
+                    n = 4,
+                    r = t(o, s, n),
+                    a = r[0],
+                    c = r[1],
                     d = ge("preq_warn");
-                n[2] !== o && (a > s ? a = s : c > 4 && (c = 4), val(i, n[2]), i.lastLen = trim(n[2])
-                    .length), a > s - 40 || c > r ? (a > s ? d.innerHTML = getLang("friends_exceeds_symbol_limit", a - s) : c > 4 ? d.innerHTML = getLang(
+                r[2] !== o && (a > s ? a = s : c > 4 && (c = 4), val(i, r[2]), i.lastLen = trim(r[2])
+                    .length), a > s - 40 || c > n ? (a > s ? d.innerHTML = getLang("friends_exceeds_symbol_limit", a - s) : c > 4 ? d.innerHTML = getLang(
                     "friends_exceeds_lines_limit", c - 4) : d.innerHTML = getLang("text_N_symbols_remain", s - a), show(d)) : hide(d)
             }
         },
@@ -390,7 +392,7 @@ var Profile = {
                 var t = geByTag("img", geByClass1("module_body", o)),
                     s = vkImage();
                 s.src = i || "/images/gift/" + e + "/" + (window.devicePixelRatio >= 2, "96") + ".png";
-                var r = function() {
+                var n = function() {
                     var e = t[0],
                         i = e.parentNode,
                         o = t.length;
@@ -400,7 +402,7 @@ var Profile = {
                         o >= 3 && re(t[t.length - 1])
                     }))
                 };
-                s.width ? r() : addEvent(s, "load", r)
+                s.width ? n() : addEvent(s, "load", n)
             }
         },
         declineFriend: function(e) {
@@ -471,10 +473,10 @@ var Profile = {
                     t = getXY(i),
                     s = getSize(i);
                 o.style.opacity = 0, show(o);
-                var r = getSize(o),
-                    n = t[1] - Math.floor((r[1] - s[1]) / 2),
-                    a = t[0] + (vk.rtl ? -(r[0] + 10) : s[0] + 10);
-                o.style.left = a + (vk.rtl ? -10 : 10) + "px", o.style.top = n + "px";
+                var n = getSize(o),
+                    r = t[1] - Math.floor((n[1] - s[1]) / 2),
+                    a = t[0] + (vk.rtl ? -(n[0] + 10) : s[0] + 10);
+                o.style.left = a + (vk.rtl ? -10 : 10) + "px", o.style.top = r + "px";
                 var c = animate.pbind(o, {
                         left: a,
                         opacity: 1

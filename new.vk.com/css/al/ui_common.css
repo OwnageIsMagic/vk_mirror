@@ -35,6 +35,7 @@
 .ui_tab_group:after,
 .ui_tab_search:after,
 .ui_tabs_progress,
+.ui_thumb_extra .ui_extra_btn,
 .ui_thumb_pe_button .ui_thumb_pe,
 .ui_thumb_pe_button .ui_thumb_x,
 .ui_thumb_x_button .ui_thumb_pe,
@@ -1594,7 +1595,7 @@ a.ui_search_custom_link {
 .ui_thumb_x_button .ui_thumb_pe,
 .ui_thumb_x_button .ui_thumb_x {
     display: block;
-    background: url(/images/attach_icons.png?2) no-repeat 0 -40px;
+    background: url(/images/attach_icons.png?3) no-repeat 0 -40px;
     opacity: 0.85;
     filter: alpha(opacity=85);
     width: 8px;
@@ -1613,6 +1614,47 @@ a.ui_search_custom_link {
     padding: 3px
 }
 
+.ui_thumb_extra {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 15px 0;
+    opacity: 0;
+    -o-transition: opacity 100ms linear;
+    transition: opacity 100ms linear;
+    background: -o-linear-gradient(top, transparent 0%, rgba(0, 0, 0, .55) 100%);
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, .55))
+}
+
+.ui_thumb_extra .ui_extra_btn {
+    width: 24px;
+    height: 24px;
+    background-image: url(/images/attach_icons.png?3);
+    background-position: -5px -167px;
+    display: inline-block;
+    margin: 0 6px;
+    opacity: 0.7;
+    cursor: pointer
+}
+
+.ui_thumb_extra .ui_extra_btn:hover {
+    opacity: 1
+}
+
+.ui_thumb_extra .ui_extra_btn#ui_btn_pe {
+    background-position: -5px -200px
+}
+
+.thumb_wrap:hover .ui_thumb_extra {
+    opacity: 1
+}
+
+.moving .ui_thumb_extra {
+    display: none
+}
+
 .ui_thumb_pe_button {
     right: inherit;
     left: 0;
@@ -1623,7 +1665,7 @@ a.ui_search_custom_link {
 .ui_thumb_pe_button .ui_thumb_pe {
     height: 18px;
     width: 18px;
-    background: url(/images/attach_icons.png?2) no-repeat 0 -159px
+    background: url(/images/attach_icons.png?3) no-repeat 0 -159px
 }
 
 .ui_toggler_wrap {

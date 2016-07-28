@@ -570,7 +570,7 @@ a.page_poll_code {
 
 .page_pics_preview .page_media_x_wrap .page_media_x {
     display: block;
-    background: url(/images/attach_icons.png?2) no-repeat 0 -40px;
+    background: url(/images/attach_icons.png?3) no-repeat 0 -40px;
     opacity: 0.85;
     filter: alpha(opacity=85);
     width: 8px;
@@ -595,7 +595,7 @@ a.page_poll_code {
 
 .page_docs_preview .page_media_x_wrap .page_media_x {
     display: block;
-    background: url(/images/attach_icons.png?2) no-repeat 0 0;
+    background: url(/images/attach_icons.png?3) no-repeat 0 0;
     opacity: 0.6;
     filter: alpha(opacity=60);
     width: 9px;

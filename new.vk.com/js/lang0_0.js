@@ -70,7 +70,7 @@ global_online_sm = ['', 'online', 'online'];
 global_on_behalf_group = '�� ����� ����������';
 global_on_behalf_me = '�� ������ �����';
 global_on_behalf_title = '��������� ��������';
-global_pe_edit = '������������';
+global_pe_edit = '�������';
 global_photo_attach_show = '�������';
 global_photo_full_size = '���������';
 global_privacy_except = '�����:';
@@ -239,7 +239,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 451;
+// section = 0; version = 452;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;

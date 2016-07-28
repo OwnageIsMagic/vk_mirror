@@ -594,7 +594,7 @@ h5.post_author {
 
 .wall_signed_by {
     padding: 0 15px;
-    background: url(/images/attach_icons.png?2) no-repeat;
+    background: url(/images/attach_icons.png?3) no-repeat;
     background-position: left -146px
 }
 
@@ -2533,7 +2533,7 @@ a.page_media_link_desc {
 .media_preview .progress_x {
     cursor: pointer;
     margin: 3px 5px 0;
-    background-image: url(/images/attach_icons.png?2);
+    background-image: url(/images/attach_icons.png?3);
     opacity: 0.6;
     filter: alpha(opacity=60);
     height: 10px;
@@ -3571,7 +3571,7 @@ div.submit_post_field[contenteditable=true]>p {
 .checkbox_pic {
     cursor: pointer;
     margin-top: 7px;
-    background: url(/images/attach_icons.png?2) no-repeat 0 0;
+    background: url(/images/attach_icons.png?3) no-repeat 0 0;
     width: 16px;
     height: 16px;
     overflow: hidden;

@@ -1818,7 +1818,7 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
     function t(t, i) {
         i = i || "";
         var s = l._opts.sublists && l._opts.sublists[t[0]] ? "idd_sublist" : "",
-            n = '<div class="idd_item ' + i + " " + e + " " + s + '" id="' + o + "idd_item_" + t[0] + '" data-id="' + t[0] + '">' + (l._opts.withIcon ?
+            n = '<div class="idd_item ' + i + " " + e + " " + s + '" id="' + o + "idd_item_" + t[0] + '" data-id="' + t[0] + '" tabindex="0">' + (l._opts.withIcon ?
                 '<div class="idd_item_icon" id="' + t[0] + '"></div>' : "") + '<div class="idd_item_name">' + (l._opts.html ? l._opts.html(t) : t[1]) + "</div></div>";
         return n
     }
