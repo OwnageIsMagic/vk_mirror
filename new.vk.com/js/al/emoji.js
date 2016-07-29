@@ -83,6 +83,9 @@ if (!window.Emoji) {
                                     return cancelEvent(e);
                                 }
                             }
+                            if (opts.noLineBreaks) {
+                                return cancelEvent(e);
+                            }
                         }
                         if (e.ctrlKey && e.keyCode == KEY.RETURN) {
                             var val = this.value;

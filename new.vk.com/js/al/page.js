@@ -3758,6 +3758,11 @@ var Wall = {
     },
     onReplySubmitChanged: function(value, from) {
         cur.wallTpl.reply_multiline = value;
+        if (Wall.customCur()
+            .wallTpl) {
+            Wall.customCur()
+                .wallTpl.reply_multiline = value;
+        }
         if (from) {
             var point = cur.replySubmitSettings;
             point && point.tt && point.tt.el && point.tt.destroy();
@@ -3765,8 +3770,9 @@ var Wall = {
             ajax.post('al_wall.php', {
                 act: 'a_save_ctrl_submit',
                 value: value,
-                hash: cur.wallTpl.poll_hash
-            })
+                hash: Wall.customCur()
+                    .wallTpl.poll_hash
+            });
             window.Notifier && Notifier.lcSend('wall_reply_multiline', {
                 value: value
             });
@@ -8768,7 +8774,8 @@ Composer = {
         sel.moveStart('character', -1);
         sel.text = '';
         if (browser.msie && len == -1) {
-            return node.value.length;
+            return (node.value || '')
+                .length;
         }
         return len;
     },

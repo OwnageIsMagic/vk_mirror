@@ -39,6 +39,10 @@
     overflow: hidden
 }
 
+.profile_info .labeled>a {
+    unicode-bidi: embed
+}
+
 .profile_info .relation_request {
     position: relative
 }

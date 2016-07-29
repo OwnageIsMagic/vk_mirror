@@ -504,7 +504,7 @@ h5.post_author {
 .wall_post_source_icon {
     display: inline-block;
     margin: 0 0 -1px 5px;
-    background: url(/images/profile_icons.png?15) no-repeat;
+    background: url(/images/profile_icons.png?16) no-repeat;
     width: 11px;
     height: 11px
 }
@@ -543,6 +543,10 @@ h5.post_author {
 
 .wall_post_source_prisma {
     background-position: 0 -288px
+}
+
+.wall_post_source_vinci {
+    background-position: 0 -308px
 }
 
 .wall_post_source_ads_mark {
@@ -1357,6 +1361,8 @@ h5.post_author {
 
 #like_wall_preview.wall_module .wall_text .page_media_thumbed_link:last-child,
 .wl_postreach_wall_module.wall_module .wall_text .page_media_thumbed_link:last-child,
+.wall_module .post.postponed .wall_text .page_media_poll_wrap:last-child,
+.wall_module .post.postponed .wall_text .page_media_thumbed_link:last-child,
 .wall_module .post.suggest .wall_text .page_media_poll_wrap:last-child,
 .wall_module .post.suggest .wall_text .page_media_thumbed_link:last-child {
     margin-bottom: 0
@@ -5241,7 +5247,7 @@ div.create_poll_cb {
 }
 
 .page_fronly {
-    background: url(/images/profile_icons.png?15) no-repeat;
+    background: url(/images/profile_icons.png?16) no-repeat;
     background-position: 0 -163px;
     width: 8px;
     height: 11px;
