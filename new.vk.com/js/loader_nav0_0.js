@@ -132,8 +132,8 @@ var stVersions = {
     'ie7.css': 532233945,
     'rtl.css': 836314285,
     'pagination.js': 46926455,
-    'blog.css': 4100372369,
-    'blog.js': 188708593,
+    'blog.css': 3183699413,
+    'blog.js': 2553245436,
     'html5audio.js': 1230354391,
     'html5video.js': 3599850170,
     'html5video.css': 521186648,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 6629;
+var _rnd = 5518;
