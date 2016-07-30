@@ -48,8 +48,8 @@
 .nim-dialog .nim-dialog--close,
 .nim-dialog .nim-dialog--markre,
 .nim-dialog .nim-dialog--star,
-.nim-dialog.nim-dialog_muted .nim-dialog--name-w:after,
-.nim-dialog.nim-dialog_unread.nim-dialog_prep-injected.nim-dialog_muted .nim-dialog--name-w:after,
+.nim-dialog.nim-dialog_muted .nim-dialog--mute,
+.nim-dialog.nim-dialog_unread.nim-dialog_prep-injected.nim-dialog_muted .nim-dialog--mute,
 .nim-dialog.nim-dialog_verified .nim-dialog--verfifed,
 .nim-dialog.nim-dialog_verified.nim-dialog_selected .nim-dialog--verfifed,
 .ui_actions_menu_item.im-action:before,
@@ -914,10 +914,6 @@ body.mac .im_stickerpack_fixed {
     overflow: visible
 }
 
-#footer_wrap {
-    display: none
-}
-
 .im_cal_clear {
     background: #ebf0f5;
     padding: 5px 0px
@@ -998,7 +994,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page.im-page_classic .ui_search_field.im-page--dialogs-search_fill {
-    padding-right: 55%
+    padding-right: 60px
 }
 
 .im-page.im-page_classic .im-page--history_loading {
@@ -1068,6 +1064,13 @@ body.mac .im_stickerpack_fixed {
     bottom: 0;
     height: auto;
     box-shadow: none
+}
+
+@media screen and (-ms-high-contrast: active),
+(-ms-high-contrast: none) {
+    .im-page.im-page_classic .im-page--dialogs {
+        top: 13px
+    }
 }
 
 .im-page.im-page_classic .im-page--back {
@@ -1346,7 +1349,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page.im-page_classic.im-page_group .nim-dialog.nim-dialog_classic:hover .nim-dialog--star {
-    display: block
+    display: inline-block
 }
 
 .im-page.im-page_classic.im-page_group .im-mess--fav {
@@ -2027,7 +2030,8 @@ body.mac .im_stickerpack_fixed {
 
 .im-page .im-page--header-more .ui_actions_menu_icons {
     margin-top: -18px;
-    background: url(/images/icons/m_more.png) no-repeat 2px;
+    background: url(/images/icons/m_more.png) no-repeat;
+    background-position: left 2px center;
     height: 46px;
     opacity: 0.7;
     margin-right: 0;
@@ -2596,7 +2600,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-search .im-search--wrap {
-    margin-right: 215px
+    margin-right: 230px
 }
 
 .im-search .im-search--wrap .ui_search_reset {
@@ -2634,6 +2638,10 @@ body.mac .im_stickerpack_fixed {
 
 .im-mess .im-mess--del-attach {
     color: #939393
+}
+
+.im-mess .im-mess--inline-fwd {
+    margin-top: 5px
 }
 
 .im-mess .im-mess--text {
@@ -3248,21 +3256,19 @@ body.mac .im_stickerpack_fixed {
     font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    margin-bottom: 7px;
+    margin-bottom: 4px;
     margin-top: 6px;
     width: 100%;
-    position: relative;
-    overflow: hidden
+    position: relative
 }
 
 .nim-dialog .nim-dialog--name .nim-dialog--name-w {
     color: #222;
     max-width: 70%;
     white-space: nowrap;
-    display: block;
+    display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
-    float: left;
     padding-bottom: 1px
 }
 
@@ -3270,11 +3276,12 @@ body.mac .im_stickerpack_fixed {
     width: 12px;
     height: 12px;
     background: url(/images/icons/im_actions.png?3) -4px -4px;
-    float: left;
     margin-left: 6px;
     cursor: pointer;
+    vertical-align: middle;
     border: none;
     outline: 0;
+    position: absolute;
     display: none
 }
 
@@ -3479,7 +3486,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     padding: 0;
     width: 8px;
     height: 8px;
-    margin-top: -10px;
+    margin-top: -12px;
     background: rgba(147, 173, 200, .9);
     margin-right: 1px;
     text-indent: -99px
@@ -3636,11 +3643,11 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .nim-dialog.nim-dialog_verified.nim-dialog_muted .nim-dialog--name-w {
-    padding-right: 40px
+    padding-right: 0
 }
 
-.nim-dialog.nim-dialog_verified.nim-dialog_muted .nim-dialog--name-w:after {
-    top: 4px
+.nim-dialog.nim-dialog_verified.nim-dialog_muted .nim-dialog--mute {
+    margin-left: 29px
 }
 
 .nim-dialog.nim-dialog_verified.nim-dialog_selected .nim-dialog--verfifed {
@@ -3648,21 +3655,20 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .nim-dialog.nim-dialog_verified .nim-dialog--name-w {
-    display: inline-block;
-    padding-right: 22px;
-    line-height: 15px;
+    padding-right: 0;
     position: relative;
     max-width: 60%
 }
 
 .nim-dialog.nim-dialog_verified .nim-dialog--star {
-    position: relative;
-    top: 1px
+    margin-left: 28px;
+    margin-top: 1px
 }
 
 .nim-dialog.nim-dialog_verified .nim-dialog--verfifed {
     position: absolute;
     display: inline-block;
+    margin-top: -1px;
     width: 18px;
     height: 18px;
     margin-left: 2px;
@@ -3681,24 +3687,21 @@ body.sf .nim-dialog .nim-dialog--unread {
 .nim-dialog.nim-dialog_muted .nim-dialog--name-w,
 .nim-dialog.nim-dialog_unread.nim-dialog_prep-injected.nim-dialog_muted .nim-dialog--name-w {
     position: relative;
-    display: inline-block;
-    padding-right: 20px
+    padding-right: 9px
 }
 
-.nim-dialog.nim-dialog_muted .nim-dialog--name-w:after,
-.nim-dialog.nim-dialog_unread.nim-dialog_prep-injected.nim-dialog_muted .nim-dialog--name-w:after {
-    margin-top: -2px;
-    content: "";
+.nim-dialog.nim-dialog_muted .nim-dialog--mute,
+.nim-dialog.nim-dialog_unread.nim-dialog_prep-injected.nim-dialog_muted .nim-dialog--mute {
+    margin-top: 1px;
     display: inline-block;
     width: 11px;
     height: 13px;
     background: url(/images/icons/mute_icons.png) no-repeat 0 0;
-    position: absolute;
-    top: 3px;
-    right: 0
+    vertical-align: middle;
+    position: absolute
 }
 
-.nim-dialog.nim-dialog_muted.nim-dialog_selected .nim-dialog--name-w:after {
+.nim-dialog.nim-dialog_muted.nim-dialog_selected .nim-dialog--mute {
     background-position: 0 -17px;
     opacity: 0.65
 }
@@ -3775,7 +3778,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .nim-dialog.nim-dialog_starred .nim-dialog--star {
-    display: block;
+    display: inline-block;
     background-position: -4px -20px
 }
 
@@ -3807,8 +3810,16 @@ body.sf .nim-dialog .nim-dialog--unread {
     padding-left: 25px
 }
 
+.nim-dialog.nim-dialog_classic.nim-dialog_verified.nim-dialog_muted .nim-dialog--mute {
+    margin-top: 2px
+}
+
+.nim-dialog.nim-dialog_classic .nim-dialog--verfifed {
+    margin-top: 0px
+}
+
 .nim-dialog.nim-dialog_classic .nim-dialog--unread {
-    bottom: 15px
+    bottom: 12px
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--cw {
@@ -3818,7 +3829,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .nim-dialog.nim-dialog_classic.nim-dialog_unread-out:not(.nim-dialog_failed) .nim-dialog--unread {
-    bottom: 19px
+    bottom: 20px
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--name,
@@ -3980,7 +3991,6 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-typing .im-typing--icon {
     position: absolute;
-    left: 0;
     display: block;
     width: 4px;
     height: 4px;
@@ -4023,6 +4033,10 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-typing.im-typing_shown {
     visibility: visible
+}
+
+.im-typing.im-typing_classic .im-typing--icon {
+    left: 11px
 }
 
 @-webkit-keyframes typer {
@@ -4194,6 +4208,21 @@ body.sf .nim-dialog .nim-dialog--unread {
     border-bottom: 0
 }
 
+.im-members .im-members--error {
+    position: absolute;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    transform: translateY(-50%);
+    color: #939393;
+    text-align: center;
+    left: 0;
+    width: 100%;
+    padding: 0 40px;
+    box-sizing: border-box
+}
+
 .im-member-item {
     clear: both;
     padding: 15px 0;
@@ -4308,7 +4337,8 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-important-box .im-deselect {
     position: relative;
-    bottom: -4px
+    bottom: -2px;
+    vertical-align: middle
 }
 
 .im-important-box .ui_tab.ui_tab_sel,
@@ -4789,6 +4819,10 @@ body.sf .nim-dialog .nim-dialog--unread {
     outline: 0;
     cursor: pointer;
     border: none
+}
+
+.im-dialog-select.im-dialog-select_classic {
+    right: -10px
 }
 
 .im-chat-placeholder {

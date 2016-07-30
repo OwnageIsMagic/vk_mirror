@@ -2545,15 +2545,12 @@ var Videoview = {
                 var e = Emoji.init(VideoChat.replyInput, {
                     controlsCont: VideoChat.replyForm,
                     noLineBreaks: 1,
+                    noCtrlSend: 1,
                     onSend: function() {
-                        VideoChat.sendMessage(), VideoChat.replyInput.blur()
-                    },
-                    ctrlSend: function() {
-                        return Wall.customCur()
-                            .wallTpl.reply_multiline
+                        VideoChat.sendMessage()
                     },
                     checkEditable: function() {
-                        VideoChat.checkInputHeight(), VideoChat.checkTextLen()
+                        VideoChat.checkFormHeight(), VideoChat.checkTextLen()
                     },
                     onStickerSend: function(e, i) {
                         VideoChat.sendMessage(e)
@@ -2562,14 +2559,14 @@ var Videoview = {
                 data(VideoChat.replyForm, "optId", e)
             })
         },
-        checkInputHeight: function() {
-            var e = VideoChat.replyInput,
+        checkFormHeight: function() {
+            var e = VideoChat.replyForm,
                 i = e.offsetHeight;
             if (e.lastHeight !== i) {
                 e.lastHeight = i;
                 var t = !VideoChat.scroll.data.scrollBottom;
                 setStyle(VideoChat.messagesWrap, {
-                    bottom: i + 1 + "px"
+                    bottom: i + "px"
                 }), t && VideoChat.scroll.scrollBottom()
             }
         },
@@ -2621,7 +2618,10 @@ var Videoview = {
             else if (i = {
                     message: trim(Emoji.val(VideoChat.replyInput))
                 }, !i.message) return void elfocus(VideoChat.replyInput);
-            ajax.post("al_video.php", Wall.fixPostParams(extend(i, {
+            return vkNow() - VideoChat.lastMsgSent < 1e3 ? (window.tooltips && tooltips.destroy(VideoChat.replyInput), void showTooltip(VideoChat.replyInput, {
+                text: getLang("video_live_chat_too_fast"),
+                black: 1
+            })) : void ajax.post("al_video.php", Wall.fixPostParams(extend(i, {
                 act: "post_comment",
                 video: mvcur.mvData.videoRaw,
                 hash: mvcur.mvData.hash,
@@ -2629,7 +2629,7 @@ var Videoview = {
                 videoviewer_chat: 1
             })), {
                 onDone: function(e, i) {
-                    e && i && VideoChat.appendMessage(e, i), Emoji.val(VideoChat.replyInput, ""), VideoChat.checkInputHeight()
+                    e && i && VideoChat.appendMessage(e, i), Emoji.val(VideoChat.replyInput, ""), VideoChat.checkFormHeight(), VideoChat.lastMsgSent = vkNow()
                 },
                 onFail: function(e) {
                     return VideoChat.replyInput ? (window.tooltips && tooltips.destroy(VideoChat.replyInput), showTooltip(VideoChat.replyInput, {

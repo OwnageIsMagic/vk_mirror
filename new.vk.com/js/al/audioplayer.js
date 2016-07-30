@@ -257,7 +257,7 @@ var AudioUtils = {
         var ap = getAudioPlayer(),
             currentPlaylist = ap.getCurrentPlaylist();
         if (ap.layer)
-            if (ap.layer.isShown()) ap.layer.hide(), topHeaderClearClose();
+            if (ap.layer.isShown()) ap.layer.hide(), cancelStackFilter("top_audio", !0);
             else {
                 ap.layer.show();
                 var initFunc = data(ap.layer, "init-func");
@@ -266,9 +266,9 @@ var AudioUtils = {
                     var audioPage = data(ap.layer, "audio-page");
                     audioPage && audioPage.onShow()
                 }
-                addClass(btn, "active"), topHeaderClose(function() {
+                addClass(btn, "active"), cancelStackPush("top_audio", function() {
                     ap.layer.hide()
-                })
+                }, !0)
             }
         else {
             var BORDER_COMPENSATION = 2;
@@ -284,7 +284,8 @@ var AudioUtils = {
                 elClassWhenTooltip: "audio_top_btn_active",
                 forceSide: "bottom",
                 onHide: function(t, i) {
-                    audioPage = data(ap.layer, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), i && topHeaderClearClose()
+                    audioPage = data(ap.layer, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), i && cancelStackFilter("top_audio", !
+                        0)
                 },
                 width: getLayerWidth,
                 setPos: function(t) {
@@ -316,9 +317,9 @@ var AudioUtils = {
                     var l = i;
                     ap.layer.isShown() ? initLayer(t, l, e, o, a) : data(ap.layer, "init-func", initLayer.pbind(t, l, e, o, a))
                 }
-            }), topHeaderClose(function() {
+            }), cancelStackPush("top_audio", function() {
                 ap.layer.hide()
-            })
+            }, !0)
         }
     },
     filterClaimedAudios: function(t) {

@@ -3797,7 +3797,7 @@ FastChat = {
     clistWrapPeer: function(id, data, re) {
         var unread = curFastChat.tabs[id] ? curFastChat.tabs[id].unread : 0,
             online = curFastChat.onlines[id],
-            href, photoEvents, cls = online ? ' online' + (mobPlatforms[online] ? ' mobile' : '') : '';
+            href, photoEvents, cls = onlinePlatformClass(online);
         var name = (data[0] || '')
             .replace(/</g, '&lt;')
             .replace(/>/g, '&gt;')
@@ -4208,7 +4208,7 @@ FastChat = {
         } else {
             var peerHref = data.alink || '/id' + peer;
         }
-        var cls = data.online ? ' online' + (mobPlatforms[data.online] ? ' mobile' : '') : '';
+        var cls = onlinePlatformClass(data.online);
         var t = se('<a class="chat_tab_wrap' + (noAnim ? '' : ' chat_tab_beforeanim') + '" id="chat_tab_icon_' + peer + '" href="' + peerHref +
             '" onclick="FastChat.itemsOut();return FastChat.togglePeer(' + peer + ', event);"><div class="chat_tab_imgcont _chat_tab_image' + cls +
             '"><div class="chat_tab_close" onclick="return FastChat.closeTabIcon(' + peer + ', event)"></div>' + imgRow +
@@ -6205,14 +6205,14 @@ var TopNotifier = {
         TopNotifier.refresh();
 
         if (ev !== true) {
-            topHeaderClose(TopNotifier.hide.bind(this));
+            cancelStackPush('top_notifier', TopNotifier.hide.bind(this), true);
         }
 
         return ev ? cancelEvent(ev) : false;
     },
     hide: function() {
         removeClass(this.tnLink, 'active');
-        topHeaderClearClose();
+        cancelStackFilter('top_notifier', true);
     },
     shown: function() {
         return hasClass(this.tnLink, 'active');

@@ -2063,7 +2063,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     position: absolute;
     z-index: 1;
     top: 0;
-    bottom: 41px;
+    bottom: 40px;
     left: 0;
     right: 0
 }
@@ -2075,7 +2075,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 
 .mv_chat_message {
     display: block;
-    padding: 8px 17px 8px 10px
+    padding: 6px 17px 6px 10px
 }
 
 .mv_chat_message:after {
@@ -2107,8 +2107,8 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 
 .mv_chat_message_author_thumb_img {
     position: relative;
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 0;
     background-color: transparent
@@ -2120,14 +2120,14 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     position: absolute;
     top: 0;
     left: 0;
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
     background-color: #1e1e1e
 }
 
 .mv_chat_message_author_thumb_img:after {
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     content: " ";
     display: block;
@@ -2140,13 +2140,16 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 }
 
 .mv_chat_message_author_name {
-    color: #d8d8d8;
+    color: #aaa;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
     margin-right: 6px;
     white-space: nowrap
 }
 
 .mv_chat_message_content {
-    margin-left: 32px;
+    margin-left: 33px;
     margin-top: 3px;
     line-height: 1.4
 }
@@ -2167,11 +2170,6 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     font-size: 0
 }
 
-.mv_chat_message_sticker_img {
-    -o-transition: opacity .1s;
-    transition: opacity .1s
-}
-
 .mv_chat_reply_form {
     position: absolute;
     z-index: 1;
@@ -2183,13 +2181,13 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 }
 
 .mv_chat_reply_author_photo {
-    margin: 8px 8px 8px 10px;
     float: left;
-    width: 24px;
-    height: 24px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 0;
-    background-color: transparent
+    background-color: transparent;
+    margin: 7px 8px 7px 10px
 }
 
 .mv_chat_reply_author_photo:before {
@@ -2203,8 +2201,8 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     position: absolute;
     top: 0;
     left: 0;
-    width: 24px;
-    height: 24px
+    width: 25px;
+    height: 25px
 }
 
 .mv_chat_reply_author_photo:after {
@@ -2214,6 +2212,11 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     background-size: cover
 }
 
+.mv_chat_reply_input {
+    margin-right: -30px;
+    padding-right: 30px
+}
+
 .mv_chat_reply_input_wrap {
     overflow: hidden
 }
@@ -2221,17 +2224,24 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 .mv_chat_reply_input_wrap .mv_chat_reply_input,
 .mv_chat_reply_input_wrap .mv_chat_reply_input~.placeholder>.ph_input {
     padding: 11px 0 12px;
-    line-height: 17px;
-    min-height: 40px;
-    max-height: 74px;
-    overflow: auto;
-    color: #fff;
-    border: none;
-    background: transparent
+    line-height: 16px
 }
 
 .mv_chat_reply_input_wrap .mv_chat_reply_input~.placeholder .ph_content {
-    padding: 0
+    padding: 0;
+    color: #aaa
+}
+
+.mv_chat_reply_input_wrap .mv_chat_reply_input {
+    margin-right: -50px;
+    padding-right: 50px;
+    min-height: 39px;
+    max-height: 71px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    color: #fff;
+    border: none;
+    background: transparent
 }
 
 .mv_chat_reply_emoji_btn,
@@ -2239,8 +2249,8 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     float: right;
     font-size: 0;
     padding: 0 8px;
-    height: 40px;
-    line-height: 40px;
+    height: 39px;
+    line-height: 39px;
     cursor: pointer;
     opacity: .65;
     -o-transition: opacity .2s;
@@ -2283,7 +2293,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     float: right;
     position: relative;
     left: 29px;
-    top: 32px
+    top: 31.5px
 }
 
 .ui_scroll_videoview_theme .ui_scroll_bar_inner {

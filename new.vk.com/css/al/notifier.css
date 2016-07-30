@@ -1989,7 +1989,9 @@ div.chat_tab_img {
     white-space: nowrap;
     position: absolute;
     max-width: 100%;
-    overflow: hidden
+    overflow: hidden;
+    -o-transition: margin 0s ease;
+    transition: margin 0s ease
 }
 
 .im-chat-input .sticker_hints_tt {
@@ -2015,6 +2017,11 @@ div.chat_tab_img {
 .sticker_hints_tt .emoji_sticker_item.promo .emoji_sticker_image {
     opacity: 0.5;
     filter: alpha(opacity=50)
+}
+
+.sticker_hints_tt._margin_transition {
+    -o-transition-duration: 0.2s;
+    transition-duration: 0.2s
 }
 
 .sticker_hints_inner {
