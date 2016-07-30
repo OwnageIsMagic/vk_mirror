@@ -397,7 +397,7 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 993252443,
     'ui.js': 3425210242,
-    'ui_common.js': 520584219,
+    'ui_common.js': 4023297608,
     'ui_common.css': 3025842343,
     'ui_media_selector.js': 3035011918,
     'ui_media_selector.css': 3438437909,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 944;
+var _rnd = 7444;

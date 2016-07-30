@@ -1380,7 +1380,7 @@ Slider.prototype.toggleLoading = function(t) {
         this._toggleHint(!0), this._updateHint(t, !0), cancelEvent(t)
 }, Slider.prototype._getPos = function() {
     return this._slidePos = getXY(this._slideEl)
-}, Slider.LOGFBASE = 60, Slider.prototype._logf = function(t) {
+}, Slider.LOGFBASE = 35, Slider.prototype._logf = function(t) {
     if (!this.options.log) return t;
     var i = Slider.LOGFBASE;
     return (Math.pow(i, t) - 1) / (i - 1)
