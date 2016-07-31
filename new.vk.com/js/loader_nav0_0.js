@@ -455,13 +455,13 @@ var stVersions = {
     'snapster/mobile.css': 100872175,
     'snapster/common.js': 1252755421,
     'snapster/main.js': 1497766167,
-    'snapster/snapster.js': 3279770649,
-    'snapster/modules.js': 1313367968,
+    'snapster/snapster.js': 3889884962,
+    'snapster/modules.js': 76227555,
     'snapster/snapster.css': 4036026970,
     'snapster/mob_templates.js': 947523457,
     'snapster/snapster_mobile.js': 2272524840,
     'snapster/snapster_mobile.css': 963199809,
-    'snapster/templates.js': 3425929857,
+    'snapster/templates.js': 437138181,
     'snapster/snapster_ui.js': 67361843,
     'snapster/notifier.js': 2711093753,
     'snapster/snapster_ui.css': 1171299641,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 7444;
+var _rnd = 6742;
