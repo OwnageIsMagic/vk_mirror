@@ -209,7 +209,7 @@ var stVersions = {
     'module.css': 1120627851,
     'owner_photo.js': 2787686692,
     'owner_photo.css': 628686323,
-    'page.js': 3945767366,
+    'page.js': 39889144,
     'page.css': 2269096805,
     'page_help.css': 40887916,
     'public.css': 792068511,
@@ -243,7 +243,7 @@ var stVersions = {
     'im.css': 1433165723,
     'imn.js': 1841607078,
     'im.js': 6705744,
-    'emoji.js': 3443628941,
+    'emoji.js': 4161908654,
     'wide_dd.css': 2849633119,
     'wide_dd.js': 4260857284,
     'writebox.css': 498396150,
@@ -306,7 +306,7 @@ var stVersions = {
     'developers.css': 2192083352,
     'touch.css': 1524784846,
     'notifier.js': 2463532556,
-    'notifier.css': 2649952138,
+    'notifier.css': 3216272889,
     'earthday.js': 1302273681,
     'earthday.css': 190978924,
     'restore.js': 1578098959,
@@ -319,7 +319,7 @@ var stVersions = {
     'tags_dd.css': 3629295033,
     'tasks.js': 2346279584,
     'tasks.css': 2970006707,
-    'helpdesk.js': 3156559970,
+    'helpdesk.js': 3727701420,
     'tickets.js': 2175749834,
     'tickets.css': 4179225901,
     'faq.js': 743323881,
@@ -397,8 +397,8 @@ var stVersions = {
     'contests.css': 630790975,
     'ui.css': 993252443,
     'ui.js': 3425210242,
-    'ui_common.js': 4023297608,
-    'ui_common.css': 3025842343,
+    'ui_common.js': 609189789,
+    'ui_common.css': 2053095027,
     'ui_media_selector.js': 3035011918,
     'ui_media_selector.css': 3438437909,
     'admin.js': 1614876408,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 5807;
+var _rnd = 3113;

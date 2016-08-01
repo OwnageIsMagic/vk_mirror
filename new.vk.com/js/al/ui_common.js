@@ -622,7 +622,7 @@ var uiTabs = {
     },
     uiScroll = function() {
         var t = function(t, i) {
-            if (t = isString(t) && "_" === t[0] ? geByClass1(t) : ge(t), !t) throw new Error("uiScroll container is undefined");
+            if (!(t = this.ge(t))) throw new Error("uiScroll container is undefined");
             t.__uiScroll__ && t.__uiScroll__.destroy(), this.options = extend({
                     global: !1,
                     "native": !1,
@@ -637,6 +637,7 @@ var uiTabs = {
                     onmoreThreshold: null,
                     hidden: !1,
                     shadows: !1,
+                    scrollElements: [],
                     onresize: null,
                     onscroll: null,
                     onscrollstart: null,
@@ -646,21 +647,24 @@ var uiTabs = {
                     ondragstop: null,
                     onupdate: null,
                     onmore: null
-                }, i), this.options["native"] && (this.options.shadows = !1), this.removeEvents = [], this.removeElements = [], this.dragging = !1, this.released = !0, this.noMore = !
-                1, this.dragY = null, this.dragScroll = null, this.shadowTop = !1, this.shadowBottom = !1, this.unnecessary = !1, this.disabled = !1, this.stopped = !0, this.stoppedTimeout =
-                null, this.fixSizeDefault = null, this.animation = null, this.emitter = new EventEmitter, isFunction(this.options.onresize) && this.emitter.addListener(
-                    "resize", this.options.onresize), isFunction(this.options.onscroll) && this.emitter.addListener("scroll", this.options.onscroll), isFunction(this.options.onscrollstart) &&
-                this.emitter.addListener("scrollstart", this.options.onscrollstart), isFunction(this.options.onscrollstop) && this.emitter.addListener("scrollstop", this.options
-                    .onscrollstop), isFunction(this.options.ondrag) && this.emitter.addListener("drag", this.options.ondrag), isFunction(this.options.ondragstart) && this.emitter
-                .addListener("dragstart", this.options.ondragstart), isFunction(this.options.ondragstop) && this.emitter.addListener("dragstop", this.options.ondragstop),
-                isFunction(this.options.onupdate) && this.emitter.addListener("update", this.options.onupdate), isFunction(this.options.onmore) && this.emitter.addListener(
-                    "more", this.options.onmore), this.el = {
+                }, i), this.options["native"] && (this.options.shadows = !1), browser.mobile && (this.options.stopScrollPropagation = !1), isArray(this.options.scrollElements) ||
+                (this.options.scrollElements = []), this.removeEvents = [], this.removeElements = [], this.dragging = !1, this.released = !0, this.noMore = !1, this.dragY =
+                null, this.dragScroll = null, this.shadowTop = !1, this.shadowBottom = !1, this.unnecessary = !1, this.disabled = !1, this.stopped = !0, this.stoppedTimeout =
+                null, this.fixSizeDefault = null, this.animation = null, this.blockerScrollTop = 500, this.emitter = new EventEmitter, isFunction(this.options.onresize) &&
+                this.emitter.addListener("resize", this.options.onresize), isFunction(this.options.onscroll) && this.emitter.addListener("scroll", this.options.onscroll),
+                isFunction(this.options.onscrollstart) && this.emitter.addListener("scrollstart", this.options.onscrollstart), isFunction(this.options.onscrollstop) && this.emitter
+                .addListener("scrollstop", this.options.onscrollstop), isFunction(this.options.ondrag) && this.emitter.addListener("drag", this.options.ondrag), isFunction(
+                    this.options.ondragstart) && this.emitter.addListener("dragstart", this.options.ondragstart), isFunction(this.options.ondragstop) && this.emitter.addListener(
+                    "dragstop", this.options.ondragstop), isFunction(this.options.onupdate) && this.emitter.addListener("update", this.options.onupdate), isFunction(this.options
+                    .onmore) && this.emitter.addListener("more", this.options.onmore), this.el = {
                     container: t,
                     overflow: ce("div", {
                         className: "ui_scroll_overflow"
                     }),
                     outer: ce("div", {
                         className: "ui_scroll_outer"
+                    }, {
+                        margin: this.options.stopScrollPropagation ? this.blockerScrollTop + "px 0" : void 0
                     }),
                     inner: ce("div", {
                         className: "ui_scroll_inner"
@@ -692,10 +696,13 @@ var uiTabs = {
                         i && s.push("ui_scroll_" + i + "_theme")
                     }), addClass(this.el.container, s.join(" ")), this.options.hidden && addClass(this.el.container, "ui_scroll_hidden"); this.el.container.firstChild;) this.el
                 .content.appendChild(this.el.container.firstChild);
-            if (this.el.outer.appendChild(this.el.inner), this.el.inner.appendChild(this.el.content), this.el.overflow.appendChild(this.el.outer), e.appendChild(this.el.overflow),
-                this.options["native"] ? addClass(this.el.container, "ui_scroll_no_bar") : (this.el.barOuter.appendChild(this.el.barInner), this.el.barContainer.appendChild(
-                    this.el.barOuter), e.appendChild(this.el.barContainer), this.options.shadows && (this.el.overflow.appendChild(this.el.shadowTop), this.el.overflow.appendChild(
-                    this.el.shadowBottom))), this.options.autoresize) {
+            if (this.el.outer.appendChild(this.el.inner), this.el.inner.appendChild(this.el.content), this.options.stopScrollPropagation ? (this.el.blocker = ce("div", {
+                    className: "ui_scroll_blocker"
+                }), this.addEvent(this.el.blocker, "scroll", this.fixBlocker.bind(this)), this.el.blocker.appendChild(this.el.outer), this.el.overflow.appendChild(this.el.blocker)) :
+                this.el.overflow.appendChild(this.el.outer), e.appendChild(this.el.overflow), this.options["native"] ? addClass(this.el.container, "ui_scroll_native") : (this.el
+                    .barOuter.appendChild(this.el.barInner), this.el.barContainer.appendChild(this.el.barOuter), e.appendChild(this.el.barContainer), this.options.shadows && (
+                        this.el.overflow.appendChild(this.el.shadowTop), this.el.overflow.appendChild(this.el.shadowBottom)), this.options.scrollElements.push(this.el.barContainer)
+                ), this.options.autoresize) {
                 var o = this.addResizeSensor(this.el.inner),
                     n = this.addResizeSensor(this.el.overflow);
                 this.startResizeListening = function() {
@@ -718,9 +725,7 @@ var uiTabs = {
                 scrollBottom: this.scrollBottom.bind(this),
                 scrollBy: this.scrollBy.bind(this),
                 scrollIntoView: this.scrollIntoView.bind(this),
-                update: function() {
-                    return this.inited ? this.update() : this.init()
-                }.bind(this),
+                update: this.init.bind(this),
                 updateAbove: this.updateAbove.bind(this),
                 updateBelow: this.updateBelow.bind(this),
                 data: {
@@ -734,10 +739,13 @@ var uiTabs = {
             var l = "onwheel" in this.el.outer ? "wheel" : void 0 !== document.onmousewheel ? "mousewheel" : browser.mozilla ? "MozMousePixelScroll" : "DOMMouseScroll";
             return this.addEvent(this.el.container, l, function(t) {
                 this.animation && this.animation.stop(), this.options.stopScrollPropagation && !this.disabled && this.isScrollEventUnused(t) && cancelEvent(t)
-            }.bind(this)), this.options["native"] || (this.addEvent(this.el.barInner, "mousedown", this.dragstart.bind(this)), this.addEvent(this.el.barContainer, l,
-                function(t) {
-                    this.disabled || (this.scrollBy(this.scrollEventDelta(t)), (this.options.stopScrollPropagation || !this.isScrollEventUnused(t)) && cancelEvent(t))
-                }.bind(this))), this.options.reversed && this.addEvent(this.el.container, "mousedown touchstart pointerdown", function(t) {
+            }.bind(this)), this.options["native"] || this.addEvent(this.el.barInner, "mousedown", this.dragstart.bind(this)), each(this.options.scrollElements, function(t,
+                i) {
+                this.addEvent(i, l, function(t) {
+                    this.disabled || (this.scrollBy(this.scrollEventDelta(t)), (this.options.stopScrollPropagation || !this.isScrollEventUnused(t)) &&
+                        cancelEvent(t))
+                }.bind(this))
+            }.bind(this)), this.options.reversed && this.addEvent(this.el.container, "mousedown touchstart pointerdown", function(t) {
                 this.released = !1, this.noMore = !0;
                 var i = this.addEvent(document, "mouseup contextmenu touchend pointerup", function(t) {
                     removeEvent(i), this.released = !0, this.noMore && this.stopped && !this.dragging && (this.noMore = !1, this.more())
@@ -752,9 +760,16 @@ var uiTabs = {
             }.bind(this)), this.api
         };
         return t.prototype = {
+            ge: function(t) {
+                return t = isString(t) && "_" === t[0] ? geByClass1(t) : ge(t)
+            },
             init: function() {
-                return this.el.container.scrollWidth && !this.disabled ? (this.fixSize(!0), this.options.autoresize && this.startResizeListening(), this.options.global ||
-                    cur.destroy.push(this.destroy.bind(this)), this.inited = !0, this.update()) : void 0
+                if (this.fixBlocker(), !this.inited) {
+                    if (!this.el.container.scrollWidth || this.disabled) return;
+                    this.fixSize(!0), this.options.autoresize && this.startResizeListening(), this.options.global || cur.destroy.push(this.destroy.bind(this)), this.inited = !
+                        0
+                }
+                return this.update(), this.api
             },
             addEvent: function(t, i, e) {
                 return this.removeEvents.push([t, i, e]), addEvent(t, i, e), e
@@ -769,9 +784,9 @@ var uiTabs = {
                     for (var t = cf(); this.el.content.firstChild;) t.appendChild(this.el.content.firstChild);
                     this.el.container.appendChild(t)
                 }
-                this.el.container.className = this.el.container.className.replace(/\bui_scroll_.+?\b/g, " "), each(this.removeElements, function(t, i) {
+                return this.el.container.className = this.el.container.className.replace(/\bui_scroll_.+?\b/g, " "), each(this.removeElements, function(t, i) {
                     re(i)
-                }), this.el.container.scrollTop = this.api.data.scrollTop, this.el.container.__uiScroll__ = null
+                }), this.el.container.scrollTop = this.api.data.scrollTop, delete this.el.container.__uiScroll__, this.api
             },
             updateAbove: function(t) {
                 if (isFunction(t)) {
@@ -779,6 +794,7 @@ var uiTabs = {
                     var i = this.el.outer.scrollHeight - this.el.outer.scrollTop - this.el.overflow.offsetHeight;
                     t(), this.el.outer.scrollTop = this.el.outer.scrollHeight - this.el.overflow.offsetHeight - i
                 }
+                return this.api
             },
             updateBelow: function(t) {
                 if (isFunction(t)) {
@@ -786,13 +802,17 @@ var uiTabs = {
                     var i = this.options.preserveEdgeBelow && this.api.data.scrollBottom <= this.options.preserveEdgeBelowThreshold;
                     t(), i && this.scrollBottom()
                 }
+                return this.api
             },
             fixSize: function(t) {
                 this.options["native"] || (t && null == this.fixSizeDefault && (this.fixSizeDefault = this.el.container.style.width), setStyle(this.el.container, "width",
                     t ? getSize(this.el.container, !0)[0] || this.fixSizeDefault || "" : this.fixSizeDefault || ""))
             },
+            fixBlocker: function() {
+                this.options.stopScrollPropagation && (this.el.blocker.scrollTop = this.blockerScrollTop)
+            },
             emitEvent: function(t) {
-                !this.disabled && this.inited && this.emitter.emitEvent(t, [this.api])
+                this.disabled || this.inited && this.emitter.emitEvent(t, [this.api])
             },
             scrollEventDelta: function(t) {
                 var i = 0,
@@ -804,10 +824,7 @@ var uiTabs = {
             },
             isScrollEventUnused: function(t, i) {
                 var i = this.scrollEventDelta(t);
-                if (i > 0) {
-                    if (i > this.api.data.scrollBottom) return this.api.data.scrollBottom && this.scrollBottom(), !0
-                } else if (-i > this.api.data.scrollTop) return this.api.data.scrollTop && this.scrollTop(), !0;
-                return !1
+                return i > 0 ? !this.api.data.scrollBottom : !this.api.data.scrollTop
             },
             addResizeSensor: function(t) {
                 if (browser.msie9 || browser.opera && browser.version < 13) {
@@ -815,8 +832,8 @@ var uiTabs = {
                         e = !1,
                         s = function() {
                             return o.contentDocument ? (o.contentDocument.defaultView.addEventListener("resize", function() {
-                                this.update() && this.emitEvent("resize")
-                            }.bind(this)), void(this.update() && this.emitEvent("resize"))) : setTimeout(s, 100)
+                                this.update() && (this.fixBlocker(), this.emitEvent("resize"))
+                            }.bind(this)), void(this.update() && (this.fixBlocker(), this.emitEvent("resize")))) : setTimeout(s, 100)
                         }.bind(this),
                         o = ce("object", {
                             type: "text/html",
@@ -849,37 +866,37 @@ var uiTabs = {
                         var i = (t.offsetWidth || 1e4) + 10,
                             e = (t.offsetHeight || 1e4) + 10;
                         r.style.width = i + "px", r.style.height = e + "px", n.scrollLeft = i, n.scrollTop = e, l.scrollLeft = i, l.scrollTop = e, h !== (h = i + " " + e) &&
-                            this.update() && this.emitEvent("resize")
+                            this.update() && (this.fixBlocker(), this.emitEvent("resize"))
                     }.bind(this)
             },
             disable: function(t) {
-                this.disabled = !!t, t ? (this.animation && this.animation.stop(), this.fixSize()) : (this.fixSize(!0), this.update()), toggleClass(this.el.container,
-                    "ui_scroll_disabled", this.disabled)
+                return this.disabled = !!t, t ? (this.animation && this.animation.stop(), this.fixSize()) : (this.fixSize(!0), this.update()), toggleClass(this.el.container,
+                    "ui_scroll_disabled", this.disabled), this.api
             },
             dragstart: function(t) {
-                this.disabled || this.dragging || this.options["native"] || (t || (t = window.event), this.dragging = !0, this.animation && this.animation.stop(), this.options
-                    .reversed && (this.noMore = !0), setStyle(bodyNode, "cursor", "pointer"), addEvent(document, "mouseup contextmenu", this.dragstartHandler = this.dragstop
-                        .bind(this)), addEvent(document, "mousemove", this.dragHandler = this.drag.bind(this)), addClass(this.el.container, "ui_scroll_dragging"), this
-                    .dragScroll = this.options.reversed ? this.api.data.scrollBottom : this.api.data.scrollTop, this.dragY = t.screenY, this.emitEvent("dragstart"),
-                    cancelEvent(t))
+                return this.disabled || this.dragging || this.options["native"] ? void 0 : (t || (t = window.event), this.dragging = !0, this.animation && this.animation.stop(),
+                    this.options.reversed && (this.noMore = !0), setStyle(bodyNode, "cursor", "pointer"), addEvent(document, "mouseup contextmenu", this.dragstartHandler =
+                        this.dragstop.bind(this)), addEvent(document, "mousemove", this.dragHandler = this.drag.bind(this)), addClass(this.el.container,
+                        "ui_scroll_dragging"), this.dragScroll = this.options.reversed ? this.api.data.scrollBottom : this.api.data.scrollTop, this.dragY = t.screenY,
+                    cancelEvent(t), this.emitEvent("dragstart"), this.api)
             },
             dragstop: function(t) {
-                this.disabled || !this.dragging || this.options["native"] || (t || (t = window.event), this.dragging = !1, this.dragstopHandler && removeEvent(document,
-                        "mouseup contextmenu", this.dragstopHandler), this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), setStyle(bodyNode,
-                        "cursor", ""), removeClass(this.el.container, "ui_scroll_dragging"), this.noMore && (this.noMore = !1, this.more()), this.emitEvent("dragstop"),
-                    t && "contextmenu" !== t.type && cancelEvent(t))
+                return this.disabled || !this.dragging || this.options["native"] ? void 0 : (t || (t = window.event), this.dragging = !1, this.dragstopHandler &&
+                    removeEvent(document, "mouseup contextmenu", this.dragstopHandler),
+                    this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), setStyle(bodyNode, "cursor", ""), removeClass(this.el.container,
+                        "ui_scroll_dragging"), this.noMore && (this.noMore = !1, this.more()), t && "contextmenu" !== t.type && cancelEvent(t), this.emitEvent(
+                        "dragstop"), this.api)
             },
             drag: function(t) {
                 if (!this.disabled && this.dragging && !this.options["native"]) {
                     t || (t = window.event);
                     var i = (t.screenY - this.dragY) * (this.api.data.scrollHeight / this.el.barOuter.scrollHeight);
-                    this.el.outer.scrollTop = this.options.reversed ? this.el.outer.scrollHeight - this.el.overflow.offsetHeight - this.dragScroll + i : this.dragScroll +
-                        i, this.emitEvent("drag"), cancelEvent(t)
+                    return this.el.outer.scrollTop = this.options.reversed ? this.el.outer.scrollHeight - this.el.overflow.offsetHeight - this.dragScroll + i : this.dragScroll +
+                        i, cancelEvent(t), this.emitEvent("drag"), this.api
                 }
             },
             scroll: function(t, i, e) {
-                this.animation && this.animation.stop(), i ? (i = "number" != typeof i || !Number.isFinite(i) || i % 1 ? 300 : Math.abs(i),
-                    this.animation = new Fx.Base({
+                return this.animation && this.animation.stop(), i ? (i = "number" != typeof i || !Number.isFinite(i) || i % 1 ? 300 : Math.abs(i), this.animation = new Fx.Base({
                         scrollTop: this.el.outer.scrollTop
                     }, {
                         transition: Fx.Transitions.easeOutCubic,
@@ -893,19 +910,19 @@ var uiTabs = {
                         scrollTop: this.el.outer.scrollTop
                     }, {
                         scrollTop: t
-                    })) : (this.el.outer.scrollTop = t, isFunction(e) && e(this.api))
+                    })) : (this.el.outer.scrollTop = t, isFunction(e) && e(this.api)), this.api
             },
             scrollTop: function(t, i, e) {
-                this.disabled || this.dragging || this.scroll(intval(t), i, e)
+                return this.disabled || this.dragging ? void 0 : this.scroll(intval(t), i, e)
             },
             scrollBottom: function(t, i, e) {
-                this.disabled || this.dragging || this.scroll(this.el.outer.scrollHeight - this.el.overflow.offsetHeight - intval(t), i, e)
+                return this.disabled || this.dragging ? void 0 : this.scroll(this.el.outer.scrollHeight - this.el.overflow.offsetHeight - intval(t), i, e)
             },
             scrollBy: function(t, i, e) {
-                this.disabled || this.dragging || this.scroll(this.el.outer.scrollTop + intval(t), i, e)
+                return this.disabled || this.dragging ? void 0 : this.scroll(this.el.outer.scrollTop + intval(t), i, e)
             },
             scrollIntoView: function(t, i, e) {
-                if ((t = ge(t)) && t.compareDocumentPosition(this.el.content) & Node.DOCUMENT_POSITION_CONTAINS) {
+                if ((t = this.ge(t)) && t.compareDocumentPosition(this.el.content) & Node.DOCUMENT_POSITION_CONTAINS) {
                     var s = getXY(t)[1],
                         o = getXY(this.el.overflow)[1],
                         n = getSize(t)[1];
@@ -914,6 +931,7 @@ var uiTabs = {
                         getSize(this.el.shadowTop)[1] : 0), i, e) : this.scrollTop(s - o + this.api.data.scrollTop + n - this.api.data.viewportHeight + (this.options.shadows ?
                         getSize(this.el.shadowBottom)[1] : 0), i, e)
                 }
+                return this.api
             },
             update: function() {
                 if (!this.inited || this.disabled) return !1;

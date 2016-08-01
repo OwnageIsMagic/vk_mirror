@@ -1741,22 +1741,33 @@ a.ui_search_custom_link {
     position: relative
 }
 
+.ui_scroll_container:not(.ui_scroll_native) .ui_scroll_blocker::-webkit-scrollbar,
+.ui_scroll_container:not(.ui_scroll_native) .ui_scroll_outer::-webkit-scrollbar {
+    display: none
+}
+
+.ui_scroll_blocker,
 .ui_scroll_outer {
+    -webkit-tap-highlight-color: transparent;
     width: inherit;
     height: inherit;
     min-height: inherit;
     max-height: inherit;
     overflow-y: scroll;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: hidden
+}
+
+.ui_scroll_blocker {
     padding-right: 100px
 }
 
-.ui_scroll_no_bar .ui_scroll_outer {
-    padding-right: 0
+.ui_scroll_outer {
+    -webkit-overflow-scrolling: touch;
+    padding-right: 50px
 }
 
-.ui_scroll_container:not(.ui_scroll_no_bar) .ui_scroll_outer::-webkit-scrollbar {
-    display: none
+.ui_scroll_native .ui_scroll_outer {
+    padding-right: 0
 }
 
 .ui_scroll_overflow {
@@ -1903,6 +1914,7 @@ a.ui_search_custom_link {
     filter: none
 }
 
+.ui_scroll_disabled .ui_scroll_blocker,
 .ui_scroll_disabled .ui_scroll_outer {
     overflow: hidden!important;
     padding: 0!important

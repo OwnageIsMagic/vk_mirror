@@ -20,6 +20,8 @@
 .notifier_close,
 .notify_tt_thumb,
 .sticker_hints_arrow,
+.ui_scroll_emoji_theme .ui_scroll_shadow_bottom,
+.ui_scroll_emoji_theme .ui_scroll_shadow_top,
 span.fc_contact_photo.online:after {
     -ms-high-contrast-adjust: none
 }
@@ -1751,6 +1753,21 @@ div.chat_tab_img {
     pointer-events: none
 }
 
+.ui_scroll_emoji_theme .ui_scroll_outer {
+    position: relative
+}
+
+.ui_scroll_emoji_theme .ui_scroll_bar_outer {
+    right: -9px
+}
+
+.ui_scroll_emoji_theme .ui_scroll_shadow_bottom,
+.ui_scroll_emoji_theme .ui_scroll_shadow_top {
+    background: url(/images/emoji_sprite.png?11) 0 -29px;
+    box-shadow: none;
+    height: 10px
+}
+
 .emoji_sprite {
     background-image: url(/images/emoji_sprite.png?11);
     background-repeat: no-repeat
@@ -1764,34 +1781,6 @@ div.chat_tab_img {
     background: #606060;
     background: hsla(0, 0%, 59%, .4);
     border-radius: 5px
-}
-
-.emoji_expanded .emoji_expand_shadow {
-    height: 9px;
-    background-position: 0px -20px;
-    bottom: 1px
-}
-
-.emoji_expanded .emoji_expand_shadow,
-.emoji_expanded .emoji_expand_shadow_top {
-    z-index: 80;
-    position: absolute;
-    width: 272px;
-    background-repeat: repeat-x;
-    left: 3px;
-    pointer-events: none
-}
-
-.emoji_expanded .emoji_expand_shadow_top {
-    display: none;
-    height: 10px;
-    background-position: 0px -28px;
-    top: 0px
-}
-
-.emoji_no_opacity.emoji_expanded .emoji_expand_shadow,
-.emoji_no_opacity.emoji_expanded .emoji_expand_shadow_top {
-    display: none
 }
 
 .emoji_tabs {
