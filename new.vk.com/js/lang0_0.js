@@ -85,6 +85,7 @@ global_search_not_found = '�� ������� {search} �����
 global_to_top = '������';
 global_try_to_activate = '������ ������� ����? �������� ����������<br>{link}��������� ����� ��������� ������� &#187;{/link}';
 global_unknown_error = '����������� ������';
+global_user_is_online = '������������ ������';
 global_vkontakte = '���������';
 global_warning = '�������������e';
 global_write_msg = '�������� ���������';
@@ -239,7 +240,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 452;
+// section = 0; version = 454;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;

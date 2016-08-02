@@ -2,6 +2,17 @@
     display: none
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .chat_onl:after,
 .chat_tab_close:after,
 .chat_tab_imgcont.online:after,
@@ -2281,6 +2292,14 @@ div.chat_tab_img {
 }
 
 .notify_tt_text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0;
     margin-left: 40px;
     line-height: 16px
 }

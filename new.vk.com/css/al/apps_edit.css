@@ -12,6 +12,17 @@
     transition: opacity 0.15s ease
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .apps_edit_nav_header {
     padding: 10px 23px;
     background: #fafbfc;
@@ -2032,10 +2043,6 @@ input.apps_edit_input {
 .apps_edit_dd,
 .apps_edit_table textarea {
     margin-top: -1px
-}
-
-div.apps_edit_dd .selector_container td.selector_dropdown {
-    background-position: center 1px
 }
 
 .apps_edit_small_banner_panel {

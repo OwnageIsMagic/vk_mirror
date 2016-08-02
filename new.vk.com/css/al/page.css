@@ -80,6 +80,17 @@
     transition: opacity 0.15s ease
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .group_info .short_text,
 .public_info .short_text {
     background: #fff;
@@ -2613,7 +2624,8 @@ a.choose:hover {
 
 .choose_link {
     float: right;
-    margin-left: 20px
+    margin-left: 20px;
+    outline: none
 }
 
 .choose_row {

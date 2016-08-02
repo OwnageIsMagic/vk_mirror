@@ -23,12 +23,23 @@
     -ms-high-contrast-adjust: none
 }
 
+.h4-text {
+    border-bottom: none;
+    font-size: 1em;
+    margin: 0;
+    padding: 0
+}
+
+.h4-text,
 .audio_layout {
     color: #000;
-    line-height: 1.154;
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
+}
+
+.audio_layout {
+    line-height: 1.154
 }
 
 #ui_rmenu_audio_albums_list,

@@ -63,6 +63,17 @@ a.apps_header_progress:before {
     transition: opacity 0.15s ease
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .media-photo-thumb-background {
     background-repeat: no-repeat;
     background-size: cover;
@@ -1544,7 +1555,7 @@ a.page_block_header:hover .apps_cat_header_link:after {
 }
 
 .app_actions_menu_wrap .ui_actions_menu {
-    right: -26px
+    right: -27px
 }
 
 .app_actions_menu_wrap.loading {

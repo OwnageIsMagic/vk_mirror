@@ -77,7 +77,7 @@ function MediaSelector(e, a, i, o) {
                                     noZIndex: !0
                                 })
                             })), p && addEvent(c, "click", function() {
-                                return r.hide(!0), i.onItemClick && !i.onItemClick(_) ? !1 : (p(), !1)
+                                return r.activate(), r.hide(!0), i.onItemClick && !i.onItemClick(_) ? !1 : (p(), !1)
                             })
                     })
                 }

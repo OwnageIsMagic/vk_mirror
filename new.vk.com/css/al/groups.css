@@ -11,6 +11,17 @@ a.groups_messages_block:before {
     -ms-high-contrast-adjust: none
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 #groups_css {
     display: none
 }

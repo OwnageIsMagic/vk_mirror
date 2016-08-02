@@ -196,6 +196,16 @@ var AudioUtils = {
             }
         })
     },
+    chooseAudioBox: function(t, i, e) {
+        if (window.event = window.event || e, void 0 !== t.selected) cur.lastAddMedia.unchooseMedia(t.selected), t.selected = void 0, removeClass(domPN(t),
+            "audio_selected"), t.innerHTML = i.labels.add;
+        else {
+            var o = cur.attachCount && cur.attachCount() || 0;
+            cur.chooseMedia("audio", i.owner_id + "_" + i.id, i.info), (!cur.attachCount || cur.attachCount() > o) && cur.lastAddMedia && (t.selected = cur.lastAddMedia.chosenMedias
+                .length - 1, addClass(domPN(t), "audio_selected"), t.innerHTML = i.labels.cancel)
+        }
+        window.event = void 0
+    },
     drawAudio: function(t, i) {
         for (var e = JSON.parse(getTemplate("audio_bits_to_cls")), o = t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS], a = [], l = 0; 32 > l; l++) {
             var s = 1 << l;
@@ -949,7 +959,7 @@ AudioPlayer.tabIcons = {
             e ? setTimeout(function() {
                 var i = intval(domData(t, "is-current"));
                 toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, !!i)
-            }) : toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, i)
+            }) : toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, i);
         }
         var a = !!intval(domData(t, "is-current"));
         if (a != i) {
@@ -969,10 +979,9 @@ AudioPlayer.tabIcons = {
             }, 200);
             var e = geByClass1("_audio_duration", t);
             e && (e.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                    .duration)),
-                this.off(t), each(i.sliders, function() {
-                    this.destroy()
-                }), data(t, "player_inited", !1)
+                .duration)), this.off(t), each(i.sliders, function() {
+                this.destroy()
+            }), data(t, "player_inited", !1)
         }
     }, AudioPlayer.prototype._addRowPlayer = function(t, i) {
         if (!geByClass1("_audio_inline_player", t)) {

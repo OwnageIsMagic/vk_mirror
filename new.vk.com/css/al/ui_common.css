@@ -65,6 +65,17 @@ input.ui_search_field {
     transition: opacity 0.15s ease, visibility 0.15s ease
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .ui_tabs {
     position: relative;
     border-bottom: 1px solid #e7e8ec;
@@ -230,7 +241,7 @@ a.ui_box_header_link {
 }
 
 .ui_tab_group.visible:before {
-    z-index: 4;
+    z-index: 5;
     opacity: 1;
     -webkit-filter: none;
     filter: none

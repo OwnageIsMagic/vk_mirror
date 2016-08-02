@@ -19,6 +19,17 @@
     transition: opacity 0.15s ease
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .post_thumbed_media {
     margin: 0 -5px -5px 0;
     padding: 0 0 10px

@@ -6,11 +6,21 @@
 .dev_method_page_access_row_icon,
 .dev_methods_list_access_group_icon,
 .dev_sect_icon,
-body.dev #page_wrap .big.selector_container td.selector_dropdown,
 body.dev #stl_text,
 body.dev .priv_h_arrow,
 body.dev input.dev_top_input {
     -ms-high-contrast-adjust: none
+}
+
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
 }
 
 body.dev {
@@ -100,15 +110,6 @@ body.dev .stl_active.over_fast #stl_bg {
     background-color: #dce2e8
 }
 
-body.dev #page_wrap .selector_container td.selector input {
-    padding: 2px 0 1px 7px!important;
-    line-height: 1.23em
-}
-
-body.dev #page_wrap .big.selector_container td.selector_dropdown {
-    background: url(/images/dropdown_arrow.png) no-repeat 6px 50%
-}
-
 body.dev .paginated_table table {
     border: none
 }
@@ -194,22 +195,6 @@ body.dev .tdd_x_c {
     margin-top: 0
 }
 
-body.dev #page_wrap .selector_container td.selector .token span.x,
-body.dev #page_wrap .selector_container td.selector .token span.x_hover {
-    background: url(/images/dev_hide_tag.png?1) 4px 0 no-repeat;
-    margin-top: 3px!important
-}
-
-body.dev #page_wrap .selector_container td.selector .token.token_hover span.x,
-body.dev #page_wrap .selector_container td.selector .token.token_selected span.x,
-body.dev #page_wrap .selector_container td.selector .token span.x_hover {
-    background-position: 4px -24px
-}
-
-body.dev #page_wrap .big.selector_container td.selector .placeholder_wrap2 {
-    top: 2px
-}
-
 body.dev .tdd_input {
     margin-top: 2px;
     margin-bottom: 4px
@@ -234,22 +219,8 @@ body.dev .top_info_wrap {
     display: none!important
 }
 
-body.dev #page_wrap .selector_container td.selector .token,
 body.dev #page_wrap .tdd_tag {
     background: #d4dce5
-}
-
-body.dev #page_wrap .selector_container td.selector .token {
-    padding-top: 4px!important;
-    padding-bottom: 5px!important
-}
-
-body.dev #page_wrap .selector_container td.selector .token_hover {
-    background: #587da1
-}
-
-body.dev #page_wrap .selector_container td.selector .token_selected {
-    background: #2a5883
 }
 
 body.dev .tt.apps_edit_tt .bottom_sh,

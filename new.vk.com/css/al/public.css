@@ -6,6 +6,17 @@
     -ms-high-contrast-adjust: none
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .new_public_header {
     text-align: center;
     border-bottom: 1px solid #e7e8ec;

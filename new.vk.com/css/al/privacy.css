@@ -13,6 +13,17 @@
     -ms-high-contrast-adjust: none
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .privacy_edit_wrap {
     position: relative;
     display: inline-block;
@@ -196,7 +207,8 @@
 
 .flist_item {
     height: 34px;
-    padding: 12px 0
+    padding: 12px 0;
+    outline: none
 }
 
 .flist_item_img {
