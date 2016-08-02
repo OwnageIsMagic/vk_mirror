@@ -880,10 +880,10 @@ a.apps_header_progress:before {
 }
 
 .app_link {
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #42648b
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    color: #2a5885
 }
 
 .app_cat_name {
@@ -901,11 +901,15 @@ a.apps_header_progress:before {
 }
 
 .app_type_label {
-    padding-top: 5px
+    padding-top: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
+.app_cat_link,
 .apps_cat_users {
-    color: #656565;
+    color: #939393;
     font-size: 12.5px
 }
 
@@ -1333,10 +1337,13 @@ a.page_block_header:hover .apps_cat_header_link:after {
 
 .app_settings_name,
 .app_settings_name a {
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #42648b
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.app_settings_name a {
+    color: #2a5885
 }
 
 .apps_manage_layout .app_settings_name {

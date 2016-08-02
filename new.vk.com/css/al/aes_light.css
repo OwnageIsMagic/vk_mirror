@@ -773,17 +773,19 @@ a.ads_ad_box2:hover {
     vertical-align: bottom
 }
 
-.ads_ad_title.apps_only,
 .ads_ad_title.groups_only {
-    display: inline
-}
-
-.ads_ad_title.apps_only,
-.ads_ad_title.groups_only,
-.ads_ad_title.big_app {
+    display: inline;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale
+}
+
+.ads_ad_title.apps_only {
+    display: inline;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    color: #2a5885
 }
 
 .ads_ad_title.big_app {
@@ -793,6 +795,9 @@ a.ads_ad_box2:hover {
     z-index: 1;
     font-size: 14px;
     line-height: 143%;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     margin-bottom: 3px;
     padding: 0
 }
@@ -878,7 +883,7 @@ a.ads_ad_box2:hover {
 }
 
 .ads_ad_domain.apps_only {
-    color: #656565;
+    color: #939393;
     font-size: 12.5px;
     padding-top: 5px
 }

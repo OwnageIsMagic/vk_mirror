@@ -2382,7 +2382,7 @@ AppsSlider.prototype = {
             var tab = this.geTabBySection(section);
             return tab && setTimeout(uiTabs.switchTab.pbind(tab), 0), window[cur.loadMore ? "show" : "hide"](cur.lShowMoreButton), !1
         }
-        target && addClass(target, "apps_header_progress");
+        target && (hasClass(target, "app_cat_link") ? lockLink(target) : addClass(target, "apps_header_progress"));
         var tab = this.geTabBySection(section);
         return tab && (uiTabs.switchTab(tab), uiTabs.showProgress(tab)), nav.go({
             0: this.address,
@@ -2393,7 +2393,7 @@ AppsSlider.prototype = {
             add: nav.objLoc.add
         }, !1, {
             onDone: function(t) {
-                removeClass(target, "apps_header_progress"), extend(cur, {
+                target && (hasClass(target, "app_cat_link") ? unlockLink(target) : removeClass(target, "apps_header_progress")), extend(cur, {
                     scrollToHeader: scrollToHeader,
                     scrollToTop: scrollToTop
                 })

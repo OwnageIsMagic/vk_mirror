@@ -156,36 +156,6 @@
     margin: 15px auto 0
 }
 
-.wall_module .ext_video img {
-    width: 120px;
-    height: 90px
-}
-
-div.wall_module .ext_video div {
-    width: 120px;
-    margin-top: 75px
-}
-
-.wall_module .video div {
-    bottom: 5px;
-    right: 0;
-    position: absolute;
-    font-size: 0.9em;
-    z-index: 10
-}
-
-.wall_module .video div span.bg {
-    background: #000;
-    color: #000;
-    opacity: 0.6;
-    filter: alpha(opacity=60)
-}
-
-.wall_module .video div span {
-    color: #fff;
-    padding: 0 3px 1px
-}
-
 .wall_module .wall_posts .post {
     display: none
 }
@@ -1234,112 +1204,6 @@ h5.post_author {
     visibility: visible
 }
 
-.wall_module .post_thumbs_num1 .page_media_thumb1,
-.wall_module .post_thumbs_num2 .page_media_thumb1,
-.wall_module .post_thumbs_num2 .page_media_thumb2,
-.wall_module .post_thumbs_num3 .page_media_thumb1,
-.wall_module .post_thumbs_num4 .page_media_thumb1 {
-    max-width: 320px;
-    max-height: 306px;
-    height: auto;
-    float: left
-}
-
-.wall_module .post_thumbs_num1 .page_media_thumb1 img,
-.wall_module .post_thumbs_num2 .page_media_thumb1 img,
-.wall_module .post_thumbs_num2 .page_media_thumb2 img,
-.wall_module .post_thumbs_num3 .page_media_thumb1 img,
-.wall_module .post_thumbs_num4 .page_media_thumb1 img {
-    max-width: 320px;
-    max-height: 306px;
-    width: auto;
-    height: auto
-}
-
-.wall_module .post_thumbs_num1 .page_media_video {
-    max-width: 320px;
-    max-height: 240px
-}
-
-.wall_module .post_thumbs_num1 .page_media_video .video img {
-    max-width: 320px;
-    max-height: 240px;
-    width: 320px;
-    height: 240px
-}
-
-.wall_module .page_media_full_video .video div {
-    bottom: 10px;
-    font-size: 11px
-}
-
-.wall_module .post_thumbs_num1 .page_media_thumb1 {
-    margin: 0
-}
-
-.wall_module .page_media_full_video {
-    padding-bottom: 0;
-    max-width: 480px;
-    max-height: 360px
-}
-
-.wall_module .page_media_full_video .video img {
-    max-width: 480px;
-    max-height: 360px;
-    width: 480px;
-    height: 360px
-}
-
-.wall_module .page_media_full_video .video div.video_play_inline,
-.wall_module .page_media_video .video div.video_play_inline {
-    left: 137px;
-    top: 97px;
-    position: absolute;
-    z-index: 10;
-    background: url(/images/inline_video_play.png) no-repeat;
-    width: 46px;
-    height: 46px
-}
-
-.wall_module .page_media_full_video .video div.video_play_inline {
-    left: 225px;
-    top: 165px
-}
-
-.wall_module .video div.page_video_play_live {
-    left: 80px;
-    top: 97px;
-    position: absolute;
-    z-index: 10;
-    background: url(/images/inline_video_small_play.png) 100% no-repeat;
-    background-color: rgba(0, 0, 0, .5);
-    width: 100px;
-    height: 14px;
-    color: #fff;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    border-radius: 10px;
-    padding: 16px 40px 16px 20px;
-    font-size: 13px!important;
-    font-size: 13px;
-    line-height: 100%
-}
-
-.wall_module .page_media_full_video div.page_video_play_live {
-    left: 160px;
-    top: 165px
-}
-
-.wall_module .page_media_full_video .video div.video_play_inline_loading {
-    background: url(/images/upload_inv_mono.gif) no-repeat 50% 50%;
-    width: 100px;
-    background-color: #000;
-    background-color: rgba(0, 0, 0, .7);
-    border-radius: 5px;
-    margin: -2px 0 0 -27px
-}
-
 .wall_module .page_media_thumbed_link {
     display: block;
     margin: 15px 0 5px;
@@ -1774,20 +1638,6 @@ a.page_media_link_desc {
 
 .post_video_views_count {
     color: #939393
-}
-
-.wall_module .video {
-    display: block;
-    position: relative
-}
-
-.wall_module .video:hover {
-    text-decoration: none
-}
-
-.wall_module .video img {
-    height: 98px;
-    vertical-align: top
 }
 
 .wall_module .app img.icon {
@@ -5697,7 +5547,25 @@ button.wall_block_app_btn {
     padding: 2px 0
 }
 
-.page_no_flash_wrap {
+.video_box_wrap {
+    position: relative;
+    overflow: hidden;
+    height: 100%
+}
+
+.video_box_background {
+    position: absolute;
+    top: -10px;
+    bottom: -10px;
+    left: -10px;
+    right: -10px;
+    background: no-repeat 50%;
+    background-size: cover;
+    -webkit-filter: blur(10px);
+    filter: blur(10px)
+}
+
+.video_box_flash_needed {
     position: absolute;
     left: 50%;
     top: 50%;
@@ -5711,31 +5579,9 @@ button.wall_block_app_btn {
     text-align: center
 }
 
-#mv_box .page_no_flash_wrap {
-    margin: -18px 0 0 -160px;
-    width: 300px
-}
-
-.mv_minimized #mv_box .page_no_flash_wrap {
-    margin: -27px 0 0 -100px;
-    width: 180px
-}
-
-.video_box_wrap {
-    position: relative;
-    overflow: hidden
-}
-
-.video_box_background {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    bottom: -10px;
-    left: -10px;
-    background: no-repeat 50%;
-    background-size: cover;
-    -webkit-filter: blur(10px);
-    filter: blur(10px)
+#video_player {
+    width: 100%;
+    height: 100%
 }
 
 .wall_browse_images {
@@ -6327,12 +6173,6 @@ button.wall_block_app_btn {
     color: #888;
     margin-left: 2px;
     font-size: 9px
-}
-
-.video_external_inline,
-.video_external_inline .video_box_wrap_external,
-.video_external_inline .wrap {
-    height: 100%
 }
 
 .videos_edit_main_album_description {
