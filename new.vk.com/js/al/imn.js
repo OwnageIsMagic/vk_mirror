@@ -6087,7 +6087,7 @@
             r = arguments.length <= 3 || void 0 === arguments[3] ? !1 : arguments[3],
             a = e.get()
             .tabs[t];
-        if (!a.last_act) return {
+        if (!a.last_act || !a.last_act[0]) return {
             str: "",
             time: ""
         };
@@ -10036,7 +10036,7 @@
             u = (0, w.searchLocalHints)(r, t.get());
         t.get()
             .creation_showed_all = !1, n.reset(), n.pipe(m(u, r, t), r), n.toTop(), r ? (o = (0, w.searchFriends)(r, t.get()), s = (0, w.searchHintsIndex)(r, [], "friends",
-                data), n.pipe(m(s, r, t), r), n.pipe(m(o, r, t), r)) : (s = Promise.resolve([]), o = Promise.resolve([])), t.set(i.bind(null, [u, o, s], !0)), uiSearch.showProgress(
+                t.get()), n.pipe(m(s, r, t), r), n.pipe(m(o, r, t), r)) : (s = Promise.resolve([]), o = Promise.resolve([])), t.set(i.bind(null, [u, o, s], !0)), uiSearch.showProgress(
                 l), Promise.all([u, s, o])
             .then(uiSearch.hideProgress.bind(null, l))
     }

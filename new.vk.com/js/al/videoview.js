@@ -763,7 +763,7 @@ var Videoview = {
             setTimeout(Videoview.playerNextTimerUpdate, 10)
         },
         onFullscreenChange: function() {
-            Videoview.updateExternalVideoFinishBlock()
+            Videoview.updateExternalVideoFinishBlock(), mvcur.chatMode && VideoChat.updateScroll()
         },
         updateSize: function() {
             if (mvcur.minimized) return !1;
@@ -1351,8 +1351,8 @@ var Videoview = {
                 if (!vk.id && !html) return void setTimeout(function() {
                     Videoview.hide(!1, !0), showDoneBox(title)
                 }, 500);
-                if (title && !html) return val("mv_content", '<div id="video_player" class="video_layer_message">' + title + "</div>"), show("mv_content"), hide("mv_progress"),
-                    void hide("mv_controls");
+                if (title && !html) return val("mv_content", '<div class="mv_video_unavailable_message_wrap"><div class="mv_video_unavailable_message">' + title +
+                    "</div></div>"), show("mv_content"), hide("mv_progress"), void hide("mv_controls");
                 if (opt = opt || {}, cur.lang = extend(cur.lang || {}, opt.lang), cur.share_timehash = cur.share_timehash || opt.share_timehash, mvcur.post = opt.post, mvcur.maxReplyLength =
                     opt.maxReplyLength, mvcur.maxChatReplyLength = opt.maxChatReplyLength, mvcur.maxDescriptionLength = opt.maxDescriptionLength, mvcur.mvData = opt.mvData,
                     mvcur.videoRaw = opt.mvData.videoRaw, mvcur.commentsTpl = opt.commentsTpl, mvcur.mvMediaTypes = opt.media, mvcur.mvMediaShare = opt.share, mvcur.mvReplyNames =
@@ -1435,7 +1435,7 @@ var Videoview = {
                 mvcur.mvData.uploaded || Videoview.recache(), Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData && stManager.add("notifier.js",
                     function() {
                         Videoview.checkUpdates(opt.queueData)
-                    })
+                    }), mvcur.mvData.is_live && setTimeout(Videoview.checkOtherLives.pbind(videoRaw), 6e4)
             }
         },
         adaptRecomsHeight: function() {
@@ -1505,7 +1505,7 @@ var Videoview = {
                     actions: c
                 });
                 var m = langDate(1e3 * n, getLang("global_short_date_time", "raw"), 0, []),
-                    u = rs(mvcur.commentsTpl.reply, {
+                    u = rs(psr(mvcur.commentsTpl.reply, {
                         actions: c,
                         post_oid: e,
                         reply_id: e + "video_" + i + "mv",
@@ -1517,13 +1517,27 @@ var Videoview = {
                         message: r,
                         date: m,
                         to_link: s
-                    });
+                    }));
                 mvcur.mvReplyNames[t] = [v, l], ge("mv_comments")
                     .insertAdjacentHTML("beforeend", u), mvcur.mvData.commcount++, mvcur.mvData.commshown++
             }
         },
         updateLiveViewersCount: function(e) {
             (e = intval(e)) && val("mv_views", getLang("video_live_N_watching", e, !0))
+        },
+        checkOtherLives: function(e) {
+            mvcur.mvShown && !mvcur.minimized && mvcur.videoRaw == e && (ajax.post("/al_video.php", {
+                act: "live_other_videos",
+                video: e
+            }, {
+                onDone: function(e) {
+                    var i = domByClass(mvLayer, "mv_info_narrow_column");
+                    val(i, e)
+                },
+                onFail: function() {
+                    return !0
+                }
+            }), setTimeout(Videoview.checkOtherLives.pbind(e), 6e4))
         },
         onVideoShared: function(e, i, t) {
             "publish" != e || Videoview._isCurrentVideoPublished() || (Videoview.hide(!0, !0), setTimeout(function() {
@@ -1761,8 +1775,8 @@ var Videoview = {
                     top: "0px"
                 }), setStyle(mvLayer, {
                     width: "auto"
-                }), mvcur.mvData && Videoview.minimizePlayer(), window.tooltips && tooltips.destroyAll("mv_container"), removeEvent(window, "resize", Videoview.onResize),
-                removeEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
+                }), Videoview.minimizePlayer(), window.tooltips && tooltips.destroyAll("mv_container"), removeEvent(window, "resize", Videoview.onResize), removeEvent(document,
+                    "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
                 addEvent(window, "resize", Videoview.minResize), Videoview.enabledResize() ? (addEvent("mv_box", "mousedown", Videoview.startDrag), addEvent("mv_box",
                     "mousemove", Videoview.changeCursor), mvcur.minDestroy = function() {
                     removeEvent("mv_box", "mousedown", Videoview.startDrag), removeEvent("mv_box", "mousemove", Videoview.changeCursor), setStyle("mv_box", {
@@ -1811,14 +1825,17 @@ var Videoview = {
                     removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
                 var o = "mv_dark";
                 return addClass(mvLayerWrap, o), addClass(layerBG, o), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle(
-                        "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), Videoview.updateSize(), addEvent(window, "resize",
-                        Videoview.onResize), addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document,
-                        "keydown", Videoview.onKeyDown), removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e ===
-                    !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
+                        "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_content", {
+                        width: "",
+                        height: ""
+                    }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
+                        "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
+                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(),
+                    onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
-                    }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && VideoChat.toggleStateClasses(), Videoview.viewScroll(),
-                    Videoview.playerOnResize(), !1
+                    }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),
+                    Videoview.viewScroll(), Videoview.playerOnResize(), !1
             }
         },
         toggleSideBlock: function() {
@@ -1849,10 +1866,9 @@ var Videoview = {
         hideDD: function(e) {
             if (e > 0) return void(cur.hideShareTimer = setTimeout(Videoview.hideDD.pbind(0), e));
             var i = cur.ddShown;
-            i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"),
-                fadeOut(i, 200, function() {
-                    removeClass(i, "mv_dd_hiding")
-                })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
+            i && (-1 == e ? hide(i) : (addClass(i, "mv_dd_hiding"), fadeOut(i, 200, function() {
+                removeClass(i, "mv_dd_hiding")
+            })), removeEvent(document, "click", Videoview.hideDD), cur.ddShown = !1)
         },
         reportFromDD: function(e, i) {
             ajax.post("reports.php", {
@@ -2553,18 +2569,18 @@ var Videoview = {
                 pack_id: n,
                 img_size: isRetina() ? 256 : 128
             }));
-            var s = getTemplate("video_chat_message", {
+            var s = psr(getTemplate("video_chat_message", {
                 author_href: a,
                 author_photo: o,
                 author_name: t,
                 message: d,
                 video_owner_id: e,
                 msg_id: i
-            });
+            }));
             VideoChat.appendMessage(s, i)
         },
         receiveDelete: function(e, i) {
-            re("mv_chat_msg_" + e + "_" + i)
+            re("mv_chat_msg" + e + "_" + i)
         },
         appendMessage: function(e, i) {
             if (!ge("mv_chat_msg" + mvcur.mvData.oid + "_" + i)) {
@@ -2624,13 +2640,16 @@ var Videoview = {
         },
         toggle: function() {
             var e = VideoChat.isHidden();
-            this.setHidden(!e), VideoChat.toggleStateClasses(), e && VideoChat.scroll && VideoChat.scroll.scrollBottom()
+            this.setHidden(!e), VideoChat.toggleStateClasses(), e && VideoChat.scroll && VideoChat.updateScroll()
         },
         toggleStateClasses: function() {
             var e = !!this.block,
                 i = VideoChat.isHidden(),
                 t = Videoview.isMinimized();
             toggleClass("mv_container", "_has_chat", e && !t), toggleClass("mv_container", "_hide_chat", e && !t && i)
+        },
+        updateScroll: function() {
+            VideoChat.scroll.update(), VideoChat.scroll.scrollBottom()
         },
         destroy: function() {
             if (VideoChat.block) {

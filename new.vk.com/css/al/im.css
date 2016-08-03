@@ -230,6 +230,11 @@ img.im_photo_thumb {
     min-width: 342px
 }
 
+.im_fwd_log_wrap .button_wide {
+    margin-left: 5px;
+    margin-bottom: 8px
+}
+
 .wall_module .media_desc .audio .title_wrap b {
     background: none;
     width: auto;

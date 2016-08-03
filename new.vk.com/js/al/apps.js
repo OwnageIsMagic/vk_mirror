@@ -1983,10 +1983,10 @@ AppsSlider.prototype = {
                 n = o.getHours(),
                 r = o.getMinutes();
             10 > n && (n = "0" + n), 10 > r && (r = "0" + r), a = a.replace("{date}", n + ":" + r);
-            var c = cf(a);
+            var c = domFC(cf(a));
             cur.fWrap && (addClass(c, "apps_feed_row_just_added"), cur.fWrap.insertBefore(c, domFC(cur.fWrap)), s ? c.addEventListener("oTransitionEnd", e) : addEvent(
-                    c, "webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", e), setTimeout(removeClass.pbind(c, "apps_feed_row_just_added"), 10),
-                window.tooltips && tooltips.hideAll())
+                    c, "webkitTransitionEnd transitionend msTransitionEnd oTransitionEnd", e), removeClassDelayed(c, "apps_feed_row_just_added"), window.tooltips &&
+                tooltips.hideAll())
         }
     },
     feedInit: function() {

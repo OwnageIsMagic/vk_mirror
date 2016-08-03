@@ -83,25 +83,24 @@ body.mobfixed #mv_layer_wrap {
     z-index: 610
 }
 
-.video_layer_message {
-    background-color: #1e1e1e;
-    color: #aaa;
-    text-align: center;
+.mv_video_unavailable_message_wrap {
+    display: table;
+    width: 100%;
+    height: 100%
+}
+
+.mv_video_unavailable_message {
+    display: table-cell;
     width: 100%;
     height: 100%;
-    padding: 0;
+    text-align: center;
     vertical-align: middle;
-    display: table-cell;
     line-height: 1.4;
-    -o-transition: none!important;
-    transition: none!important
+    background-color: #1e1e1e;
+    color: #aaa
 }
 
-.mv_minimized .video_layer_message {
-    width: auto
-}
-
-.video_layer_message a {
+.mv_video_unavailable_message a {
     color: #6b98ba
 }
 
@@ -534,6 +533,18 @@ body.mobfixed #mv_layer_wrap {
     }
 }
 
+@media (min-width: 1680px) {
+    #mv_container._has_chat .mv_info_wide_column {
+        width: 1119px
+    }
+}
+
+@media (min-width: 1920px) {
+    #mv_container._has_chat .mv_info_wide_column {
+        width: 1359px
+    }
+}
+
 .mv_info_narrow_column,
 #mv_container._has_playlist .mv_info_narrow_column {
     width: 240px
@@ -782,6 +793,22 @@ body.mobfixed #mv_layer_wrap {
     }
 }
 
+@media (min-width: 1680px) {
+    #mv_container._has_chat:not(._hide_chat) #mv_content,
+    #mv_container._has_chat:not(._hide_chat) #mv_progress {
+        height: 630px;
+        width: 1120px
+    }
+}
+
+@media (min-width: 1920px) {
+    #mv_container._has_chat:not(._hide_chat) #mv_content,
+    #mv_container._has_chat:not(._hide_chat) #mv_progress {
+        height: 765px;
+        width: 1360px
+    }
+}
+
 #mv_container._has_chat._hide_chat #mv_content,
 #mv_container._has_chat._hide_chat #mv_progress {
     height: 540px;
@@ -801,6 +828,22 @@ body.mobfixed #mv_layer_wrap {
     #mv_container._has_chat._hide_chat #mv_progress {
         height: 720px;
         width: 1280px
+    }
+}
+
+@media (min-width: 1680px) {
+    #mv_container._has_chat._hide_chat #mv_content,
+    #mv_container._has_chat._hide_chat #mv_progress {
+        height: 810px;
+        width: 1440px
+    }
+}
+
+@media (min-width: 1920px) {
+    #mv_container._has_chat._hide_chat #mv_content,
+    #mv_container._has_chat._hide_chat #mv_progress {
+        height: 945px;
+        width: 1680px
     }
 }
 
@@ -2168,6 +2211,10 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     color: #fff
 }
 
+.mv_chat_message_text .mv_chat_reply_to {
+    color: #fff
+}
+
 .mv_chat_message_text a {
     color: #bfe2fe
 }
@@ -2184,6 +2231,25 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     font-size: 13px;
     line-height: 1.5;
     text-align: center
+}
+
+.mv_chat_new_messages_btn {
+    display: none;
+    position: absolute;
+    left: 50%;
+    bottom: 13px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    height: 30px;
+    line-height: 30px;
+    border-radius: 15px;
+    padding: 0 20px 0 36px;
+    color: #fff;
+    background: #4d4d4d;
+    white-space: nowrap;
+    cursor: pointer
 }
 
 .mv_chat_message_sticker {

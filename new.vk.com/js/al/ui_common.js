@@ -896,7 +896,8 @@ var uiTabs = {
                 }
             },
             scroll: function(t, i, e) {
-                return this.animation && this.animation.stop(), i ? (i = "number" != typeof i || !Number.isFinite(i) || i % 1 ? 300 : Math.abs(i), this.animation = new Fx.Base({
+                return this.animation && this.animation.stop(), this.fixBlocker(), this.el.outer.scrollTop == t && this.update(), i ? (i = "number" != typeof i || !Number.isFinite(
+                        i) || i % 1 ? 300 : Math.abs(i), this.animation = new Fx.Base({
                         scrollTop: this.el.outer.scrollTop
                     }, {
                         transition: Fx.Transitions.easeOutCubic,

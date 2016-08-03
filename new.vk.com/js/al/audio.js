@@ -222,7 +222,7 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 u = geByClass1("ui_rmenu_item_sel", l),
                 _ = u ? u.id : !1,
                 c = domPN(l);
-            c.replaceChild(se(o), l), cur.audioPage._initAlbumsSort(), _ && uiRightMenu.switchMenu(ge(_)), curBox()
+            c.replaceChild(se(o), l), cur.audioPage._initAlbumsSort(), _ && ge(_) && uiRightMenu.switchMenu(ge(_)), curBox()
                 .hide(), setTimeout(function() {
                     if (r) nav.go("/audios" + s + "?album_id=" + i);
                     else if (cur.audioPage) {
@@ -245,8 +245,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         shift: [8, 5, 0],
         appendParentCls: "_audio_page_player"
     })
-}, AudioPage.prototype.createAlbum = function(e) {
-    return this.editAlbum(0)
+}, AudioPage.prototype.createAlbum = function(e, i) {
+    return this.editAlbum(0), cancelEvent(e)
 }, AudioPage.prototype.editAlbum = function(e, i, t) {
     function o() {
         d && (removeClass(d, "in_progress"), hideProgress(d)), showTabbedBox("al_audio.php", {

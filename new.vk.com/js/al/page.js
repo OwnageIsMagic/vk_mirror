@@ -5333,6 +5333,7 @@ var Wall = {
                         updH = newEl.offsetHeight + mt;
                         updY = getXY(newEl, fixed)[1];
                         nodeUpdated(newEl);
+                        updateOnlineText();
                         Wall.updateMentionsIndex();
                         break;
                     }
