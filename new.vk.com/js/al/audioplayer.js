@@ -437,28 +437,29 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     }, TopAudioPlayer.prototype.onPlay = function(t, i, e) {
         function o() {
             var i = getAudioPlayer();
-            i.layer && i.layer.isShown() && i.layer.updatePosition(), addClass(s._el, a), toggleClass(s._el, "top_audio_player_playing", i.isPlaying()), t = AudioUtils.asObject(t),
-                clearTimeout(s._currTitleReTO);
-            var o = geByClass1("top_audio_player_title_out", s._el);
-            re(o);
-            var l = geByClass1("top_audio_player_title", s._el);
+            i.layer && i.layer.isShown() && i.layer.updatePosition(), addClass(s._el, a), toggleClass(s._el, "top_audio_player_playing", i.isPlaying());
+            var o = geByClass1("_top_audio_player_play");
+            o && attr(o, "aria-label", i.isPlaying() ? getLang("global_audio_pause") : getLang("global_audio_play")), t = AudioUtils.asObject(t), clearTimeout(s._currTitleReTO);
+            var l = geByClass1("top_audio_player_title_out", s._el);
+            re(l);
+            var r = geByClass1("top_audio_player_title", s._el);
             if (0 != e) {
-                var r = 0 > e ? -10 : 10,
-                    u = l.offsetLeft,
-                    n = se('<div class="top_audio_player_title top_audio_player_title_next" style="opacity: 0; top:' + r + "px; left: " + u + 'px">' + t.performer + " &ndash; " +
+                var u = 0 > e ? -10 : 10,
+                    n = r.offsetLeft,
+                    d = se('<div class="top_audio_player_title top_audio_player_title_next" style="opacity: 0; top:' + u + "px; left: " + n + 'px">' + t.performer + " &ndash; " +
                         t.title + "</div>");
-                n.setAttribute("onmouseover", "setTitle(this)"), e > 0 ? domInsertAfter(n, l) : domInsertBefore(n, l), addClass(l, "top_audio_player_title_out"), setStyle(l, {
-                    top: -r,
+                d.setAttribute("onmouseover", "setTitle(this)"), e > 0 ? domInsertAfter(d, r) : domInsertBefore(d, r), addClass(r, "top_audio_player_title_out"), setStyle(r, {
+                    top: -u,
                     opacity: 0
                 }), setTimeout(function() {
-                    setStyle(n, {
+                    setStyle(d, {
                         top: 0,
                         opacity: 1
                     })
                 }, 1), clearTimeout(s._currTitleReTO), s._currTitleReTO = setTimeout(function() {
-                    re(l), removeClass(n, "top_audio_player_title_next")
+                    re(r), removeClass(d, "top_audio_player_title_next")
                 }, TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED)
-            } else l.innerHTML = t.performer + " &ndash; " + t.title, l.titleSet = 0, l.setAttribute("onmouseover", "setTitle(this)")
+            } else r.innerHTML = t.performer + " &ndash; " + t.title, r.titleSet = 0, r.setAttribute("onmouseover", "setTitle(this)")
         }
         var a = "top_audio_player_enabled";
         if (!t) {
@@ -471,7 +472,9 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
             hide(s._playIconBtn), o()
         }, 150))
     }, TopAudioPlayer.prototype.onPause = function() {
-        removeClass(this._el, "top_audio_player_playing")
+        removeClass(this._el, "top_audio_player_playing");
+        var t = geByClass1("_top_audio_player_play");
+        t && attr(t, "aria-label", getLang("global_audio_play"))
     }, TopAudioPlayer.prototype.onNext = function() {}, AudioPlaylist.plIndex = 0, AudioPlaylist.TYPE_CURRENT = "current", AudioPlaylist.TYPE_ALBUM = "album", AudioPlaylist.TYPE_TEMP =
     "temp", AudioPlaylist.TYPE_RECOM = "recoms", AudioPlaylist.TYPE_POPULAR = "popular", AudioPlaylist.TYPE_SEARCH = "search", AudioPlaylist.TYPE_FEED = "feed", AudioPlaylist.TYPE_LIVE =
     "live", AudioPlaylist.TYPE_WALL = "wall", AudioPlaylist.ALBUM_ALL = -2, AudioPlaylist.prototype.serialize = function() {
@@ -941,25 +944,26 @@ AudioPlayer.tabIcons = {
             if (s && (i ? r._addRowPlayer(t, e) : r._removeRowPlayer(t)), i) r.on(t, AudioPlayer.EVENT_PLAY, function(i) {
                 AudioUtils.asObject(i)
                     .fullId == AudioUtils.getAudioFromEl(t, !0)
-                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_pause")))
+                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_pause")), attr(geByClass1("_audio_title", t), "role",
+                        "heading"))
             }), r.on(t, AudioPlayer.EVENT_PROGRESS, function(i, e) {
                 i = AudioUtils.asObject(i);
                 var o, a = intval(i.duration);
                 o = r.getDurationType() ? "-" + formatTime(Math.round(a - e * a)) : formatTime(Math.round(e * a)), geByClass1("audio_duration", t)
                     .innerHTML = o
             }), r.on(t, [AudioPlayer.EVENT_PAUSE, AudioPlayer.EVENT_ENDED], function(i) {
-                removeClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_play"))
+                removeClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
             }), toggleClass(t, AudioUtils.AUDIO_PLAYING_CLS, r.isPlaying());
             else {
                 r.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
                 var o = geByClass1("audio_duration", t);
                 o && (o.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                    .duration))
+                    .duration)), attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
             }
             e ? setTimeout(function() {
                 var i = intval(domData(t, "is-current"));
                 toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, !!i)
-            }) : toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, i);
+            }) : toggleClass(t, AudioUtils.AUDIO_CURRENT_CLS, i)
         }
         var a = !!intval(domData(t, "is-current"));
         if (a != i) {

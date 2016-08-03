@@ -238,7 +238,7 @@ var VideoUpload = {
                     },
                     onUploadError: function(i, err) {
                         var debug;
-                        if (err.code || err.error) {
+                        if (err && (err.code || err.error)) {
                             try {
                                 debug = eval("(" + err.debug + ")")
                             } catch (e) {

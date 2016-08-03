@@ -1645,9 +1645,9 @@ AppsSlider.prototype = {
                         });
                         var tab = ge("apps-recent-notifications-tab");
                         notifications[0] ? ((notifications[2] ? hide : show)(cur.rNotShowMoreButton), show(tab), hide(cur.rNotNoContent),
-                            domInsertBefore(cf(notifications[0]), cur.rNotShowMoreButton)) : (hide(cur.rNotShowMoreButton), show(cur.rNotNoContent),
-                            "notifications" != nav.objLoc.tab && hide(tab)), cur.notificationsOffset = notifications[1], this.notificationsSetCounters(
-                            notifications[3]), this.notificationsInit()
+                                domInsertBefore(cf(notifications[0]), cur.rNotShowMoreButton)) : (hide(cur.rNotShowMoreButton), show(cur.rNotNoContent),
+                                "notifications" != nav.objLoc.tab && hide(tab)), cur.notificationsOffset = notifications[1], cur.notificationsNewest =
+                            notifications[4], this.notificationsSetCounters(notifications[3]), this.notificationsInit()
                     }
                 }.bind(this)),
                 showProgress: function() {
@@ -1694,6 +1694,7 @@ AppsSlider.prototype = {
                     o.offsetTop - e + o.offsetHeight / 2 <= t + cur.rNotWrap.offsetHeight && (i.push(o.getAttribute("data-id")), s.push(o))
                 }), i.length && ajax.post(this.address, {
                     act: "a_mark",
+                    newest: cur.notificationsNewest,
                     notif_ids: i.join(","),
                     hash: cur.notificationsHash
                 }, {
@@ -1727,13 +1728,14 @@ AppsSlider.prototype = {
             }, i, getLang("global_delete"), function(e) {
                 ajax.post(this.address, {
                     act: "remove_all_notifications_and_requests",
+                    newest: cur.notificationsNewest,
                     hash: s
                 }, {
-                    onDone: this.withFastBackCheck(function(t) {
+                    onDone: this.withFastBackCheck(function() {
                         each(geByClass("apps_notification_row", cur.rNotWrap), function(t, e) {
                             re(e)
                         }), cur.rNotScrollbar && (cur.rNotScrollbar.destroy(), cur.rNotScrollbar.hide(), delete cur.rNotScrollbar), hide(
-                            cur.rNotShowMoreButton), show(cur.rNotNoContent), this.handlePageCount(t)
+                            cur.rNotShowMoreButton), show(cur.rNotNoContent), this.notificationsSetCounters(0)
                     }.bind(this)),
                     showProgress: function() {
                         lockButton(e), lockLink(t)
@@ -1747,7 +1749,7 @@ AppsSlider.prototype = {
         }
     },
     notificationsSetCounters: function(t) {
-        if (void 0 !== t && (this.handlePageCount(t), cur.rNotCounter)) {
+        if (void 0 !== t && (cur.notificationsNew = t, this.handlePageCount(t), cur.rNotCounter)) {
             var e = 1e3 > t ? t + "" : ".." + (t + "")
                 .substr(-3);
             t && removeClass(cur.rNotCounter, this.optionHiddenClass), t ? removeClass(cur.rNotCounter, "ui_tab_count_hidden") : addClass(cur.rNotCounter,
@@ -1764,6 +1766,7 @@ AppsSlider.prototype = {
                 minHeight: getSize(a)[1]
             }), ajax.post(this.address, {
                 act: "reject_" + s,
+                newest: cur.notificationsNewest,
                 rid: e,
                 hash: i
             }, {
@@ -1782,6 +1785,7 @@ AppsSlider.prototype = {
             var s = ge("apps_notification_" + e);
             ajax.post(this.address, {
                 act: "request_restore",
+                newest: cur.notificationsNewest,
                 rid: e,
                 hash: i
             }, {
@@ -1802,6 +1806,7 @@ AppsSlider.prototype = {
                 minHeight: getSize(a)[1]
             }), ajax.post(this.address, {
                 act: "delete_notification",
+                newest: cur.notificationsNewest,
                 nid: e,
                 aid: i,
                 hash: s
@@ -2263,7 +2268,7 @@ AppsSlider.prototype = {
                         function() {
                             var t = nav.objLoc && ge("notifications" == nav.objLoc.tab ? "apps-recent-notifications-tab" : "apps-recent-apps-tab");
                             t && this.switchTabPrepared(t.getElementsByTagName("a")[0]), cur.aSearch && (uiSearch.startEvents(cur.aSearch), cur.aSearch.value =
-                                cur.searchStr || "", uiSearch.scrollResize(cur.aSearch)), this.searchWriteToAddressBar(cur.searchStr);
+                                cur.searchStr || "", uiSearch.scrollResize(cur.aSearch)), this.searchWriteToAddressBar(cur.searchStr)
                         }.bind(this), 0), this.ttHideAll(), this.recentTabsUpdate(), this.startEvents(), cur.aTabs) {
                     var t = this.geTabBySection(this.isSection("list") ? cur.list + (cur.listId || "") : cur.section);
                     t && uiTabs.switchTab(t), uiTabs.hideProgress(cur.aTabs)
@@ -2359,6 +2364,7 @@ AppsSlider.prototype = {
                     feedHash: oldCur.feedHash,
                     rNotScrollbar: oldCur.rNotScrollbar,
                     notificationsOffset: oldCur.notificationsOffset,
+                    notificationsNewest: oldCur.notificationsNewest,
                     notificationsHash: oldCur.notificationsHash,
                     recentOffset: oldCur.recentOffset,
                     recentUpdateHash: oldCur.recentUpdateHash

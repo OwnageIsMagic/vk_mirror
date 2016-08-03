@@ -5566,10 +5566,15 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player .top_audio_player_btn {
-    display: inline;
     float: left;
     padding: 16px 4px 12px;
-    cursor: pointer
+    cursor: pointer;
+    border: none;
+    background: transparent;
+    box-sizing: content-box;
+    width: 14px;
+    margin-top: 0;
+    margin-bottom: 0
 }
 
 .top_audio_player .top_audio_player_btn>div {
@@ -5594,7 +5599,7 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player .top_audio_player_play {
-    padding: 14px 4px
+    padding: 14px 4px 13px
 }
 
 .top_audio_player .top_audio_player_play>div {
