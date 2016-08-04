@@ -4680,7 +4680,8 @@ em.highlight {
     padding-left: 7px;
     margin-left: 7px;
     background: url(/images/icons/mobile.png?1) no-repeat 0 3px;
-    cursor: pointer
+    cursor: pointer;
+    font-size: 13px
 }
 
 #mvk_footer_lnk {

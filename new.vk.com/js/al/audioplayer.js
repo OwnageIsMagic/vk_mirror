@@ -801,21 +801,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         function i(t) {
             if (e._repeatCurrent && !t) e._implSeekImmediate(0), e._implPlay();
             else {
-                if (e._isPlaying = !1, e.notify(AudioPlayer.EVENT_PAUSE), e.notify(AudioPlayer.EVENT_ENDED), e._failsCount++, e._failsCount > 3) {
-                    e._failsCount = 0;
-                    var i;
-                    return (i = new MessageBox({
-                            title: getLang("global_error")
-                        }))
-                        .content(getLang("audio_error_loading"))
-                        .setButtons("Ok", function() {
-                            curBox()
-                                .hide()
-                        })
-                        .show(), void setTimeout(function() {
-                            i.hide()
-                        }, 3e3)
-                }
+                e._isPlaying = !1, e.notify(AudioPlayer.EVENT_PAUSE), e.notify(AudioPlayer.EVENT_ENDED), e._failsCount++;
                 e.playNext(!0)
             }
         }
@@ -958,7 +944,8 @@ AudioPlayer.tabIcons = {
                 r.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
                 var o = geByClass1("audio_duration", t);
                 o && (o.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                    .duration)), attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
+                        .duration)), attr(l, "aria-label", getLang("global_audio_play")),
+                    attr(geByClass1("_audio_title", t), "role", "")
             }
             e ? setTimeout(function() {
                 var i = intval(domData(t, "is-current"));

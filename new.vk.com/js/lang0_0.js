@@ -33,6 +33,7 @@ global_audio_seek_forward = '��������� ������';
 global_audio_volume_down = '����';
 global_audio_volume_up = '������';
 global_back = '�����';
+global_box_title_back = '��������� �����';
 global_Complain_video = '������������';
 global_cancel = '������';
 global_captcha_input_here = '������� ���';

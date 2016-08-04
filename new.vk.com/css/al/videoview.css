@@ -5,6 +5,9 @@
 #mv_pl_tt .mv_tt_playlist_private_icon,
 .mv_add_button .mv_add_icon,
 .mv_chat_first_message_intro,
+.mv_chat_new_messages_btn:before,
+.mv_chat_reply_emoji_icon,
+.mv_chat_reply_submit_icon,
 .mv_close_icon,
 .mv_delete_button .mv_delete_icon,
 .mv_edit_button .mv_edit_icon,
@@ -545,7 +548,12 @@ body.mobfixed #mv_layer_wrap {
     }
 }
 
-.mv_info_narrow_column,
+.mv_info_narrow_column {
+    border-left: 1px solid #e7e8ec;
+    margin-left: -1px;
+    width: 240px
+}
+
 #mv_container._has_playlist .mv_info_narrow_column {
     width: 240px
 }
@@ -580,13 +588,13 @@ body.mobfixed #mv_layer_wrap {
 }
 
 #mv_min_layer .mv_mini_control .mv_max_control {
-    background: url(/images/icons/video_icon.png) 0 -119px;
+    background: url(/images/icons/video_icon.png?2) 0 -119px;
     height: 10px;
     width: 11px
 }
 
 #mv_min_layer .mv_mini_control .mv_close_control {
-    background: url(/images/icons/video_icon.png) 0 -139px;
+    background: url(/images/icons/video_icon.png?2) 0 -139px;
     height: 10px;
     width: 10px
 }
@@ -1031,7 +1039,7 @@ embed#video_player {
 .mv_close_icon,
 .mv_minimize_icon,
 .mv_toggle_sideblock_icon {
-    background: url(/images/icons/video_icon.png) no-repeat
+    background: url(/images/icons/video_icon.png?2) no-repeat
 }
 
 .mv_close_icon {
@@ -1169,18 +1177,23 @@ embed#video_player {
     padding: 15px 10px 10px
 }
 
-.mv_recom_block .mv_recom_block_title {
+.mv_recom_block_title {
     padding-bottom: 4px;
     font-size: 16px;
     line-height: 23px;
     color: #2b2f33
 }
 
-.mv_recom_block .mv_recom_item {
-    padding: 8px 0
+.mv_recom_item {
+    padding: 8px 0;
+    font-size: 12px
 }
 
-.mv_recom_block .mv_recom_item_thumb {
+#mv_container._has_chat .mv_recom_item {
+    font-size: 12.5px
+}
+
+.mv_recom_item_thumb {
     display: block;
     float: left;
     position: relative;
@@ -1193,39 +1206,60 @@ embed#video_player {
     background-position: 50%
 }
 
-.mv_recom_block .mv_recom_item_duration {
+#mv_container._has_chat .mv_recom_item_thumb {
+    height: 72px;
+    width: 128px
+}
+
+.mv_recom_item_duration {
     position: absolute;
     bottom: 0;
     right: 0;
-    padding: 1px 3px 1px 4px;
+    padding: 2px 4px 1px;
     border-radius: 2px 0;
     background-color: #000;
     background-color: rgba(0, 0, 0, .5);
     color: #fff;
     color: hsla(0, 0%, 100%, .9);
-    font-size: 11px;
     line-height: 15px
 }
 
-.mv_recom_block .mv_recom_item_info {
+.mv_recom_item_active_live .mv_recom_item_duration {
+    background-color: #f65148;
+    text-transform: uppercase
+}
+
+.mv_recom_item_info {
     margin-left: 108px
 }
 
-.mv_recom_block .mv_recom_item_title {
-    max-height: 32px;
+#mv_container._has_chat .mv_recom_item_info {
+    margin-left: 138px
+}
+
+.mv_recom_item_title {
+    line-height: 16px;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 12px;
-    line-height: 16px
+    max-height: 32px
 }
 
-.mv_recom_block .mv_recom_item_views {
-    padding-top: 3px;
-    color: #939393;
-    font-size: 11px;
+.mv_recom_live_block .mv_recom_item_title:not(#mv_container._has_chat .mv_recom_item_title) {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-height: 16px
+}
+
+.mv_recom_item_author,
+.mv_recom_item_views {
+    margin-top: 3px;
+    color: #656565;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis
@@ -1950,13 +1984,13 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 }
 
 .mv_playlist .mv_playlist_header .mv_playlist_header_autoplay_icon {
-    background: url(/images/icons/video_icon.png) 0 -77px;
+    background: url(/images/icons/video_icon.png?2) 0 -77px;
     height: 11px;
     width: 18px
 }
 
 .mv_playlist .mv_playlist_header .mv_playlist_header_reverse_icon {
-    background: url(/images/icons/video_icon.png) 0 -98px;
+    background: url(/images/icons/video_icon.png?2) 0 -98px;
     height: 11px;
     width: 15px
 }
@@ -1980,6 +2014,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     margin-right: 7px;
     overflow: hidden;
     background-color: #1e1e1e;
+    font-size: 12px;
     cursor: pointer;
     -o-transition: background-color 0.1s;
     transition: background-color 0.1s
@@ -2010,7 +2045,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 }
 
 .mv_playlist .mv_playlist_item_info {
-    margin-left: 109px;
+    margin-left: 108px;
     white-space: normal
 }
 
@@ -2022,14 +2057,12 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    font-size: 12px;
     line-height: 17px;
     color: #fff;
     opacity: 0.7
 }
 
 .mv_playlist .mv_playlist_item_views {
-    font-size: 11px;
     line-height: 15px;
     color: #fff;
     opacity: 0.35;
@@ -2042,13 +2075,12 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     position: absolute;
     right: 0px;
     bottom: 0px;
-    padding: 1px 3px 1px 4px;
+    padding: 2px 4px 1px;
     border-radius: 2px 0;
     background-color: #000;
     background-color: rgba(0, 0, 0, .6);
     color: #fff;
     color: hsla(0, 0%, 100%, .9);
-    font-size: 11px;
     line-height: 15px;
     -o-transition: opacity 100ms linear;
     transition: opacity 100ms linear
@@ -2125,7 +2157,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 
 .mv_chat_message {
     display: block;
-    padding: 8px 17px 8px 10px
+    padding: 7px 17px 7px 10px
 }
 
 .mv_chat_message:after {
@@ -2201,7 +2233,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 .mv_chat_message_content {
     margin-left: 33px;
     margin-top: 3px;
-    line-height: 1.4
+    line-height: 1.3
 }
 
 .mv_chat_message_text {
@@ -2233,23 +2265,49 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     text-align: center
 }
 
-.mv_chat_new_messages_btn {
-    display: none;
+.mv_chat_new_messages_btn_wrap {
     position: absolute;
-    left: 50%;
-    bottom: 13px;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
+    bottom: 43px;
+    left: 0;
+    right: 0;
+    height: 0;
+    text-align: center;
+    -o-transition: opacity .2s, visibility .2s;
+    transition: opacity .2s, visibility .2s
+}
+
+.mv_chat_new_messages_btn_wrap.hidden {
+    visibility: hidden;
+    opacity: 0
+}
+
+.mv_chat_new_messages_btn {
+    display: inline-block;
     height: 30px;
     line-height: 30px;
     border-radius: 15px;
-    padding: 0 20px 0 36px;
+    padding: 0 20px 0 16px;
     color: #fff;
     background: #4d4d4d;
     white-space: nowrap;
-    cursor: pointer
+    cursor: pointer;
+    -o-transition: background-color 0.2s;
+    transition: background-color 0.2s
+}
+
+.mv_chat_new_messages_btn:before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    width: 12px;
+    height: 12px;
+    background: url(/images/icons/video_icon.png?2) -6px -234px;
+    padding-right: 8px;
+    margin-bottom: 4px
+}
+
+.mv_chat_new_messages_btn:hover {
+    background: #595959
 }
 
 .mv_chat_message_sticker {
@@ -2316,7 +2374,14 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 
 .mv_chat_reply_input_wrap .mv_chat_reply_input~.placeholder .ph_content {
     padding: 0;
-    color: #aaa
+    color: #aaa;
+    -o-transition: opacity .2s;
+    transition: opacity .2s
+}
+
+.mv_chat_reply_input_wrap .mv_chat_reply_input:focus~.placeholder .ph_content {
+    color: #aaa;
+    opacity: .5
 }
 
 .mv_chat_reply_input_wrap .mv_chat_reply_input {
@@ -2341,8 +2406,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     cursor: pointer;
     opacity: .65;
     -o-transition: opacity .2s;
-    transition: opacity .2s;
-    will-change: opacity, contents
+    transition: opacity .2s
 }
 
 .mv_chat_reply_emoji_btn:hover,
@@ -2356,24 +2420,20 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 }
 
 .mv_chat_reply_emoji_icon {
-    display: inline-block;
-    vertical-align: middle;
     width: 18px;
-    height: 18px;
-    background-image: url("data:image/svg+xml,%3Csvg%20viewBox%3D%220%200%2018%2018%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20height%3D%22100%25%22%20width%3D%22100%25%22%3E%0A%20%20%3Cpath%20d%3D%22M9%2C16.5%20L9%2C16.5%20C13.1421356%2C16.5%2016.5%2C13.1421356%2016.5%2C9%20C16.5%2C4.85786438%2013.1421356%2C1.5%209%2C1.5%20C4.85786438%2C1.5%201.5%2C4.85786438%201.5%2C9%20C1.5%2C13.1421356%204.85786438%2C16.5%209%2C16.5%20L9%2C16.5%20Z%20M9%2C18%20C4.02943725%2C18%200%2C13.9705627%200%2C9%20C0%2C4.02943725%204.02943725%2C0%209%2C0%20C13.9705627%2C0%2018%2C4.02943725%2018%2C9%20C18%2C13.9705627%2013.9705627%2C18%209%2C18%20Z%20M5%2C6.99895656%20C5%2C6.44724809%205.44386482%2C6%206%2C6%20C6.55228475%2C6%207%2C6.44266033%207%2C6.99895656%20L7%2C8.00104344%20C7%2C8.55275191%206.55613518%2C9%206%2C9%20C5.44771525%2C9%205%2C8.55733967%205%2C8.00104344%20L5%2C6.99895656%20Z%20M11%2C6.99895656%20C11%2C6.44724809%2011.4438648%2C6%2012%2C6%20C12.5522847%2C6%2013%2C6.44266033%2013%2C6.99895656%20L13%2C8.00104344%20C13%2C8.55275191%2012.5561352%2C9%2012%2C9%20C11.4477153%2C9%2011%2C8.55733967%2011%2C8.00104344%20L11%2C6.99895656%20Z%20M6.7226499%2C12.4160251%20C7.27591903%2C12.7848712%208.02886972%2C13%209%2C13%20C9.97113028%2C13%2010.724081%2C12.7848712%2011.2773501%2C12.4160251%20C11.6354813%2C12.177271%2011.8477318%2C11.9225704%2011.9472136%2C11.7236068%20C12.0707082%2C11.4766175%2011.970596%2C11.176281%2011.7236068%2C11.0527864%20C11.4766175%2C10.9292918%2011.176281%2C11.029404%2011.0527864%2C11.2763932%20C11.0272682%2C11.3274296%2010.9270187%2C11.447729%2010.7226499%2C11.5839749%20C10.338419%2C11.8401288%209.77886963%2C11.9999452%208.99999991%2C11.9999452%20C8.22113018%2C11.9999452%207.66158097%2C11.8401288%207.2773501%2C11.5839749%20C7.07298128%2C11.447729%206.97273179%2C11.3274296%206.9472136%2C11.2763932%20C6.82371897%2C11.029404%206.52338245%2C10.9292918%206.2763932%2C11.0527864%20C6.02940395%2C11.176281%205.92929178%2C11.4766175%206.0527864%2C11.7236068%20C6.15226821%2C11.9225704%206.36451872%2C12.177271%206.7226499%2C12.4160251%20Z%22%20stroke%3D%22none%22%20fill%3D%22%23FFFFFF%22%20fill-rule%3D%22evenodd%22%2F%3E%0A%3C%2Fsvg%3E")
+    background: url(/images/icons/video_icon.png?2) -3px -183px
 }
 
+.mv_chat_reply_emoji_icon,
 .mv_chat_reply_submit_icon {
     display: inline-block;
     vertical-align: middle;
-    height: 17px;
-    width: 15px;
-    margin-top: -1px;
-    background: url("data:image/svg+xml,%3Csvg%20viewBox%3D%224%203%2015%2017%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%20height%3D%22100%25%22%20width%3D%22100%25%22%3E%0A%20%20%3Cpath%20d%3D%22M6.9266308%2C13.4361337%20C6.38470515%2C14.8524652%205.61515997%2C16.9534997%205.34697303%2C18.1310702%20C4.9165968%2C20.0207908%204.60366105%2C20.4464416%206.20772543%2C19.5483607%20C7.81178981%2C18.6502799%2015.5772925%2C14.2014962%2017.3098323%2C13.2128057%20C19.5682719%2C11.9240054%2019.5984515%2C12.0246966%2017.1886674%2C10.6562959%20C15.3533009%2C9.61407953%207.67882547%2C5.28132955%206.20772546%2C4.43059603%20C4.73662545%2C3.57986251%204.91659683%2C3.95816584%205.34697304%2C5.8478865%20C5.61566358%2C7.0276684%206.38759712%2C9.12190492%206.92968138%2C10.5289363%20L13.6325937%2C11.95796%20L6.9266308%2C13.4361337%20Z%22%20stroke%3D%22none%22%20fill%3D%22%23FFF%22%20fill-rule%3D%22evenodd%22%2F%3E%0A%3C%2Fsvg%3E")
+    height: 18px
 }
 
-.mv_chat_reply_submit_btn._loading .mv_chat_reply_submit_icon {
-    background: none
+.mv_chat_reply_submit_icon {
+    width: 16px;
+    background: url(/images/icons/video_icon.png?2) -4px -207px
 }
 
 .mv_chat_reply_emoji_tt_wrap {

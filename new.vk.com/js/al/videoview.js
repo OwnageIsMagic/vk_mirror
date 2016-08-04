@@ -690,8 +690,8 @@ var Videoview = {
                     }
                 }
                 var s = mvcur.minimized;
-                if (s && (Videoview.unminimize(!0, !0, !0), mvcur.minimized = !1, e = !0), Wall.cancelEdit(!0), mvcur.replyFormShown && Wall.hideEditReply(mvcur.post), mvcur.mvData
-                    .duration > 60 && !i && !mvcur.finished) {
+                if (s && (Videoview.unminimize(!0, !0, !0), mvcur.minimized = !1, e = !0), Wall.cancelEdit(!0), mvcur.replyFormShown && Wall.hideEditReply(mvcur.post), (mvcur.mvData
+                        .duration > 60 || mvcur.mvData.is_live) && !i && !mvcur.finished) {
                     var v = (new Date)
                         .getTime() - mvcur.showTime,
                         l = getLang("video_are_you_sure_close");
@@ -834,7 +834,7 @@ var Videoview = {
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateCommentsHeader(from);
                 hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                    Videoview.updateCommentsHeader(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
+                    Videoview.updateCommentsHeader(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos();
             }
         },
         commAction: function(e, i, t, o, a) {
@@ -1353,7 +1353,7 @@ var Videoview = {
                 }, 500);
                 if (title && !html) return val("mv_content", '<div class="mv_video_unavailable_message_wrap"><div class="mv_video_unavailable_message">' + title +
                     "</div></div>"), show("mv_content"), hide("mv_progress"), void hide("mv_controls");
-                if (opt = opt || {}, cur.lang = extend(cur.lang || {}, opt.lang), cur.share_timehash = cur.share_timehash || opt.share_timehash, mvcur.post = opt.post, mvcur.maxReplyLength =
+                if (opt = opt || {}, addLangKeys(opt.lang, !0), cur.share_timehash = cur.share_timehash || opt.share_timehash, mvcur.post = opt.post, mvcur.maxReplyLength =
                     opt.maxReplyLength, mvcur.maxChatReplyLength = opt.maxChatReplyLength, mvcur.maxDescriptionLength = opt.maxDescriptionLength, mvcur.mvData = opt.mvData,
                     mvcur.videoRaw = opt.mvData.videoRaw, mvcur.commentsTpl = opt.commentsTpl, mvcur.mvMediaTypes = opt.media, mvcur.mvMediaShare = opt.share, mvcur.mvReplyNames =
                     opt.names || {}, mvcur.rmedia_types = opt.rmedia_types, mvcur.adminLevel = opt.adminLevel, mvcur.chatMode = !!opt.chatMode, opt.queueData && (mvcur.queueKey =
@@ -1432,8 +1432,8 @@ var Videoview = {
                             }
                         }) : re("mv_more"), toggle(ge("mv_edit_button"), mvcur.mvData.editHash && !mvcur.mvData.hideEdit && !mvcur.mvData.editFromDropdown)
                 }
-                mvcur.mvData.uploaded || Videoview.recache(), Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData && stManager.add("notifier.js",
-                    function() {
+                mvcur.mvData.uploaded || Videoview.recache(), mvcur.mvData.is_live || Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData && stManager
+                    .add("notifier.js", function() {
                         Videoview.checkUpdates(opt.queueData)
                     }), mvcur.mvData.is_live && setTimeout(Videoview.checkOtherLives.pbind(videoRaw), 6e4)
             }
@@ -2513,11 +2513,15 @@ var Videoview = {
     VideoChat = {
         init: function(e) {
             VideoChat.block && VideoChat.destroy(), e && (VideoChat.block = e, VideoChat.messagesWrap = domByClass(e, "mv_chat_messages_wrap"), VideoChat.scroll = new uiScroll(
-                domFC(VideoChat.messagesWrap), {
-                    reversed: !0,
-                    theme: "videoview"
-                }), VideoChat.replyForm = domByClass(e, "mv_chat_reply_form"), VideoChat.replyForm && (VideoChat.replyInput = domByClass(e, "mv_chat_reply_input"),
-                VideoChat.initReplyInput()), VideoChat.firstMsgIntro = domByClass(e, "mv_chat_first_message_intro"))
+                    domFC(VideoChat.messagesWrap), {
+                        reversed: !0,
+                        preserveEdgeBelow: !0,
+                        theme: "videoview",
+                        stopScrollPropagation: !1,
+                        onscroll: VideoChat.onScroll
+                    }), this.scrollBottomBtnWrap = domByClass(e, "mv_chat_new_messages_btn_wrap"), VideoChat.replyForm = domByClass(e, "mv_chat_reply_form"), VideoChat.replyForm &&
+                (VideoChat.replyInput = domByClass(e, "mv_chat_reply_input"), VideoChat.initReplyInput()), VideoChat.firstMsgIntro = domByClass(e,
+                    "mv_chat_first_message_intro"))
         },
         initReplyInput: function() {
             placeholderInit(VideoChat.replyInput, {
@@ -2563,6 +2567,9 @@ var Videoview = {
                 }) : window.tooltips && tooltips.destroy(e)
             }
         },
+        onScroll: function(e) {
+            VideoChat.scroll.data.scrollBottom < 20 && VideoChat.toggleScrollBottomBtn(!1)
+        },
         receiveMessage: function(e, i, t, o, a, d, r, n) {
             r && (d = getTemplate("video_chat_sticker", {
                 sticker_id: r,
@@ -2580,18 +2587,29 @@ var Videoview = {
             VideoChat.appendMessage(s, i)
         },
         receiveDelete: function(e, i) {
-            re("mv_chat_msg" + e + "_" + i)
+            VideoChat.scroll.updateAbove(function() {
+                re("mv_chat_msg" + e + "_" + i)
+            })
         },
         appendMessage: function(e, i) {
             if (!ge("mv_chat_msg" + mvcur.mvData.oid + "_" + i)) {
                 VideoChat.firstMsgIntro && (re(VideoChat.firstMsgIntro), VideoChat.firstMsgIntro = null);
-                var t = !VideoChat.scroll.data.scrollBottom,
-                    o = VideoChat.scroll.content,
-                    a = se(e);
-                o.appendChild(a), t && VideoChat.scroll.scrollBottom();
-                var d = o.childNodes;
-                d.length > 100 && re(d[0])
+                var t = VideoChat.scroll.content,
+                    o = se(e);
+                VideoChat.scroll.updateBelow(function() {
+                    t.appendChild(o)
+                });
+                var a = t.childNodes;
+                a.length > 500 && VideoChat.scroll.updateAbove(function() {
+                    re(a[0])
+                }), VideoChat.scroll.data.scrollBottom > o.offsetHeight && VideoChat.toggleScrollBottomBtn(!0)
             }
+        },
+        toggleScrollBottomBtn: function(e) {
+            toggleClass(this.scrollBottomBtnWrap, "hidden", !e)
+        },
+        scrollBottom: function() {
+            VideoChat.scroll.scrollBottom(0, 200)
         },
         sendMessage: function(e) {
             if (!VideoChat.messageSending) {
@@ -2617,7 +2635,7 @@ var Videoview = {
                 })), {
                     onDone: function(e, i) {
                         VideoChat.messageSending = !1, e && i && VideoChat.appendMessage(e, i), Emoji.val(VideoChat.replyInput, ""), VideoChat.checkFormHeight(),
-                            VideoChat.lastMsgSent = vkNow()
+                            VideoChat.scroll.data.scrollBottom && VideoChat.scrollBottom(), VideoChat.lastMsgSent = vkNow()
                     },
                     onFail: function(e) {
                         return VideoChat.messageSending = !1, VideoChat.replyInput ? (window.tooltips && tooltips.destroy(VideoChat.replyInput), showTooltip(
@@ -2649,7 +2667,7 @@ var Videoview = {
             toggleClass("mv_container", "_has_chat", e && !t), toggleClass("mv_container", "_hide_chat", e && !t && i)
         },
         updateScroll: function() {
-            VideoChat.scroll.update(), VideoChat.scroll.scrollBottom()
+            VideoChat.scroll.update(), VideoChat.scroll.scrollBottom(), VideoChat.toggleScrollBottomBtn(!1)
         },
         destroy: function() {
             if (VideoChat.block) {
