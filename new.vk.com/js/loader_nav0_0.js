@@ -184,14 +184,14 @@ var stVersions = {
     'video.css': 3949503983,
     'videocat.js': 3251527792,
     'videocat.css': 2053234935,
-    'videoview.js': 2210999059,
+    'videoview.js': 1970635300,
     'videoview.css': 450714760,
     'video_edit.js': 660308478,
     'video_edit.css': 4110752837,
     'video_upload.js': 2236165204,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3591312868,
-    'videoplayer.js': 1766381035,
+    'videoplayer.js': 224089943,
     'videoplayer.css': 2915623094,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
@@ -216,7 +216,7 @@ var stVersions = {
     'public.js': 1370745423,
     'pages.css': 791854731,
     'pages.js': 3347413999,
-    'groups.css': 1927329498,
+    'groups.css': 4094188592,
     'groups.js': 3132396477,
     'groups_list.js': 3462017115,
     'groups_edit.css': 1201915880,
@@ -313,7 +313,7 @@ var stVersions = {
     'restore.css': 1629072411,
     'recover.js': 2216623723,
     'recover.css': 1708940698,
-    'docs.js': 2903580294,
+    'docs.js': 4093948501,
     'docs.css': 4062218364,
     'tags_dd.js': 2519761220,
     'tags_dd.css': 2737355895,
@@ -516,4 +516,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 5654;
+var _rnd = 9284;

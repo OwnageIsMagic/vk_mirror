@@ -2511,14 +2511,16 @@ var Videoview = {
         }
     },
     VideoChat = {
+        SCROLL_EDGE_BELOW_THRESHOLD: 20,
         init: function(e) {
             VideoChat.block && VideoChat.destroy(), e && (VideoChat.block = e, VideoChat.messagesWrap = domByClass(e, "mv_chat_messages_wrap"), VideoChat.scroll = new uiScroll(
                     domFC(VideoChat.messagesWrap), {
                         reversed: !0,
                         preserveEdgeBelow: !0,
+                        preserveEdgeBelowThreshold: VideoChat.SCROLL_EDGE_BELOW_THRESHOLD,
                         theme: "videoview",
                         stopScrollPropagation: !1,
-                        onscroll: VideoChat.onScroll
+                        onupdate: VideoChat.onScrollUpdate
                     }), this.scrollBottomBtnWrap = domByClass(e, "mv_chat_new_messages_btn_wrap"), VideoChat.replyForm = domByClass(e, "mv_chat_reply_form"), VideoChat.replyForm &&
                 (VideoChat.replyInput = domByClass(e, "mv_chat_reply_input"), VideoChat.initReplyInput()), VideoChat.firstMsgIntro = domByClass(e,
                     "mv_chat_first_message_intro"))
@@ -2567,8 +2569,8 @@ var Videoview = {
                 }) : window.tooltips && tooltips.destroy(e)
             }
         },
-        onScroll: function(e) {
-            VideoChat.scroll.data.scrollBottom < 20 && VideoChat.toggleScrollBottomBtn(!1)
+        onScrollUpdate: function(e) {
+            e.data.scrollBottom < VideoChat.SCROLL_EDGE_BELOW_THRESHOLD && VideoChat.toggleScrollBottomBtn(!1)
         },
         receiveMessage: function(e, i, t, o, a, d, r, n) {
             r && (d = getTemplate("video_chat_sticker", {
@@ -2602,14 +2604,14 @@ var Videoview = {
                 var a = t.childNodes;
                 a.length > 500 && VideoChat.scroll.updateAbove(function() {
                     re(a[0])
-                }), VideoChat.scroll.data.scrollBottom > o.offsetHeight && VideoChat.toggleScrollBottomBtn(!0)
+                }), !VideoChat.isHidden() && VideoChat.scroll.data.scrollBottom > o.offsetHeight && VideoChat.toggleScrollBottomBtn(!0)
             }
         },
         toggleScrollBottomBtn: function(e) {
             toggleClass(this.scrollBottomBtnWrap, "hidden", !e)
         },
         scrollBottom: function() {
-            VideoChat.scroll.scrollBottom(0, 200)
+            VideoChat.scroll.scrollBottom(0, !0)
         },
         sendMessage: function(e) {
             if (!VideoChat.messageSending) {

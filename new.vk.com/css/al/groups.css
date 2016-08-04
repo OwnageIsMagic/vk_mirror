@@ -846,5 +846,6 @@ a.groups_catalog_comm_title_link {
 }
 
 .group_app_button button {
-    padding: 7px 24px
+    padding-left: 24px;
+    padding-right: 24px
 }
