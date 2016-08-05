@@ -6744,6 +6744,8 @@ function MessageBox(options, dark) {
     boxControlsText = domNS(boxProgress);
 
     boxLayer.appendChild(boxContainer);
+    boxContainer.setAttribute('tabindex', 0);
+    boxContainer.focus();
 
     refreshBox();
     boxRefreshCoords(boxContainer);
@@ -6955,6 +6957,7 @@ function MessageBox(options, dark) {
             if (options.onClean) options.onClean();
             boxBody.innerHTML = html;
             boxRefreshCoords(boxContainer);
+            boxContainer.focus();
             refreshBox();
             return this;
         },

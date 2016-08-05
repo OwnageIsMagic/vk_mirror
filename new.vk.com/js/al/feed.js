@@ -270,15 +270,15 @@ var Feed = {
                     R = i.offsetHeight,
                     d = r.split("_")[0],
                     l = 0 > d ? 8 & a ? 2 : 2 & a ? 1 : 0 : 0,
-                    F = wall.getNewReplyHTML(e, l),
+                    D = wall.getNewReplyHTML(e, l),
                     u = !1,
-                    D = !1;
+                    F = !1;
                 if (isVisible(M) && isVisible(j) && !isVisible("reply_link" + r)) {
                     var q = M.nextSibling,
                         I = geByClass("new_reply", M, "div")
                         .length + 1;
                     if (cur.wallMyOpened[r]) {
-                        q && "replies_open" == q.className && re(q), D = !0;
+                        q && "replies_open" == q.className && re(q), F = !0;
                         var U = geByClass1("wr_header", M, "a"),
                             A = geByClass("reply", M, "div")
                             .length + 1,
@@ -287,12 +287,12 @@ var Feed = {
                             .split("/")[1]) + 1), (V > 5 || V > A) && (U || M.insertBefore(U = ce("a", {
                             className: "wr_header"
                         }), M.firstChild), wall.updateRepliesHeader(r, U, A, V))
-                    } else F = wall.updatePostImages(F), u = se(F), addClass(u, "new_reply"), q && "replies_open" == q.className || (q = ce("div", {
+                    } else D = wall.updatePostImages(D), u = se(D), addClass(u, "new_reply"), q && "replies_open" == q.className || (q = ce("div", {
                         className: "replies_open",
                         onclick: wall.openNewComments.pbind(r)
                     }), M.parentNode.insertBefore(q, M.nextSibling)), q.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, I)), q.newCnt = I
-                } else re("reply_link" + r), show(j, M), D = !0;
-                r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(F)), M.appendChild(u), feed.needScrollPost(t, D ? u : q) && (c += i.offsetHeight - R), D &&
+                } else re("reply_link" + r), show(j, M), F = !0;
+                r.split("_")[0] == vk.id && cur.feedUnreadCount++, u || (u = se(D)), M.appendChild(u), feed.needScrollPost(t, F ? u : q) && (c += i.offsetHeight - R), F &&
                     nodeUpdated(u), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
                 break;
             case "del_reply":
@@ -1379,24 +1379,9 @@ var Feed = {
             hash: s
         }), !1
     },
-    toggleCustomFeedTab: function(e, t, s, o) {
-        var r = hasClass(e, "feed_tab_link_hidden"),
-            i = domPN(ge("feed_" + t + "_tab"));
-        if (r) removeClass(i, "feed_tab_hidden"), removeClass(e, "feed_tab_link_hidden"), feed.checkTabsFilter(t, "t_" + t);
-        else {
-            addClass(i, "feed_tab_hidden");
-            var n = getLang("news_hide_named_list")
-                .replace("{title}", getLang(o)),
-                a = function() {
-                    feed.checkTabsFilter(t, "t_" + t), c.hide()
-                },
-                c = showFastBox({
-                    title: getLang("news_hide_list_confirm_title"),
-                    dark: 1,
-                    bodyStyle: "padding: 20px; line-height: 160%;"
-                }, n, getLang("news_hide"), a)
-        }
-        return !1
+    toggleCustomFeedTab: function(e, t) {
+        return hasClass(e, "feed_tab_link_hidden") ? (removeClass(e, "feed_tab_link_hidden"), setCookie("remixcustom_feed_added", t)) : lockButton(e), feed.checkTabsFilter(
+            geByClass1("_feed_custom_" + t), t)
     },
     recomPreload: function() {
         cur.recomPreload || (cur.recomPreload = !0, ajax.post("/al_feed.php", {

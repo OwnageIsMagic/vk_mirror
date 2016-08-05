@@ -2492,11 +2492,16 @@ if (!window.Emoji) {
                                 mini = true;
                                 break;
                             }
+                            if (hasClass(el, 'mv_chat')) {
+                                break;
+                            }
                         }
                         if (!el) return false;
                         if (!mini) {
                             if (hasClass(el, 'js-im-page')) {
                                 txt = geByClass1('_im_text');
+                            } else if (hasClass(el, 'mv_chat')) {
+                                txt = domByClass(el, 'mv_chat_reply_input');
                             }
                         } else {
                             txt = geByClass1('fc_editable', el);
@@ -2506,7 +2511,7 @@ if (!window.Emoji) {
                     if (txt) {
                         var opts = Emoji.opts[txt.emojiId];
 
-                        Emoji.ttClick(txt.emojiId, geByClass1('emoji_smile', txt.parentNode.parentNode), false, true);
+                        Emoji.ttClick(txt.emojiId, geByClass1('_emoji_btn', txt.parentNode.parentNode), false, true);
 
                         var tab_cont = geByClass1('emoji_tabs_wrap', opts.tt),
                             tab = geByClass1('emoji_tab_' + packId, tab_cont),

@@ -1586,9 +1586,18 @@ div.feed_recom {
     line-height: 180%
 }
 
-.feed_info_bar .feed_info_bar_btn {
-    margin-top: 8px;
-    display: inline-block
+.feed_info_bar .feed_info_bar_buttons {
+    margin-top: 12px
+}
+
+.feed_info_bar .feed_info_bar_buttons .feed_info_bar_add_list {
+    margin: 0 20px 0 0
+}
+
+.feed_info_bar .feed_info_bar_buttons .feed_info_bar_hide {
+    margin-top: 3px;
+    display: inline-block;
+    vertical-align: top
 }
 
 .feedback_reply_field_wrap {

@@ -640,7 +640,7 @@ a#posts_filter:hover {
     width: 16px;
     height: 16px;
     margin: 0;
-    background: url(/images/icons/news_iconset.png?7) no-repeat 0 -144px;
+    background: url(/images/icons/news_iconset.png?8) no-repeat 0 -144px;
 }
 
 #feed_tab_add_menu .feed_tab_add_icon {
@@ -696,7 +696,7 @@ a#posts_filter:hover {
     width: 16px;
     height: 16px;
     margin: 0;
-    background-image: url(/images/icons/news_iconset.png?7);
+    background-image: url(/images/icons/news_iconset.png?8);
 }
 
 .feed_filter_tabs_icon {
@@ -760,6 +760,10 @@ a#posts_filter:hover {
 
 .feed_icon_hockey {
     background-position: 0 -224px;
+}
+
+.feed_icon_rio2016 {
+    background-position: 0 -240px;
 }
 
 .feed_filter_lists_row .feed_filter_tabs_icon {
@@ -2144,11 +2148,11 @@ a.feed_article_thumb {
 }
 
 .feed_info_bar .feed_info_bar_buttons {
-    margin-top: 8px;
+    margin-top: 10px;
 }
 
 .feed_info_bar .feed_info_bar_buttons .feed_info_bar_add_list {
-    margin: 0 10px 0 -5px;
+    margin: 0 15px 0 0;
 }
 
 .feed_info_bar .feed_info_bar_buttons .feed_info_bar_hide {

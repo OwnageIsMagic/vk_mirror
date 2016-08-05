@@ -2,6 +2,7 @@
     display: none
 }
 
+.dev_community_widget_wrap,
 .dev_home_link:before,
 .dev_method_page_access_row_icon,
 .dev_methods_list_access_group_icon,
@@ -2200,4 +2201,19 @@ input.dev_wrong_val {
 
 .dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_marker {
     background: #7195b5
+}
+
+.dev_community_widget_wrap {
+    position: relative;
+    width: 663px;
+    height: 573px;
+    background: url(/images/widgets/w_chat_dev_bg.png);
+    background-size: cover;
+    margin-top: 15px;
+    border-bottom: 1px solid #d3d9de
+}
+
+.dev_community_widget_wrap #dev_widget_preview {
+    position: absolute!important;
+    margin: 0px
 }

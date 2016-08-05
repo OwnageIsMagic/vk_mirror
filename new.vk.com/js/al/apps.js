@@ -335,17 +335,19 @@ var vkApp = function(t, e, i, s) {
             showSettingsBox: function(t) {
                 if (!cur.settingsBoxShown) {
                     cur.settingsBoxShown = !0;
-                    var i = showBox("apps", {
+                    var i = {
                         act: "settings_box",
                         aid: e.aid,
                         mask: t
-                    }, {
+                    };
+                    e.gid && (i.gid = e.gid);
+                    var s = showBox("apps", i, {
                         params: {
                             dark: 1,
                             width: 550
                         }
                     });
-                    i.setOptions({
+                    s.setOptions({
                         onHide: function() {
                             setTimeout(function() {
                                 cur.settingsBoxShown = !1

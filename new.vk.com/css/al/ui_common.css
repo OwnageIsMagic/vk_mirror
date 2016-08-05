@@ -1603,7 +1603,8 @@ a.ui_search_custom_link {
     background: rgba(29, 32, 34, .6);
     border-radius: 0 0 0 2px;
     padding: 5px;
-    cursor: pointer
+    cursor: pointer;
+    outline: none
 }
 
 .ui_thumb_pe_button .ui_thumb_pe,

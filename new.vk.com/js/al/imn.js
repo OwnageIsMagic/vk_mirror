@@ -8452,84 +8452,77 @@
             M = S.bind(null, s);
         hide(geByClass1("ms_items_more_helper", e));
         var O, R = new MediaSelector(geByClass1(q, e), "_im_media_preview", [
-            ["photo", getLang("profile_wall_photo")],
-            ["gift", getLang("profile_wall_gift")],
-            ["video", getLang("profile_wall_video")],
-            ["audio", getLang("profile_wall_audio")],
-            ["doc", getLang("profile_wall_doc")],
-            ["map", getLang("profile_wall_map")]
-        ], {
-            maxShown: 1,
-            onAddMediaChange: function(r, a, i, s) {
-                return p(n, t, G, e, r, a, i, s, R)
-            },
-            editable: 1,
-            onChangedSize: function() {
-                var e = n()
-                    .updateScroll();
-                n()
-                    .scrollFix(t, t.get()
-                        .peer, e)
-            },
-            sortable: 1,
-            teWidth: 150,
-            mail: 1,
-            teHeight: 100,
-            forceToUp: !0,
-            toId: t.get()
-                .gid ? -t.get()
-                .gid : void 0,
-            blockPersonal: t.get()
-                .gid ? 1 : 0,
-            docParams: t.get()
-                .gid ? {
-                    imhash: t.get()
-                        .im_doc_hash,
-                    from: "from_gim"
-                } : {}
-        });
-        hide(geByClass1("ms_items_more_helper", e)), addEvent(geByClass1(q, e), "mouseover", function() {
-            O && clearTimeout(O), show(geByClass1("ms_items_more_helper", e))
-        }), addEvent(geByClass1(q, e), "mouseout", function() {
-            O = setTimeout(function() {
-                hide(geByClass1("ms_items_more_helper", e))
-            }, 500)
-        });
-        var U, G = d.bind(null, t, n, v, e, a, R),
-            z = debounce(w.bind(null, t, R), 500),
-            K = m(e, t, function(r, a) {
+                ["photo", getLang("profile_wall_photo")],
+                ["gift", getLang("profile_wall_gift")],
+                ["video", getLang("profile_wall_video")],
+                ["audio", getLang("profile_wall_audio")],
+                ["doc", getLang("profile_wall_doc")],
+                ["map", getLang("profile_wall_map")]
+            ], {
+                maxShown: 1,
+                onAddMediaChange: function(r, a, i, s) {
+                    return p(n, t, U, e, r, a, i, s, R)
+                },
+                editable: 1,
+                onChangedSize: function() {
+                    var e = n()
+                        .updateScroll();
+                    n()
+                        .scrollFix(t, t.get()
+                            .peer, e)
+                },
+                sortable: 1,
+                teWidth: 150,
+                mail: 1,
+                teHeight: 100,
+                forceToUp: !0,
+                toId: t.get()
+                    .gid ? -t.get()
+                    .gid : void 0,
+                blockPersonal: t.get()
+                    .gid ? 1 : 0,
+                docParams: t.get()
+                    .gid ? {
+                        imhash: t.get()
+                            .im_doc_hash,
+                        from: "from_gim"
+                    } : {}
+            }),
+            U = d.bind(null, t, n, v, e, a, R),
+            G = debounce(w.bind(null, t, R), 500),
+            z = m(e, t, function(r, a) {
                 var i = t.get()
                     .peer,
                     s = Emoji.val(a);
                 (0, F.isReservedPeer)(i) || T(i, t) || t.get()
-                    .tabs[i].imdraft == s || !s || I(t), z(r, a);
+                    .tabs[i].imdraft == s || !s || I(t), G(r, a);
                 var o = e.offsetHeight;
-                if (U && U !== o) {
+                if (O && O !== o) {
                     var l = n()
                         .updateScroll();
                     n()
                         .scrollFix(t, t.get()
                             .peer, l)
                 }
-                U = o
-            }, G, A, M, s),
-            Y = G.bind(null, []),
-            V = _.bind(null, t),
-            Z = geByClass1("_im_send", e);
-        addEvent(Z, "click", Y), addEvent(Z, "mouseover", V), t.get()
+                O = o
+            }, U, A, M, s),
+            K = U.bind(null, []),
+            Y = _.bind(null, t),
+            V = geByClass1("_im_send", e);
+        addEvent(V, "click", K), addEvent(V, "mouseover", Y), t.get()
             .textMediaSelector = R, t.set(B.initTextStore.bind(null, h, C, E, P));
-        var $ = (ge("_im_media_preview"), geByClass1("_im_text", e));
+        var Z = (ge("_im_media_preview"), geByClass1("_im_text", e));
         setTimeout(function() {
             a()
                 .restoreDraft(t)
         }, 0);
-        var X = k.bind(null, K, t, $, R),
-            J = b.bind(null, t, e, n),
-            ee = u.bind(null, t);
+        var $ = k.bind(null, z, t, Z, R),
+            X = b.bind(null, t, e, n),
+            J = u.bind(null, t);
         return addEvent(geByClass1("_im_text_wrap", e), "click", function() {
-                $ !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)($)
-            }), (0, j.addDelegateEvent)(e, "click", "_im_rc_emoji", X), (0, j.addDelegateEvent)(e, "click", W, J), (0, j.addDelegateEvent)(e, "click", "_im_will_fwd", D),
-            (0, j.addDelegateEvent)(bodyNode, "click", Q, ee), i(R, $, e, Y, n, X, h, J, D, s, M, ee)
+                Z !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)(Z)
+            }), (0, j.addDelegateEvent)(e, "click", "_im_rc_emoji", $), (0, j.addDelegateEvent)(e, "click", W, X), (0, j.addDelegateEvent)(e, "click", "_im_will_fwd", D),
+            (0, j.addDelegateEvent)(bodyNode, "click", Q, J), i(R, Z, e, K, n, $, h, X, D, s, M, J)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0
@@ -9290,8 +9283,7 @@
             cancelStackPush("im_search", s), e.set(h.setCurrentSearch.bind(null, i, !1))
                 .then(t), addClass(r, "im-page--dialogs-search_fill")
         } else i || (e.set(h.setCurrentSearch.bind(null, "", !1))
-            .then(t),
-            removeClass(r, "im-page--dialogs-search_fill"))
+            .then(t), removeClass(r, "im-page--dialogs-search_fill"))
     }
 
     function s(e, t, n) {

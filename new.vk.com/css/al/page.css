@@ -4225,6 +4225,10 @@ h2.page_name {
     background-color: #f0f2f5
 }
 
+#currinfo_wrap {
+    outline: none
+}
+
 .current_text,
 .my_current_info,
 .no_current_info {
@@ -4478,7 +4482,8 @@ textarea.page_poll_export_code {
 }
 
 .owner_photo_top_bubble {
-    display: none;
+    opacity: 0;
+    filter: alpha(opacity=0);
     position: absolute;
     top: 0;
     right: 0
@@ -4492,7 +4497,9 @@ textarea.page_poll_export_code {
 }
 
 .owner_photo_wrap:hover .owner_photo_top_bubble {
-    display: block
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
 }
 
 .owner_photo_bubble_action {
@@ -4502,7 +4509,8 @@ textarea.page_poll_export_code {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: pointer
+    cursor: pointer;
+    outline: none
 }
 
 .owner_photo_bubble_action:hover .owner_photo_bubble_action_in {

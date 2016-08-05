@@ -95,10 +95,22 @@ var Videocat = window.Videocat || {
         function n() {
             removeEvent(window, "scroll", cur._videocat_onScroll)
         }
-        cur._videocatInited || (cur._videocatInited = !0, Videocat.lists = extend(Videocat.lists || {}, i), Videocat.moreBlocks = e, Videocat.feedData = o, Videocat.preloadLists =
-            t, Videocat.top3playlists = s, Videocat.moreChannelsInfo = a, cur.videoCatRecomsLoaded = !1, cur._sessionChannelsSubscriptions = [], cur._videocat_onScroll &&
-            removeEvent(window, "scroll", cur._videocat_onScroll), addEvent(window, "scroll", cur._videocat_onScroll = Videocat._onScroll), cur.destroy.push(n), cur._back
-            .hide.push(n))
+        if (!cur._videocatInited) {
+            cur._videocatInited = !0, Videocat.lists = extend(Videocat.lists || {}, i), Videocat.moreBlocks = e, Videocat.feedData = o, Videocat.preloadLists = t, Videocat
+                .top3playlists = s, Videocat.moreChannelsInfo = a, cur.videoCatRecomsLoaded = !1, cur._sessionChannelsSubscriptions = [], cur._videocat_onScroll &&
+                removeEvent(window, "scroll", cur._videocat_onScroll), addEvent(window, "scroll", cur._videocat_onScroll = Videocat._onScroll), cur.destroy.push(n), cur._back
+                .hide.push(n);
+            var c = ge("videocat_inline_autoplay_id");
+            if (c) {
+                var r = c.dataset.video_id;
+                r && showInlineVideo(r, "", {
+                    autoplay: !0,
+                    addParams: {
+                        from_autoplay: 1
+                    }
+                }, event, c)
+            }
+        }
     },
     show: function(e, o, t, i, s, a) {
         return checkEvent(o) ? !0 : (showVideo(t, i, {

@@ -2671,7 +2671,8 @@ body.mac #layer_stl .fixed {
 .popup_box_container {
     margin: 0 auto;
     z-index: 1000;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, .35)
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .35);
+    outline: none
 }
 
 #box_loader {
@@ -5568,7 +5569,7 @@ button.ui_load_more_btn {
 
 .top_audio_player .top_audio_player_btn {
     float: left;
-    padding: 16px 4px 12px;
+    padding: 16px 4px 10px;
     cursor: pointer;
     border: none;
     background: transparent;
@@ -5600,7 +5601,7 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player .top_audio_player_play {
-    padding: 14px 4px 13px
+    padding: 14px 4px 12px
 }
 
 .top_audio_player .top_audio_player_play>div {
