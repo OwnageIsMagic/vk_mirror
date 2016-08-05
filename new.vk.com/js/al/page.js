@@ -1986,6 +1986,7 @@ var Wall = {
         Wall.suggestUpdate(-1);
         showDoneBox(text);
         cur.wallMyDeleted[post] = 1;
+        Wall.deinitComposer(ge('wpe_text'));
 
         if (cur.wallType == 'full_own' || cur.wallType == 'full_all') {
             Pagination.recache(-1);
@@ -2817,6 +2818,9 @@ var Wall = {
             },
             ownmsg = (cur.postTo == vk.id || params.official || cur.options.only_official),
             attachI = 0;
+        if (cur.options.additional_save_params) {
+            params = extend(params, cur.options.additional_save_params);
+        }
 
         if (isArray(media) && media.length) {
             medias.push(clone(media));
@@ -2978,7 +2982,7 @@ var Wall = {
                         return true;
                     }
                     ge('submit_post_error')
-                        .innerHTML = msg;
+                        .innerHTML = (msg.length > 60 ? '<div class="msg_text">' + msg + '</div>' : msg);
                     if (!isVisible('submit_post_error')) {
                         slideDown('submit_post_error', 100);
                     }

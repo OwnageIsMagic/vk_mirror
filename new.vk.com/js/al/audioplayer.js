@@ -154,23 +154,26 @@ var AudioUtils = {
                         getAudioPlayer()
                         .notify(AudioPlayer.EVENT_REMOVED, r.fullId, _.addedFullId)
                 }
-            } else ajax.post("al_audio.php", p, {
-                    onDone: function(t, i, o, l) {
-                        if (t) {
-                            var u = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
-                            if (d[r.fullId] = {
-                                    state: "added",
-                                    addedFullId: u
-                                }, a) {
-                                var n = getAudioPlayer()
-                                    .getPlaylist(AudioPlaylist.TYPE_ALBUM, s ? -s : vk.id, AudioPlaylist.ALBUM_ALL);
-                                n.addAudio(t, 0)
+            } else {
+                var f = gpeByClass("_post", t);
+                f && (p.post_id = domData(f, "post-id")), ajax.post("al_audio.php", p, {
+                        onDone: function(t, i, o, l) {
+                            if (t) {
+                                var u = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
+                                if (d[r.fullId] = {
+                                        state: "added",
+                                        addedFullId: u
+                                    }, a) {
+                                    var n = getAudioPlayer()
+                                        .getPlaylist(AudioPlaylist.TYPE_ALBUM, s ? -s : vk.id, AudioPlaylist.ALBUM_ALL);
+                                    n.addAudio(t, 0)
+                                }
                             }
+                            e(!1)
                         }
-                        e(!1)
-                    }
-                }), removeClass(o, "canadd"), addClass(o, "added"), A && (removeClass(A, "canadd"), addClass(A, "added")), getAudioPlayer()
-                .notify(AudioPlayer.EVENT_ADDED, r.fullId)
+                    }), removeClass(o, "canadd"), addClass(o, "added"), A && (removeClass(A, "canadd"), addClass(A, "added")), getAudioPlayer()
+                    .notify(AudioPlayer.EVENT_ADDED, r.fullId)
+            }
         }
     },
     addAudioFromChooseBox: function(t, i, e, o, a, l, s) {
@@ -944,8 +947,8 @@ AudioPlayer.tabIcons = {
                 r.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
                 var o = geByClass1("audio_duration", t);
                 o && (o.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                        .duration)), attr(l, "aria-label", getLang("global_audio_play")),
-                    attr(geByClass1("_audio_title", t), "role", "")
+                        .duration)),
+                    attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
             }
             e ? setTimeout(function() {
                 var i = intval(domData(t, "is-current"));
