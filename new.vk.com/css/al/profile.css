@@ -440,11 +440,6 @@
     display: none
 }
 
-.gifts_list_module .module_inverted span.fl_l,
-.module_inverted .header_top .right_link {
-    color: #99adc2
-}
-
 .gifts_inverted_loading .profile_gifts_send {
     background: #597da3 url('/images/upload_inv_mini.gif') right 5px no-repeat;
     padding-right: 23px;

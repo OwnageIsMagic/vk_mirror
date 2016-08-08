@@ -11127,6 +11127,7 @@ function fixImHeight(isGroup) {
     if (page) {
         var height = (window.innerHeight || document.documentElement.clientHeight) - 78;
         var prop = isGroup ? "minHeight" : "height"
+        page.style.height = "auto";
         page.style[prop] = height + "px";
     }
 }
@@ -11176,9 +11177,23 @@ function onlinePlatformClass(platform) {
 }
 
 function toggleOnline(obj, platform) {
-    removeClass(obj, 'online');
-    removeClass(obj, 'mobile');
-    addClass(obj, onlinePlatformClass(platform));
+    var allCls = ['online', 'mobile', '_online'];
+    var onlineCls = onlinePlatformClass(platform)
+        .split(' ');
+
+    var toAdd = [];
+
+    allCls.forEach(function(cls) {
+        if (inArray(cls, onlineCls) && !hasClass(obj, cls)) {
+            toAdd.push(cls);
+        } else if (!inArray(cls, onlineCls) && hasClass(obj, cls)) {
+            removeClass(obj, cls);
+        }
+    });
+
+    if (toAdd.length > 0) {
+        addClass(obj, toAdd.join(' '));
+    }
 }
 
 function updateOnlineText() {

@@ -1208,6 +1208,10 @@ embed#video_player {
     line-height: 15px
 }
 
+.mv_recom_item_duration:empty {
+    display: none
+}
+
 .mv_recom_item_active_live .mv_recom_item_duration {
     background-color: #f65148;
     text-transform: uppercase
@@ -2068,6 +2072,10 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     line-height: 15px;
     -o-transition: opacity 100ms linear;
     transition: opacity 100ms linear
+}
+
+.mv_playlist .mv_playlist_item_duration:empty {
+    display: none
 }
 
 .mv_pl_scrollbar_cont.scrollbar_cont {
