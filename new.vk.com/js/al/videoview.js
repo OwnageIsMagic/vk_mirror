@@ -153,10 +153,10 @@ var Videoview = {
                     }), mvcur.adData.view_complete_full = !0))
             },
             onVideoStreamPlaying: function(e, i) {
-                if (e + "_" + i == cur.pinnedVideo) {
-                    var t = window.mvcur && mvcur.player || cur.videoInlinePlayer || ge("video_player") || window.html5video;
-                    if (!(t && t.isTouchedByUser && t.isTouchedByUser())) return;
-                    cur.pinnedVideoDestroyHandlers()
+                var t = window.mvcur && mvcur.player || cur.videoInlinePlayer || ge("video_player");
+                if (t && (t.isFromAutoplay && t.isFromAutoplay() || e + "_" + i == cur.pinnedVideo)) {
+                    if (!t.isTouchedByUser || !t.isTouchedByUser()) return;
+                    cur.pinnedVideoDestroyHandlers && cur.pinnedVideoDestroyHandlers()
                 }
                 window.Notifier && setTimeout(function() {
                     Notifier.lcSend("video_start")
@@ -1431,8 +1431,8 @@ var Videoview = {
                             }
                         }) : re("mv_more"), toggle(ge("mv_edit_button"), mvcur.mvData.editHash && !mvcur.mvData.hideEdit && !mvcur.mvData.editFromDropdown)
                 }
-                mvcur.mvData.uploaded || Videoview.recache(), mvcur.mvData.is_live || Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData && stManager
-                    .add("notifier.js", function() {
+                mvcur.mvData.uploaded || Videoview.recache(), mvcur.mvData.is_active_live || Videoview.adaptRecomsHeight(), Videoview.updateReplyFormPos(), opt.queueData &&
+                    stManager.add("notifier.js", function() {
                         Videoview.checkUpdates(opt.queueData)
                     }), mvcur.mvData.is_live && setTimeout(Videoview.checkOtherLives.pbind(videoRaw), 6e4)
             }
@@ -1448,11 +1448,14 @@ var Videoview = {
                 e), 25e3))
         },
         receiveUpdates: function(e, i) {
-            return window.mvcur && mvcur.mvShown && mvcur.queueKey === e && i ? i.failed ? void(mvcur.queueKey = null) : void each(i.events, function() {
+            function t(e, i) {
+                return e + "video_" + i + "mv"
+            }
+            if (window.mvcur && mvcur.mvShown && mvcur.queueKey === e && i) return i.failed ? void(mvcur.queueKey = null) : void each(i.events, function() {
                 var e = this.split("<!>"),
                     i = e[0],
-                    t = e[1];
-                if (i == mvcur.qversion) switch (t) {
+                    o = e[1];
+                if (i == mvcur.qversion) switch (o) {
                     case "new_reply":
                         mvcur.chatMode || (Videoview.appendNewComment.apply(Videoview, e.slice(2)), Videoview.updateCommentsHeader(), Videoview.updateReplyFormPos());
                         break;
@@ -1460,41 +1463,46 @@ var Videoview = {
                         mvcur.chatMode && VideoChat.receiveMessage.apply(VideoChat, e.slice(2));
                         break;
                     case "edit_reply":
-                        var o = ge("wpt" + e[2]);
-                        o && !attr(o, "data-action") && val(o, psr(e[3])), Videoview.updateReplyFormPos();
+                        var a = e[2],
+                            d = e[3],
+                            r = e[4],
+                            n = ge("wpt" + t(a, d));
+                        n && !attr(n, "data-action") && val(n, psr(r)), Videoview.updateReplyFormPos();
                         break;
                     case "del_reply":
                         var a = e[2],
                             d = e[3];
                         if (mvcur.chatMode) VideoChat.receiveDelete(a, d);
                         else {
-                            var o = ge("post" + a + "video_" + d + "mv");
-                            o ? attr(o, "data-action") || (mvcur.mvData.commcount--, mvcur.mvData.commshown--, re(o)) : mvcur.mvData.commcount--, Videoview.updateCommentsHeader(),
+                            var n = ge("post" + t(a, d));
+                            n ? attr(n, "data-action") || (mvcur.mvData.commcount--, mvcur.mvData.commshown--, re(n)) : mvcur.mvData.commcount--, Videoview.updateCommentsHeader(),
                                 Videoview.updateReplyFormPos()
                         }
                         break;
                     case "like_reply":
-                        var r = (e[2], +e[3]),
-                            n = +e[4],
-                            s = +e[5],
-                            o = ge("wpe_bottom" + e[2]);
-                        if (o) {
-                            var v = domByClass(o, "_like_wrap"),
-                                l = domByClass(v, "_count");
-                            val(l, r > 0 ? r : ""), toggleClass(v, "no_likes", !r), n == vk.id && toggleClass(v, "my_like", !s)
+                        var a = e[2],
+                            d = e[3],
+                            s = +e[4],
+                            v = +e[5],
+                            l = +e[6],
+                            n = ge("wpe_bottom" + t(a, d));
+                        if (n) {
+                            var c = domByClass(n, "_like_wrap"),
+                                m = domByClass(c, "_count");
+                            val(m, s > 0 ? s : ""), toggleClass(c, "no_likes", !s), v == vk.id && toggleClass(c, "my_like", !l)
                         }
                         break;
                     case "video_view":
                         Videoview.updateLiveViewersCount(e[3]);
                         break;
                     case "end_live":
-                        var c = mvcur.player;
-                        c.onLiveEnded();
+                        var u = mvcur.player;
+                        u.onLiveEnded();
                         break;
                     default:
                         debugLog("unhandled video event")
                 }
-            }) : void 0
+            })
         },
         appendNewComment: function(e, i, t, o, a, d, r, n, s, v, l) {
             if (!ge("post" + e + "video_" + i + "mv")) {
@@ -1504,7 +1512,7 @@ var Videoview = {
                     actions: c
                 });
                 var m = langDate(1e3 * n, getLang("global_short_date_time", "raw"), 0, []),
-                    u = rs(psr(mvcur.commentsTpl.reply, {
+                    u = psr(rs(mvcur.commentsTpl.reply, {
                         actions: c,
                         post_oid: e,
                         reply_id: e + "video_" + i + "mv",
@@ -1529,14 +1537,19 @@ var Videoview = {
                 act: "live_other_videos",
                 video: e
             }, {
-                onDone: function(e) {
-                    var i = domByClass(mvLayer, "mv_info_narrow_column");
-                    val(i, e)
+                onDone: function(i) {
+                    Videoview.updateOtherLives(e, i)
                 },
                 onFail: function() {
                     return !0
                 }
             }), setTimeout(Videoview.checkOtherLives.pbind(e), 6e4))
+        },
+        updateOtherLives: function(e, i) {
+            if (mvcur.mvShown && mvcur.videoRaw == e) {
+                var t = domByClass(mvLayer, "mv_info_narrow_column");
+                val(t, i), mvcur.mvData.is_active_live || Videoview.adaptRecomsHeight()
+            }
         },
         onVideoShared: function(e, i, t) {
             "publish" != e || Videoview._isCurrentVideoPublished() || (Videoview.hide(!0, !0), setTimeout(function() {
@@ -1900,7 +1913,7 @@ var Videoview = {
         },
         viewScroll: function() {
             var e, i = 6,
-                t = (ge("mv_top_controls"), getXY("mv_box", !0)[1]),
+                t = (ge("mv_top_controls"), getXY("mv_main", !0)[1]),
                 o = getSize("mv_player_box")[1];
             e = t - i, e = 0 > e ? -e : 0, toggleClass("mv_top_controls", "fixed", e > 0), toggleClass("mv_pl_prev", "fixed", e > 0), toggleClass("mv_pl_next", "fixed", e > 0),
                 toggleClass("mv_top_pl_toggle", "hidden", e > o), mvcur.scrolledAway = e > o / 3, Videoview.playerNextTimerUpdate(), Videoview.updateReplyFormPos()
@@ -2518,7 +2531,6 @@ var Videoview = {
                         preserveEdgeBelow: !0,
                         preserveEdgeBelowThreshold: VideoChat.SCROLL_EDGE_BELOW_THRESHOLD,
                         theme: "videoview",
-                        stopScrollPropagation: !1,
                         onupdate: VideoChat.onScrollUpdate
                     }), this.scrollBottomBtnWrap = domByClass(e, "mv_chat_new_messages_btn_wrap"), VideoChat.replyForm = domByClass(e, "mv_chat_reply_form"), VideoChat.replyForm &&
                 (VideoChat.replyInput = domByClass(e, "mv_chat_reply_input"), VideoChat.initReplyInput()), VideoChat.firstMsgIntro = domByClass(e,

@@ -157,6 +157,10 @@
     margin-bottom: 20px
 }
 
+.videocat_featured:hover .hide_icon {
+    opacity: 1
+}
+
 .videocat_featured_playlist,
 .videocat_featured_video {
     height: 137px;

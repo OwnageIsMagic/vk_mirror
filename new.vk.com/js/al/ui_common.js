@@ -650,13 +650,19 @@ var uiTabs = {
                 }, i), this.options["native"] && (this.options.shadows = !1), browser.mobile && (this.options.stopScrollPropagation = !1), isArray(this.options.scrollElements) ||
                 (this.options.scrollElements = []), this.removeEvents = [], this.removeElements = [], this.dragging = !1, this.released = !0, this.noMore = !1, this.dragY =
                 null, this.dragScroll = null, this.shadowTop = !1, this.shadowBottom = !1, this.unnecessary = !1, this.disabled = !1, this.stopped = !0, this.stoppedTimeout =
-                null, this.fixSizeDefault = null, this.animation = null, this.blockerScrollTop = 500, this.emitter = new EventEmitter, isFunction(this.options.onresize) &&
-                this.emitter.addListener("resize", this.options.onresize), isFunction(this.options.onscroll) && this.emitter.addListener("scroll", this.options.onscroll),
-                isFunction(this.options.onscrollstart) && this.emitter.addListener("scrollstart", this.options.onscrollstart), isFunction(this.options.onscrollstop) && this.emitter
-                .addListener("scrollstop", this.options.onscrollstop), isFunction(this.options.ondrag) && this.emitter.addListener("drag", this.options.ondrag), isFunction(
-                    this.options.ondragstart) && this.emitter.addListener("dragstart", this.options.ondragstart), isFunction(this.options.ondragstop) && this.emitter.addListener(
-                    "dragstop", this.options.ondragstop), isFunction(this.options.onupdate) && this.emitter.addListener("update", this.options.onupdate), isFunction(this.options
-                    .onmore) && this.emitter.addListener("more", this.options.onmore), this.el = {
+                null, this.fixSizeDefault = null, this.animation = null, this.blockerScrollTop = 500, this.options.stopScrollPropagation && (this.fixBlocker = window.devicePixelRatio >=
+                    2 && browser.chrome ? function(t) {
+                        t.el.blocker.scrollTop = t.blockerScrollTop + 1, setTimeout(function() {
+                            t.el.blocker.scrollTop = t.blockerScrollTop
+                        }, 0)
+                    }.pbind(this) : function() {
+                        this.el.blocker.scrollTop = this.blockerScrollTop
+                    }), this.emitter = new EventEmitter, isFunction(this.options.onresize) && this.emitter.addListener("resize", this.options.onresize), isFunction(this.options
+                    .onscroll) && this.emitter.addListener("scroll", this.options.onscroll), isFunction(this.options.onscrollstart) && this.emitter.addListener("scrollstart",
+                    this.options.onscrollstart), isFunction(this.options.onscrollstop) && this.emitter.addListener("scrollstop", this.options.onscrollstop), isFunction(this.options
+                    .ondrag) && this.emitter.addListener("drag", this.options.ondrag), isFunction(this.options.ondragstart) && this.emitter.addListener("dragstart", this.options
+                    .ondragstart), isFunction(this.options.ondragstop) && this.emitter.addListener("dragstop", this.options.ondragstop), isFunction(this.options.onupdate) &&
+                this.emitter.addListener("update", this.options.onupdate), isFunction(this.options.onmore) && this.emitter.addListener("more", this.options.onmore), this.el = {
                     container: t,
                     overflow: ce("div", {
                         className: "ui_scroll_overflow"
@@ -764,7 +770,7 @@ var uiTabs = {
                 return t = isString(t) && "_" === t[0] ? geByClass1(t) : ge(t)
             },
             init: function() {
-                if (this.fixBlocker(), !this.inited) {
+                if (this.options.stopScrollPropagation && this.fixBlocker(), !this.inited) {
                     if (!this.el.container.scrollWidth || this.disabled) return;
                     this.fixSize(!0), this.options.autoresize && this.startResizeListening(), this.options.global || cur.destroy.push(this.destroy.bind(this)), this.inited = !
                         0
@@ -808,9 +814,6 @@ var uiTabs = {
                 this.options["native"] || (t && null == this.fixSizeDefault && (this.fixSizeDefault = this.el.container.style.width), setStyle(this.el.container, "width",
                     t ? getSize(this.el.container, !0)[0] || this.fixSizeDefault || "" : this.fixSizeDefault || ""))
             },
-            fixBlocker: function() {
-                this.options.stopScrollPropagation && (this.el.blocker.scrollTop = this.blockerScrollTop)
-            },
             emitEvent: function(t) {
                 this.disabled || this.inited && this.emitter.emitEvent(t, [this.api])
             },
@@ -832,8 +835,9 @@ var uiTabs = {
                         e = !1,
                         s = function() {
                             return o.contentDocument ? (o.contentDocument.defaultView.addEventListener("resize", function() {
-                                this.update() && (this.fixBlocker(), this.emitEvent("resize"))
-                            }.bind(this)), void(this.update() && (this.fixBlocker(), this.emitEvent("resize")))) : setTimeout(s, 100)
+                                this.update() && (this.options.stopScrollPropagation && this.fixBlocker(), this.emitEvent("resize"))
+                            }.bind(this)), void(this.update() && (this.options.stopScrollPropagation && this.fixBlocker(), this.emitEvent("resize")))) : setTimeout(s,
+                                100)
                         }.bind(this),
                         o = ce("object", {
                             type: "text/html",
@@ -866,7 +870,7 @@ var uiTabs = {
                         var i = (t.offsetWidth || 1e4) + 10,
                             e = (t.offsetHeight || 1e4) + 10;
                         r.style.width = i + "px", r.style.height = e + "px", n.scrollLeft = i, n.scrollTop = e, l.scrollLeft = i, l.scrollTop = e, h !== (h = i + " " + e) &&
-                            this.update() && (this.fixBlocker(), this.emitEvent("resize"))
+                            this.update() && (this.options.stopScrollPropagation && this.fixBlocker(), this.emitEvent("resize"))
                     }.bind(this)
             },
             disable: function(t) {
@@ -877,15 +881,15 @@ var uiTabs = {
                 return this.disabled || this.dragging || this.options["native"] ? void 0 : (t || (t = window.event), this.dragging = !0, this.animation && this.animation.stop(),
                     this.options.reversed && (this.noMore = !0), setStyle(bodyNode, "cursor", "pointer"), addEvent(document, "mouseup contextmenu", this.dragstartHandler =
                         this.dragstop.bind(this)), addEvent(document, "mousemove", this.dragHandler = this.drag.bind(this)), addClass(this.el.container,
-                        "ui_scroll_dragging"), this.dragScroll = this.options.reversed ? this.api.data.scrollBottom : this.api.data.scrollTop, this.dragY = t.screenY,
-                    cancelEvent(t), this.emitEvent("dragstart"), this.api)
+                        "ui_scroll_dragging"),
+                    this.dragScroll = this.options.reversed ? this.api.data.scrollBottom : this.api.data.scrollTop, this.dragY = t.screenY, cancelEvent(t), this.emitEvent(
+                        "dragstart"), this.api)
             },
             dragstop: function(t) {
                 return this.disabled || !this.dragging || this.options["native"] ? void 0 : (t || (t = window.event), this.dragging = !1, this.dragstopHandler &&
-                    removeEvent(document, "mouseup contextmenu", this.dragstopHandler),
-                    this.dragHandler && removeEvent(document, "mousemove", this.dragHandler), setStyle(bodyNode, "cursor", ""), removeClass(this.el.container,
-                        "ui_scroll_dragging"), this.noMore && (this.noMore = !1, this.more()), t && "contextmenu" !== t.type && cancelEvent(t), this.emitEvent(
-                        "dragstop"), this.api)
+                    removeEvent(document, "mouseup contextmenu", this.dragstopHandler), this.dragHandler && removeEvent(document, "mousemove", this.dragHandler),
+                    setStyle(bodyNode, "cursor", ""), removeClass(this.el.container, "ui_scroll_dragging"), this.noMore && (this.noMore = !1, this.more()), t &&
+                    "contextmenu" !== t.type && cancelEvent(t), this.emitEvent("dragstop"), this.api)
             },
             drag: function(t) {
                 if (!this.disabled && this.dragging && !this.options["native"]) {
@@ -896,22 +900,22 @@ var uiTabs = {
                 }
             },
             scroll: function(t, i, e) {
-                return this.animation && this.animation.stop(), this.fixBlocker(), this.el.outer.scrollTop == t && this.update(), i ? (i = "number" != typeof i || !Number.isFinite(
-                        i) || i % 1 ? 300 : Math.abs(i), this.animation = new Fx.Base({
-                        scrollTop: this.el.outer.scrollTop
-                    }, {
-                        transition: Fx.Transitions.easeOutCubic,
-                        onStep: function(t) {
-                            this.el.outer.scrollTop = t.scrollTop
-                        }.bind(this),
-                        duration: i,
-                        onComplete: isFunction(e) ? e.pbind(this.api) : void 0
-                    })
-                    .start({
-                        scrollTop: this.el.outer.scrollTop
-                    }, {
-                        scrollTop: t
-                    })) : (this.el.outer.scrollTop = t, isFunction(e) && e(this.api)), this.api
+                return this.animation && this.animation.stop(), this.options.stopScrollPropagation && this.fixBlocker(), this.el.outer.scrollTop == t && this.update(), i ?
+                    (i = "number" != typeof i || !Number.isFinite(i) || i % 1 ? 300 : Math.abs(i), this.animation = new Fx.Base({
+                            scrollTop: this.el.outer.scrollTop
+                        }, {
+                            transition: Fx.Transitions.easeOutCubic,
+                            onStep: function(t) {
+                                this.el.outer.scrollTop = t.scrollTop
+                            }.bind(this),
+                            duration: i,
+                            onComplete: isFunction(e) ? e.pbind(this.api) : void 0
+                        })
+                        .start({
+                            scrollTop: this.el.outer.scrollTop
+                        }, {
+                            scrollTop: t
+                        })) : (this.el.outer.scrollTop = t, isFunction(e) && e(this.api)), this.api
             },
             scrollTop: function(t, i, e) {
                 return this.disabled || this.dragging ? void 0 : this.scroll(intval(t), i, e)

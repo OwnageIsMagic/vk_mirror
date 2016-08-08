@@ -237,12 +237,14 @@ var slide_show = function(e) {
                 act: "subscr",
                 oid: s,
                 hash: t,
-                from: c || "search"
+                from: c || "search",
+                ref: cur.module
             }) : (a = "al_fans.php", n = {
                 act: "unsub",
                 oid: s,
                 hash: t,
-                from: "search"
+                from: "search",
+                ref: cur.module
             }), ajax.post(a, n, {
                 onDone: function() {
                     i ? toggleClass(u, "touched", !!r) : (toggle("search_sub" + s, !r), toggle("search_unsub" + s, !!r)), r || (cur.unsubscribed[s] = 1)

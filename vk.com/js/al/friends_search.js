@@ -101,8 +101,8 @@ var FriendsSearch = {
                     redirectUri) + '&approval_prompt=force&state=' + state + '&client_id=190525020719-3g15ppddiep5mnjbt0g8vi1kh6v160an.apps.googleusercontent.com&hl=' +
                 googleLang;
         } else if (type == 3) {
-            var oauthUrl = 'https://graph.facebook.com/oauth/authorize?client_id=128749580520227&redirect_uri=' + encodeURIComponent(redirectUri) + '&display=popup&state=' +
-                state;
+            var oauthUrl = 'https://graph.facebook.com/v2.7/oauth/authorize?client_id=128749580520227&redirect_uri=' + encodeURIComponent(redirectUri) +
+                '&display=popup&state=' + state;
         } else if (type == 4) {
             var oauthUrl = 'http://www.odnoklassniki.ru/oauth/authorize?client_id=168388096&scope=VALUABLE+ACCESS&response_type=code&redirect_uri=' + encodeURIComponent(
                 redirectUri + '&state=' + state);

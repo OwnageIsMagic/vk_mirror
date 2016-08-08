@@ -1205,14 +1205,14 @@ var ProfileEditor = {
         });
     },
 
-    setUpFacebook: function(app_id, redir, authorized) {
+    setUpFacebook: function(app_id, redir, authorized, state) {
         if (authorized && !cur.disableFbExport) {
             return showBox('al_profileEdit.php', {
                 act: 'facebook_settings_box'
             });
         }
         var url = 'https://graph.facebook.com/v2.7/oauth/authorize?client_id=' + app_id + '&redirect_uri=' + redir +
-            '&scope=email,user_birthday,publish_actions&display=popup';
+            '&scope=email,user_birthday,publish_actions&display=popup&state=' + state;
         var params = 'scrollbars=0,resizable=1,menubar=0,location=0,left=' + (Math.floor(screen.width / 2) - 300) + ',top=' + (Math.floor(screen.height / 2) - 240) +
             ',width=600,height=400,toolbar=0,status=0';
         var win = window.open(url, 'fb', params);

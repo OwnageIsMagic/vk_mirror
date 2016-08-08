@@ -2638,7 +2638,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-search .im-search--calendar {
-    margin: 16px 20px 0 0
+    margin: 15px 20px 0 0
 }
 
 .im-search .im-search--calendar:hover,
@@ -2652,6 +2652,10 @@ body.mac .im_stickerpack_fixed {
     margin: 0 7px
 }
 
+.im-mess .im-mess--blind-selected {
+    display: none
+}
+
 .im-mess .im-mess--del-attach {
     color: #939393
 }
@@ -2660,7 +2664,12 @@ body.mac .im_stickerpack_fixed {
     margin-top: 5px
 }
 
+.im-mess .im-mess--blind-read {
+    display: none
+}
+
 .im-mess .im-mess--text {
+    outline: 0;
     margin: 0 20px 0 86px;
     line-height: 18px;
     word-wrap: break-word
@@ -2739,7 +2748,8 @@ body.mac .im_stickerpack_fixed {
     height: 13px;
     margin: 3px 7px 0 0;
     display: block;
-    visibility: hidden
+    visibility: hidden;
+    outline: 0
 }
 
 .im-mess .im-mess--btn {
@@ -2817,6 +2827,11 @@ body.mac .im_stickerpack_fixed {
     margin-right: 0
 }
 
+.im-mess.im-mess_fwd-top .im-mess_fwd .im-mess--blind-select,
+.im-mess.im-mess_fwd .im-mess--blind-select {
+    display: none
+}
+
 .im-mess.im-mess_fwd-top .im-mess_fwd .copy_post_img,
 .im-mess.im-mess_fwd .copy_post_img {
     width: 36px;
@@ -2870,6 +2885,11 @@ body.mac .im_stickerpack_fixed {
     background: #edf0f5
 }
 
+.im-mess.im-mess_selected .im-mess--blind-selected,
+.im-mess.im-mess_selected:hover .im-mess--blind-selected {
+    display: block
+}
+
 .im-mess.im-mess_selected .im-mess--marker,
 .im-mess.im-mess_selected:hover .im-mess--marker {
     display: none!important
@@ -2914,6 +2934,10 @@ body.mac .im_stickerpack_fixed {
     padding-right: 54px;
     margin-left: 36px;
     margin-right: 36px
+}
+
+.im-mess.im-mess_unread>.im-mess--blind-read {
+    display: block
 }
 
 .im-mess.im-mess_unread>.im-mess--text {
@@ -3233,6 +3257,8 @@ body.mac .im_stickerpack_fixed {
     padding-right: 15px;
     margin-left: 57px;
     position: relative;
+    display: block;
+    text-decoration: none;
     border-top: solid 1px #e7e8ec
 }
 
@@ -3359,7 +3385,8 @@ body.sf .nim-dialog .nim-dialog--unread {
     line-height: 18px
 }
 
-.nim-dialog .nim-dialog--preview {
+.nim-dialog .nim-dialog--preview,
+.nim-dialog .nim-dialog--preview b {
     color: #656565
 }
 
@@ -4273,6 +4300,9 @@ body.sf .nim-dialog .nim-dialog--unread {
     width: 15px;
     height: 15px;
     display: block;
+    border: none;
+    outline: 0;
+    cursor: pointer;
     background: url(/images/icons/box_acts.png) no-repeat 0 -15px
 }
 
@@ -4516,6 +4546,9 @@ body.sf .nim-dialog .nim-dialog--unread {
     margin-left: 12px;
     margin-top: -3px;
     opacity: 0.7;
+    outline: 0;
+    background: none;
+    border: none;
     cursor: pointer
 }
 
@@ -4523,8 +4556,8 @@ body.sf .nim-dialog .nim-dialog--unread {
     content: "";
     display: block;
     position: absolute;
-    margin-left: 5px;
-    margin-top: 5px;
+    margin-top: -7px;
+    margin-left: -1px;
     width: 14px;
     height: 14px;
     background: url(/images/icons/box_acts.png) no-repeat 0 -14px
@@ -4565,7 +4598,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-create .im-create--cancel {
-    margin-right: 20px
+    margin-right: 25px
 }
 
 .im-create .scrollbar_bottom {
@@ -4658,6 +4691,10 @@ body.sf .nim-dialog .nim-dialog--unread {
     display: inline-block;
     vertical-align: middle;
     margin-left: 25px
+}
+
+.im-create .im-create--btn.im-create--btn_cancel {
+    margin-left: 0
 }
 
 .im-create.im-create_chat .im-creation--chat-tools {

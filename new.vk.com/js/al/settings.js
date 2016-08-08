@@ -504,6 +504,9 @@ var Settings = {
             hideProgress: unlockButton.pbind(t)
         })
     },
+    accessCheck: function() {
+        clearTimeout(cur.accessUpdateTO), cur.accessUpdateTO = setTimeout(Settings.accessSubmit, 200)
+    },
     giftsCheck: function() {
         clearTimeout(cur.giftsUpdateTO), cur.giftsUpdateTO = setTimeout(Settings.giftsSubmit, 200)
     },
@@ -526,6 +529,15 @@ var Settings = {
             no_autoplay: isChecked(ge("settings_gif_autoplay")) ? 0 : 1
         }, {
             onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("cposts")
+        })
+    },
+    accessSubmit: function() {
+        console.log(isChecked(geByClass1("_settings_access")), geByClass1("_settings_access")), ajax.post("/al_settings.php", {
+            act: "a_toggle_access_mode",
+            hash: cur.options.access_hash,
+            mode: isChecked(geByClass1("_settings_access")) ? 1 : 0
+        }, {
+            onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("settings_a11y")
         })
     },
     stickersHintsCheck: function() {
@@ -1162,7 +1174,7 @@ var Settings = {
     },
     scrollCheckApps: function() {
         this.isDelayedOnSilentLoad("scrollCheck", this.scrollCheckApps.bind(this)) || !browser.mobile && !cur.isAppsLoading && !cur.disableAutoMore && isVisible(cur.lShowMoreButton) &&
-            (window.innerHeight || document.documentElement.clientHeight || bodyNode.clientHeight) + scrollGetY() + 400 >= cur.lShowMoreButton.offsetTop && this.showAppsRows()
+            (window.innerHeight || document.documentElement.clientHeight || bodyNode.clientHeight) + scrollGetY() + 400 >= cur.lShowMoreButton.offsetTop && this.showAppsRows();
     },
     showAppsRows: function() {
         if (!this.isDelayedOnSilentLoad("showAppsRows", this.showAppsRows.bind(this)) && cur.defaultCount && cur.shownApps < cur.appsCount) {
@@ -1171,8 +1183,7 @@ var Settings = {
                 s = cur.appsList[cur.curList] || [],
                 o = s.length;
             if (s = this.filterApps(s.slice(cur.shownApps))
-                .slice(0, cur.defaultCount),
-                s.length && cur.appTpl) {
+                .slice(0, cur.defaultCount), s.length && cur.appTpl) {
                 var n = [];
                 each(s, function(e, t) {
                     t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), n.push(cur.appTpl(t, e == s.length - 1, !1))

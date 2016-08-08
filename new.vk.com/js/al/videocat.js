@@ -108,7 +108,7 @@ var Videocat = window.Videocat || {
                     addParams: {
                         from_autoplay: 1
                     }
-                }, event, c)
+                }, !1, c)
             }
         }
     },
@@ -354,19 +354,20 @@ var Videocat = window.Videocat || {
     isAutoplayEnabled: function() {
         return !1
     },
-    closeBlock: function(e, o, t) {
-        var i = gpeByClass("videocat_row", e);
-        setStyle(i, {
-                "max-height": getSize(i)[1]
+    closeBlock: function(e, o, t, i, s) {
+        i || (i = "videocat_row");
+        var a = gpeByClass(i, e);
+        s ? a.parentElement.removeChild(a) : (setStyle(a, {
+                "max-height": getSize(a)[1]
             }), setTimeout(function() {
-                addClass(i, "videocat_row_closed")
-            }), ajax.post("al_video.php", {
+                addClass(a, "videocat_row_closed")
+            })), ajax.post("al_video.php", {
                 act: "a_videocat_closeblock",
                 block_id: o,
                 hash: t
-            }), window.tooltips && tooltips.hideAll(), 1 == domPN(i)
+            }), window.tooltips && tooltips.hideAll(), 1 == domPN(a)
             .children.length && setTimeout(function() {
-                re(gpeByClass("videocat_page_block", i))
+                re(gpeByClass("videocat_page_block", a))
             }, 500)
     },
     isTop3Playlist: function(e) {

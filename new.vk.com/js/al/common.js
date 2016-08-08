@@ -8359,7 +8359,8 @@ function zNav(changed, opts, fin) {
                 var listId = zt[3],
                     options = extend(opts, {
                         onFail: onFail,
-                        noLocChange: 1
+                        noLocChange: 1,
+                        focusPlay: 1
                     });
                 if (listId) {
                     var parts = [],
@@ -8380,7 +8381,6 @@ function zNav(changed, opts, fin) {
                         options = extend(options, {
                             playlistId: playlistId,
                             module: module,
-                            focusPlay: 1,
                             addParams: {
                                 force_no_repeat: 1,
                                 show_next: 1,
@@ -8568,7 +8568,7 @@ window._videoLastInlined = false;
 
 function showVideo(videoId, listId, options, ev) {
     if (cur.viewAsBox) return cur.viewAsBox();
-    if (checkEvent(ev)) return true;
+    if (checkEvent(ev)) return;
 
     if (window.mvcur && mvcur.mvShown && mvcur.minimized && mvcur.videoRaw == videoId) {
         Videoview.unminimize();
@@ -8749,6 +8749,10 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
             .src = locProtocol +
             '//vk.com/rtrg?r=w*Z1Flwi3QdbWaoLMc7zOA*7Cr4Nrtojr9otHjsjIhsb2CVqRWalgbvxZw3MzxZa6be3Siu2XY3gvK5fysYtWLWgNwHMpjRTupSGZrcGRNlj7fduqq9*t7ij6CX4aMcBTD5be8mIXJsbTsvP8Zl2RZEd76a4FTuCOFqzMxqGtFc-';
     });
+    if (!cur.destroyVideoInlinePlayer) {
+        cur.destroy.push(destroyInlineVideoPlayer);
+        cur.destroyVideoInlinePlayer = 1;
+    }
     return false;
 }
 
@@ -8772,20 +8776,28 @@ function revertLastInlineVideo(ancestor) {
     re(_videoLastInlined[0]);
     show(_videoLastInlined[1]);
     _videoLastInlined = false;
+    destroyInlineVideoPlayer();
+    delete cur.mvOpts;
+}
+
+function destroyInlineVideoPlayer() {
     if (cur.videoInlinePlayer) {
         cur.videoInlinePlayer.destroy();
         delete cur.videoInlinePlayer;
     }
-    delete cur.mvOpts;
 }
 
 function pauseLastInlineVideo() {
     if (!_videoLastInlined) {
         return;
     }
-    var player = ge('video_player') || window.html5video || null;
-    if (player && player.playVideo) {
-        player.playVideo(false);
+    var player = cur.videoInlinePlayer || ge('video_player') || (ge('video_yt') && window.VideoYoutube);
+    if (player) {
+        if (player.togglePlay) {
+            player.togglePlay(false);
+        } else if (player.playVideo) {
+            player.playVideo(false);
+        }
     }
 }
 

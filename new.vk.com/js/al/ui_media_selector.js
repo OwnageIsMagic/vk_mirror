@@ -476,8 +476,8 @@ function MediaSelector(e, a, i, o) {
                     G = c && 1 === L ? !1 : "photos_list" == a ? se('<div class="page_preview_' + a + "_wrap" + I + '" style="position: relative">' + P +
                             '<div class="page_photos_count">' + i.split(",")
                             .length + "</div></div>") : se('<div class="page_preview_' + a + "_wrap" + I + '"' + (o.nocl ? ' style="cursor: default"' : "") + N + ">" + P +
-                            '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' + getLang("dont_attach") +
-                            '" onmouseover="showTitle(this)" onclick="cur.addMedia[' + t.lnkId + "].unchooseMedia(" + Y +
+                            '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' + getLang("dont_attach") + '" aria-label="' + getLang("dont_attach") +
+                            '" role="button" onmouseover="showTitle(this)" onclick="cur.addMedia[' + t.lnkId + "].unchooseMedia(" + Y +
                             '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + M + "</div>"), addClass(G, L ? "fl_l" : "clear_fix"),
                         void 0 !== s.upload_ind && re("upload" + s.upload_ind + "_progress_wrap"), o.toggleLnk && toggle(e, t.attachCount() + 1 < l), c && 1 === L ? (
                             addClass(A, "editable_thumbs_wrap"), A = domLC(A) && hasClass(domLC(A), "editable_thumbs") ? domLC(A) : A.appendChild(ce("div", {
@@ -514,8 +514,9 @@ function MediaSelector(e, a, i, o) {
                     "postpone" === a ? Y = 1 : "mark_as_ads" === a && (Y = 2);
                     var G = se('<div class="' + (L === !1 ? "page_docs_preview" : "page_pics_preview") + (Y ? "" : " post_thumbed_media") + '"><div class="page_preview_' +
                         a + '_wrap"' + (o.nocl ? ' style="cursor: default"' : "") + N + ">" + P + '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' +
-                        getLang("dont_attach") + '" onmouseover="showTitle(this)" onclick="cur.addMedia[' + t.lnkId + "].unchooseMedia(" + Y +
-                        '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + M + "</div></div>");
+                        getLang("dont_attach") + '" aria-label="' + getLang("dont_attach") + '" role="button" onmouseover="showTitle(this)" onclick="cur.addMedia[' + t
+                        .lnkId + "].unchooseMedia(" + Y + '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + M + "</div></div>"
+                    );
                     addClass(G, L ? "fl_l" : "clear_fix"), void 0 !== s.upload_ind && re("upload" + s.upload_ind + "_progress_wrap"), "postpone" !== a && "mark_as_ads" !==
                         a && (t.chosenMedia = [a, i], t.chosenMediaData = s), t.singleAdded(G, a)
                 }
@@ -754,7 +755,8 @@ function MediaSelector(e, a, i, o) {
                         [0, ""]
                     ]), cur.pollAnswerTemplate =
                     '<input onkeydown="cur.addMedia[%lnkid%].keyPoll(this, event)" class="text dark medadd_c_polla" %attrs%/><div class="page_media_x_wrap medadd_c_pollrem" data-title="' +
-                    e.lang.d + '" onmouseover="showTitle(this)" onclick="cur.addMedia[%lnkid%].decPoll(this)"><div class="page_media_x"></div></div>';
+                    e.lang.d + '" aria-label="' + e.lang.d +
+                    '" role="button" onmouseover="showTitle(this)" onclick="cur.addMedia[%lnkid%].decPoll(this)"><div class="page_media_x"></div></div>';
                 for (var s = 0, d = e.answers.length; d > s; ++s) a = e.answers[s], o.push('<div class="medadd_c_polla_wr">' + rs(cur.pollAnswerTemplate, {
                     attrs: (a[0] ? 'id="create_poll_ans' + a[0] + '" ' : "") + (a[1] ? '" value="' + a[1] + '" ' : ""),
                     lnkid: m

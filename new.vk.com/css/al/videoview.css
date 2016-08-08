@@ -690,28 +690,33 @@ body.mobfixed #mv_layer_wrap {
     padding-bottom: 10px
 }
 
-#mv_approve,
 #mv_publish {
     background: #fff;
-    padding: 15px 30px 15px 15px;
-    border-bottom: 1px solid #dae1e8;
-    background: #fff;
+    padding: 15px 20px;
+    border-bottom: 1px solid #e7e8ec;
     text-align: left
 }
 
-.mv_minimized #mv_approve,
 .mv_minimized #mv_publish {
     display: none
 }
 
-#mv_approve table,
-#mv_publish table {
-    width: 100%
+.mv_publish_table {
+    width: 100%;
+    vertical-align: middle
 }
 
-#mv_approve table .info,
-#mv_publish table .info {
-    vertical-align: center
+.mv_publish_info {
+    max-width: 700px;
+    line-height: 1.4
+}
+
+.mv_publish_buttons {
+    width: 220px
+}
+
+.mv_publish_delete_btn {
+    margin-left: 6px
 }
 
 #mv_progress_box {

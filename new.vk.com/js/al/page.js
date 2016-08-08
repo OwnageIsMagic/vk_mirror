@@ -1748,8 +1748,15 @@ var Wall = {
             mention: Wall.withMentions ? 1 : ''
         }, options), {
             onDone: function() {
-                var args = Array.prototype.slice.call(arguments),
-                    media_types = window.wkcur && wkcur.shown ? wkcur.options.rmedia_types : cur.options.media_types;
+                var args = Array.prototype.slice.call(arguments);
+                var media_types;
+                if (window.wkcur && wkcur.shown) {
+                    media_types = wkcur.options.rmedia_types;
+                } else if (window.mvcur && mvcur.mvShown && !mvcur.minimized) {
+                    media_types = mvcur.rmedia_types
+                } else {
+                    media_types = cur.options.media_types;
+                }
                 args.unshift(post);
                 if (args[5] !== void 0 && media_types !== void 0) {
                     var mediaTypes = [];
@@ -2927,6 +2934,12 @@ var Wall = {
                 onDone: function(rows, names) {
                     Wall.clearInput();
                     cur.postSent = false;
+
+                    if (isObject(rows) && rows.redirect) {
+                        nav.go(rows.redirect);
+                        return
+                    }
+
                     if (postponePost) {
                         if (pType == 'feed') {
                             showDoneBox(rows, {
@@ -7304,11 +7317,9 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                         se('<div class="page_preview_' + type + '_wrap" style="position: relative">' + preview + '<div class="page_photos_count">' + media.split(',')
                             .length + '</div></div>') :
                         se('<div class="page_preview_' + type + '_wrap"' + (opts.nocl ? ' style="cursor: default"' : '') + attrs + '>' + preview +
-                            '<div nosorthandle="1" class="page_media_x_wrap inl_bl" ' + (browser.msie && browser.version < 9 ? 'title' : 'tootltip') + '="' + getLang(
-                                'dont_attach') +
-                            '" onmouseover="if (browser.msie && browser.version < 9) return; showTooltip(this, {text: this.getAttribute(\'tootltip\'), shift: [14, 3, 3], black: 1})" onclick="cur.addMedia[' +
-                            addMedia.lnkId + '].unchooseMedia(' + ind + '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + postview +
-                            '</div>'));
+                            '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' + getLang('dont_attach') + '" aria-label="' + getLang('dont_attach') +
+                            '" role="button" onmouseover="showTitle(this, false, [14, 3, 3])" onclick="cur.addMedia[' + addMedia.lnkId + '].unchooseMedia(' + ind +
+                            '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + postview + '</div>'));
                 addClass(mediaEl, toPics ? 'fl_l' : 'clear_fix');
                 if (data.upload_ind !== undefined) re('upload' + data.upload_ind + '_progress_wrap');
                 if (opts.toggleLnk) toggle(lnk, addMedia.attachCount() + 1 < limit);
@@ -7380,11 +7391,10 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
             } else {
                 var ind = (type === 'postpone' ? 1 : 0);
                 var mediaEl = se('<div class="' + (toPics === false ? 'page_docs_preview' : 'page_pics_preview') + '"><div class="page_preview_' + type + '_wrap"' + (opts.nocl ?
-                        ' style="cursor: default"' : '') + attrs + '>' + preview + '<div nosorthandle="1" class="page_media_x_wrap inl_bl" ' + (browser.msie && browser
-                        .version < 9 ? 'title' : 'tootltip') + '="' + getLang('dont_attach') +
-                    '" onmouseover="if (browser.msie && browser.version < 9) return; showTooltip(this, {text: this.getAttribute(\'tootltip\'), shift: [14, 3, 3], black: 1})" onclick="cur.addMedia[' +
-                    addMedia.lnkId + '].unchooseMedia(' + ind + '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + postview +
-                    '</div></div>');
+                        ' style="cursor: default"' : '') + attrs + '>' + preview + '<div nosorthandle="1" class="page_media_x_wrap inl_bl" data-title="' + getLang(
+                        'dont_attach') + '" aria-label="' + getLang('dont_attach') +
+                    '" role="button" onmouseover="showTitle(this, false, [14, 3, 3])" onclick="cur.addMedia[' + addMedia.lnkId + '].unchooseMedia(' + ind +
+                    '); return cancelEvent(event);"><div class="page_media_x" nosorthandle="1"></div></div>' + postview + '</div></div>');
                 if (data.upload_ind !== undefined) re('upload' + data.upload_ind + '_progress_wrap');
                 if (type !== 'postpone' && type !== 'mark_as_ads') {
                     addMedia.chosenMedia = [type, media];
@@ -7818,9 +7828,9 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 [0, '']
             ];
             cur.pollAnswerTemplate =
-                '<input onkeydown="cur.addMedia[%lnkid%].keyPoll(this, event)" class="text medadd_c_polla" %attrs%/><div class="page_media_x_wrap medadd_c_pollrem inl_bl" ' +
-                (browser.msie ? 'title' : 'tootltip') + '="' + data.lang.d +
-                '" onmouseover="if (browser.msie) return; showTooltip(this, {text: this.getAttribute(\'tootltip\'), shift: [14, 3, 3], black: 1})" onclick="cur.addMedia[%lnkid%].decPoll(this)"><div class="page_media_x"></div></div>';
+                '<input onkeydown="cur.addMedia[%lnkid%].keyPoll(this, event)" class="text medadd_c_polla" %attrs%/><div class="page_media_x_wrap medadd_c_pollrem inl_bl" data-title="' +
+                getLang('dont_attach') + '" aria-label="' + getLang('dont_attach') +
+                '" role="button" onmouseover="showTitle(this, false, [14, 3, 3])" onclick="cur.addMedia[%lnkid%].decPoll(this)"><div class="page_media_x"></div></div>';
             for (var i = 0, l = data.answers.length; i < l; ++i) {
                 ans = data.answers[i];
                 html.push('<div class="medadd_c_polla_wr">' + rs(cur.pollAnswerTemplate, {
