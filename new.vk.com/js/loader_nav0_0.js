@@ -220,7 +220,7 @@ var stVersions = {
     'groups.js': 2442861242,
     'groups_list.js': 3462017115,
     'groups_edit.css': 2428853467,
-    'groups_edit.js': 1669959332,
+    'groups_edit.js': 4144320042,
     'profile.css': 3079584989,
     'profile.js': 2246332062,
     'calendar.css': 3200687086,
@@ -473,7 +473,7 @@ var stVersions = {
     'snapster/notifier.js': 2711093753,
     'snapster/snapster_ui.css': 3704972475,
     'favicon': 5,
-    'lang': 6737
+    'lang': 6738
 };
 var stTypes = {
     fromLib: {
@@ -523,4 +523,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 7127;
+var _rnd = 7299;
