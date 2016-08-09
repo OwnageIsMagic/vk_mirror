@@ -672,11 +672,12 @@ var Photoview = {
                         P = [];
                     if (e.actions.spam && (f.push(["spam", getLang("photos_report"), "", "Photoview.showSpamActions()"]), f.push("sep"), P = cur.pvReasons), e.actions.edit &&
                         (e.pe_type & Photoview.PE_V1 || e.pe_type & Photoview.PE_V2) && f.push(["pe", getLang("photos_pv_act_photoeditor"), "Photoview.openEditor()"]), e.pe_type &
-                        Photoview.PE_V3 && isPhotoeditor3Available() && f.push(["spe", getLang("global_pe_edit"), "Photoview.openStickersEditor()"]), e.actions.rot && (f.push(
-                            ["rotate_ccw", getLang("photos_pv_act_rotate_ccw"), "Photoview.rotatePhoto(-1)"]), f.push(["rotate_cw", getLang("photos_pv_act_rotate_cw"),
-                            "Photoview.rotatePhoto(1)"
-                        ]), f.push("sep")), e.actions.place && f.push(["place", getLang("photos_edit_add_place"), "Photoview.editPlace()"]), e.actions.prof && f.push([
-                            "to_profile", getLang("photos_pv_act_to_avatar"), "showBox('al_page.php', {act: 'owner_photo_edit', photo: '" + e.id +
+                        Photoview.PE_V3 && isPhotoeditor3Available() && !inArray(nav.objLoc[0], ["support", "helpdesk"]) && f.push(["spe", getLang("global_pe_edit"),
+                            "Photoview.openStickersEditor()"
+                        ]), e.actions.rot && (f.push(["rotate_ccw", getLang("photos_pv_act_rotate_ccw"), "Photoview.rotatePhoto(-1)"]), f.push(["rotate_cw", getLang(
+                            "photos_pv_act_rotate_cw"), "Photoview.rotatePhoto(1)"]), f.push("sep")), e.actions.place && f.push(["place", getLang("photos_edit_add_place"),
+                            "Photoview.editPlace()"
+                        ]), e.actions.prof && f.push(["to_profile", getLang("photos_pv_act_to_avatar"), "showBox('al_page.php', {act: 'owner_photo_edit', photo: '" + e.id +
                             "'}, {stat: ['owner_photo.css', 'owner_photo.js', 'tagger.css', 'tagger.js']})"
                         ]), e.actions.dialog && f.push(["to_dialog", getLang("photos_load_to_dialog"), "showBox('al_page.php', {act: 'owner_photo_edit', photo: '" + e.id +
                             "', oid: " + e.actions.dialog + ", list: '" + cur.pvListId + "'}, {stat: ['owner_photo.css', 'owner_photo.js', 'tagger.css', 'tagger.js']});"
@@ -723,12 +724,12 @@ var Photoview = {
                         pvProgress: ge("pv_progress")
                     }), e.deleted || !e.author ? (cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel", "pv_prof_done"), isArray(e.deleted) && Photoview.toggleTopInfoPanel(
                         e.deleted[0], e.deleted[1]), hide(cur.pvHHWrap), Photoview.toggleDeletedState(!0)) : e.taginfo ? (cleanElems("pv_confirm_tag", "pv_delete_tag",
-                            "pv_prof_cancel", "pv_prof_done"), Photoview.toggleTopInfoPanel(e.taginfo,
-                            '        <button class="flat_button" id="pv_confirm_tag" onclick="Photoview.confirmTag(' + e.tagid + ', this)">' + getLang("photos_confirm_tag") +
+                            "pv_prof_cancel", "pv_prof_done"),
+                        Photoview.toggleTopInfoPanel(e.taginfo, '        <button class="flat_button" id="pv_confirm_tag" onclick="Photoview.confirmTag(' + e.tagid +
+                            ', this)">' + getLang("photos_confirm_tag") +
                             '</button>         <button class="flat_button secondary black" id="pv_delete_tag" onclick="Photoview.deleteTag(' + e.tagid + ', this)">' + getLang(
-                                "photos_delete_tag") + "</button>       </div>"),
-                        show(cur.pvCommentsData), Photoview.hhCheck() && show(cur.pvHHWrap)) : (Photoview.toggleTopInfoPanel(!1), Photoview.toggleDeletedState(!1), Photoview.hhCheck() &&
-                        show(cur.pvHHWrap)), (cur.pvOptions || {})
+                                "photos_delete_tag") + "</button>       </div>"), show(cur.pvCommentsData), Photoview.hhCheck() && show(cur.pvHHWrap)) : (Photoview.toggleTopInfoPanel(!
+                        1), Photoview.toggleDeletedState(!1), Photoview.hhCheck() && show(cur.pvHHWrap)), (cur.pvOptions || {})
                     .scroll && cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.scrollTop(cur.pvOptions.scroll), cur.pvBodyScrollTop = bodyNode.scrollTop, setTimeout(function() {
                         void 0 !== cur.pvBodyScrollTop && (bodyNode.scrollTop = cur.pvBodyScrollTop, delete cur.pvBodyScrollTop)
                     }, 0), Photoview.updateVerticalPosition(), setTimeout(Photoview.afterShow, 2)
@@ -1686,7 +1687,7 @@ var Photoview = {
                             return cur.pvLikeInProgress[t.id] -= 1, cur.pvListId == o && cur.pvIndex == e ? Photoview.likeUpdate(r, a, i) : (cur.pvCommsLikes[t.id]
                                 [1] = a, void(t.liked = r))
                         }
-                    }), Photoview.likeUpdate(r, cur.pvCommsLikes[t.id][1])
+                    }), Photoview.likeUpdate(r, cur.pvCommsLikes[t.id][1]);
                 }
             }
         },
@@ -1705,8 +1706,7 @@ var Photoview = {
                     from: "photo_viewer"
                 }, {
                     onDone: function(o, a) {
-                        return cur.pvListId == e && cur.pvIndex == t ? Photoview.likeUpdate(!0, o, a) : (cur.pvCommsLikes[r.id][1] = o,
-                            void(r.liked = !0))
+                        return cur.pvListId == e && cur.pvIndex == t ? Photoview.likeUpdate(!0, o, a) : (cur.pvCommsLikes[r.id][1] = o, void(r.liked = !0))
                     }
                 }), Photoview.likeUpdate(!0, cur.pvCommsLikes[r.id][1] + (r.liked ? 0 : 1))
             }

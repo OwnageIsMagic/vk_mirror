@@ -2149,6 +2149,7 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
     display: inline-block;
     overflow: hidden;
     line-height: 376px;
+    vertical-align: top;
     text-align: center;
     position: relative
 }
