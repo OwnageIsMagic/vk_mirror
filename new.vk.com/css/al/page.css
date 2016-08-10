@@ -533,8 +533,8 @@ h5.post_author {
 .wall_post_source_ads_mark {
     cursor: default;
     background: url(/images/icons/post_ad_tag_gray.png) no-repeat;
-    background-size: 10px 10px;
-    background-position: 1px 1px
+    width: 10px;
+    height: 10px
 }
 
 .wall_module .published_by_quote,
@@ -1603,6 +1603,39 @@ a.page_media_link_desc {
 
 .post_media_link_preview_wrap .wall_postlink_preview_btn_disabled .flat_button {
     display: none
+}
+
+.page_media_money_transfer td.page_media_link_thumb {
+    width: 120px;
+    height: 120px;
+    background-size: 124px 124px
+}
+
+.page_media_money_transfer a.page_media_link_thumb {
+    min-height: 120px;
+    height: 120px
+}
+
+.page_media_money_transfer .page_media_link_desc_td {
+    height: 96px;
+    overflow: hidden
+}
+
+.page_media_money_transfer a.page_media_link_title {
+    padding-top: 6px;
+    font-size: 16px;
+    color: #000;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.page_media_money_transfer div.page_media_link_desc {
+    color: #656565
+}
+
+.page_media_money_transfer .wall_postlink_preview_btn {
+    padding-top: 19px
 }
 
 .page_media_caption {

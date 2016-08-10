@@ -9579,35 +9579,36 @@
                 r.get()
                     .rebuilding_draft = !0, e.unchooseMedia(), e.chosenMedias = [], r.get()
                     .rebuilding_draft = !1;
-                var i = geByClass1("ms_item_gift", n);
+                var i = geByClass1("ms_item_gift", n),
+                    s = geByClass1("ms_item_money", n);
                 (0, B.isUserPeer)(r.get()
                     .peer) && !r.get()
-                    .gid ? show(i) : hide(i);
-                var s = r.get()
+                    .gid ? show(i, s) : hide(i, s);
+                var o = r.get()
                     .peer;
-                (0, B.isReservedPeer)(s) || Promise.all([(0, x.getAttaches)(r, s), (0, x.getTextDraft)(s, r.get()), (0, x.getForwardedMessages)(s, r.get())])
+                (0, B.isReservedPeer)(o) || Promise.all([(0, x.getAttaches)(r, o), (0, x.getTextDraft)(o, r.get()), (0, x.getForwardedMessages)(o, r.get())])
                     .then(function(e) {
-                        return r.set(x.cleanMediaStore.bind(null, s))
+                        return r.set(x.cleanMediaStore.bind(null, o))
                             .then(function(t) {
                                 return e
                             })
                     })
                     .then(function(i) {
-                        var o = D(i, 3),
-                            l = o[0],
-                            u = o[1],
-                            c = o[2];
-                        L(r, s, t)
+                        var s = D(i, 3),
+                            l = s[0],
+                            u = s[1],
+                            c = s[2];
+                        L(r, o, t)
                             .then(function(i) {
                                 if (!i) {
                                     l.length > 0 && show(ge("_im_media_preview"));
-                                    for (var o = 0; o < l.length; o++) e.chooseMedia.apply(e, l[o]);
+                                    for (var s = 0; s < l.length; s++) e.chooseMedia.apply(e, l[s]);
                                     c.length > 0 ? h(c, n) : geByClass1(q, n)
                                         .innerHTML = "", v(t, u);
                                     var d = a()
                                         .updateScroll();
                                     a()
-                                        .scrollFix(r, s, d)
+                                        .scrollFix(r, o, d)
                                 }
                             })
                     })
@@ -9766,17 +9767,19 @@
             L = o.bind(null, t, n, v, a),
             A = P.bind(null, t);
         hide(geByClass1("ms_items_more_helper", e));
-        var D, M = new MediaSelector(geByClass1(z, e), "_im_media_preview", [
-                ["photo", getLang("profile_wall_photo")],
-                ["gift", getLang("profile_wall_gift")],
-                ["video", getLang("profile_wall_video")],
-                ["audio", getLang("profile_wall_audio")],
-                ["doc", getLang("profile_wall_doc")],
-                ["map", getLang("profile_wall_map")]
-            ], {
+        var D = [
+            ["gift", getLang("profile_wall_gift")],
+            ["video", getLang("profile_wall_video")],
+            ["audio", getLang("profile_wall_audio")],
+            ["doc", getLang("profile_wall_doc")],
+            ["map", getLang("profile_wall_map")]
+        ];
+        t.get()
+            .moneyTransferAvail && D.unshift(["money", getLang("profile_wall_money")]), D.unshift(["photo", getLang("profile_wall_photo")]);
+        var M, N = new MediaSelector(geByClass1(z, e), "_im_media_preview", D, {
                 maxShown: 1,
                 onAddMediaChange: function(r, a, i, s) {
-                    return p(n, t, N, e, r, a, i, s, M)
+                    return p(n, t, j, e, r, a, i, s, N)
                 },
                 editable: 1,
                 onChangedSize: function() {
@@ -9803,41 +9806,41 @@
                         from: "from_gim"
                     } : {}
             }),
-            N = d.bind(null, t, n, v, e, a, M),
-            j = debounce(w.bind(null, t, M), 500),
-            H = m(e, t, function(r, a) {
+            j = d.bind(null, t, n, v, e, a, N),
+            H = debounce(w.bind(null, t, N), 500),
+            G = m(e, t, function(r, a) {
                 var i = t.get()
                     .peer,
                     s = Emoji.val(a);
                 (0, B.isReservedPeer)(i) || T(i, t) || t.get()
-                    .tabs[i].imdraft == s || !s || k(t), j(r, a);
+                    .tabs[i].imdraft == s || !s || k(t), H(r, a);
                 var o = e.offsetHeight;
-                if (D && D !== o) {
+                if (M && M !== o) {
                     var l = n()
                         .updateScroll();
                     n()
                         .scrollFix(t, t.get()
                             .peer, l)
                 }
-                D = o
-            }, N, L, s),
-            G = N.bind(null, []),
-            q = _.bind(null, t),
-            Q = geByClass1("_im_send", e);
-        addEvent(Q, "click", G), addEvent(Q, "mouseover", q), t.get()
-            .textMediaSelector = M, t.set(x.initTextStore.bind(null, h, C, E, I));
-        var Y = (ge("_im_media_preview"), geByClass1("_im_text", e));
+                M = o
+            }, j, L, s),
+            q = j.bind(null, []),
+            Q = _.bind(null, t),
+            Y = geByClass1("_im_send", e);
+        addEvent(Y, "click", q), addEvent(Y, "mouseover", Q), t.get()
+            .textMediaSelector = N, t.set(x.initTextStore.bind(null, h, C, E, I));
+        var V = (ge("_im_media_preview"), geByClass1("_im_text", e));
         setTimeout(function() {
             a()
                 .restoreDraft(t)
         }, 0);
-        var V = S.bind(null, H, t, Y, M),
-            Z = b.bind(null, t, e, n),
-            $ = u.bind(null, t);
+        var Z = S.bind(null, G, t, V, N),
+            $ = b.bind(null, t, e, n),
+            X = u.bind(null, t);
         return addEvent(geByClass1("_im_text_wrap", e), "click", function() {
-                Y !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)(Y)
-            }), (0, R.addDelegateEvent)(e, "click", "_im_rc_emoji", V), (0, R.addDelegateEvent)(e, "click", K, Z), (0, R.addDelegateEvent)(e, "click", "_im_will_fwd", A),
-            (0, R.addDelegateEvent)(bodyNode, "click", W, $), i(M, Y, e, G, n, V, h, Z, A, s, $)
+                V !== document.activeElement && (window.Emoji ? Emoji.focus : elfocus)(V)
+            }), (0, R.addDelegateEvent)(e, "click", "_im_rc_emoji", Z), (0, R.addDelegateEvent)(e, "click", K, $), (0, R.addDelegateEvent)(e, "click", "_im_will_fwd", A),
+            (0, R.addDelegateEvent)(bodyNode, "click", W, X), i(N, V, e, q, n, Z, h, $, A, s, X)
     }
     Object.defineProperty(t, "__esModule", {
         value: !0

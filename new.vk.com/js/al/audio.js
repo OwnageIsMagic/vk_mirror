@@ -497,16 +497,16 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }
 }, AudioPage.prototype._initSearch = function() {
     var e = geByClass1("_audio_search_input", this._container);
-    this.searchInputEl = geByClass1("_field", e), uiSearch.init(e), window.radioBtns["audio_search_type_" + intval(this.isLayer())] = {
-        els: geByClass("_audio_search_type", this._container),
-        keep: !0
-    }, this._searchSortFilter = new Dropdown(geByClass1("_audio_fltr_sort", this._container), this.options.sortFilters, {
-        big: 1,
-        zeroPlaceholder: !0,
-        onChange: this.onSearchFiltersChanged.bind(this)
-    });
-    var i = this;
-    new Suggester(this.searchInputEl, {
+    if (this.searchInputEl = geByClass1("_field", e), uiSearch.init(e), window.radioBtns["audio_search_type_" + intval(this.isLayer())] = {
+            els: geByClass("_audio_search_type", this._container),
+            keep: !0
+        }, this._searchSortFilter = new Dropdown(geByClass1("_audio_fltr_sort", this._container), this.options.sortFilters, {
+            big: 1,
+            zeroPlaceholder: !0,
+            onChange: this.onSearchFiltersChanged.bind(this)
+        }), !hasAccessibilityMode()) {
+        var i = this;
+        new Suggester(this.searchInputEl, {
             section: "audio",
             sidePadding: "47px",
             onSelect: function(e) {
@@ -515,7 +515,9 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             onChoose: function(e) {
                 val(i.searchInputEl, e[3]), i.searchAudios(e[3])
             }
-        }), this.toggleSearchProgress = debounce(this.toggleSearchProgress, 100)
+        })
+    }
+    this.toggleSearchProgress = debounce(this.toggleSearchProgress, 100)
         .bind(this)
 }, AudioPage.searchAudios = function(e) {
     AudioPage(this)
@@ -966,11 +968,11 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 var a = geByClass1("_audio_additional_blocks_wrap_" + o, t._container),
                     s = geByClass1("_audio_additional_block_" + i, t._container);
                 !s && t._blocks[i] && (s = se(rs(t.options.additionalBlockSectionTpl, {
-                    block_id: i
-                })), val(s, t._blocks[i]), a.appendChild(s)), show(s), show(a)
+                        block_id: i
+                    })), val(s, t._blocks[i]), a.appendChild(s)), show(s),
+                    show(a)
             }
-        }), uiSearch.init("audio_friends_search"),
-        this._updateLayerRowsBottomPadding()
+        }), uiSearch.init("audio_friends_search"), this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype.onSubmenuToggle = function() {
     this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype._updateLayerBottom = function() {}, AudioPage.prototype._hideMenuItemProgress = function() {
@@ -1033,12 +1035,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             u = this.ap.getPlaylist(AudioPlaylist.TYPE_POPULAR, vk.id, p + intval(a.genre))
         } else if (a.friend) {
             var y = intval(a.friend),
-                P = geByClass1("_audio_friend_" + y, this._container);
-            addClass(P, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioPlaylist.ALBUM_ALL), geByClass1("_audio_friend_" + y) ||
+                A = geByClass1("_audio_friend_" + y, this._container);
+            addClass(A, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioPlaylist.ALBUM_ALL), geByClass1("_audio_friend_" + y) ||
                 this.showMoreFriends(!1, y), o.q && 0 > y && !cur.prevSearchPlaylist && (cur.prevSearchPlaylist = this.getCurrentPlaylist())
         } else if (a.section == AudioPlaylist.TYPE_RECOM) {
-            var A = AudioPlaylist.ALBUM_ALL;
-            a.audio_id ? A = "audio" + a.audio_id : a.album_id && (A = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, A)
+            var P = AudioPlaylist.ALBUM_ALL;
+            a.audio_id ? P = "audio" + a.audio_id : a.album_id && (P = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, P)
         } else a.section == AudioPlaylist.TYPE_FEED ? u = this.ap.getPlaylist(AudioPlaylist.TYPE_FEED, vk.id, 0) : a.section == AudioPlaylist.TYPE_CURRENT ? u = this.ap
             .getCurrentPlaylist() : a.band ? (u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, intval(a.band), AudioPlaylist.ALBUM_ALL), u.mergeWith({
                 band: 1

@@ -202,6 +202,15 @@ function MediaSelector(e, a, i, o) {
                         })
                     };
                     break;
+                case "money":
+                    n = function() {
+                        var e = cur.peer;
+                        showBox("al_payments.php", extend(h, {
+                            act: "money_transfer_box",
+                            to_id: e
+                        }))
+                    };
+                    break;
                 case "market":
                     n = showBox.pbind("al_market.php", extend(h, {
                         act: "a_choose_product_box"
@@ -906,8 +915,9 @@ function MediaSelector(e, a, i, o) {
                             p = s ? 'style="width: 100%"' : d.imagesStyles && d.imagesStyles[cur.shareShowImg] || "";
                         if (c = '<img class="medadd_c_linkimg" src="' + h + '" ' + n + " " + p + " />", c += s ? Page.buildMediaLinkEl(d.domain) : "", d.images.length > 0) {
                             var m = (d.images.length > 1 ? '<div class="medadd_c_linkimg_scroll_wrap medadd_c_linkimg_scroll_wrap_left ' + (0 == cur.shareShowImg ?
-                                    "medadd_c_linkimg_scroll_wrap_left_first" : "") + '" onclick="' + (0 == cur.shareShowImg ? "Page.ownerPhoto('" + d.media + "');" :
-                                    "cur.shareShowNext(true);") + '"><div class="medadd_c_linkimg_scroll"></div></div>' : "", ""),
+                                        "medadd_c_linkimg_scroll_wrap_left_first" : "") + '" onclick="' + (0 == cur.shareShowImg ? "Page.ownerPhoto('" + d.media + "');" :
+                                        "cur.shareShowNext(true);") + '"><div class="medadd_c_linkimg_scroll"></div></div>' : "",
+                                    ""),
                                 u = "";
                             cur.shareShowImg < d.images.length - 1 ? m =
                                 '<div class="medadd_c_linkimg_scroll_wrap medadd_c_linkimg_scroll_wrap_right" onclick="cur.shareShowNext();"><div class="medadd_c_linkimg_scroll"></div></div>' :

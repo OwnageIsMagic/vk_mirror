@@ -124,7 +124,8 @@ window.Videocat = window.Videocat || {
                     'autoplay': true,
                     addParams: {
                         mute: 1
-                    }
+                    },
+                    module: 'videocat'
                 }, false, videocat_inline_autoplay);
             }
         }

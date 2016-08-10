@@ -5643,13 +5643,6 @@ button.ui_load_more_btn {
     transition: opacity 190ms ease, top 300ms ease
 }
 
-.audio_act_hidden {
-    width: 1px;
-    height: 1px;
-    position: absolute;
-    outline: none
-}
-
 .audio_row {
     padding: 6px 10px;
     cursor: pointer;
@@ -5973,7 +5966,7 @@ button.ui_load_more_btn {
     opacity: 0.5
 }
 
-.audio_row .audio_act_hidden,
+.audio_row .blind_label,
 .top_audio_layer .audio_author {
     display: none
 }

@@ -89,6 +89,7 @@
     background-position: left -285px
 }
 
+.media_selector .ms_item.ms_item_money:before,
 .media_selector .ms_item.ms_item_mark_as_ads:before {
     background-position: left -307px
 }

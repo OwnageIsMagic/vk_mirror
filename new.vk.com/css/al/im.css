@@ -2464,7 +2464,8 @@ body.mac .im_stickerpack_fixed {
     -moz-osx-font-smoothing: grayscale
 }
 
-.im-mess-stack .im-mess-stack--gift {
+.im-mess-stack .im-mess-stack--gift,
+.im-mess-stack .im-mess-stack--money-tranfer {
     color: #7f7660
 }
 
