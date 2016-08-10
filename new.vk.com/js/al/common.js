@@ -8605,7 +8605,10 @@ function showVideo(videoId, listId, options, ev) {
         }
     }
 
-    if (options.player) {
+    if (options.expandPlayer) {
+        options.addParams = extend(options.addParams, {
+            expand_player: 1
+        });
         delete cur.videoInlinePlayer;
     }
 
@@ -8675,6 +8678,8 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
         return showVideo(videoId, listId, options, ev);
     }
 
+    if (attr(thumb, 'data-loading')) return;
+
     options = options || {};
     options.params = options.params || {
         act: 'show_inline',
@@ -8690,7 +8695,7 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
     }
     var h = thumb.clientHeight,
         w = thumb.clientWidth,
-        btn = geByClass1('video_play_inline', thumb, 'div');
+        btn = domByClass(thumb, 'page_post_video_play_inline');
 
     extend(options.params, {
         width: w,
@@ -8709,7 +8714,7 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
             width: w,
             height: h
         });
-        _videoLastInlined = [videoWrap, thumb]
+        _videoLastInlined = [videoWrap, thumb];
         thumb.parentNode.appendChild(videoWrap);
         cur.mvOpts = opts && opts.mvData ? opts.mvData : false;
         try {
@@ -8729,6 +8734,8 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
                 ap.pausedByVideo = 1;
             }
         }
+
+        thumb.setAttribute('data-playing', 1);
     };
     options.onFail = function(text) {
         setTimeout(showFastBox({
@@ -8738,10 +8745,18 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
         return true;
     }
     options.showProgress = function() {
-        addClass(btn, 'video_play_inline_loading');
+        thumb.setAttribute('data-loading', 1);
+        if (!options.no_progress) {
+            addClass(btn, 'page_post_video_play_inline_loading');
+            val(btn, getProgressHtml());
+        }
     };
     options.hideProgress = function() {
-        removeClass(btn, 'video_play_inline_loading');
+        thumb.removeAttribute('data-loading');
+        if (!options.no_progress) {
+            removeClass(btn, 'page_post_video_play_inline_loading');
+            val(btn, '');
+        }
     };
     stManager.add('videoview.js', function() {
         ajax.post('al_video.php', options.params, options);
@@ -8749,9 +8764,9 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
             .src = locProtocol +
             '//vk.com/rtrg?r=w*Z1Flwi3QdbWaoLMc7zOA*7Cr4Nrtojr9otHjsjIhsb2CVqRWalgbvxZw3MzxZa6be3Siu2XY3gvK5fysYtWLWgNwHMpjRTupSGZrcGRNlj7fduqq9*t7ij6CX4aMcBTD5be8mIXJsbTsvP8Zl2RZEd76a4FTuCOFqzMxqGtFc-';
     });
-    if (!cur.destroyVideoInlinePlayer) {
+    if (!cur.videoInlinePlayerDestroyerSet) {
         cur.destroy.push(destroyInlineVideoPlayer);
-        cur.destroyVideoInlinePlayer = 1;
+        cur.videoInlinePlayerDestroyerSet = 1;
     }
     return false;
 }
@@ -8775,6 +8790,7 @@ function revertLastInlineVideo(ancestor) {
     }
     re(_videoLastInlined[0]);
     show(_videoLastInlined[1]);
+    _videoLastInlined[1].removeAttribute('data-playing');
     _videoLastInlined = false;
     destroyInlineVideoPlayer();
     delete cur.mvOpts;

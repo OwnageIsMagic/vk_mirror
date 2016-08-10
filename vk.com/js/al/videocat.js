@@ -1082,21 +1082,33 @@ window.Videocat = window.Videocat || {
         return false;
     },
 
-    closeBlock: function(ref, blockId, hash) {
-        var blockEl = gpeByClass('videocat_row', ref);
+    closeBlock: function(ref, blockId, hash, container, removeFromDom) {
+        if (!container) {
+            container = 'videocat_row'
+        }
+        var blockEl = gpeByClass(container, ref);
+
         setStyle(blockEl, {
             'max-height': 300
         });
         setStyle(ref, {
             'opacity': 0
         });
-        setTimeout(function() {
-            setStyle(blockEl, {
-                opacity: 0,
-                'max-height': 0,
-                marginTop: 0
+        if (!removeFromDom) {
+
+            setTimeout(function() {
+                setStyle(blockEl, {
+                    opacity: 0,
+                    'max-height': 0,
+                    marginTop: 0
+                });
             });
-        });
+        } else {
+            setTimeout(function() {
+                blockEl.parentElement.removeChild(blockEl);
+            });
+
+        }
         ajax.post('al_video.php', {
             act: 'a_videocat_closeblock',
             block_id: blockId,

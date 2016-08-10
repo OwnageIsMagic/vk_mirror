@@ -130,6 +130,29 @@ a.page_post_thumb_wrap:hover {
     background-color: rgba(0, 0, 0, .6)
 }
 
+.page_post_video_play_inline_loading {
+    background-image: none
+}
+
+.page_post_video_play_inline_loading .pr {
+    position: relative;
+    top: 50%;
+    margin-top: -3px;
+    opacity: 1;
+    text-align: center
+}
+
+.page_post_video_play_inline_loading .pr .pr_bt {
+    width: 6px;
+    height: 6px;
+    margin-right: 3px;
+    background: #fff
+}
+
+.page_post_video_play_inline_loading .pr .pr_bt:last-child {
+    margin-right: 0
+}
+
 .page_post_video_is_processing {
     position: absolute;
     color: #fff;

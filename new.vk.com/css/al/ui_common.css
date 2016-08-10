@@ -1784,6 +1784,10 @@ a.ui_search_custom_link {
     padding-right: 0
 }
 
+.ui_scroll_unnecessary .ui_scroll_blocker .ui_scroll_outer {
+    margin: 0!important
+}
+
 .ui_scroll_overflow {
     overflow: hidden;
     position: relative;
@@ -2161,16 +2165,24 @@ a.ui_search_custom_link {
 }
 
 .right_list_info {
-    padding-top: 0;
+    padding-top: 4px;
     font-size: 12.5px
 }
 
+.right_list_info.right_list_compact {
+    padding-top: 0
+}
+
 .right_list_field {
-    padding-bottom: 2px;
+    padding-bottom: 4px;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
     color: #939393
+}
+
+.right_list_compact .right_list_field {
+    padding-bottom: 2px
 }
 
 .right_list_field .group_link,

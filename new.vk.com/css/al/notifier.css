@@ -31,8 +31,8 @@
 .notifier_close,
 .notify_tt_thumb,
 .sticker_hints_arrow,
-.ui_scroll_emoji_theme .ui_scroll_shadow_bottom,
-.ui_scroll_emoji_theme .ui_scroll_shadow_top,
+.ui_scroll_default_theme.ui_scroll_emoji_theme .ui_scroll_shadow_bottom,
+.ui_scroll_default_theme.ui_scroll_emoji_theme .ui_scroll_shadow_top,
 span.fc_contact_photo.online:after {
     -ms-high-contrast-adjust: none
 }
@@ -173,9 +173,9 @@ span.fc_contact_photo.online.mobile:after {
     line-height: 16px
 }
 
-#notifiers_wrap a,
 .notifier_baloon_msg span.group_link,
-.notifier_baloon_msg span.mem_link {
+.notifier_baloon_msg span.mem_link,
+.notifier_baloon_wrap a {
     color: #bfe2fe;
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
@@ -1764,16 +1764,16 @@ div.chat_tab_img {
     pointer-events: none
 }
 
-.ui_scroll_emoji_theme .ui_scroll_outer {
+.ui_scroll_default_theme.ui_scroll_emoji_theme .ui_scroll_outer {
     position: relative
 }
 
-.ui_scroll_emoji_theme .ui_scroll_bar_outer {
+.ui_scroll_default_theme.ui_scroll_emoji_theme .ui_scroll_bar_outer {
     right: -9px
 }
 
-.ui_scroll_emoji_theme .ui_scroll_shadow_bottom,
-.ui_scroll_emoji_theme .ui_scroll_shadow_top {
+.ui_scroll_default_theme.ui_scroll_emoji_theme .ui_scroll_shadow_bottom,
+.ui_scroll_default_theme.ui_scroll_emoji_theme .ui_scroll_shadow_top {
     background: url(/images/emoji_sprite.png?11) 0 -29px;
     box-shadow: none;
     height: 10px

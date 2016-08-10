@@ -5046,7 +5046,7 @@ body.mac .narrow_column.fixed {
     cursor: default
 }
 
-.video_no_duration .video_thumb_duration {
+.video_thumb_duration:empty {
     display: none
 }
 
@@ -5134,7 +5134,7 @@ body.mac .narrow_column.fixed {
     filter: blur(10px)
 }
 
-.video_box_flash_needed {
+.video_box_cant_play {
     position: absolute;
     left: 50%;
     top: 50%;
