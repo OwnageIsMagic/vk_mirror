@@ -1024,7 +1024,7 @@ var photos = {
             .getAttribute("data-id")), o ? r.push(o) : each(geByClass("photos_edit_selected"), function() {
             r.push(this.getAttribute("data-id"))
         }), i = intval(photos._editGetSelectedCount() > r.length));
-        var s = cur.album ? cur.album.split("_") : [vk.id, -7];
+        var s = cur.album ? cur.album.split("_") : [vk.id, -15];
         return showBox("/al_photos.php", {
             act: "a_move_to_album_box",
             photo_ids: i ? "" : r.join(","),

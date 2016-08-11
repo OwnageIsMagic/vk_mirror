@@ -5550,6 +5550,7 @@ button.ui_load_more_btn {
     position: relative;
     max-width: 300px;
     cursor: pointer;
+    display: none;
     opacity: 0;
     pointer-events: none
 }
@@ -5566,6 +5567,7 @@ button.ui_load_more_btn {
     opacity: 1;
     -webkit-filter: none;
     filter: none;
+    display: block;
     pointer-events: all
 }
 

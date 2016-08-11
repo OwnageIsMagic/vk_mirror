@@ -443,7 +443,9 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     toggleClass(geByClass1("_audio_shuffle_btn", this._container), "audio_page_player_btn_enabled", !!e.shuffle)
 }, AudioPage.prototype.toggleRepeat = function(e) {
     var i = toggleClass(e, "audio_page_player_btn_enabled");
-    this.ap.toggleRepeatCurrentAudio(i)
+    this.ap.toggleRepeatCurrentAudio(i);
+    var t = geByClass1("_blind_label", e);
+    t.innerHTML = this.ap.isRepeatCurrentAudio() ? getLang("audio_dont_repeat_tooltip") : getLang("audio_repeat_tooltip")
 }, AudioPage.prototype.toggleShuffle = function(e) {
     var i = this.getCurrentPlaylist();
     i.isShuffled() ? (removeClass(e, "audio_page_player_btn_enabled"), i.shuffle(0)) : (addClass(e, "audio_page_player_btn_enabled"), i.shuffle(irand(1, 999999))), this.switchToSection(
@@ -968,9 +970,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 var a = geByClass1("_audio_additional_blocks_wrap_" + o, t._container),
                     s = geByClass1("_audio_additional_block_" + i, t._container);
                 !s && t._blocks[i] && (s = se(rs(t.options.additionalBlockSectionTpl, {
-                        block_id: i
-                    })), val(s, t._blocks[i]), a.appendChild(s)), show(s),
-                    show(a)
+                    block_id: i
+                })), val(s, t._blocks[i]), a.appendChild(s)), show(s), show(a)
             }
         }), uiSearch.init("audio_friends_search"), this._updateLayerRowsBottomPadding()
 }, AudioPage.prototype.onSubmenuToggle = function() {

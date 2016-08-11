@@ -999,7 +999,8 @@ embed#video_player {
     filter: alpha(opacity=40);
     cursor: pointer;
     -o-transition: opacity 0.15s ease-in-out;
-    transition: opacity 0.15s ease-in-out
+    transition: opacity 0.15s ease-in-out;
+    outline: none
 }
 
 .mv_top_button:hover {
@@ -1060,7 +1061,8 @@ embed#video_player {
 
 .mv_top_controls_wrap {
     position: absolute;
-    right: 0
+    right: 0;
+    top: 0
 }
 
 #mv_top_controls {
@@ -1074,12 +1076,14 @@ embed#video_player {
 
 .mv_pl_prev_wrap {
     position: absolute;
-    left: -64px
+    left: -64px;
+    top: 0
 }
 
 .mv_pl_next_wrap {
     position: absolute;
-    right: 0
+    right: 0;
+    top: 0
 }
 
 .mv_playlist_controls {
