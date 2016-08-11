@@ -1080,9 +1080,9 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         if (a._trackSlider) {
             var e = AudioUtils.asObject(a._readyAudio || s.getCurrentAudio()),
                 i = e.ownerId != a.options.oid;
-            p !== i && (toggle(g, i), p = i), cur._audioAddRestoreInfo = cur._audioAddRestoreInfo || {};
+            y !== i && (toggle(p, i), y = i), cur._audioAddRestoreInfo = cur._audioAddRestoreInfo || {};
             var t = cur._audioAddRestoreInfo[e.fullId];
-            addClass(g, "no_transition"), toggleClass(g, "audio_player_btn_added", !(!t || "added" != t.state)), removeClassDelayed(g, "no_transition"), toggleClass(h,
+            addClass(p, "no_transition"), toggleClass(p, "audio_player_btn_added", !(!t || "added" != t.state)), removeClassDelayed(p, "no_transition"), toggleClass(g,
                 "audio_page_player_btn_enabled", a.ap.isRepeatCurrentAudio())
         }
     }
@@ -1095,9 +1095,10 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         u = geByClass1("audio_page_player_title_song", d),
         _ = geByClass1("audio_page_player_duration", d),
         c = geByClass1("_audio_page_player_play", d),
-        h = geByClass1("_audio_page_player_repeat", d),
-        g = geByClass1("_audio_page_player_add", d),
-        p = void 0;
+        h = geByClass1("_play_blind_label", c),
+        g = geByClass1("_audio_page_player_repeat", d),
+        p = geByClass1("_audio_page_player_add", d),
+        y = void 0;
     this._trackSlider || (this._trackSlider = new Slider(geByClass1("audio_page_player_track_slider", d), {
         value: s.getCurrentProgress(),
         backValue: s.getCurrentBuffered(),
@@ -1127,14 +1128,14 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }), this.ap.on(this, AudioPlayer.EVENT_CAN_PLAY, function() {
         a._trackSlider.toggleLoading(!1)
     }), this.ap.on(this, AudioPlayer.EVENT_ADDED, function(e, i) {
-        e = AudioUtils.asObject(e), e && e.fullId == i && addClass(g, "audio_player_btn_added")
+        e = AudioUtils.asObject(e), e && e.fullId == i && addClass(p, "audio_player_btn_added")
     }), this.ap.on(this, AudioPlayer.EVENT_REMOVED, function(e, i) {
-        e = AudioUtils.asObject(e), e && e.fullId == i && removeClass(g, "audio_player_btn_added")
+        e = AudioUtils.asObject(e), e && e.fullId == i && removeClass(p, "audio_player_btn_added")
     }), this.ap.on(this, AudioPlayer.EVENT_PLAY, function(e, s, r) {
         delete a._readyAudio, data(d, "audio", e), o(), i(e), addClass(c, "audio_playing"), s && !cur.audioStartReadyAudio && (a._trackSlider.setBackValue(0), a._trackSlider
-            .setValue(0), _.innerHTML = t(e, 0), n.setAttribute("title", ""), n.titleSet = !1), attr(c, "aria-label", getLang("global_audio_pause"))
+            .setValue(0), _.innerHTML = t(e, 0), n.setAttribute("title", ""), n.titleSet = !1), h.innerHTML = getLang("global_audio_pause")
     }), this.ap.on(this, AudioPlayer.EVENT_PAUSE, function(e) {
-        removeClass(c, "audio_playing"), attr(c, "aria-label", getLang("global_audio_play"))
+        removeClass(c, "audio_playing"), h.innerHTML = getLang("global_audio_play")
     }), this.ap.on(this, AudioPlayer.EVENT_BUFFERED, function(e, i) {
         a._trackSlider.setBackValue(i)
     }), this.ap.on(this, AudioPlayer.EVENT_VOLUME, function(e, i) {
@@ -1144,8 +1145,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }), this.ap.on(this, AudioPlayer.EVENT_PROGRESS, function(e, i) {
         a._trackSlider.setValue(i), _.innerHTML = t(e, i)
     }));
-    var y = this.ap.getCurrentAudio() || this._readyAudio;
-    y && (domData(d, "audio", JSON.stringify(y)), i(y), toggleClass(c, "audio_playing", this.ap.isPlaying()), _.innerHTML = t(y, 1), e && (this._trackSlider.setValue(0), this._trackSlider
+    var A = this.ap.getCurrentAudio() || this._readyAudio;
+    A && (domData(d, "audio", JSON.stringify(A)), i(A), toggleClass(c, "audio_playing", this.ap.isPlaying()), _.innerHTML = t(A, 1), e && (this._trackSlider.setValue(0), this._trackSlider
         .setBackValue(0), this._trackSlider.toggleLoading(!1))), o()
 }, AudioPage.prototype.scrollToTrack = function(e) {
     var i = this,

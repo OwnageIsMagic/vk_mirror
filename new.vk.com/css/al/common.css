@@ -59,7 +59,7 @@
 .sort_not_rev_icon,
 .sort_rev_icon,
 .summary_tab_x,
-.top_audio_player .top_audio_player_btn>div,
+.top_audio_player .top_audio_player_btn .top_audio_player_btn_icon,
 .top_home_link .top_home_logo,
 .top_nav_btn .top_nav_btn_icon,
 .top_profile_arrow,
@@ -3189,7 +3189,10 @@ body.mac #layer_stl .fixed {
     height: 24px;
     border-radius: 50%;
     background: #577ca1 url(/images/icons/audio_playpause.png) no-repeat 8px 7px;
-    outline: none
+    outline: none;
+    border: none;
+    display: block;
+    cursor: pointer
 }
 
 .audio_play.playing,
@@ -5578,7 +5581,7 @@ button.ui_load_more_btn {
     margin-bottom: 0
 }
 
-.top_audio_player .top_audio_player_btn>div {
+.top_audio_player .top_audio_player_btn .top_audio_player_btn_icon {
     width: 14px;
     height: 14px;
     background-image: url(/images/icons/head_icons.png?6);
@@ -5587,7 +5590,7 @@ button.ui_load_more_btn {
     transition: opacity 60ms linear
 }
 
-.top_audio_player .top_audio_player_btn:hover>div {
+.top_audio_player .top_audio_player_btn:hover .top_audio_player_btn_icon {
     opacity: 1
 }
 
@@ -5595,7 +5598,7 @@ button.ui_load_more_btn {
     padding-left: 10px
 }
 
-.top_audio_player .top_audio_player_prev>div {
+.top_audio_player .top_audio_player_prev .top_audio_player_btn_icon {
     background-position: -32px -80px
 }
 
@@ -5603,7 +5606,7 @@ button.ui_load_more_btn {
     padding: 14px 4px 12px
 }
 
-.top_audio_player .top_audio_player_play>div {
+.top_audio_player .top_audio_player_play .top_audio_player_btn_icon {
     background-position: 0 -78px
 }
 
@@ -5615,7 +5618,7 @@ button.ui_load_more_btn {
     margin-right: 7px
 }
 
-.top_audio_player .top_audio_player_next>div {
+.top_audio_player .top_audio_player_next .top_audio_player_btn_icon {
     background-position: -48px -80px
 }
 

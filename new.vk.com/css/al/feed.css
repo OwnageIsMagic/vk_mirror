@@ -213,6 +213,10 @@
     right: -24px
 }
 
+.feed_updates .wall_module .more_link {
+    margin: 15px auto
+}
+
 .post_photos .page_post_sized_thumbs {
     padding-bottom: 0
 }

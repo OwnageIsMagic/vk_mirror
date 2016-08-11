@@ -380,6 +380,7 @@ video_delete_from_public = '������ �� �������';
 video_delete_tag = '������� �������';
 video_flash_needed = '��� ��������� ��������� {flash_player} ��������� ������.';
 video_playback_err_code = '��� ������: {code}';
+video_player_pause = '�������������';
 // section = 5; version = 152;
 
 notes_cancel = '������';

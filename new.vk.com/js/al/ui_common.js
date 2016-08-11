@@ -650,19 +650,13 @@ var uiTabs = {
                 }, i), this.options["native"] && (this.options.shadows = !1), browser.mobile && (this.options.stopScrollPropagation = !1), isArray(this.options.scrollElements) ||
                 (this.options.scrollElements = []), this.removeEvents = [], this.removeElements = [], this.dragging = !1, this.released = !0, this.noMore = !1, this.dragY =
                 null, this.dragScroll = null, this.shadowTop = !1, this.shadowBottom = !1, this.unnecessary = !1, this.disabled = !1, this.stopped = !0, this.stoppedTimeout =
-                null, this.fixSizeDefault = null, this.animation = null, this.blockerScrollTop = 500, this.options.stopScrollPropagation && (this.fixBlocker = window.devicePixelRatio >=
-                    2 && browser.chrome ? function(t) {
-                        t.el.blocker.scrollTop = t.blockerScrollTop + 1, setTimeout(function() {
-                            t.el.blocker.scrollTop = t.blockerScrollTop
-                        }, 0)
-                    }.pbind(this) : function() {
-                        this.el.blocker.scrollTop = this.blockerScrollTop
-                    }), this.emitter = new EventEmitter, isFunction(this.options.onresize) && this.emitter.addListener("resize", this.options.onresize), isFunction(this.options
-                    .onscroll) && this.emitter.addListener("scroll", this.options.onscroll), isFunction(this.options.onscrollstart) && this.emitter.addListener("scrollstart",
-                    this.options.onscrollstart), isFunction(this.options.onscrollstop) && this.emitter.addListener("scrollstop", this.options.onscrollstop), isFunction(this.options
-                    .ondrag) && this.emitter.addListener("drag", this.options.ondrag), isFunction(this.options.ondragstart) && this.emitter.addListener("dragstart", this.options
-                    .ondragstart), isFunction(this.options.ondragstop) && this.emitter.addListener("dragstop", this.options.ondragstop), isFunction(this.options.onupdate) &&
-                this.emitter.addListener("update", this.options.onupdate), isFunction(this.options.onmore) && this.emitter.addListener("more", this.options.onmore), this.el = {
+                null, this.fixSizeDefault = null, this.animation = null, this.blockerScrollTop = 500, this.emitter = new EventEmitter, isFunction(this.options.onresize) &&
+                this.emitter.addListener("resize", this.options.onresize), isFunction(this.options.onscroll) && this.emitter.addListener("scroll", this.options.onscroll),
+                isFunction(this.options.onscrollstart) && this.emitter.addListener("scrollstart", this.options.onscrollstart), isFunction(this.options.onscrollstop) && this.emitter
+                .addListener("scrollstop", this.options.onscrollstop), isFunction(this.options.ondrag) && this.emitter.addListener("drag", this.options.ondrag), isFunction(
+                    this.options.ondragstart) && this.emitter.addListener("dragstart", this.options.ondragstart), isFunction(this.options.ondragstop) && this.emitter.addListener(
+                    "dragstop", this.options.ondragstop), isFunction(this.options.onupdate) && this.emitter.addListener("update", this.options.onupdate), isFunction(this.options
+                    .onmore) && this.emitter.addListener("more", this.options.onmore), this.el = {
                     container: t,
                     overflow: ce("div", {
                         className: "ui_scroll_overflow"
@@ -810,6 +804,10 @@ var uiTabs = {
                 }
                 return this.api
             },
+            fixBlocker: function() {
+                browser.chrome && (this.el.blocker.style.display = "none", this.el.blocker.offsetHeight, this.el.blocker.style.display = ""), this.el.blocker.scrollTop =
+                    this.blockerScrollTop
+            },
             fixSize: function(t) {
                 this.options["native"] || (t && null == this.fixSizeDefault && (this.fixSizeDefault = this.el.container.style.width), setStyle(this.el.container, "width",
                     t ? getSize(this.el.container, !0)[0] || this.fixSizeDefault || "" : this.fixSizeDefault || ""))
@@ -881,9 +879,8 @@ var uiTabs = {
                 return this.disabled || this.dragging || this.options["native"] ? void 0 : (t || (t = window.event), this.dragging = !0, this.animation && this.animation.stop(),
                     this.options.reversed && (this.noMore = !0), setStyle(bodyNode, "cursor", "pointer"), addEvent(document, "mouseup contextmenu", this.dragstartHandler =
                         this.dragstop.bind(this)), addEvent(document, "mousemove", this.dragHandler = this.drag.bind(this)), addClass(this.el.container,
-                        "ui_scroll_dragging"),
-                    this.dragScroll = this.options.reversed ? this.api.data.scrollBottom : this.api.data.scrollTop, this.dragY = t.screenY, cancelEvent(t), this.emitEvent(
-                        "dragstart"), this.api)
+                        "ui_scroll_dragging"), this.dragScroll = this.options.reversed ? this.api.data.scrollBottom : this.api.data.scrollTop, this.dragY = t.screenY,
+                    cancelEvent(t), this.emitEvent("dragstart"), this.api)
             },
             dragstop: function(t) {
                 return this.disabled || !this.dragging || this.options["native"] ? void 0 : (t || (t = window.event), this.dragging = !1, this.dragstopHandler &&
@@ -942,7 +939,7 @@ var uiTabs = {
                 if (!this.inited || this.disabled) return !1;
                 var t = this.el.overflow.offsetHeight,
                     i = this.el.inner.offsetHeight,
-                    e = this.el.outer.scrollTop,
+                    e = Math.max(0, this.el.outer.scrollTop),
                     s = Math.max(0, i - e - t);
                 if (t !== this.api.data.viewportHeight || i !== this.api.data.scrollHeight || e !== this.api.data.scrollTop || s !== this.api.data.scrollBottom) {
                     if (this.api.data.viewportHeight = t, this.api.data.scrollHeight = i, this.api.data.scrollTop = e, this.api.data.scrollBottom = s, !this.options[
@@ -950,9 +947,8 @@ var uiTabs = {
                         var o = Math.max(this.options.minContentHeight, i),
                             n = t >= o;
                         if (!n) {
-                            var l = Math.max(this.options.barMinHeight, this.el.barOuter.offsetHeight * t / o);
-                            this.el.barInner.style.top = Math.max(0, (this.el.barOuter.offsetHeight - l) * Math.min(1, e / (o - t))) + "px", this.el.barInner.style.height =
-                                l + "px"
+                            var l = 100 * Math.max(this.options.barMinHeight, this.el.barOuter.offsetHeight * t / o) / this.el.barOuter.offsetHeight;
+                            this.el.barInner.style.height = l + "%", this.el.barInner.style.top = (100 - l) * e / (o - t) + "%"
                         }
                         this.options.shadows && (this.shadowTop != (e && !n) && toggleClass(this.el.container, "ui_scroll_shadow_top_visible", this.shadowTop = e && !n),
                                 this.shadowBottom != (s && !n) && toggleClass(this.el.container, "ui_scroll_shadow_bottom_visible", this.shadowBottom = s && !n)), this.unnecessary !==

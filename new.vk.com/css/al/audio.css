@@ -132,7 +132,9 @@
 
 .audio_page_player .audio_page_player_ctrl {
     float: left;
-    outline: none
+    border: none;
+    outline: none;
+    background: none
 }
 
 .audio_page_player .audio_page_player_ctrl.audio_page_player_btns {
@@ -195,6 +197,10 @@
     padding: 4px;
     float: left;
     margin-top: 18px;
+    border: none;
+    display: block;
+    background: none;
+    outline: none;
     cursor: pointer
 }
 
@@ -722,6 +728,10 @@ body.mac .audio_rows_header.fixed {
 }
 
 .audio_menu_btn {
+    outline: none;
+    border: none;
+    background: none;
+    cursor: pointer;
     float: right;
     margin-top: 10px;
     margin-right: 10px;

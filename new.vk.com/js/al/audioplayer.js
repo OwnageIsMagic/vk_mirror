@@ -441,8 +441,8 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         function o() {
             var i = getAudioPlayer();
             i.layer && i.layer.isShown() && i.layer.updatePosition(), addClass(s._el, a), toggleClass(s._el, "top_audio_player_playing", i.isPlaying());
-            var o = geByClass1("_top_audio_player_play");
-            o && attr(o, "aria-label", i.isPlaying() ? getLang("global_audio_pause") : getLang("global_audio_play")), t = AudioUtils.asObject(t), clearTimeout(s._currTitleReTO);
+            var o = geByClass1("_top_audio_player_play_blind_label");
+            o && (o.innerHTML = i.isPlaying() ? getLang("global_audio_pause") : getLang("global_audio_play")), t = AudioUtils.asObject(t), clearTimeout(s._currTitleReTO);
             var l = geByClass1("top_audio_player_title_out", s._el);
             re(l);
             var r = geByClass1("top_audio_player_title", s._el);
@@ -476,8 +476,8 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         }, 150))
     }, TopAudioPlayer.prototype.onPause = function() {
         removeClass(this._el, "top_audio_player_playing");
-        var t = geByClass1("_top_audio_player_play");
-        t && attr(t, "aria-label", getLang("global_audio_play"))
+        var t = geByClass1("_top_audio_player_play_blind_label");
+        t && (t.innerHTML = getLang("global_audio_play"))
     }, TopAudioPlayer.prototype.onNext = function() {}, AudioPlaylist.plIndex = 0, AudioPlaylist.TYPE_CURRENT = "current", AudioPlaylist.TYPE_ALBUM = "album", AudioPlaylist.TYPE_TEMP =
     "temp", AudioPlaylist.TYPE_RECOM = "recoms", AudioPlaylist.TYPE_POPULAR = "popular", AudioPlaylist.TYPE_SEARCH = "search", AudioPlaylist.TYPE_FEED = "feed", AudioPlaylist.TYPE_LIVE =
     "live", AudioPlaylist.TYPE_WALL = "wall", AudioPlaylist.ALBUM_ALL = -2, AudioPlaylist.prototype.serialize = function() {

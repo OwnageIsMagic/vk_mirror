@@ -667,7 +667,7 @@ var Photoview = {
                         "<a id=\"pv_tag_link\" onclick=\"stManager.add(['phototag.js', 'phototag.css', 'tagger.css', 'tagger.js'], function() { Phototag.startTag(); })\">" +
                         getLang("photos_tagperson") + "</a>"), e.actions.del && w.push('<a id="pv_delete" onclick="Photoview.deletePhoto()">' + getLang("photos_pv_act_delete") +
                         "</a>"), e.actions.save && w.push('<a id="pv_save_to_me" onclick="Photoview.savePhoto()">' + getLang("photos_pv_act_save") + "</a>"), cur.pvShowBottomActions &&
-                    !a) {
+                    !a && !cur.pvIsLightMode) {
                     var f = [],
                         P = [];
                     if (e.actions.spam && (f.push(["spam", getLang("photos_report"), "", "Photoview.showSpamActions()"]), f.push("sep"), P = cur.pvReasons), e.actions.edit &&
@@ -723,7 +723,7 @@ var Photoview = {
                         pvEditing: !1,
                         pvProgress: ge("pv_progress")
                     }), e.deleted || !e.author ? (cleanElems("pv_confirm_tag", "pv_delete_tag", "pv_prof_cancel", "pv_prof_done"), isArray(e.deleted) && Photoview.toggleTopInfoPanel(
-                        e.deleted[0], e.deleted[1]), hide(cur.pvHHWrap), Photoview.toggleDeletedState(!0)) : e.taginfo ? (cleanElems("pv_confirm_tag", "pv_delete_tag",
+                        e.deleted[0], e.deleted[1]), hide(cur.pvHHWrap), a || Photoview.toggleDeletedState(!0)) : e.taginfo ? (cleanElems("pv_confirm_tag", "pv_delete_tag",
                             "pv_prof_cancel", "pv_prof_done"),
                         Photoview.toggleTopInfoPanel(e.taginfo, '        <button class="flat_button" id="pv_confirm_tag" onclick="Photoview.confirmTag(' + e.tagid +
                             ', this)">' + getLang("photos_confirm_tag") +
