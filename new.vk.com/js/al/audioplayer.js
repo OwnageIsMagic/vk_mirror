@@ -15,7 +15,7 @@ function AudioPlaylist(t, i, e) {
 function AudioPlayer() {
     if (this._currentAudio = !1, this._isPlaying = !1, this._prevPlaylist = null, this._currentPlaylist = null, this._playlists = [], this.subscribers = [], this._tasks = [], this
         ._listened = {}, this._statusExport = {}, this._currentPlayingRows = [], this._allowPrefetchNext = !1, !vk.isBanned) {
-        this._initImpl(), this._initEvents(), this._restoreVolumeState();
+        AudioUtils.debugLog("Player creation"), this._initImpl(), this._initEvents(), this._restoreVolumeState();
         var t = this;
         setTimeout(function() {
             t._restoreState(), AudioUtils.toggleAudioHQBodyClass(), t.updateCurrentPlaying()
@@ -418,6 +418,24 @@ var AudioUtils = {
         } else(r = gpeByClass("_module", t)) ? (e = a.getPlaylist(AudioPlaylist.TYPE_ALBUM, cur.oid, AudioPlaylist.ALBUM_ALL), o = [r]) : o = [domPN(t)];
         return e || (e = a.getPlaylist(AudioPlaylist.TYPE_TEMP, vk.id, l)), e = AudioUtils.initDomPlaylist(e, o), -1 == e.indexOfAudio(s) && (e = new AudioPlaylist(
             AudioPlaylist.TYPE_TEMP, vk.id, irand(999, 99999)), e = AudioUtils.initDomPlaylist(e, [domPN(t)])), e.load(), e
+    },
+    LOG_LS_KEY: "audiolog",
+    debugLog: function() {
+        var t = Array.prototype.slice.call(arguments);
+        t.unshift(vkNow());
+        var i = ls.get(AudioUtils.LOG_LS_KEY) || [];
+        i.push(t);
+        var e = 50;
+        i.length > e && i.splice(0, i.length - e), ls.set(AudioUtils.LOG_LS_KEY, i)
+    },
+    renderAudioDiag: function() {
+        var t = ge("audio_diag_log"),
+            i = ls.get(AudioUtils.LOG_LS_KEY) || [];
+        t && each(i, function(i, e) {
+            var o = new Date(e.shift())
+                .toUTCString();
+            e = e.join(", "), t.appendChild(se('<div class="audio_diag_log_row"><span class="audio_diag_log_time">' + o + "</span>" + e + "</div>"))
+        })
     }
 };
 TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
@@ -846,7 +864,9 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                     }
                 }
             };
-        AudioPlayerHTML5.isSupported() || t ? this._impl = new AudioPlayerHTML5(a) : browser.flash && (this._impl = new AudioPlayerFlash(a)), this._implSetVolume(0)
+        AudioUtils.debugLog("Implementation init"), AudioUtils.debugLog("param browser.flash", browser.flash), AudioUtils.debugLog("param force HTML5", !!t), AudioPlayerHTML5.isSupported() ||
+            t ? (AudioUtils.debugLog("Initializing HTML5 impl"), this._impl = new AudioPlayerHTML5(a)) : browser.flash && (AudioUtils.debugLog("Initializing Flash impl"), this._impl =
+                new AudioPlayerFlash(a)), this._implSetVolume(0)
     }, AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop", AudioPlayer.EVENT_UPDATE = "update", AudioPlayer.EVENT_LOADED =
     "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED = "buffered", AudioPlayer.EVENT_PROGRESS = "progress", AudioPlayer
     .EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.EVENT_START_LOADING =
@@ -933,8 +953,8 @@ AudioPlayer.tabIcons = {
             if (s && (i ? r._addRowPlayer(t, e) : r._removeRowPlayer(t)), i) r.on(t, AudioPlayer.EVENT_PLAY, function(i) {
                 AudioUtils.asObject(i)
                     .fullId == AudioUtils.getAudioFromEl(t, !0)
-                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_pause")), attr(geByClass1("_audio_title", t), "role",
-                        "heading"))
+                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS),
+                        attr(l, "aria-label", getLang("global_audio_pause")), attr(geByClass1("_audio_title", t), "role", "heading"))
             }), r.on(t, AudioPlayer.EVENT_PROGRESS, function(i, e) {
                 i = AudioUtils.asObject(i);
                 var o, a = intval(i.duration);
@@ -947,8 +967,7 @@ AudioPlayer.tabIcons = {
                 r.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
                 var o = geByClass1("audio_duration", t);
                 o && (o.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                        .duration)),
-                    attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
+                    .duration)), attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
             }
             e ? setTimeout(function() {
                 var i = intval(domData(t, "is-current"));
@@ -1097,7 +1116,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype._ensureImplReady = function(t) {
         var i = this;
         this._impl && this._impl.onReady(function(e) {
-            return e ? t() : void("flash" == i._impl.type && i._initImpl(!0))
+            return e ? t() : void("flash" == i._impl.type && (AudioUtils.debugLog("Flash not initialized, lets try HTML5 as desperate way"), i._initImpl(!0)))
         })
     }, AudioPlayer.prototype._implNewTask = function(t, i) {
         this._taskIDCounter = this._taskIDCounter || 1, this._tasks = this._tasks || [], this._tasks.push({
@@ -1614,13 +1633,13 @@ AudioPlayer.tabIcons = {
         this._player && this._player.stopAudio()
     }, AudioPlayerFlash.prototype._checkFlashLoaded = function() {
         var t = ge("player");
-        if (this._checks = this._checks || 0, this._checks++, this._checks > 10) {
-            this._player = !1;
+        if (this._checks = this._checks || 0, this._checks++, AudioUtils.debugLog("Flash element check", this._checks), this._checks > 10) {
+            AudioUtils.debugLog("No Flash element found after some amount of checks"), this._player = !1;
             var i = this._onReady;
             return i && i(!1)
         }
         if (t && t.paused) {
-            this._player = t;
+            AudioUtils.debugLog("Flash element found"), this._player = t;
             var i = this._onReady;
             i && i(!0), this._onReady = null
         } else {
@@ -1632,11 +1651,16 @@ AudioPlayer.tabIcons = {
     }, AudioPlayerHTML5.AUDIO_EL_ID = "ap_audio", AudioPlayerHTML5.STATE_HAVE_NOTHING = 0, AudioPlayerHTML5.STATE_HAVE_FUTURE_DATA = 3, AudioPlayerHTML5.HAVE_ENOUGH_DATA = 4,
     AudioPlayerHTML5.SILENCE = "data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQAAAAA=", AudioPlayerHTML5.isSupported = function() {
         var t = "undefined" != typeof navigator ? navigator.userAgent : "";
-        if (/(Windows NT 5.1|Windows XP)/.test(t) && (browser.vivaldi || browser.opera || browser.mozilla)) return !1;
-        if (/(Windows 7|Windows NT 6.1)/.test(t) && (browser.vivaldi || browser.opera)) return !1;
+        if (/(Windows NT 5.1|Windows XP)/.test(t) && (browser.vivaldi || browser.opera || browser.mozilla)) return AudioUtils.debugLog(
+            "Force no HTML5 (xp vivaldi / opera / mozilla)"), !1;
+        if (/(Windows 7|Windows NT 6.1)/.test(t) && (browser.vivaldi || browser.opera)) return AudioUtils.debugLog("Force no HTML5 (win7 vivaldi / opera)"), !1;
         var i = document.createElement("audio");
-        return !(!i.canPlayType || !i.canPlayType('audio/mpeg; codecs="mp3"')
-            .replace(/no/, ""))
+        if (i.canPlayType) {
+            var e = i.canPlayType('audio/mpeg; codecs="mp3"'),
+                o = !!e.replace(/no/, "");
+            return AudioUtils.debugLog("HTML5 browser support " + (o ? "yes" : "no"), e, t), o
+        }
+        return AudioUtils.debugLog("audio.canPlayType is not available", t), !1
     }, AudioPlayerHTML5.prototype.type = "html5", AudioPlayerHTML5.prototype.destroy = function() {}, AudioPlayerHTML5.prototype.getPlayedTime = function() {
         for (var t = this._currentAudioEl.played, i = 0, e = 0; e < t.length; e++) i += t.end(e) - t.start(e);
         return i
@@ -1657,7 +1681,8 @@ AudioPlayer.tabIcons = {
         }), this.opts.onSeek && addEvent(i, "seeking", function() {
             e._currentAudioEl == i && e.opts.onSeek()
         }), addEvent(i, "error", function() {
-            e._prefetchAudioEl == i ? e._prefetchAudioEl = e._createAudioNode() : e._currentAudioEl == i && e.opts.onFail && e.opts.onFail()
+            AudioUtils.debugLog("HTML5 error track loding"), e._prefetchAudioEl == i ? e._prefetchAudioEl = e._createAudioNode() : e._currentAudioEl == i && e.opts.onFail &&
+                e.opts.onFail()
         }), addEvent(i, "canplay", function() {
             e._prefetchAudioEl == i, e._currentAudioEl == i && (e.opts.onCanPlay && e.opts.onCanPlay(), e._seekOnReady && (e.seek(e._seekOnReady), e._seekOnReady = !1))
         }), t && (i.src = t, i.preload = "auto", i.volume = this._volume || 1, i.load()), this._audioNodes.push(i), i

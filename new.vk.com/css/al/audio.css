@@ -3195,3 +3195,18 @@ body.mac .audio_rows_header.fixed {
 .audio_sticker_ua {
     background-image: url('/images/icons/new_audio_ua.png')
 }
+
+#audio_diag_log {
+    padding: 20px
+}
+
+.audio_diag_log_row {
+    padding: 5px 0
+}
+
+.audio_diag_log_row .audio_diag_log_time {
+    color: #777;
+    display: inline-block;
+    vertical-align: top;
+    margin-right: 10px
+}

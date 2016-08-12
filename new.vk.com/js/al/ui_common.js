@@ -733,8 +733,7 @@ var uiTabs = {
                     scrollBottom: null,
                     scrollHeight: null,
                     viewportHeight: null
-                },
-                db: this
+                }
             }, this.init();
             var l = "onwheel" in this.el.outer ? "wheel" : void 0 !== document.onmousewheel ? "mousewheel" : browser.mozilla ? "MozMousePixelScroll" : "DOMMouseScroll";
             return this.addEvent(this.el.container, l, function(t) {
@@ -805,7 +804,7 @@ var uiTabs = {
                 return this.api
             },
             fixBlocker: function() {
-                browser.chrome && (this.el.blocker.style.display = "none", this.el.blocker.offsetHeight, this.el.blocker.style.display = ""), this.el.blocker.scrollTop =
+                browser.chrome && (this.el.blocker.style.display = "inline-block", this.el.blocker.offsetHeight, this.el.blocker.style.display = ""), this.el.blocker.scrollTop =
                     this.blockerScrollTop
             },
             fixSize: function(t) {
