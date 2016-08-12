@@ -692,19 +692,21 @@ a.groups_catalog_comm_title_link {
 
 .group_box_image_wrap {
     float: left;
+    display: block;
     margin-right: 12px
 }
 
 .group_box_image_wrap,
 .group_box_image_link {
     position: relative;
-    display: block;
     width: 50px;
     height: 50px;
     border-radius: 50%
 }
 
 .group_box_image_link {
+    display: table-cell;
+    vertical-align: middle;
     overflow: hidden
 }
 
@@ -719,11 +721,8 @@ a.groups_catalog_comm_title_link {
 }
 
 .group_box_image {
-    position: absolute;
-    width: 50px;
-    top: 0;
-    bottom: 0;
-    margin: auto
+    display: table-cell;
+    width: 50px
 }
 
 .group_box_actions {

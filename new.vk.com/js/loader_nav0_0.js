@@ -114,7 +114,7 @@ var navMap = {
     'landings$': ['landings.php', []],
     'ach($|/)': ['achievements.php', ['achievements.css', 'achievements.js']],
     'memedit($|/)': ['members.php', ['members.css', 'dyn-members.js']],
-    'meminfo($|/)': ['member_info.php', ['meminfo.css']],
+    'meminfo($|/)': ['member_info.php', ['dyn-meminfo.js', 'meminfo.css']],
     'groupinfo($|/)': ['group_info.php', ['groupinfo.css']]
 };
 var stVersions = {
@@ -187,14 +187,14 @@ var stVersions = {
     'video.css': 3949503983,
     'videocat.js': 435413719,
     'videocat.css': 1483166340,
-    'videoview.js': 2195087765,
+    'videoview.js': 1324862576,
     'videoview.css': 772116959,
     'video_edit.js': 660308478,
     'video_edit.css': 4110752837,
     'video_upload.js': 2236165204,
     'video_youtube.js': 3123894146,
     'video_youtube.css': 3591312868,
-    'videoplayer.js': 2167886484,
+    'videoplayer.js': 506036620,
     'videoplayer.css': 3787255065,
     'translation.js': 3444393106,
     'translation.css': 4017022451,
@@ -219,7 +219,7 @@ var stVersions = {
     'public.js': 1370745423,
     'pages.css': 791854731,
     'pages.js': 3347413999,
-    'groups.css': 4094188592,
+    'groups.css': 1399102376,
     'groups.js': 2442861242,
     'groups_list.js': 3462017115,
     'groups_edit.css': 2428853467,
@@ -334,7 +334,7 @@ var stVersions = {
     'achievements.css': 2158662972,
     'sf.css': 1890805025,
     'members.css': 3492225543,
-    'meminfo.css': 248895059,
+    'meminfo.css': 4088339307,
     'groupinfo.css': 2938574198,
     'bugs.js': 2994463564,
     'bugs.css': 550177605,
@@ -528,4 +528,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 3541;
+var _rnd = 8949;

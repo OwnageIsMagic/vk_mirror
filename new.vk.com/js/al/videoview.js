@@ -1390,11 +1390,11 @@ var Videoview = {
                         "id", "video_box_wrap" + mvcur.videoRaw), needRemin = !1) : (mvcur.player && re(mvcur.player.el), val("mv_player_box", html)), hide(
                         "mv_progress_box")
                 }
-                if (val("mv_info", desc), val("mv_service_btns", serviceBtns), toggleClass("mv_box", "_has_chat", mvcur.chatMode && !mvcur.minimized), mvcur.chatMode) {
+                if (val("mv_info", desc), val("mv_service_btns", serviceBtns), mvcur.chatMode) {
                     VideoPlaylist.removeBlock();
                     var chatBlock = se(opt.chatBlock);
                     ge("mv_main")
-                        .appendChild(chatBlock), VideoChat.init(chatBlock)
+                        .appendChild(chatBlock), VideoChat.init(chatBlock), VideoChat.toggleStateClasses(), VideoChat.updateScroll()
                 }
                 var rf = ge("reply_field" + mvcur.post);
                 if (rf && placeholderInit(rf, {
@@ -1853,8 +1853,8 @@ var Videoview = {
                         height: ""
                     }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
                         "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
-                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(),
-                    mvcur.noLocChange || e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
+                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(),
+                    onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
                     }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),
@@ -2703,7 +2703,7 @@ var Videoview = {
                 t = Videoview.isMinimized();
             toggleClass("mv_box", "_has_chat", e && !t), toggleClass("mv_box", "_hide_chat", e && !t && i);
             var o = "";
-            e && (o = getLang(i ? "video_aria_expand_playlist" : "video_aria_minimize_playlist")), attr("mv_top_pl_toggle", "aria-label", o)
+            e && (o = getLang(i ? "video_aria_expand_chat" : "video_aria_minimize_chat")), attr("mv_top_pl_toggle", "aria-label", o)
         },
         updateScroll: function() {
             VideoChat.scroll.update(), VideoChat.scroll.scrollBottom(), VideoChat.toggleScrollBottomBtn(!1)
