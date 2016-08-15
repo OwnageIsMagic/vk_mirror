@@ -657,9 +657,7 @@ var Videoview = {
                 getProgressHtml() +
                 '</div>      <div id="mv_player_box"></div>      <div class="mv_top_controls_wrap">        <div id="mv_top_controls">          <div onclick="return Videoview.hide(false, true, event, true);" class="mv_top_button mv_top_close" role="button" tabindex="0" aria-label="' +
                 getLang("global_close") +
-                '">            <div class="mv_close_icon"></div>          </div>          <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize" role="button" tabindex="0" aria-label="' +
-                getLang("global_min") +
-                '">            <div class="mv_minimize_icon"></div>          </div>          <div onclick="return Videoview.toggleSideBlock();" class="mv_top_button mv_top_toggle_sideblock" id="mv_top_pl_toggle" role="button" tabindex="0">            <div class="mv_toggle_sideblock_icon"></div>          </div>        </div>      </div>    </div>    <div id="mv_service_btns_wrap">      <div id="mv_service_btns"></div>    </div>    <div class="mv_info" id="mv_info"></div>    <div id="mv_warning" style="display: none;"></div>  </div></div>  '
+                '">            <div class="mv_close_icon"></div>          </div>          <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize">            <div class="mv_minimize_icon"></div>          </div>          <div onclick="return Videoview.toggleSideBlock();" class="mv_top_button mv_top_toggle_sideblock" id="mv_top_pl_toggle" role="button" tabindex="0">            <div class="mv_toggle_sideblock_icon"></div>          </div>        </div>      </div>    </div>    <div id="mv_service_btns_wrap">      <div id="mv_service_btns"></div>    </div>    <div class="mv_info" id="mv_info"></div>    <div id="mv_warning" style="display: none;"></div>  </div></div>  '
             ), browser.mobile && setStyle("mv_container", {
                 paddingTop: intval(window.pageYOffset) + 10 + "px"
             }), Videoview.updateSize()
@@ -845,8 +843,9 @@ var Videoview = {
                     msg = domByClass(node, "dld");
                 if (!text) return re(msg), show(comment), "mv" == from ? (++mvcur.mvData.commcount, ++mvcur.mvData.commshown) : (++cur.commentsCount, ++cur.commentsShown),
                     void Videoview.updateCommentsHeader(from);
-                hide(comment), node.appendChild(se(text)), del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown),
-                    Videoview.updateCommentsHeader(from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
+                hide(comment), node.appendChild(se(text)),
+                    del ? ("mv" == from ? (--mvcur.mvData.commcount, --mvcur.mvData.commshown) : (--cur.commentsCount, --cur.commentsShown), Videoview.updateCommentsHeader(
+                        from)) : "mv" == from && Videoview.recache(), script && eval(script), Videoview.updateReplyFormPos()
             }
         },
         commAction: function(e, i, t, o, a) {

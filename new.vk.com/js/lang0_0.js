@@ -87,6 +87,7 @@ global_to_top = '������';
 global_try_to_activate = '������ ������� ����? �������� ����������<br>{link}��������� ����� ��������� ������� &#187;{/link}';
 global_unknown_error = '����������� ������';
 global_user_is_online = '������';
+global_user_is_online_mobile = '������ � ��������';
 global_vkontakte = '���������';
 global_warning = '�������������e';
 global_write_msg = '�������� ���������';
@@ -241,7 +242,7 @@ videofile_num = ['', '�����������', '�������
 votes_flex = ['', '�����', '������', '�������'];
 Work_place = '����� ������:';
 yesterday = '�����';
-// section = 0; version = 455;
+// section = 0; version = 457;
 
 friends_no_user_selected = '�� �� ������� �� ������ ������������.';
 // section = 2; version = 207;

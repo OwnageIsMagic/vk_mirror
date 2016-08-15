@@ -592,10 +592,22 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                         var i = this._list.splice(0, this.getLocalFoundCount());
                         this._originalList = [].concat(i), shuffle(i), this._list = i.concat(this._list)
                     }
-                } else this.clean()
+                } else {
+                    var e = getAudioPlayer()
+                        .getCurrentAudio();
+                    this.indexOfAudio(e) >= 0 && (this._audioToFirstPos = e), this.clean()
+                }
             } else this._originalList = [].concat(this._list), shuffle(this._list), this._moveCurrentAudioAtFirstPosition();
-        else this._originalList ? this.getType() == AudioPlaylist.TYPE_SEARCH ? (this._list.splice(0, this.getLocalFoundCount()), this._list = this._originalList.concat(this._list)) :
-            this._list = this._originalList : this.clean(), delete this._shuffle, delete this._originalList;
+        else {
+            if (this._originalList) this.getType() == AudioPlaylist.TYPE_SEARCH ? (this._list.splice(0, this.getLocalFoundCount()), this._list = this._originalList.concat(this._list)) :
+                this._list = this._originalList;
+            else {
+                var e = getAudioPlayer()
+                    .getCurrentAudio();
+                this.indexOfAudio(e) >= 0 && (this._audioToFirstPos = e), this.clean()
+            }
+            delete this._shuffle, delete this._originalList
+        }
         return !0
     }, AudioPlaylist.prototype.isComplete = function() {
         return this.getSelf()
@@ -664,7 +676,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
             }, {
                 onDone: function(t) {
                     getAudioPlayer()
-                        .mergePlaylistData(o, t), delete o._loading;
+                        .mergePlaylistData(o, t), o._audioToFirstPos && (o.addAudio(o._audioToFirstPos, 0), delete o._audioToFirstPos), delete o._loading;
                     var i = o._onDoneLoading;
                     delete o._onDoneLoading, each(i || [], function(t, i) {
                             i && i(o)
@@ -953,8 +965,8 @@ AudioPlayer.tabIcons = {
             if (s && (i ? r._addRowPlayer(t, e) : r._removeRowPlayer(t)), i) r.on(t, AudioPlayer.EVENT_PLAY, function(i) {
                 AudioUtils.asObject(i)
                     .fullId == AudioUtils.getAudioFromEl(t, !0)
-                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS),
-                        attr(l, "aria-label", getLang("global_audio_pause")), attr(geByClass1("_audio_title", t), "role", "heading"))
+                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_pause")), attr(geByClass1("_audio_title", t), "role",
+                        "heading"))
             }), r.on(t, AudioPlayer.EVENT_PROGRESS, function(i, e) {
                 i = AudioUtils.asObject(i);
                 var o, a = intval(i.duration);

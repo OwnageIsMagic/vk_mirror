@@ -532,7 +532,7 @@ var Settings = {
         })
     },
     accessSubmit: function() {
-        console.log(isChecked(geByClass1("_settings_access")), geByClass1("_settings_access")), ajax.post("/al_settings.php", {
+        ajax.post("/al_settings.php", {
             act: "a_toggle_access_mode",
             hash: cur.options.access_hash,
             mode: isChecked(geByClass1("_settings_access")) ? 1 : 0

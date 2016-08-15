@@ -443,9 +443,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     toggleClass(geByClass1("_audio_shuffle_btn", this._container), "audio_page_player_btn_enabled", !!e.shuffle)
 }, AudioPage.prototype.toggleRepeat = function(e) {
     var i = toggleClass(e, "audio_page_player_btn_enabled");
-    this.ap.toggleRepeatCurrentAudio(i);
-    var t = geByClass1("_blind_label", e);
-    t.innerHTML = this.ap.isRepeatCurrentAudio() ? getLang("audio_dont_repeat_tooltip") : getLang("audio_repeat_tooltip")
+    if (this.ap.toggleRepeatCurrentAudio(i), this.isLayer() && cur.audioPage) {
+        var t = geByClass1("_audio_page_player_repeat", cur.audioPage._container);
+        t && toggleClass(t, "audio_page_player_btn_enabled", i)
+    }
+    var o = geByClass1("_blind_label", e);
+    o.innerHTML = this.ap.isRepeatCurrentAudio() ? getLang("audio_dont_repeat_tooltip") : getLang("audio_repeat_tooltip")
 }, AudioPage.prototype.toggleShuffle = function(e) {
     var i = this.getCurrentPlaylist();
     i.isShuffled() ? (removeClass(e, "audio_page_player_btn_enabled"), i.shuffle(0)) : (addClass(e, "audio_page_player_btn_enabled"), i.shuffle(irand(1, 999999))), this.switchToSection(
@@ -1036,12 +1039,12 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
             u = this.ap.getPlaylist(AudioPlaylist.TYPE_POPULAR, vk.id, p + intval(a.genre))
         } else if (a.friend) {
             var y = intval(a.friend),
-                A = geByClass1("_audio_friend_" + y, this._container);
-            addClass(A, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioPlaylist.ALBUM_ALL), geByClass1("_audio_friend_" + y) ||
+                P = geByClass1("_audio_friend_" + y, this._container);
+            addClass(P, "audio_friend_selected"), u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, y, AudioPlaylist.ALBUM_ALL), geByClass1("_audio_friend_" + y) ||
                 this.showMoreFriends(!1, y), o.q && 0 > y && !cur.prevSearchPlaylist && (cur.prevSearchPlaylist = this.getCurrentPlaylist())
         } else if (a.section == AudioPlaylist.TYPE_RECOM) {
-            var P = AudioPlaylist.ALBUM_ALL;
-            a.audio_id ? P = "audio" + a.audio_id : a.album_id && (P = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, P)
+            var A = AudioPlaylist.ALBUM_ALL;
+            a.audio_id ? A = "audio" + a.audio_id : a.album_id && (A = "album" + a.album_id), u = this.ap.getPlaylist(AudioPlaylist.TYPE_RECOM, this.options.oid, A)
         } else a.section == AudioPlaylist.TYPE_FEED ? u = this.ap.getPlaylist(AudioPlaylist.TYPE_FEED, vk.id, 0) : a.section == AudioPlaylist.TYPE_CURRENT ? u = this.ap
             .getCurrentPlaylist() : a.band ? (u = this.ap.getPlaylist(AudioPlaylist.TYPE_ALBUM, intval(a.band), AudioPlaylist.ALBUM_ALL), u.mergeWith({
                 band: 1
@@ -1146,8 +1149,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
     }), this.ap.on(this, AudioPlayer.EVENT_PROGRESS, function(e, i) {
         a._trackSlider.setValue(i), _.innerHTML = t(e, i)
     }));
-    var A = this.ap.getCurrentAudio() || this._readyAudio;
-    A && (domData(d, "audio", JSON.stringify(A)), i(A), toggleClass(c, "audio_playing", this.ap.isPlaying()), _.innerHTML = t(A, 1), e && (this._trackSlider.setValue(0), this._trackSlider
+    var P = this.ap.getCurrentAudio() || this._readyAudio;
+    P && (domData(d, "audio", JSON.stringify(P)), i(P), toggleClass(c, "audio_playing", this.ap.isPlaying()), _.innerHTML = t(P, 1), e && (this._trackSlider.setValue(0), this._trackSlider
         .setBackValue(0), this._trackSlider.toggleLoading(!1))), o()
 }, AudioPage.prototype.scrollToTrack = function(e) {
     var i = this,

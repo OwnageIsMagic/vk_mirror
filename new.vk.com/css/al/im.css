@@ -13,6 +13,7 @@
     padding: 0
 }
 
+.im-chat-input .im-chat-input--error:before,
 .im-chat-placeholder,
 .im-deselect:before,
 .im-dialog-select .im-dialog-select--btn,
@@ -964,7 +965,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im_change_topic_label {
-    padding-top: 2px;
+    padding-top: 3px;
     padding-right: 8px;
     color: #777
 }
@@ -1089,6 +1090,10 @@ body.mac .im_stickerpack_fixed {
     }
 }
 
+.im-page.im-page_classic .im-page--back-button:hover .im-page--back:before {
+    opacity: 1
+}
+
 .im-page.im-page_classic .im-page--back {
     display: inline-block;
     vertical-align: middle;
@@ -1096,10 +1101,6 @@ body.mac .im_stickerpack_fixed {
     width: 36px;
     position: relative;
     cursor: pointer
-}
-
-.im-page.im-page_classic .im-page--back:hover:before {
-    opacity: 1
 }
 
 .im-page.im-page_classic .im-page--back:before {
@@ -1186,7 +1187,8 @@ body.mac .im_stickerpack_fixed {
     margin-left: -1px;
     border-left: solid 1px #edeef0;
     border-right: solid 1px #edeef0;
-    border-bottom: none
+    border-bottom: none;
+    z-index: 3
 }
 
 .im-page.im-page_classic .im-page--header-inner {
@@ -1489,7 +1491,7 @@ body.mac .im_stickerpack_fixed {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     position: relative;
-    z-index: 103
+    z-index: 3
 }
 
 .im-page .im-page--dialogs.im-page--dialogs_with-mess .scrollbar_top {
@@ -1870,7 +1872,6 @@ body.mac .im_stickerpack_fixed {
     box-sizing: border-box;
     width: 100%;
     position: relative;
-    z-index: 101;
     height: 46px;
     border-bottom: solid 1px #e4e6e9
 }
@@ -2334,6 +2335,23 @@ body.mac .im_stickerpack_fixed {
     padding: 0
 }
 
+.im-chat-input .im-chat-input--error {
+    display: none;
+    padding: 15px 82px
+}
+
+.im-chat-input .im-chat-input--error:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    top: 50%;
+    margin-top: -18px;
+    left: 36px;
+    background: url(/images/icons/msg_warning.png)
+}
+
 .im-chat-input .im-chat-input--fwd {
     clear: both
 }
@@ -2390,6 +2408,21 @@ body.mac .im_stickerpack_fixed {
     box-shadow: 0px -1px 3px -1px rgba(0, 0, 0, .12)
 }
 
+.im-chat-input.im-chat-input_error {
+    padding-top: 0;
+    padding-bottom: 0;
+    position: relative
+}
+
+.im-chat-input.im-chat-input_error .im-chat-input--error {
+    display: block
+}
+
+.im-chat-input.im-chat-input_error .im-chat-input--textarea,
+.im-chat-input.im-chat-input_error>.nim-peer {
+    display: none
+}
+
 .im-chat-input.im-chat-input_classic {
     padding-left: 26px;
     padding-right: 26px;
@@ -2412,7 +2445,8 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-mess-stack {
-    position: relative
+    position: relative;
+    z-index: 1
 }
 
 .im-mess-stack .im-mess-stack--content .im-mess-stack--lnk {
@@ -3385,6 +3419,10 @@ body.sf .nim-dialog .nim-dialog--unread {
     line-height: 18px
 }
 
+.nim-dialog.nim-dialog_muted.nim-dialog_verified .nim-dialog--name .nim-dialog--name-w {
+    max-width: 50%
+}
+
 .nim-dialog .nim-dialog--preview,
 .nim-dialog .nim-dialog--preview b {
     color: #656565
@@ -3700,7 +3738,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 .nim-dialog.nim-dialog_verified .nim-dialog--name-w {
     padding-right: 0;
     position: relative;
-    max-width: 60%
+    max-width: 59%
 }
 
 .nim-dialog.nim-dialog_verified .nim-dialog--star {
@@ -3742,6 +3780,10 @@ body.sf .nim-dialog .nim-dialog--unread {
     background: url(/images/icons/mute_icons.png) no-repeat 0 0;
     vertical-align: middle;
     position: absolute
+}
+
+.nim-dialog.nim-dialog_muted .nim-dialog--name .nim-dialog--name-w {
+    max-width: 59%
 }
 
 .nim-dialog.nim-dialog_muted.nim-dialog_selected .nim-dialog--mute {
@@ -3855,6 +3897,15 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .nim-dialog.nim-dialog_classic.nim-dialog_verified.nim-dialog_muted .nim-dialog--mute {
     margin-top: 2px
+}
+
+.nim-dialog.nim-dialog_classic.nim-dialog_muted .nim-dialog--name .nim-dialog--name-w,
+.nim-dialog.nim-dialog_classic.nim-dialog_verified .nim-dialog--name .nim-dialog--name-w {
+    max-width: 75%
+}
+
+.nim-dialog.nim-dialog_classic.nim-dialog_muted.nim-dialog_verified .nim-dialog--name .nim-dialog--name-w {
+    max-width: 70%
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--verfifed {
@@ -5204,7 +5255,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 .im-topic_dialog {
     font-size: 13px;
     color: #939393;
-    display: inline-block;
+    display: inline;
     font-weight: 400;
     margin-right: 3px
 }
@@ -5367,7 +5418,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im_change_topic_labeled {
-    width: 235px;
+    width: 225px;
     position: relative;
     left: 3px
 }

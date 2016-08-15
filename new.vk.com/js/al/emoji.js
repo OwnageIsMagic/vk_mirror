@@ -520,6 +520,11 @@ if (!window.Emoji) {
                     } else {
                         range.selectNodeContents(editable);
                     }
+
+                    if (browser.mozilla && editable.innerHTML === '<br>') {
+                        editable.innerHTML = ''; // fix strange ff behaviour, inserting empty brs in contenteidtable
+                    }
+
                     if (!noCollapse) {
                         range.collapse(after ? false : true);
                     }

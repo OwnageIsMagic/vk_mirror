@@ -5283,7 +5283,7 @@ div.medadd_c_linkprg {
 
 .medadd_c_linkimg_big .medadd_c_linkimg_container {
     width: 100%;
-    max-height: 150px;
+    max-height: 228px;
     margin: 0
 }
 
@@ -5302,9 +5302,20 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_linkimg_big .medadd_c_linkdsc {
-    padding: 0 15px 10px;
-    margin-top: -2px;
-    line-height: 15px
+    margin: 2px 15px 10px;
+    padding: 0;
+    line-height: 17px;
+    font-size: 12.5px;
+    max-height: 2.9em;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis
+}
+
+.medadd_c_linkimg_big .medadd_c_linkdsc:empty {
+    margin: 0
 }
 
 .medadd_c_linkimg_big .medadd_c_linkmicrodata {
@@ -5312,12 +5323,21 @@ div.medadd_c_linkprg {
 }
 
 .medadd_c_linkimg_big .medadd_c_linkhead {
-    padding: 10px 15px 6px;
+    padding: 10px 15px 5px;
     display: block;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 21px;
+    color: #000;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    cursor: pointer;
-    line-height: 15px
+    max-height: 2.8em
 }
 
 .medadd_c_linkimg_big .medadd_c_linkhead:hover {

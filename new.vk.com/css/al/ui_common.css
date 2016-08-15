@@ -1827,6 +1827,10 @@ a.ui_search_custom_link {
     pointer-events: none
 }
 
+.mobile .ui_scroll_bar_container {
+    pointer-events: none
+}
+
 .ui_scroll_bar_outer {
     position: relative;
     width: 100%;
@@ -1858,10 +1862,8 @@ a.ui_search_custom_link {
     left: 0;
     right: 0;
     overflow: hidden;
-    z-index: -1000;
     visibility: hidden;
-    pointer-events: none;
-    opacity: 0
+    pointer-events: none
 }
 
 .ui_scroll_resize_sensor::-webkit-scrollbar {
@@ -2678,7 +2680,7 @@ a.ui_search_custom_link {
 .ui_bullet:after {
     content: "";
     display: inline-block;
-    margin: 0 7px 0 9px;
+    margin: 0 3px 0 8px;
     width: 2px;
     height: 2px;
     border-radius: 2px;

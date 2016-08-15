@@ -667,7 +667,7 @@ var Photoview = {
                         "<a id=\"pv_tag_link\" onclick=\"stManager.add(['phototag.js', 'phototag.css', 'tagger.css', 'tagger.js'], function() { Phototag.startTag(); })\">" +
                         getLang("photos_tagperson") + "</a>"), e.actions.del && w.push('<a id="pv_delete" onclick="Photoview.deletePhoto()">' + getLang("photos_pv_act_delete") +
                         "</a>"), e.actions.save && w.push('<a id="pv_save_to_me" onclick="Photoview.savePhoto()">' + getLang("photos_pv_act_save") + "</a>"), cur.pvShowBottomActions &&
-                    !a && !cur.pvIsLightMode) {
+                    !a) {
                     var f = [],
                         P = [];
                     if (e.actions.spam && (f.push(["spam", getLang("photos_report"), "", "Photoview.showSpamActions()"]), f.push("sep"), P = cur.pvReasons), e.actions.edit &&

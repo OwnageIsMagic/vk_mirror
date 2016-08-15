@@ -264,21 +264,20 @@ body.mobfixed #mv_layer_wrap {
     margin-top: -5px;
     border: 5px solid transparent;
     border-color: transparent;
-    border-left-color: #e5ebf1;
-    pointer-events: none
+    border-left-color: #e5ebf1
 }
 
 .mv_subscribe_block .mv_subscribe_btn_wrap {
     position: absolute;
     right: 0;
-    -o-transition: opacity 150ms ease;
-    transition: opacity 150ms ease
+    -o-transition: visibility 0.2s, opacity 0.2s;
+    transition: visibility 0.2s, opacity 0.2s
 }
 
 .mv_subscribe_block .mv_subscribe_btn_wrap.mv_state_subscribed {
     opacity: 0;
     filter: alpha(opacity=0);
-    pointer-events: none
+    visibility: hidden
 }
 
 .mv_subscribe_block #mv_subscribe_btn {
@@ -291,16 +290,16 @@ body.mobfixed #mv_layer_wrap {
     right: 0;
     opacity: 0;
     filter: alpha(opacity=0);
-    -o-transition: opacity 150ms ease;
-    transition: opacity 150ms ease;
-    pointer-events: none
+    visibility: hidden;
+    -o-transition: visibility 0.2s, opacity 0.2s;
+    transition: visibility 0.2s, opacity 0.2s
 }
 
 .mv_subscribe_block #mv_subscribed_msg.mv_state_subscribed {
     opacity: 1;
     -webkit-filter: none;
     filter: none;
-    pointer-events: all
+    visibility: visible
 }
 
 .mv_share_actions {
