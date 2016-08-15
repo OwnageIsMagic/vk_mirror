@@ -2607,6 +2607,10 @@ body.mac .im_stickerpack_fixed {
     margin-top: 15px
 }
 
+.im-mess-stack.im-mess-stack_fwd {
+    z-index: 0
+}
+
 .im-mess-stack.im-mess-stack_fwd .im-mess-stack--info {
     padding-left: 48px
 }
