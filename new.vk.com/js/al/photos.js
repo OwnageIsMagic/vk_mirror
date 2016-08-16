@@ -132,7 +132,7 @@ var photos = {
         }
     },
     updatePeriods: function() {
-        cur.periods = geByClass("photos_period_delimiter")
+        cur.periods = geByClass("photos_period_delimiter", ge("photos_all_block"))
     },
     destroyPeriod: function() {
         cur.fixedPeriod && (re(cur.fixedPeriod), cur.fixedPeriod = !1, cur.fixedPeriodEl = !1)
@@ -1123,7 +1123,8 @@ var photos = {
         }), addEvent(document, "drop", function(e) {
             return o.un(e, !0), o.drop(e.dataTransfer.files), cancelEvent(e)
         }), cur.destroy.push(function() {
-            removeEvent(document, "dragenter dragover"), removeEvent(document, "dragleave"), removeEvent(document, "drop");
+            removeEvent(document, "dragenter dragover"), removeEvent(document, "dragleave"),
+                removeEvent(document, "drop")
         })
     },
     openWebcamPhoto: function() {

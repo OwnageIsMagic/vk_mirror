@@ -410,21 +410,20 @@ var Videoview = {
         },
         subscribeToAuthor: function(e, i, t, o, a, d, r, n) {
             function s() {
-                toggleClass(ge("mv_subscribe_btn_wrap"), "mv_state_subscribed", a), toggleClass(ge("mv_subscribed_msg"), "mv_state_subscribed", a), ajax.post("al_video.php", {
-                    act: "a_subscribe",
-                    gid: t,
-                    hash: o,
-                    unsubscribe: intval(!a),
-                    from: n
-                });
                 var e = Videoview.getMvData();
-                if (e.subscribed = a, !r) {
+                if (toggleClass("mv_subscribe_btn_wrap", "mv_state_subscribed", a), toggleClass("mv_subscribed_msg", "mv_state_subscribed", a), ajax.post("al_video.php", {
+                        act: "a_subscribe",
+                        gid: t,
+                        video: e.videoRaw,
+                        hash: o,
+                        unsubscribe: intval(!a),
+                        from: n
+                    }), e.subscribed = a, !r) {
                     var i = Videoview.getPlayerObject();
                     i && i.onSubscribed && i.onSubscribed()
                 }
                 var d = ge("mv_finish_subscribe_btn");
-                d && (d.innerHTML = a ? getLang("video_view_subscribed_msg") : getLang("video_view_subscribe_to_author"), toggleClass("mv_finish_subscribe",
-                    "mv_finish_subscribed", a))
+                d && (val(d, getLang(a ? "video_view_subscribed_msg" : "video_view_subscribe_to_author")), toggleClass("mv_finish_subscribe", "mv_finish_subscribed", a))
             }
             if (o)
                 if (!a && d) {
