@@ -1507,7 +1507,7 @@ input.dev_section_search {
 }
 
 .dev_methods_sect_rows.small {
-    width: 455px
+    width: 665px
 }
 
 .dev_methods_list_row {
@@ -1552,8 +1552,11 @@ input.dev_section_search {
     padding: 2px 5px 3px
 }
 
-.dev_methods_sect_rows.dev_methods_sect_simular .dev_methods_list_desc,
-.dev_methods_sect_rows.small .dev_methods_list_desc {
+.dev_methods_sect_rows.small .dev_methods_list_descdev_methods_list_desc {
+    width: 465px
+}
+
+.dev_methods_sect_rows.dev_methods_sect_simular .dev_methods_list_desc {
     width: 239px
 }
 
@@ -1621,9 +1624,12 @@ input.dev_section_search {
     margin-top: 33px
 }
 
-.dev_method_page,
-.dev_section_wrap {
+.dev_method_page {
     width: 455px
+}
+
+.dev_section_wrap {
+    width: 665px
 }
 
 .dev_method_header {

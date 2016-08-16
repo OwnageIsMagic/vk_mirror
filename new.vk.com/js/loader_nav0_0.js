@@ -255,7 +255,7 @@ var stVersions = {
     'fansbox.js': 3553173932,
     'postbox.css': 4170744741,
     'postbox.js': 2878853436,
-    'feed.js': 689386801,
+    'feed.js': 1551570855,
     'feed.css': 4060911493,
     'privacy.js': 1229359010,
     'privacy.css': 2039863267,
@@ -321,12 +321,12 @@ var stVersions = {
     'docs.css': 4062218364,
     'tags_dd.js': 2519761220,
     'tags_dd.css': 2737355895,
-    'tasks.js': 2494546487,
+    'tasks.js': 891881753,
     'tasks.css': 1111369733,
     'helpdesk.js': 152567817,
     'helpdesk.css': 2183795805,
     'tickets.js': 2175749834,
-    'tickets.css': 3028813346,
+    'tickets.css': 3621748205,
     'faq.js': 4282038603,
     'faq.css': 987559389,
     'agents.js': 3700121524,
@@ -393,8 +393,8 @@ var stVersions = {
     'filters_pe.js': 1797468460,
     'pe.js': 2468168913,
     'pe.css': 1936859814,
-    'dev.js': 3440549172,
-    'dev.css': 476430968,
+    'dev.js': 2845917569,
+    'dev.css': 1119000234,
     'share.css': 3172999721,
     'stickers_office.css': 2865554295,
     'stickers_office.js': 2247906357,
@@ -529,4 +529,4 @@ var stTypes = {
         'mobile/wiki.css': 1
     }
 };
-var _rnd = 7299;
+var _rnd = 8376;

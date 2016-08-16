@@ -200,7 +200,7 @@ var Feed = {
                             label: getLang("news_show_X_reposts", g.length)
                         });
                         var x = se('<div class="feed_row' + (b ? "_unshown" : "") + '">' + v + "</div>"),
-                            S = domFC(S);
+                            P = domFC(P);
                         w.insertBefore(x, w.firstChild), !b && feed.needScrollPost(t, x) && (c += x.offsetHeight + intval(getStyle(domByClass(x, "page_block"), "marginTop"))),
                             C = !0, f = x.firstChild, u = geByClass1("feed_reposts_first", f, "div"), _ = geByClass1("feed_reposts_group", f, "div"), each(clone(g),
                                 function() {
@@ -226,24 +226,24 @@ var Feed = {
                     m.length > 300 ? w.removeChild(m[300]) : m.length <= 1 && removeClass(cur.feedEls.wrap, "feed_is_empty");
                 break;
             case "edit_post":
-                var P, T = ge("wpt" + r);
-                if (!isVisible(i) || !T) break;
-                var B = geByClass1("wall_post_more", T);
-                B && (B = isVisible(domNS(B))), (P = feed.needScrollPost(t, T)) && (c -= T.offsetHeight);
+                var S, B = ge("wpt" + r);
+                if (!isVisible(i) || !B) break;
+                var T = geByClass1("wall_post_more", B);
+                T && (T = isVisible(domNS(T))), (S = feed.needScrollPost(t, B)) && (c -= B.offsetHeight);
                 var E = psr(rs(e[3], {
                         poll_hash: cur.wallTpl.poll_hash
                     })),
                     w = ge("post" + r);
-                w && !isVisible(w.parentNode) && (E = wall.updatePostImages(E)), val(T, E), B && (B = geByClass1("wall_post_more", T), B && B.onclick()), ge("post_poll_id" +
-                    r) && wall.updatePoll(r), P && (c += T.offsetHeight), nodeUpdated(T);
+                w && !isVisible(w.parentNode) && (E = wall.updatePostImages(E)), val(B, E), T && (T = geByClass1("wall_post_more", B), T && T.onclick()), ge("post_poll_id" +
+                    r) && wall.updatePoll(r), S && (c += B.offsetHeight), nodeUpdated(B);
                 break;
             case "edit_reply":
                 var L = e[3],
-                    T = ge("wpt" + L);
-                if (!isVisible("post" + L) || !T) break;
-                var B = geByClass1("wall_reply_more", T);
-                B && (B = isVisible(domNS(B))), updH = -T.offsetHeight, updY = getXY(T)[1], val(T, psr(e[4])), B && (B = geByClass1("wall_reply_more", T), B && B.onclick()),
-                    updH += T.offsetHeight, nodeUpdated(T);
+                    B = ge("wpt" + L);
+                if (!isVisible("post" + L) || !B) break;
+                var T = geByClass1("wall_reply_more", B);
+                T && (T = isVisible(domNS(T))), updH = -B.offsetHeight, updY = getXY(B)[1], val(B, psr(e[4])), T && (T = geByClass1("wall_reply_more", B), T && T.onclick()),
+                    updH += B.offsetHeight, nodeUpdated(B);
                 break;
             case "post_parsed_link":
                 if (!i) break;
@@ -592,6 +592,11 @@ var Feed = {
         checkEvent(t) || (lockButton(e), cur._back.show.push(function() {
             unlockButton(e)
         }), nav.go("/friends?act=find"))
+    },
+    showMorePublics: function(e, t) {
+        checkEvent(t) || (lockButton(e), cur._back.show.push(function() {
+            unlockButton(e)
+        }), nav.go("/groups?act=catalog&c%5Bcategory%5D=0 "))
     },
     getTypesSection: function() {
         switch (cur.section) {
@@ -1021,9 +1026,8 @@ var Feed = {
             a = scrollGetY(),
             c = isVisible(i);
         return i ? (c ? n -= i.offsetHeight + intval(getStyle(e, "marginTop")) : (domPN(domPN(i)) || {})
-                .bits = 0, toggle(i, !c),
-                val(r, c ? getLang("news_show_X_reposts", i.childNodes.length) : getLang("news_hide_reposts")), n && scrollToY(a + n + getSize("page_header")[1], 0), !1) :
-            void(r && re(r.parentNode.parentNode))
+            .bits = 0, toggle(i, !c), val(r, c ? getLang("news_show_X_reposts", i.childNodes.length) : getLang("news_hide_reposts")), n && scrollToY(a + n + getSize(
+                "page_header")[1], 0), !1) : void(r && re(r.parentNode.parentNode))
     },
     editHidden: function() {
         return showTabbedBox("al_settings.php", {
