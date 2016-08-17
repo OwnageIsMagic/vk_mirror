@@ -1278,7 +1278,8 @@ h2.payments_getvotes_title {
 }
 
 .payments_money_transfer_box .payments_summary_cont {
-    margin-top: -2px
+    margin-top: -2px;
+    margin-left: 55px
 }
 
 .payments_money_transfer_box .payments_summary_phumb,

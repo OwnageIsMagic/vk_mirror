@@ -1107,23 +1107,42 @@ var Settings = {
             }
         }), !1
     },
-    showNextVotesHistory: function(e) {
-        return buttonLocked(e) ? void 0 : (lockButton(e), ajax.post("al_settings.php", {
-            act: "a_votes_history",
-            offset: cur.historyOffset
-        }, {
-            onDone: function(t, s) {
-                var o = ge("settings_votes_history")
-                    .tBodies[0];
-                if (t)
-                    if (unlockButton(e), cur.historyOffset += 100, browser.msie) {
-                        var n = se("<table>" + t + "</table>"),
-                            a = geByTag("tr", n);
-                        for (i in a) 1 == a[i].nodeType && o.appendChild(a[i])
-                    } else o.insertAdjacentHTML("beforeEnd", t);
-                    (!t || s) && (addClass(o.lastChild, "settings_votes_history_last"), hide(e))
-            }
-        }), !1)
+    showNextPaymentsHistory: function(e, t) {
+        if (!buttonLocked(e)) {
+            lockButton(e);
+            var s, o;
+            return t ? (s = {
+                act: "a_transfer_history",
+                offset: cur.historyOffset
+            }, o = "settings_transfer_history") : (s = {
+                act: "a_votes_history",
+                offset: cur.historyOffset
+            }, o = "settings_votes_history"), ajax.post("al_settings.php", s, {
+                onDone: function(t, s) {
+                    var n = ge(o)
+                        .tBodies[0];
+                    if (t)
+                        if (unlockButton(e), cur.historyOffset += 100, browser.msie) {
+                            var a = se("<table>" + t + "</table>"),
+                                r = geByTag("tr", a);
+                            for (i in r) 1 == r[i].nodeType && n.appendChild(r[i])
+                        } else n.insertAdjacentHTML("beforeEnd", t);
+                        (!t || s) && (addClass(n.lastChild, "settings_votes_history_last"), hide(e))
+                }
+            }), !1
+        }
+    },
+    switchPaymentsHistoryTab: function(e, t, s) {
+        if (checkEvent(s)) return !0;
+        var o = clone(nav.objLoc);
+        return uiTabs.switchTab(e), "transfer" === t ? (hide("settings_votes_history_wrap"), show("settings_transfer_history_wrap"), o.section = t) : (hide(
+            "settings_transfer_history_wrap"), show("settings_votes_history_wrap"), delete o.section), nav.setLoc(o), !1
+    },
+    moneyTransferRepeat: function(e, t) {
+        return showBox("al_payments.php?act=money_transfer_box", {
+            repeat_id: e,
+            hash: t
+        }), !1
     },
     initApps: function(opts, appTpl) {
         extend(cur, {
@@ -1158,7 +1177,7 @@ var Settings = {
                             for (var e in cur.onSilentLoad) isFunction(cur.onSilentLoad[e]) && cur.onSilentLoad[e]()
                     })) : cur.silent = !1
             }.bind(this)
-        })
+        });
     },
     isDelayedOnSilentLoad: function e(t, s) {
         return cur.silent ? (e.count = e.count || 0, e.count++, cur.onSilentLoad[t || "key_" + e.count] = s, !0) : void 0
@@ -1174,7 +1193,7 @@ var Settings = {
     },
     scrollCheckApps: function() {
         this.isDelayedOnSilentLoad("scrollCheck", this.scrollCheckApps.bind(this)) || !browser.mobile && !cur.isAppsLoading && !cur.disableAutoMore && isVisible(cur.lShowMoreButton) &&
-            (window.innerHeight || document.documentElement.clientHeight || bodyNode.clientHeight) + scrollGetY() + 400 >= cur.lShowMoreButton.offsetTop && this.showAppsRows();
+            (window.innerHeight || document.documentElement.clientHeight || bodyNode.clientHeight) + scrollGetY() + 400 >= cur.lShowMoreButton.offsetTop && this.showAppsRows()
     },
     showAppsRows: function() {
         if (!this.isDelayedOnSilentLoad("showAppsRows", this.showAppsRows.bind(this)) && cur.defaultCount && cur.shownApps < cur.appsCount) {

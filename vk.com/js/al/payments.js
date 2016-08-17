@@ -425,6 +425,9 @@ var MoneyTransfer = {
     init: function() {
         placeholderInit('transfer_amount');
         placeholderInit('transfer_comment');
+        if (cur.paymentsOptions.repeatId) {
+            MoneyTransfer.send();
+        }
     },
     send: function() {
         var box = curBox();
