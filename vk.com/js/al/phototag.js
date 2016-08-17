@@ -6,8 +6,10 @@ var Phototag = {
             cur.pvFriends = layer.appendChild(ce('div', {
                 id: 'pv_friends',
                 innerHTML: '\
-<div class="box_title_wrap"><div class="box_x_button"></div>\
-  <div class="box_title">' + getLang('photos_typename') +
+<div class="box_title_wrap box_grey"> \
+  <div class="box_x_button"></div> \
+  <div class="box_title">' + getLang(
+                        'photos_typename') +
                     '</div>\
 </div>\
 <div class="name_input"><input onkeyup="Phototag.updateFriends()" onkeypress="if (event.keyCode == 10 || event.keyCode == 13) Phototag.addTag()" type="text" id="pv_friend_name" class="text" /></div>\
@@ -19,9 +21,9 @@ var Phototag = {
 <div class="box_controls_wrap">\
   <div class="box_controls">\
     <div id="pv_tag_buttons" class="clear_all">\
-        <button class="flat_button fl_l" id="pv_add_tag">' +
+        <button class="flat_button fl_r" id="pv_add_tag">' +
                     getLang('global_add') + '</button>\
-        <button class="flat_button secondary fl_l" id="pv_cancel_tag">' + getLang('global_cancel') +
+        <button class="flat_button secondary fl_r" id="pv_cancel_tag">' + getLang('global_cancel') +
                     '</button>\
     </div>\
     <div id="pv_tag_progress" class="progress"></div>\
@@ -36,17 +38,7 @@ var Phototag = {
             addEvent(cur.pvFriends, 'click', function() {
                 cur.pvClicked = true;
             });
-            var xbtn = cur.pvFriends.firstChild.firstChild;
-            addEvent(xbtn, 'mouseover', function() {
-                animate(this, {
-                    backgroundColor: '#FFFFFF'
-                }, 200);
-            });
-            addEvent(xbtn, 'mouseout', function() {
-                animate(this, {
-                    backgroundColor: '#9CB8D4'
-                }, 200);
-            });
+            var xbtn = geByClass1('box_x_button', cur.pvFriends);
             addEvent(xbtn, 'click', Phototag.stopTag);
 
             ge('pv_add_tag')
@@ -69,11 +61,11 @@ var Phototag = {
             Phototag.updateFriends();
         }
         cleanElems('pv_confirm_tag', 'pv_delete_tag', 'pv_prof_cancel', 'pv_prof_done');
-        cur.pvTagInfo.innerHTML = '<div class="msg"><a class="fl_r" onclick="Phototag.stopTag()">' + getLang('global_done') + '</a>' + getLang('photos_select_tag_area') +
-            '</div>';
-        show(cur.pvTagInfo);
-        hide(cur.pvLeft, cur.pvLeftNav, cur.pvRightNav, cur.pvClose);
-        Photoview.updateHeight();
+
+        Photoview.toggleTopInfoPanel(getLang('photos_select_tag_area'), '<button class="flat_button" onclick="Phototag.stopTag()">' + getLang('global_done') + '</button>');
+
+        Photoview.toggleNavControls('');
+        Photoview.toggleOnPhotoControls(false);
 
         layerWrap.scrollTop = 0;
         cur.pvTagger = 'loading';
@@ -87,6 +79,8 @@ var Phototag = {
             },
             ph = cur.pvData[cur.pvListId][cur.pvIndex];
 
+        Photoview.updatePhotoDimensions();
+
         cur.pvTagger = photoTagger(cur.pvPhoto.firstChild, extend(options, {
             zstart: 600
         }));
@@ -96,11 +90,14 @@ var Phototag = {
             cur.pvTagger = false;
             return;
         }
-        hide(cur.pvFriends, cur.pvTagInfo);
+        Photoview.toggleTopInfoPanel(false);
+        hide(cur.pvFriends);
         if (cur.pvListId && cur.pvData[cur.pvListId].length > 1) {
-            show(cur.pvLeft, cur.pvClose, cur.pvLeftNav, cur.pvRightNav);
+            Photoview.toggleNavControls('left close right');
         }
-        Photoview.updateHeight();
+
+        Photoview.toggleOnPhotoControls(true);
+
         if (cur.pvFriendName) {
             cur.pvFriendName.value = '';
             cur.pvFriendsQ = false;
@@ -108,11 +105,15 @@ var Phototag = {
         }
         cur.pvTagger.destroy();
         cur.pvTagger = false;
+
+        Photoview.updatePhotoDimensions();
     },
     addTag: function(mid, ev) {
         if (checkEvent(ev)) return true;
         if (!cur.pvTagger || cur.pvTagger == 'loading') return false;
-        if (isVisible('pv_tag_progress')) return false;
+
+        var btn = ge('pv_add_tag');
+        if (isButtonLocked(btn)) return false;
 
         var name = trim(cur.pvFriendName.value),
             rect = cur.pvTagger.result();
@@ -126,6 +127,7 @@ var Phototag = {
             elfocus(cur.pvFriendName);
             return false;
         }
+
         var listId = cur.pvListId,
             index = cur.pvIndex,
             ph = cur.pvData[listId][index];
@@ -166,14 +168,8 @@ var Phototag = {
                     cur.pvTagger.reset();
                 }
             },
-            showProgress: function() {
-                hide('pv_tag_buttons');
-                show('pv_tag_progress');
-            },
-            hideProgress: function() {
-                hide('pv_tag_progress');
-                show('pv_tag_buttons');
-            }
+            showProgress: lockButton.pbind(btn),
+            hideProgress: unlockButton.pbind(btn)
         });
         return false;
     },

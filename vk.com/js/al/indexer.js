@@ -7,11 +7,10 @@ function vkIndexer(list, prepareFunc, callback) {
     this.prepareFunc = prepareFunc || function(obj) {
         return obj;
     };
-    debugLog('vkIndexer: start');
     setTimeout(this.indexIteration.bind(this), 10);
 }
 
-vkIndexer.prototype.delimiter = new RegExp('[\\s\\-\\.,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\+\\?\\\\]+', 'g');
+vkIndexer.prototype.delimiter = vkIndexer.delimiter = new RegExp('[\\s\\-\\.,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\+\\?\\\\]+', 'g');
 vkIndexer.prototype.trimmer = new RegExp('^[\\s\\-\\.,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\+\\?\\\\]+|[\\s\\-,\\"\\\'\\�\\(\\)\\[\\]\\{\\}\\\\]+$', 'g');
 
 vkIndexer.prototype.toTranslit = {
@@ -131,8 +130,7 @@ vkIndexer.prototype.indexIteration = function() {
     }
     this.iterCur = i;
     if (i >= this.iterEnd) {
-        this.callback();
-        debugLog('vkIndexer: index created', this.index);
+        this.callback(this);
     } else {
         setTimeout(this.indexIteration.bind(this), 10);
     }

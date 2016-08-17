@@ -10,7 +10,6 @@ function PlaceSelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         multiselect: false,
         selectedItems: '',
@@ -123,7 +122,6 @@ function HouseSelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         multiselect: false,
         selectedItems: '',
@@ -225,7 +223,6 @@ function StreetSelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         multiselect: false,
         selectedItems: '',
@@ -234,7 +231,7 @@ function StreetSelect(input, container, options) {
         city: 0,
         testing: true,
         street: 0,
-        placeholder: getLang('select_street_not_selected'),
+        placeholder: options.placeholder || getLang('select_street_not_selected'),
         introText: getLang('select_street_select'),
         noResult: getLang('select_street_not_found')
     };
@@ -378,7 +375,6 @@ function StationDistrictSelect(fields, input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         selectedItems: '',
         placeholder: '',
         city: 0,
@@ -514,6 +510,7 @@ function ClassSelect(input, container, options) {
         hide: hide,
         visible: true,
         multiselect: false,
+        zeroPlaceholder: true,
         placeholder: getLang('select_class_not_selected'),
         country: 0,
         school: 0,
@@ -607,7 +604,6 @@ function SchoolSelect(input, container, type_input, type_container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         selectedItems: '',
         visible: true,
@@ -808,7 +804,6 @@ function SchoolHintSelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         multiselect: false,
         selectedItems: '',
@@ -1113,7 +1108,6 @@ function ChairSelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         faculty: 0,
         chair: 0,
@@ -1281,7 +1275,6 @@ function FacultySelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         visible: true,
         university: 0,
@@ -1470,7 +1463,6 @@ function UniversitySelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         visible: true,
         multiselect: false,
@@ -1648,7 +1640,6 @@ function UniversityHintSelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         forceEnableCustom: 0, // manages enableCustom: 0 - as usual, 1 - always, -1 - never
         multiselect: false,
         selectedItems: '',
@@ -1839,7 +1830,6 @@ function CitySelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         enableCustom: false,
         multiselect: false,
         selectedItems: '',
@@ -2070,7 +2060,6 @@ function CountrySelect(input, container, options) {
     var defaults = {
         show: show,
         hide: hide,
-        placeholderColor: '#000',
         country: 0,
         visible: true,
         multiselect: false,

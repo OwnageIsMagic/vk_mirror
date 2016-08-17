@@ -43,6 +43,7 @@ var Dev = {
         Dev.initPage(opts);
         Dev.initSuggestions();
         Dev.onResize();
+        placeholderSetup('dev_top_input');
         cur.verDD && Dev.checkMethodParams();
     },
 
@@ -76,6 +77,13 @@ var Dev = {
         }
         this.checkBlockHeight();
         this.scrollToAnchor();
+
+        each(geByClass('dev_methods_list_access_group_icon'), function() {
+            this.onmouseover = showTooltip.pbind(this, {
+                text: getLang('developers_group_access_method_tip'),
+                black: 1,
+            });
+        });
     },
 
     checkBlockHeight: function() {
@@ -169,17 +177,6 @@ var Dev = {
                 slideDown(newSubMenu, duration);
             }
         }
-    },
-
-    showIconTT: function(el, text) {
-        showTooltip(el, {
-            text: '<div class="dev_side_tt_arr"></div>' + text,
-            slideX: (vk.rtl ? 15 : -15),
-            black: 1,
-            asrtl: 1,
-            className: 'dev_side_tt',
-            shift: [-25, -21, 0]
-        });
     },
 
     onResize: function() {
@@ -311,7 +308,7 @@ var Dev = {
             pageOpts.ver = opts.ver;
         }
         ajax.post('/dev/' + page, pageOpts, {
-            onDone: function(title, text, acts, top_section, edit_sections, isPage, opts, js, bodyClass, parent_section) {
+            onDone: function(title, text, acts, top_section, edit_sections, isPage, isSection, opts, js, bodyClass, parent_section) {
                 window.tooltips && tooltips.hideAll();
                 ge('dev_header_name')
                     .innerHTML = title;
@@ -334,7 +331,7 @@ var Dev = {
                 delete cur.verDD;
                 Dev.setLeftNav(parent_section);
                 nav.setLoc('dev/' + page + nav.toStr(pageOpts));
-                toggle('dev_method_narrow', !isPage && pageOpts.act !== 'history');
+                toggle('dev_method_narrow', !isPage && !isSection && pageOpts.act !== 'history');
                 Dev.initPage(opts);
                 if (js) {
                     eval('(function(){' + js + ';})()');
@@ -387,7 +384,7 @@ var Dev = {
                 firstMethod = name;
             }
             html += '<a id="dev_mlist_' + (name.replace(/\./g, '_')) + '" class="dev_mlist_item' + (cur.page == name ? ' nav_selected' : '') + (className ? ' ' + className :
-                '') + '" href="/dev/' + name + '">' + name + '</a>';
+                '') + '" href="/dev/' + name + '" role="listitem">' + name + '</a>';
         }
         var mlist = ge('dev_mlist_list');
         mlist.innerHTML = html;
@@ -773,8 +770,8 @@ var Dev = {
     },
 
     showObjTooltip: function(el, content, onShowStart) {
-        if (window.tooltip) {
-            window.tooltip.hideAll();
+        if (window.tooltips) {
+            window.tooltips.hideAll();
         }
         showTooltip(el, {
             content: '<div class="dev_tt_preview">' + content + '</div>',

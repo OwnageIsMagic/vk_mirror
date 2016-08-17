@@ -68,20 +68,20 @@ var inviter = {
 
         var selData = opts.selData;
 
-        placeholderSetup('inv_mobile');
-        selectsData.setCountries(selData.countries_list);
+        placeholderInit('inv_mobile');
+        /*selectsData.setCountries(selData.countries_list);
         for (var i in selData.countries) {
-            selectsData.setCountryInfo(i, selData.countries[i]);
+          selectsData.setCountryInfo(i, selData.countries[i]);
         }
         for (var i in selData.cities) {
-            selectsData.setCityInfo(i, selData.cities[i]);
+          selectsData.setCityInfo(i, selData.cities[i]);
         }
         for (var i in selData.universities) {
-            selectsData.setUniversityInfo(i, selData.universities[i]);
+          selectsData.setUniversityInfo(i, selData.universities[i]);
         }
         for (var i in selData.faculties) {
-            selectsData.setFacultyInfo(i, selData.faculties[i]);
-        }
+          selectsData.setFacultyInfo(i, selData.faculties[i]);
+        }*/
 
         var uiBDay, uiBMonth, uiBYear, uiCountry, uiCity;
 
@@ -100,14 +100,12 @@ var inviter = {
             [73, 'Portugues']
         ], {
             big: 1,
-            width: 222,
             multiselect: false,
             selectedItems: (vk.lang < 3) ? 0 : vk.lang
         });
 
         cur.uiSex = new Dropdown(ge('inv_sex'), selData.sexes, {
             big: 1,
-            width: 222,
             multiselect: false,
             onChange: function(val) {
                 var label = ge('birth_date_label')
@@ -118,279 +116,278 @@ var inviter = {
             }
         });
 
-        var updDays = function(year, month) {
-            if (uiBDay.val() > inviter.getLastDay(year, month)) {
-                uiBDay.clear();
-            }
-            uiBDay.setData(inviter.getLastDay(year, month));
+        /*var updDays = function(year, month) {
+          if (uiBDay.val() > inviter.getLastDay(year, month)) {
+            uiBDay.clear();
+          }
+          uiBDay.setData(inviter.getLastDay(year, month));
         }
 
         uiBDay = new Dropdown(ge('inv_bday'), inviter.genDays(0, 0), {
-            big: 1,
-            width: 55,
-            multiselect: false
+          big: 1,
+          width: 55,
+          multiselect: false
         });
 
         uiBMonth = new Dropdown(ge('inv_bmonth'), selData.bmonths, {
-            big: 1,
-            width: 95,
-            multiselect: false,
-            onChange: function(value) {
-                updDays(uiBYear.val(), value);
-            }
+          big: 1,
+          width: 95,
+          multiselect: false,
+          onChange: function(value) {
+            updDays(uiBYear.val(), value);
+          }
         });
 
         uiBYear = new Dropdown(ge('inv_byear'), selData.byears, {
-            big: 1,
-            width: 60,
-            multiselect: false,
-            onChange: function(value) {
-                updDays(value, uiBMonth.val());
-            }
+          big: 1,
+          width: 60,
+          multiselect: false,
+          onChange: function(value) {
+            updDays(value, uiBMonth.val());
+          }
         });
 
         uiClass = new ClassSelect(ge('inv_sclass'), ge('inv_sclass_row'), {
-            big: 1,
-            width: 222,
-            country: selData.s_country[0],
-            school: selData.school,
-            school_class: selData.s_class
+          big: 1,
+          width: 222,
+          country: selData.s_country[0],
+          school: selData.school,
+          school_class: selData.s_class
         });
 
         uiSchool = new SchoolSelect(ge('inv_sschool'), ge('inv_sschool_row'),
-            ge('inv_sschool_type'), ge('inv_sschool_type_row'), {
-                big: 1,
-                width: 222,
-                type_width: 75,
-                with_type_width: 98,
-                show: slideShow,
-                hide: slideHide,
-                types: selData.school_types,
-                school: selData.school,
-                city: selData.s_city[0],
-                classSelect: uiClass,
-                onChange: function(value) {
-                    if (intval(value)) {
-                        slideShow('inv_sdetails', 300);
-                    } else {
-                        slideHide('inv_sdetails', 300);
-                    }
-                    uiClass.clear();
-                    uiSchoolStartYear.clear();
-                    uiSchoolFinishYear.clear();
-                    uiSchoolGradYear.clear();
-                }
-            });
+                                    ge('inv_sschool_type'), ge('inv_sschool_type_row'), {
+          big: 1,
+          width: 222,
+          type_width: 75,
+          with_type_width: 98,
+          show: slideShow,
+          hide: slideHide,
+          types: selData.school_types,
+          school: selData.school,
+          city: selData.s_city[0],
+          classSelect: uiClass,
+          onChange: function(value) {
+            if (intval(value)) {
+              slideShow('inv_sdetails', 300);
+            } else {
+              slideHide('inv_sdetails', 300);
+            }
+            uiClass.clear();
+            uiSchoolStartYear.clear();
+            uiSchoolFinishYear.clear();
+            uiSchoolGradYear.clear();
+          }
+        });
 
         uiEducationForm = new EducationFormSelect(ge('inv_uedu_form'), ge('inv_uedu_form_row'), {
-            big: 1,
-            width: 222,
-            country: selData.u_country[0],
-            university: selData.university,
-            edu_form: selData.edu_form
+          big: 1,
+          width: 222,
+          country: selData.u_country[0],
+          university: selData.university,
+          edu_form: selData.edu_form
         });
 
         uiEducationStatus = new EducationStatusSelect(ge('inv_uedu_status'), ge('inv_uedu_status_row'), {
-            big: 1,
-            width: 222,
-            country: selData.u_country[0],
-            university: selData.university,
-            edu_status: selData.edu_status
+          big: 1,
+          width: 222,
+          country: selData.u_country[0],
+          university: selData.university,
+          edu_status: selData.edu_status
         });
 
         uiChair = new ChairSelect(ge('inv_uchair'), ge('inv_uchair_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            chair: selData.chair,
-            faculty: selData.faculty
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          chair: selData.chair,
+          faculty: selData.faculty
         });
 
         uiFaculty = new FacultySelect(ge('inv_ufaculty'), ge('inv_ufaculty_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            progressBar: ge('uni_progress'),
-            faculty: selData.faculty,
-            university: selData.university,
-            chairSelect: uiChair
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          progressBar: ge('uni_progress'),
+          faculty: selData.faculty,
+          university: selData.university,
+          chairSelect: uiChair
         });
 
         uiUniversity = new UniversitySelect(ge('inv_uuniversity'), ge('inv_uuniversity_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            progressBar: ge('uni_progress'),
-            university: selData.university,
-            city: selData.u_city[0],
-            facultySelect: uiFaculty,
-            eduFormSelect: uiEducationForm,
-            eduStatusSelect: uiEducationStatus,
-            onChange: function(value) {
-                if (intval(value)) {
-                    slideShow('inv_udetails', 300);
-                } else {
-                    slideHide('inv_udetails', 300);
-                }
-                uiEducationForm.clear();
-                uiEducationStatus.clear();
-                uiGrad.clear();
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          progressBar: ge('uni_progress'),
+          university: selData.university,
+          city: selData.u_city[0],
+          facultySelect: uiFaculty,
+          eduFormSelect: uiEducationForm,
+          eduStatusSelect: uiEducationStatus,
+          onChange: function(value) {
+            if (intval(value)) {
+              slideShow('inv_udetails', 300);
+            } else {
+              slideHide('inv_udetails', 300);
             }
+            uiEducationForm.clear();
+            uiEducationStatus.clear();
+            uiGrad.clear();
+          }
         });
 
         uiUCity = new CitySelect(ge('inv_ucity'), ge('inv_ucity_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            progressBar: ge('uni_progress'),
-            city: selData.u_city,
-            country: selData.u_country[0],
-            universitySelect: uiUniversity
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          progressBar: ge('uni_progress'),
+          city: selData.u_city,
+          country: selData.u_country[0],
+          universitySelect: uiUniversity
         });
 
         uiSCity = new CitySelect(ge('inv_scity'), ge('inv_scity_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            progressBar: ge('school_progress'),
-            city: selData.s_city,
-            country: selData.s_country[0],
-            schoolSelect: uiSchool
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          progressBar: ge('school_progress'),
+          city: selData.s_city,
+          country: selData.s_country[0],
+          schoolSelect: uiSchool
         });
 
         uiCity = new CitySelect(ge('inv_city'), ge('inv_city_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            city: selData.city,
-            country: selData.country[0],
-            onChange: function(value) {
-                value = intval(value);
-                if (value) {
-                    var cnfull = uiCountry.val_full(),
-                        ctfull = uiCity.val_full();
-                    if (!intval(uiUCity.val()) || !isVisible('inv_uni_info')) {
-                        uiUCountry.val(cnfull, true);
-                        uiUCity.val(ctfull, true);
-                    }
-                    if (!intval(uiSCity.val()) || !isVisible('inv_school_info')) {
-                        uiSCountry.val(cnfull, true);
-                        uiSCity.val(ctfull, true);
-                    }
-                }
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          city: selData.city,
+          country: selData.country[0],
+          onChange: function(value) {
+            value = intval(value);
+            if (value) {
+              var cnfull = uiCountry.val_full(), ctfull = uiCity.val_full();
+              if (!intval(uiUCity.val()) || !isVisible('inv_uni_info')) {
+                uiUCountry.val(cnfull, true);
+                uiUCity.val(ctfull, true);
+              }
+              if (!intval(uiSCity.val()) || !isVisible('inv_school_info')) {
+                uiSCountry.val(cnfull, true);
+                uiSCity.val(ctfull, true);
+              }
             }
+          }
         });
 
         uiUCountry = new CountrySelect(ge('inv_ucountry'), ge('inv_ucountry_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            progressBar: ge('uni_progress'),
-            country: selData.u_country,
-            eduFormSelect: uiEducationForm,
-            eduStatusSelect: uiEducationStatus,
-            citySelect: uiUCity
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          progressBar: ge('uni_progress'),
+          country: selData.u_country,
+          eduFormSelect: uiEducationForm,
+          eduStatusSelect: uiEducationStatus,
+          citySelect: uiUCity
         });
 
         uiSCountry = new CountrySelect(ge('inv_scountry'), ge('inv_scountry_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            progressBar: ge('school_progress'),
-            country: selData.s_country,
-            classSelect: uiClass,
-            citySelect: uiSCity
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          progressBar: ge('school_progress'),
+          country: selData.s_country,
+          classSelect: uiClass,
+          citySelect: uiSCity
         });
 
         uiCountry = new CountrySelect(ge('inv_country'), ge('inv_country_row'), {
-            big: 1,
-            width: 222,
-            show: slideShow,
-            hide: slideHide,
-            progressBar: ge('city_progress'),
-            country: selData.country,
-            citySelect: uiCity,
-            onChange: function(value) {
-                value = intval(value);
-                if (value) {
-                    var full = uiCountry.val_full();
-                    if (!intval(uiUCountry.val()) || !isVisible('inv_uni_info')) {
-                        uiUCountry.val(full, true);
-                    }
-                    if (!intval(uiSCountry.val()) || !isVisible('inv_school_info')) {
-                        uiSCountry.val(full, true);
-                    }
-                }
+          big: 1,
+          width: 222,
+          show: slideShow,
+          hide: slideHide,
+          progressBar: ge('city_progress'),
+          country: selData.country,
+          citySelect: uiCity,
+          onChange: function(value) {
+            value = intval(value);
+            if (value) {
+              var full = uiCountry.val_full();
+              if (!intval(uiUCountry.val()) || !isVisible('inv_uni_info')) {
+                uiUCountry.val(full, true);
+              }
+              if (!intval(uiSCountry.val()) || !isVisible('inv_school_info')) {
+                uiSCountry.val(full, true);
+              }
             }
+          }
         });
 
         uiGrad = new Dropdown(ge('inv_ugraduation'), selData.graduations, {
-            big: 1,
-            width: 222,
-            autocomplete: true,
-            placeholderColor: '#000',
-            placeholder: cur.lang.select_year_not_selected,
-            noResult: cur.lang.select_year_not_found,
-            selectedItems: selData.grad,
-            onChange: function(value) {
-                if (!intval(value)) {
-                    uiGrad.clear();
-                }
+          big: 1,
+          width: 222,
+          autocomplete: true,
+          placeholderColor: '#000',
+          placeholder: cur.lang.select_year_not_selected,
+          noResult: cur.lang.select_year_not_found,
+          selectedItems: selData.grad,
+          onChange: function(value) {
+            if (!intval(value)) {
+              uiGrad.clear();
             }
+          }
         });
 
         uiSchoolStartYear = new Dropdown(ge('inv_sstart'), selData.start_years, {
-            big: 1,
-            width: 222,
-            autocomplete: true,
-            placeholderColor: '#000',
-            placeholder: cur.lang.select_year_not_selected,
-            noResult: cur.lang.select_year_not_found,
-            selectedItems: selData.s_start,
-            onChange: function(value) {
-                if (!intval(value)) {
-                    uiSchoolStartYear.clear();
-                }
+          big: 1,
+          width: 222,
+          autocomplete: true,
+          placeholderColor: '#000',
+          placeholder: cur.lang.select_year_not_selected,
+          noResult: cur.lang.select_year_not_found,
+          selectedItems: selData.s_start,
+          onChange: function(value) {
+            if (!intval(value)) {
+              uiSchoolStartYear.clear();
             }
+          }
         });
 
         uiSchoolFinishYear = new Dropdown(ge('inv_sfinish'), selData.finish_years, {
-            big: 1,
-            width: 222,
-            autocomplete: true,
-            placeholderColor: '#000',
-            placeholder: cur.lang.select_year_not_selected,
-            noResult: cur.lang.select_year_not_found,
-            selectedItems: selData.s_finish,
-            onChange: function(value) {
-                if (!intval(value)) {
-                    uiSchoolFinishYear.clear();
-                }
+          big: 1,
+          width: 222,
+          autocomplete: true,
+          placeholderColor: '#000',
+          placeholder: cur.lang.select_year_not_selected,
+          noResult: cur.lang.select_year_not_found,
+          selectedItems: selData.s_finish,
+          onChange: function(value) {
+            if (!intval(value)) {
+              uiSchoolFinishYear.clear();
             }
+          }
         });
 
         uiSchoolGradYear = new Dropdown(ge('inv_sgraduation'), selData.finish_years, {
-            big: 1,
-            width: 222,
-            autocomplete: true,
-            placeholderColor: '#000',
-            placeholder: cur.lang.select_year_not_selected,
-            noResult: cur.lang.select_year_not_found,
-            selectedItems: selData.s_grad,
-            onChange: function(value) {
-                if (!intval(value)) {
-                    uiSchoolGradYear.clear();
-                }
+          big: 1,
+          width: 222,
+          autocomplete: true,
+          placeholderColor: '#000',
+          placeholder: cur.lang.select_year_not_selected,
+          noResult: cur.lang.select_year_not_found,
+          selectedItems: selData.s_grad,
+          onChange: function(value) {
+            if (!intval(value)) {
+              uiSchoolGradYear.clear();
             }
-        });
+          }
+        });*/
 
     },
 
@@ -507,9 +504,7 @@ var inviter = {
                 });
             }
         }
-        if (isVisible('inv_error')) {
-            slideUp('inv_error', 200);
-        }
+        val('inv_error', '');
         ajax.post('invite.php', params, {
             onDone: function(res, html) {
                 if (res) {
@@ -521,7 +516,7 @@ var inviter = {
                     var newEl = se(html);
                     newEl.style.display = 'none';
                     container.insertBefore(newEl, container.firstChild);
-                    show('invited_invites_sent_wrap');
+                    show('invited_popup_box', 'invited_invites_sent_wrap');
                     slideDown(newEl, 200);
 
                     each(['inv_fname', 'inv_lname', 'inv_mobile'], function(i, el) {
@@ -534,12 +529,7 @@ var inviter = {
             },
             onFail: function(text) {
                 if (!text) return;
-
-                ge('inv_error')
-                    .innerHTML = text;
-                if (!isVisible('inv_error')) {
-                    slideDown('inv_error', 200);
-                }
+                showMsg('inv_error', text, 'error');
                 return true;
             },
             showProgress: lockButton.pbind('invite_send_btn'),

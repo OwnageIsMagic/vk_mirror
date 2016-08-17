@@ -876,7 +876,8 @@ vkMaps.register('yandex', {
                         .appendChild(div)
                         .appendChild(input);
                     new Dropdown(ge('yandex_type_dd'), vkMaps.VKMap.TYPES_LIST, {
-                        width: 80,
+                        width: 120,
+                        dark: 1,
                         onChange: onChange.bind(me)
                     });
                 },
@@ -1331,7 +1332,8 @@ vkMaps.register('yandex2', {
             this.controls.unshift(typeDD);
 
             new Dropdown(ge('yandex_type_dd'), vkMaps.VKMap.TYPES_LIST, {
-                width: 80,
+                width: 120,
+                dark: 1,
                 onChange: onChange.bind(me)
             });
         },
@@ -1762,7 +1764,8 @@ vkMaps.register('google', {
             });
             div.appendChild(input);
             new Dropdown(input, vkMaps.VKMap.TYPES_LIST, {
-                width: 80,
+                width: 120,
+                dark: 1,
                 onChange: onChange.bind(this)
             });
             this.controls.unshift(div);
@@ -2223,7 +2226,8 @@ vkMaps.register('mapbox', {
                     });
                     div.appendChild(input);
                     new Dropdown(input, vkMaps.VKMap.TYPES_LIST, {
-                        width: 80,
+                        width: 120,
+                        dark: 1,
                         onChange: onChange.bind(me)
                     });
                     return div;

@@ -1,22 +1,22 @@
 #content {
-    padding: 10px 0px 0px 0px;
+    padding: 10px 0px 0px
 }
 
 .summaryBar {
-    border-bottom: 1px solid #DAE2E8;
+    border-bottom: 1px solid #dae2e8;
     clear: both;
-    padding: 11px 10px 0 10px;
-    color: black;
-    font-weight: normal;
-    line-height: normal;
+    padding: 11px 10px 0;
+    color: #000;
+    font-weight: 400;
+    line-height: normal
 }
 
 .summaryBar .summary {
-    color: #45688E;
+    color: #45688e;
     float: left;
-    font-weight: bold;
+    font-weight: 700;
     padding-top: 3px;
-    padding-bottom: 4px;
+    padding-bottom: 4px
 }
 
 #noMatches {
@@ -26,7 +26,7 @@
     padding: 50px 10px;
     color: gray;
     background: #fff;
-    border: solid 1px #ddd;
+    border: solid 1px #ddd
 }
 
 .match {
@@ -35,14 +35,14 @@
     display: inline;
     height: 120px;
     padding: 10px;
-    border: 1px solid #DAE1E8;
+    border: 1px solid #dae1e8;
     background-color: #fff;
-    margin: 5px;
+    margin: 5px
 }
 
 .matchPhoto {
     overflow: hidden;
-    height: 110px;
+    height: 110px
 }
 
 .matchInfo {
@@ -50,7 +50,7 @@
     vertical-align: top;
     padding: 15px 5px 5px 10px;
     border-left: 1px solid #e7e7e7;
-    background-color: #fbfbfb;
+    background-color: #fbfbfb
 }
 
 .matchSent {
@@ -58,29 +58,29 @@
     float: left;
     display: inline;
     padding: 10px;
-    border: 1px solid #DAE1E8;
+    border: 1px solid #dae1e8;
     background-color: #fff;
-    margin: 5px;
+    margin: 5px
 }
 
 .matchSentInfo {
     width: 420px;
     vertical-align: top;
     padding: 15px 5px 5px 10px;
-    border-left: 1px solid #e7e7e7;
+    border-left: 1px solid #e7e7e7
 }
 
 .pollEdit {
     float: right;
     margin-top: 10px;
-    font-size: 9px;
+    font-size: 9px
 }
 
 .qOnline {
     float: right;
     margin-right: 5px;
-    font-weight: normal;
-    color: #ccc;
+    font-weight: 400;
+    color: #ccc
 }
 
 #questionEdited {
@@ -88,71 +88,59 @@
     padding: 2px;
     font-family: Tahoma;
     border: 1px solid #c0cad5;
-    font-size: 11px;
+    font-size: 11px
 }
 
 #qClosed {
-    color: #808080;
-    font-weight: normal;
+    color: gray;
+    font-weight: 400;
     font-size: 12px;
-    padding-left: 8px;
+    padding-left: 8px
 }
 
 .oneMatch {
     vertical-align: top;
     padding-left: 10px;
-    border-left: 1px solid #E7E7E7;
+    border-left: 1px solid #e7e7e7
 }
 
 #oneMatch {
     overflow: auto;
-    border: 1px solid #DAE1E8;
-    background-color: #FFF;
+    border: 1px solid #dae1e8;
+    background-color: #fff;
     padding: 10px;
     width: 430px;
-    float: left;
+    float: left
 }
 
 .oneQuestion {
     font-size: 11px;
     min-height: 100px;
-    height: auto !important;
+    height: auto!important;
     height: 100px;
     padding-top: 30px;
-    padding-bottom: 10px;
+    padding-bottom: 10px
 }
 
-.matchCitySelect {
-    border: 1px solid #c0cad5;
-    padding: 2px;
-    width: 120px;
-    margin: 5px 0px;
-}
-
-.matchSexSelect {
-    border: 1px solid #c0cad5;
-    padding: 2px;
-    width: 120px;
-    margin: 5px 0px;
-}
-
+.matchCitySelect,
+.matchSexSelect,
 .matchYearsSelect {
     border: 1px solid #c0cad5;
     padding: 2px;
     width: 120px;
-    margin: 5px 0px;
+    margin: 5px 0px
 }
 
 .matchLabel {
-    font-weight: bold;
-    color: #808080;
-    margin: 5px 0px;
+    font-weight: 700;
+    color: gray;
+    margin: 5px 0px
 }
 
 .matchWrapEdit {
     background-color: #f7f7f7;
     padding: 10px;
-    border-bottom: 1px solid #DAE1E8;
+    border-bottom: 1px solid #dae1e8
 }
 
 .matchEditLabel {
@@ -160,6 +148,6 @@
     width: 30px;
     vertical-align: top;
     padding: 7px 0px 10px 70px;
-    font-weight: bold;
-    color: #888;
+    font-weight: 700;
+    color: #888
 }

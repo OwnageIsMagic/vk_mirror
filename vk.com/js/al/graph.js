@@ -168,7 +168,7 @@ if (!window.Graph)
 
         function getFont(size, orig) {
             if (!orig) size = cs * size;
-            return size + 'px tahoma, arial, verdana, sans-serif, Lucida Sans';
+            return size + 'px Open Sans, tahoma, arial, verdana, sans-serif, Lucida Sans';
         }
 
         function fullDate(time, params) {
@@ -630,7 +630,7 @@ if (!window.Graph)
                 return;
             }
             setStyle(this.graphDiv, {
-                fontFamily: 'tahoma, arial, verdana, sans-serif, Lucida Sans',
+                fontFamily: 'Open Sans, tahoma, arial, verdana, sans-serif, Lucida Sans',
                 fontSize: '11px',
                 color: '#36638e',
                 width: this.viewWidth + 'px',

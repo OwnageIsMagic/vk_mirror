@@ -1,56 +1,24 @@
-var like_loading = false;
-var like_anim = false;
-var like_hide_cb = null;
-var first = false;
-var next_stats = false;
+var like_loading = false,
+    like_hide_cb = null,
+    first = false,
+    next_stats = false;
 
 var WLike = {
     init: function() {
-        if (!window.fastXDM) {
-            return;
-        }
+        if (!window.fastXDM) return;
+
         window.checkbox = ge('checkbox');
         window.mainDiv = ge('main');
-        if (window.leftTd = ge('like_table_left')) {
-            var lr = ge('like_right');
-            var ll = ge('like_left');
-            var prevDisplay = [getStyle(ll, 'display'), getStyle(lr, 'display')];
-            show(ll);
-            show(lr);
-            cur.minW = getSize(ll)[0] + 1;
-            /*if (cur.height == 18) {
-              cur.minW -= 2;
-            }*/
-            var lw = getSize(lr)[0];
-            cur.maxW = cur.minW + lw;
-            var diff = 14;
-            if (cur.eng) {
-                diff = 8;
-            }
-
-            setStyle(ll, {
-                'display': prevDisplay[0]
-            });
-            setStyle(lr, {
-                'display': prevDisplay[1],
-                width: cur.maxW - cur.minW - diff
-            });
-            if (hasClass(checkbox, 'checked')) { // minified
-                setStyle(checkbox, 'width', cur.minW);
-                addClass(checkbox, 'like_minified');
-            } else {
-                setStyle(checkbox, 'width', cur.maxW);
-            }
-        }
         addEvent(mainDiv, 'mouseover', function(e) {
             if (noAuthVal || !Rpc) return;
             if (!window.tooltipInited) {
                 window.tooltipInited = true;
-                Rpc.callMethod('initTooltip', counter);
+                setTimeout(Rpc.callMethod.bind(Rpc, 'initTooltip', counter), 100);
             } else if (counter) {
-                Rpc.callMethod('showTooltip', true);
+                setTimeout(Rpc.callMethod.bind(Rpc, 'showTooltip'), 100);
             }
         });
+
         addEvent(checkbox, 'mouseup mousedown mouseover mouseout click', function(e) {
             if (e.type == 'mouseup' || e.type == 'mousedown') {
                 window[e.type == 'mousedown' ? 'addClass' : 'removeClass'](checkbox, 'checkbox_pressed');
@@ -60,21 +28,14 @@ var WLike = {
                 var isOver = e.type == 'mouseover';
                 window[isOver ? 'addClass' : 'removeClass'](this, 'checkbox_over');
                 if (!isOver) removeClass(checkbox, 'checkbox_pressed');
-                return
+                return;
             }
             if (window.noAuthVal) return WLike.widgetAuth();
             val = !hasClass(checkbox, 'checked');
             if (!WLike.saveLike(val)) return;
-            if (val) {
-                addClass(checkbox, 'checked');
-                window.Rpc.callMethod('showTooltip', true);
-            } else {
-                removeClass(checkbox, 'checked');
-                window.Rpc.callMethod('hideTooltip');
-            }
+            val ? addClass(checkbox, 'checked') : removeClass(checkbox, 'checked');
             return cancelEvent(e);
         });
-        setInterval(resizeWidget, 1000);
 
         window.Rpc = new fastXDM.Client({
             onInit: function() {},
@@ -92,20 +53,26 @@ var WLike = {
         }, {
             safe: true
         });
+
+        setTimeout(function() {
+            resizeWidget();
+            setStyle('stats_text', 'visibility', 'visible');
+            setInterval(resizeWidget, 1000);
+        }, 0);
     },
+
     saveLike: function(val) {
-        if (like_loading || like_anim) return false;
+        if (like_loading) return false;
         like_loading = true;
+
         counter += val ? 1 : -1;
-        if (!counter) {
+
+        window.Rpc.callMethod('proxy', val ? 'showUser' : 'hideUser');
+        if (val && counter == 1) {
+            window.Rpc.callMethod('showTooltip', true);
+        } else if (!counter) {
             window.Rpc.callMethod('hideTooltip', true);
-        } else {
-            if (val && counter == 1) window.Rpc.callMethod('showTooltip', true);
-            else window.Rpc.callMethod('proxy', val ? 'showUser' : 'hideUser');
-        }
-        if (!val) {
-            window.Rpc.callMethod('proxy', 'unpublish');
-        }
+        }!val && window.Rpc.callMethod('proxy', 'unpublish');
 
         ajax.post('widget_like.php', {
             act: 'a_like',
@@ -123,11 +90,7 @@ var WLike = {
                 next_stats = extend({}, resp, {
                     stats: resp.next_stats
                 });
-                if (val) {
-                    window.Rpc.callMethod('publish', 'widgets.like.liked', resp.num);
-                } else {
-                    window.Rpc.callMethod('publish', 'widgets.like.unliked', resp.num);
-                }
+                window.Rpc.callMethod('publish', (val ? 'widgets.like.liked' : 'widgets.like.unliked'), resp.num);
             },
             onFail: function() {
                 like_loading = false;
@@ -136,66 +99,38 @@ var WLike = {
                 hide('loading');
             }
         });
-        if (!hasClass(mainDiv, 'like_dived')) return true;
-        var rightBorder = geByClass('like_right', checkbox)[0],
-            iconV = geByClass('iconV', checkbox)[0],
-            iconH = geByClass('iconHeart', checkbox)[0];
-        if (iconH && iconV) {
-            var hideIcon = val ? iconV : iconH,
-                showIcon = val ? iconH : iconV;
-            like_anim = true;
-            animate(hideIcon, {
-                opacity: 0
-            }, 150, function() {
-                hide(hideIcon);
-                like_anim = false;
-            });
-            setStyle(showIcon, {
-                opacity: 0
-            });
-            animate(showIcon, {
-                opacity: 1
-            }, 150);
-        }
-        if (!ge('stats_text')) return true;
-        if (like_hide_cb !== null) {
-            like_hide_cb = null;
-        } else {
-            like_hide_cb = function() {
-                like_anim = true;
-                animate(checkbox, {
-                    width: val ? cur.minW : cur.maxW
-                }, {
-                    duration: 200,
-                    transition: Fx.Transitions.sineInOut,
-                    onComplete: function() {
-                        like_anim = false;
-                        resizeWidget();
-                        if (val) {
-                            addClass(checkbox, 'like_minified');
-                        } else {
-                            removeClass(checkbox, 'like_minified');
-                        }
-                    }
-                });
+
+        if (hasClass(mainDiv, 'like_dived') && ge('stats_text')) {
+            if (like_hide_cb !== null) {
                 like_hide_cb = null;
-                if (next_stats) WLike.updateStats(next_stats);
-                next_stats = false;
-            };
+            } else {
+                like_hide_cb = function() {
+                    like_hide_cb = null;
+                    if (next_stats) {
+                        WLike.updateStats(next_stats);
+                        resizeWidget();
+                    }
+                    next_stats = false;
+                };
+            }
+            if (!val && like_hide_cb) {
+                setTimeout(like_hide_cb, 200);
+                like_hide_cb = null;
+            }
         }
-        if (!val && like_hide_cb) {
-            setTimeout(like_hide_cb, 200);
-            like_hide_cb = null;
-        }
+
         return true;
     },
+
     updateStats: function(stats, noAnim) {
         var statsNum = ge('stats_num');
-        statsNum && animateCount(statsNum, stats.num ? stats.num_text || '' : '+1', {
+        statsNum && animateCount(statsNum, (stats.num ? stats.num_text || '' : '+1'), {
             str: 1,
-            leftOnly: 1
+            leftOnly: 1,
+            onDone: function() {
+                cur.autoWidth && resizeWidget();
+            }
         });
-
         counter = stats.num;
         if (ge('stats_text') && stripHTML(ge('stats_text')
                 .innerHTML)
@@ -231,7 +166,8 @@ var WLike = {
 
     shareThisPage: function(val, hash) {
         if (hash != shareData.wall_hash) return;
-        var params = {
+
+        ajax.post('widget_like.php', {
             act: 'a_recommend',
             hash: shareData.wall_hash,
             description: shareData.description,
@@ -242,8 +178,7 @@ var WLike = {
             app: _aid,
             pageQuery: _pageQuery,
             s: cur.shorter ? 1 : 0
-        };
-        ajax.post('widget_like.php', params, {
+        }, {
             onDone: function(text) {
                 WLike.sharedThisPage(text, val);
             }
@@ -253,42 +188,33 @@ var WLike = {
             counter++;
         }
     },
+
     sharedThisPage: function(resp, val) {
         if (val && !hasClass(checkbox, 'checked')) {
             addClass(checkbox, 'checked');
             counter++;
         }
-        // WLike.updateStats(resp);
-        // window.Rpc.callMethod('proxy', 'update', resp);
-        if (val) {
-            window.Rpc.callMethod('publish', 'widgets.like.shared', resp.num);
-        } else {
-            window.Rpc.callMethod('publish', 'widgets.like.unshared', resp.num);
-        }
+        window.Rpc.callMethod('publish', (val ? 'widgets.like.shared' : 'widgets.like.unshared'), resp.num);
     },
+
     widgetAuth: function() {
-        var
-            screenX = typeof window.screenX != 'undefined' ? window.screenX : window.screenLeft,
+        var screenX = typeof window.screenX != 'undefined' ? window.screenX : window.screenLeft,
             screenY = typeof window.screenY != 'undefined' ? window.screenY : window.screenTop,
             outerWidth = typeof window.outerWidth != 'undefined' ? window.outerWidth : document.body.clientWidth,
             outerHeight = typeof window.outerHeight != 'undefined' ? window.outerHeight : (document.body.clientHeight - 22),
-            features = 'width=655,height=479,left=' + parseInt(screenX + ((outerWidth - 655) / 2), 10) + ',top=' + parseInt(screenY + ((outerHeight - 479) / 2.5), 10);
-        var active = this.active = window.open(location.protocol + '//oauth.vk.com/authorize?client_id=-1&redirect_uri=close.html&display=widget', 'vk_openapi', features);
+            features = 'width=655,height=479,left=' + parseInt(screenX + ((outerWidth - 655) / 2), 10) + ',top=' + parseInt(screenY + ((outerHeight - 479) / 2.5), 10),
+            active = this.active = window.open(location.protocol + '//oauth.vk.com/authorize?client_id=-1&redirect_uri=close.html&display=widget', 'vk_openapi', features);
 
         function checkWnd() {
-            if (active.closed) {
-                window.gotSession(true);
-            } else {
-                setTimeout(checkWnd, 1000);
-            }
+            active.closed ? window.gotSession(true) : setTimeout(checkWnd, 1000);
         }
         checkWnd();
     },
+
     showMore: function() {
-        if (cur.loadingMore) {
-            return false;
-        }
+        if (cur.loadingMore) return false;
         cur.loadingMore = true;
+
         ajax.post('widget_like.php', {
             act: 'a_stats_box',
             offset: cur.shown,
@@ -302,30 +228,26 @@ var WLike = {
         }, {
             onDone: function(rows, shown, more) {
                 ge('like_users_cont')
-                    .appendChild(cf(rows))
+                    .appendChild(cf(rows));
                 cur.shown = shown;
-                if (more) {
-                    show('like_more_link');
-                } else {
-                    hide('like_more_link');
-                }
+                more ? show('like_more_link') : hide('like_more_link');
                 cur.loadingMore = false;
             },
             showProgress: function() {
-                hide('like_more_link');
-                show('like_more_progress');
+                lockButton('like_more_link');
+                addClass('like_more_link', 'flat_button_loading');
             },
             hideProgress: function() {
-                hide('like_more_progress');
+                unlockButton('like_more_link');
+                removeClass('like_more_link', 'flat_button_loading');
             }
         });
-
     },
-    switchTab: function(tabName, title) {
-        if (cur.loadingTab) {
-            return false;
-        }
+
+    switchTab: function(tabName, tabEl) {
+        if (cur.loadingTab) return false;
         cur.loadingTab = true;
+
         ajax.post('widget_like.php', {
             act: 'a_stats_box',
             offset: 0,
@@ -342,42 +264,31 @@ var WLike = {
                 cont.innerHTML = '';
                 cont.appendChild(cf(rows))
                 cur.shown = shown;
-                if (more) {
-                    show('like_more_link');
-                } else {
-                    hide('like_more_link');
-                }
+                more ? show('like_more_link') : hide('like_more_link');
                 cur.loadingTab = false;
                 cur.loadingMore = false;
-                var tabsCont = ge('like_tabs');
-                var sel = geByClass1('summary_tab_sel', tabsCont);
-                sel.className = 'fl_l summary_tab';
-                ge('likes_tab_' + tabName)
-                    .className = 'fl_l summary_tab_sel';
-                curBox()
-                    .setOptions({
-                        title: title
-                    });
+                tabEl && uiTabs.switchTab(tabEl);
                 cur.tab = tabName;
             },
             showProgress: function() {
-                show('like_tabs_prg');
-                setStyle('like_tabs_prg');
+                var box = curBox();
+                box && addClass(box.bodyNode, 'box_loading');
             },
             hideProgress: function() {
-                hide('like_tabs_prg');
+                var box = curBox();
+                box && removeClass(box.bodyNode, 'box_loading');
             }
         });
     }
 }
 
-
-
 function resizeWidget() {
-    if (!ge('like_table') || !window.Rpc) return;
-    var size = getSize(ge('like_table'))[1];
-    // if (browser.msie && !browser.msie8 || browser.opera) size += 15;
-    window.Rpc.callMethod('resize', size);
+    if (!window.Rpc) return;
+    if (cur.autoWidth && ge('main')) {
+        window.Rpc.callMethod('resizeWidget', Math.round(getSize(ge('main'))[0]), cur.height);
+    } else if (ge('like_table')) {
+        window.Rpc.callMethod('resize', getSize(ge('like_table'))[1]);
+    }
 }
 
 function openFullList() {
@@ -385,7 +296,7 @@ function openFullList() {
 }
 
 function goAway(url) {
-    return true
+    return true;
 }
 
 function gotSession(session_data) {
@@ -396,8 +307,8 @@ function gotSession(session_data) {
 }
 
 function showCaptchaBox(sid, dif, box, o) {
-    var difficulty = intval(dif) ? '' : '&s=1';
-    var imgSrc = o.imgSrc || '/captcha.php?sid=' + sid + difficulty;
+    var difficulty = intval(dif) ? '' : '&s=1',
+        imgSrc = o.imgSrc || '/captcha.php?sid=' + sid + difficulty;
     window.Rpc.callMethod('showBox', '/al_apps.php?' + ajx2q({
         act: 'show_captcha_box',
         sid: sid,
@@ -407,7 +318,8 @@ function showCaptchaBox(sid, dif, box, o) {
         widget_width: 322
     }), {
         height: window.outerHeight || screen.availHeight || 768,
-        width: window.outerWidth || screen.availWidth || 1028
+        width: window.outerWidth || screen.availWidth || 1028,
+        base_domain: '//' + location.hostname + '/'
     });
     window.onCaptcha = o.onSubmit;
     window.onCaptchaHide = o.onHide;
@@ -577,6 +489,7 @@ function animateCount(el, newCount, opts) {
             if (typeof next == 'number' || opts.str && typeof next == 'string') {
                 setTimeout(animateCount.pbind(el, next, opts), 0);
             }
+            opts.onDone && opts.onDone();
         },
         margin = vert ? {
             marginTop: incr ? 0 : -h

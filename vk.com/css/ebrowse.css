@@ -1,112 +1,99 @@
 .main {
     width: 156px;
-    text-align: center;
+    text-align: center
 }
 
 .month {
-    text-align: center;
-    background-color: #36638E;
     font: normal 11px Tahoma;
     padding: 4px;
-    color: white;
+    color: #fff
+}
+
+.month,
+.monthArr {
+    text-align: center;
+    background-color: #36638e
 }
 
 .monthArr {
-    text-align: center;
-    padding: 2px;
-    background-color: #36638E;
+    padding: 2px
 }
 
 a.monthArrow {
-    color: #FFF;
+    color: #fff
+}
+
+a.monthArrow,
+a.monthArrow:hover {
     text-align: center;
-    font: bold 13px Tahoma;
-    text-decoration: none;
+    font: 700 13px Tahoma;
+    text-decoration: none
 }
 
 a.monthArrow:hover {
-    color: #DAE2E8;
-    text-align: center;
-    font: bold 13px Tahoma;
-    text-decoration: none;
+    color: #dae2e8
 }
 
 .daysofweek {
-    background-color: #6B8CAB;
-    font: bold 9px Tahoma;
+    background-color: #6b8cab;
+    font: 700 9px Tahoma;
     text-align: center;
     height: 16px;
     width: 50px;
-    color: white;
-    border-bottom: 1px solid #36638E;
+    color: #fff;
+    border-bottom: 1px solid #36638e
 }
 
-.day {
+.day,
+.dayLeft {
     height: 20px;
     width: 10px;
     font-size: 11px;
     font-family: Tahoma;
     color: #333;
-    background-color: #FFF;
+    background-color: #fff;
     text-decoration: none;
     cursor: pointer;
     cursor: hand;
     text-align: center;
-    border-right: 1px solid #DAE2E8;
-    border-bottom: 1px solid #DAE2E8;
+    border-right: 1px solid #dae2e8;
+    border-bottom: 1px solid #dae2e8
 }
 
 .dayLeft {
-    border-left: 1px solid #DAE2E8;
-    height: 20px;
-    width: 10px;
-    font-size: 11px;
-    font-family: Tahoma;
-    color: #333;
-    background-color: #FFF;
-    text-decoration: none;
-    cursor: pointer;
-    cursor: hand;
-    text-align: center;
-    border-right: 1px solid #DAE2E8;
-    border-bottom: 1px solid #DAE2E8;
+    border-left: 1px solid #dae2e8
 }
 
 .dayOn {
-    height: 20px;
-    width: 10px;
-    font-size: 11px;
-    font-family: Tahoma;
-    color: #36638E;
-    background-color: #EDF0F3;
-    text-decoration: none;
-    cursor: pointer;
-    cursor: hand;
-    text-align: center;
-    border-right: 1px solid #DAE2E8;
-    border-bottom: 1px solid #DAE2E8;
+    background-color: #edf0f3;
+    border-right: 1px solid #dae2e8;
+    border-bottom: 1px solid #dae2e8
 }
 
+.dayOn,
 .today {
     height: 20px;
     width: 10px;
     font-size: 11px;
     font-family: Tahoma;
-    color: #36638E;
-    background-color: #DAE2E8;
+    color: #36638e;
     text-decoration: none;
     cursor: pointer;
     cursor: hand;
-    text-align: center;
+    text-align: center
+}
+
+.today {
+    background-color: #dae2e8
 }
 
 .pastDay {
-    color: #666;
+    color: #666
 }
 
 .noMonthDay {
-    color: #CCC;
-    background-color: #F5F8FA;
+    color: #ccc;
+    background-color: #f5f8fa
 }
 
 .todayOn {
@@ -114,35 +101,37 @@ a.monthArrow:hover {
     width: 10px;
     font-size: 11px;
     font-family: Tahoma;
-    color: #36638E;
-    background-color: #DAE2E8;
+    color: #36638e;
+    background-color: #dae2e8;
     text-decoration: none;
     cursor: pointer;
     cursor: hand;
-    text-align: center;
+    text-align: center
 }
 
 .btn {
     cursor: pointer;
     margin: 0px 7px 3px 0px;
-    padding: 4px 10px 5px;
+    padding: 4px 10px 5px
 }
 
 .btnTrigger {
-    background-color: #FFF;
-    border: 1px solid #DAE2E8;
-    color: #36638E;
+    background-color: #fff;
+    border: 1px solid #dae2e8;
+    color: #36638e
 }
 
 .btnTriggerOn {
-    background-color: #DAE2E8;
-    border: 1px solid #C0CAD5;
-    color: #36638E;
+    background-color: #dae2e8
+}
+
+.btnTriggerOn,
+.btnTrigger:hover {
+    border: 1px solid #c0cad5;
+    color: #36638e
 }
 
 .btnTrigger:hover {
-    background-color: #EDF0F3;
-    border: 1px solid #C0CAD5;
-    color: #36638E;
-    text-decoration: none;
+    background-color: #edf0f3;
+    text-decoration: none
 }

@@ -1,180 +1,151 @@
 var Jobs = {
-    view: function(id, e) {
+    view: function(o, n) {
         return showWiki({
-            w: 'job' + id
-        }, false, e);
+            w: "job" + o
+        }, !1, n)
     },
     addVacancyBox: function() {
-        return !showBox('al_jobs.php', {
-            act: 'add_box'
+        return !showBox("al_jobs.php", {
+            act: "add_box"
         }, {
             params: {
                 dark: 1,
                 width: 550
             }
-        });
+        })
     },
-    addVacancy: function(html) {
-        var el = se(html),
-            listEl = ge('jobs_vacancies_list');
-        listEl.appendChild(el);
+    addVacancy: function(o) {
+        var n = se(o),
+            e = ge("jobs_vacancies_list");
+        e.appendChild(n)
     },
-    deleteVacancyBox: function(id, hash) {
-        showFastBox({
-                title: getLang('jobs_delete_vacancy'),
-                dark: 1,
-                bodyStyle: 'padding: 20px;'
-            },
-            getLang('jobs_delete_vacancy_confirmation'),
-            getLang('global_delete'),
-            function(btn) {
-                ajax.post('al_jobs.php', {
-                    act: 'delete',
-                    id: id,
-                    hash: hash
-                }, {
-                    showProgress: lockButton.pbind(btn),
-                    hideProgress: unlockButton.pbind(btn),
-                    onDone: function(reply) {
-                        if (reply.error) {
-                            topError(reply.error);
-                        } else {
-                            Jobs.deleteVacancy(id);
-                        }
-
-                        curBox()
-                            .hide();
-                    }
-                })
-            },
-            getLang('global_cancel')
-        );
-        return false;
+    deleteVacancyBox: function(o, n) {
+        return showFastBox({
+            title: getLang("jobs_delete_vacancy"),
+            dark: 1,
+            bodyStyle: "padding: 20px;"
+        }, getLang("jobs_delete_vacancy_confirmation"), getLang("global_delete"), function(e) {
+            ajax.post("al_jobs.php", {
+                act: "delete",
+                id: o,
+                hash: n
+            }, {
+                showProgress: lockButton.pbind(e),
+                hideProgress: unlockButton.pbind(e),
+                onDone: function(n) {
+                    n.error ? topError(n.error) : Jobs.deleteVacancy(o), curBox()
+                        .hide()
+                }
+            })
+        }, getLang("global_cancel")), !1
     },
-    deleteVacancy: function(id) {
-        re('jobs_job' + id);
+    deleteVacancy: function(o) {
+        re("jobs_job" + o)
     },
-    editVacancyBox: function(id) {
-        return !showBox('al_jobs.php', {
-            act: 'edit_box',
-            id: id
+    editVacancyBox: function(o) {
+        return !showBox("al_jobs.php", {
+            act: "edit_box",
+            id: o
         }, {
             params: {
                 dark: 1,
                 width: 550
             }
-        });
+        })
     },
-    editVacancy: function(id, name, text, ordering) {
-        var nameEl = ge('jobs_job' + id + '_name'),
-            textEl = ge('jobs_job' + id + '_text'),
-            orderingEl = ge('jobs_job' + id + '_ordering');
-
-        nameEl.innerHTML = name;
-        textEl.innerHTML = text;
-        orderingEl.innerHTML = ordering;
+    editVacancy: function(o, n, e, t) {
+        var a = ge("jobs_job" + o + "_name"),
+            i = ge("jobs_job" + o + "_text"),
+            d = ge("jobs_job" + o + "_ordering");
+        a.innerHTML = n, i.innerHTML = e, d.innerHTML = t
     },
-    toggleVacancy: function(id, hash) {
-        var linkEl = ge('jobs_job' + id + '_toggle_link'),
-            uploadEl = ge('jobs_job' + id + '_upload'),
-            disabled = intval(linkEl.getAttribute('data-disabled'));
-
-        uploadEl.olddisplay = 'inline-block';
-        ajax.post('al_jobs.php', {
-            act: 'toggle',
-            id: id,
-            hash: hash,
-            disable: disabled ? 0 : 1
+    toggleVacancy: function(o, n) {
+        var e = ge("jobs_job" + o + "_toggle_link"),
+            t = ge("jobs_job" + o + "_upload"),
+            a = intval(e.getAttribute("data-disabled"));
+        return t.olddisplay = "inline-block", ajax.post("al_jobs.php", {
+            act: "toggle",
+            id: o,
+            hash: n,
+            disable: a ? 0 : 1
         }, {
             showProgress: function() {
-                show(uploadEl);
+                show(t)
             },
             hideProgress: function() {
-                hide(uploadEl);
+                hide(t)
             },
-            onDone: function(reply) {
-                linkEl.setAttribute('data-disabled', disabled ? 0 : 1);
-                linkEl.innerHTML = getLang('jobs_' + (disabled ? 'hide' : 'show'));
+            onDone: function(o) {
+                e.setAttribute("data-disabled", a ? 0 : 1), e.innerHTML = getLang("jobs_" + (a ? "hide" : "show"))
             }
-        });
-
-        return false;
+        }), !1
     },
     showInlineProgress: function() {
-        show('jobs_progress_inline');
+        show("jobs_progress_inline")
     },
-    goToPage: function(el, e) {
-        this.showInlineProgress();
-        return nav.go(el, e);
+    goToPage: function(o, n) {
+        return this.showInlineProgress(), nav.go(o, n)
     },
-    declineApplicationBox: function(id) {
-        return !showBox('al_jobs.php', {
-            act: 'decline_application_box',
-            id: id
+    declineApplicationBox: function(o) {
+        return !showBox("al_jobs.php", {
+            act: "decline_application_box",
+            id: o
         }, {
             params: {
                 dark: 1,
                 width: 550,
-                hideButtons: true,
-                bodyStyle: 'padding: 0'
+                hideButtons: !0,
+                bodyStyle: "padding: 0"
             }
-        });
+        })
     },
-    acceptApplicationBox: function(id) {
-        return !showBox('al_jobs.php', {
-            act: 'accept_application_box',
-            id: id
+    acceptApplicationBox: function(o) {
+        return !showBox("al_jobs.php", {
+            act: "accept_application_box",
+            id: o
         }, {
             params: {
                 dark: 1,
                 width: 400,
-                hideButtons: true,
-                bodyStyle: 'padding: 0'
+                hideButtons: !0,
+                bodyStyle: "padding: 0"
             }
-        });
+        })
     },
-    editCommentBox: function(id) {
-        return !showBox('al_jobs.php', {
-            act: 'edit_comment_box',
-            id: id
+    editCommentBox: function(o) {
+        return !showBox("al_jobs.php", {
+            act: "edit_comment_box",
+            id: o
         }, {
             params: {
                 dark: 1,
                 width: 400,
-                hideButtons: true,
-                bodyStyle: 'padding: 0'
+                hideButtons: !0,
+                bodyStyle: "padding: 0"
             }
-        });
+        })
     },
-    deleteApplicationBox: function(id, hash) {
-        showFastBox({
-                title: getLang('jobs_delete_application'),
-                dark: 1,
-                bodyStyle: 'padding: 20px;'
-            },
-            getLang('jobs_delete_application_confirmation'),
-            getLang('global_delete'),
-            function(btn) {
-                ajax.post('al_jobs.php', {
-                    act: 'delete_application',
-                    id: id,
-                    hash: hash
-                }, {
-                    showProgress: lockButton.pbind(btn),
-                    hideProgress: unlockButton.pbind(btn),
-                    onDone: function(reply) {
-                        re('jobs_application' + id);
-                        curBox()
-                            .hide();
-                    }
-                })
-            },
-            getLang('global_cancel')
-        );
-        return false;
-    },
+    deleteApplicationBox: function(o, n) {
+        return showFastBox({
+            title: getLang("jobs_delete_application"),
+            dark: 1,
+            bodyStyle: "padding: 20px;"
+        }, getLang("jobs_delete_application_confirmation"), getLang("global_delete"), function(e) {
+            ajax.post("al_jobs.php", {
+                act: "delete_application",
+                id: o,
+                hash: n
+            }, {
+                showProgress: lockButton.pbind(e),
+                hideProgress: unlockButton.pbind(e),
+                onDone: function(n) {
+                    re("jobs_application" + o), curBox()
+                        .hide()
+                }
+            })
+        }, getLang("global_cancel")), !1
+    }
 };
-
 try {
-    stManager.done('jobs.js');
+    stManager.done("jobs.js")
 } catch (e) {}

@@ -269,7 +269,7 @@ Ads.initFixed = function(elemWrap) {
     if (!elemFixed) return;
 
     var inited = elemWrap.getAttribute('fixed_inited');
-    var positionTop = 20;
+    var positionTop = 66;
 
     if (inited) {
         setStyle(elemWrap, {
@@ -323,9 +323,11 @@ Ads.initFixed = function(elemWrap) {
 Ads.initIntroPage = function(widgetParamsMore) {
     var widgetParams = {}
     widgetParams.mode = 2;
-    widgetParams.width = 212;
-    widgetParams.height = 340;
+    widgetParams.width = 321;
+    widgetParams.height = 293;
     widgetParams.no_head = 1;
+    widgetParams.base_domain = '//' + window.location.hostname + '/';
+    widgetParams.color1 = '#FFFFFF';
     extend(widgetParams, widgetParamsMore);
     VK.Widgets.Group('ads_intro_news_widget', widgetParams, 19542789);
 
@@ -377,6 +379,21 @@ Ads.initIntroPage = function(widgetParamsMore) {
             }
         });
     };
+}
+
+Ads.showIntroBox = function(section, event) {
+    showBox(
+        'ads.php', {
+            act: 'w_ads_intro_' + section
+        }, {
+            params: {
+                grey: true,
+                width: 638,
+                hideButtons: true
+            }
+        },
+        event);
+    return false;
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -2927,6 +2944,10 @@ Ads.changeDemographyView = function(name, unionId, updateOnly) {
             position: 'absolute',
             top: '-100000px'
         });
+
+        if (cur.can_show_views_stats_only) {
+            Ads.changeDemographySource('views');
+        }
     }
 }
 
@@ -3189,19 +3210,41 @@ Ads.showEditAdminBox = function(event, unionId, userId, userEmail, isRemove) {
     return false;
 }
 
-Ads.showRetargetingGroupActions = function(el, groupId) {
+Ads.showRetargetingGroupActions = function(el, groupId, hasAttachedPixel) {
     cur.options.groupId = groupId;
     cur.uiRetargetingActions.setOptions({
         target: el
     });
+    var editRuleEl = geByClass1('ads_retargeting_menu_edit_rule', cur.uiRetargetingActions.rows);
+    var editAudienceEl = geByClass1('ads_retargeting_menu_edit_audience', cur.uiRetargetingActions.rows);
+    var addAudienceEl = geByClass1('ads_retargeting_menu_add_audience', cur.uiRetargetingActions.rows);
+    if (hasAttachedPixel) {
+        show(editRuleEl);
+        show(addAudienceEl);
+        hide(editAudienceEl);
+    } else {
+        hide(editRuleEl);
+        hide(addAudienceEl);
+        show(editAudienceEl);
+    }
+    geByClass1('ads_retargeting_menu_header', cur.uiRetargetingActions.rows)
+        .innerHTML = el.innerHTML;
     cur.uiRetargetingActions.show();
 }
 
 Ads.showRetargetingGroupBox = function(act, addParams) {
+    var hideButtons;
+    if (addParams.hideButtons) {
+        hideButtons = true;
+        delete addParams.hideButtons;
+    } else {
+        hideButtons = false;
+    }
     var ajaxParams = {};
     ajaxParams.union_id = cur.options.unionId;
     if (cur.options.groupId) {
         ajaxParams.group_id = cur.options.groupId;
+        ajaxParams.smart_pixel_id = cur.options.groupId;
     }
     if (addParams) {
         ajaxParams = extend(ajaxParams, addParams);
@@ -3212,15 +3255,187 @@ Ads.showRetargetingGroupBox = function(act, addParams) {
     };
     showOptions.onFail = Ads.onBoxFail;
     showOptions.params = {
-        width: 450,
+        width: 480,
         dark: true,
-        hideButtons: true,
+        hideButtons: hideButtons,
         bodyStyle: 'padding: 0;'
     };
 
     showBox('/ads?act=a_retargeting_group_' + act + '_box', ajaxParams, showOptions);
 
     return true;
+}
+
+Ads.retargetingCreateRuleArgumentInput = function(id, type, rule) {
+    var ruleIndex = false;
+    for (var i in cur.smartPixelRules) {
+        if (cur.smartPixelRules[i].id == id) {
+            ruleIndex = i;
+            break;
+        }
+    }
+    if (ruleIndex === false) {
+        return;
+    }
+
+    // cleanup
+    if (cur.smartPixelRules[ruleIndex].selector) {
+        cur.smartPixelRules[ruleIndex].selector.destroy();
+        delete cur.smartPixelRules[ruleIndex].selector;
+    }
+    if (cur.smartPixelRules[ruleIndex].input) {
+        delete cur.smartPixelRules[ruleIndex].input;
+    }
+    cur.smartPixelRules[ruleIndex].argumentWrapper.innerHTML = '';
+
+    // create new input
+    var ruleArgumentsInput;
+    if (type == cur.ruleTypesConstants.ADS_RETARGETING_RULE_TYPE_SUBSTR) {
+        ruleArgumentsInput = ce('input', {
+            type: "hidden",
+            id: 'retargeting_rule_argument_' + id
+        });
+    } else {
+        ruleArgumentsInput = ce('input', {
+            type: "text",
+            autocomplete: "off",
+            className: "dark retargeting_rule_argument",
+            id: 'retargeting_rule_argument_' + id
+        });
+    }
+
+    cur.smartPixelRules[ruleIndex].argumentWrapper.appendChild(ruleArgumentsInput);
+
+    if (type == cur.ruleTypesConstants.ADS_RETARGETING_RULE_TYPE_SUBSTR) {
+        cur.smartPixelRules[ruleIndex].selector = new Selector(ruleArgumentsInput, [], {
+            multiselect: true,
+            dropdown: false,
+            enableCustom: true,
+            multiCustom: true,
+            valueIsCustom: true,
+            autocomplete: true,
+            width: 278,
+            big: true,
+            noResult: '',
+            tokenPrefix: getLang('ads_retargeting_rule_token_prefix_and'),
+            addCustomTokenOnKeys: [32, 188], // space and comma
+            selectedItems: (id > 0 && rule && rule.substrings) ? rule.substrings : []
+        });
+        setTimeout(function() {
+            cur.smartPixelRules[ruleIndex].selector.focus();
+        }, 0);
+    } else {
+        val(ruleArgumentsInput, (id > 0 && rule && rule.regex) ? rule.regex : ((rule && rule.string) ? rule.string : '')); // ADS_RETARGETING_RULE_TYPE_
+        cur.smartPixelRules[ruleIndex].input = ruleArgumentsInput;
+        setTimeout(elfocus.pbind(cur.smartPixelRules[ruleIndex].input), 0);
+    }
+}
+
+Ads.retargetingUpdateDeleteRuleVisibility = function() {
+    if (cur.smartPixelRules.length == 1) {
+        addClass(cur.smartPixelRules[0].ruleDeleteButton, 'unshown');
+    } else {
+        each(cur.smartPixelRules, function(k, v) {
+            removeClass(cur.smartPixelRules[k].ruleDeleteButton, 'unshown');
+        });
+    }
+}
+
+Ads.retargetingCheckSmartPixelRulesCount = function() {
+    cur.smartPixelRules = cur.smartPixelRules || [];
+
+    var limit = 10;
+
+    if (cur.smartPixelRules.length >= limit) {
+        hide('ads_retargeting_add_parameter_link');
+        return false;
+    } else {
+        show('ads_retargeting_add_parameter_link');
+    }
+
+    return true;
+}
+
+Ads.retargetingAddSmartPixelRule = function(id, type, rule) {
+    var container = ge('ads_retargeting_edit_rule_parameters');
+    var ruleContainer = ce('div', {
+        className: 'ads_retargeting_edit_rule_parameter_wrap'
+    });
+
+    var ruleDeleteButton = ce('div', {
+        className: 'ads_retargeting_rule_delete',
+        title: getLang('global_delete')
+    });
+    addEvent(ruleDeleteButton, 'click', function() {
+        if (cur.smartPixelRules.length < 2) {
+            return false;
+        }
+        var ruleIndex = false;
+        for (var i in cur.smartPixelRules) {
+            if (cur.smartPixelRules[i].id == id) {
+                ruleIndex = i;
+                break;
+            }
+        }
+        if (ruleIndex === false) {
+            return;
+        }
+        if (cur.smartPixelRules[ruleIndex].selector) {
+            cur.smartPixelRules[ruleIndex].selector.destroy();
+        }
+
+        re(cur.smartPixelRules[ruleIndex].ruleContainer);
+        delete cur.smartPixelRules[ruleIndex];
+        cur.smartPixelRules.splice(ruleIndex, 1);
+        Ads.retargetingUpdateDeleteRuleVisibility();
+        Ads.retargetingCheckSmartPixelRulesCount();
+    });
+    ruleContainer.appendChild(ruleDeleteButton);
+
+    cur.smartPixelRules = cur.smartPixelRules || [];
+    id = id || -(+(new Date()) % 100000000);
+
+    var ruleTypeDropdown = ce('input', {
+        type: 'hidden',
+        id: 'retargeting_rule_type_' + id
+    });
+
+    var ruleTypeDropdownWrapper = ce('div', {
+        className: 'ads_retargeting_rule_type_wrapper'
+    });
+
+    ruleTypeDropdownWrapper.appendChild(ruleTypeDropdown);
+    ruleContainer.appendChild(ruleTypeDropdownWrapper);
+
+    var ruleArgumentWrapper = ce('div', {
+        className: 'ads_retargeting_rule_argument_wrapper'
+    });
+
+    ruleContainer.appendChild(ruleArgumentWrapper);
+    container.appendChild(ruleContainer);
+
+    var ruleObject = {
+        id: id,
+        type: type,
+        ruleContainer: ruleContainer,
+        ruleDeleteButton: ruleDeleteButton,
+        argumentWrapper: ruleArgumentWrapper
+    };
+
+    ruleObject.typeDropdown = new Dropdown(ge('retargeting_rule_type_' + id), cur.ruleTypes.types, {
+        selectedItems: type,
+        width: 140,
+        resultListWidth: 200,
+        dark: true,
+        onChange: function(value) {
+            Ads.retargetingCreateRuleArgumentInput(id, value);
+        }
+    });
+    cur.smartPixelRules.push(ruleObject);
+
+    Ads.retargetingCreateRuleArgumentInput(id, type, rule);
+    Ads.retargetingUpdateDeleteRuleVisibility();
+    Ads.retargetingCheckSmartPixelRulesCount();
 }
 
 Ads.saveRetargetingGroupParam = function(id, v) {
@@ -3230,7 +3445,7 @@ Ads.saveRetargetingGroupParam = function(id, v) {
     } else if (!el && v === undefined) {
         return;
     }
-    hide(ads_retargeting_box_error);
+    hide('ads_retargeting_box_error');
 
     ajax.post('/ads?act=a_retargeting_save_params', {
         union_id: cur.options.unionId,
@@ -3244,10 +3459,19 @@ Ads.saveRetargetingGroupParam = function(id, v) {
             if (id === 'domain' && !value_s) {
                 value_s = getLang('ads_retargeting_domain_not_set');
             }
-            ge('ads_retargeting_' + id + '_text')
-                .innerHTML = value_s;
-            ge('ads_retargeting_' + id)
-                .value = value;
+
+            (ge('ads_retargeting_' + cur.options.groupId + '_' + id) || {})
+            .innerHTML = value;
+
+            var value_s_el = ge('ads_retargeting_' + id + '_text');
+            if (value_s_el) {
+                value_s_el.innerHTML = value_s;
+            }
+            var value_el = ge('ads_retargeting_' + id);
+            if (value_el) {
+                value_el.innerHTML = value;
+            }
+            cur.values = cur.values || {};
             cur.values[id] = value;
 
             val('union_' + cur.options.groupId + '_' + id, value);
@@ -3271,7 +3495,7 @@ Ads.saveRetargetingGroupParam = function(id, v) {
         onFail: function(msg) {
             ge('ads_retargeting_box_error')
                 .innerHTML = msg;
-            show(ads_retargeting_box_error);
+            show('ads_retargeting_box_error');
             return true;
         },
         showProgress: function() {
@@ -3296,8 +3520,10 @@ Ads.deleteRetargetingGroup = function() {
         return false;
     }
 
-    cur.uiRetargetingActions.hide();
-    var box = showFastBox(getLang('ads_retargeting_del_confirm_title'), getLang('ads_retargeting_del_confirm_message'), getLang('box_yes'), function() {
+    cur.uiRetargetingActions.hide(); //
+    var confirm_message = (cur.options.current_tab === 'pixels') ? getLang('ads_retargeting_del_smart_pixel_confirm_message') : getLang(
+        'ads_retargeting_del_audience_confirm_message');
+    var box = showFastBox(getLang('ads_retargeting_del_confirm_title'), confirm_message, getLang('box_yes'), function() {
         ajax.post('/ads?act=a_del_retargeting_group', {
             union_id: cur.options.unionId,
             group_id: cur.options.groupId,
@@ -3306,6 +3532,7 @@ Ads.deleteRetargetingGroup = function() {
             onDone: function(html) {
                 ge('ads_retargeting_groups_table')
                     .innerHTML = html;
+                Ui.tableInitFilters(geByClass1('ui_table'));
                 curBox()
                     .hide();
             },
@@ -3325,6 +3552,125 @@ Ads.deleteRetargetingGroup = function() {
     }, getLang('box_no'));
 
     return false;
+}
+
+Ads.retargetingCheckLink = function() {
+    hide('ads_retargeting_box_error');
+    hide('ads_retargeting_check_link_results');
+
+    var link = val('ads_retargeting_check_link_input')
+        .trim();
+    if (!link) {
+        notaBene('ads_retargeting_check_link_input');
+        return false;
+    }
+
+    ajax.post('/ads?act=a_retargeting_check_link', {
+        union_id: cur.options.unionId,
+        link: link
+    }, {
+        onDone: function(html) {
+            ge('ads_retargeting_check_link_results')
+                .innerHTML = html;
+            show('ads_retargeting_check_link_results');
+            elfocus('ads_retargeting_check_link_input');
+            return true;
+        },
+        onFail: function(err) {
+            ge('ads_retargeting_box_error')
+                .innerHTML = err;
+            show('ads_retargeting_box_error');
+            return true;
+        },
+        showProgress: lockButton.pbind('ads_retargeting_check_link_button'),
+        hideProgress: unlockButton.pbind('ads_retargeting_check_link_button')
+    });
+}
+
+Ads.retargetingCreatePixel = function() {
+    /*if (cur.retargetingIsEdit) {
+      cur.retargetingDeferAudienceCreation = {
+        group_id: cur.options.groupId
+      };
+    } else {
+      cur.retargetingDeferAudienceCreation = {
+        name: val('retargeting_group_name')
+      };
+    }*/
+
+    curBox()
+        .hide();
+    if (cur.options.groupId) {
+        delete cur.options.groupId;
+    }
+    Ads.showRetargetingGroupBox('edit_smart_pixel', {
+        redirect: 1
+    });
+}
+
+Ads.retargetingSaveSmartPixel = function() {
+    var box = curBox();
+
+    var options = {
+        'name': val('retargeting_smart_pixel_name')
+            .trim(),
+        'domain': val('retargeting_smart_pixel_domain')
+            .trim(),
+        'hash': val('retargeting_smart_pixel_hash'),
+        'category_id': cur.uiRetargetingSmartPixelCategorySelector.val(),
+        'union_id': cur.options.unionId,
+        'smart_pixel_id': box.groupId,
+        'redirect': cur.retargetingRedirectAfterSmartPixelSave
+    };
+    if (cur.retargetingRedirectAfterSmartPixelSave) {
+        delete cur.retargetingRedirectAfterSmartPixelSave;
+    }
+
+    if (!options.name) {
+        notaBene('retargeting_smart_pixel_name');
+        return;
+    }
+
+    hide('ads_retargeting_box_error');
+
+    ajax.post('/ads?act=a_retargeting_save_smart_pixel', options, {
+        onDone: function(smart_pixel_id, name, domain, table_html) {
+            (ge('ads_retargeting_' + smart_pixel_id + '_name') || {})
+            .innerHTML = name;
+            (ge('ads_retargeting_' + smart_pixel_id + '_domain') || {})
+            .innerHTML = domain;
+            box.hide();
+            if (cur.retargetingDeferAudienceCreation) {
+                Ads.showRetargetingGroupBox('edit', cur.retargetingDeferAudienceCreation);
+                delete cur.retargetingDeferAudienceCreation;
+            } else if (!cur.options.groupId) { // show box only when creating pixel
+                Ads.showRetargetingGroupBox('edit_smart_pixel', {
+                    smart_pixel_id: smart_pixel_id,
+                    only_code: 1
+                });
+            }
+            if (cur.options.current_tab === 'pixels') {
+                ge('ads_retargeting_groups_table')
+                    .innerHTML = table_html;
+                Ui.tableInitFilters(geByClass1('ui_table'));
+            }
+        },
+        onFail: function(err) {
+            var msg;
+            if (err) {
+                msg = err;
+            } else {
+                msg = getLang('ads_error_box_title');
+            }
+            ge('ads_retargeting_box_error')
+                .innerHTML = msg;
+            show('ads_retargeting_box_error');
+
+            return true;
+        },
+        showProgress: box.showProgress,
+        hideProgress: box.hideProgress
+    });
 }
 
 Ads.toggleRetargetingInput = function(id, show) {
@@ -3350,270 +3696,277 @@ Ads.toggleRetargetingInput = function(id, show) {
         } else {
             Ads.toggleRetargetingInput(id, false);
         }
-    },
-
-    Ads.initContacts = function(selectData, ajaxParams, isBig) {
-
-        if (cur.contacts && cur.contacts.destroy) {
-            cur.contacts.destroy();
-        }
-
-        var destroy = [];
-
-        cur.contacts = {};
-        cur.contacts.ajaxParams = ajaxParams;
-
-        cur.contacts.destroy = function() {
-            for (var i in destroy) {
-                destroy[i]();
-            }
-            destroy = [];
-        }
-        cur.destroy.push(function() {
-            cur.contacts.destroy();
-        });
-
-        var interestingEvents = 'keydown keyup keypress change paste cut drop input blur';
-
-        var uiWidth = 250 + (isBig ? 22 : 0);
-
-        var uiCountry = null;
-        var uiCity = null;
-
-        ge('country')
-            .removeAttribute('autocomplete');
-        uiCountry = new Dropdown(ge('country'), selectData.countries, {
-            selectedItem: [selectData.country_val],
-
-            big: isBig,
-            width: uiWidth,
-            multiselect: false,
-
-            onChange: function(value) {
-                Ads.onFormEdit();
-                if (value == 1) {
-                    hide('ads_contacts_form_nonresident', 'cis_msg');
-                    show('ads_contacts_form_rus');
-                } else if (value > 1) {
-                    hide('ads_contacts_form_rus');
-                    show('ads_contacts_form_nonresident');
-                    if (value < 4) show('cis_msg');
-                    else hide('cis_msg');
-                }
-                if (value == -1) {
-                    getAllCountries();
-                    return;
-                } else if (value > 3) {
-                    hide('city_row');
-                    return;
-                }
-                uiCity.clear();
-                uiCity.setURL('/select_ajax.php?act=a_get_cities&country=' + value);
-                selectsData.getCountryInfo(value, 1, function(response) {
-                    var new_options = {
-                        defaultItems: response.cities,
-                        dropdown: true
-                    };
-                    uiCity.setOptions(new_options);
-                    if (selectData.country == value) {
-                        uiCity.selectItem(selectData.city_val);
-                    }
-                });
-                show(ge('city_row'));
-            }
-        });
-        destroy.push(function() {
-            uiCountry.destroy();
-        });
-
-        ge('city')
-            .removeAttribute('autocomplete');
-        uiCity = new Selector(ge('city'), '/select_ajax.php?act=a_get_cities&country=' + selectData.country, {
-            defaultItems: selectData.cities,
-            selectedItems: [selectData.city_val],
-
-            big: isBig,
-            width: uiWidth,
-            multiselect: false,
-            dropdown: true,
-
-            placeholder: getLang('select_city_not_selected'),
-            introText: getLang('select_city_select'),
-            noResult: getLang('select_city_not_found'),
-            otherCity: getLang('select_city_other_city'),
-
-            onChange: function(value) {
-                Ads.onFormEdit();
-            }
-        });
-        destroy.push(function() {
-            uiCity.destroy();
-        });
-
-        var uiAgency = new Checkbox(ge('agency'), {
-            checked: 1,
-            width: uiWidth,
-            label: getLang('ads_help_contacts_agency'),
-
-            onChange: function(value) {
-                Ads.onFormEdit();
-                if (value == 1) {
-                    slideDown(ge("agency_fields"), 200);
-                } else {
-                    if (isVisible('agency_fields')) {
-                        slideUp(ge("agency_fields"), 200);
-                    }
-                }
-            }
-        });
-        destroy.push(function() {
-            uiAgency.destroy();
-        });
-
-        var uiDating = new Checkbox(ge('dating'), {
-            checked: 0,
-            width: uiWidth,
-            label: getLang('ads_help_contacts_dating'),
-
-            onChange: function(value) {
-                Ads.onFormEdit();
-            }
-        });
-        destroy.push(function() {
-            uiDating.destroy();
-        });
-
-        var uiMedicine = new Checkbox(ge('medicine'), {
-            checked: 0,
-            width: uiWidth,
-            label: getLang('ads_help_contacts_medicine'),
-
-            onChange: function(value) {
-                Ads.onFormEdit();
-            }
-        });
-        destroy.push(function() {
-            uiMedicine.destroy();
-        });
-
-        ge('budget')
-            .removeAttribute('autocomplete');
-        var uiBudget = new Dropdown(ge('budget'), selectData.budget, {
-            selectedItems: '0',
-            big: isBig,
-            width: uiWidth,
-            zeroPlaceholder: true,
-            multiselect: false,
-
-            onChange: function(value) {
-                Ads.onFormEdit();
-            }
-        });
-        destroy.push(function() {
-            uiBudget.destroy();
-        });
-
-        ge('budget_nr')
-            .removeAttribute('autocomplete');
-        var uiBudgetNr = new Dropdown(ge('budget_nr'), selectData.budget, {
-            selectedItems: '0',
-            big: isBig,
-            width: uiWidth,
-            zeroPlaceholder: true,
-            multiselect: false,
-
-            onChange: function(value) {
-                Ads.onFormEdit();
-            }
-        });
-        destroy.push(function() {
-            uiBudgetNr.destroy();
-        });
-
-        if (selectData.offices) {
-            ge('office')
-                .removeAttribute('autocomplete');
-            var uiOffice = new Dropdown(ge('office'), selectData.offices, {
-                selectedItems: selectData.office,
-                big: isBig,
-                width: uiWidth,
-                multiselect: false,
-
-                onChange: function(value) {
-                    Ads.onFormEdit();
-                }
-            });
-            destroy.push(function() {
-                uiOffice.destroy();
-            });
-        }
-
-        addEvent(ge('organisation'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('organisation'));
-        });
-        addEvent(ge('contact'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('contact'));
-        });
-        addEvent(ge('email'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('email'));
-        });
-        addEvent(ge('phone'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('phone'));
-        });
-        addEvent(ge('message'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('message'));
-        });
-        addEvent(ge('organisation_nr'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('organisation_nr'));
-        });
-        addEvent(ge('contact_nr'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('contact_nr'));
-        });
-        addEvent(ge('requisites_nr'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('requisites_nr'));
-        });
-        addEvent(ge('email_nr'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('email_nr'));
-        });
-        addEvent(ge('phone_nr'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('phone_nr'));
-        });
-        addEvent(ge('clients_nr'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('clients_nr'));
-        });
-        addEvent(ge('message_nr'), interestingEvents, Ads.onFormEdit);
-        destroy.push(function() {
-            cleanElems(ge('message_nr'));
-        });
-
-        function getAllCountries() {
-            function onDone(response) {
-                if (response && isArray(response.countries)) {
-                    response.countries.splice(0, 1);
-                    uiCountry.setData(response.countries);
-                    uiCountry.val('');
-                    uiCity.clear();
-                    uiCity.setOptions({
-                        defaultItems: []
-                    });
-                }
-            }
-            ajax.post('/ads?act=a_get_countries', {}, {
-                onDone: onDone
-            });
-        }
     }
+
+Ads.hideHeroUnit = function(hash) {
+    hide('ads_hero_unit');
+    ajax.post('/ads?act=a_hide_hero', {
+        hash: hash
+    }, {});
+}
+
+Ads.initContacts = function(selectData, ajaxParams, isBig) {
+
+    if (cur.contacts && cur.contacts.destroy) {
+        cur.contacts.destroy();
+    }
+
+    var destroy = [];
+
+    cur.contacts = {};
+    cur.contacts.ajaxParams = ajaxParams;
+
+    cur.contacts.destroy = function() {
+        for (var i in destroy) {
+            destroy[i]();
+        }
+        destroy = [];
+    }
+    cur.destroy.push(function() {
+        cur.contacts.destroy();
+    });
+
+    var interestingEvents = 'keydown keyup keypress change paste cut drop input blur';
+
+    var uiWidth = 250 + (isBig ? 22 : 0);
+
+    var uiCountry = null;
+    var uiCity = null;
+
+    ge('country')
+        .removeAttribute('autocomplete');
+    uiCountry = new Dropdown(ge('country'), selectData.countries, {
+        selectedItem: [selectData.country_val],
+
+        big: isBig,
+        width: uiWidth,
+        multiselect: false,
+
+        onChange: function(value) {
+            Ads.onFormEdit();
+            if (value == 1) {
+                hide('ads_contacts_form_nonresident', 'cis_msg');
+                show('ads_contacts_form_rus');
+            } else if (value > 1) {
+                hide('ads_contacts_form_rus');
+                show('ads_contacts_form_nonresident');
+                if (value < 4) show('cis_msg');
+                else hide('cis_msg');
+            }
+            if (value == -1) {
+                getAllCountries();
+                return;
+            } else if (value > 3) {
+                hide('city_row');
+                return;
+            }
+            uiCity.clear();
+            uiCity.setURL('/select_ajax.php?act=a_get_cities&country=' + value);
+            selectsData.getCountryInfo(value, 1, function(response) {
+                var new_options = {
+                    defaultItems: response.cities,
+                    dropdown: true
+                };
+                uiCity.setOptions(new_options);
+                if (selectData.country == value) {
+                    uiCity.selectItem(selectData.city_val);
+                }
+            });
+            show(ge('city_row'));
+        }
+    });
+    destroy.push(function() {
+        uiCountry.destroy();
+    });
+
+    ge('city')
+        .removeAttribute('autocomplete');
+    uiCity = new Selector(ge('city'), '/select_ajax.php?act=a_get_cities&country=' + selectData.country, {
+        defaultItems: selectData.cities,
+        selectedItems: [selectData.city_val],
+
+        big: isBig,
+        width: uiWidth,
+        multiselect: false,
+        dropdown: true,
+
+        placeholder: getLang('select_city_not_selected'),
+        introText: getLang('select_city_select'),
+        noResult: getLang('select_city_not_found'),
+        otherCity: getLang('select_city_other_city'),
+
+        onChange: function(value) {
+            Ads.onFormEdit();
+        }
+    });
+    destroy.push(function() {
+        uiCity.destroy();
+    });
+
+    var uiAgency = new Checkbox(ge('agency'), {
+        checked: 1,
+        width: uiWidth,
+        label: getLang('ads_help_contacts_agency'),
+
+        onChange: function(value) {
+            Ads.onFormEdit();
+            if (value == 1) {
+                slideDown(ge("agency_fields"), 200);
+            } else {
+                if (isVisible('agency_fields')) {
+                    slideUp(ge("agency_fields"), 200);
+                }
+            }
+        }
+    });
+    destroy.push(function() {
+        uiAgency.destroy();
+    });
+
+    var uiDating = new Checkbox(ge('dating'), {
+        checked: 0,
+        width: uiWidth,
+        label: getLang('ads_help_contacts_dating'),
+
+        onChange: function(value) {
+            Ads.onFormEdit();
+        }
+    });
+    destroy.push(function() {
+        uiDating.destroy();
+    });
+
+    var uiMedicine = new Checkbox(ge('medicine'), {
+        checked: 0,
+        width: uiWidth,
+        label: getLang('ads_help_contacts_medicine'),
+
+        onChange: function(value) {
+            Ads.onFormEdit();
+        }
+    });
+    destroy.push(function() {
+        uiMedicine.destroy();
+    });
+
+    ge('budget')
+        .removeAttribute('autocomplete');
+    var uiBudget = new Dropdown(ge('budget'), selectData.budget, {
+        selectedItems: '0',
+        big: isBig,
+        width: uiWidth,
+        zeroPlaceholder: true,
+        multiselect: false,
+
+        onChange: function(value) {
+            Ads.onFormEdit();
+        }
+    });
+    destroy.push(function() {
+        uiBudget.destroy();
+    });
+
+    ge('budget_nr')
+        .removeAttribute('autocomplete');
+    var uiBudgetNr = new Dropdown(ge('budget_nr'), selectData.budget, {
+        selectedItems: '0',
+        big: isBig,
+        width: uiWidth,
+        zeroPlaceholder: true,
+        multiselect: false,
+
+        onChange: function(value) {
+            Ads.onFormEdit();
+        }
+    });
+    destroy.push(function() {
+        uiBudgetNr.destroy();
+    });
+
+    if (selectData.offices) {
+        ge('office')
+            .removeAttribute('autocomplete');
+        var uiOffice = new Dropdown(ge('office'), selectData.offices, {
+            selectedItems: selectData.office,
+            big: isBig,
+            width: uiWidth,
+            multiselect: false,
+
+            onChange: function(value) {
+                Ads.onFormEdit();
+            }
+        });
+        destroy.push(function() {
+            uiOffice.destroy();
+        });
+    }
+
+    addEvent(ge('organisation'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('organisation'));
+    });
+    addEvent(ge('contact'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('contact'));
+    });
+    addEvent(ge('email'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('email'));
+    });
+    addEvent(ge('phone'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('phone'));
+    });
+    addEvent(ge('message'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('message'));
+    });
+    addEvent(ge('organisation_nr'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('organisation_nr'));
+    });
+    addEvent(ge('contact_nr'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('contact_nr'));
+    });
+    addEvent(ge('requisites_nr'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('requisites_nr'));
+    });
+    addEvent(ge('email_nr'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('email_nr'));
+    });
+    addEvent(ge('phone_nr'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('phone_nr'));
+    });
+    addEvent(ge('clients_nr'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('clients_nr'));
+    });
+    addEvent(ge('message_nr'), interestingEvents, Ads.onFormEdit);
+    destroy.push(function() {
+        cleanElems(ge('message_nr'));
+    });
+
+    function getAllCountries() {
+        function onDone(response) {
+            if (response && isArray(response.countries)) {
+                response.countries.splice(0, 1);
+                uiCountry.setData(response.countries);
+                uiCountry.val('');
+                uiCity.clear();
+                uiCity.setOptions({
+                    defaultItems: []
+                });
+            }
+        }
+        ajax.post('/ads?act=a_get_countries', {}, {
+            onDone: onDone
+        });
+    }
+}
 
 Ads.sendContactsForm = function(button) {
     if (!Ads.lock('sendContactsForm', onLock, onUnlock)) {
