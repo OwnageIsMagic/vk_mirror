@@ -1901,20 +1901,23 @@ body.mac .im_stickerpack_fixed {
     top: 0;
     bottom: 0;
     width: 100%;
-    overflow: hidden
+    overflow: hidden;
+    height: 100%
 }
 
-.im-page .im-page--chat-body-abs .scrollbar_bottom {
-    bottom: -3px
+.im-page .im-page--chat-body-abs .ui_scroll_outer {
+    max-height: 100%;
+    height: auto;
+    position: absolute;
+    bottom: 0
 }
 
 .im-page .im-page--chat-body-wrap-inner {
     overflow-y: hidden;
     padding-top: 34px;
     overflow-x: hidden;
-    max-height: 100%;
+    height: 100%;
     box-sizing: border-box;
-    position: absolute;
     bottom: 0;
     width: 100%
 }
@@ -4677,9 +4680,8 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-create .im-create--dcontent {
-    max-height: 100%;
-    padding-bottom: 25px;
-    box-sizing: border-box
+    box-sizing: border-box;
+    height: 100%
 }
 
 .im-create .im-create--dcontent li:first-of-type .nim-dialog--content {
@@ -4817,8 +4819,8 @@ body.sf .nim-dialog .nim-dialog--unread {
     top: 57px
 }
 
-.im-create.im-create_classic .im-create--dcontent {
-    padding-bottom: 70px
+.im-create.im-create_classic .im-create--dcontent .ui_scroll_content {
+    margin-bottom: 70px
 }
 
 .im-create.im-create_classic .im-create--table {
