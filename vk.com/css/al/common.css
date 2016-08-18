@@ -2370,6 +2370,7 @@ a:hover .left_count_persist .left_void {
     margin-bottom: -20px
 }
 
+#ads_left.ads_empty+.left_menu_nav_wrap,
 #ads_left:empty+.left_menu_nav_wrap {
     padding-top: 16px;
     border-top: 1px solid #dfe2e8

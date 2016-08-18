@@ -2695,21 +2695,33 @@ body.dev .tickets_dmca_data_row.links .value {
 }
 
 .tickets_payments_header {
-    display: inline-block;
-    margin-top: 10px
+    margin: 12px 0 0
 }
 
 .tickets_payments_header a:hover {
     text-decoration: none
 }
 
+.tickets_payments_header .mi_payments_table {
+    margin: 10px 0 0
+}
+
 .tickets_payments_header .mi_section {
-    margin: 10px 0 0;
-    width: 597px
+    padding-bottom: 1px
 }
 
 .tickets_payments_header th {
     text-align: left
+}
+
+.tickets_payments_header .mi_table>tbody>tr>td:first-child,
+.tickets_payments_header .mi_table>thead>tr>th:first-child {
+    padding-left: 18px
+}
+
+.tickets_payments_header .mi_table>tbody>tr>td:last-child,
+.tickets_payments_header .mi_table>thead>tr>th:last-child {
+    padding-right: 18px
 }
 
 .tickets_payment_data .cal_table .day {

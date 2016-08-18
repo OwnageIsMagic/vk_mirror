@@ -156,7 +156,7 @@ var AudioUtils = {
                 }
             } else {
                 var f = gpeByClass("_post", t);
-                f && (p.post_id = domData(f, "post-id")), ajax.post("al_audio.php", p, {
+                f && (p.post_id = domData(f, "post-id")), p.at = r.title, p.ap = r.performer, ajax.post("al_audio.php", p, {
                         onDone: function(t, i, o, l) {
                             if (t) {
                                 var u = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];

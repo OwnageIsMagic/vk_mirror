@@ -6812,6 +6812,10 @@ addEvent(window, 'DOMContentLoaded load', function() {
     vk.loaded = true;
 });
 
+function isPhotoeditor3Available() {
+    return (browser.msie ? parseInt(browser.version) > 10 : true);
+}
+
 try {
     stManager.done('lite.js');
 } catch (e) {}
