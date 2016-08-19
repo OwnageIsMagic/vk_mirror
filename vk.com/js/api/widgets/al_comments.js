@@ -1630,6 +1630,7 @@ WComments = {
                                 WComments.contentUpdated();
                             }
                         });
+                        return false;
                     },
 
                     postClick: function(post, event, opts) {

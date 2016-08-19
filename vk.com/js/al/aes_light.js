@@ -743,6 +743,7 @@
                 id: a
             });
             var d = ge("ads_left");
+            if (!d) return AdsLight.sendExperimentStat(t, "fail"), void AdsLight.onYaDirectRenderUnsuccessful(s);
             d.appendChild(i), i = ge(a), Ya.Context.AdvManager.render({
                 blockId: e,
                 renderTo: a,
