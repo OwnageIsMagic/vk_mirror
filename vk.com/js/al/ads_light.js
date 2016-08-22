@@ -31,12 +31,12 @@
         }
 
         function s(e) {
-            e && AdsLight.handleEvent("ads.onEvent", "onFocusWindow", 0), r || (r = !0, h = window.vkNow && vkNow() || 0, vk__adsLight.userEventTime = window.vkNow && vkNow() ||
+            e && AdsLight.handleEvent("ads.onEvent", "onFocusWindow", 0), r || (r = !0, _ = window.vkNow && vkNow() || 0, vk__adsLight.userEventTime = window.vkNow && vkNow() ||
                 0, n())
         }
 
         function i(e) {
-            r = !1, window.vkNow && vkNow() - h < 1e3 || (e && AdsLight.handleEvent("ads.onEvent", "onBlurWindow", 0), vk__adsLight.activeTab = window.vkNow && -vkNow() || 0)
+            r = !1, window.vkNow && vkNow() - _ < 1e3 || (e && AdsLight.handleEvent("ads.onEvent", "onBlurWindow", 0), vk__adsLight.activeTab = window.vkNow && -vkNow() || 0)
         }
 
         function a(e, t) {
@@ -46,7 +46,7 @@
             return e && !t ? (clearTimeout(c), void(c = setTimeout(function() {
                 a(e, !0)
             }, 100))) : (e && AdsLight.handleEvent("ads.onEvent", "onScrollWindow", 0), vk__adsLight.userEventTime = window.vkNow && vkNow() || 0, n(), isVkDomain &&
-                window.vkNow && window.vk && vk.ads_rotate_interval && s() && (clearTimeout(_), _ = setTimeout(function() {
+                window.vkNow && window.vk && vk.ads_rotate_interval && s() && (clearTimeout(h), h = setTimeout(function() {
                     s() && (__adsLoaded = 0, AdsLight.updateBlock())
                 }, 10)), void(isVkDomain && AdsLight.applyAds()))
         }
@@ -59,7 +59,7 @@
         }
 
         function o(e) {
-            e && AdsLight.handleEvent("ads.onEvent", "onMouseDownDocumentAction", 0), clearTimeout(_), l = !0, setTimeout(function() {
+            e && AdsLight.handleEvent("ads.onEvent", "onMouseDownDocumentAction", 0), clearTimeout(h), l = !0, setTimeout(function() {
                 l = !1
             }, 10)
         }
@@ -69,7 +69,7 @@
                 return vkNow() - __adsLoaded >= vk.ads_rotate_interval
             }
             isVkDomain && window.vkNow && window.vk && vk.ads_rotate_interval && !l && vk__adsLight.activeTab < 0 && vkNow() + vk__adsLight.activeTab >= 15e3 && t() && (
-                clearTimeout(_), _ = setTimeout(function() {
+                clearTimeout(h), h = setTimeout(function() {
                     t() && (__adsLoaded = 0, AdsLight.updateBlock())
                 }, 10)), vk__adsLight.activeTab = 1
         }
@@ -85,8 +85,8 @@
         };
         var r = !1,
             l = !1,
-            h = !1,
             _ = !1,
+            h = !1,
             c = !1
     }, AdsLight.initWeb = function(e, t, s, i) {
         if (vk__adsLight.adsSection = e, top !== window) {
@@ -184,8 +184,8 @@
         a.unshift("adsPublish"), d.unshift("adsPublish"), o.unshift("adsPublish"), n.unshift("publish");
         var r, l = [];
         if (window.VK && VK.Widgets && VK.Widgets.RPC)
-            for (var h in vk__adsLight.widgetsIds) VK.Widgets.RPC[h] && VK.Widgets.RPC[h].callMethod && (r = function() {
-                var e = h;
+            for (var _ in vk__adsLight.widgetsIds) VK.Widgets.RPC[_] && VK.Widgets.RPC[_].callMethod && (r = function() {
+                var e = _;
                 return function() {
                     VK.Widgets.RPC[e].callMethod.apply(VK.Widgets.RPC[e], a)
                 }
@@ -214,15 +214,15 @@
         function s(t) {
             var r = +new Date,
                 l = 0;
-            for (var h in vk__adsLight.adsShowedAll) {
-                var _ = vk__adsLight.adsShowedAll[h];
-                if (r - _.publish_time >= 3e4) delete vk__adsLight.adsShowedAll[h];
-                else if (!i || !n[h]) {
-                    if (2 == _.update_progress) {
-                        l = h;
+            for (var _ in vk__adsLight.adsShowedAll) {
+                var h = vk__adsLight.adsShowedAll[_];
+                if (r - h.publish_time >= 3e4) delete vk__adsLight.adsShowedAll[_];
+                else if (!i || !n[_]) {
+                    if (2 == h.update_progress) {
+                        l = _;
                         break
                     }
-                    1 == _.update_progress && (!l || l > h) && (l = h)
+                    1 == h.update_progress && (!l || l > _) && (l = _)
                 }
             }
             t || !l || l == vk__adsLight.windowId ? (clearInterval(a), clearTimeout(d), vk__adsLight.updateProgress = 2, AdsLight.onAdsShowed(0), e()) : l != o && (o = l,
@@ -347,7 +347,8 @@
             var l = ge("side_bar");
             if (!l) return void AdsLight.resizeBlockWrap([0, 0], !1, !1, !0);
             n = l.appendChild(ce("div", {
-                id: "ads_left"
+                id: "ads_left",
+                className: "ads_left_empty"
             }, {
                 display: r ? "block" : "none"
             }))
@@ -385,7 +386,7 @@
                 opacity: 0,
                 zIndex: 10,
                 width: "100%"
-            }), p.style.setProperty("display", "block", "important");
+            });
             var t = AdsLight.getBlockSize(L);
             t = AdsLight.resizeBlockWrap(t, g, u), c ? o() : animate(e, {
                 width: t[0],
@@ -394,7 +395,7 @@
         }
 
         function o() {
-            cleanElems(e);
+            toggleClass(e, "ads_left_empty", c), cleanElems(e);
             var t = AdsLight.getBlockSize(L);
             t = AdsLight.resizeBlockWrap(t, !1, u, !0), c ? n() : animate(p, {
                 opacity: 1
@@ -426,11 +427,11 @@
             }), window.updSideTopLink && updSideTopLink(), AdsLight.updateExternalStats(e), c || AdsLight.scrollToPreview()
         }
         if (!s || browserLight.msie6 || browserLight.msie7) {
-            s || debugLog("Ads container is hidden"), e.innerHTML = t;
+            s || debugLog("Ads container is hidden"), e.innerHTML = t, toggleClass(e, "ads_left_empty", !t);
             var l = AdsLight.getBlockSize(e);
             return AdsLight.resizeBlockWrap(l, !1, !1, !0), void AdsLight.updateExternalStats(e)
         }
-        for (var h = getXY(e)[1], _ = scrollGetY(), c = !t, v = h + 50 > _ + lastWindowHeight ? 0 : 200, g = AdsLight.getBlockSize(e), u = [0, 0], p = e.appendChild("string" ==
+        for (var _ = getXY(e)[1], h = scrollGetY(), c = !t, v = _ + 50 > h + lastWindowHeight ? 0 : 200, g = AdsLight.getBlockSize(e), u = [0, 0], p = e.appendChild("string" ==
                 typeof t ? ce("div", {
                     innerHTML: t
                 }, {
@@ -516,17 +517,17 @@
         }
         for (var d = !1, o = [], n = 0, r = e.length; r > n; n++) {
             var l = document.elementFromPoint(e[n][0], e[n][1]),
-                h = l && (l === t || a(l, t)),
-                d = d || h;
-            h && o.push(e[n])
+                _ = l && (l === t || a(l, t)),
+                d = d || _;
+            _ && o.push(e[n])
         }
         d = !!d;
-        var _, c = function(e) {
-            clearTimeout(_), s(void 0 !== e ? e : d)
+        var h, c = function(e) {
+            clearTimeout(h), s(void 0 !== e ? e : d)
         };
         !i && o.length && window != parent && isVkDomain && "web" === vk__adsLight.adsSection && vk__adsLight.rpc && vk__adsLight.rpc.callMethod ? (vk__adsLight.rpc.callMethod(
-            "publish", "ads.isVisibleBlockWrap", o, c), _ = setTimeout(c, 300)) : !i && o.length && window != parent && !isVkDomain && window.VK && VK.callMethod ? (VK.callMethod(
-            "adsPublish", "ads.isVisibleBlockWrap", o, c), _ = setTimeout(c, 300)) : c()
+            "publish", "ads.isVisibleBlockWrap", o, c), h = setTimeout(c, 300)) : !i && o.length && window != parent && !isVkDomain && window.VK && VK.callMethod ? (VK.callMethod(
+            "adsPublish", "ads.isVisibleBlockWrap", o, c), h = setTimeout(c, 300)) : c()
     }, AdsLight.isVisibleBlockWrapRpc = function(e, t, s) {
         var i;
         i = s ? VK.Widgets.RPC[s].frame : cur.app.frame;
@@ -639,18 +640,18 @@
 
         function r(e) {
             if (!e) return void setTimeout(r.pbind(!0), 100);
-            if (t && c && !_) {
-                _ = !0;
+            if (t && c && !h) {
+                h = !0;
                 var s = {};
                 s.ads_more = t, s.ads_height = c, ajax.post("/ads_light.php?act=all_ads_more", s, {
                     onDone: l,
-                    onFail: h
+                    onFail: _
                 })
             }
         }
 
         function l(e) {
-            if (_ = !1, !e) return void h();
+            if (h = !1, !e) return void _();
             if (t = e.ads_more, AdsLight.addAdsToApply(e.ads_ids_apply), e.ads_html) {
                 var s = ge("ads_ads_all_ads_rows"),
                     i = ge("ads_ads_all_ads_more");
@@ -659,10 +660,10 @@
             d()
         }
 
-        function h() {
-            return _ = !1, !0
+        function _() {
+            return h = !1, !0
         }
-        var _ = !1,
+        var h = !1,
             c = !1;
         boxLayerWrap.scrollTop = 0;
         var v = {};
@@ -794,7 +795,7 @@
                 i({
                     reason: "timeout"
                 })
-            }, h), window[o] = function(t) {
+            }, _), window[o] = function(t) {
                 if (clearTimeout(d), t && t[0] && t[0].html) {
                     try {
                         var a = ge(e),
@@ -805,7 +806,8 @@
                                 reason: "no-side-bar"
                             });
                             a = n.appendChild(ce("div", {
-                                id: "ads_left"
+                                id: "ads_left",
+                                className: "ads_left_empty"
                             }, {
                                 display: o ? "block" : "none"
                             }))
@@ -825,10 +827,10 @@
             n = i.slot_id,
             r = "https://ad.mail.ru/adq/?callback=" + o + "&q%5B%5D=" + n + "%3Fn%3D" + encodeURIComponent(e),
             l = {},
-            h = 5e3;
+            _ = 5e3;
         i && i.test_id && (l.test_id = i.test_id), i && i.vk_id && (l.vk_id = i.vk_id);
-        var _;
-        for (_ in l) r += "&" + _ + "=" + l[_];
+        var h;
+        for (h in l) r += "&" + h + "=" + l[h];
         return a(r, t, s), o
     }, AdsLight.tryRenderTarget = function(e, t, s, i) {
         var a = {

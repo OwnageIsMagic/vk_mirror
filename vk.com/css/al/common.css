@@ -2370,10 +2370,11 @@ a:hover .left_count_persist .left_void {
     margin-bottom: -20px
 }
 
-#ads_left.ads_empty+.left_menu_nav_wrap,
-#ads_left:empty+.left_menu_nav_wrap {
+#ads_left.ads_left_empty+.left_menu_nav_wrap {
     padding-top: 16px;
-    border-top: 1px solid #dfe2e8
+    border-top: 1px solid #dfe2e8;
+    -o-transition: padding-top 0.2s ease;
+    transition: padding-top 0.2s ease
 }
 
 .left_menu_more:after {

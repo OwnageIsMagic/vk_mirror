@@ -25,15 +25,13 @@
 .settings_otp_box_step2,
 .settings_otp_box_step2_en,
 .settings_otp_box_step3,
-.settings_otp_box_step3_en,
-.settings_transfer_repeat,
-.settings_transfer_status {
+.settings_otp_box_step3_en {
     -ms-high-contrast-adjust: none
 }
 
 .settings_apps .apps_settings_action_edit,
 .settings_apps .apps_settings_action_remove,
-.settings_transfer_repeat {
+.settings_transfer_cancel {
     -o-transition: opacity 0.15s ease;
     transition: opacity 0.15s ease
 }
@@ -958,60 +956,48 @@ a.settings_blb_title {
     white-space: nowrap
 }
 
-.settings_history_status {
-    padding-left: 8px!important;
-    vertical-align: middle
+.settings_history_actions {
+    text-align: right;
+    font-size: 12.5px
 }
 
-.settings_history_repeat {
-    padding-left: 15px!important;
-    vertical-align: middle;
-    width: 20px
+.settings_history_actions .settings_history_alt_row {
+    padding-top: 6px
 }
 
-.settings_transfer_status {
-    background: url(/images/icons/p2p_icons.png) no-repeat 0 0;
-    width: 14px;
-    height: 14px
+.settings_history_alt_row {
+    padding-top: 3px
 }
 
-.settings_transfer_in_process {
-    background-position: left 0
+.settings_transfer_date {
+    color: #939393;
+    font-size: 12.5px
 }
 
-.settings_transfer_complete {
-    background-position: 4px -33px
-}
-
-.settings_transfer_cancelled {
-    background-position: 4px -44px
-}
-
-.settings_transfer_repeat {
-    display: block;
-    visibility: hidden;
-    background: url(/images/icons/p2p_icons.png) no-repeat 50% -16px;
-    width: 20px;
-    height: 20px;
+.settings_transfer_cancel {
+    color: #656565;
+    visibility: none;
     opacity: 0;
     filter: alpha(opacity=0)
 }
 
 .settings_transfer_history .settings_history_title {
     padding-right: 15px!important;
-    width: 190px
+    width: 210px
 }
 
-.settings_transfer_history tr:hover .settings_transfer_repeat {
+.settings_transfer_history tr:hover .settings_transfer_cancel {
     visibility: visible;
     opacity: 0.7;
     filter: alpha(opacity=70)
 }
 
-.settings_transfer_history tr:hover .settings_transfer_repeat:hover {
-    opacity: 1;
-    -webkit-filter: none;
-    filter: none
+.settings_transfer_status_complete {
+    color: #3d7334
+}
+
+.settings_transfer_status_cancelled {
+    color: #a62308
 }
 
 .settings_payments_history .ui_load_more_btn {

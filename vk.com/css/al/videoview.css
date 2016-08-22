@@ -8,6 +8,7 @@
 .mv_chat_reply_submit_icon,
 .mv_close_icon,
 .mv_delete_button .mv_delete_icon,
+.mv_donate_icon,
 .mv_edit_button .mv_edit_icon,
 .mv_in_moder,
 .mv_like_icon,
@@ -281,11 +282,11 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_subscribe_block #mv_subscribe_btn {
-    padding: 5px 22px 6px
+    padding: 5px 16px 6px
 }
 
 .mv_subscribe_block #mv_subscribed_msg {
-    padding: 5px 22px 6px;
+    padding: 5px 16px 6px;
     position: absolute;
     right: 0;
     opacity: 0;
@@ -300,6 +301,22 @@ body.mobfixed #mv_layer_wrap {
     -webkit-filter: none;
     filter: none;
     visibility: visible
+}
+
+.mv_donate_button.mv_donate_button {
+    margin-top: 12px;
+    margin-left: 10px;
+    padding: 5px 16px 6px
+}
+
+.mv_donate_icon {
+    display: inline-block;
+    vertical-align: middle;
+    height: 13px;
+    width: 10px;
+    margin-top: -3px;
+    margin-right: 7px;
+    background: url(/images/icons/video_actions.png?6) 0 -105px
 }
 
 .mv_share_actions {
@@ -348,7 +365,7 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_like_icon {
-    background: url(/images/icons/video_actions.png?5) no-repeat 0 0;
+    background: url(/images/icons/video_actions.png?6) no-repeat 0 0;
     float: left;
     height: 10px;
     width: 13px;
@@ -386,7 +403,7 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_share_button .mv_share_icon {
-    background: url(/images/icons/video_actions.png?5) no-repeat 0 -44px;
+    background: url(/images/icons/video_actions.png?6) no-repeat 0 -44px;
     height: 13px;
     margin-right: 7px
 }
@@ -400,13 +417,13 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_edit_button .mv_edit_icon {
-    background: url(/images/icons/video_actions.png?5) no-repeat 0 -61px;
+    background: url(/images/icons/video_actions.png?6) no-repeat 0 -61px;
     height: 12px;
     margin-right: 6px
 }
 
 .mv_delete_button .mv_delete_icon {
-    background: url(/images/icons/video_actions.png?5) no-repeat 0 -92px;
+    background: url(/images/icons/video_actions.png?6) no-repeat 0 -92px;
     height: 9px;
     width: 9px;
     display: inline-block;
@@ -415,7 +432,7 @@ body.mobfixed #mv_layer_wrap {
 }
 
 .mv_add_button .mv_add_icon {
-    background: url(/images/icons/video_actions.png?5) no-repeat 0 -15px;
+    background: url(/images/icons/video_actions.png?6) no-repeat 0 -15px;
     height: 12px;
     width: 12px;
     margin-bottom: -2px;
@@ -1290,7 +1307,7 @@ embed#video_player {
 
 #mv_pl_tt .mv_tt_add_playlist .mv_tt_plus_icon {
     display: inline-block;
-    background: url(/images/icons/video_actions.png?5) no-repeat 0 -15px;
+    background: url(/images/icons/video_actions.png?6) no-repeat 0 -15px;
     height: 12px;
     width: 12px;
     margin: 0px 9px 0 2px;
@@ -1323,7 +1340,7 @@ embed#video_player {
 
 #mv_pl_tt .mv_tt_playlist_private_icon {
     display: inline-block;
-    background: url(/images/icons/video_actions.png?5) 0 -77px;
+    background: url(/images/icons/video_actions.png?6) 0 -77px;
     height: 11px;
     width: 10px;
     margin: 0 0 -1px 7px
@@ -2450,4 +2467,115 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     width: 7px;
     background: #3d3d3d;
     border-radius: 1px
+}
+
+.video_donate_pr {
+    padding: 150px 0;
+    text-align: center;
+    opacity: 1
+}
+
+.video_donate_step {
+    position: relative
+}
+
+.video_donate_intro {
+    display: block;
+    margin-bottom: 22px
+}
+
+.video_donate_intro:after {
+    content: '.';
+    display: block;
+    height: 0;
+    font-size: 0;
+    line-height: 0;
+    clear: both;
+    visibility: hidden
+}
+
+* html .video_donate_intro {
+    height: 1%
+}
+
+.video_donate_intro_author_photo {
+    float: left;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    -moz-force-broken-image-icon: 0;
+    background-color: #fafbfc
+}
+
+.video_donate_intro_author_photo:before {
+    background-color: #fff
+}
+
+.video_donate_intro_author_photo:before,
+.video_donate_intro_author_photo:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    height: 40px
+}
+
+.video_donate_intro_author_photo:after {
+    border-radius: 50%;
+    background-color: #fafbfc;
+    background-image: url(/images/camera_100.png);
+    background-size: cover
+}
+
+.video_donate_intro_text {
+    margin-left: 52px;
+    line-height: 1.3
+}
+
+.video_donate_form_row {
+    margin-bottom: 15px
+}
+
+.video_donate_form_row:last-child {
+    margin-bottom: 0
+}
+
+.video_donate_input {
+    display: block;
+    width: 100%;
+    resize: none
+}
+
+.video_donate_input_hint {
+    margin-top: 8px;
+    color: #656565;
+    font-size: 12px;
+    line-height: 1.3
+}
+
+.video_donate_widget_offline {
+    margin: 20px -25px -20px;
+    padding: 15px 25px 16px;
+    border-top: 1px solid #e7e8ec;
+    border-radius: 0 0 2px 2px;
+    text-align: center;
+    background-color: #fafbfc;
+    font-size: 12.5px
+}
+
+.video_donate_pay_method_title {
+    color: #222;
+    margin-bottom: 14px
+}
+
+.video_donate_pay_method_option {
+    float: left;
+    width: 50%;
+    margin-bottom: 11px
+}
+
+.video_donate_billing_additional_fields {
+    margin-bottom: 15px
 }
