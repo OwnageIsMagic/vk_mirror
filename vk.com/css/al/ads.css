@@ -467,7 +467,7 @@ a .ads_sub_link:hover {
     background-image: url(/images/ads_intro_label_new_ua.png)
 }
 
-.ads_intro_subsections {
+.page_block.ads_intro_subsections {
     margin-right: 15px;
     padding: 13px;
     display: inline-block;

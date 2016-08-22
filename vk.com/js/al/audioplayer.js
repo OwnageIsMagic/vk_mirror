@@ -962,24 +962,23 @@ AudioPlayer.tabIcons = {
         this._currentPlayingRows = e
     }, AudioPlayer.prototype.toggleCurrentAudioRow = function(t, i, e) {
         function o() {
-            if (s && (i ? r._addRowPlayer(t, e) : r._removeRowPlayer(t)), i) r.on(t, AudioPlayer.EVENT_PLAY, function(i) {
+            if (r && (i ? u._addRowPlayer(t, e) : u._removeRowPlayer(t)), i) u.on(t, AudioPlayer.EVENT_PLAY, function(i) {
                 AudioUtils.asObject(i)
                     .fullId == AudioUtils.getAudioFromEl(t, !0)
-                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_pause")), attr(geByClass1("_audio_title", t), "role",
-                        "heading"))
-            }), r.on(t, AudioPlayer.EVENT_PROGRESS, function(i, e) {
+                    .fullId && (addClass(t, AudioUtils.AUDIO_PLAYING_CLS), l && attr(l, "aria-label", getLang("global_audio_pause")), s && attr(s, "role", "heading"))
+            }), u.on(t, AudioPlayer.EVENT_PROGRESS, function(i, e) {
                 i = AudioUtils.asObject(i);
                 var o, a = intval(i.duration);
-                o = r.getDurationType() ? "-" + formatTime(Math.round(a - e * a)) : formatTime(Math.round(e * a)), geByClass1("audio_duration", t)
+                o = u.getDurationType() ? "-" + formatTime(Math.round(a - e * a)) : formatTime(Math.round(e * a)), geByClass1("audio_duration", t)
                     .innerHTML = o
-            }), r.on(t, [AudioPlayer.EVENT_PAUSE, AudioPlayer.EVENT_ENDED], function(i) {
-                removeClass(t, AudioUtils.AUDIO_PLAYING_CLS), attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
-            }), toggleClass(t, AudioUtils.AUDIO_PLAYING_CLS, r.isPlaying());
+            }), u.on(t, [AudioPlayer.EVENT_PAUSE, AudioPlayer.EVENT_ENDED], function(i) {
+                removeClass(t, AudioUtils.AUDIO_PLAYING_CLS), l && attr(l, "aria-label", getLang("global_audio_play")), s && attr(s, "role", "")
+            }), toggleClass(t, AudioUtils.AUDIO_PLAYING_CLS, u.isPlaying());
             else {
-                r.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
+                u.off(t), removeClass(t, AudioUtils.AUDIO_PLAYING_CLS);
                 var o = geByClass1("audio_duration", t);
                 o && (o.innerHTML = formatTime(AudioUtils.getAudioFromEl(t, !0)
-                    .duration)), attr(l, "aria-label", getLang("global_audio_play")), attr(geByClass1("_audio_title", t), "role", "")
+                    .duration)), l && attr(l, "aria-label", getLang("global_audio_play")), s && attr(s, "role", "")
             }
             e ? setTimeout(function() {
                 var i = intval(domData(t, "is-current"));
@@ -990,9 +989,10 @@ AudioPlayer.tabIcons = {
         if (a != i) {
             domData(t, "is-current", intval(i));
             var l = geByClass1("_audio_play", t),
-                s = hasClass(t, "inlined");
-            s && toggleClass(t, "audio_with_transition", e), e = s ? e : !1;
-            var r = this;
+                s = geByClass1("_audio_title", t),
+                r = hasClass(t, "inlined");
+            r && toggleClass(t, "audio_with_transition", e), e = r ? e : !1;
+            var u = this;
             e ? setTimeout(o) : o()
         }
     }, AudioPlayer.prototype._removeRowPlayer = function(t) {
@@ -1435,7 +1435,8 @@ AudioPlayer.tabIcons = {
                     full_id: i.fullId,
                     impl: this._impl.type
                 }, t.getPlaybackParams());
-            i.ownerId == vk.id && i.id && (e.id = i.id), ajax.post("al_audio.php", e)
+            i.ownerId == vk.id && i.id && (e.id = i.id), cur.audioLoadTimings && (e.timings = cur.audioLoadTimings.join(","), cur.audioLoadTimings = []), ajax.post("al_audio.php",
+                e)
         }
     }, AudioPlayer.prototype.saveStateCurrentPlaylist = function() {
         if (!vk.widget) {
@@ -1676,6 +1677,8 @@ AudioPlayer.tabIcons = {
     }, AudioPlayerHTML5.prototype.type = "html5", AudioPlayerHTML5.prototype.destroy = function() {}, AudioPlayerHTML5.prototype.getPlayedTime = function() {
         for (var t = this._currentAudioEl.played, i = 0, e = 0; e < t.length; e++) i += t.end(e) - t.start(e);
         return i
+    }, AudioPlayerHTML5.prototype._setAudioNodeUrl = function(t, i) {
+        data(t, "setUrlTime", i == AudioPlayerHTML5.SILENCE ? 0 : vkNow()), t.src = i
     }, AudioPlayerHTML5.prototype._createAudioNode = function(t) {
         var i = new Audio,
             e = this;
@@ -1696,12 +1699,14 @@ AudioPlayer.tabIcons = {
             AudioUtils.debugLog("HTML5 error track loding"), e._prefetchAudioEl == i ? e._prefetchAudioEl = e._createAudioNode() : e._currentAudioEl == i && e.opts.onFail &&
                 e.opts.onFail()
         }), addEvent(i, "canplay", function() {
-            e._prefetchAudioEl == i, e._currentAudioEl == i && (e.opts.onCanPlay && e.opts.onCanPlay(), e._seekOnReady && (e.seek(e._seekOnReady), e._seekOnReady = !1))
-        }), t && (i.src = t, i.preload = "auto", i.volume = this._volume || 1, i.load()), this._audioNodes.push(i), i
+            var t = data(i, "setUrlTime");
+            t && (cur.audioLoadTimings = cur.audioLoadTimings || [], cur.audioLoadTimings.push(vkNow() - t), data(i, "setUrlTime", 0)), e._prefetchAudioEl == i, e._currentAudioEl ==
+                i && (e.opts.onCanPlay && e.opts.onCanPlay(), e._seekOnReady && (e.seek(e._seekOnReady), e._seekOnReady = !1))
+        }), t && (this._setAudioNodeUrl(i, t), i.preload = "auto", i.volume = this._volume || 1, i.load()), this._audioNodes.push(i), i
     }, AudioPlayerHTML5.prototype.onReady = function(t) {
         t(!0)
     }, AudioPlayerHTML5.prototype.prefetch = function(t) {
-        this._prefetchAudioEl && (this._prefetchAudioEl.src = AudioPlayerHTML5.SILENCE), this._prefetchAudioEl = this._createAudioNode(t)
+        this._prefetchAudioEl && this._setAudioNodeUrl(this._prefetchAudioEl, AudioPlayerHTML5.SILENCE), this._prefetchAudioEl = this._createAudioNode(t)
     }, AudioPlayerHTML5.prototype.seek = function(t) {
         var i = this._currentAudioEl;
         isNaN(i.duration) ? this._seekOnReady = t : i.currentTime = i.duration * t
@@ -1720,16 +1725,16 @@ AudioPlayer.tabIcons = {
         if (this._seekOnReady = !1, e.src == t) return this.opts.onCanPlay && this.opts.onCanPlay(), i && i(!0);
         if (this._prefetchAudioEl && this._prefetchAudioEl.readyState > AudioPlayerHTML5.STATE_HAVE_NOTHING)
             if (this._prefetchAudioEl.src == t) {
-                this._currentAudioEl.pause(0), this._currentAudioEl.src = AudioPlayerHTML5.SILENCE;
+                this._currentAudioEl.pause(0), this._setAudioNodeUrl(this._currentAudioEl, AudioPlayerHTML5.SILENCE);
                 var o = this;
                 this._prefetchAudioEl.readyState >= AudioPlayerHTML5.STATE_HAVE_FUTURE_DATA && setTimeout(function() {
                     o.opts.onCanPlay && o.opts.onCanPlay()
                 }), e = this._currentAudioEl = this._prefetchAudioEl, this._prefetchAudioEl = !1
-            } else this._prefetchAudioEl.src && (this._prefetchAudioEl.src = AudioPlayerHTML5.SILENCE);
-        return e.src != t && (e.src = t, e.load()), i && i(!0)
+            } else this._prefetchAudioEl.src && this._setAudioNodeUrl(this._prefetchAudioEl, AudioPlayerHTML5.SILENCE);
+        return e.src != t && (this._setAudioNodeUrl(e, t), e.load()), i && i(!0)
     }, AudioPlayerHTML5.prototype.play = function(t) {
-        this._prefetchAudioEl.src == t && this._prefetchAudioEl.readyState > AudioPlayerHTML5.STATE_HAVE_NOTHING && (this._currentAudioEl.src = AudioPlayerHTML5.SILENCE, this._currentAudioEl =
-            this._prefetchAudioEl, this._prefetchAudioEl = this._createAudioNode(), this.opts.onCanPlay && this.opts.onCanPlay());
+        this._prefetchAudioEl.src == t && this._prefetchAudioEl.readyState > AudioPlayerHTML5.STATE_HAVE_NOTHING && (this._setAudioNodeUrl(this._currentAudioEl, AudioPlayerHTML5.SILENCE),
+            this._currentAudioEl = this._prefetchAudioEl, this._prefetchAudioEl = this._createAudioNode(), this.opts.onCanPlay && this.opts.onCanPlay());
         var i = this._currentAudioEl;
         if (i.src) try {
             i.play()
@@ -1741,7 +1746,7 @@ AudioPlayer.tabIcons = {
         t.src && t.pause()
     }, AudioPlayerHTML5.prototype.stop = function() {
         var t = this._currentAudioEl;
-        t.src = AudioPlayerHTML5.SILENCE
+        this._setAudioNodeUrl(t, AudioPlayerHTML5.SILENCE)
     }, AudioPlayerHTML5.prototype._setFadeVolumeInterval = function(t) {
         if (t) {
             if (!this._fadeVolumeWorker && window.Worker && window.Blob) {
