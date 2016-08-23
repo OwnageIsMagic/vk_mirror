@@ -216,11 +216,13 @@ var AudioUtils = {
         }
         i && a.push(i);
         var r = formatTime(t[AudioUtils.AUDIO_ITEM_INDEX_DURATION]),
-            u = clean(JSON.stringify(t))
+            u = t[AudioUtils.AUDIO_ITEM_INDEX_PERFORMER].replace(/<\/?em>/g, ""),
+            n = clean(JSON.stringify(t))
             .split("$")
             .join("$$"),
-            n = getTemplate("audio_row", t);
-        return n = n.replace(/%cls%/, a.join(" ")), n = n.replace(/%duration%/, r), n = n.replace(/%serialized%/, u)
+            d = getTemplate("audio_row", t);
+        return d = d.replace(/%cls%/, a.join(" ")), d = d.replace(/%duration%/, r), d = d.replace(/%serialized%/, n), d = d.replace(/%search_href%/, "/search?c[q]=" +
+            encodeURIComponent(u) + "&c[section]=audio&c[performer]=1")
     },
     isRecomAudio: function(t) {
         return t = AudioUtils.asObject(t), t.flags & AudioUtils.AUDIO_ITEM_RECOMS_BIT
@@ -948,7 +950,7 @@ AudioPlayer.tabIcons = {
             e = [];
         if (i) {
             var o = geByClass("_audio_row_" + i.fullId);
-            e = e.concat([].slice.call(o))
+            e = e.concat([].slice.call(o));
         }
         for (var a = 0, l = this._currentPlayingRows.length; l > a; a++) {
             var s = this._currentPlayingRows[a];
@@ -1770,7 +1772,7 @@ AudioPlayer.tabIcons = {
         this._setFadeVolumeInterval(function() {
             o > 0 && (o *= 1.2), a += o;
             var e = !1;
-            return (e = 0 > o ? t >= a : a >= t) ? (this.setVolume(t), this._setFadeVolumeInterval(), i && i()) : void this.setVolume(a)
+            return (e = 0 > o ? t >= a : a >= t) ? (this.setVolume(t), this._setFadeVolumeInterval(), i && i()) : void this.setVolume(a);
         }.bind(this))
     };
 try {
