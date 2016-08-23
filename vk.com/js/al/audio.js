@@ -648,8 +648,8 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         s = !1,
         r = this.getCurrentPlaylist(),
         d = !1;
-    if (this.isLayer() ? s = r == this.ap.getCurrentPlaylist() : (d = e.getType() == AudioPlaylist.TYPE_POPULAR && this.options.md, s = this.options.reorderHash && e.getType() ==
-            AudioPlaylist.TYPE_ALBUM || d), s && !this._sorter) {
+    if (this.isLayer() ? s = r == this.ap.getCurrentPlaylist() : (d = e.getType() == AudioPlaylist.TYPE_POPULAR && this.options.md, s = e.getOwnerId() > 0 && vk.id != e.getOwnerId() ?
+            !1 : this.options.reorderHash && e.getType() == AudioPlaylist.TYPE_ALBUM || d), s && !this._sorter) {
         var n = this.isLayer() ? {} : {
             onDragOverElClass: "_audio_album_item",
             onDragEnter: function(i, o) {
@@ -820,15 +820,15 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
         top: _
     });
     var c = getXY(l)[1];
-    addEvent(window, "scroll", this._ev_onScroll = function() {
+    addEvent(window, "scroll resize", this._ev_onScroll = function(e) {
         scrollGetY() >= c - _ ? (addClass(d, "fixed"), setStyle(l, {
             "padding-top": n,
             "z-index": 2
         })) : (removeClass(d, "fixed"), setStyle(l, {
             "padding-top": null
-        }))
+        })), hasClass(d, "fixed") && setStyle(d, "left", getXY(l)[0] - scrollGetX())
     }), this.isLayer() || cur.destroy.push(function() {
-        removeEvent(window, "scroll", r._ev_onScroll)
+        removeEvent(window, "scroll resize", r._ev_onScroll)
     })
 }, AudioPage.prototype.toggleSearchProgress = function(e) {
     var i = geByClass1("ui_search_fltr_control", this._container),

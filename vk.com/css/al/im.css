@@ -997,6 +997,10 @@ body.mac .im_stickerpack_fixed {
     width: 100%
 }
 
+.im-page.im-page_classic .im-page--top-date-bar-wrap {
+    z-index: 3
+}
+
 .im-page.im-page_classic .im-page--typing {
     margin-left: 34px
 }
@@ -1170,7 +1174,8 @@ body.mac .im_stickerpack_fixed {
     padding-top: 61px;
     max-height: none;
     background: #fff;
-    padding-bottom: 147px
+    padding-bottom: 147px;
+    position: relative
 }
 
 .im-page.im-page_classic .im-page--mess-search {
@@ -1412,7 +1417,7 @@ body.mac .im_stickerpack_fixed {
     width: 594px;
     top: 46px;
     margin-top: -14px;
-    z-index: 2;
+    z-index: 101;
     text-align: center;
     pointer-events: none
 }
@@ -1919,6 +1924,7 @@ body.mac .im_stickerpack_fixed {
     height: 100%;
     box-sizing: border-box;
     bottom: 0;
+    z-index: 1;
     width: 100%
 }
 
@@ -2380,6 +2386,12 @@ body.mac .im_stickerpack_fixed {
     transition: border-bottom-color 0.3s linear
 }
 
+.im-chat-input .im-chat-input--text * {
+    color: #000!important;
+    font-weight: 400;
+    -webkit-font-smoothing: auto
+}
+
 .im-chat-input .im-chat-input--text:focus {
     border-bottom-color: #a9bbcf
 }
@@ -2448,8 +2460,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-mess-stack {
-    position: relative;
-    z-index: 1
+    position: relative
 }
 
 .im-mess-stack .im-mess-stack--content .im-mess-stack--lnk {
@@ -3759,7 +3770,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     margin-top: -1px;
     width: 18px;
     height: 18px;
-    margin-left: 2px;
+    margin-left: 7px;
     background: url(/images/icons/verify.png) no-repeat 0 0
 }
 
@@ -5423,8 +5434,12 @@ body.sf .nim-dialog .nim-dialog--unread {
     margin-top: 17px
 }
 
+.im_change_topic_label {
+    max-width: 202px
+}
+
 .im_change_topic_labeled {
-    width: 225px;
+    width: 190px;
     position: relative;
     left: 3px
 }

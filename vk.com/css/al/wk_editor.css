@@ -55,7 +55,7 @@ textarea.wke_textarea {
     width: 24px;
     height: 24px;
     margin-left: 4px;
-    background: url(/images/icons/wiki_icons.png) no-repeat;
+    background: url(/images/icons/wiki_icons.png?1) no-repeat;
     border-radius: 2px
 }
 
@@ -135,6 +135,12 @@ textarea.wke_textarea {
 
 .wke_b.wke_b_mode {
     background-position: 0px -360px;
+    float: right;
+    margin-left: 12px
+}
+
+.wke_b.wke_b_help {
+    background-position: 0px -384px;
     float: right
 }
 
