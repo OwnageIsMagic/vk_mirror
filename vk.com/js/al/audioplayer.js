@@ -314,7 +314,7 @@ var AudioUtils = {
                         u = s + r / 2,
                         n = i ? t.left : u - a / 2;
                     o <= AudioUtils.AUDIO_LAYER_MAX_WIDTH && o >= AudioUtils.AUDIO_LAYER_MIN_WIDTH && (n = e[0]);
-                    var d = 37,
+                    var d = 38,
                         _ = s - n + Math.min(r / 2, d) - 2;
                     return setPseudoStyle(this.getContent(), "after", {
                         left: _ + "px"

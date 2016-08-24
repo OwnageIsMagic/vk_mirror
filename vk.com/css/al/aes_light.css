@@ -1401,6 +1401,10 @@ a.ads_ad_box2:hover {
     padding: 0
 }
 
+.ads_ad_box.redesign .ads_ad_box2.ver.repeat_ver.size_site.first {
+    margin-top: 0
+}
+
 .ads_ad_box.redesign .ads_ad_photo_box {
     border-radius: 2px;
     height: 85px

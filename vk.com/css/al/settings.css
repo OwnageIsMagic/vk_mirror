@@ -978,24 +978,28 @@ a.settings_blb_title {
     font-size: 12.5px
 }
 
+.settings_transfer_receive {
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
 .settings_transfer_action {
     display: block;
     visibility: none;
-    opacity: 0.3;
-    filter: alpha(opacity=30);
-    background: url(/images/icons/p2p_icons.png?2) no-repeat 0 0
+    opacity: 0.2;
+    filter: alpha(opacity=20);
+    background: url(/images/icons/p2p_icons.png?2) no-repeat 0 0;
+    width: 16px;
+    height: 16px
 }
 
 .settings_transfer_repeat {
-    width: 15px;
-    height: 15px;
-    background-position: left -18px
+    background-position: right -18px
 }
 
 .settings_transfer_cancel {
-    width: 14px;
-    height: 14px;
-    background-position: left -59px
+    background-position: right -58px
 }
 
 .settings_transfer_history .settings_history_title {

@@ -2346,7 +2346,15 @@ body.mac .im_stickerpack_fixed {
 
 .im-chat-input .im-chat-input--error {
     display: none;
-    padding: 15px 82px
+    padding: 15px 36px 15px 48px;
+    height: 80px;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    box-sizing: border-box
 }
 
 .im-chat-input .im-chat-input--error:before {
@@ -2426,11 +2434,14 @@ body.mac .im_stickerpack_fixed {
 .im-chat-input.im-chat-input_error {
     padding-top: 0;
     padding-bottom: 0;
-    position: relative
+    position: relative;
+    background: #fafbfc
 }
 
 .im-chat-input.im-chat-input_error .im-chat-input--error {
-    display: block
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex
 }
 
 .im-chat-input.im-chat-input_error .im-chat-input--textarea,
@@ -2444,6 +2455,10 @@ body.mac .im_stickerpack_fixed {
     border-top: 0;
     border-radius: 0 0 2px 2px;
     box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
+}
+
+.im-chat-input.im-chat-input_classic .im-chat-input--error {
+    padding-left: 58px
 }
 
 .im-chat-input.im-chat-input_classic .multi_media_preview .page_docs_preview,

@@ -391,6 +391,26 @@
     padding: 15px
 }
 
+.ads_all_ads_box .ads_ad_box.redesign {
+    padding: 10px
+}
+
+.ads_all_ads_box .ads_ad_box.redesign .ads_ad_box_border {
+    background-color: #edeef0
+}
+
+.ads_all_ads_box .ads_ad_box.redesign .ads_ad_box_border.repeat_ver.first {
+    border-width: 1px
+}
+
+.ads_all_ads_box .ads_ad_box.redesign .ads_ad_box2.ver.repeat_ver.size_site {
+    margin: 0
+}
+
+.ads_all_ads_box .ads_ad_box.redesign.ver.repeat_ver.size_site.first {
+    padding: 10px
+}
+
 .ads_all_ads_box .ads_ad_box_border {
     border-width: 1px
 }
@@ -420,6 +440,26 @@
 
 .ads_premoderation_requests .ads_ad_box.promoted_post {
     padding: 15px
+}
+
+.ads_premoderation_requests .ads_ad_box.redesign {
+    padding: 10px
+}
+
+.ads_premoderation_requests .ads_ad_box.redesign .ads_ad_box_border {
+    background-color: #edeef0
+}
+
+.ads_premoderation_requests .ads_ad_box.redesign .ads_ad_box_border.repeat_ver.first {
+    border-width: 1px
+}
+
+.ads_premoderation_requests .ads_ad_box.redesign .ads_ad_box2.ver.repeat_ver.size_site {
+    margin: 0
+}
+
+.ads_premoderation_requests .ads_ad_box.redesign.ver.repeat_ver.size_site.first {
+    padding: 10px
 }
 
 .ads_premoderation_requests .ads_ad_box_border {
@@ -463,7 +503,7 @@
 .ads_premoderation_request {
     border: 1px solid #d3dbe1;
     padding: 3px;
-    width: 283px;
+    width: 365px;
     overflow: hidden
 }
 

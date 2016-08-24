@@ -5921,6 +5921,9 @@ var Wall = {
                 onMediaChange: function() {
                     Wall.postChanged();
                 },
+                onMediaUploadStarted: function() {
+                    Wall.postChanged();
+                },
                 editable: 1,
                 sortable: 1
             }, opts.media_opts || {}));

@@ -1367,6 +1367,12 @@ h2.payments_getvotes_title {
     color: #828282
 }
 
+.payments_money_transfer_history_box {
+    padding: 0 25px;
+    height: 350px;
+    overflow-y: scroll
+}
+
 .payments_systems_messages_container {
     margin: 10px 10px 0
 }

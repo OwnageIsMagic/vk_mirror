@@ -797,6 +797,16 @@
     color: #939393
 }
 
+.feedback_buttons {
+    padding-top: 9px
+}
+
+.feedback_buttons .flat_button {
+    padding-left: 12px;
+    padding-right: 12px;
+    margin-right: 8px
+}
+
 .feedback_rphoto {
     float: right;
     margin: 0 6px 0 15px;
@@ -870,6 +880,7 @@
     background-position: 0 -110px
 }
 
+.feedback_money_row .feedback_photo_icon,
 .feedback_payment_row .feedback_photo_icon {
     display: block;
     background-position: 0 -132px

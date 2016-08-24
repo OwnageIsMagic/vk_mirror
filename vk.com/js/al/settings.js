@@ -1139,17 +1139,16 @@ var Settings = {
             "settings_transfer_history_wrap"), show("settings_votes_history_wrap"), delete o.section), nav.setLoc(o), !1
     },
     moneyTransferCancel: function(e, t, s, o) {
-        var n = gpeByClass("settings_history_row", e),
-            i = geByClass1("settings_transfer_status_in_process", n);
+        var n = gpeByClass("_row", e),
+            i = geByClass1("_status", n);
         o || addClass(n, "settings_history_row_progress"), ajax.post("al_payments.php?act=a_cancel_money_transfer", {
             tx_id: t,
             hash: s
         }, {
             onDone: function(a, r) {
                 return 0 === a ? (o || val(i, getLang("settings_transfer_status_cancelling")), void setTimeout(Settings.moneyTransferCancel.pbind(e, t, s, !0),
-                    2e3)) : (removeClass(n, "settings_history_row_progress"), re(e), void val(i,
-                    '<div class="settings_history_alt_row settings_transfer_status_cancelled">' + getLang("settings_transfer_status_cancelled") +
-                    "</div>"))
+                    2e3)) : (removeClass(n, "settings_history_row_progress"), re(e), val(i, getLang("settings_transfer_status_cancelled")), removeClass(i,
+                    "settings_transfer_receive"), void addClass(i, "settings_transfer_status_cancelled"))
             },
             onFail: function(e) {
                 return removeClass(n, "settings_history_row_progress"), setTimeout(showFastBox(getLang("global_error"), e)
@@ -1165,39 +1164,38 @@ var Settings = {
     },
     initApps: function(opts, appTpl) {
         extend(cur, {
-                aSearch: ge("s_search"),
-                lShowMoreButton: ge("ui_apps_load_more"),
-                lContent: ge("settings_apps_list"),
-                aEmptyCont: ge("settings_apps_empty"),
-                aSummaryCounter: geByClass1("page_block_header_count", "wide_column"),
-                onSilentLoad: {},
-                apps: {},
-                deletedApps: {},
-                appTpl: appTpl || function() {
-                    return ""
-                }
-            }), extend(cur, opts), cur.defaultCount = cur.shownApps,
-            cur.appTpl = appTpl || function() {
+            aSearch: ge("s_search"),
+            lShowMoreButton: ge("ui_apps_load_more"),
+            lContent: ge("settings_apps_list"),
+            aEmptyCont: ge("settings_apps_empty"),
+            aSummaryCounter: geByClass1("page_block_header_count", "wide_column"),
+            onSilentLoad: {},
+            apps: {},
+            deletedApps: {},
+            appTpl: appTpl || function() {
                 return ""
-            }, Settings.scrollNode = browser.msie6 ? pageNode : window, addEvent(Settings.scrollNode, "scroll", Settings.scrollCheckApps.bind(this)), setTimeout(function() {
-                cur.destroy.push(function() {
-                    removeEvent(Settings.scrollNode, "scroll", Settings.scrollCheckApps.bind(this))
-                })
-            }, 0), cur.silent = !0, ajax.post("/al_settings.php", {
-                act: "load_apps_silent"
-            }, {
-                cache: 1,
-                local: 1,
-                onDone: function(data, count) {
-                    return (data = eval("(" + data + ")")) ? (void 0 === cur.searchOffset && (cur.searchOffset = 0), cur.curList = "all", cur.appsList = data[cur.curList] ?
-                        data : {
-                            all: []
-                        }, cur.appsCount = count, void this.indexApp(function() {
-                            if (cur.silent = !1, cur.onSilentLoad)
-                                for (var e in cur.onSilentLoad) isFunction(cur.onSilentLoad[e]) && cur.onSilentLoad[e]()
-                        })) : cur.silent = !1
-                }.bind(this)
+            }
+        }), extend(cur, opts), cur.defaultCount = cur.shownApps, cur.appTpl = appTpl || function() {
+            return "";
+        }, Settings.scrollNode = browser.msie6 ? pageNode : window, addEvent(Settings.scrollNode, "scroll", Settings.scrollCheckApps.bind(this)), setTimeout(function() {
+            cur.destroy.push(function() {
+                removeEvent(Settings.scrollNode, "scroll", Settings.scrollCheckApps.bind(this))
             })
+        }, 0), cur.silent = !0, ajax.post("/al_settings.php", {
+            act: "load_apps_silent"
+        }, {
+            cache: 1,
+            local: 1,
+            onDone: function(data, count) {
+                return (data = eval("(" + data + ")")) ? (void 0 === cur.searchOffset && (cur.searchOffset = 0), cur.curList = "all", cur.appsList = data[cur.curList] ?
+                    data : {
+                        all: []
+                    }, cur.appsCount = count, void this.indexApp(function() {
+                        if (cur.silent = !1, cur.onSilentLoad)
+                            for (var e in cur.onSilentLoad) isFunction(cur.onSilentLoad[e]) && cur.onSilentLoad[e]()
+                    })) : cur.silent = !1
+            }.bind(this)
+        })
     },
     isDelayedOnSilentLoad: function e(t, s) {
         return cur.silent ? (e.count = e.count || 0, e.count++, cur.onSilentLoad[t || "key_" + e.count] = s, !0) : void 0

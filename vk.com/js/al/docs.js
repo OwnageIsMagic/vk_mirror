@@ -115,8 +115,8 @@ var Docs = {
             a = e[4],
             i = e[6],
             u = e[7],
-            n = e[9] || 0,
-            d = "/doc" + a + "_" + o,
+            d = e[9] || 0,
+            n = "/doc" + a + "_" + o,
             l = a == vk.id || u == vk.id || a == cur.oid && 0 > a && cur.groupAdmin,
             h = "";
         g = "", cur.selection && (s = s.replace(cur.selection.re, cur.selection.val));
@@ -131,7 +131,7 @@ var Docs = {
             })
         }
         var g = e[8],
-            _ = " docs_icon_type" + n,
+            f = " docs_icon_type" + d,
             h = rs(l ? cur.tpl.edit : cur.tpl.add, {
                 oid: a,
                 item_id: o
@@ -140,10 +140,10 @@ var Docs = {
             oid: a,
             item_id: o,
             ext: r,
-            url: d,
+            url: n,
             thumb: g,
             title: clean(s),
-            icon_class: _
+            icon_class: f
         }), rs(cur.tpl.item, {
             oid: a,
             item_id: o,
@@ -152,7 +152,7 @@ var Docs = {
             title: s,
             title_clean: c,
             date_str: t,
-            url: d,
+            url: n,
             tags: i
         })
     },
@@ -569,9 +569,17 @@ var Docs = {
         hasClass(boxLayerWrap, "box_layer_hidden") && (removeClass(boxLayerWrap, "box_layer_hidden"), hide(boxLayerWrap)), boxLayerWrap.visibilityHide = !1
     },
     onChooseDragEnter: function(e) {
-        return boxLayerWrap.scrollTop = 0, setStyle(cur.docsChooseDropbox, "height", getSize(cur.docsChooseDropbox)[1] + lastWindowHeight - getSize(curBox()
-            .bodyNode)[1] - getXY(curBox()
-            .bodyNode, !0)[1]), cancelEvent(e)
+        boxLayerWrap.scrollTop = 0;
+        var o = curBox(),
+            r = o.bodyNode;
+        if (isVisible(cur.docsChooseRows)) o.bodyH = getSize(r)[1];
+        else if (void 0 !== o.bodyH) {
+            var c = getXY(r, !0)[1],
+                s = getSize(cur.docsChooseDropbox)[1],
+                t = getSize(domPN(cur.docsChooseDropbox))[1] - s;
+            setStyle(cur.docsChooseDropbox, "height", Math.min(lastWindowHeight - c - t, o.bodyH - t))
+        }
+        return cancelEvent(e)
     },
     _eof: 1
 };
