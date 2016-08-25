@@ -798,7 +798,7 @@
 }
 
 .feedback_buttons {
-    padding-top: 9px
+    padding: 9px 0 2px
 }
 
 .feedback_buttons .flat_button {
@@ -833,7 +833,7 @@
 
 .feedback_photo_icon {
     display: none;
-    background: url(/images/feedback_icons.png) no-repeat;
+    background: url(/images/feedback_icons.png?2) no-repeat;
     background-color: #fff;
     position: absolute;
     width: 16px;
@@ -880,7 +880,6 @@
     background-position: 0 -110px
 }
 
-.feedback_money_row .feedback_photo_icon,
 .feedback_payment_row .feedback_photo_icon {
     display: block;
     background-position: 0 -132px
@@ -904,6 +903,11 @@
 .feedback_mention_row .feedback_photo_icon {
     display: block;
     background-position: 0 -220px
+}
+
+.feedback_money_row .feedback_photo_icon {
+    display: block;
+    background-position: 0 -286px
 }
 
 .feedback_payment_thumb {

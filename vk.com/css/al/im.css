@@ -2529,7 +2529,7 @@ body.mac .im_stickerpack_fixed {
 
 .im-mess-stack .im-mess-stack--gift,
 .im-mess-stack .im-mess-stack--money-tranfer {
-    color: #7f7660
+    color: #777e8c
 }
 
 .im-mess-stack .im-mess-stack--photo {
@@ -2869,7 +2869,7 @@ body.mac .im_stickerpack_fixed {
 .im-mess.im-mess_gift .im-mess--text {
     margin-top: 18px!important;
     text-align: center;
-    color: #7f7660;
+    color: #777e8c;
     font-size: 14px
 }
 

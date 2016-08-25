@@ -1966,6 +1966,18 @@ div.chat_tab_img {
     background-position: -25px -42px
 }
 
+.emoji_tabs_no_store .emoji_tabs_r_s {
+    margin-left: 272px
+}
+
+.emoji_tabs_no_store .emoji_tabs_wrap {
+    width: 254px
+}
+
+.emoji_tabs_no_store .emoji_shop {
+    display: none
+}
+
 .emoji_tab_recent {
     padding: 9px;
     width: 18px;
@@ -2328,7 +2340,7 @@ div.chat_tab_img {
 }
 
 .top_notify_cont .feedback_row {
-    padding: 13px 15px
+    padding: 10px 15px
 }
 
 .top_notify_cont .feedback_row .post_actions {
@@ -2391,7 +2403,7 @@ div.chat_tab_img {
 }
 
 .top_notify_cont .feedback_footer {
-    padding: 3px 0 0
+    padding: 2px 0 0
 }
 
 .top_notify_cont .feedback_payment_thumb {

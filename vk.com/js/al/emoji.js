@@ -188,7 +188,7 @@ if (!window.Emoji) {
                 });
             }
 
-            if (!opts.noStickers && window.emojiStickers && (hasClass(txt, 'im_editable') || hasClass(txt, 'fc_editable'))) {
+            if (!opts.noStickers && !opts.noStickersStore && window.emojiStickers && (hasClass(txt, 'im_editable') || hasClass(txt, 'fc_editable'))) {
                 for (var i in window.emojiStickers) {
                     if (window.emojiStickers[i][2]) {
                         Emoji.hasNewStickers = window.emojiStickers[i][2];
@@ -1608,6 +1608,13 @@ if (!window.Emoji) {
                 re(el);
                 Emoji.noNewStickers = true;
             });
+
+            if (opts.noStickersStore) {
+                addClass(geByClass1('emoji_tabs', 'emoji_block_' + optId), 'emoji_tabs_no_store');
+            } else {
+                removeClass(geByClass1('emoji_tabs', 'emoji_block_' + optId), 'emoji_tabs_no_store');
+            }
+
             return cancelEvent(ev);
         },
         curEmojiSet: ['D83DDE0A', 'D83DDE03', 'D83DDE09', 'D83DDE06', 'D83DDE1C', 'D83DDE0B', 'D83DDE0D', 'D83DDE0E', 'D83DDE12', 'D83DDE0F', 'D83DDE14', 'D83DDE22',
