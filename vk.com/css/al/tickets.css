@@ -352,7 +352,8 @@ body.dev .tickets_reply_row {
 }
 
 .tickets_sys_content__date {
-    color: #939393
+    color: #939393;
+    white-space: nowrap
 }
 
 .tickets_reply_actions {
@@ -497,7 +498,8 @@ body.dev .tickets_header {
     padding-right: 35px;
     font-size: 15px;
     line-height: 20px;
-    overflow: hidden
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .tickets_header_title .title_deleted {
@@ -560,7 +562,8 @@ body.dev .tickets_header_task_info {
 }
 
 .tickets_header_body {
-    float: left
+    float: left;
+    max-width: 100%
 }
 
 .tickets_header_links {

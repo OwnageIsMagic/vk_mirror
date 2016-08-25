@@ -2527,8 +2527,15 @@ body.mac .im_stickerpack_fixed {
     -moz-osx-font-smoothing: grayscale
 }
 
-.im-mess-stack .im-mess-stack--gift,
-.im-mess-stack .im-mess-stack--money-tranfer {
+.im-mess-stack .im-mess-stack--gift {
+    color: #7f7660
+}
+
+.im-mess-stack .im-mess-stack--money-transfer {
+    color: #656565
+}
+
+.im-mess_unread .im-mess-stack .im-mess-stack--money-transfer {
     color: #777e8c
 }
 
@@ -2869,7 +2876,7 @@ body.mac .im_stickerpack_fixed {
 .im-mess.im-mess_gift .im-mess--text {
     margin-top: 18px!important;
     text-align: center;
-    color: #777e8c;
+    color: #7f7660;
     font-size: 14px
 }
 
