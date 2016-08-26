@@ -833,7 +833,7 @@
 
 .feedback_photo_icon {
     display: none;
-    background: url(/images/feedback_icons.png?2) no-repeat;
+    background: url(/images/feedback_icons.png?3) no-repeat;
     background-color: #fff;
     position: absolute;
     width: 16px;
@@ -905,9 +905,15 @@
     background-position: 0 -220px
 }
 
+.feedback_money_complete_row .feedback_photo_icon,
 .feedback_money_row .feedback_photo_icon {
     display: block;
-    background-position: 0 -286px
+    background-position: 0 -352px
+}
+
+.feedback_money_decline_row .feedback_photo_icon {
+    display: block;
+    background-position: 0 -374px
 }
 
 .feedback_payment_thumb {

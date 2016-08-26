@@ -2618,24 +2618,28 @@ window.VideoChat = {
     onScrollUpdate: function(e) {
         e.data.scrollBottom < VideoChat.SCROLL_EDGE_BELOW_THRESHOLD && VideoChat.toggleScrollBottomBtn(!1)
     },
-    receiveMessage: function(e, i, t, o, a, d, n, r) {
-        n && (d = getTemplate("video_chat_sticker", {
-            sticker_id: n,
-            pack_id: r,
+    receiveMessage: function(e, i, t, o, a, d, n, r, s) {
+        r && (n = getTemplate("video_chat_sticker", {
+            sticker_id: r,
+            pack_id: s,
             img_size: isRetina() ? 256 : 128
         }));
-        var s = psr(getTemplate("video_chat_message", {
-            author_href: a,
-            author_photo: o,
-            author_name: t,
-            message: d,
+        var v = "";
+        (mvcur.adminLevel > 0 || e == vk.id) && (v += getTemplate("video_chat_message_action_del"));
+        var l = psr(getTemplate("video_chat_message", {
+            author_href: d,
+            author_photo: a,
+            author_name: o,
+            message: n,
             video_owner_id: e,
-            msg_id: i
+            msg_id: i,
+            actions: v
         }));
-        VideoChat.appendMessage(s, i)
+        VideoChat.appendMessage(l, i)
     },
     receiveDelete: function(e, i) {
-        VideoChat.scroll.updateAbove(function() {
+        var t = ge("mv_chat_msg" + e + "_" + i);
+        t && !hasClass(t, "_deleting") && VideoChat.scroll.updateAbove(function() {
             re("mv_chat_msg" + e + "_" + i)
         })
     },
@@ -2697,6 +2701,19 @@ window.VideoChat = {
                 }
             }), VideoChat.messageSending = !0
         }
+    },
+    deleteMessage: function(e, i) {
+        var t = ge("mv_chat_msg" + e);
+        addClass(t, "_deleting"), ajax.post("al_video.php", {
+            act: "delete_comment",
+            comment: e,
+            hash: i,
+            videoview_chat: 1
+        }, {
+            onDone: function(e) {
+                val(domByClass(t, "mv_chat_message_content"), e)
+            }
+        })
     },
     isHidden: function() {
         return !!this.hidden

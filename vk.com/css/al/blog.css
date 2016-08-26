@@ -1444,6 +1444,12 @@ textarea.blog_edit_inp {
     display: inline-block
 }
 
-.blog_load_more_but_hidden {
+.blog_load_more_but_hidden,
+.blog_notify_settings {
     display: none
+}
+
+.blog_notify_settings_checkbox {
+    width: 250px;
+    margin-top: 8px
 }
