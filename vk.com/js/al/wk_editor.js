@@ -473,7 +473,7 @@ extend(WkEditor.prototype, {
     },
     getLinkWiki: function(e, t, i) {
         var s, n;
-        "/" == e[0] && (e = "http://vk.com" + e);
+        "/" == e[0] && (e = "https://vk.com" + e);
         var a = "[",
             r = "]";
         if (s = e.match(this.re.away)) e = decodeURIComponent(s[1]);

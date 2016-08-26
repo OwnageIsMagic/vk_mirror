@@ -74,7 +74,7 @@
     transition: opacity 0.2s ease
 }
 
-.page_media_money_transfer .page_media_money_decline_btn,
+.page_media_money_transfer .page_media_money_decline_btn .button,
 .wall_copy_more,
 .wall_post_more,
 .wall_reply_more {
@@ -1641,24 +1641,24 @@ a.page_media_link_desc {
 }
 
 .page_media_money_transfer .page_media_money_decline_btn {
-    display: inline-block;
-    opacity: 0;
-    filter: alpha(opacity=0)
+    display: inline-block
 }
 
 .page_media_money_transfer .page_media_money_decline_btn .button {
     background: url(/images/icons/p2p_icons.png?2) no-repeat 0 -58px;
     width: 16px;
-    height: 16px
+    height: 16px;
+    opacity: 0;
+    filter: alpha(opacity=0)
 }
 
-.page_media_money_transfer .page_media_money_decline_btn:hover {
+.page_media_money_transfer .page_media_money_decline_btn:hover .button {
     opacity: 1!important;
     -webkit-filter: none!important;
     filter: none!important
 }
 
-.page_media_money_transfer:hover .page_media_money_decline_btn {
+.page_media_money_transfer:hover .page_media_money_decline_btn .button {
     opacity: 0.6;
     filter: alpha(opacity=60)
 }
