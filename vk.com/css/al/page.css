@@ -28,7 +28,6 @@
 .page_actions_item_unfolded,
 .page_actions_subitem.checked,
 .page_avatar.no_avatar,
-.page_coub,
 .page_fronly,
 .page_gif_add_icon,
 .page_gif_added .page_gif_add_icon,
@@ -43,12 +42,13 @@
 .page_microdata_logo_aliexpress,
 .page_microdata_logo_asos,
 .page_more_link.loading,
-.page_pladform,
-.page_rutube,
-.page_vimeo,
 .page_wall_search .page_reset_search,
 .page_wall_search .wall_search,
 .page_wm,
+.page_wm.page_coub,
+.page_wm.page_pladform,
+.page_wm.page_rutube,
+.page_wm.page_vimeo,
 .replies_side,
 .wall_module .like_icon,
 .wall_module .media_desc b,
@@ -5819,19 +5819,19 @@ button.wall_block_app_btn {
     margin: 6px
 }
 
-.page_vimeo {
+.page_wm.page_vimeo {
     background-image: url(/images/icons/vimeo_watermark.png)
 }
 
-.page_rutube {
+.page_wm.page_rutube {
     background-image: url(/images/icons/rutube_watermark.png)
 }
 
-.page_coub {
+.page_wm.page_coub {
     background-image: url(/images/icons/coub_watermark.png)
 }
 
-.page_pladform {
+.page_wm.page_pladform {
     background-image: url(/images/icons/pladform_watermark.png)
 }
 

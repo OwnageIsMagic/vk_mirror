@@ -1300,7 +1300,7 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 .group_activity_row_wrap .group_activity_content .group_activity_actions .divider {
-    margin-right: 7px
+    margin-right: 1px
 }
 
 .group_activity_row_wrap .group_obscene_word {
@@ -1311,14 +1311,6 @@ a.group_ad_post_link.deleted.deleted:hover {
 
 .group_activity_row_wrap:last-child .group_activity_obscene_comment_wrap {
     border-bottom: none
-}
-
-.group_activity_row_empty {
-    padding: 85px 130px;
-    font-size: 12px;
-    line-height: 14px;
-    text-align: center;
-    color: #777
 }
 
 .group_activity_more_link {
