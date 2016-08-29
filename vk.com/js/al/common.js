@@ -2160,7 +2160,7 @@ function shortCurrency() {
             });
             ge('utils')
                 .appendChild(div);
-            rubEnabled[ff] = Math.abs(div.firstChild.offsetWidth - div.lastChild.offsetWidth) >= 3 * _short_len;
+            rubEnabled[ff] = Math.abs(div.firstChild.offsetWidth - div.lastChild.offsetWidth) >= 2 * _short_len;
             re(div);
         }
         if (rubEnabled[ff]) {

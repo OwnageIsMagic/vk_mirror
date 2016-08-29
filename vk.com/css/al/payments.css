@@ -1323,10 +1323,92 @@ h2.payments_getvotes_title {
 }
 
 .payments_money_transfer_wrap {
-    padding: 20px 25px
+    margin: 20px 25px;
+    text-align: center
 }
 
-.payments_money_transfer_wrap .flat_button {
+.payments_money_transfer_amount_wrap {
+    padding: 32px 0 0;
+    border: 1px solid #d3d9de;
+    border-radius: 3px 3px 0 0;
+    background-color: #f7f9fa
+}
+
+.payments_money_transfer_amount_wrap.money_error {
+    background-color: #faf0ed;
+    border-color: #cc8f8f
+}
+
+.payments_money_transfer_amount_wrap.money_error .payments_money_transfer_amount {
+    background-color: #faf0ed
+}
+
+.payments_money_transfer_amount_wrap.money_error .payments_money_transfer_notice {
+    color: #981c0d
+}
+
+.payments_money_transfer_amount {
+    display: inline-block;
+    border: none;
+    font-size: 48px!important;
+    font-weight: 300;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    text-align: right;
+    width: auto;
+    background-color: #f7f9fa
+}
+
+.payments_money_transfer_amount::-webkit-input-placeholder {
+    color: #aeb2ba
+}
+
+.payments_money_transfer_amount::-moz-placeholder,
+.payments_money_transfer_amount:-moz-placeholder {
+    color: #aeb2ba
+}
+
+.payments_money_transfer_amount:-ms-input-placeholder {
+    color: #aeb2ba
+}
+
+.payments_money_transfer_amount~.placeholder .ph_content {
+    color: #aeb2ba
+}
+
+.payments_money_transfer_currency {
+    display: inline-block;
+    font-size: 24px;
+    font-weight: 300;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin-right: 50px
+}
+
+.payments_money_transfer_notice {
+    padding: 18px 0 12px;
+    color: #7a7e87;
+    text-align: center
+}
+
+.payments_money_transfer_comment {
+    padding: 15px 15px 7px!important;
+    border: 1px solid #d3d9de;
+    border-top: none;
+    border-radius: 0 0 3px 3px!important;
+    height: 48px;
+    width: 400px;
+    resize: none;
+    background-color: #f7f9fa
+}
+
+.payments_money_transfer_buttons {
+    padding: 0 25px 25px;
+    color: #939393;
+    font-size: 12.5px
+}
+
+.payments_money_transfer_buttons .flat_button {
     float: right
 }
 
@@ -1335,7 +1417,7 @@ h2.payments_getvotes_title {
 }
 
 .payments_money_transfer_row .dark {
-    width: 510px
+    width: 398px
 }
 
 .payments_money_transfer_row textarea {
@@ -1346,25 +1428,11 @@ h2.payments_getvotes_title {
     padding-bottom: 0
 }
 
-.payments_money_transfer_limit_msg {
-    padding: 6px 0 2px;
-    font-size: 12px;
-    line-height: 15px;
-    color: #656565
-}
-
 .payments_money_transfer_secure {
     padding: 6px 0 0 20px;
-    color: #656565;
+    color: #7a7e87;
     font-size: 12px;
     background: url(/images/payment_security.png) no-repeat 0 7px
-}
-
-.payments_money_transfer_currency {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    color: #828282
 }
 
 .payments_money_transfer_history_box {

@@ -978,17 +978,15 @@ a.settings_blb_title {
     font-size: 12.5px
 }
 
-.settings_transfer_receive {
-    font-weight: 500;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto
+.settings_transfer_decline_lnk {
+    color: #939393
 }
 
 .settings_transfer_action {
     display: block;
     visibility: none;
-    opacity: 0.2;
-    filter: alpha(opacity=20);
+    opacity: 0.6;
+    filter: alpha(opacity=60);
     background: url(/images/icons/p2p_icons.png?2) no-repeat 0 0;
     width: 16px;
     height: 16px
@@ -1004,7 +1002,7 @@ a.settings_blb_title {
 
 .settings_transfer_history .settings_history_title {
     padding-right: 15px!important;
-    width: 240px
+    width: 220px
 }
 
 .settings_transfer_history .settings_history_actions {
@@ -1012,9 +1010,7 @@ a.settings_blb_title {
 }
 
 .settings_transfer_history tr:hover .settings_transfer_action {
-    visibility: visible;
-    opacity: 0.7;
-    filter: alpha(opacity=70)
+    visibility: visible
 }
 
 .settings_transfer_history tr:hover .settings_transfer_action:hover {

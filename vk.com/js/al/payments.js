@@ -425,27 +425,24 @@ var MoneyTransfer = {
     init: function() {
         placeholderInit('transfer_amount');
         placeholderInit('transfer_comment');
-        if (cur.paymentsOptions.repeatId) {
-            MoneyTransfer.send();
-        }
+        setTimeout(elfocus.pbind('transfer_amount'), 100);
+        shortCurrency();
+        MoneyTransfer.autosizeAmount();
+        /*if (cur.paymentsOptions.repeatId) {
+          MoneyTransfer.send();
+        }*/
     },
     send: function() {
         var box = curBox();
-        btn = box.btns.ok[0];
+        btn = ge('payments_money_transfer_send');
         if (isButtonLocked(btn)) return;
 
-        var amount = val('transfer_amount'),
-            error = false;
+        var amount = val('transfer_amount');
         if (!amount || amount <= 0) {
-            notaBene('transfer_amount');
+            addClass('payments_money_transfer_amount_wrap', 'money_error');
+            setTimeout(removeClass.pbind('payments_money_transfer_amount_wrap', 'money_error'), 500);
             return;
-        } else if (cur.paymentsOptions.minAmount && amount < cur.paymentsOptions.minAmount) {
-            error = getLang('payments_money_transfer_error_min_amount', cur.paymentsOptions.minAmount);
-        } else if (cur.paymentsOptions.maxAmount && amount > cur.paymentsOptions.maxAmount) {
-            error = getLang('payments_money_transfer_error_max_amount', cur.paymentsOptions.maxAmount);
-        }
-        if (error != false) {
-            MoneyTransfer.showError(error);
+        } else if (!MoneyTransfer.checkAmount(amount, true)) {
             return;
         }
 
@@ -489,21 +486,24 @@ var MoneyTransfer = {
             onDone: function(data, html) {
                 cur._popup_text = html;
                 cur._popup_callback = function() {
-                    hide('payments_money_transfer_wrap', 'payments_box_error');
+                    hide('payments_money_transfer_wrap', 'payments_money_transfer_buttons', 'payments_box_error');
                     show('payments_iframe_container');
                     ge('payments_iframe_container')
                         .scrollTop = 0;
 
                     box.setOptions({
-                        hideButtons: true
+                        width: 560
                     });
                     box.setBackTitle(function() {
                         hide('payments_iframe_container');
-                        show('payments_money_transfer_wrap');
+                        show('payments_money_transfer_wrap', 'payments_money_transfer_buttons');
                         box.setOptions({
-                                hideButtons: false
-                            })
-                            .setBackTitle(false);
+                            width: 450
+                        });
+                        box.setBackTitle(false);
+                    });
+                    setStyle(iframe, {
+                        width: (frc.parentNode.offsetWidth - sbWidth()) + 'px'
                     });
                 }
                 if (!popupUrl) {
@@ -630,12 +630,45 @@ var MoneyTransfer = {
 
         MoneyTransfer.startCheckStatus(data);
     },
-    cleanAmount: function(o) {
+    cleanAmount: function(o, event) {
+        if (event.keyCode == 13) {
+            return;
+        }
         var v = o.value.replace(/[^0-9]/g, "");
         if (o.value != v) o.value = v;
+        MoneyTransfer.checkAmount(v);
+        MoneyTransfer.autosizeAmount();
+    },
+    checkAmount(amount, submit) {
+        var error = false,
+            errorShown = hasClass('payments_money_transfer_amount_wrap', 'money_error');
+        if (submit && errorShown) {
+            return false;
+        }
+        if (submit && cur.paymentsOptions.minAmount && amount < cur.paymentsOptions.minAmount) {
+            error = getLang('payments_money_transfer_error_min_amount', cur.paymentsOptions.minAmount);
+        } else if (cur.paymentsOptions.maxAmount && amount > cur.paymentsOptions.maxAmount) {
+            error = getLang('payments_money_transfer_error_max_amount', cur.paymentsOptions.maxAmount);
+        }
+        if (error != false) {
+            val('payments_money_transfer_notice', error);
+            addClass('payments_money_transfer_amount_wrap', 'money_error');
+            return false;
+        } else if (errorShown) {
+            val('payments_money_transfer_notice', getLang('payments_money_transfer_amount_limits'));
+            removeClass('payments_money_transfer_amount_wrap', 'money_error');
+        }
+        return true;
+    },
+    autosizeAmount: function() {
+        var el = ge('transfer_amount'),
+            len = el.value.length || 1;
+        if (browser.chrome) len += 1;
+        el.setAttribute('size', len);
     },
     checkUserMessage: function() {
         checkTextLength(cur.paymentsOptions.maxTextLength, ge('transfer_comment'), ge('transfer_comment_limit_message'), false, true);
+        (val('transfer_comment_limit_message') && isVisible('transfer_comment_limit_message') ? hide : show)('payments_money_transfer_about_fee');
     },
     aboutBox: function() {
         return !showFastBox({
@@ -653,6 +686,10 @@ var MoneyTransfer = {
         if (ge('payments_money_transfer_wrap')) {
             hide('payments_iframe_container');
             show('payments_money_transfer_wrap');
+            box.setOptions({
+                width: 450
+            });
+            box.setBackTitle(false);
         }
     },
 
