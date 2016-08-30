@@ -3258,6 +3258,11 @@ body.mac .reply_box_inner_wrap.fixed {
     resize: none
 }
 
+.ml_ui2 .wall_module .reply_fakebox {
+    margin-left: 0;
+    padding-left: 20px
+}
+
 .post_field_wrap {
     position: relative
 }
@@ -3267,10 +3272,21 @@ body.mac .reply_box_inner_wrap.fixed {
     margin-left: 43px
 }
 
+.ml_ui2 .reply_field_wrap {
+    margin-left: 0
+}
+
 .post_field_group,
 .post_field_user {
     float: left;
     position: relative
+}
+
+.ml_ui2 .reply_fakebox_wrap .post_field_group,
+.ml_ui2 .reply_fakebox_wrap .post_field_user,
+.ml_ui2 .reply_form .post_field_group,
+.ml_ui2 .reply_form .post_field_user {
+    display: none
 }
 
 .post_field_user_image {
@@ -3408,6 +3424,13 @@ div.submit_post_field~.placeholder .ph_content {
 .reply_box div.submit_post_field[contenteditable=true]:focus~.placeholder .ph_content {
     opacity: 0;
     filter: alpha(opacity=0)
+}
+
+.ml_ui2 .reply_box div.submit_post_field,
+.ml_ui2 .reply_box div.submit_post_field[contenteditable=true],
+.ml_ui2 .reply_box div.submit_post_field[contenteditable=true]~.placeholder .ph_input,
+.ml_ui2 .reply_box div.submit_post_field~.placeholder .ph_input {
+    padding-left: 20px
 }
 
 div.submit_post_field[contenteditable=true]:empty:not(.submit_post_inited):not(.reply_field):before,
@@ -3895,6 +3918,10 @@ div.submit_post_field[contenteditable=true]>p {
     margin-bottom: 0
 }
 
+.ml_ui3 .wall_module .post_share_icon {
+    background-position: 1px -15px
+}
+
 .wall_module .my_like .post_like_icon,
 .wall_module .my_share .post_share_icon {
     opacity: 1!important;
@@ -3911,6 +3938,7 @@ div.submit_post_field[contenteditable=true]>p {
     margin: 1px 0 0 3px
 }
 
+.ml_ui3 .wall_module .post_share_link,
 .wall_module .no_likes .post_like_count,
 .wall_module .no_shares .post_share_count {
     display: none

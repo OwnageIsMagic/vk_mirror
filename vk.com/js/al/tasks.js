@@ -38,13 +38,12 @@ Tasks = {
             load: 1
         }, {
             cache: 1,
-            onDone: function(content, script) {
-                "viewbug" == cur.act ? ge("task_comments")
-                    .innerHTML = content : ge("tasks_content")
-                    .innerHTML = content, window.tooltips && tooltips.hideAll(), script && eval(script), offset || "viewbug" == cur.act ? nav.setLoc(extend(nav
-                        .objLoc, {
-                            offset: offset
-                        })) : (delete nav.objLoc.offset, nav.setLoc(nav.objLoc))
+            onDone: function(content, filters, script) {
+                inArray(cur.act, ["notifications", "my", "bugs", "features", "news", "support"]) ? Tasks.setFiltersHtml(filters) : script = filters, "viewbug" ==
+                    cur.act ? val("task_comments", content) : val("tasks_content", content), window.tooltips && tooltips.hideAll(), script && eval(script),
+                    offset || "viewbug" == cur.act ? nav.setLoc(extend(nav.objLoc, {
+                        offset: offset
+                    })) : (delete nav.objLoc.offset, nav.setLoc(nav.objLoc))
             },
             onFail: function() {
                 hide("pages_loading_top"), hide("pages_loading_bottom")
@@ -609,11 +608,14 @@ Tasks = {
             load: 1
         }, {
             onDone: function(content, filters, script) {
-                hide("tasks_loading"), val("tasks_content", content), window.tooltips && tooltips.hideAll(), script && eval(script), nav.setLoc(nav.objLoc);
-                var filtersEl = ge("tasks_section_filters");
-                filtersEl.parentNode.replaceChild(se(filters), filtersEl)
+                hide("tasks_loading"), val("tasks_content", content), window.tooltips && tooltips.hideAll(), script && eval(script), nav.setLoc(nav.objLoc),
+                    Tasks.setFiltersHtml(filters)
             }
         })
+    },
+    setFiltersHtml: function(e) {
+        var t = ge("tasks_section_filters");
+        t.parentNode.replaceChild(se(e), t)
     },
     selectDev: function(e, t) {
         return window.tooltips && tooltips.hide(e.parentNode), cur.idSelect.val(t, !0), !1

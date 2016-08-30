@@ -254,7 +254,7 @@ input.search {
 }
 
 #tasks_content #feed .tasks_comm_cont {
-    width: 459px
+    width: 440px
 }
 
 #tasks_content #feed .warning .tasks_comm_cont {
@@ -284,9 +284,13 @@ input.search {
     padding: 0px 0px 0px 5px
 }
 
-.tasks_action .tasks_unsubscribe,
-.tasks_action .tasks_date_link {
+.tasks_action .tasks_unsubscribe {
     padding-top: 3px
+}
+
+.tasks_action .tasks_date_link {
+    padding-top: 3px;
+    width: 110px
 }
 
 .tasks_unsubscribe div {
@@ -397,7 +401,7 @@ a.tasks_more:hover {
 }
 
 .tasks_row_title {
-    width: 250px;
+    width: 245px;
     padding: 0 5px
 }
 
