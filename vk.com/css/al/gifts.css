@@ -55,7 +55,9 @@
 .gift_description {
     padding: 0 10px;
     line-height: 19px;
-    margin-bottom: -4px
+    margin-bottom: -4px;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .gift_actions {

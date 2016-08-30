@@ -2082,9 +2082,9 @@ var GroupsEdit = {
                 hash: t
             };
             ajax.post("groupsedit.php", r, {
-                onDone: function(e, t) {
+                onDone: function(e, t, o) {
                     extend(cur, t), ge("group_apps_wrapper")
-                        .innerHTML = e, GroupsEdit.app.initSettings()
+                        .innerHTML = e, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(o)
                 },
                 showProgress: function() {
                     lockLink(o)
@@ -2107,8 +2107,8 @@ var GroupsEdit = {
                 privacy: GroupsEdit.app.privacy.selectedItems()[0][0]
             };
             ajax.post("groupsedit.php", e, {
-                onDone: function(e) {
-                    return e
+                onDone: function(e, t) {
+                    return GroupsEdit.showMessage(t), e
                 },
                 showProgress: function() {
                     lockButton("group_app_save")
@@ -2126,9 +2126,9 @@ var GroupsEdit = {
                 hash: cur.delAppHash
             };
             ajax.post("groupsedit.php", t, {
-                onDone: function(e, t) {
+                onDone: function(e, t, o) {
                     extend(cur, t), ge("group_apps_wrapper")
-                        .innerHTML = e
+                        .innerHTML = e, GroupsEdit.showMessage(o)
                 },
                 showProgress: function() {
                     lockLink(e)

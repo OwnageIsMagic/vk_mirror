@@ -94,7 +94,7 @@ var Pagination = {
                 }, cur.pgParams || {}), {
                     onDone: function() {
                         Pagination.loaded.apply(window, arguments), nav.setLoc(i), setTimeout(function() {
-                            Pagination.setScroll(o ? cur.pgFixedStart - cur.pgFixed.offsetTop : 0)
+                            (o || !cur.pgNoNavScroll) && Pagination.setScroll(o ? cur.pgFixedStart - cur.pgFixed.offsetTop : 0)
                         }, 0)
                     },
                     frame: 1,

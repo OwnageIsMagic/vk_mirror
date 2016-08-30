@@ -259,7 +259,8 @@ a.docs_item_name {
     background: url(/images/icons/common.png?6) no-repeat 2px -42px;
     opacity: 0;
     filter: alpha(opacity=0);
-    cursor: pointer
+    cursor: pointer;
+    outline: none
 }
 
 .docs_action_icon.docs_item_progress {

@@ -1195,7 +1195,7 @@ var Feed = {
         if (cur.feedEls.search && getLang("news_search")) {
             var e;
             e = cur.section.indexOf("photos") ? cur.section.indexOf("articles") ? getLang("news_search") : getLang("news_articles_search") : getLang("news_photo_search"),
-                cur.feedEls.search.setAttribute("placeholder", e), placeholderInit(cur.feedEls.search, {
+                cur.feedEls.search.setAttribute("placeholder", clean(unclean(e))), placeholderInit(cur.feedEls.search, {
                     reload: !0
                 })
         }
