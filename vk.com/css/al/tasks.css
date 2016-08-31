@@ -971,11 +971,12 @@ li.over .tasks_ticket_unbind {
     background-position: 16px -28px
 }
 
-#tasks_support_binding {
-    height: 13px;
-    width: 378px;
-    padding: 5px;
-    outline: none
+.tasks_support_binding_link_error.error {
+    margin: 0 0 20px
+}
+
+.tasks_support_binding {
+    width: 100%
 }
 
 #edit_task .radiobtn {

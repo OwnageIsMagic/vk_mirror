@@ -383,6 +383,10 @@ h2.payments_getvotes_title {
     -webkit-overflow-scrolling: touch
 }
 
+.payments_threeds_frame #card_iframe {
+    margin: 15px 0 0 15px
+}
+
 .payments_tform .tform_row {
     padding-bottom: 15px
 }

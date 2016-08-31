@@ -132,6 +132,11 @@ span.fc_contact_photo.online.mobile:after {
     margin-right: 12px
 }
 
+.notifier_type_ach_achieved .notifier_image_wrap {
+    width: 64px;
+    max-height: 64px
+}
+
 .notifier_image {
     width: 50px;
     height: 50px;
@@ -143,7 +148,9 @@ span.fc_contact_photo.online.mobile:after {
 }
 
 .notifier_type_ach_achieved .notifier_image {
-    border-radius: 0
+    border-radius: 0;
+    width: 64px;
+    height: 64px
 }
 
 .notifier_add_image_wrap {

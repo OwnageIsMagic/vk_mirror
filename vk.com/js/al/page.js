@@ -4266,6 +4266,7 @@ var Wall = {
             root: root ? 1 : 0
         }, {
             onDone: function(msg) {
+                re('post_del_btn' + post);
                 var pd = ge('post_del' + post);
                 if (!pd) return;
                 var r = ge('post' + post),

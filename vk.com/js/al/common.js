@@ -2942,7 +2942,7 @@ function updateNarrow() {
         lastSt = cur.lastSt || 0,
         lastStyles = cur.lastStyles || {},
         styles, needFix = false,
-        smallEnough = headH + barMB + barH + barMT + barPB <= wh,
+        smallEnough = headH + barMB + barH + barMT + barPB <= wh && !cur.narrowHide,
         delta = 1;
 
     if (st - delta < barPT && !(smallEnough && browser.msie) || tooBig) {
@@ -2955,9 +2955,10 @@ function updateNarrow() {
             marginLeft: Math.min(-bodyNode.scrollLeft, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(pl)[0]))
         }
         needFix = true;
-    } else if (st + delta > Math.max(lastSt, barPos + barH + barMB - wh) && barBottom < 0) {
+    } else if (st + delta > Math.max(lastSt, barPos + barH + barMB - wh) && barBottom < 0 && !cur.narrowHide || cur.narrowHide && st + delta > Math.max(lastSt, barPos + barH -
+            headH)) {
         styles = {
-            bottom: barMB,
+            bottom: (cur.narrowHide ? wh - headH : barMB),
             marginLeft: Math.min(-bodyNode.scrollLeft, Math.max(-bodyNode.scrollLeft, bodyNode.clientWidth - getSize(pl)[0]))
         }
         needFix = true;

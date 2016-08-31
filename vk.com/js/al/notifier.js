@@ -541,6 +541,7 @@ Notifier = {
 
             case 'ach_achieved':
                 handlePageCount('ach', ev.add);
+                ev.author_photo = ev.custom[0];
                 break;
 
             case 'ach_achieved_upd':
