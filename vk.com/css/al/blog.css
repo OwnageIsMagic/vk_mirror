@@ -374,6 +374,10 @@
     padding-top: 3px
 }
 
+.blog_cat_name a {
+    margin-left: 10px
+}
+
 .blog_entry_nav {
     padding: 25px 0px 26px!important;
     height: auto
