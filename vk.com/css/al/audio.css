@@ -2190,7 +2190,7 @@ body.mac .audio_rows_header.fixed {
 .audio_friend_name_now {
     padding: 3px 0 3px 10px;
     display: block;
-    width: 155px;
+    width: 137px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

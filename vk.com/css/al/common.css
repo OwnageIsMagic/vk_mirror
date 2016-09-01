@@ -4772,7 +4772,7 @@ em.highlight {
     width: 17px;
     height: 17px;
     position: absolute;
-    top: 1px;
+    top: 0;
     left: 0;
     opacity: 0.9;
     filter: alpha(opacity=90);
@@ -5716,7 +5716,8 @@ button.ui_load_more_btn {
     filter: alpha(opacity=75);
     padding: 5px 6px;
     display: none;
-    cursor: pointer
+    cursor: pointer;
+    color: #2a5885
 }
 
 .audio_row .audio_acts .audio_act:hover {
@@ -5865,6 +5866,20 @@ button.ui_load_more_btn {
 
 .audio_row .audio_author .mem_link {
     font-size: 12px
+}
+
+.audio_row.claim_mode .audio_acts>.audio_act {
+    display: none!important
+}
+
+.audio_row.claim_mode:not(.claim_hidden) #claim_remove,
+.audio_row.claim_mode.claim_hidden #claim_restore,
+.audio_row.claim_mode.claim_uma #claim_show_uma {
+    display: block
+}
+
+.audio_row #claim_show_uma {
+    font-weight: 700
 }
 
 .audio_row.inlined.audio_row_current.added:hover .audio_acts,

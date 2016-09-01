@@ -234,14 +234,14 @@ var AudioUtils = {
         return t = AudioUtils.asObject(t), JSON.parse(t.extra || "{}")
     },
     getAudioFromEl: function(t, i) {
+        t = domClosest("_audio_row", t);
         var e = data(t, "audio");
         return e || (e = JSON.parse(domData(t, "audio"))), i ? AudioUtils.asObject(e) : e
     },
     showAudioLayer: function(btn) {
         function initLayer(html, playlist, options, firstSong, script) {
-            eval(script);
             var telContent = ap.layer.getContent();
-            addClass(telContent, "no_transition"), removeClass(telContent, "top_audio_loading"), telContent.innerHTML = html;
+            addClass(telContent, "no_transition"), removeClass(telContent, "top_audio_loading"), telContent.innerHTML = html, eval(script);
             var layerScrollNode = geByClass1("audio_layer_rows_wrap", telContent);
             setStyle(layerScrollNode, "height", AudioUtils.AUDIO_LAYER_HEIGHT), options.layer = ap.layer, options.layer.sb = new Scrollbar(layerScrollNode, {
                 nomargin: !0,
@@ -438,6 +438,18 @@ var AudioUtils = {
                 .toUTCString();
             e = e.join(", "), t.appendChild(se('<div class="audio_diag_log_row"><span class="audio_diag_log_time">' + o + "</span>" + e + "</div>"))
         })
+    },
+    claim: function(t) {
+        var i = AudioUtils.getAudioFromEl(t, !0);
+        AudioUtils.getAudioExtra(i)
+    },
+    unclaim: function(t) {
+        var i = AudioUtils.getAudioFromEl(t, !0);
+        AudioUtils.getAudioExtra(i)
+    },
+    getUMAInfo: function(t) {
+        var i = AudioUtils.getAudioFromEl(t, !0);
+        AudioUtils.getAudioExtra(i)
     }
 };
 TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
@@ -943,14 +955,15 @@ AudioPlayer.tabIcons = {
             o.getId() == t.getId() && o.mergeWith(i)
         }) : t
     }, AudioPlayer.prototype.deleteCurrentPlaylist = function() {
-        this.stop(), delete this._currentAudio, delete this._currentPlaylist, this.notify(AudioPlayer.EVENT_UPDATE), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED)
+        this.stop(), delete this._currentAudio, delete this._currentPlaylist, this.notify(AudioPlayer.EVENT_UPDATE),
+            this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED)
     }, AudioPlayer.prototype.updateCurrentPlaying = function(t) {
         t = !!t;
         var i = (this.getCurrentPlaylist(), AudioUtils.asObject(this.getCurrentAudio())),
             e = [];
         if (i) {
             var o = geByClass("_audio_row_" + i.fullId);
-            e = e.concat([].slice.call(o));
+            e = e.concat([].slice.call(o))
         }
         for (var a = 0, l = this._currentPlayingRows.length; l > a; a++) {
             var s = this._currentPlayingRows[a];
@@ -1767,12 +1780,13 @@ AudioPlayer.tabIcons = {
         t = Math.max(0, Math.min(1, t));
         var e = this._currentAudioEl,
             o = 0;
-        if (o = t < e.volume ? -.04 : .001, Math.abs(t - e.volume) <= .001) return this._setFadeVolumeInterval(), i && i();
+        if (o = t < e.volume ? -.04 : .001,
+            Math.abs(t - e.volume) <= .001) return this._setFadeVolumeInterval(), i && i();
         var a = e.volume;
         this._setFadeVolumeInterval(function() {
             o > 0 && (o *= 1.2), a += o;
             var e = !1;
-            return (e = 0 > o ? t >= a : a >= t) ? (this.setVolume(t), this._setFadeVolumeInterval(), i && i()) : void this.setVolume(a);
+            return (e = 0 > o ? t >= a : a >= t) ? (this.setVolume(t), this._setFadeVolumeInterval(), i && i()) : void this.setVolume(a)
         }.bind(this))
     };
 try {
