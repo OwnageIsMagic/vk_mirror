@@ -509,12 +509,9 @@ body.dev #page_wrap .bugs_view_data .flat_button {
     padding-bottom: 10px
 }
 
-#bugs_new_title {
-    width: 434px;
-    height: 14px;
-    padding: 6px;
-    outline: 0px;
-    margin: 0px 0px 10px
+.bugs_new_title {
+    margin: 0 0 10px;
+    width: 100%
 }
 
 .bugs_new_submit {
@@ -586,10 +583,9 @@ body.dev #page_wrap .bugs_view_data .flat_button {
     margin-bottom: 20px
 }
 
-#bugs_new_text {
-    width: 434px;
-    padding: 6px;
-    margin-bottom: 5px
+.bugs_new_text {
+    margin-bottom: 5px;
+    width: 100%
 }
 
 #bugs_text_warn {

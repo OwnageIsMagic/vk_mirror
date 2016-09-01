@@ -639,7 +639,7 @@ var MoneyTransfer = {
         MoneyTransfer.checkAmount(v);
         MoneyTransfer.autosizeAmount();
     },
-    checkAmount(amount, submit) {
+    checkAmount: function(amount, submit) {
         var error = false,
             errorShown = hasClass('payments_money_transfer_amount_wrap', 'money_error');
         if (submit && errorShown) {
@@ -711,7 +711,7 @@ var MoneyTransfer = {
         }
     },
 
-    initHistoryBox() {
+    initHistoryBox: function() {
         var btn = ge('ui_money_transfer_load_more');
         if (btn) {
             var tbl = ge('settings_transfer_history')
