@@ -1526,7 +1526,7 @@ AudioPlayer.tabIcons = {
         if (AudioUtils.isClaimedAudio(a)) {
             var l = AudioUtils.getAudioExtra(a),
                 s = l.claim;
-            return void showAudioClaimWarning(a.ownerId, a.id, s.deleteHash, s.id, a.title)
+            if (s) return void showAudioClaimWarning(a.ownerId, a.id, s.id, a.title, s.reason)
         }
         var r = hasClass(e, AudioUtils.AUDIO_PLAYING_CLS);
         if (r) this.pause();
@@ -1780,8 +1780,7 @@ AudioPlayer.tabIcons = {
         t = Math.max(0, Math.min(1, t));
         var e = this._currentAudioEl,
             o = 0;
-        if (o = t < e.volume ? -.04 : .001,
-            Math.abs(t - e.volume) <= .001) return this._setFadeVolumeInterval(), i && i();
+        if (o = t < e.volume ? -.04 : .001, Math.abs(t - e.volume) <= .001) return this._setFadeVolumeInterval(), i && i();
         var a = e.volume;
         this._setFadeVolumeInterval(function() {
             o > 0 && (o *= 1.2), a += o;

@@ -7490,7 +7490,7 @@ function initAddMedia(lnk, previewId, mediaTypes, opts) {
                 noboxhide = true;
             }
             if ((!cur.fileApiUploadStarted || data.upload_ind === undefined) && !cur.preventBoxHide && noboxhide !== true && !inArray(type, ['poll', 'share', 'page',
-                    'postpone'
+                    'postpone', 'mark_as_ads'
                 ])) {
                 boxQueue.hideLast();
             }

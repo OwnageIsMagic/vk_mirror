@@ -1219,6 +1219,10 @@ h5.post_author {
     border: none!important
 }
 
+.wall_module .page_media_thumbed_link+.wall_signed {
+    margin-top: 12px
+}
+
 .wall_module a.page_media_thumbed_link {
     cursor: pointer;
     color: #000
@@ -3862,6 +3866,11 @@ div.submit_post_field[contenteditable=true]>p {
     border-radius: 2px
 }
 
+.ml_ui5 .post_like,
+.ml_ui5 .post_share {
+    color: #2c5885
+}
+
 .wall_module .post_like:hover,
 .wall_module .post_share:hover {
     background-color: #f2f4f7
@@ -3871,6 +3880,11 @@ div.submit_post_field[contenteditable=true]>p {
 .wall_module .post_share_link {
     margin: 1px 0 0 6px;
     float: left
+}
+
+.ml_ui5 .wall_module .post_like_link,
+.ml_ui5 .wall_module .post_share_link {
+    color: #3f668c
 }
 
 .wall_module .post_like_icon,
@@ -3886,6 +3900,14 @@ div.submit_post_field[contenteditable=true]>p {
 }
 
 .wall_module .post_like_count,
+.wall_module .post_like_link,
+.wall_module .post_share_count,
+.wall_module .post_share_link {
+    line-height: 15px;
+    height: 14px
+}
+
+.wall_module .post_like_count,
 .wall_module .post_share_count {
     margin: 1px 0 1px 6px;
     float: left;
@@ -3897,12 +3919,16 @@ div.submit_post_field[contenteditable=true]>p {
 
 .wall_module .post_like_count .counter_anim_wrap,
 .wall_module .post_share_count .counter_anim_wrap {
-    line-height: 14px;
+    line-height: 15px;
     height: 14px
 }
 
-.wall_module .post_like_link:empty+.post_like_count,
-.wall_module .post_share_link:empty+.post_share_count {
+.ml_ui5 .wall_module .post_like_count,
+.ml_ui5 .wall_module .post_share_count {
+    color: #627e9e
+}
+
+.wall_module .post_like_link:empty+.post_like_count {
     margin-left: 0
 }
 
@@ -3912,14 +3938,15 @@ div.submit_post_field[contenteditable=true]>p {
     filter: alpha(opacity=65)
 }
 
-.wall_module .post_share_icon {
-    background-position: 0 -15px;
-    height: 14px;
-    margin-bottom: 0
+.ml_ui5 .wall_module .post_like:hover .post_like_link,
+.ml_ui5 .wall_module .post_share:hover .post_share_link {
+    color: #2e5882
 }
 
-.ml_ui3 .wall_module .post_share_icon {
-    background-position: 1px -15px
+.wall_module .post_share_icon {
+    background-position: 1px -15px;
+    height: 14px;
+    margin-bottom: 0
 }
 
 .wall_module .my_like .post_like_icon,
@@ -3929,16 +3956,25 @@ div.submit_post_field[contenteditable=true]>p {
     filter: none!important
 }
 
+.wall_module .post_share_count {
+    margin: 1px 0 1px 4px
+}
+
 .wall_module .my_like .post_like_count,
 .wall_module .my_share .post_share_count {
     color: #6983a0
 }
 
-.wall_module .post_share_link {
-    margin: 1px 0 0 3px
+.ml_ui5 .wall_module .my_like .post_like_count,
+.ml_ui5 .wall_module .my_share .post_share_count {
+    color: #627e9e
 }
 
-.ml_ui3 .wall_module .post_share_link,
+.wall_module .post_share_link {
+    display: none;
+    margin: 1px 0 0 4px
+}
+
 .wall_module .no_likes .post_like_count,
 .wall_module .no_shares .post_share_count {
     display: none

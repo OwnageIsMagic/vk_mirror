@@ -28,7 +28,7 @@
 .fc_snapster_invite_ic,
 .fc_snapster_invite_ic_ios,
 .fc_tab_attach .media_selector .ms_item_more,
-.notifier_close,
+.notifier_close_wrap:before,
 .notify_tt_thumb,
 .sticker_hints_arrow,
 .ui_scroll_default_theme.ui_scroll_emoji_theme .ui_scroll_shadow_bottom,
@@ -101,10 +101,12 @@ span.fc_contact_photo.online.mobile:after {
 
 .notifier_close_wrap {
     float: right;
+    display: block;
     padding: 12px;
     margin: -10px -12px -11px 12px;
     opacity: 0.65;
-    filter: alpha(opacity=65)
+    filter: alpha(opacity=65);
+    outline: none
 }
 
 .notifier_close_wrap:hover {
@@ -113,8 +115,9 @@ span.fc_contact_photo.online.mobile:after {
     filter: none
 }
 
-.notifier_close {
+.notifier_close_wrap:before {
     display: block;
+    content: '';
     background: url(/images/icons/common.png?6) no-repeat 0 -175px;
     height: 10px;
     width: 10px
