@@ -266,16 +266,11 @@
 }
 
 .bugs_view_data {
-    width: 188px;
+    border-radius: 0 2px 2px 0;
+    width: 228px;
     margin-top: -1px;
     font-size: 0.923em;
-    overflow: hidden;
-    -webkit-border-bottom-right-radius: 2px;
-    -webkit-border-bottom-left-radius: 2px;
-    -moz-border-radius-bottomright: 2px;
-    -moz-border-radius-bottomleft: 2px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px
+    overflow: hidden
 }
 
 .bugs_view_actions,
@@ -504,9 +499,11 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 
 .bugs_new_header {
     font-weight: 700;
-    font-size: 1.09em;
-    color: #45688e;
-    padding-bottom: 10px
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 14px;
+    color: #42648b;
+    padding-bottom: 8px
 }
 
 .bugs_new_title {
@@ -580,7 +577,7 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 }
 
 .bugs_new_text_toggle {
-    margin-bottom: 20px
+    margin: 6px 0 20px
 }
 
 .bugs_new_text {
@@ -789,29 +786,58 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 }
 
 .bugs_subscriber_row {
-    width: 120px;
-    overflow: hidden;
-    height: 133px
+    padding: 0 10px;
+    height: 155px;
+    width: 100px;
+    overflow: hidden
 }
 
 .bugs_subscriber_ph {
-    position: relative;
     width: 100px;
     height: 100px;
+    position: relative;
     overflow: hidden;
     display: block;
     margin: 0px auto
 }
 
-.bugs_subscriber_row img {
-    vertical-align: top;
-    width: 100px
+.bugs_subscriber_img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    -moz-force-broken-image-icon: 0;
+    background-color: #fafbfc;
+    vertical-align: top
+}
+
+.bugs_subscriber_img:before {
+    background-color: #fff
+}
+
+.bugs_subscriber_img:before,
+.bugs_subscriber_img:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px
+}
+
+.bugs_subscriber_img:after {
+    border-radius: 50%;
+    background-color: #fafbfc;
+    background-image: url(/images/camera_100.png);
+    background-size: cover
 }
 
 .bugs_subscriber_name {
-    padding-top: 4px;
-    line-height: 120%;
-    text-align: center
+    padding-top: 6px;
+    line-height: 140%;
+    overflow: hidden;
+    text-align: center;
+    text-overflow: ellipsis
 }
 
 .bugs_subscribers_more {

@@ -12,8 +12,7 @@
 .payments_logo_mailmoney,
 .payments_logo_paypal_ipn,
 .payments_logo_webmoney,
-.payments_logo_yandexmoney,
-.payments_money_transfer_secure {
+.payments_logo_yandexmoney {
     -ms-high-contrast-adjust: none
 }
 
@@ -101,7 +100,8 @@
 }
 
 .payments_summary_notice {
-    color: #656565
+    color: #939393;
+    font-size: 12.5px
 }
 
 .payments_summary_header {
@@ -1281,13 +1281,13 @@ h2.payments_getvotes_title {
     margin: -20px -25px
 }
 
-.payments_money_transfer_box .payments_summary_cont {
+#payments_box.payments_money_transfer_box .payments_summary_cont {
     margin-top: -2px;
     margin-left: 55px
 }
 
-.payments_money_transfer_box .payments_summary_phumb,
-.payments_money_transfer_box .payments_transfer_to_photo {
+#payments_box.payments_money_transfer_box .payments_summary_phumb,
+#payments_box.payments_money_transfer_box .payments_transfer_to_photo {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -1295,8 +1295,8 @@ h2.payments_getvotes_title {
     background-color: #fafbfc
 }
 
-.payments_money_transfer_box .payments_summary_phumb:before,
-.payments_money_transfer_box .payments_transfer_to_photo:before {
+#payments_box.payments_money_transfer_box .payments_summary_phumb:before,
+#payments_box.payments_money_transfer_box .payments_transfer_to_photo:before {
     content: " ";
     display: block;
     position: absolute;
@@ -1307,8 +1307,8 @@ h2.payments_getvotes_title {
     background-color: #fff
 }
 
-.payments_money_transfer_box .payments_summary_phumb:after,
-.payments_money_transfer_box .payments_transfer_to_photo:after {
+#payments_box.payments_money_transfer_box .payments_summary_phumb:after,
+#payments_box.payments_money_transfer_box .payments_transfer_to_photo:after {
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -1322,8 +1322,22 @@ h2.payments_getvotes_title {
     background-size: cover
 }
 
-.payments_money_transfer_box .msg {
+#payments_box.payments_money_transfer_box .msg {
     margin: 20px 25px 0
+}
+
+#payments_box.payments_money_transfer_box #payments_iframe_container {
+    display: block
+}
+
+#payments_box.payments_money_transfer_box .payments_about_votes {
+    margin: 0;
+    padding-left: 70px;
+    padding-right: 70px
+}
+
+.payments_money_transfer_iframe {
+    display: none
 }
 
 .payments_money_transfer_wrap {
@@ -1409,7 +1423,7 @@ h2.payments_getvotes_title {
 }
 
 .payments_money_transfer_buttons {
-    padding: 0 25px 25px;
+    padding: 0 25px 20px;
     color: #939393;
     font-size: 12.5px
 }
@@ -1418,27 +1432,8 @@ h2.payments_getvotes_title {
     float: right
 }
 
-.payments_money_transfer_row {
-    padding-bottom: 15px
-}
-
-.payments_money_transfer_row .dark {
-    width: 398px
-}
-
-.payments_money_transfer_row textarea {
-    height: 68px
-}
-
-.payments_money_transfer_row.last_row {
-    padding-bottom: 0
-}
-
-.payments_money_transfer_secure {
-    padding: 6px 0 0 20px;
-    color: #7a7e87;
-    font-size: 12px;
-    background: url(/images/payment_security.png) no-repeat 0 7px
+.payments_money_transfer_about {
+    padding-top: 7px
 }
 
 .payments_money_transfer_history_box {
