@@ -397,6 +397,12 @@
     margin-top: -1px
 }
 
+.ml_ui6 .wall_module .reply .dld {
+    padding: 10px 20px 10px 44px;
+    min-height: 50px;
+    line-height: 50px
+}
+
 .wall_module .reply .dld_inner {
     display: inline-block;
     vertical-align: middle;

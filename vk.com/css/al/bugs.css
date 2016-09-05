@@ -356,7 +356,7 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 }
 
 #bugs_view_description {
-    width: 457px;
+    width: 420px;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis

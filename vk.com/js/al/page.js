@@ -3074,7 +3074,6 @@ var Wall = {
         } else {
             r.innerHTML = replies;
         }
-        debugLog('render in', vkNow() - a);
         if (openEl && openEl.className == 'replies_open') {
             re(openEl);
         }
@@ -3508,7 +3507,7 @@ var Wall = {
         }
         Wall.initReplyEditable(rf, realBox, post, fixed);
         if (cur.wallMyOpened) {
-            cur.wallMyOpened[post] = false;
+            cur.wallMyOpened[post] = cur.wallMyOpened[post] || false;
         }
         if (cur.editing === post) {
             Emoji.editableFocus(rf, false, true);
@@ -4912,7 +4911,8 @@ var Wall = {
             w: 'poll' + post,
             opt_id: opt
         }, false, e, {
-            queue: 1
+            queue: 1,
+            noloader: !!curBox()
         });
     },
     pollOver: function(el, post, opt) {

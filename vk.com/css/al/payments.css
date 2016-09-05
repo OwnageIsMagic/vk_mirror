@@ -100,6 +100,7 @@
 }
 
 .payments_summary_notice {
+    margin-top: -3px;
     color: #939393;
     font-size: 12.5px
 }
@@ -1282,8 +1283,12 @@ h2.payments_getvotes_title {
 }
 
 #payments_box.payments_money_transfer_box .payments_summary_cont {
-    margin-top: -2px;
-    margin-left: 55px
+    margin-left: 52px;
+    margin-top: 0
+}
+
+#payments_box.payments_money_transfer_box .payments_summary_phumb {
+    margin-right: 12px
 }
 
 #payments_box.payments_money_transfer_box .payments_summary_phumb,
@@ -1292,7 +1297,8 @@ h2.payments_getvotes_title {
     height: 40px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 0;
-    background-color: #fafbfc
+    background-color: #fafbfc;
+    display: block
 }
 
 #payments_box.payments_money_transfer_box .payments_summary_phumb:before,
