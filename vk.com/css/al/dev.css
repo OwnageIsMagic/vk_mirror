@@ -1,3 +1,4 @@
+@import 'fonts.css';
 #dev_css {
     display: none
 }
@@ -1291,7 +1292,7 @@ input.dev_input_simular {
 }
 
 .dev_last_news {
-    padding: 26px 20px 25px 30px
+    padding: 26px 17px 25px 30px
 }
 
 body.dev a.dev_platform_info {
@@ -1898,7 +1899,7 @@ body.dev a.dev_search_match_row {
 }
 
 #vk_groups {
-    margin-left: -10px
+    margin: 0 0 0 -13px
 }
 
 .dev_main_widget_cont {

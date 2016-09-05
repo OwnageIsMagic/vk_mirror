@@ -50,17 +50,19 @@ var Videoview = {
                 }, 0)
             },
             fetchSuggestions: function(e) {
-                var i = Videoview.getMvData(),
-                    t = i.videoRaw;
-                ajax.post("/al_video.php", {
-                    act: "fetch_player_suggestions",
-                    videos: e
-                }, {
-                    onDone: function(e) {
-                        var i = Videoview.getMvData();
-                        i && i.videoRaw == t && (i.playerSuggestions = e)
-                    }
-                })
+                if (e) {
+                    var i = Videoview.getMvData(),
+                        t = i.videoRaw;
+                    ajax.post("/al_video.php", {
+                        act: "fetch_player_suggestions",
+                        videos: e
+                    }, {
+                        onDone: function(e) {
+                            var i = Videoview.getMvData();
+                            i && i.videoRaw == t && (i.playerSuggestions = e)
+                        }
+                    })
+                }
             },
             setSuggestions: function(e) {
                 Videoview.playerCallback.fetchSuggestions(e)

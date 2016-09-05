@@ -504,8 +504,8 @@ var Settings = {
             hideProgress: unlockButton.pbind(t)
         })
     },
-    accessCheck: function() {
-        clearTimeout(cur.accessUpdateTO), cur.accessUpdateTO = setTimeout(Settings.accessSubmit, 200)
+    accessCheck: function(e, t) {
+        clearTimeout(cur.accessUpdateTO), cur.accessUpdateTO = setTimeout(Settings.accessSubmit, 200), t.setAttribute("aria-checked", e ? "true" : "false")
     },
     giftsCheck: function() {
         clearTimeout(cur.giftsUpdateTO), cur.giftsUpdateTO = setTimeout(Settings.giftsSubmit, 200)

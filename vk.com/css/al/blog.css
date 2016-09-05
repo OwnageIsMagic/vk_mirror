@@ -469,6 +469,24 @@
     margin-top: 15px
 }
 
+.blog_followed_state {
+    margin-top: 10px;
+    line-height: 15px;
+    font-size: 12.5px
+}
+
+.blog_followed_state .pr {
+    display: inline
+}
+
+.blog_followed_state.loading .blog_unfollow_text {
+    display: none
+}
+
+.blog_followed_state .pr_bt {
+    margin-top: 7px
+}
+
 .blog_more_btn_wrap {
     text-align: center;
     margin-top: 15px
@@ -1450,4 +1468,42 @@ textarea.blog_edit_inp {
 .blog_notify_settings_checkbox {
     width: 250px;
     margin-top: 8px
+}
+
+.blog_email_settings_tt {
+    white-space: nowrap
+}
+
+.blog_email_settings_checkbox {
+    padding: 6px 0px
+}
+
+.blog_email_settings_checkbox:first-child {
+    padding-top: 0px
+}
+
+.blog_email_settings_inp {
+    width: 100%
+}
+
+.blog_email_settings_row {
+    margin-top: 5px;
+    padding-bottom: 15px
+}
+
+.blog_email_settings_label {
+    color: #828282;
+    width: 132px;
+    text-align: right
+}
+
+.blog_email_settings_labeled {
+    margin-left: 144px
+}
+
+.blog_email_settings_label,
+.blog_email_settings_labeled {
+    font-size: 13px;
+    letter-spacing: -0.1px;
+    line-height: 15px
 }

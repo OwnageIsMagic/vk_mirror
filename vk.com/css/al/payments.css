@@ -1336,12 +1336,6 @@ h2.payments_getvotes_title {
     display: block
 }
 
-#payments_box.payments_money_transfer_box .payments_about_votes {
-    margin: 0;
-    padding-left: 70px;
-    padding-right: 70px
-}
-
 .payments_money_transfer_iframe {
     display: none
 }
@@ -1440,6 +1434,13 @@ h2.payments_getvotes_title {
 
 .payments_money_transfer_about {
     padding-top: 7px
+}
+
+.payments_money_transfer_footer {
+    padding: 16px 90px;
+    color: #939393;
+    font-size: 12px;
+    text-align: center
 }
 
 .payments_money_transfer_history_box {

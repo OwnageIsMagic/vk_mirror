@@ -451,7 +451,7 @@ div#enterID.enterID {
 }
 
 .ed_body #box_layer_bg {
-    opacity: 0
+    opacity: 0.15!important
 }
 
 .ed_body .popup_box_container {

@@ -134,7 +134,7 @@ var ThumbsEdit = {
                 className: "draggable_thumb clear_fix" + (e.unsized ? " unsized" + (e.single ? " unsized_single" : "") : "")
             }, i);
         e.name && a.setAttribute("aria-label", e.name);
-        var d = isPhotoeditor3Available() ? '<div class="ui_extra_btn ui_extra_btn_pe _ui_extra_btn_pe" id="ui_btn_pe"></div>' : "",
+        var d = isPhotoeditor3Available() && !vk.widget ? '<div class="ui_extra_btn ui_extra_btn_pe _ui_extra_btn_pe" id="ui_btn_pe"></div>' : "",
             h = se('<div class="ui_thumb_extra">       <div class="ui_extra_btn ui_extra_btn_show _ui_extra_btn_show" id="ui_btn_show"></div>' + d + "     </div>"),
             l = geByClass1("_ui_extra_btn_pe", h),
             u = geByClass1("_ui_extra_btn_show", h);
