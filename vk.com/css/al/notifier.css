@@ -1813,8 +1813,7 @@ div.chat_tab_img {
 }
 
 .emoji_scroll {
-    padding: 2px 0px;
-    cursor: pointer
+    padding: 2px 0px
 }
 
 .emoji_tmp_textarea {
@@ -1922,6 +1921,8 @@ div.chat_tab_img {
     zoom: 1;
     border-radius: 4px;
     width: 64px;
+    height: 72px;
+    cursor: pointer;
     text-align: center;
     vertical-align: middle
 }

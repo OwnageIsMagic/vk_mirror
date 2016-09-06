@@ -57,8 +57,8 @@ function InlineDropdown(t, e) {
         if (!hasClass(t, "idd_wrap")) {
             if (this._opts = e || {}, this._items = e.items ? clone(e.items) : JSON.parse(t.getAttribute("data-items")), !this._items) throw new Error("No items provided");
             this._title = e.keepTitle ? e.title || t.innerHTML : "", this._selectable = e.keepTitle ? e.keepSelected : !0, this._iddEl = se('<div class="idd_wrap" id="' + t.id +
-                '"><div class="idd_selected_value ' + (e.withArrow ? "idd_arrow" : "") + '" tabindex="0" role="link">' + t.innerHTML + '</div><input type="hidden" name="' + (t
-                    .getAttribute("name") || t.id) + '" /></div>');
+                '"><div class="idd_selected_value ' + (e.withArrow ? "idd_arrow" : "") + '" tabindex="0" role="link">' + t.innerHTML + '</div><input type="hidden" id="' + t.id +
+                '_input" name="' + (t.getAttribute("name") || t.id) + '" /></div>');
             var i = this;
             if (each(t.classList, function(t, e) {
                     addClass(i._iddEl, e)

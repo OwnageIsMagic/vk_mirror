@@ -1407,7 +1407,7 @@ body.mac #layer_stl .fixed {
     content: '';
     float: left;
     background: url(/images/icons/dev_check.png?2) 0 0 no-repeat;
-    margin: 1px 7px 0 0;
+    margin: 0 7px 0 0;
     width: 15px;
     height: 15px
 }
@@ -1983,6 +1983,9 @@ h4.subheader {
 
 .subheader,
 h4.subheader {
+    border: 0;
+    font-size: inherit;
+    padding: 0;
     color: #222;
     font-weight: 500;
     margin: 18px 0 12px

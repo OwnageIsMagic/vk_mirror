@@ -485,7 +485,7 @@
 .checkbox_container table td .checkbox_on,
 .checkbox_container table td .checkbox_on_over {
     background: url(/images/icons/dev_check.png?2) 0 0 no-repeat;
-    margin: 1px 7px 0 0;
+    margin: 0 7px 0 0;
     width: 15px;
     height: 15px;
     overflow: hidden
@@ -936,7 +936,8 @@ x:-moz-any-link {
     padding: 0;
     line-height: 1em;
     display: inline-block;
-    outline: none
+    outline: none;
+    color: #2a5885
 }
 
 .idd_wrap .idd_selected_value:hover {

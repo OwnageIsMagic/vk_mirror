@@ -452,7 +452,7 @@ var MoneyTransfer = {
             name: 'transfer_iframe'
         }, {
             border: 0,
-            height: '415px',
+            height: '445px',
             width: (frc.parentNode.offsetWidth - sbWidth()) + 'px',
             overflowX: 'hidden',
             overflowY: 'hidden'
@@ -490,6 +490,7 @@ var MoneyTransfer = {
                     show('payments_money_transfer_iframe');
                     ge('payments_iframe_container')
                         .scrollTop = 0;
+                    window.addEventListener('message', MoneyTransfer.frameMessage, false);
 
                     box.setOptions({
                         width: 560
@@ -535,7 +536,7 @@ var MoneyTransfer = {
         }
     },
     startCheckStatus: function(data) {
-        cur.isPaymentComplete = cur.isPaymentCanceled = cur.isPaymentFailed = false;
+        cur.isPaymentCanceled = cur.isPaymentFailed = false;
         if (cur.moneyTranferCheckInt) {
             clearInterval(cur.moneyTranferCheckInt);
         }
@@ -583,6 +584,7 @@ var MoneyTransfer = {
                     }
                 } else if (result == 2) { // failed
                     MoneyTransfer.showError(text);
+                    window.removeEventListener('message', MoneyTransfer.frameMessage, false);
                 }
                 clearInterval(cur.moneyTranferCheckInt);
             },
@@ -593,6 +595,41 @@ var MoneyTransfer = {
             }
         });
     },
+    paymentCanceled: function(error) {
+        if (error) {
+            cur.isPaymentFailed = true;
+        } else {
+            cur.isPaymentCanceled = true;
+        }
+        MoneyTransfer.frameHeight();
+    },
+    frameHeight: function(height) {
+        var fr = ge('transfer_iframe');
+        if (height) {
+            cur.prevFrameHeight = fr.style.height;
+            fr.style.height = height + 'px';
+        } else {
+            fr.style.height = cur.prevFrameHeight;
+            removeClass('payments_iframe_container', 'payments_threeds_frame');
+        }
+        ge('payments_iframe_container')
+            .scrollTop = 0;
+    },
+    frameMessage: function(e) {
+        debugLog(e);
+        if (!e.origin.match(/^https?:\/\/([a-zA-Z0-9\-\.]+\.)?money\.mail\.ru$/)) {
+            return false;
+        }
+        var message = {};
+        if (e.data && e.data.substr(0, 1) == '{') {
+            message = parseJSON(e.data);
+            if (message.type != 'billing') return;
+        }
+        if (e.data == 'submit' || message.action == '3dsPage') {
+            setTimeout(MoneyTransfer.frameHeight.pbind(600), 1000);
+            addClass('payments_iframe_container', 'payments_threeds_frame');
+        }
+    },
     initAccept: function(data, html) {
         var frc = ge('payments_iframe_container');
         var iframe = ce('iframe', {
@@ -600,7 +637,7 @@ var MoneyTransfer = {
             name: 'transfer_iframe'
         }, {
             border: 0,
-            height: '415px',
+            height: '445px',
             width: (frc.parentNode.offsetWidth - sbWidth()) + 'px',
             overflowX: 'hidden',
             overflowY: 'hidden'

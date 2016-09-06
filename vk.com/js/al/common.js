@@ -6741,7 +6741,7 @@ function MessageBox(options, dark) {
 <table cellspacing="0" cellpadding="0" class="fl_r"><tr></tr></table>\
 <div class="progress" id="' + options.progress +
             '"></div>\
-<div class="box_controls_text"></div>\
+<div class="box_controls_text _box_controls_text"></div>\
 </div></div>\
 </div>'
     }, {
@@ -7989,7 +7989,8 @@ function moneyTransferBox(txId, hash, ev, btn, decline) {
     if (cur.viewAsBox) return cur.viewAsBox();
     if (decline) {
         if (decline === true) {
-            cur.confirmBox = showFastBox(getLang('global_action_confirmation'), getLang('news_fb_money_transfer_decline_confirm'), getLang('news_fb_money_transfer_decline_btn'),
+            cur.confirmBox = showFastBox(getLang('global_action_confirmation'), (cur.lang && cur.lang.mail_money_transfer_decline_confirm) || getLang(
+                    'news_fb_money_transfer_decline_confirm'), (cur.lang && cur.lang.mail_money_transfer_decline_btn) || getLang('news_fb_money_transfer_decline_btn'),
                 moneyTransferBox.pbind(txId, hash, ev, btn, 1), getLang('global_cancel'));
             return;
         }

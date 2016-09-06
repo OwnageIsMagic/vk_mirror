@@ -384,7 +384,8 @@ h2.payments_getvotes_title {
     -webkit-overflow-scrolling: touch
 }
 
-.payments_threeds_frame #card_iframe {
+.payments_threeds_frame #card_iframe,
+.payments_threeds_frame #transfer_iframe {
     margin: 15px 0 0 15px
 }
 
@@ -1333,7 +1334,8 @@ h2.payments_getvotes_title {
 }
 
 #payments_box.payments_money_transfer_box #payments_iframe_container {
-    display: block
+    display: block;
+    height: 450px
 }
 
 .payments_money_transfer_iframe {

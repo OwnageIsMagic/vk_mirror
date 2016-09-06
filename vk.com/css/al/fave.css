@@ -29,7 +29,8 @@
     height: 50px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 0;
-    background-color: #fafbfc
+    background-color: #fafbfc;
+    position: relative
 }
 
 .fave_link_thumb:before {

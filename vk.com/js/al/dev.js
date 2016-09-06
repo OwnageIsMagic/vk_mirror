@@ -66,6 +66,7 @@ var Dev = {
         if (opts.res) {
             Dev.requestResult(parseJSON(opts.res));
         }
+        opts.lang = extend(cur.lang || {}, opts.lang);
         extend(cur, opts);
         // elfocus(cur.searchEl);
         cur.editors = [];

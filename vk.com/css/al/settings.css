@@ -19,6 +19,7 @@
 .settings_history_thumb,
 .settings_menu_rows .olist_item_menu .olist_item_photo,
 .settings_more_icon,
+.settings_narrow_row input[type=checkbox]+label:before,
 .settings_otp_box_pad,
 .settings_otp_box_step1,
 .settings_otp_box_step1_en,
@@ -129,6 +130,24 @@
 .settings_narrow_row .settings_label,
 .settings_narrow_row .settings_labeled_text {
     padding-top: 0
+}
+
+.settings_narrow_row label {
+    cursor: pointer
+}
+
+.settings_narrow_row input[type=checkbox]+label:before {
+    display: block;
+    content: '';
+    float: left;
+    background: url(/images/icons/dev_check.png?2) 0 0 no-repeat;
+    margin: 0 7px 0 0;
+    width: 15px;
+    height: 15px
+}
+
+.settings_narrow_row input[type=checkbox]:checked+label:before {
+    background-position: 0 -15px
 }
 
 .settings_block_footer {

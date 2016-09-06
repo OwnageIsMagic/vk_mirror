@@ -504,8 +504,8 @@ var Settings = {
             hideProgress: unlockButton.pbind(t)
         })
     },
-    accessCheck: function(e, t) {
-        clearTimeout(cur.accessUpdateTO), cur.accessUpdateTO = setTimeout(Settings.accessSubmit, 200), t.setAttribute("aria-checked", e ? "true" : "false")
+    accessCheck: function() {
+        clearTimeout(cur.accessUpdateTO), cur.accessUpdateTO = setTimeout(Settings.accessSubmit, 200)
     },
     giftsCheck: function() {
         clearTimeout(cur.giftsUpdateTO), cur.giftsUpdateTO = setTimeout(Settings.giftsSubmit, 200)
@@ -535,7 +535,8 @@ var Settings = {
         ajax.post("/al_settings.php", {
             act: "a_toggle_access_mode",
             hash: cur.options.access_hash,
-            mode: isChecked(geByClass1("_settings_access")) ? 1 : 0
+            mode: intval(ge("settings_a11y")
+                .checked)
         }, {
             onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("settings_a11y")
         })
