@@ -368,12 +368,12 @@ body.mac .wcommunity_show_more button .pr {
     transform: translateZ(0)
 }
 
-.ui_scroll_default_theme.ui_scroll_wcommunity_theme .ui_scroll_bar_container {
+.ui_scroll_default_theme.ui_scroll_wcommunity_theme>.ui_scroll_bar_container {
     border: 0;
     right: 4.5px
 }
 
-.wcommunity_no_head .ui_scroll_default_theme.ui_scroll_wcommunity_theme .ui_scroll_bar_container {
+.wcommunity_no_head .ui_scroll_default_theme.ui_scroll_wcommunity_theme>.ui_scroll_bar_container {
     right: 0
 }
 

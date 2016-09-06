@@ -18,8 +18,11 @@ WComments = {
             onEditFormSizeUpdate: WComments.contentUpdated.bind(WComments, false)
         });
 
+        cur.options.filter_media_types = cur.options.media_types;
+
         this.override('lite.js');
         this.override('page.js');
+        this.override('emoji.js');
         this.override('ui_media_selector.js', true);
 
         stManager.emitter.addListener('update', this.override.bind(this));
@@ -307,28 +310,33 @@ WComments = {
         });
     },
 
-    updateTimes: function() {
+    updateTimes: function(cont) {
+        if (!(cur.lang || {})
+            .wall_X_seconds_ago_words) {
+            return;
+        }
         var timeNow = intval(vkNow() / 1000),
-            rm_class = [];
-        each(geByClass('rel_date_needs_update', ge('wcomments_posts'), 'span'), function(k, v) {
+            toClean = [];
+        timeNow -= cur.tsDiff;
+        each(geByClass('rel_date_needs_update', cont || ge('wcomments_posts'), 'span'), function(k, v) {
             if (!v) return;
             var timeRow = intval(v.getAttribute('time')),
                 diff = timeNow - timeRow,
                 timeText = v.getAttribute('abs_time');
             if (diff < 5) {
-                timeText = getLang('news_just_now');
+                timeText = getLang('wall_just_now');
             } else if (diff < 60) {
-                timeText = WComments.langWordNumeric(diff, cur.lang.news_X_seconds_ago_words, cur.lang.news_X_seconds_ago);
+                timeText = Wall.langWordNumeric(diff, cur.lang.wall_X_seconds_ago_words, cur.lang.wall_X_seconds_ago);
             } else if (diff < 3600) {
-                timeText = WComments.langWordNumeric(intval(diff / 60), cur.lang.news_X_minutes_ago_words, cur.lang.news_X_minutes_ago);
+                timeText = Wall.langWordNumeric(intval(diff / 60), cur.lang.wall_X_minutes_ago_words, cur.lang.wall_X_minutes_ago);
             } else if (diff < 4 * 3600) {
-                timeText = WComments.langWordNumeric(intval(diff / 3600), cur.lang.news_X_hours_ago_words, cur.lang.news_X_hours_ago);
+                timeText = Wall.langWordNumeric(intval(diff / 3600), cur.lang.wall_X_hours_ago_words, cur.lang.wall_X_hours_ago);
             } else {
-                rm_class.push(v);
+                toClean.push(v);
             }
             v.innerHTML = timeText;
         });
-        each(rm_class, function() {
+        each(toClean, function() {
             removeClass(this, 'rel_date_needs_update');
         });
     },
@@ -370,9 +378,10 @@ WComments = {
             hash: hash,
             app: cur.options.app
         }, {
-            onDone: function(response) {
-                each(geByClass('wcomments_post', ge('wcomments_posts'), 'div'), function() {
-                    !this.id.indexOf('post' + mid) && this.id != 'post' + post_id && isVisible(this) && hide(this);
+            onDone: function(response, earliest_post_id) {
+                earliest_post_id && each(geByClass('wcomments_post', ge('wcomments_posts'), 'div'), function() {
+                    !this.id.indexOf('post' + mid) && this.id.split('_')[1] >= earliest_post_id && this.id != 'post' + post_id && isVisible(this) &&
+                        hide(this);
                 });
                 ge('post_del' + post_id)
                     .innerHTML = response;
@@ -738,10 +747,8 @@ WComments = {
                 if (el) break;
                 var cont = ge('wcomments_posts'),
                     flgs = intval(ev[ev.length - 1]),
-                    newEl = this.resizePost(se(Wall.getNewPostHTML(ev, cur.options.is_admin))),
-                    posts = geByClass('wcomments_post', cont, 'div');
+                    newEl = this.resizePost(se(Wall.getNewPostHTML(ev, cur.options.is_admin)));
 
-                posts.length && re(posts[posts.length - 1]);
                 WComments.eventsUpdateAttaches(newEl);
 
                 function addPost() {
@@ -759,6 +766,7 @@ WComments = {
                 nodeUpdated(newEl);
                 Wall.updateMentionsIndex();
                 if (cur.section !== 'browse') val(cur.countEl, newCnt ? getLang('widgets_comments_top_count', newCnt) : getLang('widgets_comments'));
+
                 break;
 
             case 'del_post':
@@ -828,6 +836,7 @@ WComments = {
                 break;
 
         }
+        this.resizeWidget();
     },
 
     override: function(file, force) {
@@ -1097,6 +1106,18 @@ WComments = {
                         }
                     }
 
+                });
+                break;
+
+            case 'emoji.js':
+                extend(Emoji, {
+                    focus: function(cont, shouldScroll) {
+                        Emoji.editableFocus(cont, false, true);
+                        if (shouldScroll && cur.scrollbar) {
+                            var el = domCA(cont, '.reply_box');
+                            el && cur.scrollbar.scrollIntoView(el);
+                        }
+                    }
                 });
                 break;
 

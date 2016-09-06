@@ -2503,7 +2503,7 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     top: 31.5px
 }
 
-.ui_scroll_videoview_theme .ui_scroll_bar_inner {
+.ui_scroll_videoview_theme>.ui_scroll_bar_container>.ui_scroll_bar_outer>.ui_scroll_bar_inner {
     width: 7px;
     background: #3d3d3d;
     border-radius: 1px
