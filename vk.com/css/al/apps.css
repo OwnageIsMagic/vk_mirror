@@ -661,18 +661,15 @@ body.mac .apps_featured_thumb .ads_ad_big_app_info_box {
     position: absolute;
     z-index: 1;
     right: 20px;
-    bottom: 20px
-}
-
-.apps_ab_featured .apps_featured_thumb_play_btn {
+    bottom: 20px;
     background: #5fb053
 }
 
-.apps_ab_featured .apps_featured_thumb_play_btn:hover {
+.apps_featured_thumb_play_btn:hover {
     background: #68b35d
 }
 
-.apps_ab_featured .apps_featured_thumb_play_btn:active {
+.apps_featured_thumb_play_btn:active {
     background: #5aa84d
 }
 

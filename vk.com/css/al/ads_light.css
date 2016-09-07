@@ -691,18 +691,15 @@ a.ads_ad_box2:hover {
     position: absolute;
     z-index: 1;
     right: 20px;
-    bottom: 20px
-}
-
-.apps_ab_featured .ads_ad_big_app_info_box.big_app .ads_ad_play {
+    bottom: 20px;
     background: #5fb053
 }
 
-.apps_ab_featured .ads_ad_big_app_info_box.big_app .ads_ad_play:hover {
+.ads_ad_big_app_info_box.big_app .ads_ad_play:hover {
     background: #68b35d
 }
 
-.apps_ab_featured .ads_ad_big_app_info_box.big_app .ads_ad_play:active {
+.ads_ad_big_app_info_box.big_app .ads_ad_play:active {
     background: #5aa84d
 }
 

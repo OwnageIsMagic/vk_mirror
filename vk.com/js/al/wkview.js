@@ -97,52 +97,54 @@ var WkView = {
             case "market":
                 if (window.Market) return Market.updateCommentsOnScroll(r)
         }
-        var o = ge("wke_buttons_panel"),
-            t = ge("wke_buttons_cont");
-        if (o) {
-            var i = getXY(t, !0)[1];
-            wkcur.bottomSize || (wkcur.bottomSize = getSize(o));
-            var w = wkcur.bottomSize[1],
-                a = window.innerHeight || document.documentElement.clientHeight;
-            if (r && !wkcur.fixedBottom && i + 20 > a - w) wkLayerWrap.scrollTop += i + 20 - (a - w);
-            else if (i > a - w) {
-                if (!wkcur.fixedBottom || r) {
-                    wkcur.fixedBottom = !0;
-                    var l = getSize(t);
-                    addClass(wkcur.wkContent, "wke_bottom_fixed"), setStyle(o, {
-                        width: l[0],
-                        height: l[1]
-                    }), setStyle(t, {
-                        paddingTop: l[1]
-                    })
-                }
-            } else(wkcur.fixedBottom || r) && (wkcur.fixedBottom = !1, removeClass(wkcur.wkContent, "wke_bottom_fixed"), setStyle(o, {
-                width: null,
-                height: null
-            }), setStyle(t, {
-                paddingTop: 0
-            }));
-            var n = ge("wke_controls"),
-                s = ge("wke_controls_cont");
-            if (s) {
-                var c = getXY(s, !0);
-                if (c[1] < 0) {
-                    if (!wkcur.fixedTop) {
-                        wkcur.fixedTop = !0;
-                        var k = getSize(s);
-                        addClass(wkcur.wkContent, "wke_top_fixed"), setStyle(n, {
-                            width: k[0],
-                            height: k[1]
-                        }), setStyle(s, {
-                            paddingTop: k[1]
+        if (!isFunction(WkView.customOnScroll) || !WkView.customOnScroll(r)) {
+            var o = ge("wke_buttons_panel"),
+                t = ge("wke_buttons_cont");
+            if (o) {
+                var i = getXY(t, !0)[1];
+                wkcur.bottomSize || (wkcur.bottomSize = getSize(o));
+                var w = wkcur.bottomSize[1],
+                    a = window.innerHeight || document.documentElement.clientHeight;
+                if (r && !wkcur.fixedBottom && i + 20 > a - w) wkLayerWrap.scrollTop += i + 20 - (a - w);
+                else if (i > a - w) {
+                    if (!wkcur.fixedBottom || r) {
+                        wkcur.fixedBottom = !0;
+                        var l = getSize(t);
+                        addClass(wkcur.wkContent, "wke_bottom_fixed"), setStyle(o, {
+                            width: l[0],
+                            height: l[1]
+                        }), setStyle(t, {
+                            paddingTop: l[1]
                         })
                     }
-                } else wkcur.fixedTop && (wkcur.fixedTop = !1, removeClass(wkcur.wkContent, "wke_top_fixed"), setStyle(n, {
+                } else(wkcur.fixedBottom || r) && (wkcur.fixedBottom = !1, removeClass(wkcur.wkContent, "wke_bottom_fixed"), setStyle(o, {
                     width: null,
                     height: null
-                }), setStyle(s, {
+                }), setStyle(t, {
                     paddingTop: 0
-                }))
+                }));
+                var n = ge("wke_controls"),
+                    s = ge("wke_controls_cont");
+                if (s) {
+                    var c = getXY(s, !0);
+                    if (c[1] < 0) {
+                        if (!wkcur.fixedTop) {
+                            wkcur.fixedTop = !0;
+                            var k = getSize(s);
+                            addClass(wkcur.wkContent, "wke_top_fixed"), setStyle(n, {
+                                width: k[0],
+                                height: k[1]
+                            }), setStyle(s, {
+                                paddingTop: k[1]
+                            })
+                        }
+                    } else wkcur.fixedTop && (wkcur.fixedTop = !1, removeClass(wkcur.wkContent, "wke_top_fixed"), setStyle(n, {
+                        width: null,
+                        height: null
+                    }), setStyle(s, {
+                        paddingTop: 0
+                    }))
+                }
             }
         }
     },
@@ -941,7 +943,8 @@ var WkView = {
         for (var r in ajaxCache) r.match(new RegExp("^\\/wkview.php\\#act=show", "")) && delete ajaxCache[r]
     },
     likesRemove: function(e) {
-        re("fans_fan_row" + e), WkView.likesRecache(-1), WkView.onScroll(), domFC(ge("wk_likes_rows")) || nav.reload();
+        re("fans_fan_row" + e),
+            WkView.likesRecache(-1), WkView.onScroll(), domFC(ge("wk_likes_rows")) || nav.reload()
     },
     historyInit: function() {
         addEvent(wkLayerWrap, "scroll", WkView.onScroll), addEvent(window, "resize", WkView.onResize), onBodyResize(), wkcur._hide.push(function() {

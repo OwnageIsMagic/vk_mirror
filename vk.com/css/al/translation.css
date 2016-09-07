@@ -59,6 +59,12 @@ i i.untranslated {
     padding: 10px
 }
 
+.tr_untranslated_warning {
+    padding: 20px 20px 30px;
+    text-align: center;
+    color: #444
+}
+
 .tr_keys_lang_selector_wrap {
     padding: 20px;
     height: 30px
