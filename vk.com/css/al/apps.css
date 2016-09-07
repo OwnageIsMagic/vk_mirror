@@ -643,8 +643,8 @@ body.mac .apps_featured_thumb .ads_ad_big_app_info_box {
 
 .apps_featured_thumb_gradient {
     background-color: transparent;
-    background: -o-linear-gradient(270deg, transparent, rgba(0, 0, 0, .5));
-    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5));
+    background: -o-linear-gradient(270deg, transparent, rgba(0, 0, 0, .8));
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .8));
     position: absolute;
     height: 140px
 }
@@ -664,6 +664,18 @@ body.mac .apps_featured_thumb .ads_ad_big_app_info_box {
     bottom: 20px
 }
 
+.apps_ab_featured .apps_featured_thumb_play_btn {
+    background: #5fb053
+}
+
+.apps_ab_featured .apps_featured_thumb_play_btn:hover {
+    background: #68b35d
+}
+
+.apps_ab_featured .apps_featured_thumb_play_btn:active {
+    background: #5aa84d
+}
+
 .apps_featured_thumb_descr,
 .apps_featured_thumb_title {
     color: #fff;
@@ -675,16 +687,17 @@ body.mac .apps_featured_thumb .ads_ad_big_app_info_box {
 .apps_featured_thumb_title {
     font-size: 14px;
     line-height: 143%;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
     margin-bottom: 3px
 }
 
 .apps_featured_thumb_descr {
     font-size: 14px;
     line-height: 136%;
-    margin-bottom: -4px
+    margin-bottom: -4px;
+    opacity: 0.9
 }
 
 .apps_featured_next,

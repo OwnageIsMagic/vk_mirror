@@ -136,11 +136,14 @@ var Videoview = {
             },
             onInitialized: function() {
                 window.mvcur && mvcur.mvShown ? (VideoPlaylist.toggle(!VideoPlaylist.isCollapsed()), mvcur.options.focusPlay && ("visible" == document.visibilityState ?
-                    Videoview.togglePlay(!0) : "hidden" == document.visibilityState && addEvent(window, "focus", function i() {
-                        Videoview.togglePlay(!0), removeEvent(window, "focus", i)
+                    Videoview.togglePlay(!0) : "hidden" == document.visibilityState && addEvent(window, "focus", function t() {
+                        Videoview.togglePlay(!0), removeEvent(window, "focus", t)
                     }))) : cur.pinnedVideoInitHandlers && cur.pinnedVideoInitHandlers();
                 var e = window.mvcur && mvcur.player && mvcur.player.el || ge("video_player");
-                e && e.focus()
+                e && e.focus();
+                var i = Videoview.getMvData();
+                i && i.kz && (vkImage()
+                    .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videoloading/" + this.playerCallback.randomNumber())
             },
             onVideoPlayProgress: function(e, i, t, o, a) {
                 var n = e + "_" + i;
@@ -198,10 +201,13 @@ var Videoview = {
                     onDone: function(e) {}
                 });
                 if (void 0 !== r) {
-                    window.mvcur && (vkImage()
-                        .src = locProtocol + "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + this.playerCallback.randomNumber());
-                    var s = 0;
-                    switch (cur.mvOpts ? s = cur.mvOpts.l_type : window.mvcur && (s = mvcur.mvData.l_type), s) {
+                    vkImage()
+                        .src = locProtocol + "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + this.playerCallback.randomNumber();
+                    var s = Videoview.getMvData();
+                    s && s.kz && (vkImage()
+                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + this.playerCallback.randomNumber());
+                    var v = 0;
+                    switch (cur.mvOpts ? v = cur.mvOpts.l_type : window.mvcur && (v = mvcur.mvData.l_type), v) {
                         case 1:
                             vkImage()
                                 .src = locProtocol +
@@ -215,27 +221,35 @@ var Videoview = {
                 }
             },
             onVideoPlayFinished: function() {
-                cur.pinnedVideoDestroy && cur.pinnedVideoDestroy(), window.mvcur && mvcur.mvShown && (mvcur.finished = !0, mvcur.mousemoved = !0, Videoview.moveCheck(),
-                    Videoview.logViewedPercentage(), mvcur.adData ? (mvcur.adData.stat_link_start && !mvcur.adData.view_complete_start && (ajax.post(mvcur.adData.stat_link_start, {}, {
+                if (cur.pinnedVideoDestroy && cur.pinnedVideoDestroy(), window.mvcur && mvcur.mvShown && (mvcur.finished = !0, mvcur.mousemoved = !0, Videoview.moveCheck(),
+                        Videoview.logViewedPercentage()), window.mvcur && mvcur.mvShown && mvcur.adData) mvcur.adData.stat_link_start && !mvcur.adData.view_complete_start && (
+                    ajax.post(mvcur.adData.stat_link_start, {}, {
                         onDone: function() {},
                         onFail: function() {
                             return !0
                         }
                     }), mvcur.adData.view_complete_start = !0), mvcur.adData.stat_link_half && !mvcur.adData.view_complete_half && (ajax.post(mvcur.adData.stat_link_half, {}, {
-                        onDone: function() {},
-                        onFail: function() {
-                            return !0
-                        }
-                    }), mvcur.adData.view_complete_half = !0), mvcur.adData.stat_link_full && !mvcur.adData.view_complete_full && (ajax.post(mvcur.adData.stat_link_full, {}, {
-                        onDone: function() {},
-                        onFail: function() {
-                            return !0
-                        }
-                    }), mvcur.adData.view_complete_full = !0)) : vkImage()
-                    .src = locProtocol + "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerend/" + this.playerCallback.randomNumber())
+                    onDone: function() {},
+                    onFail: function() {
+                        return !0
+                    }
+                }), mvcur.adData.view_complete_half = !0), mvcur.adData.stat_link_full && !mvcur.adData.view_complete_full && (ajax.post(mvcur.adData.stat_link_full, {}, {
+                    onDone: function() {},
+                    onFail: function() {
+                        return !0
+                    }
+                }), mvcur.adData.view_complete_full = !0);
+                else {
+                    vkImage()
+                        .src = locProtocol + "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerend/" + this.playerCallback.randomNumber();
+                    var e = Videoview.getMvData();
+                    e && e.kz && (vkImage()
+                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videoend/" + this.playerCallback.randomNumber())
+                }
             },
             randomNumber: function() {
-                return mvcur.mvData.randomNumber = mvcur.mvData.randomNumber || Math.round(1e9 * Math.random()), mvcur.mvData.randomNumber
+                var e = Videoview.getMvData();
+                return e.randomNumber = e.randomNumber || Math.round(1e9 * Math.random()), e.randomNumber
             },
             onVideoAdsLoadStarted: function() {
                 vkImage()
@@ -833,7 +847,8 @@ var Videoview = {
             } else mvcur.mvPrevLoc ? nav.setLoc(mvcur.mvPrevLoc) : ("video" == nav.objLoc[0] || nav.objLoc[0].match(/^video-?\d+_\d+/)) && nav.setLoc({
                 0: "video"
             });
-            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)), delete mvcur.options.prevTitle), mvcur.noHistory = 1
+            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)),
+                delete mvcur.options.prevTitle), mvcur.noHistory = 1
         },
         highlightComment: function(e) {
             if (e = ge(e)) {
@@ -1859,14 +1874,15 @@ var Videoview = {
                     }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"), hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1,
                     removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
                 var o = "mv_dark";
-                return addClass(mvLayerWrap, o), addClass(layerBG, o), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle(
-                        "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
+                return addClass(mvLayerWrap, o), addClass(layerBG, o), mvcur.needShowApprove && (mvcur.needShowApprove = !1,
+                        show("mv_approve")), Videoview.restoreStyle("mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer),
+                    setStyle("mv_player_box", {
                         width: "",
                         height: ""
                     }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
                         "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
-                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(),
-                    mvcur.noLocChange || e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
+                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(),
+                    onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
                     }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),

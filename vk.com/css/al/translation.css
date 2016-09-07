@@ -19,6 +19,37 @@
     padding: 0
 }
 
+.translation_box {
+    text-align: center;
+    padding: 20px 0
+}
+
+.translation_box .flat_button {
+    margin: 5px 0
+}
+
+i.translated,
+i.untranslated {
+    cursor: copy;
+    font-style: normal
+}
+
+i.translated {
+    border-bottom: 1px dotted #555
+}
+
+i i.translated {
+    border-bottom: 1px solid #000
+}
+
+i.untranslated {
+    border-bottom: 1px dotted red
+}
+
+i i.untranslated {
+    border-bottom: 1px solid red
+}
+
 .tr_key_multi_sep {
     margin: 0 5px;
     color: #c5c5c5
@@ -186,7 +217,7 @@
     box-sizing: border-box;
     display: block;
     height: 30px;
-    font-family: consolas, monospace;
+    font-family: Monaco, Consolas, Courier, monospace;
     width: 100%;
     resize: vertical
 }

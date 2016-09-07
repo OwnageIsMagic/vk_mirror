@@ -1292,6 +1292,10 @@ h2.payments_getvotes_title {
     margin-right: 12px
 }
 
+#payments_box.payments_money_transfer_box .payments_transfer_to_photo {
+    margin-left: 5px
+}
+
 #payments_box.payments_money_transfer_box .payments_summary_phumb,
 #payments_box.payments_money_transfer_box .payments_transfer_to_photo {
     width: 40px;
@@ -1439,7 +1443,7 @@ h2.payments_getvotes_title {
 }
 
 .payments_money_transfer_footer {
-    padding: 16px 90px;
+    padding: 16px 30px;
     color: #939393;
     font-size: 12px;
     text-align: center

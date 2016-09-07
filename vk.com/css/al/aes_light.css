@@ -694,6 +694,18 @@ a.ads_ad_box2:hover {
     bottom: 20px
 }
 
+.apps_ab_featured .ads_ad_big_app_info_box.big_app .ads_ad_play {
+    background: #5fb053
+}
+
+.apps_ab_featured .ads_ad_big_app_info_box.big_app .ads_ad_play:hover {
+    background: #68b35d
+}
+
+.apps_ab_featured .ads_ad_big_app_info_box.big_app .ads_ad_play:active {
+    background: #5aa84d
+}
+
 .ads_ad_photo_icon_box,
 .ads_ad_photo_icon_box_separator {
     display: none
@@ -783,9 +795,13 @@ a.ads_ad_box2:hover {
 .ads_ad_title.apps_only {
     display: inline;
     font-weight: 500;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
     color: #2a5885
+}
+
+.ads_ad_title.apps_only,
+.ads_ad_title.big_app {
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
 .ads_ad_title.big_app {
@@ -795,9 +811,7 @@ a.ads_ad_box2:hover {
     z-index: 1;
     font-size: 14px;
     line-height: 143%;
-    font-weight: 700;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    font-weight: 600;
     margin-bottom: 3px;
     padding: 0
 }
@@ -829,6 +843,7 @@ a.ads_ad_box2:hover {
     font-size: 14px;
     line-height: 136%;
     margin-bottom: -4px;
+    opacity: 0.9;
     padding: 0
 }
 
@@ -841,8 +856,8 @@ a.ads_ad_box2:hover {
 
 .ads_ad_big_app_info_shadow {
     background-color: transparent;
-    background: -o-linear-gradient(270deg, transparent, rgba(0, 0, 0, .5));
-    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .5));
+    background: -o-linear-gradient(270deg, transparent, rgba(0, 0, 0, .8));
+    background: linear-gradient(180deg, transparent, rgba(0, 0, 0, .8));
     position: absolute;
     height: 140px;
     bottom: 0;

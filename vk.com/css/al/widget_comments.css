@@ -597,8 +597,13 @@
 .wall_module .post.wcomments_post {
     border-bottom: none;
     border-radius: 3px;
-    margin: 6px -9px -9px;
-    padding: 9px
+    margin: 1px -14px -14px;
+    padding: 14px
+}
+
+.wall_module .post.wcomments_post+.wcomments_post {
+    margin: 11px -14px -14px;
+    padding: 14px
 }
 
 .wall_module .post.wcomments_post .wcomments_delete_all_cancel {
@@ -743,10 +748,15 @@
 
 .wall_module .post.wcomments_post .replies_list>.reply {
     border-radius: 3px;
-    margin: 6px -9px -9px;
-    padding: 9px;
+    margin: 4px -11px -11px;
+    padding: 11px;
     border-top: 0;
     border-bottom: 0
+}
+
+.wall_module .post.wcomments_post .replies_list>.reply+.reply {
+    margin: 9px -11px -11px;
+    padding: 11px
 }
 
 .wall_module .post.wcomments_post .replies_list>.reply>.reply_wrap {

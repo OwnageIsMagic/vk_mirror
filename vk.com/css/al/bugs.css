@@ -314,7 +314,7 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 
 .bugs_author_name {
     padding-left: 8px;
-    max-width: 112px;
+    width: 148px;
     margin-right: -5px;
     white-space: nowrap;
     overflow: hidden
