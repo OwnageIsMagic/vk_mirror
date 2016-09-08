@@ -75,7 +75,8 @@ i i.untranslated {
 }
 
 .tr_key {
-    padding: 10px 15px;
+    font-size: 12px;
+    padding: 7px 15px;
     cursor: pointer
 }
 
@@ -98,7 +99,7 @@ i i.untranslated {
 }
 
 .tr_key.tr_untranslated:hover {
-    background-color: #fdf5d9
+    background-color: #f7ecc5
 }
 
 .tr_key .tr_key_inner {
@@ -136,6 +137,10 @@ i i.untranslated {
 
 .tr_sections_block .ui_search {
     margin-bottom: 5px
+}
+
+.tr_sections_block .ui_rmenu_item .pr {
+    margin-right: 16px!important
 }
 
 .tr_control {
