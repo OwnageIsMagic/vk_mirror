@@ -727,6 +727,10 @@
     color: #444
 }
 
+.video_upload_tc_wrap {
+    overflow: hidden
+}
+
 .video_upload_tc_wrap .video_upload_tc_info {
     color: #777;
     line-height: 1.4em;
@@ -943,4 +947,161 @@
 
 .video_upload_tc_wrap .video_tc_slider:hover .video_tc_slider_btn#video_tc_right {
     right: 7px
+}
+
+.video_add_live_tab * {
+    box-sizing: border-box
+}
+
+.video_add_live_tab .subheader {
+    clear: both
+}
+
+.video_add_live_tab .video_tc_upload_image {
+    width: 170px;
+    height: 85px;
+    position: relative
+}
+
+.video_add_live_tab .video_tc_item,
+.video_add_live_tab .video_tc_upload_btn {
+    width: 170px;
+    height: 85px;
+    margin-bottom: 7px
+}
+
+.video_add_live_tab .video_tc_upload_btn {
+    box-sizing: border-box;
+    padding: 49px 0 0;
+    height: 100%;
+    width: 100%;
+    white-space: normal;
+    background-color: #e6ebf0;
+    color: #647e97;
+    line-height: 1.3em;
+    border-radius: 2px;
+    background-image: url(/images/icons/flat_plus.png);
+    background-repeat: no-repeat;
+    background-position: center 29px;
+    font-size: 12px;
+    cursor: pointer;
+    text-align: center
+}
+
+.video_add_live_tab .video_new_live_trans_description,
+.video_add_live_tab .video_new_live_trans_title {
+    width: 100%
+}
+
+.video_add_live_tab .video_new_live_trans_description {
+    margin-bottom: 17px
+}
+
+.video_add_live_tab .input_wrapper {
+    position: relative
+}
+
+.video_add_live_tab .input_wrapper input {
+    width: 100%;
+    padding-left: 40px
+}
+
+.video_add_live_tab .input_wrapper .input_label {
+    position: absolute;
+    padding: 4px;
+    width: 40px;
+    text-align: center;
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+    color: #777
+}
+
+.video_add_live_tab .video_upload_separator {
+    height: 30px;
+    box-sizing: border-box;
+    margin: 12px 0
+}
+
+.video_add_live_tab #video_coder_settings_hidden,
+.video_add_live_tab #video_coder_settings_shown {
+    clear: both;
+    height: 89px
+}
+
+.video_add_live_tab #video_coder_settings_shown {
+    display: none
+}
+
+.video_add_live_tab .video_add_live_trans__show_link {
+    width: 100%;
+    height: 58px;
+    box-sizing: border-box;
+    background-color: #f2f4f7;
+    border: 1px solid #e1e5e9;
+    color: #5c7fa1;
+    padding: 0;
+    padding-left: 20px;
+    padding-top: 20px;
+    cursor: pointer;
+    text-align: left
+}
+
+.video_add_live_tab .video_add_live_trans__show_link.center {
+    text-align: center
+}
+
+.video_add_live_tab .video_add_live_trans__show_link:hover {
+    background-color: #e2e7ec
+}
+
+.video_add_live_tab .video_coder_settings__header {
+    position: relative
+}
+
+.video_add_live_tab .video_coder_settings__header .new_link {
+    position: absolute;
+    top: 0;
+    right: 0
+}
+
+.video_add_live_tab .video_coder_settings__header .subheader {
+    margin-top: 0
+}
+
+.video_add_live_tab .video_add_live_trans__warning {
+    font-size: 12px;
+    border-left: 3px solid #fdad46;
+    padding-left: 10px;
+    margin: 10px 0;
+    line-height: 16px;
+    color: #181818
+}
+
+.video_add_live_tab .video_add_live_trans__comment {
+    color: #777;
+    font-size: 12px;
+    line-height: 14px
+}
+
+.video_add_live_tab .video_tc_upload_progress_wrap {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
+.video_add_live_tab .video_tc_upload_progress_wrap .video_tc_upload_progress {
+    margin: auto;
+    margin-left: 50%;
+    margin-top: 42px;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%)
+}
+
+.video_add_live_tab .checkbox {
+    margin-bottom: 10px
 }

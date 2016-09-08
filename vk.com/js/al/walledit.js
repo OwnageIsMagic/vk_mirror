@@ -2,29 +2,29 @@ var WallEdit = {
     handleEditEsc: function(e) {
         e.keyCode == KEY.ESC && WallEdit.cancelEditPost()
     },
-    editPost: function(e, t, i, o, a, n) {
+    editPost: function(e, t, i, o, a, s) {
         if (!window.Emoji) return stManager.add(["emoji.js", "notifier.css"], function() {
-            WallEdit.editPost(e, t, i, o, a, n)
+            WallEdit.editPost(e, t, i, o, a, s)
         }), !1;
-        var s = ge("wpe_text");
-        if (cur.editingPost && (cur.editingPost[0] != e || cur.editingPost[1]) && s) return window.Emoji ? Emoji.focus(s) : !1;
+        var n = ge("wpe_text");
+        if (cur.editingPost && (cur.editingPost[0] != e || cur.editingPost[1]) && n) return window.Emoji ? Emoji.focus(n) : !1;
         var d, r, l = window.wkcur && wkcur.shown && wkcur.post == e ? geByClass1("_wall_post_cont", wkLayer) : ge("wpt" + e);
         d = "photo_comment" == a.reply ? ge("post" + e) : "video_comment" == a.reply ? ge("mv_comment" + e.replace(/(\d+)video_(\d+)mv/, "$1_$2")) : "market_comment" == a.reply ?
             ge("market_comment" + e.replace(/(\d+)market_(\d+)/, "$1_$2")) : ge("post" + e), r = a.wkview ? "wl_post_actions_wrap" : a.reply ? "wpe_bottom" + e :
             geByClass1("ui_actions_menu_wrap", d), addClass(d, "wpe_wrap");
-        var c = geByClass1("post_edit_button", d) || geByClass1("reply_edit_button", d);
-        c && setStyle(c, {
+        var p = geByClass1("post_edit_button", d) || geByClass1("reply_edit_button", d);
+        p && setStyle(p, {
             visibility: "hidden"
         }), cur.editingPost = [e, l, r, a];
-        var p = null;
-        a.wkview ? (p = geByClass1("post_author", ge("wl_post"), "div"), WkView.wallOnEdit(e, a)) : p = geByClass1(a.reply ? "reply_author" : "post_author", d), hide(
+        var c = null;
+        a.wkview ? (c = geByClass1("post_author", ge("wl_post"), "div"), WkView.wallOnEdit(e, a)) : c = geByClass1(a.reply ? "reply_author" : "post_author", d), hide(
             geByClass1("wall_signed", domPN(l)));
         var u = ce("span", {
                 className: "wpe_info"
             }),
             _ = geByClass1(a.reply ? "like_wrap" : "post_full_like_wrap", d, "div"),
             w = ge("post_publish_wrap" + e);
-        p && (re(geByClass1("wpe_info", p)), cur.editingPost.push(p.appendChild(u))), cur.editingPost.push(_), cur.editingPost.push(w), cur.lang = extend(cur.lang || {}, a
+        c && (re(geByClass1("wpe_info", c)), cur.editingPost.push(c.appendChild(u))), cur.editingPost.push(_), cur.editingPost.push(w), cur.lang = extend(cur.lang || {}, a
                 .lang), cur.options = extend(cur.options || {}, {
                 share: a.share
             }), cur.editHash = o, val(u, " - " + (a.reply ? getLang("wall_editing_reply") : getLang("wall_editing_post"))), addEvent(window, "keydown", WallEdit.handleEditEsc),
@@ -76,19 +76,19 @@ var WallEdit = {
         }, 0) : void setTimeout(function() {
             show(l.previousSibling), hide(l, r, _, w);
             var t, o = [],
-                s = [];
-            a.reply ? (each(n, function() {
+                n = [];
+            a.reply ? (each(s, function() {
                 inArray(this[0], ["photo", "video", "audio", "doc", "link"]) && o.push(this)
-            }), s = ["album"]) : a.copy ? (each(n, function() {
+            }), n = ["album"]) : a.copy ? (each(s, function() {
                 inArray(this[0], ["photo", "video", "audio", "doc", "postpone", "mark_as_ads"]) && o.push(this)
-            }), s = ["album", "share", "link", "page"]) : o = n, o.length > 0 && (t = {
+            }), n = ["album", "share", "link", "page"]) : o = s, o.length > 0 && (t = {
                 lnk: ge("wpe_add_media")
                     .firstChild,
                 preview: "wpe_media_preview",
                 types: o,
                 options: {
                     toId: e.split("_")[0],
-                    disabledTypes: s,
+                    disabledTypes: n,
                     limit: a.copy ? 1 : a.reply ? 2 : 10,
                     toggleLnk: a.reply || a.copy,
                     editable: !a.reply && !a.copy,
@@ -96,14 +96,14 @@ var WallEdit = {
                 }
             }, a.teWidth && (t.options.teWidth = a.teWidth), a.teHeight && (t.options.teHeight = a.teHeight), ("photo_comment" == a.reply ||
                 "video_comment" == a.reply) && (t.options.nocl = 1), "photo_comment" == a.reply && (t.options.maxShown = 0, t.options.hideAfterCount = 0));
-            var c = ge("wpe_text");
-            if (cur.wallEditComposer = Composer.init(c, {
+            var p = ge("wpe_text");
+            if (cur.wallEditComposer = Composer.init(p, {
                     lang: g,
                     media: t
                 }), t) {
                 cur.wallEditMedia = cur.dropboxAddMedia = cur.wallEditComposer.addMedia, WallUpload.attachToEl(d);
-                for (var p = 0, u = i.length; u > p; ++p) cur.wallEditMedia.chooseMedia.apply(cur.wallEditMedia, i[p]), "postpone" == i[p][0] && cur.editingPost.push(
-                    i[p][1])
+                for (var c = 0, u = i.length; u > c; ++c) cur.wallEditMedia.chooseMedia.apply(cur.wallEditMedia, i[c]), "postpone" == i[c][0] && cur.editingPost.push(
+                    i[c][1])
             }
             cur.weEmoji = m(), cur.onEditFormSizeUpdate && cur.onEditFormSizeUpdate()
         }, 0)
@@ -118,13 +118,13 @@ var WallEdit = {
         if (cur.editingPost) {
             var o = cur.editingPost[0],
                 a = ge(cur.editingPost[1]),
-                n = ge(cur.editingPost[2]),
-                s = cur.editingPost[3],
+                s = ge(cur.editingPost[2]),
+                n = cur.editingPost[3],
                 d = ge("wpe_save"),
                 r = cur.editingPost[4],
                 l = cur.editingPost[5],
-                c = cur.editingPost[6],
-                p = cur.editingPost[7];
+                p = cur.editingPost[6],
+                c = cur.editingPost[7];
             if (o && a && d && !buttonLocked(d)) {
                 var u = ge("wpe_text");
                 if (0 === e) return window.Emoji ? Emoji.focus(u) : !1;
@@ -138,9 +138,9 @@ var WallEdit = {
                         visibility: ""
                     }), removeClass(w, "wpe_wrap"), -1 == e) return void Wall.postponedPublished(o);
                 if (void 0 !== e) {
-                    val(a, e), val(r, " - " + (s && s.reply ? getLang("wall_reply_saved") : getLang("wall_post_saved")));
+                    val(a, e), val(r, " - " + (n && n.reply ? getLang("wall_reply_saved") : getLang("wall_post_saved")));
                     var m = geByClass1("rel_date", w);
-                    if (p) {
+                    if (c) {
                         t && m && (m.innerHTML = t);
                         var v = geByClass1("page_fronly", o);
                         i && !v ? r.nextSibling ? r.parentNode.insertBefore(se(i), r.nextSibling) : r.parentNode.appendChild(se(i)) : !i && v && re(v)
@@ -150,63 +150,65 @@ var WallEdit = {
                         }, 500, re.pbind(r)), 1500), o.match(/^-?\d+photo_/) ? window.Photoview && Photoview.commSaved(o) : o.match(/^-?\d+video_/) && window.Videoview &&
                         Videoview.commSaved(o)
                 } else re(r);
-                show(n, a, l, c), show(geByClass1("wall_signed", domPN(a))), re(a.previousSibling), s.wkview && WkView.wallOnEdited(o), "exchange" == s.from && re(
+                show(s, a, l, p), show(geByClass1("wall_signed", domPN(a))), re(a.previousSibling), n.wkview && WkView.wallOnEdited(o), "exchange" == n.from && re(
                     "exchange_msg");
                 var h = window.audioPlayer;
                 h && h.showCurrentTrack && h.showCurrentTrack()
             }
         }
     },
-    savePost: function() {
+    savePost: function(e) {
         if (cur.editingPost) {
-            var e = cur.editingPost[0],
-                t = ge("wpe_save"),
-                i = cur.editingPost[3],
-                o = cur.editingPost[6];
-            if (e && t && !buttonLocked(t)) {
-                var a = cur.wallEditComposer,
+            var t = cur.editingPost[0],
+                i = ge("wpe_save"),
+                o = cur.editingPost[3],
+                a = cur.editingPost[6];
+            if (t && i && !buttonLocked(i)) {
+                var s = cur.wallEditComposer,
                     n = cur.wallEditMedia || {},
-                    s = Composer.getSendParams(a, WallEdit.savePost),
-                    d = cur.onepost ? "one" : (window.wkcur || {})
+                    d = Composer.getSendParams(s, WallEdit.savePost),
+                    r = cur.onepost ? "one" : (window.wkcur || {})
                     .shown ? "wk" : "";
-                if (i.from ? d = i.from : e.match(/^-?\d+photo_/) && cur.pvShown ? d = "photo" : e.match(/^-?\d+video_/) && window.mvcur && mvcur.mvShown && !mvcur.minimized ?
-                    d = "video" : e.match(/^-?\d+market_/) && ge("market_comments_wrap") && (d = "market"), !s.delayed) {
-                    var r;
-                    if ((r = ge("status_export" + n.lnkId)) && (s.status_export = isChecked(r)), (r = ge("facebook_export" + n.lnkId)) && (s.facebook_export = isChecked(r)),
-                        (r = ge("friends_only" + n.lnkId)) && (s.friends_only = isChecked(r)), !s.attach1_type && !s.message && !i.copy) return window.Emoji ? Emoji.focus(
+                if (o.from ? r = o.from : t.match(/^-?\d+photo_/) && cur.pvShown ? r = "photo" : t.match(/^-?\d+video_/) && window.mvcur && mvcur.mvShown && !mvcur.minimized ?
+                    r = "video" : t.match(/^-?\d+market_/) && ge("market_comments_wrap") && (r = "market"), !d.delayed) {
+                    var l;
+                    if ((l = ge("status_export" + n.lnkId)) && (d.status_export = isChecked(l)), (l = ge("facebook_export" + n.lnkId)) && (d.facebook_export = isChecked(l)),
+                        (l = ge("friends_only" + n.lnkId)) && (d.friends_only = isChecked(l)), !d.attach1_type && !d.message && !o.copy) return window.Emoji ? Emoji.focus(
                         ge("wpe_text")) : !1;
-                    if (o && intval(o.getAttribute("data-suggest"))) extend(s, {
+                    if (o.save_result_type && (d.save_result_type = o.save_result_type), a && intval(a.getAttribute("data-suggest"))) extend(d, {
                         act: "post",
-                        suggest: e,
+                        suggest: t,
                         signed: isChecked("wpe_signed"),
                         hash: cur.editHash,
-                        to_id: e.split("_")[0]
-                    }), ajax.post("al_wall.php", Wall.fixPostParams(s), {
-                        showProgress: lockButton.pbind(t),
-                        hideProgress: unlockButton.pbind(t),
-                        onDone: Wall.suggestPublished.pbind(e)
+                        to_id: t.split("_")[0]
+                    }), ajax.post("al_wall.php", Wall.fixPostParams(d), {
+                        showProgress: lockButton.pbind(i),
+                        hideProgress: unlockButton.pbind(i),
+                        onDone: Wall.suggestPublished.pbind(t)
                     });
                     else {
-                        extend(s, {
+                        extend(d, {
                             act: "save",
-                            post: e,
+                            post: t,
                             whole: 1,
                             hash: cur.editHash,
                             signed: isChecked("wpe_signed"),
-                            from: d
-                        }), vk.widget && cur.options && extend(s, {
+                            from: r
+                        }), vk.widget && cur.options && extend(d, {
                             max_w: cur.options.max_w,
                             reply_max_w: cur.options.reply_max_w,
                             from: cur.options.from
                         });
-                        var l = ge("wpe_cont"),
-                            c = geByClass1("wpe_error", l);
-                        c && hide(c), ajax.post("al_wall.php", Wall.fixPostParams(s), {
-                            showProgress: lockButton.pbind(t),
-                            hideProgress: unlockButton.pbind(t),
-                            onDone: WallEdit.cancelEditPost,
+                        var p = ge("wpe_cont"),
+                            c = geByClass1("wpe_error", p);
+                        c && hide(c), ajax.post("al_wall.php", Wall.fixPostParams(d), {
+                            showProgress: lockButton.pbind(i),
+                            hideProgress: unlockButton.pbind(i),
+                            onDone: function() {
+                                return e ? void e.apply(window, arguments) : void WallEdit.cancelEditPost.apply(window, arguments)
+                            },
                             onFail: function(e) {
-                                return c || (c = se('<div class="wpe_error error"><div>'), l.insertBefore(c, domFC(l))), val(c, e || getLang(
+                                return c || (c = se('<div class="wpe_error error"><div>'), p.insertBefore(c, domFC(p))), val(c, e || getLang(
                                     "global_unknown_error")), isVisible(c) || (slideDown(c, 100), vk.widget && cur.scrollbar && cur.scrollbar.scrollIntoView(
                                     c, 100)), !0
                             }

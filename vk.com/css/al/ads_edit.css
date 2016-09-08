@@ -2,6 +2,17 @@
     display: none
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .ads_edit_page_wrap3 {
     background-color: #f9f9f9;
     padding: 20px
@@ -372,12 +383,9 @@
     background-position: 0 -152px
 }
 
-#ads_param_upload_video_wrap {
-    padding-top: 10px
-}
-
+.ads_edit_value_header_post,
 .ads_edit_value_header_video {
-    padding-bottom: 15px
+    padding: 10px 0 15px
 }
 
 a.ads_edit_link_go {
@@ -393,13 +401,15 @@ a.ads_edit_link_go:hover {
 
 #ads_param_link_id_go_wrap,
 #ads_param_link_url_go_wrap,
-#ads_param_link_video_go_wrap {
+#ads_param_link_video_go_wrap,
+#ads_param_post_or_choose_post {
     width: 1px;
-    padding: 7px 0 0 10px
+    padding: 7px 0 0 10px;
+    white-space: nowrap
 }
 
-#ads_param_link_video_go_wrap {
-    padding-top: 5px
+#ads_param_post_or_choose_post {
+    color: #909090
 }
 
 #ads_param_link_domain_progress_wrap {
@@ -774,4 +784,34 @@ a.ads_edit_link_go:hover {
 #ads_edit_upload_video_external_error {
     padding-top: 5px;
     color: #777
+}
+
+#ads_edit_ad_creating_post_group_wrap {
+    padding-bottom: 20px
+}
+
+.ads_edit_ad_submit_post_wrap {
+    padding-top: 20px
+}
+
+.ads_edit_ad_submit_post_box {
+    border: 1px solid #d3d9de
+}
+
+.ads_edit_ad_submit_post_box .post_field_wrap {
+    margin-left: 0
+}
+
+#submit_post_error.error.ads_edit_ad_submit_post_error {
+    margin: 0 0 20px
+}
+
+.ads_edit_ad_creating_post_info {
+    color: #939393;
+    padding-top: 10px
+}
+
+#ads_edit_ad_editing_post_form_wrap .wpe_cancel,
+#ads_edit_ad_editing_post_form_wrap .wpe_info {
+    display: none
 }

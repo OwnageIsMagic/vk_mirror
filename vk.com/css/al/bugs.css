@@ -492,9 +492,14 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 }
 
 .bugs_new_cont {
-    position: relative;
     padding: 26px;
+    position: relative;
     background: #f7f7f7
+}
+
+.bugs_new_cont.bugs_new_cont_invisible {
+    padding: 0;
+    background: transparent
 }
 
 .bugs_new_header {

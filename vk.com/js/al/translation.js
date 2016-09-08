@@ -11,21 +11,11 @@
     function n() {
         var e = geByClass("_tr_text_value", geByClass("_tr_key_edit_wrap")[0]),
             t = geByClass("_tr_text_value", geByClass("_tr_key_edit_wrap")[1]),
-            n = !1,
-            a = "";
-        each(e, function(o) {
-            addEvent(this, "input change", function(s) {
-                var i = val(this);
-                if (n || val(t[o], i), a != val(e[0])) {
-                    a = val(e[0]);
-                    var l = a.match(/(\{[a-zA-Z_]+\})/g) || [],
-                        r = [];
-                    each(l, function(e, t) {
-                        r.push([e, t])
-                    }), setTimeout(function() {
-                        L.setData(r)
-                    }, 100)
-                }
+            n = !1;
+        each(e, function(e) {
+            addEvent(this, "input change", function(a) {
+                var o = val(this);
+                n || val(t[e], o)
             })
         }), each(t, function() {
             addEvent(this, "input change", function() {
@@ -37,7 +27,7 @@
     }
 
     function a(e) {
-        ajax.post(S, {
+        ajax.post(T, {
             act: "function_type",
             function_type: e
         }, {
@@ -63,7 +53,7 @@
             act: "save_key",
             hash: t
         };
-        o.lang_id = intval(void 0 !== nav.objLoc.lang_id ? nav.objLoc.lang_id : cur.langId), o.key = val("tr_new_key") || val("tr_key_input"), j && (o.function_type = j.getSelected()[
+        if (o.lang_id = intval(void 0 !== nav.objLoc.lang_id ? nav.objLoc.lang_id : cur.langId), o.key = val("tr_new_key") || val("tr_key_input"), E && (o.function_type = E.getSelected()[
                 0]), o.lang_ids = [], each(geByClass("_tr_key_edit_wrap"), function() {
                 var e = domData(this, "lang-id"),
                     t = [];
@@ -72,22 +62,30 @@
                 }), t = t.length > 1 ? "@@" + t.join("@") : t[0], o["Value_" + e] = t, o.lang_ids.push(e)
             }), o.lang_ids = o.lang_ids.join(","), o.description = val("tr_description_edit"), o.extended_wiki = intval(hasClass("tr_extra_wiki", "on")), o.disable_inline = intval(
                 hasClass("tr_extra_disable_inline", "on")), o["export"] = intval(hasClass("tr_extra_export_to_js", "on")), o.has_case = intval(hasClass("tr_extra_case", "on")), o.mark_untranslated =
-            intval(hasClass("tr_extra_mark_as_untranslated", "on")), o.has_case && (o["case"] = D.selectedItems()[0][0], o.case_token = L.selectedItems()[0][1]), ajax.post(S, o, {
-                showProgress: lockButton.pbind(e),
-                hideProgress: unlockButton.pbind(e),
-                onDone: function(e, t) {
-                    if (e && o.key) {
-                        var s = document.querySelector(".tr_key[data-key=" + o.key + "]");
-                        s && (removeClass(s, "tr_untranslated"), geByClass1("_tr_key_inner", s)
-                            .innerHTML = e), a && (a.innerHTML = t, a.className = "translated")
-                    } else nav.reload();
-                    boxQueue.hideAll(), n && n(e)
-                }
-            })
+            intval(hasClass("tr_extra_mark_as_untranslated", "on")), o.has_case) {
+            o["case"] = D.selectedItems()[0][0];
+            var s = L.selectedItems();
+            s.length && (o.case_token = L.selectedItems()[0][1])
+        }
+        ajax.post(T, o, {
+            showProgress: lockButton.pbind(e),
+            hideProgress: unlockButton.pbind(e),
+            onDone: function(e, t) {
+                if (e && o.key) {
+                    var s = document.querySelector(".tr_key[data-key=" + o.key + "]");
+                    s && (removeClass(s, "tr_untranslated"), geByClass1("_tr_key_inner", s)
+                        .innerHTML = e), a && (a.innerHTML = t, a.className = "translated")
+                } else nav.reload();
+                boxQueue.hideAll(), n && n(e), o.mark_untranslated && nav.reload()
+            }
+        })
     }
 
     function s(e) {
-        toggle(geByClass1("_tr_case_controls"), e)
+        if (toggle(geByClass1("_tr_case_controls"), e), e) {
+            var t = geByClass("_tr_text_value", geByClass("_tr_key_edit_wrap")[0]);
+            t.length && triggerEvent(t[0], "change")
+        }
     }
 
     function i() {
@@ -100,7 +98,7 @@
     }
 
     function r(e, s) {
-        var i = showBox(S, {
+        var i = showBox(T, {
             act: "open_key",
             key: e,
             lang_id: intval(nav.objLoc.lang_id),
@@ -134,12 +132,28 @@
                         })
                     }
                 }
-                j = !1, ge("tr_function_chooser") && (j = new InlineDropdown("tr_function_chooser", {
+                var g = geByClass("_tr_text_value", geByClass("_tr_key_edit_wrap")[0]),
+                    h = "",
+                    v = !1;
+                each(g, function(e) {
+                    addEvent(this, "input change", function(e) {
+                        if (h != val(g[0])) {
+                            h = val(g[0]);
+                            var t = h.match(/(\{[a-zA-Z_]+\})/g) || [],
+                                n = [];
+                            each(t, function(e, t) {
+                                n.push([e, t])
+                            }), clearTimeout(v), v = setTimeout(function() {
+                                L.setData(L._selectedItems = n)
+                            }, 100)
+                        }
+                    })
+                }), E = !1, ge("tr_function_chooser") && (E = new InlineDropdown("tr_function_chooser", {
                     withArrow: !0,
                     onSelect: a
                 }));
-                var g = ge("tr_section_chooser");
-                g && new Dropdown(g, r.sections, {
+                var y = ge("tr_section_chooser");
+                y && new Dropdown(y, r.sections, {
                     big: !0,
                     selectedItems: intval(nav.objLoc.section),
                     onChange: function(e, t) {
@@ -151,57 +165,65 @@
                         val(n, t[3] + "_" + a)
                     }
                 }), D = L = !1;
-                var h = ge("tr_case");
-                h && (D = new Dropdown(h, JSON.parse(domData(h, "cases")), {
-                    big: !0,
-                    width: 200,
-                    onChange: function(e, t) {}
-                }));
-                var v = ge("tr_case_token");
-                v && (L = new Dropdown(v, [], {
-                    big: !0,
-                    width: 200,
-                    onChange: function(e, t) {}
-                }));
-                var y = ge("tr_new_key"),
-                    f = ge("tr_new_key_error");
-                if (y) {
-                    var p = "";
-                    addEvent(y, "change input", debounce(function() {
-                        var e = val(y);
-                        p != e && (p = e, ajax.post(S, {
+                var f = ge("tr_case");
+                if (f) {
+                    var p = domData(f, "selected");
+                    D = new Dropdown(f, JSON.parse(domData(f, "cases")), {
+                        big: !0,
+                        width: 200,
+                        selectedItems: p,
+                        onChange: function(e, t) {}
+                    })
+                }
+                var k = ge("tr_case_token");
+                if (k) {
+                    var p = domData(k, "selected");
+                    L = new Dropdown(k, [], {
+                        big: !0,
+                        width: 200,
+                        selectedItems: p,
+                        onChange: function(e, t) {}
+                    })
+                }
+                var m = ge("tr_new_key"),
+                    x = ge("tr_new_key_error");
+                if (m) {
+                    var b = "";
+                    addEvent(m, "change input", debounce(function() {
+                        var e = val(m);
+                        b != e && (b = e, ajax.post(T, {
                             act: "check_new_key",
                             key: e
                         }, {
                             onDone: function(e) {
-                                toggle(f, !!e)
+                                toggle(x, !!e)
                             }
                         }))
                     }, 200))
                 }
-                if (y) elfocus(y);
+                if (m) elfocus(m);
                 else {
-                    var k = geByClass("_tr_text_value"),
-                        b = 3 == cur.langId ? k[1] : k[0];
+                    var w = geByClass("_tr_text_value"),
+                        C = 3 == cur.langId ? w[1] : w[0];
                     setTimeout(function() {
-                        elfocus(b), b.select()
+                        elfocus(C), C.select()
                     })
                 }
                 if (r.isDeleted) i.addButton(getLang("box_restore"), function(t) {
                     _(t, e, r.editHash)
                 }, "yes");
                 else {
-                    var x = i.addButton(e ? getLang("global_save") : getLang("tran_create_key"), function(e) {
+                    var B = i.addButton(e ? getLang("global_save") : getLang("tran_create_key"), function(e) {
                         o(e, r.editHash, !1, s)
                     }, "yes", !0);
                     if (e && cur.isSuperTranslator) {
                         cur.sections = r.sections;
-                        var m = "<a onclick=\"TR.deleteKey('" + e + "', '" + r.editHash + "')\">" + getLang("tran_delete_key") +
+                        var j = "<a onclick=\"TR.deleteKey('" + e + "', '" + r.editHash + "')\">" + getLang("tran_delete_key") +
                             '</a><span class="divider">|</span><a onclick="TR.cloneKey(\'' + e + "', '" + r.editHash + "')\">" + getLang("tran_copy_key") + "</a>";
-                        i.setControlsText(m)
+                        i.setControlsText(j)
                     }
                     addEvent(window, "keydown", cur.onBoxKeyDownEvent = function(t) {
-                        t.ctrlKey && t.keyCode == KEY.ENTER && o(x, r.editHash, function() {
+                        t.ctrlKey && t.keyCode == KEY.ENTER && o(B, r.editHash, function() {
                             boxQueue.hideAll(), l(e)
                         }, s)
                     })
@@ -217,7 +239,7 @@
     function c() {
         var e = ge("tr_keys_lang_selector"),
             t = JSON.parse(domData(e, "langs"));
-        E = new Dropdown(e, t, {
+        j = new Dropdown(e, t, {
             big: !0,
             width: 190,
             placeholder: t[0][1],
@@ -232,7 +254,7 @@
     }
 
     function _(e, t, n) {
-        lockButton(e), ajax.post(S, {
+        lockButton(e), ajax.post(T, {
             act: "restore_key",
             hash: n,
             key: t
@@ -243,7 +265,7 @@
         })
     }
 
-    function d(e) {
+    function d(e, t) {
         showFastBox({
                 title: getLang("tran_delete_box_title"),
                 bodyStyle: "padding: 20px; line-height: 160%;",
@@ -251,10 +273,10 @@
                 forceNoBtn: 1
             }, getLang("tran_delete_key_text")
             .replace(/{key}/, e), getLang("box_yes"),
-            function(t) {
-                lockButton(t), ajax.post(S, {
+            function(n) {
+                lockButton(n), ajax.post(T, {
                     act: "delete_key",
-                    hash: hash,
+                    hash: t,
                     key: e
                 }, {
                     onDone: function() {
@@ -291,7 +313,7 @@
             }
         }, n, getLang("box_save"), function(n) {
             var a = val("tr_clone_box_key");
-            trim(a) && (lockButton(n), ajax.post(S, {
+            trim(a) && (lockButton(n), ajax.post(T, {
                 act: "clone_key",
                 hash: t,
                 key: e,
@@ -315,7 +337,7 @@
     }
 
     function h(e) {
-        var t = showBox(S, {
+        var t = showBox(T, {
             act: "edit_translator_box",
             translator_id: e
         }, {
@@ -325,7 +347,7 @@
             },
             onDone: function(t, n) {
                 function a(e) {
-                    ajax.post(S, {
+                    ajax.post(T, {
                         act: "check_mem_link",
                         link: e
                     }, {
@@ -371,7 +393,7 @@
                     };
                     _ ? (a.translator_id = domData(_, "user-id"), a.is_add = 1) : a.translator_id = e, a.translator_id && (a.lang_id = l.selectedItems()[0][0],
                         a.parent_lang_id = o.selectedItems()[0][0], a.is_coordinator = intval(hasClass(geByClass1("tr_translator_is_coordinator"), "on")),
-                        ajax.post(S, a, {
+                        ajax.post(T, a, {
                             showProgress: lockButton.pbind(t),
                             hideProgress: unlockButton.pbind(t),
                             onDone: function() {
@@ -388,7 +410,7 @@
     }
 
     function v(e, t, n) {
-        showProgress(domPN(e), "", "tr_translator_bottom_progress"), hide(e), ajax.post(S, {
+        showProgress(domPN(e), "", "tr_translator_bottom_progress"), hide(e), ajax.post(T, {
             act: "delete_translator",
             translator_id: t,
             hash: n
@@ -457,7 +479,7 @@
             .innerHTML = n
     }
 
-    function b(e) {
+    function m(e) {
         cur.languages = e, cur.languagesIndex = new vkIndexer(e, function(e) {
             return e.name_rus + " " + e.name_eng + " " + e.name_native
         })
@@ -473,7 +495,7 @@
             .innerHTML = n
     }
 
-    function m(e, t, n) {
+    function b(e, t, n) {
         if ("click" != e.type || e.altKey || n) {
             var a = curBox();
             a && "key-edit-dialog" == a.bodyNode.children[0].id && a.hide();
@@ -483,13 +505,13 @@
     }
 
     function w() {
-        setCookie(T, C() ? "" : "1", 360), nav.reload({
+        setCookie(I, C() ? "" : "1", 360), nav.reload({
             force: !0
         })
     }
 
     function C() {
-        return !!getCookie(T)
+        return !!getCookie(I)
     }
 
     function B(e, t, n, a, o) {
@@ -516,8 +538,8 @@
             .onclick = w, ge("translation_to_page")
             .onclick = function() {}, !1
     }
-    var D, L, j, E, S = "al_translations.php",
-        T = "remixinline_trans";
+    var D, L, E, j, T = "al_translations.php",
+        I = "remixinline_trans";
     e.TR = {
         openKey: r,
         newKey: i,
@@ -532,9 +554,9 @@
         addTranslator: y,
         toggleCoordinatorsOnly: p,
         searchTranslators: debounce(k, 50),
-        initLanguagesPage: b,
+        initLanguagesPage: m,
         searchLang: debounce(x, 50),
-        t: m,
+        t: b,
         menu: B
     }
 }(window);
