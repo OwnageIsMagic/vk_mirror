@@ -806,8 +806,8 @@ a.fc_msgs_img {
 }
 
 .fc_msgs_error {
-    background-color: #fdf0f0;
-    border: 1px solid #f8d5d6;
+    background-color: #ffefe9;
+    border: 1px solid #f2ab99;
     border-radius: 2px;
     line-height: 150%;
     margin: 8px;

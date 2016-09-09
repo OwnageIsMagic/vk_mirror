@@ -3240,7 +3240,7 @@ wbr {
 .ok_msg {
     padding: 7px 18px 9px;
     margin: 15px 20px;
-    border: 1px solid #edf1f7;
+    border: 1px solid #c1c9d9;
     border-radius: 2px;
     line-height: 150%
 }
@@ -3268,16 +3268,16 @@ wbr {
 
 .box_error {
     margin: 0 0 15px;
-    background: #fdf0f0
+    background: #ffefe9
 }
 
 .box_error,
 .error {
-    border-color: #f8d5d6
+    border-color: #f2ab99
 }
 
 .error {
-    background: #fdf0f0 url(/images/icons/msg_error.png) no-repeat 12px 12px;
+    background: #ffefe9 url(/images/icons/msg_error.png) no-repeat 12px 12px;
     padding-left: 55px
 }
 
@@ -3289,13 +3289,13 @@ wbr {
 .info_msg {
     background: #f5f7fa url(/images/icons/msg_info.png) no-repeat 12px 12px;
     padding-left: 55px;
-    border-color: #edf1f7
+    border-color: #c1c9d9
 }
 
 .ok_msg {
-    background: #eefaee url(/images/icons/msg_ok.png) no-repeat 12px 12px;
+    background: #effaed url(/images/icons/msg_ok.png) no-repeat 12px 12px;
     padding-left: 55px;
-    border-color: #e1f2e2
+    border-color: #afd4a9
 }
 
 .ok_msg.msg_appear,

@@ -12,7 +12,8 @@
 .payments_logo_mailmoney,
 .payments_logo_paypal_ipn,
 .payments_logo_webmoney,
-.payments_logo_yandexmoney {
+.payments_logo_yandexmoney,
+.payments_money_transfer_mc_info_msg {
     -ms-high-contrast-adjust: none
 }
 
@@ -1453,6 +1454,12 @@ h2.payments_getvotes_title {
     padding: 0 25px;
     height: 350px;
     overflow-y: scroll
+}
+
+.payments_money_transfer_mc_info_msg {
+    background: #f5f7fa url(/images/mc_logo.png) no-repeat 15px 50%;
+    padding-left: 68px;
+    margin-bottom: 5px!important
 }
 
 .payments_systems_messages_container {

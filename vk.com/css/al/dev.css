@@ -5,6 +5,9 @@
 
 .dev_community_widget_wrap,
 .dev_home_link:before,
+.dev_main_featured .dev_main_featured_banner,
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon,
+.dev_main_platforms .dev_main_platform .dev_main_platform_icon,
 .dev_method_page_access_row_icon,
 .dev_methods_list_access_group_icon,
 .dev_sect_icon,
@@ -848,6 +851,255 @@ input.dev_input_simular {
 .dev_main_desc {
     margin-top: 12px;
     line-height: 160%
+}
+
+.dev_main_featured {
+    margin-top: 20px!important
+}
+
+.dev_main_featured .dev_main_featured_banner {
+    height: 400px;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    margin: -25px -30px;
+    background: url(/images/dev/dev_test_featured.jpg) no-repeat
+}
+
+.dev_main_featured .dev_main_featured_products {
+    padding: 58px 0 12px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product {
+    position: relative;
+    display: inline-block;
+    width: 140px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
+    padding: 0 18px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product:hover .dev_main_featured_product_title {
+    color: #2a5885
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_title {
+    color: #222;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    padding-top: 10px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_description {
+    color: #828282;
+    font-size: 13px;
+    line-height: 17px;
+    padding-top: 9px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon {
+    width: 72px;
+    height: 72px;
+    background: url(/images/dev/dev_products.png);
+    margin: 0 auto
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_like {
+    background-position: 0 0px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_subscribe {
+    background-position: 0 72px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_market {
+    background-position: 0 144px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_contact_us {
+    background-position: 0 216px
+}
+
+.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_community {
+    background-position: 0 288px
+}
+
+.dev_main_featured .dev_main_featured_button_wrapper {
+    margin: 10px auto;
+    width: 138px
+}
+
+.dev_main_featured .dev_main_featured_button_wrapper .dev_main_featured_button {
+    font-size: 14px;
+    font-weight: 400;
+    width: 138px;
+    height: 37px;
+    border-radius: 3px
+}
+
+.dev_page_block.dev_main_content {
+    padding: 40px 40px 47px;
+    margin-bottom: 25px
+}
+
+.dev_page_block.dev_main_content .dev_main_content_header {
+    color: #222;
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 18px;
+    padding: 0 20px
+}
+
+.dev_page_block.dev_main_content .dev_main_content_body {
+    padding: 0 20px
+}
+
+.dev_page_block.dev_main_content .dev_main_content_breaker {
+    margin: 40px 0;
+    border-bottom: 1px solid #e7e8ec
+}
+
+.dev_main_platforms {
+    padding-top: 40px;
+    margin: 0 -10px
+}
+
+.dev_main_platforms .dev_main_platform {
+    position: relative;
+    display: inline-block;
+    width: 140px;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
+    padding: 0 18px
+}
+
+.dev_main_platforms .dev_main_platform:last-child {
+    padding-right: 0
+}
+
+.dev_main_platforms .dev_main_platform:first-child {
+    padding-left: 0
+}
+
+.dev_main_platforms .dev_main_platform:hover .dev_main_platform_title {
+    color: #2a5885
+}
+
+.dev_main_platforms .dev_main_platform .dev_main_platform_title {
+    color: #222;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    padding-top: 10px
+}
+
+.dev_main_platforms .dev_main_platform .dev_main_platform_icon {
+    height: 72px;
+    width: 72px;
+    background: url(/images/dev/dev_platforms.png);
+    margin: 0 auto
+}
+
+.dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_ios {
+    background-position: 0 0px
+}
+
+.dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_web {
+    background-position: 0 72px
+}
+
+.dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_embedded {
+    background-position: 0 144px
+}
+
+.dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_wp {
+    background-position: 0 216px
+}
+
+.dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_android {
+    background-position: 0 288px
+}
+
+.dev_main_blog_posts {
+    list-style-type: disc;
+    color: #b4c6d6;
+    padding-left: 15px
+}
+
+.dev_main_blog_posts .dev_main_blog_post {
+    padding: 11px 0
+}
+
+.dev_main_blog_posts .dev_main_blog_post .dev_main_blog_post_title {
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px
+}
+
+.dev_main_blog_posts .dev_main_blog_post .dev_main_blog_post_date {
+    display: inline-block;
+    color: #828282;
+    font-size: 13px;
+    line-height: 17px;
+    padding-left: 8px
+}
+
+.dev_main_footer {
+    font-size: 14px
+}
+
+.dev_main_footer .dev_main_footer_section {
+    width: 200px
+}
+
+.dev_main_footer .dev_main_footer_section .dev_main_footer_section_title {
+    font-weight: 500;
+    color: #222
+}
+
+.dev_main_footer .dev_main_footer_section .dev_main_footer_section_links {
+    padding-left: 0;
+    list-style-type: none
+}
+
+.dev_main_footer .dev_main_footer_section .dev_main_footer_section_links .dev_main_footer_section_link {
+    padding: 6px 0
+}
+
+.dev_main_footer .dev_main_footer_section_product {
+    width: 240px
+}
+
+.dev_main_footer .dev_main_footer_rules {
+    margin-top: 32px
+}
+
+.dev_main_footer .dev_main_footer_rules .dev_main_footer_rules_links {
+    padding: 0;
+    margin: 0
+}
+
+.dev_main_footer .dev_main_footer_rules .dev_main_footer_rules_links .dev_main_footer_rules_link {
+    display: inline
+}
+
+.dev_main_footer .dev_main_footer_rules .dev_main_footer_rules_links .dev_main_footer_rules_link:after {
+    margin: 0;
+    padding-left: 8px;
+    padding-right: 3px;
+    content: '\00b7';
+    color: #777
+}
+
+.dev_main_footer .dev_main_footer_rules .dev_main_footer_rules_links .dev_main_footer_rules_link:last-child:after {
+    content: none
+}
+
+.dev_main_footer .dev_main_footer_lang {
+    color: #777
 }
 
 .dev_page_block.main_desc {

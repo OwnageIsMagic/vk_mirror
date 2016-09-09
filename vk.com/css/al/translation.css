@@ -77,7 +77,12 @@ i i.untranslated {
 .tr_key {
     font-size: 12px;
     padding: 7px 15px;
-    cursor: pointer
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, .06)
+}
+
+.tr_key:last-child {
+    border: none
 }
 
 .tr_key:hover {
@@ -85,13 +90,10 @@ i i.untranslated {
 }
 
 .tr_key .tr_key_bullet {
-    width: 4px;
-    height: 4px;
-    background-color: #8aa8cc;
-    vertical-align: top;
-    margin: 6px 10px 0 0px;
-    border-radius: 50%;
-    float: left
+    margin: 2px 0 0;
+    float: left;
+    font-size: 12px;
+    color: #aaa
 }
 
 .tr_key.tr_untranslated {
@@ -99,19 +101,30 @@ i i.untranslated {
 }
 
 .tr_key.tr_untranslated:hover {
-    background-color: #f7ecc5
+    background-color: #fff5d2
 }
 
 .tr_key .tr_key_inner {
-    margin-left: 15px;
+    margin-left: 36px;
     margin-right: 80px;
     line-height: 17px
+}
+
+.tr_key .tr_key_key_name {
+    margin-top: 5px;
+    margin-left: 36px;
+    color: #909090;
+    display: none
 }
 
 .tr_key .tr_key_section {
     float: right;
     color: #adadad;
     margin-top: -15px
+}
+
+.tr_search_rows .tr_key_key_name {
+    display: block
 }
 
 .tr_section_isolated {
@@ -290,8 +303,9 @@ i i.untranslated {
 }
 
 .tr_history_row {
-    padding: 12px 15px;
-    margin-bottom: 5px;
+    font-size: 12px;
+    padding: 8px 13px;
+    margin-bottom: 3px;
     background-color: #f0f2f5
 }
 

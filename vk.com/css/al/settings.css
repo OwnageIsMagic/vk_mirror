@@ -1071,6 +1071,24 @@ a.settings_blb_title {
     color: #939393
 }
 
+.settings_transfer_sandbox_status {
+    margin-left: 12px;
+    font-style: italic
+}
+
+.settings_transfer_sandbox_status:before {
+    content: "\2022 ";
+    color: #b3b3b3;
+    font-size: 8px;
+    padding: 0 1px 2px;
+    text-decoration: none;
+    vertical-align: middle;
+    display: inline-block;
+    pointer-events: none;
+    position: relative;
+    left: -5px
+}
+
 #settings_last_activity_row {
     width: 300px
 }

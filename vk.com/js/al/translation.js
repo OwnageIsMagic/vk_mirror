@@ -248,17 +248,18 @@
         var e = ge("tr_keys_lang_selector"),
             t = JSON.parse(domData(e, "langs"));
         E = new Dropdown(e, t, {
-            big: !0,
-            width: 190,
-            placeholder: t[0][1],
-            autocomplete: !0,
-            selectedItems: nav.objLoc.lang_id || cur.langId,
-            onChange: function(e) {
-                e = e || 0, nav.change({
-                    lang_id: e
-                })
-            }
-        }), nav.objLoc.key && l(nav.objLoc.key)
+                big: !0,
+                width: 190,
+                placeholder: t[0][1],
+                autocomplete: !0,
+                selectedItems: nav.objLoc.lang_id || cur.langId,
+                onChange: function(e) {
+                    e = e || 0, nav.change({
+                        lang_id: e
+                    })
+                }
+            }), nav.objLoc.key && l(nav.objLoc.key), ge("tr_keys_search")
+            .select()
     }
 
     function _(e, t, n) {
