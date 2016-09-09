@@ -1139,26 +1139,27 @@ var Settings = {
         return uiTabs.switchTab(e), "transfer" === t ? (hide("settings_votes_history_wrap"), show("settings_transfer_history_wrap"), n.section = t) : (hide(
             "settings_transfer_history_wrap"), show("settings_votes_history_wrap"), delete n.section), nav.setLoc(n), !1
     },
-    moneyTransferCancel: function(e, t, s, n) {
-        var o = gpeByClass("_row", e),
-            i = geByClass1("_status", o);
-        return n ? (2 !== n && (addClass(o, "settings_history_row_progress"), cur.confirmBox && cur.confirmBox.hide()), void ajax.post(
+    moneyTransferCancel: function(e, t, s, n, o) {
+        var i = domClosest("_row", e),
+            a = geByClass1("_status", i);
+        return o ? (2 !== o && (addClass(i, "settings_history_row_progress"), cur.confirmBox && cur.confirmBox.hide()), void ajax.post(
             "al_payments.php?act=a_cancel_money_transfer", {
                 tx_id: t,
                 hash: s
             }, {
-                onDone: function(a, r) {
-                    return 0 === a ? (2 !== n && (val(i, getLang("settings_transfer_status_cancelling")), removeClass(i, "settings_transfer_receive")), void setTimeout(
-                        Settings.moneyTransferCancel.pbind(e, t, s, 2), 2e3)) : (removeClass(o, "settings_history_row_progress"), re(e), val(i, getLang(
-                        "settings_transfer_status_cancelled")), removeClass(i, "settings_transfer_receive"), addClass(i,
+                onDone: function(e, r) {
+                    return 0 === e ? (2 !== o && (val(a, getLang("settings_transfer_status_cancelling")), removeClass(a, "settings_transfer_receive")), void setTimeout(
+                        Settings.moneyTransferCancel.pbind(i, t, s, n, 2), 2e3)) : (removeClass(i, "settings_history_row_progress"), val(a, getLang(
+                        "settings_transfer_status_cancelled")), removeClass(a, "settings_transfer_receive"), addClass(a,
                         "settings_transfer_status_cancelled"), void TopNotifier.invalidate())
                 },
                 onFail: function(e) {
-                    return removeClass(o, "settings_history_row_progress"), setTimeout(showFastBox(getLang("global_error"), e)
+                    return removeClass(i, "settings_history_row_progress"), setTimeout(showFastBox(getLang("global_error"), e)
                         .hide, 2e3), !0
                 }
-            })) : void(cur.confirmBox = showFastBox(getLang("global_action_confirmation"), getLang("settings_transfer_decline_confirm"), getLang(
-            "settings_transfer_decline_btn"), Settings.moneyTransferCancel.pbind(e, t, s, 1), getLang("global_cancel")))
+            })) : (n ? (confirmText = getLang("settings_transfer_decline_confirm"), confirmBtn = getLang("settings_transfer_decline_btn")) : (confirmText = getLang(
+            "settings_transfer_cancel_confirm"), confirmBtn = getLang("settings_transfer_cancel_btn")), void(cur.confirmBox = showFastBox(getLang(
+            "global_action_confirmation"), confirmText, confirmBtn, Settings.moneyTransferCancel.pbind(e, t, s, n, 1), getLang("global_cancel"))))
     },
     moneyTransferRepeat: function(e, t) {
         return showBox("al_payments.php?act=money_transfer_box", {

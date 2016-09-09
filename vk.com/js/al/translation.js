@@ -71,13 +71,16 @@
             showProgress: lockButton.pbind(e),
             hideProgress: unlockButton.pbind(e),
             onDone: function(e, t, s) {
-                each(s[0], function(e, t) {
-                    e = e.substr(1);
-                    var n = ge("tr_section_counter_" + e);
-                    n && (t[0] ? n.innerHTML = "+" + t[0] : n.innerHTML = "")
-                });
-                var i = ge("tr_section_counter_total");
-                if (s[1] ? i.innerHTML = "+" + s[1] : i.innerHTML = "", e && o.key) {
+                if (s) {
+                    each(s[0], function(e, t) {
+                        e = e.substr(1);
+                        var n = ge("tr_section_counter_" + e);
+                        n && (t[0] ? n.innerHTML = "+" + t[0] : n.innerHTML = "")
+                    });
+                    var i = ge("tr_section_counter_total");
+                    s[1] ? i.innerHTML = "+" + s[1] : i.innerHTML = ""
+                }
+                if (e && o.key) {
                     var r = document.querySelector(".tr_key[data-key=" + o.key + "]");
                     r && (removeClass(r, "tr_untranslated"), geByClass1("_tr_key_inner", r)
                         .innerHTML = e), a && (a.innerHTML = t, a.className = "translated")
