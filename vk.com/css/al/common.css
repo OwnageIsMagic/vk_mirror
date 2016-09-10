@@ -3493,7 +3493,7 @@ body.mac #layer_stl .fixed {
 }
 
 .error {
-    background: #ffefe9 url(/images/icons/msg_error.png) no-repeat 12px 12px;
+    background: #ffefe9 url(/images/icons/msg_error.png?1) no-repeat 12px 12px;
     padding-left: 55px
 }
 
@@ -3503,7 +3503,7 @@ body.mac #layer_stl .fixed {
 }
 
 .info_msg {
-    background: #f5f7fa url(/images/icons/msg_info.png) no-repeat 12px 12px;
+    background: #f5f7fa url(/images/icons/msg_info.png?1) no-repeat 12px 12px;
     padding-left: 55px;
     border-color: #c1c9d9
 }
@@ -3514,7 +3514,7 @@ body.mac #layer_stl .fixed {
 }
 
 .ok_msg {
-    background: #effaed url(/images/icons/msg_ok.png) no-repeat 12px 12px;
+    background: #effaed url(/images/icons/msg_ok.png?1) no-repeat 12px 12px;
     padding-left: 55px;
     border-color: #afd4a9
 }

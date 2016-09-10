@@ -132,7 +132,6 @@ i i.untranslated {
 }
 
 .tr_section_counter {
-    float: right;
     padding-right: 15px;
     color: #42648b;
     font-weight: 500;
@@ -561,4 +560,34 @@ h4.subheader {
 .tr_lang_completeness {
     position: absolute;
     right: 10px
+}
+
+.tr_log_row {
+    padding: 15px 0;
+    font-size: 12px;
+    border-bottom: 1px solid #dcdcdc
+}
+
+.tr_log_row:last-child {
+    border-bottom: none
+}
+
+.tr_log_row_key {
+    color: #353535;
+    font-weight: 600
+}
+
+.tr_log_row_date {
+    float: right;
+    color: #a0a0a0
+}
+
+.tr_log_row_value {
+    margin-top: 5px
+}
+
+.tr_translator_log_header {
+    padding-bottom: 10px;
+    font-size: 17px;
+    line-height: 30px
 }
