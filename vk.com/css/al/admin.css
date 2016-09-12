@@ -435,6 +435,10 @@ div#enterID.enterID {
     margin: 3px 15px 15px
 }
 
+.ed_row_removed {
+    opacity: 0.3
+}
+
 .ed_editors_search {
     float: right
 }

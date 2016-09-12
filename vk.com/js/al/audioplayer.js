@@ -830,6 +830,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 act: "load_silent",
                 owner_id: this.getOwnerId(),
                 album_id: this.getAlbumId(),
+                claim: nav.objLoc.claim,
                 band: this.isPopBand() ? this.getOwnerId() : !1
             }, {
                 showProgress: i ? i.showProgress : !1,
@@ -955,8 +956,8 @@ AudioPlayer.tabIcons = {
             o.getId() == t.getId() && o.mergeWith(i)
         }) : t
     }, AudioPlayer.prototype.deleteCurrentPlaylist = function() {
-        this.stop(), delete this._currentAudio, delete this._currentPlaylist, this.notify(AudioPlayer.EVENT_UPDATE),
-            this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED)
+        this.stop(), delete this._currentAudio, delete this._currentPlaylist,
+            this.notify(AudioPlayer.EVENT_UPDATE), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED)
     }, AudioPlayer.prototype.updateCurrentPlaying = function(t) {
         t = !!t;
         var i = (this.getCurrentPlaylist(), AudioUtils.asObject(this.getCurrentAudio())),

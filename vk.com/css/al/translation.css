@@ -127,6 +127,10 @@ i i.untranslated {
     display: block
 }
 
+.tr_section_name {
+    white-space: normal
+}
+
 .tr_section_isolated {
     color: #aaa
 }

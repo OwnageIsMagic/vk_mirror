@@ -6,8 +6,6 @@
 .dev_community_widget_wrap,
 .dev_home_link:before,
 .dev_main_featured .dev_main_featured_banner.dev_main_featured_banner_vinci,
-.dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon,
-.dev_main_platforms .dev_main_platform .dev_main_platform_icon,
 .dev_method_page_access_row_icon,
 .dev_methods_list_access_group_icon,
 .dev_sect_icon,
@@ -887,10 +885,10 @@ input.dev_input_simular {
 }
 
 .dev_main_featured .dev_main_featured_banners_anim {
-    transition: -webkit-transform 400ms ease-in-out;
-    -o-transition: transform 400ms ease-in-out, -o-transform 400ms ease-in-out;
-    transition: transform 400ms ease-in-out;
-    transition: transform 400ms ease-in-out, -webkit-transform 400ms ease-in-out, -o-transform 400ms ease-in-out
+    transition: -webkit-transform 500ms ease-in-out;
+    -o-transition: transform 500ms ease-in-out, -o-transform 500ms ease-in-out;
+    transition: transform 500ms ease-in-out;
+    transition: transform 500ms ease-in-out, -webkit-transform 500ms ease-in-out, -o-transform 500ms ease-in-out
 }
 
 .dev_main_featured .dev_main_featured_banners_anim_next,
@@ -970,28 +968,27 @@ input.dev_input_simular {
 .dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon {
     width: 72px;
     height: 72px;
-    background: url(/images/dev/dev_products.png);
     margin: 0 auto
 }
 
 .dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_like {
-    background-position: 0 0px
+    background-image: url('/images/dev/dev_like.svg')
 }
 
 .dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_subscribe {
-    background-position: 0 72px
+    background-image: url('/images/dev/dev_follow.svg')
 }
 
 .dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_market {
-    background-position: 0 144px
+    background-image: url('/images/dev/dev_market.svg')
 }
 
 .dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_contact_us {
-    background-position: 0 216px
+    background-image: url('/images/dev/dev_groups.svg')
 }
 
 .dev_main_featured .dev_main_featured_products .dev_main_featured_product .dev_main_featured_product_icon_widget_community {
-    background-position: 0 288px
+    background-image: url('/images/dev/dev_messages.svg')
 }
 
 .dev_main_featured .dev_main_featured_button_wrapper {
@@ -1067,28 +1064,38 @@ input.dev_input_simular {
 .dev_main_platforms .dev_main_platform .dev_main_platform_icon {
     height: 72px;
     width: 72px;
-    background: url(/images/dev/dev_platforms.png);
-    margin: 0 auto
+    margin: 0 auto;
+    transition: -webkit-transform 200ms ease-in-out;
+    -o-transition: transform 200ms ease-in-out, -o-transform 200ms ease-in-out;
+    transition: transform 200ms ease-in-out;
+    transition: transform 200ms ease-in-out, -webkit-transform 200ms ease-in-out, -o-transform 200ms ease-in-out
+}
+
+.dev_main_platforms .dev_main_platform:hover .dev_main_platform_icon {
+    -webkit-transform: translateY(-8px);
+    -ms-transform: translateY(-8px);
+    -o-transform: translateY(-8px);
+    transform: translateY(-8px)
 }
 
 .dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_ios {
-    background-position: 0 0px
+    background-image: url('/images/dev/dev_ios.svg')
 }
 
 .dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_web {
-    background-position: 0 72px
+    background-image: url('/images/dev/dev_web.svg')
 }
 
 .dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_embedded {
-    background-position: 0 144px
+    background-image: url('/images/dev/dev_apps.svg')
 }
 
 .dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_wp {
-    background-position: 0 216px
+    background-image: url('/images/dev/dev_wp.svg')
 }
 
 .dev_main_platforms .dev_main_platform .dev_main_platform_icon.dev_main_platform_icon_android {
-    background-position: 0 288px
+    background-image: url('/images/dev/dev_android.svg')
 }
 
 .dev_main_blog_posts {
