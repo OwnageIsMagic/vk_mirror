@@ -32,12 +32,6 @@ a .ads_sub_link:hover {
     text-decoration: underline
 }
 
-.ads_h2_add {
-    font-weight: 400;
-    font-size: 12px;
-    padding-top: 0.185em
-}
-
 .ads_gradient_progress_wrap {
     height: 18px;
     margin: 0 auto;

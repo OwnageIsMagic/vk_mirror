@@ -63,17 +63,17 @@ FAQ = {
         var e = scrollGetY(),
             t = window.lastWindowHeight || 0,
             a = 0,
-            i = ge("faq_tags_td"),
-            o = getXY(i)[1],
-            r = getSize(i)[1],
+            o = ge("faq_tags_td"),
+            i = getXY(o)[1],
+            r = getSize(o)[1],
             s = ge("faq_tags"),
             l = (getXY(s)[1], getSize(s)[1]),
-            n = Math.max(0, e + t - r - o),
+            n = Math.max(0, e + t - r - i),
             d = 20 > r - l,
             _ = cur.filterLastPos || 0,
             c = cur.lastSt || 0,
             f = getSize("page_header_cont")[1];
-        e > o && !d ? (addClass(s, "fixed"), a = t > l ? Math.min(f, t - l - n) : Math.max(Math.min(f, _ + c - e), t - l - n)) : (removeClass(s, "fixed"), a = 0), cur.filterLastPos =
+        e > i && !d ? (addClass(s, "fixed"), a = t > l ? Math.min(f, t - l - n) : Math.max(Math.min(f, _ + c - e), t - l - n)) : (removeClass(s, "fixed"), a = 0), cur.filterLastPos =
             a, cur.lastSt = e, setStyle(s, {
                 top: a + "px"
             })
@@ -88,37 +88,37 @@ FAQ = {
         }, 0)), toggleClass(e, "shown")
     },
     checkTextLength: function(e, t, a) {
-        var i = trim(e.value)
+        var o = trim(e.value)
             .replace(/\n\n\n+/g, "\n\n");
-        if (e.lastLen !== i.length) {
-            var o = e.lastLen = i.length,
-                r = o - i.replace(/\n/g, "")
+        if (e.lastLen !== o.length) {
+            var i = e.lastLen = o.length,
+                r = i - o.replace(/\n/g, "")
                 .length;
-            a = ge(a), o > t - 100 || r > 10 ? (show(a), o > t ? a.innerHTML = getLang("global_recommended_exceeded", o - t) : r > 10 ? a.innerHTML = getLang(
-                "global_recommended_lines", r - 10) : a.innerHTML = getLang("text_N_symbols_remain", t - o)) : hide(a)
+            a = ge(a), i > t - 100 || r > 10 ? (show(a), i > t ? a.innerHTML = getLang("global_recommended_exceeded", i - t) : r > 10 ? a.innerHTML = getLang(
+                "global_recommended_lines", r - 10) : a.innerHTML = getLang("text_N_symbols_remain", t - i)) : hide(a)
         }
     },
     appendExtraField: function(e) {
         var t = ge("faq_optional_extra_fields_list"),
             a = ge("faq_optional_extra_field_example");
         if (t) {
-            for (var i = a.cloneNode(!0), o = 0; ge("faq_optional_extra_field_" + o);) o++;
-            i.id = "faq_optional_extra_field_" + o, t.appendChild(i);
-            var r = geByClass1("faq_optional_extra_field_type__inp", i);
-            r.id = i.id + "_type";
-            var s = geByClass1("faq_optional_extra_field__title", i);
-            s.id = i.id + "_title", placeholderSetup(s, {
+            for (var o = a.cloneNode(!0), i = 0; ge("faq_optional_extra_field_" + i);) i++;
+            o.id = "faq_optional_extra_field_" + i, t.appendChild(o);
+            var r = geByClass1("faq_optional_extra_field_type__inp", o);
+            r.id = o.id + "_type";
+            var s = geByClass1("faq_optional_extra_field__title", o);
+            s.id = o.id + "_title", placeholderSetup(s, {
                 back: !0
             });
-            var l = geByClass1("faq_optional_extra_field__note", i);
-            l.id = i.id + "_note", placeholderSetup(l, {
+            var l = geByClass1("faq_optional_extra_field__note", o);
+            l.id = o.id + "_note", placeholderSetup(l, {
                 back: !0
             });
-            var n = geByClass1("faq_optional_extra_field_required__inp", i);
-            n.id = i.id + "_required", t.children.length >= 10 && hide(e), FAQ.prepareExtraField(i, r, n, s, l)
+            var n = geByClass1("faq_optional_extra_field_required__inp", o);
+            n.id = o.id + "_required", t.children.length >= 10 && hide(e), FAQ.prepareExtraField(o, r, n, s, l)
         }
     },
-    prepareExtraField: function(e, t, a, i, o) {
+    prepareExtraField: function(e, t, a, o, i) {
         var r = new Dropdown(t, cur.selData.extra_field_types, {
             width: 191,
             introText: "",
@@ -127,9 +127,9 @@ FAQ = {
             autocomplete: !1,
             big: 1
         });
-        data(e, "typeSelector", r), placeholderSetup(i, {
+        data(e, "typeSelector", r), placeholderSetup(o, {
             back: !0
-        }), placeholderSetup(o, {
+        }), placeholderSetup(i, {
             back: !0
         });
         var s = new Dropdown(a, cur.selData.extra_field_required_types, {
@@ -153,16 +153,16 @@ FAQ = {
             var t = ge("faq_optional_extra_field_" + e);
             if (t) {
                 var a = data(t, "typeSelector"),
-                    i = data(t, "requiredSelector");
-                a.destroy.bind(a)(), i.destroy.bind(i)()
+                    o = data(t, "requiredSelector");
+                a.destroy.bind(a)(), o.destroy.bind(o)()
             }
         }
     },
     saveFAQ: function(e) {
         var t = trim(val("faq_title")),
             a = trim(val("faq_text")),
-            i = trim(val("faq_keywords")),
-            o = trim(val("faq_description"));
+            o = trim(val("faq_keywords")),
+            i = trim(val("faq_description"));
         if (!t) return notaBene("faq_title");
         var r = [];
         if (cur.screens)
@@ -173,8 +173,8 @@ FAQ = {
                 act: "save",
                 title: t,
                 text: a,
-                keywords: i,
-                description: o,
+                keywords: o,
+                description: i,
                 hash: e,
                 imgs: r,
                 faq_id: cur.id,
@@ -205,8 +205,9 @@ FAQ = {
                 n.categories = d
             }
         } else ge("default_section") && (n.section = val("default_section"));
-        if (cur.actionButtonSelector && (n.action_id = intval(cur.actionButtonSelector.val()), 0 != n.action_id && (n.action_label = ge("faq_action_btn_label")
-                .value.trim()), 7 == n.action_id)) {
+        if (1 == n.section && (n.categories = cur.adsCategorySelector.val()), cur.actionButtonSelector && (n.action_id = intval(cur.actionButtonSelector.val()), 0 != n.action_id &&
+                (n.action_label = ge("faq_action_btn_label")
+                    .value.trim()), 7 == n.action_id)) {
             if (!n.action_label) return elfocus("faq_action_btn_label"), notaBene("faq_action_btn_label");
             if (n.action_url = ge("faq_action_btn_url")
                 .value.trim(), !n.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
@@ -260,21 +261,21 @@ FAQ = {
     unchoose: function(e, t) {
         re("fis_preview" + e), t ? delete cur.screensEdit[e] : delete cur.screens[e], toggle("fis_add_lnk" + (t ? "_edit" : ""), FAQ.attachCount(t) < 5)
     },
-    choose: function(e, t, a, i) {
-        var o = "",
+    choose: function(e, t, a, o) {
+        var i = "",
             r = ge("fis_preview" + (t ? "_edit" : ""));
         ge("fis_prg_preview" + (t ? "_edit" : ""));
-        isObject(i) || (i = {
-                thumb_m: i[0] || "",
-                thumb_s: i[1] || "",
-                list: i[2] || "",
-                view_opts: i[3] || "",
-                upload_ind: i.upload_ind || void 0
+        isObject(o) || (o = {
+                thumb_m: o[0] || "",
+                thumb_s: o[1] || "",
+                list: o[2] || "",
+                view_opts: o[3] || "",
+                upload_ind: o.upload_ind || void 0
             }), vkImage()
-            .src = i.thumb_s, o = "<div onclick=\"return showPhoto('" + a + "', '" + i.list + "', " + i.view_opts.replace(/"/g, "&quot;") +
-            ');" class="fl_l fis_preview"><img class="fis_photo" src="' + i.thumb_s + '" /></div>';
+            .src = o.thumb_s, i = "<div onclick=\"return showPhoto('" + a + "', '" + o.list + "', " + o.view_opts.replace(/"/g, "&quot;") +
+            ');" class="fl_l fis_preview"><img class="fis_photo" src="' + o.thumb_s + '" /></div>';
         var s = ce("div", {
-                innerHTML: '<div id="fis_preview' + e + '" class="fis_preview_wrap">' + o + '<div class="fis_x fl_l" ' + (browser.msie ? "title" : "tooltip") + '="' +
+                innerHTML: '<div id="fis_preview' + e + '" class="fis_preview_wrap">' + i + '<div class="fis_x fl_l" ' + (browser.msie ? "title" : "tooltip") + '="' +
                     getLang("dont_attach") +
                     '" onmouseover="if (browser.msie) return; showTooltip(this, {text: this.getAttribute(\'tooltip\'), shift: [6, 3, 3]})" onclick="FAQ.unchoose(\'' +
                     e + "'" + (t ? ", 1" : "") + ')"></div></div>'
@@ -285,15 +286,15 @@ FAQ = {
     },
     chooseUploaded: function(e, t) {
         var a = void 0 !== e.ind ? e.ind : e,
-            i = (e.fileName ? e.fileName : e, e.fileName ? a + "_" + e.fileName : e);
-        if (ge("upload" + i + "_progress_wrap")) {
-            var o = geByClass1("fis_prg_x", ge("upload" + i + "_progress_wrap"));
-            o && hide(o)
+            o = (e.fileName ? e.fileName : e, e.fileName ? a + "_" + e.fileName : e);
+        if (ge("upload" + o + "_progress_wrap")) {
+            var i = geByClass1("fis_prg_x", ge("upload" + o + "_progress_wrap"));
+            i && hide(i)
         }
         ajax.post("al_photos.php", extend({
             act: "choose_uploaded_support"
         }, t), {
-            onDone: FAQ.choose.pbind(i, Upload.options[a].forEdit),
+            onDone: FAQ.choose.pbind(o, Upload.options[a].forEdit),
             onFail: FAQ.chooseFail.pbind(e),
             progress: "form" == Upload.types[a] && curBox() ? curBox()
                 .progress : null
@@ -301,10 +302,10 @@ FAQ = {
     },
     chooseFail: function(e, t) {
         var a = void 0 !== e.ind ? e.ind : e,
-            i = (e.fileName ? e.fileName : e, Upload.options[a].forEdit);
+            o = (e.fileName ? e.fileName : e, Upload.options[a].forEdit);
         if ("fileApi" == Upload.types[a]) {
-            var o = e.fileName ? a + "_" + e.fileName : e;
-            re("upload" + o + "_progress_wrap"), FAQ.unchoose(o, i)
+            var i = e.fileName ? a + "_" + e.fileName : e;
+            re("upload" + i + "_progress_wrap"), FAQ.unchoose(i, o)
         }
         curBox() && hide(curBox()
             .progress), topError("Upload failed", {
@@ -312,21 +313,21 @@ FAQ = {
             type: 102,
             url: (ge("file_uploader_form" + a) || {})
                 .action
-        }), Upload.embed(a), toggle("fis_add_lnk" + (i ? "_edit" : ""), FAQ.attachCount(i) < 5)
+        }), Upload.embed(a), toggle("fis_add_lnk" + (o ? "_edit" : ""), FAQ.attachCount(o) < 5)
     },
     showScreenProgress: function(e, t) {
         var a = Upload.options[e].forEdit,
-            i = ge("fis_prg_preview" + (a ? "_edit" : "")),
-            o = intval(t.loaded / t.total * 100),
+            o = ge("fis_prg_preview" + (a ? "_edit" : "")),
+            i = intval(t.loaded / t.total * 100),
             r = t.fileName || t.name || "",
             s = r ? e + "_" + r : e,
             l = r ? r.length > 33 ? r.substr(0, 30) + "..." : r : "";
-        if (i) {
+        if (o) {
             if (ge("upload" + s + "_progress_wrap")) setStyle(ge("upload" + s + "_progress"), {
-                width: o + "%"
+                width: i + "%"
             }), show("upload" + s + "_progress");
             else {
-                var n = '<div class="fis_progress_wrap">  <div id="upload' + s + '_progress" class="fis_progress" style="width: ' + o + '%;"></div></div></div>',
+                var n = '<div class="fis_progress_wrap">  <div id="upload' + s + '_progress" class="fis_progress" style="width: ' + i + '%;"></div></div></div>',
                     d = ce("div", {
                         id: "upload" + s + "_progress_wrap",
                         innerHTML: '<div class="fl_l">' + n + "</div>" + (l ? '<div class="fis_label fl_l">' + l + "</div>" : "") +
@@ -337,7 +338,7 @@ FAQ = {
                     }, {
                         marginTop: "6px"
                     });
-                i.appendChild(d), show(i), toggle("fis_add_lnk" + (a ? "_edit" : ""), FAQ.attachCount(a) < 5), o || hide("upload" + s + "_progress")
+                o.appendChild(d), show(o), toggle("fis_add_lnk" + (a ? "_edit" : ""), FAQ.attachCount(a) < 5), i || hide("upload" + s + "_progress")
             }
             return !1
         }
@@ -356,11 +357,11 @@ FAQ = {
                 lang: opts.lang,
                 onUploadStart: function(e, t) {
                     var a = void 0 !== e.ind ? e.ind : e,
-                        i = Upload.options[a];
+                        o = Upload.options[a];
                     "form" == Upload.types[a] && (curBox() && show(curBox()
                             .progress), geByClass1("file", ge("fis_add_data"))
                         .disabled = !0), "fileApi" == Upload.types[a] && (cur.notStarted && (curBox()
-                        .hide(), delete cur.notStarted), i.multi_progress && this.onUploadProgress(e, 0, 0))
+                        .hide(), delete cur.notStarted), o.multi_progress && this.onUploadProgress(e, 0, 0))
                 },
                 onUploadComplete: function(info, res) {
                     var params, i = void 0 !== info.ind ? info.ind : info,
@@ -375,13 +376,13 @@ FAQ = {
                     FAQ.chooseUploaded(info, params)
                 },
                 onUploadProgress: function(e, t, a) {
-                    var i = void 0 !== e.ind ? e.ind : e;
-                    if ("fileApi" == Upload.types[i]) {
-                        var o = {
+                    var o = void 0 !== e.ind ? e.ind : e;
+                    if ("fileApi" == Upload.types[o]) {
+                        var i = {
                             loaded: t,
                             total: a
                         };
-                        e.fileName && (o.fileName = e.fileName), FAQ.showScreenProgress(i, o)
+                        e.fileName && (i.fileName = e.fileName), FAQ.showScreenProgress(o, i)
                     }
                 },
                 onUploadError: FAQ.chooseFail,
@@ -462,7 +463,7 @@ FAQ = {
         })
     },
     saveTilesTop: function(e, t, a) {
-        var i = {
+        var o = {
             act: "save_tiles",
             lang: t,
             hash: a
@@ -472,9 +473,9 @@ FAQ = {
             each(t.children, function(e, t) {
                 a.push(t.id.replace("faq_tiles_editor_tile_question", ""))
             });
-            var o = t.id.replace("faq_tiles_editor_tile__questions", "");
-            i["faq" + o] = a.join(",")
-        }), ajax.post(nav.objLoc[0], i, {
+            var i = t.id.replace("faq_tiles_editor_tile__questions", "");
+            o["faq" + i] = a.join(",")
+        }), ajax.post(nav.objLoc[0], o, {
             showProgress: function() {
                 addClass(e, "flat_btn_lock")
             },
@@ -491,23 +492,23 @@ FAQ = {
     },
     tilesQuestionRemove: function(e, t) {
         var a = ge("faq_tiles_editor_tile_question" + e),
-            i = a.parentNode,
-            o = i.id.replace("faq_tiles_editor_tile__questions", "");
-        FAQ.tilesSorterDestroy(i), re(a), sorter.init(i, {}), i.hasChildNodes() || hide(i), geByClass("faq_tiles_editor_tile_question", i)
-            .length < cur.perCategoryLimit && show("faq_tiles_editor_tile_search" + o), t && t.stopPropagation()
+            o = a.parentNode,
+            i = o.id.replace("faq_tiles_editor_tile__questions", "");
+        FAQ.tilesSorterDestroy(o), re(a), sorter.init(o, {}), o.hasChildNodes() || hide(o), geByClass("faq_tiles_editor_tile_question", o)
+            .length < cur.perCategoryLimit && show("faq_tiles_editor_tile_search" + i), t && t.stopPropagation()
     },
     tilesQuestionAdd: function(e, t, a) {
         if (t) {
-            var i = ge("faq_tiles_editor_tile_question" + t);
-            i && FAQ.tilesQuestionRemove(t);
-            var i = ce("div", {
+            var o = ge("faq_tiles_editor_tile_question" + t);
+            o && FAQ.tilesQuestionRemove(t);
+            var o = ce("div", {
                 className: "faq_tiles_editor_tile_question",
                 id: "faq_tiles_editor_tile_question" + t
             });
-            i.innerHTML = '<span class="faq_tiles_editor_tile_question__title">' + a +
+            o.innerHTML = '<span class="faq_tiles_editor_tile_question__title">' + a +
                 '</span>    <span class="faq_tiles_editor_tile_question__remove" onclick="FAQ.tilesQuestionRemove(' + t + ', event);"></span>';
-            var o = ge("faq_tiles_editor_tile__questions" + e);
-            show(o), FAQ.tilesSorterDestroy(o), o.appendChild(i), sorter.init(o, {}), geByClass("faq_tiles_editor_tile_question", o)
+            var i = ge("faq_tiles_editor_tile__questions" + e);
+            show(i), FAQ.tilesSorterDestroy(i), i.appendChild(o), sorter.init(i, {}), geByClass("faq_tiles_editor_tile_question", i)
                 .length >= cur.perCategoryLimit && hide("faq_tiles_editor_tile_search" + e)
         }
     },
@@ -516,15 +517,15 @@ FAQ = {
             t.removeAttribute("style")
         })
     },
-    saveQuestionsSort: function(e, t, a, i, o) {
+    saveQuestionsSort: function(e, t, a, o, i) {
         var r = {
                 act: "save_sort",
                 lang: t,
                 category: a,
-                hash: i
+                hash: o
             },
             s = [];
-        o || each(geByClass("faq_sort_editor_question", ge("faq_sort_editor__questions")), function(e, t) {
+        i || each(geByClass("faq_sort_editor_question", ge("faq_sort_editor__questions")), function(e, t) {
             s.push(t.id.replace("faq", ""))
         }), r.ids = s.join(","), ajax.post(nav.objLoc[0], r, {
             showProgress: function() {
@@ -541,8 +542,8 @@ FAQ = {
         t != a ? addClass(e, "faq_sort_editor_question_moved") : removeClass(e, "faq_sort_editor_question_moved"), each(geByClass("faq_sort_editor_question_moved", ge(
             "faq_sort_editor_question")), function(e, t) {
             var a = t.getAttribute("position"),
-                i = FAQ.sortQuestionsGetPosition(t);
-            a == i && removeClass(t, "faq_sort_editor_question_moved")
+                o = FAQ.sortQuestionsGetPosition(t);
+            a == o && removeClass(t, "faq_sort_editor_question_moved")
         })
     },
     sortQuestionsGetPosition: function(e) {
@@ -587,10 +588,10 @@ FAQ = {
         clearTimeout(cur.faqTimeout), cur.faqTimeout = setTimeout(function() {
             var e = t.value,
                 a = trim(e),
-                i = a.split(" "),
-                o = ge("tickets_text");
-            e.length >= 70 && o && !o.value && !cur.flood && (isVisible("tickets_detailed_form") || FAQ.toggleDetailedForm(), t.value = "", o.focus(), o.value = e),
-                isVisible("tickets_detailed_form") || a == cur.searchStr && (i.length < 4 || 4 == i.length && " " != e[e.length - 1]) || (a ? addClass(ge(
+                o = a.split(" "),
+                i = ge("tickets_text");
+            e.length >= 70 && i && !i.value && !cur.flood && (isVisible("tickets_detailed_form") || FAQ.toggleDetailedForm(), t.value = "", i.focus(), i.value = e),
+                isVisible("tickets_detailed_form") || a == cur.searchStr && (o.length < 4 || 4 == o.length && " " != e[e.length - 1]) || (a ? addClass(ge(
                         "tickets_search_reset"), "shown") : removeClass(ge("tickets_search_reset"), "shown"), cur.searchStr = a, clearTimeout(cur.searchFAQTimeout),
                     cur.searchFAQTimeout = setTimeout(function() {
                         FAQ.searchFAQ(cur.searchStr)
@@ -611,11 +612,11 @@ FAQ = {
                 cache: 1,
                 hideProgress: removeClass.pbind("tickets_search", "loading"),
                 onDone: function(t, a) {
-                    var i = ge("tickets_title")
+                    var o = ge("tickets_title")
                         .value,
-                        o = trim(i)
+                        i = trim(o)
                         .split(" "),
-                        r = o.length > 4 || 4 == o.length && " " == i[i.length - 1];
+                        r = i.length > 4 || 4 == i.length && " " == o[o.length - 1];
                     if (t ? ge("tlmd_found_list")
                         .innerHTML = se(t)
                         .innerHTML : (a && (ge("tickets_faq_button")
@@ -657,9 +658,9 @@ FAQ = {
     slideToggle: function(e) {
         var t = gpeByClass("tlmd_slide", e),
             a = !hasClass(t, "tlmd_slide_opened"),
-            i = geByClass1("tlmd_slide_brick", t);
-        toggleClass(t, "tlmd_slide_opened"), a ? (hide(i), slideDown(geByClass1("tlmd_slide_content", t), 500)) : (slideUp(geByClass1("tlmd_slide_content", t), 300),
-            setTimeout(show.pbind(i), 300))
+            o = geByClass1("tlmd_slide_brick", t);
+        toggleClass(t, "tlmd_slide_opened"), a ? (hide(o), slideDown(geByClass1("tlmd_slide_content", t), 500)) : (slideUp(geByClass1("tlmd_slide_content", t), 300),
+            setTimeout(show.pbind(o), 300))
     },
     _eof: 1
 };

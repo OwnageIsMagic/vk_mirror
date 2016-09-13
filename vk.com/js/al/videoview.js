@@ -142,8 +142,10 @@ var Videoview = {
                 var e = window.mvcur && mvcur.player && mvcur.player.el || ge("video_player");
                 e && e.focus();
                 var i = Videoview.getMvData();
-                i && i.kz && (vkImage()
-                    .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videoloading/" + this.playerCallback.randomNumber())
+                i.tns_monetized ? vkImage()
+                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerload/" + irand(1, 1e9) : vkImage()
+                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerload/" + irand(1, 1e9), i.kz && (vkImage()
+                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videoloading/" + irand(1, 1e9))
             },
             onVideoPlayProgress: function(e, i, t, o, a) {
                 var n = e + "_" + i;
@@ -173,8 +175,7 @@ var Videoview = {
                 }
                 window.Notifier && setTimeout(function() {
                     Notifier.lcSend("video_start")
-                }, 0), window.ap && ap.isPlaying() && (ap.pause(), ap.pausedByVideo = 1), window.mvcur && mvcur.mvData && !i && !e && (mvcur.mvData.randomNumber = Math.round(
-                    1e9 * Math.random()))
+                }, 0), window.ap && ap.isPlaying() && (ap.pause(), ap.pausedByVideo = 1)
             },
             onVideoPlayStarted: function(e, i, t) {
                 var o = Videoview.getVideoModule(e + "_" + i),
@@ -201,21 +202,19 @@ var Videoview = {
                     onDone: function(e) {}
                 });
                 if (void 0 !== r) {
-                    vkImage()
-                        .src = locProtocol + "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + this.playerCallback.randomNumber();
                     var s = Videoview.getMvData();
-                    s && s.kz && (vkImage()
-                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + this.playerCallback.randomNumber());
-                    var v = 0;
-                    switch (cur.mvOpts ? v = cur.mvOpts.l_type : window.mvcur && (v = mvcur.mvData.l_type), v) {
+                    switch (s.tns_monetized ? vkImage()
+                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + irand(1, 1e9) : vkImage()
+                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), s.kz && (vkImage()
+                            .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), s.l_type) {
                         case 1:
                             vkImage()
-                                .src = locProtocol +
+                                .src =
                                 "//vk.com/rtrg?r=JQ6ueUeOxlSLb8IoA8ToayylOLgRkThaoFV0XVgG5qvS1x1xWrkfqAg73sYWJxwq9PXWucKtMS02J3CsGLZdmOMNj9dv9UCjDN4a3ShJZXcJFMhgfVwSoPWoxp*Y/LAFUnKz5*XBvDCQXeaygAqI*gY9gz*jWTXaOXyT2lSfIPY-";
                             break;
                         case 2:
                             vkImage()
-                                .src = locProtocol +
+                                .src =
                                 "//vk.com/rtrg?r=lD4OYmfC8ehvdc/8TL9AsAjM956qNaHyj20XV5mCNiTgYKQ6X*IXgwE8VbgqOf7rdbLJq7uCRBrdnFPTcUU2NjMgy8x4y6NWrYVwQMteNWh62XnLoNVZqobnsMMGm1OyTW09rhEkmiX5jqk3CI3JIIYbIbd8K7EC0ytQ4Kp4Kro-"
                     }
                 }
@@ -240,28 +239,24 @@ var Videoview = {
                     }
                 }), mvcur.adData.view_complete_full = !0);
                 else {
-                    vkImage()
-                        .src = locProtocol + "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerend/" + this.playerCallback.randomNumber();
                     var e = Videoview.getMvData();
-                    e && e.kz && (vkImage()
-                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videoend/" + this.playerCallback.randomNumber())
+                    e.tns_monetized ? vkImage()
+                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerend/" + irand(1, 1e9) : vkImage()
+                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerend/" + irand(1, 1e9), e.kz && (vkImage()
+                            .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videoend/" + irand(1, 1e9))
                 }
-            },
-            randomNumber: function() {
-                var e = Videoview.getMvData();
-                return e.randomNumber = e.randomNumber || Math.round(1e9 * Math.random()), e.randomNumber
             },
             onVideoAdsLoadStarted: function() {
                 vkImage()
-                    .src = locProtocol + "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videoload-license/" + this.playerCallback.randomNumber()
+                    .src = "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videoload-license/" + irand(1, 1e9)
             },
             onVideoAdsPlayStarted: function() {
                 vkImage()
-                    .src = locProtocol + "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videostart-license/" + this.playerCallback.randomNumber()
+                    .src = "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videostart-license/" + irand(1, 1e9)
             },
             onVideoAdsPlayFinished: function() {
                 vkImage()
-                    .src = locProtocol + "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videoend-license/" + this.playerCallback.randomNumber()
+                    .src = "//www.tns-counter.ru/V13a****vk_com/ru/CP1251/tmsec=vk_videoend-license/" + irand(1, 1e9)
             },
             onViewSegmentsChanged: function(e, i, t, o) {
                 if (t && !cur.segmentsSaveProcess) {
@@ -684,7 +679,7 @@ var Videoview = {
         buildLayerContent: function() {
             var e = "mv_dark";
             addClass(window.mvLayerWrap, e), addClass(window.layerBG, e), val(mvLayer,
-                '<div id="mv_container" class="scroll_fix_wrap">  <div id="mv_box" onclick="mvcur.mvClicked = true;">    <div id="mv_approve" style="display: none;"></div>    <div id="mv_publish" style="display: none;"></div>    <div class="mv_min_header">      <div class="mv_min_control" onmousedown="return Videoview.hide(false, true);" role="button" tabindex="0" aria-label="' +
+                '<div id="mv_container" class="scroll_fix_wrap">  <div id="mv_box">    <div id="mv_approve" style="display: none;"></div>    <div id="mv_publish" style="display: none;"></div>    <div class="mv_min_header">      <div class="mv_min_control" onmousedown="return Videoview.hide(false, true);" role="button" tabindex="0" aria-label="' +
                 getLang("global_close") +
                 '">        <div class="mv_min_control_close"></div>      </div>      <div class="mv_min_control" onclick="return Videoview.unminimize();">        <div class="mv_min_control_max"></div>      </div>      <div class="mv_min_title" id="mv_min_title"></div>    </div>    <div id="mv_main" class="mv_main">      <div class="mv_pl_prev_wrap">        <div class="mv_playlist_controls" id="mv_pl_prev" onclick="return VideoPlaylist.prevVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_pl_next_wrap">        <div class="mv_playlist_controls" id="mv_pl_next" onclick="return VideoPlaylist.nextVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div id="mv_progress_box">' +
                 getProgressHtml() +
@@ -762,8 +757,8 @@ var Videoview = {
                     delete ap.pausedByVideo), window.Notifier && Notifier.lcSend("video_hide")), s ? hide(mvLayerWrap) : (layers.wraphide(mvLayerWrap), layers.fullhide = !
                     1), window.tooltips && tooltips.destroyAll(cur.mvBox);
                 var u = "mv_dark";
-                removeClass(mvLayerWrap, u), removeClass(layerBG, u), mvcur.mvShown = mvcur.mvClicked = !1, removeEvent(window, "resize", Videoview.onResize), removeEvent(
-                        document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
+                removeClass(mvLayerWrap, u), removeClass(layerBG, u), mvcur.mvShown = !1, removeEvent(window, "resize", Videoview.onResize), removeEvent(document,
+                        "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
                     removeEvent(mvLayerWrap, "click", Videoview.onClick), clearInterval(mvcur.nextTimerUpdateInterval), Videoview.removeExternalVideoFinishBlock(), Videoview.destroyPlayer(),
                     val("mv_player_box", "");
                 VideoPlaylist.getBlock();
@@ -771,8 +766,7 @@ var Videoview = {
                     o && nav.objLoc.z ? (layerQueue.skipVideo = !0, delete nav.objLoc.z, nav.setLoc(nav.objLoc)) : mvcur.noLocChange || e === !0 || (2 === e ? nav.setLoc(hab.getLoc()) :
                         Videoview.backLocation(), __adsUpdate("very_lazy")), __adsUpdate(), mvcur.bodyScrollTop = scrollNode.scrollTop, setTimeout(function() {
                         void 0 !== mvcur.bodyScrollTop && (scrollNode.scrollTop = mvcur.bodyScrollTop, delete mvcur.bodyScrollTop)
-                    }, 0), vkImage()
-                    .src = locProtocol + "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerend/" + Videoview.playerCallback.randomNumber(), !1
+                    }, 0), !1
             }
         },
         destroyPlayer: function() {
@@ -785,10 +779,7 @@ var Videoview = {
             return o > t ? -1 : t > o ? 1 : i > e ? -1 : e > i ? 1 : 0
         },
         onClick: function(e) {
-            if (mvcur.mvClicked || e && cur.__mdEvent && e.target != cur.__mdEvent.target) return void(mvcur.mvClicked = !1);
-            var i = Math.abs(e.pageX - intval(mvcur.mvOldX)),
-                t = Math.abs(e.pageY - intval(mvcur.mvOldY));
-            (i > 3 || t > 3) && vkNow() - intval(mvcur.mvOldT) > 300 && Videoview.hide()
+            (e.target == mvLayer || e.target == mvLayerWrap) && Videoview.hide()
         },
         onKeyDown: function(e) {
             return e.returnValue === !1 ? !1 : e.keyCode == KEY.ESC ? (mvcur.mvEditing ? Videoview.cancelInline() : Videoview.hide(), cancelEvent(e)) : void 0
@@ -816,7 +807,7 @@ var Videoview = {
                 i = window.innerHeight || e.clientHeight || bodyNode.clientHeight,
                 t = 2;
             isVisible("mv_info") || (t = 1.2), setStyle("mv_container", {
-                top: Math.max((i - 800) / t, 50) + "px"
+                top: Math.max((i - 800) / t, 60) + "px"
             }), onBodyResize(), Videoview.onResize()
         },
         getPrevLoc: function() {
@@ -847,8 +838,7 @@ var Videoview = {
             } else mvcur.mvPrevLoc ? nav.setLoc(mvcur.mvPrevLoc) : ("video" == nav.objLoc[0] || nav.objLoc[0].match(/^video-?\d+_\d+/)) && nav.setLoc({
                 0: "video"
             });
-            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)),
-                delete mvcur.options.prevTitle), mvcur.noHistory = 1
+            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)), delete mvcur.options.prevTitle), mvcur.noHistory = 1
         },
         highlightComment: function(e) {
             if (e = ge(e)) {
@@ -1874,15 +1864,14 @@ var Videoview = {
                     }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"), hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1,
                     removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
                 var o = "mv_dark";
-                return addClass(mvLayerWrap, o), addClass(layerBG, o), mvcur.needShowApprove && (mvcur.needShowApprove = !1,
-                        show("mv_approve")), Videoview.restoreStyle("mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer),
-                    setStyle("mv_player_box", {
+                return addClass(mvLayerWrap, o), addClass(layerBG, o), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle(
+                        "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
                         width: "",
                         height: ""
                     }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
                         "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
-                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(),
-                    onBodyResize(!0), setStyle(mvLayerWrap, {
+                    removeEvent(window, "resize", Videoview.minResize),
+                    mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
                     }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),

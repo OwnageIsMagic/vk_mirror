@@ -240,9 +240,9 @@ var GroupsEdit = {
                 h = ge("group_edit_more_" + t);
             if (!g) return hide(h), val(_, GroupsEdit.uGenEmpty(r ? cur.opts.nfound[t] : getLang("groups_no_users_in_club"))), val("group_u_summary", ""), void checkPageBlocks();
             for (var m = e ? 0 : _.childNodes.length, f = Math.min(g, m + 20), v = [], c = m; f > c; ++c) {
-                var k = o[i[c]],
-                    b = (k || {})[2];
-                k && (s && (b = b.replace(s.re, s.val)), v.push(GroupsEdit.uGenRow(t, k, b)))
+                var b = o[i[c]],
+                    k = (b || {})[2];
+                b && (s && (k = k.replace(s.re, s.val)), v.push(GroupsEdit.uGenRow(t, b, k)))
             }
             e ? (hasClass(cur.searchCont, "ui_search_fixed") && scrollToY(getXY(cur.searchWrap)[1] + 1, 0), val(_, v.join("")), r ? val("group_u_summary", langNumeric(g,
                 "%s", !0)) : GroupsEdit.uUpdateSummary()) : _.innerHTML += v.join(""), n && hide("group_edit_msg"), toggle(h, g > f), checkPageBlocks()
@@ -2074,25 +2074,32 @@ var GroupsEdit = {
                 onChange: function(e) {}
             }), GroupsEdit.app.btnName = ge("group_app_btn_name")
         },
-        attach: function(e, t, o) {
-            var r = {
-                act: "app_attach",
-                id: cur.gid,
-                app_id: e,
-                hash: t
-            };
-            ajax.post("groupsedit.php", r, {
-                onDone: function(e, t, o) {
-                    extend(cur, t), ge("group_apps_wrapper")
-                        .innerHTML = e, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(o)
-                },
-                showProgress: function() {
-                    lockLink(o)
-                },
-                hideProgress: function() {
-                    unlockLink(o)
-                }
-            })
+        attach: function(e, t, o, r) {
+            if (!cur.show_alert || r) {
+                var s = {
+                    act: "app_attach",
+                    id: cur.gid,
+                    app_id: e,
+                    hash: t
+                };
+                ajax.post("groupsedit.php", s, {
+                    onDone: function(e, t, o) {
+                        extend(cur, t), ge("group_apps_wrapper")
+                            .innerHTML = e, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(o)
+                    },
+                    showProgress: function() {
+                        lockLink(o)
+                    },
+                    hideProgress: function() {
+                        unlockLink(o)
+                    }
+                })
+            } else var a = getLang("groups_apps_replace_app_message_content", cur.appName),
+                i = showFastBox({
+                    title: getLang("groups_apps_replace_app_message_title")
+                }, a, getLang("groups_apps_replace_app_message_yes"), function() {
+                    i.hide(), GroupsEdit.app.attach(e, t, o, !0)
+                }, getLang("global_cancel"))
         },
         changeStatus: function(e) {
             radiobtn(ge("app_status_" + e), e, "app_status")

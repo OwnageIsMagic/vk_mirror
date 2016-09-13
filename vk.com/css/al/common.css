@@ -1018,8 +1018,7 @@ h4.subheader {
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
-    font-size: 13px;
-    padding-top: 0.185em
+    font-size: 13px
 }
 
 .button_blue,

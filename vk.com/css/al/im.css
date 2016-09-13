@@ -43,8 +43,8 @@
 .im-page.im-page_classic .im-page--back:before,
 .im-page.im-page_classic .im-page--gim-mute,
 .im-right-menu.ui_rmenu .im-right-menu--close:before,
-.im-to-end,
-.im-to-end.im-to-end_loading:before,
+.im-to-end .im-to-end--label,
+.im-to-end.im-to-end_loading .im-to-end--label:before,
 .im_chronicle_invite_android,
 .im_chronicle_invite_img,
 .im_chronicle_invite_iphone,
@@ -1781,8 +1781,7 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--history-new-bar_days.im-page--history-new-bar_hide {
-    position: absolute;
-    visibility: hidden
+    margin-top: -16px
 }
 
 .im-page .ui_search_field.im-page--dialogs-search_fill {
@@ -5026,39 +5025,42 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-to-end {
-    border-radius: 102.5px;
-    background: #fff url(/images/icons/history_end.png) no-repeat 14px;
     position: absolute;
     margin-top: -43px;
     cursor: pointer;
-    left: 50%;
     box-sizing: border-box;
+    left: 0;
+    width: 100%;
     display: none;
-    padding: 8px 14px 8px 33px;
-    -webkit-transform: translateX(-50%);
-    -ms-transform: translateX(-50%);
-    -o-transform: translateX(-50%);
-    transform: translateX(-50%);
     color: #2a5885;
-    border: solid 1px #cfd9e1;
     font-size: 12.5px;
+    z-index: 102;
+    text-align: center
+}
+
+.im-to-end .im-to-end--label {
+    position: relative;
+    border: solid 1px #cfd9e1;
+    padding: 8px 14px 8px 33px;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    z-index: 102
+    background: #fff url(/images/icons/history_end.png) no-repeat 14px;
+    border-radius: 102.5px;
+    display: inline-block
 }
 
-.im-to-end:hover {
+.im-to-end:hover .im-to-end--label {
     background-color: #f5f7fa
 }
 
-.im-to-end.im-to-end_loading {
+.im-to-end.im-to-end_loading .im-to-end--label {
     background: #fff
 }
 
-.im-to-end.im-to-end_loading:before {
+.im-to-end.im-to-end_loading .im-to-end--label:before {
     content: "";
     position: absolute;
     left: 12px;

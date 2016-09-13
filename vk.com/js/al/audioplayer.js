@@ -170,6 +170,9 @@ var AudioUtils = {
                                 }
                             }
                             e(!1)
+                        },
+                        onFail: function() {
+                            removeClass(o, "added"), addClass(o, "canadd"), e(!1)
                         }
                     }), removeClass(o, "canadd"), addClass(o, "added"), A && (removeClass(A, "canadd"), addClass(A, "added")), getAudioPlayer()
                     .notify(AudioPlayer.EVENT_ADDED, r.fullId)
@@ -440,16 +443,50 @@ var AudioUtils = {
         })
     },
     claim: function(t) {
-        var i = AudioUtils.getAudioFromEl(t, !0);
-        AudioUtils.getAudioExtra(i)
+        var i = AudioUtils.getAudioFromEl(t, !0),
+            e = AudioUtils.getAudioExtra(i);
+        ajax.post("al_claims.php", {
+            act: "a_claim",
+            claim_id: e.moder_claim.claim,
+            type: "audio",
+            id: i.id,
+            owner_id: i.owner_id,
+            hash: i.actHash
+        }, {
+            onDone: function(i) {
+                var e = gpeByClass("audio_row", t);
+                addClass(e, "claimed claim_hidden")
+            }
+        })
     },
     unclaim: function(t) {
-        var i = AudioUtils.getAudioFromEl(t, !0);
-        AudioUtils.getAudioExtra(i)
+        var i = AudioUtils.getAudioFromEl(t, !0),
+            e = AudioUtils.getAudioExtra(i),
+            i = AudioUtils.getAudioFromEl(t, !0),
+            e = AudioUtils.getAudioExtra(i);
+        ajax.post("al_claims.php", {
+            act: "a_unclaim",
+            claim_id: e.moder_claim.claim,
+            type: "audio",
+            id: i.id,
+            owner_id: i.owner_id,
+            hash: i.actHash
+        }, {
+            onDone: function(i) {
+                var e = gpeByClass("audio_row", t);
+                removeClass(e, "claimed"), removeClass(e, "claim_hidden")
+            }
+        })
     },
     getUMAInfo: function(t) {
         var i = AudioUtils.getAudioFromEl(t, !0);
-        AudioUtils.getAudioExtra(i)
+        AudioUtils.getAudioExtra(i);
+        showBox("al_claims.php", {
+            act: "getUMARestrictions",
+            id: i.id,
+            owner_id: i.owner_id,
+            hash: i.actHash
+        })
     }
 };
 TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
@@ -686,7 +723,8 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 shuffle: this.getShuffle(),
                 post_id: this.getPostId(),
                 wall_query: this.getWallQuery(),
-                wall_type: this.getWallType()
+                wall_type: this.getWallType(),
+                claim: intval(nav.objLoc.claim)
             }, {
                 onDone: function(t) {
                     getAudioPlayer()
@@ -931,7 +969,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.getLayerTT = function() {
         return this.layerTT
     }, AudioPlayer.prototype.isImplInited = function() {
-        return !!this._impl
+        return !!this._impl;
     }, AudioPlayer.prototype.onMediaKeyPressedEvent = function(t) {
         var i = this.getCurrentAudio();
         this.getCurrentPlaylist();
@@ -956,8 +994,7 @@ AudioPlayer.tabIcons = {
             o.getId() == t.getId() && o.mergeWith(i)
         }) : t
     }, AudioPlayer.prototype.deleteCurrentPlaylist = function() {
-        this.stop(), delete this._currentAudio, delete this._currentPlaylist,
-            this.notify(AudioPlayer.EVENT_UPDATE), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED)
+        this.stop(), delete this._currentAudio, delete this._currentPlaylist, this.notify(AudioPlayer.EVENT_UPDATE), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED)
     }, AudioPlayer.prototype.updateCurrentPlaying = function(t) {
         t = !!t;
         var i = (this.getCurrentPlaylist(), AudioUtils.asObject(this.getCurrentAudio())),

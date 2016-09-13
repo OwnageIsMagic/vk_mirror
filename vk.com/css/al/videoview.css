@@ -112,8 +112,7 @@ body.mobfixed #mv_layer_wrap {
 #mv_container {
     position: relative;
     display: table;
-    margin: 0px auto;
-    padding: 10px 0px 85px
+    margin: 0 auto 85px
 }
 
 #mv_box {

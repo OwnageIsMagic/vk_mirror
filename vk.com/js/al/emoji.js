@@ -2577,13 +2577,15 @@ if (!window.Emoji) {
             });
         },
 
-        showStickersStore: function(optId) {
-            var peer = Emoji.selectPeer(optId);
-            cur.boxStickersStore = showBox('al_im.php', {
-                act: 'stickers_store',
-                peer: peer,
-                box: 1
-            }, {
+        showStickersStore: function(optId, from) {
+            var peer = Emoji.selectPeer(optId),
+                params = {
+                    act: 'stickers_store',
+                    peer: peer,
+                    box: 1
+                };
+            if (from) params.from = from;
+            cur.boxStickersStore = showBox('al_im.php', params, {
                 dark: 1,
                 stat: ['im.css', 'imn.js', 'page_help.css', 'sorter.js']
             });

@@ -1910,3 +1910,11 @@ div.feed_recom {
 .smartfeed_notification .notification_info .notification_body .notification_controls button {
     margin-right: 10px
 }
+
+.moder_blocks_info {
+    padding: 20px
+}
+
+.moder_blocks_info .ui_table {
+    font-size: 12px
+}
