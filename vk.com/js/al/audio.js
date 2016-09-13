@@ -612,13 +612,11 @@ AudioPage.address = "audio", AudioPage.onSearchFocused = function(e) {
                 elClassWhenTooltip: "audio_status_tt_shown",
                 id: "audio_status_tt",
                 onFirstTimeShow: function(e) {
-                    this.sb = new Scrollbar(geByClass1("audio_status_wrap", e), {
-                        top: 0,
-                        global: !0,
-                        nokeys: !0
+                    this.sb = new uiScroll(geByClass1("audio_status_wrap", e), {
+                        global: !0
                     })
                 }
-            }), cur._onStatusExportBtn && this.statusTT.show()
+            }), cur._onStatusExportBtn && (this.statusTT.show(), this.statusTT.sb.update())
         }.bind(this)
     }))
 }, AudioPage.prototype.isLayer = function() {

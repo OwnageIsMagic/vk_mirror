@@ -1870,6 +1870,8 @@ if (!VK.Widgets) {
         var params = {
                 oid: oid,
                 height: ({
+                    18: 18,
+                    20: 20,
                     22: 22,
                     24: 24,
                     30: 30

@@ -143,6 +143,7 @@
 }
 
 .wcommunity_subscribers {
+    display: inline-block;
     position: relative;
     z-index: 1;
     color: #656565;
@@ -152,7 +153,8 @@
     margin: 8px 0 -5px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis
+    text-overflow: ellipsis;
+    max-width: 100%
 }
 
 .wcommunity_friends {

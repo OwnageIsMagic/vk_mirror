@@ -110,7 +110,7 @@
         var r = showBox(I, {
             act: "open_key",
             key: e,
-            lang_id: intval(nav.objLoc.lang_id),
+            lang_id: void 0 !== nav.objLoc.lang_id ? nav.objLoc.lang_id : cur.langId,
             section_id: intval(nav.objLoc.section)
         }, {
             params: {
@@ -247,7 +247,7 @@
     function c() {
         var e = ge("tr_keys_lang_selector"),
             t = JSON.parse(domData(e, "langs"));
-        S = new Dropdown(e, t, {
+        j = new Dropdown(e, t, {
                 big: !0,
                 width: 190,
                 placeholder: t[0][1],
@@ -445,7 +445,7 @@
             o = ge("tr_translators_language_selector"),
             s = JSON.parse(domData(o, "langs")),
             r = domData(o, "selected");
-        j = new Dropdown(t, n, {
+        S = new Dropdown(t, n, {
             big: !0,
             width: 200,
             selectedItems: a,
@@ -549,7 +549,7 @@
     }
 
     function D(e) {
-        var t = j.selectedItems()[0][0];
+        var t = S.selectedItems()[0][0];
         showBox(I, {
             act: "show_translator_log",
             translator_id: e,
@@ -561,7 +561,7 @@
             }
         })
     }
-    var L, T, E, S, j, I = "al_translations.php",
+    var L, T, E, j, S, I = "al_translations.php",
         H = "remixinline_trans";
     e.TR = {
         showTranslatorTranslations: D,

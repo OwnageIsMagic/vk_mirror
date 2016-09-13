@@ -2,7 +2,8 @@
     display: none
 }
 
-.flist_item_action,
+.flist_item_checked .flist_item_action,
+.flist_list_nomargin .flist_item_wrap.flist_item_checked:hover .flist_item_action,
 .flist_sel_list .flist_item_action,
 .privacy_dropdown .header .header_label:after,
 .privacy_dropdown .item_sel_plus:after,
@@ -244,11 +245,52 @@
     margin: 6px 5px 0 0;
     width: 22px;
     height: 22px;
-    background: url(/images/icons/check_uncheck.png) no-repeat 0 -26px
+    background: #fff;
+    box-shadow: 0 0 0 1px #c4ccd4 inset;
+    border-radius: 100%
 }
 
-.flist_item_checked .flist_item_action {
-    background-position: 0 0
+.flist_item_checked .flist_item_action,
+.flist_list_nomargin .flist_item_wrap.flist_item_checked:hover .flist_item_action {
+    background: url(/images/icons/check_uncheck.png) no-repeat 0 0;
+    box-shadow: none
+}
+
+.flist_list_radio .flist_item_wrap.flist_item_checked .flist_item_action,
+.flist_list_radio .flist_item_wrap:hover.flist_item_checked .flist_item_action {
+    background: #fff;
+    box-shadow: 0 0 0 1px #c4ccd4 inset
+}
+
+.flist_list_radio .flist_item_wrap.flist_item_checked .flist_item_action:before,
+.flist_list_radio .flist_item_wrap:hover.flist_item_checked .flist_item_action:before {
+    content: '';
+    display: block;
+    background: #6287ae;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    margin: 5px
+}
+
+.flist_list_nomargin .flist_item_wrap {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0
+}
+
+.flist_list_nomargin .flist_item_wrap:hover {
+    background: none
+}
+
+.flist_list_nomargin .flist_item_wrap:hover .flist_item_action {
+    background: #ebedf2
+}
+
+.flist_list_nomargin .flist_item_wrap:first-child {
+    border-top: 0;
+    margin-top: 0
 }
 
 .flist_sel_list .flist_item_wrap {
@@ -294,6 +336,7 @@
     float: none;
     display: none;
     position: absolute;
+    box-shadow: none;
     width: 45px;
     height: 45px;
     border-radius: 50%;
