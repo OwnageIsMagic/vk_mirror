@@ -2074,6 +2074,9 @@ var GroupsEdit = {
                 onChange: function(e) {}
             }), GroupsEdit.app.btnName = ge("group_app_btn_name")
         },
+        show: function(e, t) {
+            return cancelEvent(t), showApp(t, e, !0)
+        },
         attach: function(e, t, o, r) {
             if (!cur.show_alert || r) {
                 var s = {

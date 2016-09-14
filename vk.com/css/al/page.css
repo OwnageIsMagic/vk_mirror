@@ -39,6 +39,7 @@
 .page_media_money_transfer .page_media_money_decline_btn .button,
 .page_media_place_img_wrap:before,
 .page_media_place_label_inline:before,
+.page_media_stickers_store .page_media_money_decline_btn .button,
 .page_microdata_logo_aliexpress,
 .page_microdata_logo_asos,
 .page_more_link.loading,
@@ -75,6 +76,7 @@
 }
 
 .page_media_money_transfer .page_media_money_decline_btn .button,
+.page_media_stickers_store .page_media_money_decline_btn .button,
 .wall_copy_more,
 .wall_post_more,
 .wall_reply_more {
@@ -1633,23 +1635,27 @@ a.page_media_link_desc {
     display: none
 }
 
-.page_media_money_transfer td.page_media_link_thumb {
+.page_media_money_transfer td.page_media_link_thumb,
+.page_media_stickers_store td.page_media_link_thumb {
     width: 120px;
     height: 120px;
     background-size: 124px 124px
 }
 
-.page_media_money_transfer a.page_media_link_thumb {
+.page_media_money_transfer a.page_media_link_thumb,
+.page_media_stickers_store a.page_media_link_thumb {
     min-height: 120px;
     height: 120px
 }
 
-.page_media_money_transfer .page_media_link_desc_td {
+.page_media_money_transfer .page_media_link_desc_td,
+.page_media_stickers_store .page_media_link_desc_td {
     height: 96px;
     overflow: hidden
 }
 
-.page_media_money_transfer a.page_media_link_title {
+.page_media_money_transfer a.page_media_link_title,
+.page_media_stickers_store a.page_media_link_title {
     padding-top: 6px;
     font-size: 16px;
     color: #000;
@@ -1658,19 +1664,23 @@ a.page_media_link_desc {
     -moz-osx-font-smoothing: auto
 }
 
-.page_media_money_transfer div.page_media_link_desc {
+.page_media_money_transfer div.page_media_link_desc,
+.page_media_stickers_store div.page_media_link_desc {
     color: #656565
 }
 
-.page_media_money_transfer .wall_postlink_preview_btn {
+.page_media_money_transfer .wall_postlink_preview_btn,
+.page_media_stickers_store .wall_postlink_preview_btn {
     padding-top: 19px
 }
 
-.page_media_money_transfer .page_media_money_decline_btn {
+.page_media_money_transfer .page_media_money_decline_btn,
+.page_media_stickers_store .page_media_money_decline_btn {
     display: inline-block
 }
 
-.page_media_money_transfer .page_media_money_decline_btn .button {
+.page_media_money_transfer .page_media_money_decline_btn .button,
+.page_media_stickers_store .page_media_money_decline_btn .button {
     background: url(/images/icons/p2p_icons.png?2) no-repeat 0 -58px;
     width: 16px;
     height: 16px;
@@ -1678,13 +1688,15 @@ a.page_media_link_desc {
     filter: alpha(opacity=0)
 }
 
-.page_media_money_transfer .page_media_money_decline_btn:hover .button {
+.page_media_money_transfer .page_media_money_decline_btn:hover .button,
+.page_media_stickers_store .page_media_money_decline_btn:hover .button {
     opacity: 1!important;
     -webkit-filter: none!important;
     filter: none!important
 }
 
-.page_media_money_transfer:hover .page_media_money_decline_btn .button {
+.page_media_money_transfer:hover .page_media_money_decline_btn .button,
+.page_media_stickers_store:hover .page_media_money_decline_btn .button {
     opacity: 0.6;
     filter: alpha(opacity=60)
 }

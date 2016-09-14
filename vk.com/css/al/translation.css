@@ -377,6 +377,18 @@ h4.subheader {
     padding: 10px 20px
 }
 
+.tr_translator_edit_wrap {
+    display: none
+}
+
+.tr_translators.tr_coordinator .tr_translator:not(.tr_translator_coordinator) .tr_translator_edit_wrap {
+    display: inline
+}
+
+.tr_translators.tr_super_translator .tr_translator_edit_wrap {
+    display: inline!important
+}
+
 .tr_translators_controls .tr_controls_label {
     color: #888;
     font-weight: 500;

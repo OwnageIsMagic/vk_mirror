@@ -1507,3 +1507,31 @@ textarea.blog_edit_inp {
     letter-spacing: -0.1px;
     line-height: 15px
 }
+
+.blog_reg_button {
+    font-size: 13px;
+    line-height: 18px;
+    padding: 8px 25px 10px;
+    border-radius: 100px
+}
+
+.blog_reg_button:active {
+    padding: 9px 25px
+}
+
+.blog_reg_wrap {
+    text-align: center;
+    letter-spacing: -0.1px
+}
+
+.blog_reg_title {
+    font-size: 19px;
+    line-height: 19px
+}
+
+.blog_reg_text {
+    font-size: 13px;
+    line-height: 19px;
+    color: #777e8c;
+    margin-top: 10px
+}

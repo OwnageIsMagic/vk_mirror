@@ -3530,7 +3530,8 @@ body.mac #layer_stl .fixed {
     color: #000;
     font-size: 12.5px;
     background: none;
-    background-color: #fafbfc
+    background-color: #fafbfc;
+    border-color: #e7e8ec
 }
 
 .box_msg:last-child {
