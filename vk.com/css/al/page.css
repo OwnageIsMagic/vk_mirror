@@ -1664,6 +1664,11 @@ a.page_media_link_desc {
     -moz-osx-font-smoothing: auto
 }
 
+.page_media_money_transfer a.page_media_link_title:hover,
+.page_media_stickers_store a.page_media_link_title:hover {
+    text-decoration: none
+}
+
 .page_media_money_transfer div.page_media_link_desc,
 .page_media_stickers_store div.page_media_link_desc {
     color: #656565
