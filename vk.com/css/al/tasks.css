@@ -1018,7 +1018,8 @@ li.over .tasks_ticket_unbind {
     float: right
 }
 
-#task_support a.my {
+#task_support a.my,
+#task_support a.my>b {
     color: #080
 }
 

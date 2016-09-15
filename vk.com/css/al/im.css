@@ -5395,7 +5395,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-notice--money_transfer .im-notice--image {
-    background: url(/images/message_money.png) no-repeat 0 0
+    background: url(/images/message_money.png?1) no-repeat 0 0
 }
 
 .im_rc_emojibtn {
