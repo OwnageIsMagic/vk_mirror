@@ -26,6 +26,7 @@
 .im-mess.im-mess_search:hover:after,
 .im-mess.im-mess_sending.im-mess_failed.im-mess_unread .im-mess--marker,
 .im-mess.im-mess_unread.im-mess_sending .im-mess--marker,
+.im-notice--money_transfer .im-notice--image,
 .im-page-action.im-page-action_star i,
 .im-page .im-page--center-empty,
 .im-page .im-page--center-empty.im-page--center-empty_fwd,
@@ -1476,6 +1477,14 @@ body.mac .im_stickerpack_fixed {
     background: url(/images/icons/empty_icon.png) no-repeat top
 }
 
+.im-page .im-page--top-notice {
+    display: none
+}
+
+.im-page_classic.im-page .im-page--top-notice {
+    display: block
+}
+
 .im-page .im-page--center-empty.im-page--center-empty_fwd {
     width: 360px;
     margin-left: -180px;
@@ -1674,7 +1683,18 @@ body.mac .im_stickerpack_fixed {
     display: block
 }
 
-.im-page .im-page--history_empty.im-page--history .im-page--center-empty.im-page--center-empty_fwd,
+.im-page .im-page--history_empty.im-page--history .im-page--center-empty.im-page--center-empty_fwd {
+    display: none
+}
+
+.im-page .im-page--history_empty.im-page--history .im-page--top-notice {
+    display: block
+}
+
+.im-page .im-page--history_empty.im-page--history .im-page--top-notice~.im-page--center-empty {
+    margin-top: 4px
+}
+
 .im-page .im-page--history.im-page--history_fwd .im-page-history-w {
     display: none
 }
@@ -5327,6 +5347,55 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-graffiti {
     margin: 15px 0
+}
+
+.im-page--top-notice {
+    padding: 35px 45px 36px;
+    border-bottom: 1px solid #e7e8ec
+}
+
+.im-page_classic .im-page--top-notice {
+    padding: 15px 20px;
+    background-color: #f7f9fa
+}
+
+.im-page_classic .im-page--top-notice~.im-page--dcontent .nim-dialog:first-child,
+.im-page_classic .im-page--top-notice~.im-page--dcontent .nim-dialog:first-child .nim-dialog--content {
+    border-top: none;
+    margin-top: 0
+}
+
+.im-notice--image {
+    margin-right: 15px;
+    width: 100px;
+    height: 100px;
+    float: left
+}
+
+.im-notice--cont {
+    min-height: 100px
+}
+
+.im-notice--title {
+    margin-bottom: 5px;
+    color: #222;
+    font-weight: 500
+}
+
+.im-notice--text {
+    color: #505559
+}
+
+.im-notice--buttons {
+    padding-top: 13px
+}
+
+.im-notice--buttons .as_button {
+    display: inline-block
+}
+
+.im-notice--money_transfer .im-notice--image {
+    background: url(/images/message_money.png) no-repeat 0 0
 }
 
 .im_rc_emojibtn {

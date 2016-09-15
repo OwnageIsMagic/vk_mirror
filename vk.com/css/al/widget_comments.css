@@ -668,6 +668,14 @@
     display: none
 }
 
+.wall_module .post.wcomments_post .wpe_buttons {
+    padding-top: 10px
+}
+
+.wall_module .post.wcomments_post .multi_media_preview+.wpe_buttons {
+    padding-top: 0
+}
+
 .wall_module .post.wcomments_post .ui_actions_menu_wrap {
     top: -22px;
     right: -18px;

@@ -5584,6 +5584,11 @@ button.ui_load_more_btn {
     background-color: #486991
 }
 
+#top_audio_layer_place {
+    display: inline-block;
+    position: relative
+}
+
 .top_audio_player {
     overflow: hidden;
     white-space: nowrap;
@@ -5593,6 +5598,7 @@ button.ui_load_more_btn {
     position: relative;
     max-width: 300px;
     cursor: pointer;
+    height: 42px;
     display: none;
     opacity: 0;
     pointer-events: none
@@ -5616,7 +5622,7 @@ button.ui_load_more_btn {
 
 .top_audio_player .top_audio_player_btn {
     float: left;
-    padding: 16px 4px 10px;
+    padding: 16px 4px;
     cursor: pointer;
     border: none;
     background: transparent;
@@ -5668,11 +5674,11 @@ button.ui_load_more_btn {
 }
 
 .top_audio_player .top_audio_player_title_wrap {
-    margin: 13.5px 0;
+    margin: 14px 0 0;
     position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
-    min-height: 15px
+    min-height: 19px
 }
 
 .top_audio_player .top_audio_player_title {
@@ -5874,7 +5880,7 @@ button.ui_load_more_btn {
 
 .audio_row.claim_mode:not(.claim_hidden) #claim_remove,
 .audio_row.claim_mode.claim_hidden #claim_restore,
-.audio_row.claim_mode.claim_uma #claim_show_uma {
+.audio_row.claim_uma #claim_show_uma {
     display: block
 }
 
@@ -6141,8 +6147,23 @@ button.ui_load_more_btn {
 
 .eltt.eltt_vis {
     opacity: 1;
-    margin: 0!important;
     pointer-events: all
+}
+
+.eltt.eltt_vis.eltt_bottom {
+    margin-top: 0!important
+}
+
+.eltt.eltt_vis.eltt_top {
+    margin-bottom: 0!important
+}
+
+.eltt.eltt_vis.eltt_left {
+    margin-right: 0!important
+}
+
+.eltt.eltt_vis.eltt_right {
+    margin-left: 0!important
 }
 
 .eltt:after,
@@ -6166,7 +6187,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_bottom {
-    margin-top: 3px
+    margin-top: 15px
 }
 
 .eltt.eltt_bottom:after,
@@ -6186,7 +6207,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_top {
-    margin-top: -3px
+    margin-top: -15px
 }
 
 .eltt.eltt_top:after,
@@ -6206,7 +6227,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_right {
-    margin-left: 3px
+    margin-left: 15px
 }
 
 .eltt.eltt_right:after,
@@ -6226,7 +6247,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_left {
-    margin-left: -3px
+    margin-left: -15px
 }
 
 .eltt.eltt_left:after,

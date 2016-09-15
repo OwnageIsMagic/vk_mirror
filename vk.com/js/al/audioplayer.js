@@ -289,8 +289,9 @@ var AudioUtils = {
                 }, !0)
             }
         else {
-            var BORDER_COMPENSATION = 2;
-            ap.layer = new ElementTooltip(btn, {
+            var BORDER_COMPENSATION = 2,
+                attachTo = ge("top_audio_layer_place");
+            ap.layer = new ElementTooltip(attachTo, {
                 delay: 0,
                 content: rs(vk.pr_tpl, {
                     id: "",
@@ -298,8 +299,6 @@ var AudioUtils = {
                 }),
                 cls: "top_audio_loading top_audio_layer",
                 autoShow: !1,
-                appendTo: document.body,
-                elClassWhenTooltip: "audio_top_btn_active",
                 forceSide: "bottom",
                 onHide: function(t, i) {
                     audioPage = data(ap.layer, "audio-page"), audioPage && audioPage.onHide(), removeClass(btn, "active"), i && cancelStackFilter("top_audio", !
@@ -307,24 +306,21 @@ var AudioUtils = {
                 },
                 width: getLayerWidth,
                 setPos: function(t) {
-                    var i = this.isShown(),
-                        e = getXY(getPageEl()),
-                        o = getSize(getPageEl())[0] - BORDER_COMPENSATION,
-                        a = getLayerWidth(),
-                        l = getAudioBtn(),
-                        s = getXY(l)[0],
-                        r = getSize(l)[0],
-                        u = s + r / 2,
-                        n = i ? t.left : u - a / 2;
-                    o <= AudioUtils.AUDIO_LAYER_MAX_WIDTH && o >= AudioUtils.AUDIO_LAYER_MIN_WIDTH && (n = e[0]);
-                    var d = 38,
-                        _ = s - n + Math.min(r / 2, d) - 2;
-                    return setPseudoStyle(this.getContent(), "after", {
-                        left: _ + "px"
-                    }), {
-                        left: n,
-                        top: getSize(ge("page_header_cont"))[1],
-                        position: "fixed"
+                    var i, e, o;
+                    isVisible(btn) ? (e = i = btn, o = 2) : (i = attachTo, e = geByClass1("top_audio_player_play"), o = 3);
+                    var a = (getSize(btn), getXY(i)),
+                        l = getXY(e),
+                        s = getSize(e),
+                        r = getXY("page_body"),
+                        u = a[0] - r[0];
+                    if (u = Math.min(u, 400), s[0]) {
+                        var n = u + (l[0] - a[0]) + s[0] / 2 - o;
+                        setPseudoStyle(this.getContent(), "after", {
+                            left: n + "px"
+                        })
+                    }
+                    return {
+                        marginLeft: -u
                     }
                 }
             }), ap.layer.show(), addClass(btn, "active"), ajax.post("al_audio.php", {
@@ -509,7 +505,9 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     }, TopAudioPlayer.prototype.onPlay = function(t, i, e) {
         function o() {
             var i = getAudioPlayer();
-            i.layer && i.layer.isShown() && i.layer.updatePosition(), addClass(s._el, a), toggleClass(s._el, "top_audio_player_playing", i.isPlaying());
+            setTimeout(function() {
+                i.layer && i.layer.isShown() && i.layer.updatePosition()
+            }, 1), addClass(s._el, a), toggleClass(s._el, "top_audio_player_playing", i.isPlaying());
             var o = geByClass1("_top_audio_player_play_blind_label");
             o && (o.innerHTML = i.isPlaying() ? getLang("global_audio_pause") : getLang("global_audio_play")), t = AudioUtils.asObject(t), clearTimeout(s._currTitleReTO);
             var l = geByClass1("top_audio_player_title_out", s._el);
@@ -528,7 +526,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                         top: 0,
                         opacity: 1
                     })
-                }, 1), clearTimeout(s._currTitleReTO), s._currTitleReTO = setTimeout(function() {
+                }, 10), clearTimeout(s._currTitleReTO), s._currTitleReTO = setTimeout(function() {
                     re(r), removeClass(d, "top_audio_player_title_next")
                 }, TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED)
             } else r.innerHTML = t.performer + " &ndash; " + t.title, r.titleSet = 0, r.setAttribute("onmouseover", "setTitle(this)")
@@ -969,7 +967,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.getLayerTT = function() {
         return this.layerTT
     }, AudioPlayer.prototype.isImplInited = function() {
-        return !!this._impl;
+        return !!this._impl
     }, AudioPlayer.prototype.onMediaKeyPressedEvent = function(t) {
         var i = this.getCurrentAudio();
         this.getCurrentPlaylist();
