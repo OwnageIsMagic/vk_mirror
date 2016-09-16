@@ -5355,14 +5355,35 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-page_classic .im-page--top-notice {
-    padding: 15px 20px;
-    background-color: #f7f9fa
+    padding: 20px;
+    margin: 0 0 15px;
+    border-radius: 2px;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    border-bottom: none;
+    background: #fff;
+    max-height: 156px;
+    overflow: hidden
 }
 
-.im-page_classic .im-page--top-notice~.im-page--dcontent .nim-dialog:first-child,
-.im-page_classic .im-page--top-notice~.im-page--dcontent .nim-dialog:first-child .nim-dialog--content {
-    border-top: none;
-    margin-top: 0
+.im-page_classic .im-page--top-notice .im-notice--title {
+    margin-top: 8px;
+    font-size: 19px;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.im-page_classic .im-page--top-notice .im-notice--text {
+    line-height: 19px;
+    color: #000
+}
+
+.im-page .im-page--dialogs.im-page--dialogs-notice {
+    padding-top: 216px
+}
+
+.im-page .im-page--dialogs.im-page--dialogs-notice .im-page--header {
+    background-color: #edeef0
 }
 
 .im-notice--image {
@@ -5379,7 +5400,9 @@ body.sf .nim-dialog .nim-dialog--unread {
 .im-notice--title {
     margin-bottom: 5px;
     color: #222;
-    font-weight: 500
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
 .im-notice--text {

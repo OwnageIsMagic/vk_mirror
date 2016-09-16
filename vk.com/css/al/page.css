@@ -424,6 +424,10 @@
     -moz-osx-font-smoothing: auto
 }
 
+.post_author span.author {
+    color: #222
+}
+
 .wall_module .copy_post_header {
     min-height: 40px
 }

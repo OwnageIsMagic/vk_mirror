@@ -252,7 +252,7 @@
 .blog_entry_author_info {
     margin-top: 6px;
     color: #939393;
-    font-size: 12px
+    font-size: 12.5px
 }
 
 .blog_entry_author_info a {
@@ -377,12 +377,16 @@
 
 .blog_cat_name {
     line-height: 17px;
-    font-size: 13px;
+    font-size: 12.5px;
     padding-top: 3px
 }
 
 .blog_cat_name a {
     margin-left: 10px
+}
+
+.blog_cat_name a:first-child {
+    margin-left: 0px
 }
 
 .blog_entry_nav {

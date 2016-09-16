@@ -56,13 +56,13 @@
             e._index(t), browser.opera_mobile || e._textEvent({
                 target: t.text,
                 type: t.text.focused ? "focus" : "blur"
-            }), t.text.focused ? e._updateList(t) : e._updateTextInput(t), addEvent(t.text.parentNode, "click", e._clickEvent.pbind(t)), addEvent(t.arrow, "mousedown",
-                e._arrDownEvent.pbind(t)), extend(t, {
+            }), extend(t, {
                 addWidth: getSize(t.add)[0],
                 textDelta: getSize(t.text)[0] - intval(getStyle(t.text, "width")),
                 fullWidth: getSize(domPN(t.text))[0] - 4,
                 textOffset: t.text.offsetLeft
-            }), t.partWidth = t.fullWidth - getSize(t.arrow)[0], t.opts.noMultiSelect && t.opts.chosen && e.choose(t.id, !1, t.opts.chosen, !0)
+            }), t.partWidth = t.fullWidth - getSize(t.arrow)[0], t.text.focused ? e._updateList(t) : e._updateTextInput(t), addEvent(t.text.parentNode, "click", e._clickEvent
+                .pbind(t)), addEvent(t.arrow, "mousedown", e._arrDownEvent.pbind(t)), t.opts.noMultiSelect && t.opts.chosen && e.choose(t.id, !1, t.opts.chosen, !0)
         },
         _updateList: function(t, d, i) {
             if (t.cache[""]) {

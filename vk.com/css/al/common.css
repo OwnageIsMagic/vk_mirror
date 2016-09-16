@@ -2346,7 +2346,7 @@ a:hover .left_count_persist .left_void {
 
 .left_menu_nav_wrap .ui_actions_menu_wrap {
     position: relative;
-    display: inline
+    display: inline-block
 }
 
 .left_menu_nav_wrap .ui_actions_menu_icons {
@@ -2367,6 +2367,10 @@ a:hover .left_count_persist .left_void {
 .left_menu_nav_wrap .ui_actions_menu_top .ui_actions_menu {
     margin-top: 0;
     margin-bottom: -20px
+}
+
+.left_menu_nav_wrap .ui_actions_menu_left .ui_actions_menu {
+    margin-left: -35.5px
 }
 
 #ads_left.ads_left_empty+.left_menu_nav_wrap {
@@ -4390,7 +4394,7 @@ input.text.ts_input {
     border-radius: 14px;
     -o-transition: background-color 0.05s, color 0.05s;
     transition: background-color 0.05s, color 0.05s;
-    background: #31537a url(/images/icons/dev_head_magglass.png) no-repeat;
+    background: #305075 url(/images/icons/dev_head_magglass.png) no-repeat;
     padding-left: 19px;
     border-left: 8px solid transparent;
     background-position: left 8px;
