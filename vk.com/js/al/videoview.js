@@ -685,7 +685,7 @@ var Videoview = {
                 getProgressHtml() +
                 '</div>      <div id="mv_player_box"></div>      <div class="mv_top_controls_wrap">        <div id="mv_top_controls">          <div onclick="return Videoview.hide(false, true, event, true);" class="mv_top_button mv_top_close" role="button" tabindex="0" aria-label="' +
                 getLang("global_close") +
-                '">            <div class="mv_close_icon"></div>          </div>          <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize">            <div class="mv_minimize_icon"></div>          </div>          <div onclick="return Videoview.toggleSideBlock();" class="mv_top_button mv_top_toggle_sideblock" id="mv_top_pl_toggle" role="button" tabindex="0">            <div class="mv_toggle_sideblock_icon"></div>          </div>        </div>      </div>    </div>    <div id="mv_service_btns_wrap">      <div id="mv_service_btns"></div>    </div>    <div class="mv_info" id="mv_info"></div>    <div id="mv_warning" style="display: none;"></div>  </div></div>  '
+                '">            <div class="mv_close_icon"></div>          </div>          <div onclick="return Videoview.minimize(event);" class="mv_top_button mv_top_minimize">            <div class="mv_minimize_icon"></div>          </div>          <div onclick="return Videoview.toggleSideBlock(event);" class="mv_top_button mv_top_toggle_sideblock" id="mv_top_pl_toggle" role="button" tabindex="0">            <div class="mv_toggle_sideblock_icon"></div>          </div>        </div>      </div>    </div>    <div id="mv_service_btns_wrap">      <div id="mv_service_btns"></div>    </div>    <div class="mv_info" id="mv_info"></div>    <div id="mv_warning" style="display: none;"></div>  </div></div>  '
             ), browser.mobile && setStyle("mv_container", {
                 paddingTop: intval(window.pageYOffset) + 10 + "px"
             }), Videoview.updateSize()
@@ -1878,8 +1878,8 @@ var Videoview = {
                     Videoview.viewScroll(), Videoview.playerOnResize(), !1
             }
         },
-        toggleSideBlock: function() {
-            mvcur.chatMode ? VideoChat.toggle() : VideoPlaylist.toggle()
+        toggleSideBlock: function(e) {
+            return mvcur.chatMode ? VideoChat.toggle() : VideoPlaylist.toggle(), cancelEvent(e)
         },
         sendVideo: function(e) {
             Videoview.hidePlayer();
@@ -2626,23 +2626,25 @@ window.VideoChat = {
         e.data.scrollBottom < VideoChat.SCROLL_EDGE_BELOW_THRESHOLD && VideoChat.toggleScrollBottomBtn(!1)
     },
     receiveMessage: function(e, i, o, t, a, n, d, r, s) {
-        r && (d = getTemplate("video_chat_sticker", {
-            sticker_id: r,
-            pack_id: s,
-            img_size: isRetina() ? 256 : 128
-        }));
-        var v = "";
-        (mvcur.adminLevel > 0 || e == vk.id) && (v += getTemplate("video_chat_message_action_del"));
-        var l = psr(getTemplate("video_chat_message", {
-            author_href: n,
-            author_photo: a,
-            author_name: t,
-            message: d,
-            video_owner_id: e,
-            msg_id: i,
-            actions: v
-        }));
-        VideoChat.appendMessage(l, i)
+        if (!ge("mv_chat_msg" + mvcur.mvData.oid + "_" + i)) {
+            r && (d = getTemplate("video_chat_sticker", {
+                sticker_id: r,
+                pack_id: s,
+                img_size: isRetina() ? 256 : 128
+            }));
+            var v = "";
+            (mvcur.adminLevel > 0 || e == vk.id) && (v += getTemplate("video_chat_message_action_del"));
+            var l = psr(getTemplate("video_chat_message", {
+                author_href: n,
+                author_photo: a,
+                author_name: t,
+                message: d,
+                video_owner_id: e,
+                msg_id: i,
+                actions: v
+            }));
+            VideoChat.appendMessage(l)
+        }
     },
     receiveDelete: function(e, i) {
         var o = ge("mv_chat_msg" + e + "_" + i);
@@ -2650,19 +2652,21 @@ window.VideoChat = {
             re("mv_chat_msg" + e + "_" + i)
         })
     },
-    appendMessage: function(e, i) {
-        if (!ge("mv_chat_msg" + mvcur.mvData.oid + "_" + i)) {
-            VideoChat.firstMsgIntro && (re(VideoChat.firstMsgIntro), VideoChat.firstMsgIntro = null);
-            var o = VideoChat.scroll.content,
-                t = se(e);
-            VideoChat.scroll.updateBelow(function() {
-                o.appendChild(t)
-            });
-            var a = o.childNodes;
-            a.length > 500 && VideoChat.scroll.updateAbove(function() {
-                re(a[0])
-            }), !VideoChat.isHidden() && VideoChat.scroll.data.scrollBottom > t.offsetHeight && VideoChat.toggleScrollBottomBtn(!0)
-        }
+    appendMessage: function(e) {
+        VideoChat._html = (VideoChat._html || "") + e, VideoChat._appendTimeout && clearTimeout(VideoChat._appendTimeout), VideoChat._appendTimeout = setTimeout(function() {
+            VideoChat.appendMessages(VideoChat._html), VideoChat._html = "", VideoChat._appendTimeout = null
+        }, 0)
+    },
+    appendMessages: function(e) {
+        VideoChat.firstMsgIntro && (re(VideoChat.firstMsgIntro), VideoChat.firstMsgIntro = null);
+        var i = VideoChat.scroll.content;
+        VideoChat.scroll.updateBelow(function() {
+            i.insertAdjacentHTML("beforeend", e)
+        });
+        var o = i.childNodes;
+        o.length > 500 && VideoChat.scroll.updateAbove(function() {
+            re(o[0])
+        }), !VideoChat.isHidden() && VideoChat.scroll.data.scrollBottom > 100 && VideoChat.toggleScrollBottomBtn(!0)
     },
     toggleScrollBottomBtn: function(e) {
         toggleClass(this.scrollBottomBtnWrap, "hidden", !e)
@@ -2806,17 +2810,26 @@ window.VideoChat = {
     onChooseCurrency: function(e) {
         var i, o = VideoDonate.apiData,
             t = floatval(o.user_data.donation_mins.RUB),
-            a = Math.ceil(t / vk.vcost);
+            a = Math.ceil(t / vk.vcost),
+            n = floatval(val("video_donate_amount"));
+        if (n) {
+            if ("votes" == e) var d = Math.max(a, Math.round(n / vk.vcost));
+            else var d = Math.max(t, intval(n * vk.vcost));
+            val("video_donate_amount", d)
+        } else {
+            var d = "votes" == e ? a : t;
+            val("video_donate_amount", d)
+        }
         "votes" == e ? (i = getLang("video_donate_box_min_amount_votes_hint", a), i += " " + getLang("video_donate_box_total_votes_hint", vk.balance)) : i = getLang(
             "video_donate_box_min_amount_hint", t, !0), val("video_donate_amount_hint", i);
-        var n = !!intval(o.user_data.tts_is_enabled),
-            d = floatval((o.user_data.tts_mins || {})
+        var r = !!intval(o.user_data.tts_is_enabled),
+            s = floatval((o.user_data.tts_mins || {})
                 .RUB);
-        n && (d ? "votes" == e ? val("video_donate_comment_tts_hint", getLang("video_donate_box_text_speech_min_votes_hint", Math.ceil(d / vk.vcost))) : val(
-            "video_donate_comment_tts_hint", getLang("video_donate_box_text_speech_min_hint", d)) : val("video_donate_comment_tts_hint", getLang(
+        r && (s ? "votes" == e ? val("video_donate_comment_tts_hint", getLang("video_donate_box_text_speech_min_votes_hint", Math.ceil(s / vk.vcost))) : val(
+            "video_donate_comment_tts_hint", getLang("video_donate_box_text_speech_min_hint", s)) : val("video_donate_comment_tts_hint", getLang(
             "video_donate_box_text_speech_hint")));
-        var r = getLang("votes" == e ? "video_donate_box_pay_button" : "video_donate_box_donate_button");
-        val("video_donate_basic_submit", r)
+        var v = getLang("votes" == e ? "video_donate_box_pay_button" : "video_donate_box_donate_button");
+        val("video_donate_basic_submit", v)
     },
     checkCommentLength: function(e) {
         var i = VideoDonate.apiData,
@@ -2868,8 +2881,9 @@ window.VideoChat = {
         lockButton(i), ajax.plainpost(o.form_api_ssl_url, {
             data: ajx2q(s)
         }, function(e) {
-            unlockButton(i), e = parseJSON(e), e && "success" == e.status ? "votes" == d ? VideoDonate.donateVotes(t, n, r) : VideoDonate.toNextForm() : e && e.errors &&
-                each(e.errors, function(e, i) {
+            unlockButton(i), e = parseJSON(e),
+                e && "success" == e.status ? "votes" == d ? VideoDonate.donateVotes(t, n, r) : VideoDonate.toNextForm() : e && e.errors && each(e.errors, function(
+                    e, i) {
                     var o = VideoDonate.getErrorText(i.code);
                     return VideoDonate.showInputError("video_donate_" + i.field, o), !1
                 })
@@ -2885,15 +2899,16 @@ window.VideoChat = {
             amount: i,
             comment: o
         }, {
-            onDone: function(e, i) {
+            onDone: function(e, i, o) {
                 if (e) {
                     curBox()
                         .hide();
-                    var o = getTemplate("video_donate_success_msg", {
+                    var t = getTemplate("video_donate_success_msg", {
                         text: i
                     });
-                    showFastBox(getLang("video_donate_box_title"), o)
-                } else VideoDonate.showInputError("video_donate_amount", i)
+                    showFastBox(getLang("video_donate_box_title"), t)
+                } else VideoDonate.showInputError("video_donate_amount", i);
+                vk.balance != o && updateMoney(o)
             },
             showProgress: lockButton.pbind("video_donate_basic_submit"),
             hideProgress: unlockButton.pbind("video_donate_basic_submit")

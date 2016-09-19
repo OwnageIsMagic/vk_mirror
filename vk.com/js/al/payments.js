@@ -552,6 +552,7 @@ var MoneyTransfer = {
                 if (data.accept) {
                     curBox()
                         .hide();
+                    return;
                 }
                 if (cur.isPaymentFailed) {
                     MoneyTransfer.showError(getLang('payments_landing_cancelled'));
@@ -589,6 +590,7 @@ var MoneyTransfer = {
                             re(domPN(cur.acceptMoneyBtn));
                             cur.acceptMoneyBtn = false;
                         } else if (cur.acceptMoneyBtn) {
+                            // IM.updateHistory(MoneyTransfer.updateImHistory, chkData.qid, html);
                             re(geByClass1('_decline_btn', domPN(cur.acceptMoneyBtn)));
                             domReplaceEl(cur.acceptMoneyBtn, html);
                             cur.acceptMoneyBtn = false;

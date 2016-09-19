@@ -246,6 +246,7 @@ table.history .cur_session {
     margin: 10px 10px 0
 }
 
+#mi_money_transfer_history_tabsbar_progress,
 #mi_payments_tabsbar_progress,
 #mi_votes_history_tabsbar_progress {
     padding: 14px 5px 0 0;

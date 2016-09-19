@@ -984,11 +984,16 @@ var Video = {
             })
         }
         cur.found = {}, cur.currentSortings = {}, cur._preloadedPages = {}, cur.videoSearchFilters = {}, cur.chosenVideos = [], cur.albumsShowingAll = {}, cur.isNoteEdit =
-            e, cur.videoShowWindow = {}, cur.getOwnerId = function() {
-                return i
-            };
-        var u = curBox();
-        cur.nav.push(function(e, o, i, t) {
+            e, cur.videoShowWindow = {};
+        var u = curBox(),
+            _ = cur.getOwnerId;
+        cur.getOwnerId = function() {
+            return i
+        }, u.setOptions({
+            onHideAttempt: function() {
+                return cur.getOwnerId = _, !0
+            }
+        }), cur.nav.push(function(e, o, i, t) {
             if (!t.filtersChanged && 1 == Object.keys(i)
                 .length && i[0] && 0 != i[0].indexOf("video") && !t.fromSearch) return !0;
             if (e[0] && !e.section && i[0] != "videos" + cur.getOwnerId()) return !0;
@@ -1020,8 +1025,8 @@ var Video = {
             }
             return l(), !1
         }), cur.isCurrentVideoLayer = !0, Video.loadSilent(), n(), addEvent(ge("box_layer_wrap"), "scroll", Video.onScroll);
-        var _ = boxLayerWrap.scrollTop;
-        elfocus(geByClass1("_scroll_node", u.bodyNode)), boxLayerWrap.scrollTop = _, Video.initSearch(), s(), o || (cur.chooseVideoMedia = function(e, o, i) {
+        var v = boxLayerWrap.scrollTop;
+        elfocus(geByClass1("_scroll_node", u.bodyNode)), boxLayerWrap.scrollTop = v, Video.initSearch(), s(), o || (cur.chooseVideoMedia = function(e, o, i) {
             var t = e;
             hasClass(t, "media_check_btn_wrap") ? cur.cancelClick = !0 : t = geByClass1("media_check_btn_wrap", t), toggleClass(t, "checked");
             var r = 0;

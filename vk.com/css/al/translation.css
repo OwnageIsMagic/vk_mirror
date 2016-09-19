@@ -25,7 +25,8 @@
 }
 
 .translation_box .flat_button {
-    margin: 5px 0
+    margin: 5px 0;
+    width: 190px
 }
 
 i.translated,
@@ -107,7 +108,9 @@ i i.untranslated {
 .tr_key .tr_key_inner {
     margin-left: 36px;
     margin-right: 80px;
-    line-height: 17px
+    line-height: 17px;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .tr_key .tr_key_key_name {
@@ -121,6 +124,14 @@ i i.untranslated {
     float: right;
     color: #adadad;
     margin-top: -15px
+}
+
+.tr_key .tr_key_desc {
+    color: #8a8a8a;
+    margin: 8px 70px 0 36px;
+    line-height: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis
 }
 
 .tr_show_key_names .tr_key_key_name {
@@ -357,6 +368,11 @@ h4.subheader {
 
 .tr_case_controls .dropdown_container {
     display: inline-block
+}
+
+.tr_export_warning {
+    line-height: 18px;
+    margin-bottom: 30px
 }
 
 .tr_clone_box .selector_container {
@@ -597,7 +613,13 @@ h4.subheader {
 
 .tr_log_row_key {
     color: #353535;
-    font-weight: 600
+    font-weight: 600;
+    text-decoration: underline;
+    cursor: pointer
+}
+
+.tr_log_row_key:hover {
+    color: #6f6f6f
 }
 
 .tr_log_row_date {
