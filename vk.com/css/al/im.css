@@ -1406,6 +1406,11 @@ body.mac .im_stickerpack_fixed {
     margin-top: -90px
 }
 
+.im-page .im-page-chat-contain {
+    z-index: 1;
+    position: relative
+}
+
 .im-page .im-page--typing {
     margin-left: 45px;
     display: none;
@@ -2691,6 +2696,10 @@ body.mac .im_stickerpack_fixed {
     pointer-events: none
 }
 
+.im-search--date-input .cal_div {
+    z-index: 102
+}
+
 .im-search--date-input .cal_table .past_day.day,
 .im-search--date-input .cal_table .today.day {
     color: #000;
@@ -2742,6 +2751,7 @@ body.mac .im_stickerpack_fixed {
 .im-mess {
     padding: 6px 83px 7px 0;
     position: relative;
+    z-index: 1;
     margin: 0 7px
 }
 

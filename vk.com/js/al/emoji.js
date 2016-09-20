@@ -2533,8 +2533,8 @@ if (!window.Emoji) {
                     }
                 }
 
-                if (gpeByClass('_im_mess_stack', el)) {
-                    opt.appendParentCls = '_im_mess_stack';
+                if (gpeByClass('_im_peer_history_w', el)) {
+                    opt.appendParentCls = '_im_peer_history_w';
                 }
 
                 showTooltip(el, opt);

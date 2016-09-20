@@ -490,6 +490,9 @@ var Page = {
             var now = vkNow();
             for (i in posts) {
                 module = Page.getPostModuleCode(posts[i].module ? posts[i].module : '');
+                console.log(posts[i].module)
+                console.log(module)
+
                 index = posts[i].index;
                 query = posts[i].q;
                 for (j in posts[i]) {
@@ -588,6 +591,12 @@ var Page = {
                     return 'r';
                 case 'feed_news_top':
                     return 't';
+                case 'feed_recommended':
+                    return 'd';
+                case 'feed_recommended_recent':
+                    return 'd';
+                case 'feed_recommended_top':
+                    return 'e';
                 case 'feed_other':
                     return 'o';
                 default:

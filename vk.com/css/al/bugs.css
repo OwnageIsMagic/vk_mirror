@@ -369,8 +369,7 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 .bugs_updates {
     background-color: #f0f2f5;
     margin-top: 20px;
-    padding: 15px 15px 0;
-    width: 430px
+    padding: 15px 15px 0
 }
 
 .bugs_update_row {
@@ -421,7 +420,7 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 }
 
 .bugs_update_data {
-    max-width: 375px
+    max-width: 335px
 }
 
 .bugs_update_text {

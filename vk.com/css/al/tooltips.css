@@ -1082,11 +1082,11 @@ div.own_reply_tt .content {
     width: 222px
 }
 
-.sticker_extra_tt .stickers_extra_text {
+.sticker_extra_tt .tt_text .stickers_extra_text {
     line-height: 17px
 }
 
-.sticker_extra_tt .stickers_extra_text>b {
+.sticker_extra_tt .tt_text .stickers_extra_text>b {
     margin-bottom: 5px;
     background: none;
     height: auto;

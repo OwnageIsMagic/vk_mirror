@@ -59,7 +59,11 @@ var Videoview = {
                     }, {
                         onDone: function(e) {
                             var i = Videoview.getMvData();
-                            i && i.videoRaw == o && (i.playerSuggestions = e)
+                            if (i && i.videoRaw == o) {
+                                i.playerSuggestions = e;
+                                var t = cur.videoInlinePlayer || window.mvcur && mvcur.player;
+                                t && t.setSuggestions(e)
+                            }
                         }
                     })
                 }
@@ -320,6 +324,9 @@ var Videoview = {
                 var a = Videoview.getMvData(),
                     n = a.isClosedGroup || !1;
                 Videoview.subscribeToAuthor(null, null, e, i, o, n, !0, "player"), Videoview.sendPlayerStats(o ? 9 : 10, t)
+            },
+            onDonate: function() {
+                Videoview.showDonateBox()
             },
             onLiveViewersCountChange: function(e, i) {
                 window.mvcur && mvcur.mvShown && mvcur.videoRaw == e && Videoview.updateLiveViewersCount(i)
@@ -1869,9 +1876,9 @@ var Videoview = {
                         width: "",
                         height: ""
                     }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
-                        "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
-                    removeEvent(window, "resize", Videoview.minResize),
-                    mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
+                        "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange),
+                    addEvent(document, "keydown", Videoview.onKeyDown), removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange ||
+                    e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
                     }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),
@@ -2878,18 +2885,18 @@ window.VideoChat = {
             amount: a,
             comment: r
         };
-        lockButton(i), ajax.plainpost(o.form_api_ssl_url, {
-            data: ajx2q(s)
-        }, function(e) {
-            unlockButton(i), e = parseJSON(e),
-                e && "success" == e.status ? "votes" == d ? VideoDonate.donateVotes(t, n, r) : VideoDonate.toNextForm() : e && e.errors && each(e.errors, function(
-                    e, i) {
-                    var o = VideoDonate.getErrorText(i.code);
-                    return VideoDonate.showInputError("video_donate_" + i.field, o), !1
-                })
-        }, function() {
-            unlockButton(i)
-        })
+        lockButton(i),
+            ajax.plainpost(o.form_api_ssl_url, {
+                data: ajx2q(s)
+            }, function(e) {
+                unlockButton(i), e = parseJSON(e), e && "success" == e.status ? "votes" == d ? VideoDonate.donateVotes(t, n, r) : VideoDonate.toNextForm() : e && e.errors &&
+                    each(e.errors, function(e, i) {
+                        var o = VideoDonate.getErrorText(i.code);
+                        return VideoDonate.showInputError("video_donate_" + i.field, o), !1
+                    })
+            }, function() {
+                unlockButton(i)
+            })
     },
     donateVotes: function(e, i, o) {
         ajax.post("al_video.php?act=donate_votes", {
