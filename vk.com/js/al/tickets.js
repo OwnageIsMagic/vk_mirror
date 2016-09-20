@@ -353,6 +353,7 @@ Tickets = {
             case 2:
             case 3:
             case 5:
+            case 7:
                 if (2 == cur.payType) {
                     if (void 0 === cur.paySystem) return cur.showPaySysTT(), !1;
                     if (4 == cur.paySystem && !trim(val("tickets_paysystem_name"))) return notaBene("tickets_paysystem_name"), !1
@@ -382,7 +383,11 @@ Tickets = {
                     cur.payType && (4 == cur.paySystem ? e.pay_system_name = trim(val("tickets_paysystem_name")) : e.pay_system = cur.paySystem);
                 break;
             case 4:
-                e.pay_type = cur.payType, e.pay_day = val("tickets_payment_day"), e.pay_sum = floatval(val("tickets_pay_sum")), e.pay_org = trim(val("tickets_organisation"))
+                e.pay_type = cur.payType, e.pay_day = val("tickets_payment_day"), e.pay_sum = floatval(val("tickets_pay_sum")), e.pay_org = trim(val("tickets_organisation"));
+                break;
+            case 5:
+            case 7:
+                e.pay_type = cur.payType, e.pay_date = val("tickets_payment_date"), e.pay_sum = floatval(val("tickets_pay_sum"))
         }
         return e
     },

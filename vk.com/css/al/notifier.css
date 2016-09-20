@@ -2577,3 +2577,100 @@ div.chat_tab_img {
 .fc_msgs_out_inner .fc_snapster_invite_room_install {
     color: #656565
 }
+
+.audio-msg-track.audio-msg-track_player-attached {
+    display: none
+}
+
+.audio-msg-track .audio-msg-track--btn {
+    border-radius: 50%;
+    border: none;
+    display: block;
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+    float: left;
+    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2011%22%20width%3D%2210px%22%20height%3D%2211px%22%3E%0A%20%20%20%20%3Cpolygon%20stroke%3D%22%23fff%22%20fill%3D%22%23fff%22%20style%3D%22stroke-linecap%3A%20round%3B%20stroke-linejoin%3A%20round%3B%22%20points%3D%222.5%201%202.5%2010%209.5%205.5%22%20transform%3D%22%22%2F%3E%0A%3C%2Fsvg%3E") #5779a1 no-repeat 50%
+}
+
+.audio-msg-track.audio-msg-track_playing .audio-msg-track--btn {
+    background-image: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2011%22%20width%3D%2210px%22%20height%3D%2211px%22%20style%3D%22%22%3E%0A%20%20%20%20%3Crect%20x%3D%221.5%22%20y%3D%221%22%20rx%3D%220.5%22%20ry%3D%220.5%22%20width%3D%222%22%20height%3D%229%22%20style%3D%22fill%3A%23FFF%3Bstroke%3A%23FFF%3B%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%226.5%22%20y%3D%221%22%20rx%3D%220.5%22%20ry%3D%220.5%22%20width%3D%222%22%20height%3D%229%22%20style%3D%22fill%3A%23FFF%3Bstroke%3A%23FFF%3B%22%2F%3E%0A%3C%2Fsvg%3E")
+}
+
+.audio-msg-track .audio-msg-track--duration {
+    float: right;
+    line-height: 24px;
+    color: #939393
+}
+
+.audio-msg-track .audio-msg-track--wave-wrapper {
+    overflow: hidden;
+    float: none;
+    padding: 2px 8px
+}
+
+.audio-msg-track .audio-msg-track--wave-wrapper .audio-msg-track--wave {
+    vertical-align: middle;
+    width: 306px;
+    height: 20px;
+    -moz-transform: translateZ(0)
+}
+
+.audio-msg-track .audio-msg-track--wave-wrapper .audio-msg-track--wave path {
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    stroke-width: 2px;
+    fill: none;
+    stroke: #6287ae
+}
+
+.audio-msg-track .slider {
+    padding: 0
+}
+
+.audio-msg-track .slider .slider_slide {
+    background: transparent;
+    height: 20px
+}
+
+.audio-msg-track .slider .slider_slide>svg {
+    stroke-opacity: 0.5
+}
+
+.audio-msg-track .slider .slider_amount {
+    background: transparent;
+    overflow: hidden
+}
+
+.audio-msg-track .slider .slider_handler {
+    display: none
+}
+
+.im_msg_audiomsg {
+    padding: 6px 0 4px
+}
+
+.im_msg_audiomsg .audio-msg-track {
+    padding: 6px 10px;
+    cursor: pointer;
+    border-radius: 3px
+}
+
+.im_msg_audiomsg .audio-msg-track:hover {
+    background-color: #f5f7fa
+}
+
+.im_msg_audiomsg .audio-msg-player {
+    padding: 6px 10px;
+    height: 24px
+}
+
+.fc_msg .audiomsg_row {
+    padding: 6px 10px;
+    cursor: pointer
+}
+
+.fc_msg .audio-msg-track--wave-wrapper {
+    padding: 5px 10px;
+    height: 14px
+}

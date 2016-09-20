@@ -5251,6 +5251,12 @@ FastChat = {
                     }
                 },
                 onClose: function(pos) {
+                    //If voice message player node is detached from dom after closing chat tab
+                    //than stop this player
+                    if (AudioMessagePlayer.loaded) {
+                        AudioMessagePlayer.detachPlayer();
+                    }
+
                     this.onHide();
                     if (options && options.beforeClose) {
                         options.beforeClose();

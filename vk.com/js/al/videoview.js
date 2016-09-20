@@ -707,12 +707,15 @@ var Videoview = {
                 if (a && /^wall_/.test(i) && VideoPlaylist.lists[i] && cur.wallVideos && cur.wallVideos[i] && (VideoPlaylist.extendList(i, cur.wallVideos[i].list),
                         VideoPlaylist.updateBlockList(i)), a) {
                     ge("mv_main")
-                        .appendChild(a), VideoPlaylist.restoreScrollPos(), VideoPlaylist.updateScrollbar(), VideoPlaylist.setCurVideo(e, t);
+                        .appendChild(a);
                     var n = VideoPlaylist.getCurList()
                         .list.length;
-                    (window.Video && Video.isInVideosList() && vk.id == cur.oid || 5 > n) && (t || VideoPlaylist.toggle(!1))
+                    (window.Video && Video.isInVideosList() && vk.id == cur.oid || 5 > n) && (t || VideoPlaylist.toggle(!1)), isFunction(o) && o(VideoPlaylist.updateBlockList.pbind(
+                        i)), setTimeout(function() {
+                        VideoPlaylist.restoreScrollPos(), VideoPlaylist.updateScrollbar(), VideoPlaylist.setCurVideo(e, t)
+                    }, 0)
                 }
-                VideoPlaylist.toggleStateClasses(), VideoPlaylist.updateControls(), isFunction(o) && o(VideoPlaylist.updateBlockList.pbind(i))
+                VideoPlaylist.toggleStateClasses(), VideoPlaylist.updateControls()
             }
         },
         hide: function(e, i, o, t) {
@@ -1875,10 +1878,10 @@ var Videoview = {
                         "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
                         width: "",
                         height: ""
-                    }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
-                        "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange),
-                    addEvent(document, "keydown", Videoview.onKeyDown), removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange ||
-                    e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
+                    }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize),
+                    addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
+                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(),
+                    onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
                     }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),
@@ -2885,18 +2888,17 @@ window.VideoChat = {
             amount: a,
             comment: r
         };
-        lockButton(i),
-            ajax.plainpost(o.form_api_ssl_url, {
-                data: ajx2q(s)
-            }, function(e) {
-                unlockButton(i), e = parseJSON(e), e && "success" == e.status ? "votes" == d ? VideoDonate.donateVotes(t, n, r) : VideoDonate.toNextForm() : e && e.errors &&
-                    each(e.errors, function(e, i) {
-                        var o = VideoDonate.getErrorText(i.code);
-                        return VideoDonate.showInputError("video_donate_" + i.field, o), !1
-                    })
-            }, function() {
-                unlockButton(i)
-            })
+        lockButton(i), ajax.plainpost(o.form_api_ssl_url, {
+            data: ajx2q(s)
+        }, function(e) {
+            unlockButton(i), e = parseJSON(e), e && "success" == e.status ? "votes" == d ? VideoDonate.donateVotes(t, n, r) : VideoDonate.toNextForm() : e && e.errors &&
+                each(e.errors, function(e, i) {
+                    var o = VideoDonate.getErrorText(i.code);
+                    return VideoDonate.showInputError("video_donate_" + i.field, o), !1
+                })
+        }, function() {
+            unlockButton(i)
+        })
     },
     donateVotes: function(e, i, o) {
         ajax.post("al_video.php?act=donate_votes", {

@@ -766,8 +766,8 @@ var Photoview = {
             }
         },
         afterShow: function() {
-            cur.pvPhoto.href = "/photo" + cur.pvCurPhoto.id, cur.pvPhoto.focus(), 4 & cur.pvCurPhoto.actions.edit && !cur.pvCurPhoto.desc && Photoview.editInline(), cur.pvTagFrame
-                .innerHTML = '<img src="' + cur.pvCurData.src + '" />', Photoview.updateTagFrameDimensions(), (cur.pvOptions || {})
+            cur.pvPhoto.href = "/photo" + cur.pvCurPhoto.id, cur.pvPhoto.focus(), 4 & cur.pvCurPhoto.actions.edit && 1 & cur.pvCurPhoto.actions.edit && !cur.pvCurPhoto.desc &&
+                Photoview.editInline(), cur.pvTagFrame.innerHTML = '<img src="' + cur.pvCurData.src + '" />', Photoview.updateTagFrameDimensions(), (cur.pvOptions || {})
                 .scroll && (layerWrap.scrollTop = cur.pvOptions.scroll, cur.pvOptions.scroll = 0);
             var o = document.URL;
             Photoview.updateLoc(), cur.pvCandidate && (o == document.URL && (o = ""), setTimeout(window.comScoreUDM && comScoreUDM.pbind(locProtocol + "//" + location.host +

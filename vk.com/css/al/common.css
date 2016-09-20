@@ -262,6 +262,14 @@ body.firefox #page_wrap {
     text-align: left
 }
 
+:focus {
+    outline: none
+}
+
+::-moz-focus-inner {
+    border: 0
+}
+
 .scroll_fix_wrap {
     text-align: left;
     direction: ltr
