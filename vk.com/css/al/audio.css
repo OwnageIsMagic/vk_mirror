@@ -467,6 +467,15 @@
     color: #939393
 }
 
+#audio_status_tt {
+    margin-left: -120px
+}
+
+#audio_status_tt:after,
+#audio_status_tt:before {
+    left: 270px
+}
+
 #audio_status_tt .audio_status_wrap {
     max-height: 260px;
     overflow: hidden;

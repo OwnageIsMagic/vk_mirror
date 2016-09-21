@@ -1336,6 +1336,10 @@ body.mac #page_header_cont {
     transform: translateZ(0)
 }
 
+.static_header #page_header_cont {
+    position: absolute
+}
+
 #page_header_wrap {
     direction: ltr
 }
@@ -1353,8 +1357,21 @@ body.mac #page_header_cont {
     width: 100%;
     background: #507299;
     height: 42px;
-    border-bottom: 1px solid #466991;
     box-sizing: border-box
+}
+
+#page_header_cont .back:after {
+    content: '';
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #466991;
+    box-shadow: 100px 0 0 #466991
+}
+
+.static_header #page_header_cont .back {
+    box-shadow: 100px 0 0 #507299
 }
 
 .top_home_link {

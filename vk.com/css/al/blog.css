@@ -23,13 +23,16 @@
 .blog_nav_link_ic,
 .blog_new_entry_icon,
 .blog_product_icon,
-.blog_snapster_android,
+.blog_snapster_android:after,
 .blog_snapster_en .blog_snapster_photo_android,
 .blog_snapster_en .blog_snapster_photo_iphone,
-.blog_snapster_ios,
+.blog_snapster_en .blog_snapster_photo_wp,
+.blog_snapster_ios:after,
 .blog_snapster_photo_android,
 .blog_snapster_photo_iphone,
-.blog_snapster_photo_shadow {
+.blog_snapster_photo_shadow,
+.blog_snapster_photo_wp,
+.blog_snapster_wp:after {
     -ms-high-contrast-adjust: none
 }
 
@@ -1106,7 +1109,7 @@
 }
 
 .blog_snapster {
-    height: 570px;
+    height: 680px;
     margin-top: 0px;
     text-align: center;
     letter-spacing: -0.1px;
@@ -1114,7 +1117,7 @@
 }
 
 .blog_snapster_photo {
-    height: 370px;
+    height: 480px;
     width: 100%;
     background-color: #fafbfc;
     position: relative;
@@ -1129,50 +1132,68 @@
     margin-left: -370px;
     height: 12px;
     background: url(/images/pics/cm_shadow.png) no-repeat 0px 0px;
-    z-index: 1
+    z-index: 10
 }
 
 .blog_snapster_photo_android,
-.blog_snapster_photo_iphone {
+.blog_snapster_photo_iphone,
+.blog_snapster_photo_wp {
     position: absolute;
     top: 70px;
     right: 213px;
-    -o-transition: top 200ms ease-out;
-    transition: top 200ms ease-out
+    transition: -webkit-transform 200ms ease-out;
+    -o-transition: transform 200ms ease-out, -o-transform 200ms ease-out;
+    transition: transform 200ms ease-out;
+    transition: transform 200ms ease-out, -webkit-transform 200ms ease-out, -o-transform 200ms ease-out
 }
 
-.blog_snapster_photo_android {
-    background: url(/images/blog/snapster_android.png) no-repeat 0px 0px;
-    width: 257px;
-    height: 509px;
+.blog_snapster_photo_android,
+.blog_snapster_photo_wp {
+    background: url(/images/blog/vinci_android.png) no-repeat 0px 0px;
+    width: 258px;
+    height: 522px;
     z-index: 2;
-    right: 441px;
+    right: 118px;
     top: 112px
 }
 
 .blog_snapster_en .blog_snapster_photo_android {
-    background-image: url(/images/blog/snapster_android_en.png)
-}
-
-.blog_snapster_photo_android.blog_snapster_photo_screen_over,
-.blog_snapster_photo_android:hover {
-    top: 104px
+    background-image: url(/images/blog/vinci_android_en.png)
 }
 
 .blog_snapster_photo_iphone {
-    background: url(/images/blog/snapster_ios.png) no-repeat -41px 0px;
-    width: 310px;
-    height: 570px;
-    z-index: 3
+    background: url(/images/blog/vinci_ios.png) no-repeat 0px 0px;
+    width: 272px;
+    height: 554px;
+    z-index: 3;
+    left: 50%;
+    margin-left: -136px
 }
 
 .blog_snapster_en .blog_snapster_photo_iphone {
-    background-image: url(/images/blog/snapster_ios_en.png)
+    background-image: url(/images/blog/vinci_ios_en.png)
 }
 
+.blog_snapster_photo_wp {
+    background: url(/images/blog/vinci_winphone.png);
+    right: 586px;
+    top: 115px
+}
+
+.blog_snapster_en .blog_snapster_photo_wp {
+    background: url(/images/blog/vinci_winphone_en.png)
+}
+
+.blog_snapster_photo_android.blog_snapster_photo_screen_over,
+.blog_snapster_photo_android:hover,
 .blog_snapster_photo_iphone.blog_snapster_photo_screen_over,
-.blog_snapster_photo_iphone:hover {
-    top: 62px
+.blog_snapster_photo_iphone:hover,
+.blog_snapster_photo_wp.blog_snapster_photo_screen_over,
+.blog_snapster_photo_wp:hover {
+    -webkit-transform: translateY(-8px);
+    -ms-transform: translateY(-8px);
+    -o-transform: translateY(-8px);
+    transform: translateY(-8px)
 }
 
 .blog_snapster_title {
@@ -1190,22 +1211,48 @@
     margin-top: 23px
 }
 
+.blog_snapster_apps a {
+    margin-left: 9px
+}
+
+.blog_snapster_apps a:first-child {
+    margin-left: 0px
+}
+
 .blog_snapster_android,
-.blog_snapster_ios {
+.blog_snapster_ios,
+.blog_snapster_wp {
+    position: relative;
     display: inline-block;
-    padding-left: 35px;
-    background-repeat: no-repeat
+    padding-left: 34px
 }
 
-.blog_snapster_android {
-    background-image: url(/images/chronicle/install_android.png);
-    background-position: 16px 8px
+.blog_snapster_android:after,
+.blog_snapster_ios:after,
+.blog_snapster_wp:after {
+    content: '';
+    position: absolute;
+    background-image: url(/images/blog/about_install_icons.png);
+    width: 13px;
+    height: 13px;
+    left: 10px;
+    top: 8px;
+    background-repeat: no-repeat;
+    background-position: 0px 0px
 }
 
-.blog_snapster_ios {
-    margin-left: 9px;
-    background-image: url(/images/chronicle/install_ios.png);
-    background-position: 16px 8px
+.blog_snapster_android:active:after,
+.blog_snapster_ios:active:after,
+.blog_snapster_wp:active:after {
+    top: 9px
+}
+
+.blog_snapster_wp:after {
+    background-position: 0px -26px
+}
+
+.blog_snapster_android:after {
+    background-position: 0px -13px
 }
 
 .blog_jobs {

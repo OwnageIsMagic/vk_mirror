@@ -404,6 +404,10 @@
     box-sizing: border-box
 }
 
+.static_header .photos_period_delimiter_fixed {
+    margin-top: 0
+}
+
 .photos_photos_review {
     padding-top: 18px
 }

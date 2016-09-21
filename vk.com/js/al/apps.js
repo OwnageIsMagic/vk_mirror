@@ -2074,17 +2074,19 @@ AppsSlider.prototype = {
     },
     scrollToHeader: function() {
         var t = ge("apps_header_block"),
-            e = ge("page_header_cont");
-        if (t && e) {
-            var i = Math.max(0, getXY(t)[1] - parseInt(getStyle(t, "marginTop"), 10));
-            scrollNode.scrollTop + getSize(e)[1] > i && scrollToY(i, 200)
+            e = scrollNode.scrollTop,
+            i = getSize("page_header_cont")[1];
+        if (t) {
+            var s = Math.max(0, getXY(t)[1] - parseInt(getStyle(t, "marginTop"), 10));
+            e + (vk.staticheader ? Math.max(0, i - e) : i) > s && scrollToY(s, 200)
         }
     },
     scrollToSearch: function() {
-        var t = ge("page_header_cont");
-        if (cur.aSearchWrap && t) {
-            var e = getXY(domPN(cur.aSearchWrap))[1] - getSize(t)[1];
-            scrollNode.scrollTop > e && scrollToY(e, 200)
+        var t = scrollNode.scrollTop,
+            e = getSize("page_header_cont")[1];
+        if (cur.aSearchWrap) {
+            var i = getXY(domPN(cur.aSearchWrap))[1];
+            t + (vk.staticheader ? Math.max(0, e - t) : e) > i && scrollToY(i, 200)
         }
     },
     scrollCheck: function() {

@@ -139,7 +139,7 @@ var photos = {
     },
     fixPeriod: function() {
         if (ge("photos_albums_block") && (photos.headerHeight = photos.headerHeight || getSize(ge("page_header_cont"))[1], cur.periods && cur.periods.length)) {
-            var o = scrollGetY() + photos.headerHeight,
+            var o = vk.staticheader ? Math.max(scrollGetY(), photos.headerHeight) : scrollGetY() + photos.headerHeight,
                 e = !1,
                 t = !1,
                 a = getSize(cur.periods[0])[1];
@@ -1123,8 +1123,8 @@ var photos = {
         }), addEvent(document, "drop", function(e) {
             return o.un(e, !0), o.drop(e.dataTransfer.files), cancelEvent(e)
         }), cur.destroy.push(function() {
-            removeEvent(document, "dragenter dragover"), removeEvent(document, "dragleave"),
-                removeEvent(document, "drop")
+            removeEvent(document, "dragenter dragover"),
+                removeEvent(document, "dragleave"), removeEvent(document, "drop")
         })
     },
     openWebcamPhoto: function() {
