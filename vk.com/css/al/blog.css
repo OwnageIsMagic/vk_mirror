@@ -281,10 +281,6 @@
     padding: 24px 25px
 }
 
-.blog_author_pos {
-    text-transform: lowercase
-}
-
 .blog_entry_author_info_short {
     line-height: 14px;
     margin-top: 6px

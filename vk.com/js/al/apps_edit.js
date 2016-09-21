@@ -678,13 +678,16 @@ var AppsEdit = {
         if (!cur.iframeSecureChanged) {
             var e = val("app_iframe_url")
                 .replace(/^http:/, "https:");
-            val("app_iframe_secure_url", e)
+            val("app_iframe_secure_url", e), val("app_m_iframe_secure_url", e)
         }
     },
     onChangeSecureUrl: function() {
         val("app_iframe_url")
             .replace(/^http(s)?/, "") != val("app_iframe_secure_url")
             .replace(/^http(s)?/, "") && (cur.iframeSecureChanged = !0)
+    },
+    onChangeMobileSecureUrl: function() {
+        val("app_iframe_secure_url") != val("app_m_iframe_secure_url") && (cur.iframeSecureChanged = !0)
     },
     addFunc: function() {
         hide("apps_edit_funcs_empty"), hide("apps_edit_funcs_not_found"), show("func_search_panel");
@@ -1236,7 +1239,7 @@ var AppsEdit = {
         var o = geByClass1("apps_edit_content", n);
         slideDown(o, t, function() {
             var t = geByClass1("apps_edit_editor", ge("func_row_" + e));
-            t && t.ace && AppsEdit.adjustHeight(t.ace, t)
+            t && t.ace && AppsEdit.adjustHeight(t.ace, t);
         })
     },
     collectRequestData: function(e) {

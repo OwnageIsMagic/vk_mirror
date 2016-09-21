@@ -1610,6 +1610,10 @@ a.group_ad_post_link.deleted.deleted:hover {
     border-bottom: 0
 }
 
+#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_count {
+    color: #656565
+}
+
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_img {
     width: 50px;
     height: 50px;
@@ -1634,10 +1638,15 @@ a.group_ad_post_link.deleted.deleted:hover {
     margin-bottom: 2px
 }
 
-#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_add {
+#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_add,
+#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_added {
     float: right;
     height: 52px;
     line-height: 52px
+}
+
+#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_added {
+    color: #656565
 }
 
 #group_apps_wrapper .group_apps_doc {
@@ -1649,20 +1658,29 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 #group_apps_wrapper .app_settings_image img {
-    width: 40px;
-    height: 40px
+    width: 60px;
+    height: 60px
 }
 
 #group_apps_wrapper .group_edit_app_info {
     padding-top: 8px
 }
 
+#group_apps_wrapper .group_edit_app_info .app_settings_group,
+#group_apps_wrapper .group_edit_app_info .app_settings_name {
+    margin-bottom: 4px
+}
+
 #group_apps_wrapper .group_edit_app_info .app_settings_name {
     font-weight: 700
 }
 
+#group_apps_wrapper .group_edit_app_info .app_settings_group a {
+    color: #656565
+}
+
 #group_apps_wrapper .group_edit_app_info .apps_settings_go a {
-    color: #777e8c
+    color: #2a5885
 }
 
 #group_apps_wrapper .group_edit_app_info .app_settings_info {

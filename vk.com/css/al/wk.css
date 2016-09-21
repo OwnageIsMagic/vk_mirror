@@ -29,11 +29,7 @@ a.wk_inline_video div.video_play_inline {
 }
 
 .wk_sub_header {
-    font-size: 16px
-}
-
-.wk_sub_header,
-.wk_sub_sub_header {
+    font-size: 16px;
     font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
@@ -42,6 +38,10 @@ a.wk_inline_video div.video_play_inline {
 
 .wk_sub_sub_header {
     font-size: 14px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-bottom: 5px;
     color: #222
 }
 

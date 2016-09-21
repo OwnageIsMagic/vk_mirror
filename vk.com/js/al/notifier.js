@@ -6090,7 +6090,14 @@ FastChat = {
             from: 'mail'
         }, {
             stat: ['im.css'],
-            dark: 1
+            dark: 1,
+            params: {
+                onHide: function() {
+                    if (AudioMessagePlayer.loaded) {
+                        AudioMessagePlayer.detachPlayer(true);
+                    }
+                }
+            }
         });
     },
     closeTab: function(peer) {

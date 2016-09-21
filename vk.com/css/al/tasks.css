@@ -373,10 +373,10 @@ a.tasks_more:hover {
 }
 
 .tasks_sections_title {
-    width: 150px;
     text-align: right;
-    padding: 4px 10px 0;
-    color: #777
+    color: #777e8c;
+    padding: 7px 10px 0;
+    width: 200px
 }
 
 .tasks_row {

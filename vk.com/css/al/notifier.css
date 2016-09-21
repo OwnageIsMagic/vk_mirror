@@ -2590,7 +2590,7 @@ div.chat_tab_img {
     width: 24px;
     height: 24px;
     float: left;
-    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2011%22%20width%3D%2210px%22%20height%3D%2211px%22%3E%0A%20%20%20%20%3Cpolygon%20stroke%3D%22%23fff%22%20fill%3D%22%23fff%22%20style%3D%22stroke-linecap%3A%20round%3B%20stroke-linejoin%3A%20round%3B%22%20points%3D%222.5%201%202.5%2010%209.5%205.5%22%20transform%3D%22%22%2F%3E%0A%3C%2Fsvg%3E") #5779a1 no-repeat 50%
+    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2011%22%20width%3D%2210px%22%20height%3D%2211px%22%3E%0A%20%20%20%20%3Cpolygon%20stroke%3D%22%23fff%22%20fill%3D%22%23fff%22%20style%3D%22stroke-linecap%3A%20round%3B%20stroke-linejoin%3A%20round%3B%22%20points%3D%222.5%200.5%202.5%209.5%209.5%205%22%20transform%3D%22%22%2F%3E%0A%3C%2Fsvg%3E") #5779a1 no-repeat 50%
 }
 
 .audio-msg-track.audio-msg-track_playing .audio-msg-track--btn {
@@ -2624,6 +2624,10 @@ div.chat_tab_img {
     stroke: #6287ae
 }
 
+.audio-msg-track.audio-msg-player .audio-msg-track--duration {
+    color: #818d99
+}
+
 .audio-msg-track .slider {
     padding: 0
 }
@@ -2650,13 +2654,13 @@ div.chat_tab_img {
     padding: 6px 0 4px
 }
 
-.im_msg_audiomsg .audio-msg-track {
+.im_msg_audiomsg .audio-msg-track:not(.audio-msg-player) {
     padding: 6px 10px;
     cursor: pointer;
     border-radius: 3px
 }
 
-.im_msg_audiomsg .audio-msg-track:hover {
+.im_msg_audiomsg .audio-msg-track:not(.audio-msg-player):hover {
     background-color: #f5f7fa
 }
 

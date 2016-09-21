@@ -35,6 +35,10 @@ body.dev .ui_tabs {
     padding-right: 20px
 }
 
+body.dev #page_header_cont {
+    z-index: initial
+}
+
 body.dev #apps_wrap .page_block_header {
     padding-left: 30px;
     padding-right: 30px
