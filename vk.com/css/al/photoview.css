@@ -471,6 +471,15 @@
     border-radius: 3px
 }
 
+.pv_cont .pv_reply_form_wrap .reply_box .submit_post_field,
+.pv_cont .pv_reply_form_wrap .reply_box .submit_post_field~.placeholder .ph_input {
+    padding-left: 14px
+}
+
+.pv_cont .pv_reply_form_wrap .reply_field_wrap {
+    margin-left: 43px
+}
+
 .pv_cont .pv_reply_form_wrap .reply_to_title {
     clear: both;
     text-align: left;

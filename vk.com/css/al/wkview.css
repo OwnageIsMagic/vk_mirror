@@ -497,8 +497,20 @@ body.mobfixed #wk_layer_wrap {
     padding: 0
 }
 
-.wl_reply_form_wrap .submit_post_field {
+.wl_reply_form_wrap .reply_box .post_field_user_image {
+    left: 25px
+}
+
+.wl_reply_form_wrap .reply_box div.submit_post_field,
+.wl_reply_form_wrap .reply_box div.submit_post_field[contenteditable=true] {
     border-radius: 0 0 2px 2px
+}
+
+.wl_reply_form_wrap .reply_box div.submit_post_field,
+.wl_reply_form_wrap .reply_box div.submit_post_field[contenteditable=true],
+.wl_reply_form_wrap .reply_box div.submit_post_field[contenteditable=true]~.placeholder .ph_input,
+.wl_reply_form_wrap .reply_box div.submit_post_field~.placeholder .ph_input {
+    padding-left: 21px
 }
 
 .wl_reply_form_fixed {

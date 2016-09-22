@@ -351,7 +351,7 @@
 
 .wcomments_form #submit_post_box.wcomments_post_box {
     position: relative;
-    margin-left: 50px
+    margin-left: 44px
 }
 
 .wcomments_form #submit_post_box.wcomments_post_box .ms_items_more_wrap {
@@ -390,8 +390,8 @@
 .wcomments_form .wcomments_form_avatar,
 .wcomments_form .wcomments_form_avatar img {
     float: left;
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%
 }
 
@@ -473,19 +473,19 @@
 .wcomments_post.reply_box_open .reply_box_inner_wrap .wcomments_form_avatar {
     display: block;
     float: left;
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%
 }
 
 .wcomments_post.reply_box_open .reply_box_inner_wrap .wcomments_form_avatar img {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%
 }
 
 .wcomments_post.reply_box_open .reply_box_inner_wrap .reply_form {
-    margin-left: 52px
+    margin-left: 44px
 }
 
 .wcomments_post.reply_box_open .reply_box_inner_wrap .submit_post {
@@ -495,7 +495,7 @@
 
 .wcomments_post.reply_box_open .reply_box_inner_wrap .reply_field,
 .wcomments_post.reply_box_open .reply_box_inner_wrap .reply_field~.placeholder .ph_input {
-    min-height: 40px;
+    min-height: 34px;
     height: auto;
     padding: 10px 14px 12px;
     border-radius: 2px;
@@ -644,7 +644,7 @@
 }
 
 .wall_module .post.wcomments_post .replies .page_media_poll_wrap {
-    max-width: 448px
+    max-width: 454px
 }
 
 .wall_module .post.wcomments_post .replies .media_desc,
@@ -652,7 +652,7 @@
 .wall_module .post.wcomments_post .replies .page_media_wrap,
 .wall_module .post.wcomments_post .replies .post_media,
 .wall_module .post.wcomments_post .replies .wall_audio_rows {
-    max-width: 480px
+    max-width: 486px
 }
 
 .wall_module .post.wcomments_post .poll_tt .poll_tt_header,
@@ -715,8 +715,8 @@
 .wall_module .post.wcomments_post .reply_img,
 .wall_module .post.wcomments_post .wcomments_form_avatar,
 .wall_module .post.wcomments_post .wcomments_form_avatar img {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%
 }
 
@@ -735,14 +735,14 @@
 
 .wall_module .post.wcomments_post .post_content,
 .wall_module .post.wcomments_post .reply_content {
-    margin-left: 52px;
+    margin-left: 44px;
     position: relative;
     word-wrap: break-word;
-    min-height: 40px
+    min-height: 34px
 }
 
 .wall_module .post.wcomments_post .wall_text {
-    padding: 3px 0 0
+    padding: 2px 0 0
 }
 
 .wall_module .post.wcomments_post .wall_post_text {
@@ -776,7 +776,7 @@
 
 .wall_module .post.wcomments_post .dld {
     font-size: 12.5px;
-    padding: 19px 0 19px 52px;
+    padding: 19px 0 19px 44px;
     line-height: 14px;
     min-height: initial;
     cursor: default;
@@ -801,7 +801,7 @@
 
 #page_wrap .wcomments_post_footer {
     font-size: 12.5px;
-    padding: 4px 0 0
+    padding: 3px 0 0
 }
 
 .wpe_wrap #page_wrap .wcomments_post_footer {
@@ -917,7 +917,7 @@
 .wcomments_nano .wall_module .post.wcomments_post .post_content,
 .wcomments_nano .wall_module .post.wcomments_post .reply_box_open .reply_form,
 .wcomments_nano .wall_module .post.wcomments_post .reply_content {
-    margin-left: 46px
+    margin-left: 44px
 }
 
 .wcomments_nano .wall_module .post.wcomments_post .wpe_cancel {

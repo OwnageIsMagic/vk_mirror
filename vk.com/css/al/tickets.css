@@ -2878,18 +2878,18 @@ body.dev .tickets_dmca_data_row.links .value {
 .tickets_reply_thumb {
     float: left;
     display: block;
-    height: 40px;
-    width: 40px
+    height: 34px;
+    width: 34px
 }
 
 .tickets_reply_thumb_img {
-    width: 40px;
-    height: 40px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%
 }
 
 .big_wall_post.tickets_reply_post_field .submit_post_box {
-    margin-left: 51px;
+    margin-left: 44px;
     border-bottom: none
 }
 

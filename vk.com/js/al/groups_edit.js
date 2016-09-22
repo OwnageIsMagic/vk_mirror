@@ -2108,6 +2108,7 @@ var GroupsEdit = {
             radiobtn(ge("app_status_" + e), e, "app_status")
         },
         save: function() {
+            val(GroupsEdit.app.btnName, trim(val(GroupsEdit.app.btnName)));
             var e = {
                 act: "app_save",
                 app_id: cur.appId,
@@ -2118,7 +2119,7 @@ var GroupsEdit = {
             };
             ajax.post("groupsedit.php", e, {
                 onDone: function(e, t) {
-                    return GroupsEdit.showMessage(t), e
+                    return e ? GroupsEdit.showMessage(t) : GroupsEdit.showMessage(t, "error"), e
                 },
                 showProgress: function() {
                     lockButton("group_app_save")
