@@ -2578,6 +2578,10 @@ div.chat_tab_img {
     color: #656565
 }
 
+.audio-msg-track {
+    height: 24px
+}
+
 .audio-msg-track.audio-msg-track_player-attached {
     display: none
 }

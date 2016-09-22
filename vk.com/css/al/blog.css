@@ -954,7 +954,8 @@
 }
 
 .blog_about_link_cont {
-    margin-left: 15px
+    margin-left: 15px;
+    max-width: 380px
 }
 
 .blog_about_link_title {

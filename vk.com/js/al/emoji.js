@@ -2766,7 +2766,7 @@ if (!window.Emoji) {
                 peer: peer,
                 sticker_referrer: unclean(sticker_referrer)
             }, {
-                onDone: function(text, newStickers, keywords, btnText) {
+                onDone: function(text, newStickers, keywords, btnText, hideBox) {
                     each(geByClass('_sticker_btn_' + packId), function() {
                         this.innerHTML = btnText;
                         this.onmouseover = '';
@@ -2775,6 +2775,9 @@ if (!window.Emoji) {
                     });
                     if (cur.boxStickersPreview) {
                         cur.boxStickersPreview.hide();
+                    }
+                    if (hideBox && cur.boxStickersStore) {
+                        cur.boxStickersStore.hide();
                     }
                     showDoneBox(text);
                     if (newStickers) {

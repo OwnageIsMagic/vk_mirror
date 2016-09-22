@@ -1657,7 +1657,14 @@ a.group_ad_post_link.deleted.deleted:hover {
     background-color: #fff
 }
 
+#group_apps_wrapper .app_settings_image {
+    width: 60px;
+    height: 60px;
+    padding-right: 0
+}
+
 #group_apps_wrapper .app_settings_image img {
+    border-radius: 3px;
     width: 60px;
     height: 60px
 }
@@ -1671,7 +1678,8 @@ a.group_ad_post_link.deleted.deleted:hover {
     margin-bottom: 4px
 }
 
-#group_apps_wrapper .group_edit_app_info .app_settings_name {
+#group_apps_wrapper .group_edit_app_info .app_settings_name,
+#group_apps_wrapper .group_edit_app_info .app_settings_name a {
     font-weight: 700
 }
 

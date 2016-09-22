@@ -1535,7 +1535,7 @@ var Videoview = {
                         break;
                     case "end_live":
                         var u = mvcur.player;
-                        u.onLiveEnded();
+                        u && u.onLiveEnded();
                         break;
                     default:
                         debugLog("unhandled video event")
@@ -2572,6 +2572,7 @@ window.VideoChat = {
                     reversed: !0,
                     preserveEdgeBelow: !0,
                     preserveEdgeBelowThreshold: VideoChat.SCROLL_EDGE_BELOW_THRESHOLD,
+                    stopScrollPropagation: !1,
                     theme: "videoview",
                     onupdate: VideoChat.onScrollUpdate
                 }), this.scrollBottomBtnWrap = domByClass(e, "mv_chat_new_messages_btn_wrap"), VideoChat.replyForm = domByClass(e, "mv_chat_reply_form"), VideoChat.replyForm &&
@@ -2636,25 +2637,26 @@ window.VideoChat = {
         e.data.scrollBottom < VideoChat.SCROLL_EDGE_BELOW_THRESHOLD && VideoChat.toggleScrollBottomBtn(!1)
     },
     receiveMessage: function(e, i, o, t, a, n, d, r, s) {
-        if (!ge("mv_chat_msg" + mvcur.mvData.oid + "_" + i)) {
-            r && (d = getTemplate("video_chat_sticker", {
-                sticker_id: r,
-                pack_id: s,
-                img_size: isRetina() ? 256 : 128
-            }));
-            var v = "";
-            (mvcur.adminLevel > 0 || e == vk.id) && (v += getTemplate("video_chat_message_action_del"));
-            var l = psr(getTemplate("video_chat_message", {
-                author_href: n,
-                author_photo: a,
-                author_name: t,
-                message: d,
-                video_owner_id: e,
-                msg_id: i,
-                actions: v
-            }));
-            VideoChat.appendMessage(l)
-        }
+        r && (d = getTemplate("video_chat_sticker", {
+            sticker_id: r,
+            pack_id: s,
+            img_size: isRetina() ? 256 : 128
+        }));
+        var v = "";
+        (mvcur.adminLevel > 0 || e == vk.id || o == vk.id) && (v += getTemplate("video_chat_message_action_del", {
+            video_owner_id: e,
+            msg_id: i
+        }));
+        var l = psr(getTemplate("video_chat_message", {
+            author_href: n,
+            author_photo: a,
+            author_name: t,
+            message: d,
+            video_owner_id: e,
+            msg_id: i,
+            actions: v
+        }));
+        VideoChat.appendMessage(l, i)
     },
     receiveDelete: function(e, i) {
         var o = ge("mv_chat_msg" + e + "_" + i);
@@ -2662,19 +2664,20 @@ window.VideoChat = {
             re("mv_chat_msg" + e + "_" + i)
         })
     },
-    appendMessage: function(e) {
-        VideoChat._html = (VideoChat._html || "") + e, VideoChat._appendTimeout && clearTimeout(VideoChat._appendTimeout), VideoChat._appendTimeout = setTimeout(function() {
-            VideoChat.appendMessages(VideoChat._html), VideoChat._html = "", VideoChat._appendTimeout = null
-        }, 0)
+    appendMessage: function(e, i) {
+        ge("mv_chat_msg" + mvcur.mvData.oid + "_" + i) || (VideoChat.messagesBatch = (VideoChat.messagesBatch || "") + e, VideoChat._appendTimeout && clearTimeout(
+            VideoChat._appendTimeout), VideoChat._appendTimeout = setTimeout(function() {
+            VideoChat.appendMessagesBatch(VideoChat.messagesBatch), VideoChat.messagesBatch = "", VideoChat._appendTimeout = null
+        }, 0))
     },
-    appendMessages: function(e) {
+    appendMessagesBatch: function(e) {
         VideoChat.firstMsgIntro && (re(VideoChat.firstMsgIntro), VideoChat.firstMsgIntro = null);
         var i = VideoChat.scroll.content;
         VideoChat.scroll.updateBelow(function() {
             i.insertAdjacentHTML("beforeend", e)
         });
         var o = i.childNodes;
-        o.length > 500 && VideoChat.scroll.updateAbove(function() {
+        o.length > 300 && VideoChat.scroll.updateAbove(function() {
             re(o[0])
         }), !VideoChat.isHidden() && VideoChat.scroll.data.scrollBottom > 100 && VideoChat.toggleScrollBottomBtn(!0)
     },
@@ -2682,7 +2685,7 @@ window.VideoChat = {
         toggleClass(this.scrollBottomBtnWrap, "hidden", !e)
     },
     scrollBottom: function() {
-        VideoChat.scroll.scrollBottom(0, !0)
+        VideoChat.scroll.scrollBottom(0)
     },
     sendMessage: function(e) {
         if (!VideoChat.messageSending) {
@@ -2699,10 +2702,11 @@ window.VideoChat = {
                 text: getLang("video_live_chat_too_fast"),
                 black: 1
             });
+            var o = Videoview.getMvData();
             ajax.post("al_video.php", Wall.fixPostParams(extend(i, {
                 act: "post_comment",
-                video: mvcur.mvData.videoRaw,
-                hash: mvcur.mvData.hash,
+                video: o.videoRaw,
+                hash: o.hash,
                 fromview: 1,
                 videoviewer_chat: 1
             })), {
@@ -2763,7 +2767,8 @@ window.VideoChat = {
                 var e = data(VideoChat.replyForm, "optId");
                 e && Emoji.destroy(e), removeData(VideoChat.replyForm), removeData(VideoChat.replyInput), VideoChat.replyForm = VideoChat.replyInput = null
             }
-            removeData(VideoChat.block), re(VideoChat.block), VideoChat.block = null, VideoChat.firstMsgIntro = null, VideoChat.messageSending = !1, VideoChat.toggleStateClasses()
+            removeData(VideoChat.block), re(VideoChat.block), VideoChat.block = null, VideoChat.messagesBatch = "", VideoChat.firstMsgIntro = null, VideoChat.messageSending = !
+                1, VideoChat.toggleStateClasses()
         }
     }
 }, window.VideoDonate = {
@@ -2953,7 +2958,8 @@ window.VideoChat = {
                     placeholder: t,
                     hint: n,
                     required: intval(i.required),
-                    prefilled: r
+                    prefilled: r,
+                    input_id: ""
                 }))
         }), val("video_donate_billing_additional_fields", d)
     },
@@ -2992,7 +2998,8 @@ window.VideoChat = {
             currency: "RUB",
             comment: val("video_donate_comment"),
             billing_system_type: n,
-            redirect: 1
+            redirect: 1,
+            vk_test_group: VideoDonate.params.votesHash ? 1 : 2
         };
         d.email && r == d.email.value ? s.email_encrypted = d.email.encrypted : s.email = r;
         var v = !0;
@@ -3000,7 +3007,7 @@ window.VideoChat = {
             var o = domData(i, "name"),
                 a = val(i),
                 r = intval(domData(i, "required"));
-            if ("MOBILE_FAKE" == n && "phone" == o && d.phone && d.phone.value == a) o += "_encrypted", a = d.phone.encrypted;
+            if ("MOBILE_FAKE" == n && "phone" == o && d.phone && replaceEntities(d.phone.value) == a) o += "_encrypted", a = d.phone.encrypted;
             else if (a || r) {
                 a = a.replace(/\s+/g, "");
                 var l = t.payin_currencies[n].additional_fields[o],
