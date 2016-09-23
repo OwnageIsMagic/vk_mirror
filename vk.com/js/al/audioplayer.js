@@ -421,14 +421,7 @@ var AudioUtils = {
             AudioPlaylist.TYPE_TEMP, vk.id, irand(999, 99999)), e = AudioUtils.initDomPlaylist(e, [domPN(t)])), e.load(), e
     },
     LOG_LS_KEY: "audiolog",
-    debugLog: function() {
-        var t = Array.prototype.slice.call(arguments);
-        t.unshift(vkNow());
-        var i = ls.get(AudioUtils.LOG_LS_KEY) || [];
-        i.push(t);
-        var e = 50;
-        i.length > e && i.splice(0, i.length - e), ls.set(AudioUtils.LOG_LS_KEY, i)
-    },
+    debugLog: function() {},
     renderAudioDiag: function() {
         var t = ge("audio_diag_log"),
             i = ls.get(AudioUtils.LOG_LS_KEY) || [];
@@ -1805,7 +1798,7 @@ AudioPlayer.tabIcons = {
                     "         var interval;         onmessage = function(e) {           clearInterval(interval);           if (e.data == 'start') {             interval = setInterval(function() { postMessage({}); }, 20);           }         }       "
                 ]);
                 try {
-                    this._fadeVolumeWorker = new Worker(window.URL.createObjectURL(i))
+                    this._fadeVolumeWorker = new Worker(window.URL.createObjectURL(i));
                 } catch (e) {
                     this._fadeVolumeWorker = !1
                 }

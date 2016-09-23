@@ -1,6 +1,5 @@
 #video_playlists_edit_box .pl_private,
 #video_sort_progress,
-.checkbox#video_fltr_notsafe:before,
 .media-check-btn-icon,
 .media-photo-thumb-background,
 .media-video-play,
@@ -855,10 +854,6 @@
 
 .checkbox#video_fltr_notsafe {
     margin-top: 10px
-}
-
-.checkbox#video_fltr_notsafe:before {
-    background-image: url(/images/icons/check_ph.png)
 }
 
 #video_playlists_edit_box .privacy_olist {

@@ -3,7 +3,6 @@
 }
 
 .audio_lyrics_wrap .loading,
-.checkbox#search_adult:before,
 .search_filter_open .arrow,
 .search_filter_shut .arrow,
 .search_filters_minimized_text,
@@ -111,10 +110,6 @@ body.mac #filter_form {
 
 .search_checkbox {
     margin: 0 0 11px
-}
-
-.checkbox#search_adult:before {
-    background-image: url(/images/icons/check_ph.png)
 }
 
 .search_checkboxes {
