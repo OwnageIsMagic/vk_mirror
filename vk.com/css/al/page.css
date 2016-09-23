@@ -5042,10 +5042,16 @@ textarea.page_poll_export_code {
     top: 0
 }
 
-.post_field_wrap .composer_wdd .wdd_lwrap,
-.reply_field_wrap .composer_wdd .wdd_lwrap {
+.post_field_wrap .composer_wdd .wdd_lwrap {
     left: -43px;
     right: 0;
+    width: auto!important
+}
+
+.reply_field_wrap .composer_wdd .wdd_lwrap {
+    left: -48px;
+    right: 0;
+    top: 1px;
     width: auto!important
 }
 

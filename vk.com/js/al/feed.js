@@ -667,7 +667,7 @@ var Feed = {
         feed.switchSubSection(o, t)
     },
     switchList: function(e) {
-        cur.prevList = cur.list, cur.list = e, feed.setSection("list", 1), uiRightMenu.go(geByClass1("feed_section_list" + e), !1), feed.go(feed.getSectionParams(cur.section))
+        cur.prevList = cur.list, cur.list = e, feed.setSection("list", 1), uiRightMenu.go(geByClass1("feed_section_list" + e), !1, !1), feed.go(feed.getSectionParams(cur.section))
     },
     setSearchSort: function(e) {
         cur.search_sort_value = e, Feed.submitSearch()

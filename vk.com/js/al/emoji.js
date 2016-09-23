@@ -1428,12 +1428,6 @@ if (!window.Emoji) {
             Emoji.scrollTabs(optId, 2);
         },
 
-        scrollToSticker: function(tabId, optId, stickerId) {
-            var opts = Emoji.opts[optId];
-            var stickerEl = ge('emoji_sticker_item' + optId + '_' + tabId + '_' + stickerId);
-            stickerEl && opts.emojiScroll.scrollTop(stickerEl.offsetTop - getSize(stickerEl)[1]);
-        },
-
         show: function(obj, ev) {
             var optId = data(domPN(obj), 'optId');
             if (isUndefined(optId)) return;
@@ -2362,7 +2356,6 @@ if (!window.Emoji) {
                 opts.initedStickers = 1;
             }
 
-
             var posTree = [],
                 splitersPos = [];
             var el = cont.firstChild;
@@ -2465,13 +2458,10 @@ if (!window.Emoji) {
             if (opts.onStickerSend) {
                 opts.onStickerSend(stickerNum, sticker_referrer);
             }
+
             Emoji.ttHide(optId, false, false, true);
-
             opts.recentSticker = stickerNum;
-
-            opts.initedStickers = 0;
-            Emoji.tabSwitch(geByClass1('emoji_tab_' + opts.curTab, opts.tt), opts.curTab, optId);
-            Emoji.scrollToSticker(opts.curTab, optId, stickerNum);
+            opts.curTab = parseInt(attr(obj, 'data-pack-id'));
         },
 
         stickerOver: function(stickerNum, el) {
