@@ -1429,7 +1429,7 @@ var Videoview = {
                     }), mvcur.finished = !1, js && eval("(function(){" + js + "})()"), opt.publishAction) {
                     var publishAction = ge("mv_publish");
                     val(publishAction, opt.publishAction), show(publishAction)
-                }
+                } else hide("mv_publish");
                 if (Videoview.updateSize(), mvcur.minimized && needRemin && Videoview.minimizePlayer(), mvcur.statusVideo) {
                     var statusCont = ge("like_count" + mvcur.mvData.videoRaw);
                     if (statusCont) {
@@ -1878,10 +1878,10 @@ var Videoview = {
                         "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
                         width: "",
                         height: ""
-                    }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize),
-                    addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
-                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(),
-                    onBodyResize(!0), setStyle(mvLayerWrap, {
+                    }), Videoview.updateSize(),
+                    addEvent(window, "resize", Videoview.onResize), addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange),
+                    addEvent(document, "keydown", Videoview.onKeyDown), removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange ||
+                    e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
                     }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),
@@ -2580,10 +2580,12 @@ window.VideoChat = {
                 "mv_chat_first_message_intro"))
     },
     initReplyInput: function() {
+        var e = Videoview.getMvData();
         placeholderInit(VideoChat.replyInput, {
             editable: 1
         }), stManager.add(["emoji.js", "notifier.css"], function() {
-            var e = Emoji.init(VideoChat.replyInput, {
+            var i = Emoji.init(VideoChat.replyInput, {
+                forceStickerPack: e.chatForceStickerPack,
                 controlsCont: VideoChat.replyForm,
                 noLineBreaks: 1,
                 noCtrlSend: 1,
@@ -2597,7 +2599,7 @@ window.VideoChat = {
                     VideoChat.sendMessage(e)
                 }
             });
-            data(VideoChat.replyForm, "optId", e)
+            data(VideoChat.replyForm, "optId", i)
         })
     },
     checkFormHeight: function() {
@@ -2665,16 +2667,17 @@ window.VideoChat = {
         })
     },
     appendMessage: function(e, i) {
-        ge("mv_chat_msg" + mvcur.mvData.oid + "_" + i) || (VideoChat.messagesBatch = (VideoChat.messagesBatch || "") + e, VideoChat._appendTimeout && clearTimeout(
-            VideoChat._appendTimeout), VideoChat._appendTimeout = setTimeout(function() {
-            VideoChat.appendMessagesBatch(VideoChat.messagesBatch), VideoChat.messagesBatch = "", VideoChat._appendTimeout = null
-        }, 0))
+        var o = "mv_chat_msg" + mvcur.mvData.oid + "_" + i;
+        ge(o) || VideoChat.messagesBatch && VideoChat.messagesBatch.getElementById(o) || (VideoChat.messagesBatch = VideoChat.messagesBatch || document.createDocumentFragment(),
+            VideoChat.messagesBatch.appendChild(se(e)), clearTimeout(VideoChat._appendTimeout), VideoChat._appendTimeout = setTimeout(function() {
+                VideoChat.appendMessagesBatch(VideoChat.messagesBatch), VideoChat.messagesBatch = null, VideoChat._appendTimeout = null
+            }, 0))
     },
     appendMessagesBatch: function(e) {
         VideoChat.firstMsgIntro && (re(VideoChat.firstMsgIntro), VideoChat.firstMsgIntro = null);
         var i = VideoChat.scroll.content;
         VideoChat.scroll.updateBelow(function() {
-            i.insertAdjacentHTML("beforeend", e)
+            i.appendChild(e)
         });
         var o = i.childNodes;
         o.length > 300 && VideoChat.scroll.updateAbove(function() {
@@ -3003,23 +3006,30 @@ window.VideoChat = {
         };
         d.email && r == d.email.value ? s.email_encrypted = d.email.encrypted : s.email = r;
         var v = !0;
-        each(geByClass("video_donate_input", "video_donate_billing_additional_fields"), function(e, i) {
-            var o = domData(i, "name"),
-                a = val(i),
-                r = intval(domData(i, "required"));
-            if ("MOBILE_FAKE" == n && "phone" == o && d.phone && replaceEntities(d.phone.value) == a) o += "_encrypted", a = d.phone.encrypted;
-            else if (a || r) {
-                a = a.replace(/\s+/g, "");
-                var l = t.payin_currencies[n].additional_fields[o],
-                    c = l.regex_validation;
-                if (c && !new RegExp(c)
-                    .test(a)) return VideoDonate.showInputError(i), v = !1, !1
+        if (each(geByClass("video_donate_input", "video_donate_billing_additional_fields"), function(e, i) {
+                var o = domData(i, "name"),
+                    a = val(i),
+                    r = intval(domData(i, "required"));
+                if ("MOBILE_FAKE" == n && "phone" == o && d.phone && replaceEntities(d.phone.value) == a) o += "_encrypted", a = d.phone.encrypted;
+                else if (a || r) {
+                    a = a.replace(/\s+/g, "");
+                    var l = t.payin_currencies[n].additional_fields[o],
+                        c = l.regex_validation;
+                    if (c && !new RegExp(c)
+                        .test(a)) return VideoDonate.showInputError(i), v = !1, !1
+                }
+                s[o] = a
+            }), v) {
+            if ("MOBILE_FAKE" == n) ajax.plainpost(t.form_api_ssl_url, {
+                data: ajx2q(s)
+            }, i, o), lockButton(a);
+            else {
+                var l = open(t.form_api_ssl_url + "?data=" + encodeURIComponent(ajx2q(s)), "_blank");
+                l.opener = null, curBox()
+                    .hide()
             }
-            s[o] = a
-        }), v && ("MOBILE_FAKE" == n ? (ajax.plainpost(t.form_api_ssl_url, {
-            data: ajx2q(s)
-        }, i, o), lockButton(a)) : (_opener.contentWindow.open(t.form_api_ssl_url + "?data=" + encodeURIComponent(ajx2q(s))), setTimeout(_reopen, 0), curBox()
-            .hide()), statlogsValueEvent("video_donate", "", "checkout", n))
+            statlogsValueEvent("video_donate", "", "checkout", n)
+        }
     },
     getErrorText: function(e) {
         switch (e) {

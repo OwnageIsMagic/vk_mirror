@@ -1596,6 +1596,10 @@ a.group_ad_post_link.deleted.deleted:hover {
     text-align: center
 }
 
+.apps_catalog_row_added {
+    color: #656565
+}
+
 #group_apps_wrapper #apps_catalog {
     padding: 0 20px 7px
 }
@@ -1643,10 +1647,6 @@ a.group_ad_post_link.deleted.deleted:hover {
     float: right;
     height: 52px;
     line-height: 52px
-}
-
-#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_added {
-    color: #656565
 }
 
 #group_apps_wrapper .group_apps_doc {

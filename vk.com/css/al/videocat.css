@@ -198,11 +198,13 @@
     margin: 0
 }
 
-.videocat_inline_player a {
-    display: block
+.videocat_inline_player #videocat_inline_autoplay_id {
+    display: block;
+    height: 285px;
+    width: 499px;
+    margin: 0
 }
 
-.videocat_inline_player a,
 .videocat_featured_big {
     height: 285px;
     width: 499px;
