@@ -1020,7 +1020,7 @@ h4.subheader {
     font-weight: 500;
     margin: 18px 0 12px;
     padding: 0;
-    border-bottom: inherit;
+    border-bottom: none;
     font-size: inherit
 }
 

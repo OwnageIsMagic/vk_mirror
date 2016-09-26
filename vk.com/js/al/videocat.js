@@ -24,7 +24,7 @@ var Videocat = window.Videocat || {
             i = 0;
         each(o, function() {
             return isVisible(this) || (removeClass(this, "video_skip_thumb_load"), t++), i++, 9 == t ? !1 : void 0
-        }), i >= o.length && re(e)
+        }), i >= o.length && re(e), "ugc_popular" == domData(e, "type") && Videocat.sendPopularShownStats(!0)
     },
     moreSeries: function(e) {
         var o = geByClass("videocat_featured_playlist", gpeByClass("video_block_layout", e)),
@@ -110,7 +110,26 @@ var Videocat = window.Videocat || {
                     }
                 }, !1, c)
             }
+            geByClass1("videocat_row_ugc_popular") && Videocat.sendPopularShownStats()
         }
+    },
+    sendPopularShownStats: function(e) {
+        if (statlogsValueEvent("videocat_popular", "", e ? "more" : "show"), cur.popularQid) {
+            var o = "";
+            each(Videocat.getPopularShownVids(), function(e, t) {
+                    o += "&vid=" + t
+                }), vkImage()
+                .src = "//go.imgsmail.ru/vk?pxn=vs&qid=" + cur.popularQid + o
+        }
+    },
+    getPopularShownVids: function() {
+        cur.popularShown = cur.popularShown || [];
+        for (var e = cur.popularShown.length, o = geByClass1("videocat_row_ugc_popular"), t = geByClass("video_item", o), i = [], s = e;; ++s) {
+            var a = t[s];
+            if (!a || hasClass(a, "video_skip_thumb_load")) break;
+            i.push(domData(a, "id"))
+        }
+        return cur.popularShown = cur.popularShown.concat(i), i
     },
     show: function(e, o, t, i, s, a) {
         return checkEvent(o) ? !0 : (showVideo(t, i, {
@@ -301,22 +320,22 @@ var Videocat = window.Videocat || {
             }), !t && Videocat._sliderExtends && (each(Videocat._sliderExtends, function(e, o) {
                 o()
             }), Videocat._sliderExtends = []), !t && 0 > o) {
-            var g = gpeByClass("videocat_row", e),
-                m = g ? g.getAttribute("data-type") : "";
-            if (m) {
-                m = intval(m), Videocat.slideLoadMore(g, m)
+            var p = gpeByClass("videocat_row", e),
+                g = p ? p.getAttribute("data-type") : "";
+            if (g) {
+                g = intval(g), Videocat.slideLoadMore(p, g)
             }
-            if (!Videocat.feedDataLoading && g && "feed" == g.getAttribute("data-block-id") && Videocat.feedData && !isEmpty(Videocat.feedData)) {
+            if (!Videocat.feedDataLoading && p && "feed" == p.getAttribute("data-block-id") && Videocat.feedData && !isEmpty(Videocat.feedData)) {
                 Videocat.feedDataLoading = !0;
-                var p = Videocat.feedData;
-                p.act = "a_fetch_next_feed", p.module = cur.module, ajax.post("al_video.php", p, {
+                var m = Videocat.feedData;
+                m.act = "a_fetch_next_feed", m.module = cur.module, ajax.post("al_video.php", m, {
                     onDone: function(e, o, t, i, s) {
                         Videocat.feedData = extend(Videocat.feedData, {
                             video_feed_from: t,
                             video_feed_offset: i,
                             hash: s
                         }), t || (Videocat.feedData = !1), o && o.feed && (Videocat.lists.feed = Videocat.lists.feed || {}, Videocat.lists.feed.list =
-                            Videocat.lists.feed.list.concat(o.feed.list)), Videocat.extendSlider(g, e), Videocat.feedDataLoading = !1
+                            Videocat.lists.feed.list.concat(o.feed.list)), Videocat.extendSlider(p, e), Videocat.feedDataLoading = !1
                     }
                 })
             }

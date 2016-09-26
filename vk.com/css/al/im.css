@@ -5477,6 +5477,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-audio-message-btn {
     display: none;
+    border: none;
     width: 25px;
     height: 25px;
     position: absolute;

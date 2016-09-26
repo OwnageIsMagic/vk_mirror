@@ -2169,22 +2169,8 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
 
 .mv_chat_message {
     position: relative;
-    display: block;
+    overflow: hidden;
     padding: 7px 17px 7px 10px
-}
-
-.mv_chat_message:after {
-    content: '.';
-    display: block;
-    height: 0;
-    font-size: 0;
-    line-height: 0;
-    clear: both;
-    visibility: hidden
-}
-
-* html .mv_chat_message {
-    height: 1%
 }
 
 .mv_chat_message:first-child {

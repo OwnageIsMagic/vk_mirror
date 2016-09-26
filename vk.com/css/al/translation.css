@@ -2,8 +2,8 @@
     display: none
 }
 
-.tr_history_resizer_handler,
-.tr_history_row .tr_history_row_author_img,
+.tr_box_edit_key .tr_history_resizer_handler,
+.tr_box_edit_key .tr_history_row .tr_history_row_author_img,
 .tr_lang_status {
     -ms-high-contrast-adjust: none
 }
@@ -170,88 +170,106 @@ i i.untranslated {
     margin-right: 16px!important
 }
 
-.tr_control {
+.tr_box_edit_key .tr_control {
     margin: 20px
 }
 
-.tr_new_key {
+.tr_box_edit_key .tr_new_key {
     margin-top: 0
 }
 
-.tr_new_key label {
+.tr_box_edit_key .tr_new_key label {
     display: block;
     margin-bottom: 5px
 }
 
-.tr_new_key .tr_new_key_ctrl_wrap {
+.tr_box_edit_key .tr_new_key .tr_new_key_ctrl_wrap {
     margin: 5px 0;
     display: inline-block;
     width: 243px;
     vertical-align: top
 }
 
-.tr_new_key .tr_new_key_ctrl_wrap:first-child {
+.tr_box_edit_key .tr_new_key .tr_new_key_ctrl_wrap:first-child {
     margin-right: 20px
 }
 
-.tr_new_key input {
+.tr_box_edit_key .tr_new_key input {
     width: 100%
 }
 
-.tr_new_key .tr_new_key_error {
+.tr_box_edit_key .tr_new_key .tr_new_key_error {
     position: absolute;
     color: #bd4f2d;
     display: none
 }
 
-.tr_key_parent_value {
+.tr_box_edit_key .tr_key_parent_value {
     margin-top: -7px
 }
 
-.tr_key_parent_value_label {
+.tr_box_edit_key .tr_key_parent_value_label {
     color: #777;
     display: inline-block;
     line-height: 16px;
     vertical-align: top
 }
 
-.tr_key_parent_value_value {
+.tr_box_edit_key .tr_key_parent_value_value,
+.tr_box_edit_key .tr_value_rows_wrap {
     line-height: 16px;
     vertical-align: top;
     padding: 12px 15px;
     background-color: #f0f2f5
 }
 
-.tr_key_key {
+.tr_box_edit_key .tr_value_row {
+    padding: 5px 0
+}
+
+.tr_box_edit_key .tr_value_row_label {
+    color: #949494;
+    display: inline-block;
+    width: 130px;
+    vertical-align: top
+}
+
+.tr_box_edit_key .tr_value_row_value {
+    display: inline-block;
+    width: 345px;
+    vertical-align: top
+}
+
+.tr_box_edit_key .tr_key_key {
     font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto;
     margin: 0 20px 20px
 }
 
-.tr_key_section {
+.tr_box_edit_key .tr_key_section {
     font-weight: initial;
     color: #777;
     float: right
 }
 
-.tr_key_description {
+.tr_box_edit_key .tr_key_description {
     line-height: 16px;
     color: #444
 }
 
-.tr_key_edit_wrap .tr_key_edit_language_label {
+.tr_box_edit_key .tr_key_edit_wrap .tr_key_edit_language_label {
     margin: 0 0 5px;
     font-weight: 500;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }
 
-.tr_key_edit_wrap .tr_key_edit_labeled {
+.tr_box_edit_key .tr_key_edit_wrap .tr_key_edit_labeled {
     white-space: nowrap
 }
 
-.tr_key_edit_wrap textarea {
+.tr_box_edit_key .tr_key_edit_wrap textarea {
     box-sizing: border-box;
     display: block;
     height: 30px;
@@ -260,15 +278,15 @@ i i.untranslated {
     resize: vertical
 }
 
-.tr_key_edit_wrap .tr_key_edit_labeled textarea {
+.tr_box_edit_key .tr_key_edit_wrap .tr_key_edit_labeled textarea {
     width: 395px
 }
 
-.tr_key_edit_wrap .tr_key_edit_textarea_wrap {
+.tr_box_edit_key .tr_key_edit_wrap .tr_key_edit_textarea_wrap {
     display: inline-block
 }
 
-.tr_key_edit_wrap .tr_key_edit_label {
+.tr_box_edit_key .tr_key_edit_wrap .tr_key_edit_label {
     color: #777;
     width: 110px;
     display: inline-block;
@@ -276,21 +294,21 @@ i i.untranslated {
     margin-top: 5px
 }
 
-.tr_description_edit {
+.tr_box_edit_key .tr_description_edit {
     width: 100%;
     color: #444
 }
 
-.tr_history {
+.tr_box_edit_key .tr_history {
     position: relative
 }
 
-.tr_history_rows {
+.tr_box_edit_key .tr_history_rows {
     height: 120px;
     overflow-y: auto
 }
 
-.tr_history_resizer {
+.tr_box_edit_key .tr_history_resizer {
     position: absolute;
     height: 1px;
     left: 0;
@@ -299,7 +317,7 @@ i i.untranslated {
     background-color: #e5e5e5
 }
 
-.tr_history_resizer_handler {
+.tr_box_edit_key .tr_history_resizer_handler {
     width: 30px;
     height: 16px;
     margin: -7px auto;
@@ -312,23 +330,23 @@ i i.untranslated {
     background-position: 9px 4px
 }
 
-.tr_history_resizer_handler:hover {
+.tr_box_edit_key .tr_history_resizer_handler:hover {
     border: 1px solid #bfbfbf
 }
 
-.tr_history_row {
+.tr_box_edit_key .tr_history_row {
     font-size: 12px;
     padding: 8px 13px;
     margin-bottom: 3px;
     background-color: #f0f2f5
 }
 
-.tr_history_row .tr_history_language {
+.tr_box_edit_key .tr_history_row .tr_history_language {
     float: right;
     color: #777
 }
 
-.tr_history_row .tr_history_row_author_img {
+.tr_box_edit_key .tr_history_row .tr_history_row_author_img {
     float: left;
     background-image: url(/images/deactivated_50.png);
     border-radius: 50%;
@@ -338,35 +356,35 @@ i i.untranslated {
     overflow: hidden
 }
 
-.tr_history_row .tr_history_row_author_img img {
+.tr_box_edit_key .tr_history_row .tr_history_row_author_img img {
     border-radius: 50%;
     width: 25px;
     height: 25px;
     display: block
 }
 
-.tr_history_row .tr_history_row_info {
+.tr_box_edit_key .tr_history_row .tr_history_row_info {
     margin-top: 6px
 }
 
-.tr_history_row .tr_history_row_date {
+.tr_box_edit_key .tr_history_row .tr_history_row_date {
     color: #999
 }
 
-.tr_function_chooser {
+.tr_box_edit_key .tr_function_chooser {
     position: absolute;
     right: 20px
 }
 
-h4.subheader {
+.tr_box_edit_key h4.subheader {
     margin: 18px 0 5px
 }
 
-.tr_extra_params .checkbox {
+.tr_box_edit_key .tr_extra_params .checkbox {
     margin-top: 8px
 }
 
-.tr_case_controls .dropdown_container {
+.tr_box_edit_key .tr_case_controls .dropdown_container {
     display: inline-block
 }
 
