@@ -3130,7 +3130,8 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     background-position: 0 -196px
 }
 
-.tickets_suggest__icon.tickets_icon5:after {
+.tickets_suggest__icon.tickets_icon5:after,
+.tickets_suggest__icon.tickets_icon13:after {
     background-position: 0 -168px
 }
 
@@ -3347,7 +3348,8 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     background-position: 0 -196px
 }
 
-.help_tile__title.tickets_icon5:after {
+.help_tile__title.tickets_icon5:after,
+.help_tile__title.tickets_icon13:after {
     background-position: 0 -168px
 }
 
@@ -3489,7 +3491,8 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     background-position: 0 -196px
 }
 
-.help_table_questions__title.tickets_icon5:after {
+.help_table_questions__title.tickets_icon5:after,
+.help_table_questions__title.tickets_icon13:after {
     background-position: 0 -168px
 }
 
