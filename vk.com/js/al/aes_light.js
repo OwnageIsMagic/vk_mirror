@@ -705,24 +705,25 @@
                 a = getSize(t)[1];
             i + a > s + lastWindowHeight && scrollToY(i - (lastWindowHeight - a) / 2, 500)
         }
-    }, AdsLight.overrideClickEvents = function(e, t) {
-        function s(e) {
-            if (e = normEvent(e), !d)
-                if ("click" == e.type && (2 == e.which || 1 == e.which && checkEvent(e))) {
+    }, AdsLight.overrideClickEvents = function(e, t, s) {
+        function i(e) {
+            if (e = normEvent(e), !l)
+                if ("mouseup" == e.type && (2 == e.which || 1 == e.which && checkEvent(e))) {
                     if ("A" == e.target.nodeName && e.target.hasAttribute("href") && "#" !== e.target.getAttribute("href")) return !0;
-                    d = !0, setTimeout(function() {
-                        d = !1
-                    }, 100), a()
-                } else "click" == e.type && 1 == e.which && i();
+                    l = !0, setTimeout(function() {
+                        l = !1
+                    }, 100), d()
+                } else "click" == e.type && 1 == e.which && a();
             return cancelEvent(e)
         }
         if (!e) return !1;
-        var i = e.getAttribute("onclick_inside"),
-            a = e.getAttribute("onclick_outside");
-        if (!a) return !1;
-        i = new Function(i || a), a = new Function(a);
-        var d = !1;
-        return addEvent(e, "click dblclick mousedown mouseup touchstart touchmove touchend", s, !1, !1, !0), t || cur.destroy.push(function(e) {
+        var a = e.getAttribute("onclick_inside"),
+            d = e.getAttribute("onclick_outside");
+        if (!d) return !1;
+        if (a = new Function(a || d), d = new Function(d), !s)
+            for (var o, n = geByTag("a", e), r = 0; o = n[r]; r++) o.setAttribute("_href", o.href), o.removeAttribute("href");
+        var l = !1;
+        return addEvent(e, "click dblclick mousedown mouseup touchstart touchmove touchend", i, !1, !1, !0), t || cur.destroy.push(function(e) {
             cleanElems(e)
         }.pbind(e)), !0
     }, AdsLight.initYaDirect = function() {

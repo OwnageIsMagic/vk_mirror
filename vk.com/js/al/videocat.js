@@ -53,7 +53,7 @@ var Videocat = window.Videocat || {
                     onDone: function(i, a) {
                         cur.moreChannelsOffsets[o] = a, each(i, function(o, t) {
                             s.insertBefore(se(trim(t)), domPN(e))
-                        }), a >= t.channels.length - 1 && re(domPN(e))
+                        }), a >= t.channels.length - 1 && re(domPN(e)), Video._updateThumbsInView()
                     }
                 })
         } else re(domPN(e))
@@ -110,7 +110,7 @@ var Videocat = window.Videocat || {
                     }
                 }, !1, c)
             }
-            geByClass1("videocat_row_ugc_popular") && Videocat.sendPopularShownStats()
+            geByClass1("videocat_row_ugc_popular") && Videocat.sendPopularShownStats(), Video._updateThumbsInView()
         }
     },
     sendPopularShownStats: function(e) {

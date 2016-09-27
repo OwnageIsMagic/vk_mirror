@@ -45,7 +45,7 @@ var Video = {
             }, Video._initScroll(), addEvent(window, "beforeunload", function(e) {
                 var o = Video.getLoc();
                 return o[0].indexOf("video") >= 0 && o.q && Video.logSearchStats(), !0
-            })
+            }), Video._updateThumbsInView()
     },
     _initScroll: function() {
         cur._ev_onScroll && removeEvent(window, "scroll", cur._ev_onScroll), addEvent(window, "scroll", cur._ev_onScroll = Video.onScroll), cur.destroy.push(function() {
@@ -100,7 +100,8 @@ var Video = {
             var t = ge("videocat_other_blocks");
             trim(t.innerHTML) || (t.innerHTML = cur._preloadedPages.other), Videocat.init(), document.title = getLang("video_catalogue_tab_full")
         }
-        return toggle("video_add_album_btn", "catalog" != o), uiTabs.switchTab(domFC(ge("videocat_tab_" + o))), uiTabs.hideProgress("video_main_tabs"), !1
+        return toggle("video_add_album_btn", "catalog" != o), uiTabs.switchTab(domFC(ge("videocat_tab_" + o))), uiTabs.hideProgress("video_main_tabs"), Video._updateThumbsInView(), !
+            1
     },
     updateEmptyPlaceholder: function(e) {
         if (e) {
@@ -415,25 +416,27 @@ var Video = {
             .replace("{q}", e)) : cur.prevVideoPageTitle && (document.title = cur.prevVideoPageTitle))
     },
     doSearch: function(e) {
-        var o = trim(e ? e : cur.videoSearchStr);
-        each(Video.SEARCH_FILTERS, function(e, o) {
-            var i = Video._setFilterSelector(o, cur.videoSearchFilters[o]);
-            uiSearch.toggleFilter(cur.searchInputEl, o, i[1], !i[2])
-        });
-        var i = gpeByClass("_wrap", cur.searchInputEl);
-        toggleClass(i, "ui_search_field_empty", !o), cur.noEmptyLocalResults = Video.isInCatalog(), Video._toggleSearchProgress(!!o);
-        var t = [Video.VIDEO_SEARCH_TYPE, Video.ALBUM_SEARCH_TYPE, Video.VIDEO_GLOBAL_SEARCH_TYPE];
-        Video.isInSearch() && cur.noEmptyLocalResults && t.pop(), each(t, function(e, o) {
-                hide("video_subtab_pane_" + o)
-            }), hide("videocat_other_blocks"), o || Video._toggleSearchContent(!1), curBox() ? ge("box_layer_wrap")
-            .scrollTop = 0 : scrollToTop(1e3);
-        var r = Video.isInAlbum(),
-            d = r ? Video.getLoc()
-            .section : "all";
-        Video._clearPendingAction(d), Video._updateSearchPageTitle(o), o && (Video._addPendingAction(d, function() {
-            var e = Video._searchLocally(o);
-            15 > e && Video._searchGlobally(o), Video._toggleSearchProgress(!1)
-        }), Video.loadSilent(d), Video._searchGlobally(o))
+        if (cur.searchInputEl) {
+            var o = trim(e ? e : cur.videoSearchStr);
+            each(Video.SEARCH_FILTERS, function(e, o) {
+                var i = Video._setFilterSelector(o, cur.videoSearchFilters[o]);
+                uiSearch.toggleFilter(cur.searchInputEl, o, i[1], !i[2])
+            });
+            var i = gpeByClass("_wrap", cur.searchInputEl);
+            toggleClass(i, "ui_search_field_empty", !o), cur.noEmptyLocalResults = Video.isInCatalog(), Video._toggleSearchProgress(!!o);
+            var t = [Video.VIDEO_SEARCH_TYPE, Video.ALBUM_SEARCH_TYPE, Video.VIDEO_GLOBAL_SEARCH_TYPE];
+            Video.isInSearch() && cur.noEmptyLocalResults && t.pop(), each(t, function(e, o) {
+                    hide("video_subtab_pane_" + o)
+                }), hide("videocat_other_blocks"), o || Video._toggleSearchContent(!1), curBox() ? ge("box_layer_wrap")
+                .scrollTop = 0 : scrollToTop(1e3);
+            var r = Video.isInAlbum(),
+                d = r ? Video.getLoc()
+                .section : "all";
+            Video._clearPendingAction(d), Video._updateSearchPageTitle(o), o && (Video._addPendingAction(d, function() {
+                var e = Video._searchLocally(o);
+                15 > e && Video._searchGlobally(o), Video._toggleSearchProgress(!1)
+            }), Video.loadSilent(d), Video._searchGlobally(o))
+        }
     },
     _toggleSearchProgress: function(e) {
         cur.searchProgressRef = cur.searchProgressRef || 0, cur.searchProgressRef = Math.max(0, cur.searchProgressRef + (e ? 1 : -1)), e = cur.searchProgressRef > 0;
@@ -662,6 +665,7 @@ var Video = {
                 "albums" == e && cur.albumsPreload[d] ? (l = cur.albumsNoMore, cur.albumsPreload[d] = !1) : l = n >= u.length, "albums" == e && (cur.albumsShowingAll[d] = !
                     l), Video.onMoreLoaded(o, e, s, n, l)
             }
+            Video._updateThumbsInView()
         }
     },
     isInAlbum: function(e) {
@@ -713,7 +717,7 @@ var Video = {
             }
             e == Video.VIDEO_GLOBAL_SEARCH_TYPE && Video._updateLastSeenElement(i)
         }
-        Video._updateChooseFixedBottom()
+        Video._updateChooseFixedBottom(), Video._updateThumbsInView()
     },
     _initScrollFixedSearch: function(e) {
         var o = geByClass1("video_search_input");
@@ -965,7 +969,7 @@ var Video = {
             if (!r && !o && cur.videoSwitchOwnerId) {
                 var a = i == vk.id ? getLang("video_choose_wall_to_group_videos") : getLang("video_choose_wall_to_my_videos"),
                     n = i == vk.id ? cur.videoSwitchOwnerId : vk.id;
-                e += '<span class="divider">|</span><a class="toggle" onclick="Video.switchChooserToOwner(' + n + ')">' + a + "</a>";
+                e += '<span class="divider">|</span><a class="toggle" onclick="Video.switchChooserToOwner(' + n + ')">' + a + "</a>"
             }
             u.getOptions()
                 .defaultTitle && (e = u.getOptions()
@@ -1425,6 +1429,23 @@ var Video = {
                 cur.videoSearchStats.lastSeenIndex = parseInt(cur.videoSearchStats.lastSeenElement.getAttribute("data-search-pos")) || 0
             }
         }
+    },
+    _updateThumbsInView: function() {
+        var e = 400;
+        clearTimeout(this._updateThumbsInViewTO), this._updateThumbsInViewTO = setTimeout(function() {
+            var o = null,
+                i = clientHeight(),
+                t = curBox() ? boxLayerWrap.scrollTop : scrollGetY();
+            each(geByClass("_video_item_thumb"), function(r, d) {
+                if (domData(d, "thumb")) {
+                    var a = domData(d, "ypos");
+                    if (a ? a = intval(a) : (a = getXY(d)[1], domData(d, "ypos", a)), o = o || getSize(d), a > t - o[1] - e && t + i + e > a) {
+                        var n = domData(d, "thumb");
+                        domData(d, "thumb", null), setStyle(d, "background-image", "url('" + n + "')")
+                    }
+                }
+            })
+        })
     }
 };
 try {

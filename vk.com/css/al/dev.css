@@ -2440,66 +2440,65 @@ input.dev_wrong_val {
 .dev_roadmap_timeline {
     font-weight: 500;
     font-size: 14px;
-    color: #a1b1c6;
+    color: #33567f;
     margin-top: 45px;
     margin-bottom: 20px
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_time {
-    margin-top: 57px;
+    margin-bottom: 57px;
     width: 150px;
     text-align: right
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text {
-    margin-top: 57px;
+    margin-bottom: 57px;
     width: 400px
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text a {
-    color: #a1b1c6
+    color: #33567f
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_text:before {
     content: '';
-    border-left: 2px solid #d5dfe8;
-    height: 63px;
+    border-left: 2px solid #7195b5;
+    height: 77px;
     position: absolute;
-    margin: -58px 0px 0px -33px
+    margin: 0px 0px 0px -33px
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_row .dev_roadmap_timeline_row_marker {
-    background: #d5dfe8;
+    background: #7195b5;
     border-radius: 50%;
     width: 16px;
     height: 16px;
-    margin: 60px 24px 0
+    margin: 0 24px
 }
 
-.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_text,
-.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_time {
-    margin-top: 0px
+.dev_roadmap_timeline .dev_roadmap_timeline_row:last-child .dev_roadmap_timeline_row_text,
+.dev_roadmap_timeline .dev_roadmap_timeline_row:last-child .dev_roadmap_timeline_row_time {
+    margin-bottom: 0px
 }
 
-.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_marker {
-    margin-top: 3px
+.dev_roadmap_timeline .dev_roadmap_timeline_row:last-child .dev_roadmap_timeline_row_marker {
+    margin-bottom: 3px
 }
 
-.dev_roadmap_timeline .dev_roadmap_timeline_row:first-child .dev_roadmap_timeline_row_text:before {
+.dev_roadmap_timeline .dev_roadmap_timeline_row:last-child .dev_roadmap_timeline_row_text:before {
     content: none
 }
 
-.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_time,
-.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_text a {
-    color: #33567f
+.dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_time {
+    color: #a1b1c6
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_text:before {
-    border-color: #7195b5
+    border-color: #d5dfe8
 }
 
 .dev_roadmap_timeline .dev_roadmap_timeline_past .dev_roadmap_timeline_row_marker {
-    background: #7195b5
+    background: #d5dfe8
 }
 
 .dev_community_widget_wrap {
