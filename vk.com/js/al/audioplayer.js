@@ -876,24 +876,35 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         } else t && t(this)
     }, AudioPlayer.prototype._initImpl = function(t) {
         function i(t) {
-            if (e._repeatCurrent && !t) e._implSeekImmediate(0), e._implPlay();
-            else {
-                e._isPlaying = !1, e.notify(AudioPlayer.EVENT_PAUSE), e.notify(AudioPlayer.EVENT_ENDED), e._failsCount++;
-                e.playNext(!0)
+            if (t && (o++, e._implSetDelay(200), o > 3)) {
+                o = 0;
+                var i = new MessageBox({
+                        title: getLang("global_error")
+                    })
+                    .content(getLang("audio_error_loading"))
+                    .setButtons("Ok", function() {
+                        curBox()
+                            .hide()
+                    });
+                return i.show(), void setWorkerTimeout(function() {
+                    i.hide()
+                }, 3e3)
             }
+            e._repeatCurrent ? (e._implSeekImmediate(0), e._implPlay()) : (e._isPlaying = !1, e.notify(AudioPlayer.EVENT_PAUSE), e.notify(AudioPlayer.EVENT_ENDED), e.playNext(!0))
         }
         var e = this;
-        this._impl && this._impl.destroy(), this._failsCount = 0;
+        this._impl && this._impl.destroy();
         var o = 0,
-            a = {
+            a = 0,
+            l = {
                 onBufferUpdate: function(t) {
                     e.notify(AudioPlayer.EVENT_BUFFERED, t)
                 },
                 onSeeked: function() {
-                    o = 0
+                    a = 0
                 },
                 onSeek: function() {
-                    o = 0
+                    a = 0
                 },
                 onEnd: function() {
                     "html5" != e._impl.type && i()
@@ -905,24 +916,24 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                     e.notify(AudioPlayer.EVENT_CAN_PLAY)
                 },
                 onProgressUpdate: function(t) {
-                    var a = e.getCurrentAudio();
-                    if (!e._muteProgressEvents && a) {
+                    var o = e.getCurrentAudio();
+                    if (!e._muteProgressEvents && o) {
                         if (e.notify(AudioPlayer.EVENT_PROGRESS, t), "html5" == e._impl.type) {
                             var l = 0;
-                            if (a) {
-                                l = Math.max(0, t - o);
+                            if (o) {
+                                l = Math.max(0, t - a);
                                 var s = .3;
-                                l = Math.min(l, s / a[AudioUtils.AUDIO_ITEM_INDEX_DURATION])
+                                l = Math.min(l, s / o[AudioUtils.AUDIO_ITEM_INDEX_DURATION])
                             }
                             t >= 1 - l && i()
                         }
-                        o = t
+                        a = t
                     }
                 }
             };
         AudioUtils.debugLog("Implementation init"), AudioUtils.debugLog("param browser.flash", browser.flash), AudioUtils.debugLog("param force HTML5", !!t), AudioPlayerHTML5.isSupported() ||
-            t ? (AudioUtils.debugLog("Initializing HTML5 impl"), this._impl = new AudioPlayerHTML5(a)) : browser.flash && (AudioUtils.debugLog("Initializing Flash impl"), this._impl =
-                new AudioPlayerFlash(a)), this._implSetVolume(0)
+            t ? (AudioUtils.debugLog("Initializing HTML5 impl"), this._impl = new AudioPlayerHTML5(l)) : browser.flash && (AudioUtils.debugLog("Initializing Flash impl"), this._impl =
+                new AudioPlayerFlash(l)), this._implSetVolume(0)
     }, AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop", AudioPlayer.EVENT_UPDATE = "update", AudioPlayer.EVENT_LOADED =
     "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED = "buffered", AudioPlayer.EVENT_PROGRESS = "progress", AudioPlayer
     .EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.EVENT_START_LOADING =
@@ -1200,7 +1211,7 @@ AudioPlayer.tabIcons = {
         })
     }, AudioPlayer.prototype._implSetDelay = function(t) {
         this._implNewTask("delay", function i(t) {
-            setTimeout(t, i)
+            setWorkerTimeout(t, i)
         })
     }, AudioPlayer.prototype._implPlay = function() {
         var t = this;
@@ -1780,14 +1791,20 @@ AudioPlayer.tabIcons = {
         this._prefetchAudioEl.src == t && this._prefetchAudioEl.readyState > AudioPlayerHTML5.STATE_HAVE_NOTHING && (this._setAudioNodeUrl(this._currentAudioEl, AudioPlayerHTML5.SILENCE),
             this._currentAudioEl = this._prefetchAudioEl, this._prefetchAudioEl = this._createAudioNode(), this.opts.onCanPlay && this.opts.onCanPlay());
         var i = this._currentAudioEl;
-        if (i.src) try {
-            i.play()
-        } catch (e) {
-            debugLog("Audio: url set failed (html5 impl)")
+        if (i.src) {
+            var e = i.play();
+            void 0 !== e && e["catch"](function(t) {
+                t.code != t.ABORT_ERR ? setWorkerTimeout(function() {
+                    triggerEvent(i, "error", !1, !0)
+                }, 10) : debugLog("HTML5 audio play error: " + t)
+            })
         }
     }, AudioPlayerHTML5.prototype.pause = function() {
         var t = this._currentAudioEl;
-        t.src && t.pause()
+        if (t.src) {
+            var i = t.pause();
+            void 0 != i && i["catch"](function() {})
+        }
     }, AudioPlayerHTML5.prototype.stop = function() {
         var t = this._currentAudioEl;
         this._setAudioNodeUrl(t, AudioPlayerHTML5.SILENCE)
@@ -1798,7 +1815,7 @@ AudioPlayer.tabIcons = {
                     "         var interval;         onmessage = function(e) {           clearInterval(interval);           if (e.data == 'start') {             interval = setInterval(function() { postMessage({}); }, 20);           }         }       "
                 ]);
                 try {
-                    this._fadeVolumeWorker = new Worker(window.URL.createObjectURL(i));
+                    this._fadeVolumeWorker = new Worker(window.URL.createObjectURL(i))
                 } catch (e) {
                     this._fadeVolumeWorker = !1
                 }
