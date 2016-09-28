@@ -1081,7 +1081,7 @@ var Photoview = {
                     }); u.firstChild;) c.appendChild(u.firstChild);
                 c.qsorter && setTimeout(qsorter.added.pbind(c), 0), o.pvPreloaded = !1
             }
-            uiScrollBox.hide(), removeClass("chat_onl_wrap", "hidden"), delete cur.pvEditorMode, delete cur.pvEditorModeDimensionsUpdated
+            uiScrollBox.hide(), Photoview.toggleFastChats(!0), delete cur.pvEditorMode, delete cur.pvEditorModeDimensionsUpdated
         },
         editPhoto: function() {},
         descTT: function(o) {
@@ -1494,9 +1494,15 @@ var Photoview = {
                     L = b[1] + T[1],
                     C = b[0] + T[0],
                     y = 60,
-                    S = 85;
-                toggleClass("chat_onl_wrap", "hidden", S > i - C || y > p - L)
+                    S = 85,
+                    x = S > i - C || y > p - L;
+                Photoview.toggleFastChats(!x)
             }
+        },
+        toggleFastChats: function(o) {
+            toggleClass("chat_onl_wrap", "hidden", !o), each(geByClass("rb_box_wrap"), function() {
+                toggleClass(this, "hidden", !o)
+            })
         },
         onResize: function() {
             lastWindowWidth,
