@@ -536,7 +536,7 @@ var MoneyTransfer = {
         show('payments_money_transfer_wrap', 'payments_money_transfer_buttons');
         box.changed = false;
         box.setOptions({
-            width: 450
+            width: 480
         });
         box.setBackTitle(false);
     },
