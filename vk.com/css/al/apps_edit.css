@@ -971,9 +971,9 @@ body.dev .app_author {
 .apps_edit_img_wrap {
     background: #edf2f5;
     text-align: center;
-    width: 128px;
-    height: 103px;
-    padding: 25px 0px 0px;
+    width: 139px;
+    height: 107px;
+    padding: 32px 0px 0px;
     margin: 0 auto
 }
 
@@ -1065,14 +1065,25 @@ td.apps_edit_label {
 }
 
 #apps_edit_full_banner {
-    width: 448px;
-    height: 276px;
+    width: 560px;
+    height: 315px;
     display: inline-block
 }
 
 .apps_edit_imgs_l {
+    width: 139px;
+    height: 139px;
     text-align: center;
-    padding: 0px
+    padding: 0
+}
+
+.apps_edit_imgs_l .apps_edit_img_wrap {
+    border-radius: 3px
+}
+
+.apps_edit_imgs_l img {
+    border-radius: 3px;
+    vertical-align: top
 }
 
 .apps_edit_imgs_r {
@@ -2059,7 +2070,7 @@ input.apps_edit_input {
 }
 
 .apps_edit_full_wrap {
-    height: 276px;
+    height: 315px;
     margin-top: 20px
 }
 
@@ -2102,7 +2113,7 @@ input.apps_edit_input {
 }
 
 .apps_edit_remove_banner_btn {
-    width: 448px
+    width: 560px
 }
 
 .apps_edit_btn_close {

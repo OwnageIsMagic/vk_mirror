@@ -151,7 +151,7 @@ var Video = {
                 "albums" != g ? (Video.loadSilent(g), cur.videoSortDD && cur.videoSortDD.select(cur.currentSortings[g] || "default", !0), Video._toggleSorter(!0)) :
                     Video._toggleSorter(!1), Video._createSorters(g)
             }
-            return nav.setLoc(i), !1
+            return i.show_original ? !0 : (nav.setLoc(i), !1)
         }), cur.destroy.push(function() {
             cur.nav.pop()
         })

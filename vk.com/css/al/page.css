@@ -277,7 +277,23 @@
     display: none
 }
 
+.post_top_info_wall_reply {
+    padding: 13px 15px 14px;
+    box-shadow: 0 0 0 1px #e3e4e8, 0 1px 0 0 #e7e8ec
+}
+
+.post_top_info_wall_reply:empty {
+    display: none
+}
+
+.post_top_info_wall_reply_text {
+    margin-left: 21px;
+    line-height: 15px;
+    color: #656565
+}
+
 .post_header {
+    position: relative;
     min-height: 50px
 }
 

@@ -521,9 +521,9 @@ var AppsEdit = {
             onUploadError: function(e, t) {
                 if (debugLog("error", e, t), 105 == t) var a = lang.apps_banner_size_error;
                 else if (-1 == t)
-                    if ("apps_full_banner_error" == opts.errorObj) var a = lang.apps_full_banner_size_error;
+                    if ("apps_full_banner_error" == opts.errorObj) var a = lang.apps_full_banner_size_1120_error;
                     else if ("apps_photo_error" == opts.errorObj) var a = lang.apps_photo_size_error;
-                else if ("apps_catalog_image_error" == opts.errorObj) var a = lang.apps_catalog_image_size_error;
+                else if ("apps_catalog_image_error" == opts.errorObj) var a = lang.apps_catalog_image_size_278_error;
                 else if ("apps_screenshot_error" == opts.errorObj) var a = lang.apps_screenshot_size_error;
                 else var a = lang.apps_banner_size_error;
                 else var a = lang.apps_photo_notloaded_unknown;

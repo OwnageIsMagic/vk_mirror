@@ -620,7 +620,7 @@
 
 .claim_hashes_row {
     border-bottom: 1px solid #e2e2e2;
-    height: 381px;
+    padding-bottom: 20px;
     -o-transition: height 200ms linear, opacity 400ms linear;
     transition: height 200ms linear, opacity 400ms linear;
     overflow: hidden

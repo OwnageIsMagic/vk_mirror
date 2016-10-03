@@ -1321,6 +1321,20 @@ var Videoview = {
                 }
             })
         },
+        restoreOriginal: function(e, i, o, t) {
+            showFastBox("Confirm", "restore original video?", getLang("box_yes"), function() {
+                ajax.post("al_video.php", {
+                    act: "restore_original",
+                    vid: i,
+                    oid: e,
+                    hash: o
+                }, {
+                    onDone: function(e, i) {
+                        nav.reload()
+                    }
+                })
+            }, getLang("box_no"))
+        },
         spamVideo: function(e, i, o, t, a, n, d) {
             t && addClass(t, "loading"), ajax.post("al_video.php", {
                 act: "spam_video",
@@ -1874,14 +1888,15 @@ var Videoview = {
                     }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"), hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1,
                     removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
                 var t = "mv_dark";
-                return addClass(mvLayerWrap, t), addClass(layerBG, t), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle(
-                        "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
+                return addClass(mvLayerWrap, t), addClass(layerBG, t),
+                    mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle("mvContainer", "mv_container"), mvcur.mvPlayer &&
+                    Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
                         width: "",
                         height: ""
-                    }), Videoview.updateSize(),
-                    addEvent(window, "resize", Videoview.onResize), addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange),
-                    addEvent(document, "keydown", Videoview.onKeyDown), removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange ||
-                    e === !0 || Videoview.setLocation(), onBodyResize(!0), setStyle(mvLayerWrap, {
+                    }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
+                        "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
+                    removeEvent(window, "resize", Videoview.minResize), mvcur.minDestroy && mvcur.minDestroy(), mvcur.noLocChange || e === !0 || Videoview.setLocation(),
+                    onBodyResize(!0), setStyle(mvLayerWrap, {
                         left: "0px",
                         top: "0px"
                     }), Videoview.showPlayer(!0), Videoview.setTitle(), VideoPlaylist.toggleStateClasses(), mvcur.chatMode && (VideoChat.toggleStateClasses(), VideoChat.updateScroll()),
