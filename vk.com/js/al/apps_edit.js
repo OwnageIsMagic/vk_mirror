@@ -233,13 +233,13 @@ var AppsEdit = {
             }
         })
     },
-    adminApp: function(e, t, a, s, i, n, r, o, c, d) {
-        var p = showFastBox(cur.appEditAdminTitle, '<div id="apps_show_penalty" style="display:none;"><div style="color:#666;padding:5px 0;">' + cur.appEditAdminPenalty +
+    adminApp: function(e, t, a, s, i, n, r, o, c, p) {
+        var d = showFastBox(cur.appEditAdminTitle, '<div id="apps_show_penalty" style="display:none;"><div style="color:#666;padding:5px 0;">' + cur.appEditAdminPenalty +
             '</div><input type="text" id="apps_penalty" class="text" style="width:440px" value="' + i + '"/></div><div style="color:#666;padding:5px 0;">' + cur.appEditAdminComment +
             '</div><textarea id="apps_check_comment" class="dark box_textarea"></textarea>' + (r || "") + (o || "") + (c || ""));
-        p.setOptions({
+        d.setOptions({
             width: 500
-        }), i > 0 ? show("apps_show_penalty") : hide("apps_show_penalty"), p.removeButtons(), p.addButton(s, function() {
+        }), i > 0 ? show("apps_show_penalty") : hide("apps_show_penalty"), d.removeButtons(), d.addButton(s, function() {
             if (!cur.adminActStarted) {
                 cur.adminActStarted = !0;
                 var s = {
@@ -251,16 +251,16 @@ var AppsEdit = {
                     comment: ge("apps_check_comment")
                         .value
                 };
-                r && (s.ban_domain = isChecked("admin_app_bandomain")), o && (s.warn_users = isChecked("admin_app_warnusers")), c && (s[d] = isChecked(
+                r && (s.ban_domain = isChecked("admin_app_bandomain")), o && (s.warn_users = isChecked("admin_app_warnusers")), c && (s[p] = isChecked(
                     "admin_custom_field")), ajax.post(n ? "apps_check" : "apps_check.php", s, {
                     onDone: function() {
                         nav.reload()
                     },
-                    showProgress: p.showProgress,
-                    hideProgress: p.hideProgress
+                    showProgress: d.showProgress,
+                    hideProgress: d.hideProgress
                 })
             }
-        }, "yes"), p.addButton(getLang("box_cancel"), p.hide, "no")
+        }, "yes"), d.addButton(getLang("box_cancel"), d.hide, "no")
     },
     adminTogglePlatform: function(e, t, a, s) {
         if (s) {
@@ -483,9 +483,8 @@ var AppsEdit = {
                 cur.editLang && (params.edit_lang = cur.editLang), "apps_banner_error" == opts.errorObj && hide("apps_banner_update"), ajax.post("editapp", extend(
                     obj, params), {
                     onDone: function(e, t) {
-                        opts.success_callback ? cur[opts.success_callback](e, t) : (resObj.src = e, addClass(resObj.parentNode, "apps_edit_img_loaded"),
-                                resObj.parentNode && resObj.parentNode.bOvered && AppsEdit.bOver(resObj.parentNode)), opts.lite || Upload.embed(i),
-                            opts.errorObj && hide(opts.errorObj)
+                        opts.success_callback ? cur[opts.success_callback](e, t) : (resObj.src = e, addClass(resObj.parentNode, "apps_edit_img_loaded")),
+                            opts.lite || Upload.embed(i), opts.errorObj && hide(opts.errorObj)
                     },
                     onFail: function(e) {
                         return AppsEdit.showError(e, opts.errorObj), opts.lite || Upload.embed(i), !0
@@ -579,30 +578,16 @@ var AppsEdit = {
             dark: 1
         })
     },
-    bOver: function(e) {
-        if (e.bOvered = 1, hasClass(e, "apps_edit_img_loaded")) {
-            var t = geByClass1("apps_edit_btn_wrap", e);
-            fadeIn(t, 200)
-        }
-    },
-    bOut: function(e) {
-        e.bOvered = 0;
-        var t = geByClass1("apps_edit_btn_wrap", e);
-        fadeOut(t, 200)
-    },
-    bClick: function(e, t, a) {
-        hide(e.parentNode, "apps_edit_full_wrap");
-        var e = e.parentNode.parentNode;
-        removeClass(e, "apps_edit_img_loaded");
-        var s = geByClass1("apps_edit_b_img", e);
-        s.src = a ? window.devicePixelRatio >= 2 ? "/images/dquestion_q.png" : "/images/dquestion_t.png" : window.devicePixelRatio >= 2 ? "/images/dquestion_w.png" :
-            "/images/dquestion_z.png", removeClass(e, "apps_edit_progress"), Upload.embed(t), ajax.post("editapp", {
-                act: "a_clear_full_banner",
-                hash: cur.photoHash,
-                aid: cur.aid,
-                format: a ? 1 : 0,
-                edit_lang: cur.editLang
-            })
+    removeFullBanner: function(e, t) {
+        hide("apps_edit_full_wrap");
+        var a = geByTag1("img", geByClass1("selected", ge("apps_edit_full_wrap")));
+        a.src = isRetina() ? "/images/dquestion_v.png" : "/images/dquestion_u.png", removeClass(e, "apps_edit_progress"), Upload.embed(t), ajax.post("editapp", {
+            act: "a_clear_full_banner",
+            hash: cur.photoHash,
+            aid: cur.aid,
+            format: 1,
+            edit_lang: cur.editLang
+        })
     },
     certUploadBox: function(e, t) {
         var a = (Privacy.getValue("push") || "")
@@ -729,11 +714,11 @@ var AppsEdit = {
             }
             if (!i) {
                 var c = val(ge("func_search")),
-                    d = ge("apps_edit_funcs_not_found"),
-                    p = getLang("developers_no_funcs_found")
+                    p = ge("apps_edit_funcs_not_found"),
+                    d = getLang("developers_no_funcs_found")
                     .split("{query}")
                     .join("<b>" + this.cleanStr(c) + "</b>");
-                d.innerHTML = p, show(d)
+                p.innerHTML = d, show(p)
             }
         }
         delete cur.funcsVersion[e], delete cur.funcsVersions[e], delete cur.funcsVersionsDD[e], delete cur.editedFuncs[e]
@@ -801,7 +786,7 @@ var AppsEdit = {
             if (!r || !r.ace) return unlockButton(e), void(cur.funcSaving = !1);
             var o = r.ace.getValue(),
                 c = val(n),
-                d = {
+                p = {
                     act: "save_func",
                     aid: cur.aid,
                     hash: cur.funcsHash,
@@ -810,25 +795,25 @@ var AppsEdit = {
                     old_name: s.name
                 };
             if (cur.funcsVersion[t] > 0) {
-                d.act = "a_save_func_version", d.func = s.name, d.v = cur.funcsVersion[t];
-                for (var p = cur.funcsVersions[t].versions, u = 0; u < p.length; u++)
-                    if (p[u][0] == cur.funcsVersion[t]) {
+                p.act = "a_save_func_version", p.func = s.name, p.v = cur.funcsVersion[t];
+                for (var d = cur.funcsVersions[t].versions, u = 0; u < d.length; u++)
+                    if (d[u][0] == cur.funcsVersion[t]) {
                         cur.funcsVersions[t].versions[u][1] = o;
                         break
                     }
             } else cur.funcInfos[t].code = o;
-            ajax.post("editapp", d, {
-                onDone: function(a, p) {
+            ajax.post("editapp", p, {
+                onDone: function(a, d) {
                     if ("name" == a) notaBene(n);
                     else if ("code" == a) {
                         var u = geByClass1("apps_edit_err_info", i);
-                        u.innerHTML = p, isVisible(u.parentNode) || slideDown(u.parentNode, 150), r.ace.focus()
+                        u.innerHTML = d, isVisible(u.parentNode) || slideDown(u.parentNode, 150), r.ace.focus()
                     } else if ("limit" == a) showFastBox({
                         title: cur.lang.box_error,
                         dark: 1
-                    }, p);
+                    }, d);
                     else {
-                        d.v && -1 != d.v ? d.v == cur.funcsVersions[t].disable_add && (delete cur.funcsVersions[t].disable_add, show("apps_edit_add_version" +
+                        p.v && -1 != p.v ? p.v == cur.funcsVersions[t].disable_add && (delete cur.funcsVersions[t].disable_add, show("apps_edit_add_version" +
                             t)) : (s.name = c, s.code = o);
                         var _ = geByClass("apps_edit_err_info_cont", i);
                         for (var l in _) isVisible(_[l]) && slideUp(_[l], 150);
@@ -891,10 +876,10 @@ var AppsEdit = {
                 o = AppsEdit.getExecuteFields(a),
                 c = geByClass1("apps_edit_params", a);
             for (i = 0; i < o.length; i++) {
-                var d = o[i],
-                    p = geByClass1("execute_param_" + d, c),
-                    u = geByClass1("execute_field_input", p);
-                r["param_" + d] = val(u)
+                var p = o[i],
+                    d = geByClass1("execute_param_" + p, c),
+                    u = geByClass1("execute_field_input", d);
+                r["param_" + p] = val(u)
             }
             cur.verDD[e] && (r.param_v = cur.verDD[e].val()), ajax.post("dev", r, {
                 onDone: function(e) {
@@ -957,9 +942,9 @@ var AppsEdit = {
         var s = AppsEdit.getExecuteFields(a);
         e.session.getLength();
         for (var i = ace.require("ace/token_iterator")
-                .TokenIterator, n = new i(e.getSession(), 0, 0), r = [], o = [], c = -100, d = -100, p = -1; token = n.stepForward();)
-            if (p++, "identifier" == token.type && "Args" == token.value && (c = p), "punctuation.operator" == token.type && "." == token.value && (d = p), "identifier" ==
-                token.type && c == p - 2 && d == p - 1) {
+                .TokenIterator, n = new i(e.getSession(), 0, 0), r = [], o = [], c = -100, p = -100, d = -1; token = n.stepForward();)
+            if (d++, "identifier" == token.type && "Args" == token.value && (c = d), "punctuation.operator" == token.type && "." == token.value && (p = d), "identifier" ==
+                token.type && c == d - 2 && p == d - 1) {
                 var u = token.value;
                 r.indexOf(u) < 0 && (r.push(u), s.indexOf(u) < 0 && o.push(u))
             }
@@ -1239,7 +1224,7 @@ var AppsEdit = {
         var o = geByClass1("apps_edit_content", n);
         slideDown(o, t, function() {
             var t = geByClass1("apps_edit_editor", ge("func_row_" + e));
-            t && t.ace && AppsEdit.adjustHeight(t.ace, t);
+            t && t.ace && AppsEdit.adjustHeight(t.ace, t)
         })
     },
     collectRequestData: function(e) {
@@ -1541,9 +1526,9 @@ var AppsEdit = {
                     cur.activities[e] = a;
                     var o = AppsEdit.rowFromActivity(e, a, !0),
                         c = domPN(s),
-                        d = ge("apps_edit_activities_status" + a.status);
-                    c.id == d.id && n && n.status == a.status ? c.replaceChild(o, s) : (AppsEdit.removeActivity(t, !0), AppsEdit.activityInsertRow(o, d), show(
-                        d)), cur.currentActivity = null, t == e ? AppsEdit.switchEditActivity(e, 0) : 1 == r && AppsEdit.showActivityStatusTT(geByClass1(
+                        p = ge("apps_edit_activities_status" + a.status);
+                    c.id == p.id && n && n.status == a.status ? c.replaceChild(o, s) : (AppsEdit.removeActivity(t, !0), AppsEdit.activityInsertRow(o, p), show(
+                        p)), cur.currentActivity = null, t == e ? AppsEdit.switchEditActivity(e, 0) : 1 == r && AppsEdit.showActivityStatusTT(geByClass1(
                         "apps_edit_cont_icon", o), e), AppsEdit.showRequestMsg(o, !1, i), AppsEdit.updateRemainingPoints()
                 },
                 onFail: AppsEdit.showRequestMsg.pbind(s, !0),
@@ -1576,8 +1561,8 @@ var AppsEdit = {
                     cur.requests[e] = a;
                     var o = AppsEdit.rowFromRequest(e, a),
                         c = domPN(s),
-                        d = ge("apps_edit_requests_status" + a.status);
-                    c.id == d.id && n && n.status == a.status ? c.replaceChild(o, s) : (AppsEdit.removeRequest(t, !0), AppsEdit.requestInsertRow(o, d), show(d)),
+                        p = ge("apps_edit_requests_status" + a.status);
+                    c.id == p.id && n && n.status == a.status ? c.replaceChild(o, s) : (AppsEdit.removeRequest(t, !0), AppsEdit.requestInsertRow(o, p), show(p)),
                         cur.currentRequest = null, t == e ? AppsEdit.switchEditRequest(e, 0) : 1 == r && AppsEdit.showRequestStatusTT(geByClass1(
                             "apps_edit_cont_icon", o), e), AppsEdit.showRequestMsg(o, !1, i)
                 },
@@ -1736,9 +1721,9 @@ var AppsEdit = {
             } else show(o), n++
         }
         if (e && !n) {
-            var d = a.split("{query}")
+            var p = a.split("{query}")
                 .join("<b>" + this.cleanStr(e) + "</b>");
-            t.innerHTML = d, show(t)
+            t.innerHTML = p, show(t)
         } else hide(t)
     },
     uInit: function(e) {
@@ -1863,25 +1848,25 @@ var AppsEdit = {
                 } else {
                     if (i = cur.cache["_" + a], void 0 === i) {
                         var c = cur.index.search(a),
-                            d = {};
+                            p = {};
                         i = [];
-                        for (var r = 0, o = c.length; o > r; ++r) d[c[r]] || (d[c[r]] = !0, i.push(c[r]));
+                        for (var r = 0, o = c.length; o > r; ++r) p[c[r]] || (p[c[r]] = !0, i.push(c[r]));
                         i.sort(function(e, t) {
                             return e - t
                         }), cur.cache["_" + a] = i
                     }
                     s = AppsEdit.uGetHighlight(a)
                 }
-            var p = i.length,
+            var d = i.length,
                 u = ge("apps_edit_users_rows"),
                 _ = ge("apps_edit_users_more");
-            if (!p) return hide(_, "apps_edit_summary"), void val(u, AppsEdit.uGenEmpty(getLang("apps_no_admin_found")));
-            for (var l = e ? 0 : u.childNodes.length, v = Math.min(p, l + 20), g = [], r = l; v > r; ++r) {
+            if (!d) return hide(_, "apps_edit_summary"), void val(u, AppsEdit.uGenEmpty(getLang("apps_no_admin_found")));
+            for (var l = e ? 0 : u.childNodes.length, v = Math.min(d, l + 20), g = [], r = l; v > r; ++r) {
                 var f = t[i[r]],
                     h = (f || {})[2];
                 f && (s && (h = h.replace(s.re, s.val)), g.push(AppsEdit.uGenRow(f, h)))
             }
-            e ? (val(u, g.join("")), show("apps_edit_summary"), a ? val("apps_edit_summary", p) : AppsEdit.uUpdateSummary()) : u.innerHTML += g.join(""), toggle(_, p > v)
+            e ? (val(u, g.join("")), show("apps_edit_summary"), a ? val("apps_edit_summary", d) : AppsEdit.uUpdateSummary()) : u.innerHTML += g.join(""), toggle(_, d > v)
         }
     },
     uGetHighlight: function(e) {
@@ -1906,8 +1891,8 @@ var AppsEdit = {
             r = cur.opts.levels[n] || "",
             o = "",
             c = t || e[2],
-            d = cur.qShown;
-        return t || !d || d.match(/^(https?:\/\/)?([a-z0-9]+\.)*(vkontakte\.ru|vk\.com)\/.+/) || (highlight = AppsEdit.uGetHighlight(d), c = c.replace(highlight.re,
+            p = cur.qShown;
+        return t || !p || p.match(/^(https?:\/\/)?([a-z0-9]+\.)*(vkontakte\.ru|vk\.com)\/.+/) || (highlight = AppsEdit.uGetHighlight(p), c = c.replace(highlight.re,
                 highlight.val)), cur.opts.main_admin && cur.mainAdminChanging ? 3 != n ? o += '<a class="apps_edit_user_action" onclick="AppsEdit.uChangeMainAdmin(' + a +
             ')">' + getLang("apps_main_admin_promote") + "</a>" : o = '<a class="apps_edit_user_action" onclick="AppsEdit.uMainAdmin(true)">' + getLang(
                 "apps_main_admin_change_cancel") + "</a>" : 0 == n ? o = '<a class="apps_edit_user_action" onclick="AppsEdit.uEditAdmin(' + a + ')">' + getLang(

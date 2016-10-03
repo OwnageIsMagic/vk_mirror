@@ -2288,7 +2288,7 @@ WComments = {
                                 opts.onMediaAdd();
                             }
 
-                            cur.onMediaAdded && cur.onMediaAdded();
+                            cur.onMediaChanged && cur.onMediaChanged();
 
                             if (data.upload_ind !== undefined) {
                                 delete data.upload_ind;
@@ -2497,7 +2497,7 @@ WComments = {
 
                             toggleClass(previewEl, 'media_preview_has_medias', addMedia.hasVisibleRows());
 
-                            cur.onMediaAdded && cur.onMediaAdded();
+                            cur.onMediaChanged && cur.onMediaChanged();
 
                             cur.lastPostMsg = false;
 

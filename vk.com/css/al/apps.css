@@ -590,6 +590,7 @@ a.apps_header_progress:before {
 }
 
 .apps_featured_thumb {
+    font-size: 0;
     pointer-events: none;
     height: 315px;
     width: 560px;

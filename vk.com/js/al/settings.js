@@ -1065,9 +1065,10 @@ var Settings = {
             }
         })
     },
-    showPaymentsMethods: function(e, t) {
+    showPaymentsMethods: function(e, t, s) {
         return ajax.post("al_settings.php", {
             act: "a_payments_methods",
+            money_transfer: s ? 1 : 0,
             hash: t
         }, {
             onDone: function(t) {
@@ -1159,7 +1160,7 @@ var Settings = {
                 }
             })) : (n ? (confirmText = getLang("settings_transfer_decline_confirm"), confirmBtn = getLang("settings_transfer_decline_btn")) : (confirmText = getLang(
             "settings_transfer_cancel_confirm"), confirmBtn = getLang("settings_transfer_cancel_btn")), void(cur.confirmBox = showFastBox(getLang(
-            "global_action_confirmation"), confirmText, confirmBtn, Settings.moneyTransferCancel.pbind(e, t, s, n, 1), getLang("global_cancel"))))
+            "global_action_confirmation"), confirmText, confirmBtn, Settings.moneyTransferCancel.pbind(e, t, s, n, 1), getLang("global_cancel"))));
     },
     moneyTransferRepeat: function(e, t) {
         return showBox("al_payments.php?act=money_transfer_box", {
