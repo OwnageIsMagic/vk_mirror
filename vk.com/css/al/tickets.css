@@ -1697,10 +1697,6 @@ body.dev .tickets_sys_content {
     background: #edf1f5
 }
 
-#support_admin_moderators .msg {
-    margin-bottom: 20px
-}
-
 .support_stats_title {
     float: left;
     padding: 0 0 0 48px;

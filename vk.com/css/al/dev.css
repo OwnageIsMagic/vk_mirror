@@ -295,6 +295,16 @@ body.dev .priv_h_arrow img {
     color: #000
 }
 
+.dev_joined_blocks .dev_page_block {
+    width: 352.5px;
+    float: left;
+    box-sizing: border-box
+}
+
+.dev_joined_blocks .dev_page_block:last-child {
+    margin-left: 20px
+}
+
 #dev_page_wrap2 {
     padding-top: 5px
 }
