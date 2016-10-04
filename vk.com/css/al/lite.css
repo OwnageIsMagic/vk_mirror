@@ -2614,10 +2614,6 @@ h2.page_block_h2 {
     height: 100%
 }
 
-embed#video_player {
-    vertical-align: top
-}
-
 .video_box_wrap {
     position: relative;
     overflow: hidden;
@@ -2627,29 +2623,28 @@ embed#video_player {
 
 .video_box_background {
     position: absolute;
-    background: no-repeat 50%;
-    background-size: cover;
     top: -10px;
     bottom: -10px;
     left: -10px;
     right: -10px;
+    background: no-repeat 50%;
+    background-size: cover;
     -webkit-filter: blur(10px);
     filter: blur(10px)
 }
 
-.video_box_flash_needed {
+.video_box_cant_play {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 340px;
+    width: 240px;
     max-width: 80%;
     padding: 10px;
-    margin: -18px 0px 0px -170px;
-    font-size: 12px;
-    line-height: 160%;
+    margin: -18px 0px 0px -130px;
     border-radius: 5px;
     background: #fff;
     background: hsla(0, 0%, 100%, .8);
+    line-height: 160%;
     text-align: center
 }
 

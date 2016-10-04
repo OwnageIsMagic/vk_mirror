@@ -5223,9 +5223,9 @@ body.mac .narrow_column.fixed {
     position: absolute;
     left: 50%;
     top: 50%;
-    width: 264px;
+    width: 240px;
     padding: 10px;
-    margin: -27px 0 0 -140px;
+    margin: -27px 0 0 -130px;
     border-radius: 5px;
     background: #fff;
     background: hsla(0, 0%, 100%, .8);
