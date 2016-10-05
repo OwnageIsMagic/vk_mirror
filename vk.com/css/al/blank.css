@@ -2,6 +2,17 @@
     display: none
 }
 
+.h4-text {
+    color: #000;
+    border-bottom: none;
+    font-size: 1em;
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 0;
+    padding: 0
+}
+
 .groups_blocked {
     padding: 40px 50px
 }
@@ -20,9 +31,14 @@
     margin-top: 1px
 }
 
-.groups_blocked_cb_cont {
-    width: 607px;
-    margin: 24px -40px 0
+.groups_blocked_cb_cont .checkbox {
+    margin-left: 23px;
+    text-align: left;
+    line-height: 120%
+}
+
+.groups_blocked_cb_cont .checkbox:before {
+    margin-left: -23px
 }
 
 #groups_blocked_unblock_btn {

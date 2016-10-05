@@ -4207,89 +4207,81 @@ body.sf .nim-dialog .nim-dialog--unread {
     color: #a9abad
 }
 
-.im-typing .im-typing--icon {
+.im-typing .im-typing--icon.pr {
+    float: left;
     position: absolute;
-    display: block;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    top: 50%;
-    margin-top: -2px;
-    background: hsla(210, 2%, 67%, .5);
     left: 7px;
+    opacity: 1;
+    line-height: inherit
+}
+
+.im-typing .im-typing--icon .pr_bt {
+    margin-right: 3px;
+    margin-top: -2px;
+    background: #a9abad;
+    vertical-align: middle;
     -webkit-animation: 1.1s linear 0s infinite typer;
     -o-animation: 1.1s linear 0s infinite typer;
     animation: 1.1s linear 0s infinite typer
 }
 
-.im-typing .im-typing--icon:after,
-.im-typing .im-typing--icon:before {
-    content: "";
-    display: block;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: hsla(210, 2%, 67%, .5)
+.im-typing .im-typing--icon .pr_bt:nth-child(2) {
+    -webkit-animation-delay: 0.36666667s;
+    -o-animation-delay: 0.36666667s;
+    animation-delay: 0.36666667s
 }
 
-.im-typing .im-typing--icon:after {
-    margin-top: -4px;
-    position: relative;
-    right: -7px;
-    -webkit-animation: 1.1s linear 0.36666667s infinite typer;
-    -o-animation: 1.1s linear 0.36666667s infinite typer;
-    animation: 1.1s linear 0.36666667s infinite typer
+.im-typing .im-typing--icon .pr_bt:nth-child(3) {
+    -webkit-animation-delay: 0.73333333s;
+    -o-animation-delay: 0.73333333s;
+    animation-delay: 0.73333333s
 }
 
-.im-typing .im-typing--icon:before {
-    position: relative;
-    right: -14px;
-    -webkit-animation: 1.1s linear 0.73333333s infinite typer;
-    -o-animation: 1.1s linear 0.73333333s infinite typer;
-    animation: 1.1s linear 0.73333333s infinite typer
+.im-typing .im-typing--icon .pr_bt:last-child {
+    margin-right: 0
 }
 
 .im-typing.im-typing_shown {
     visibility: visible
 }
 
-.im-typing.im-typing_classic .im-typing--icon {
+.im-typing.im-typing_classic .im-typing--icon.pr {
     left: 11px
 }
 
 @-webkit-keyframes typer {
     0% {
-        background: hsla(210, 2%, 67%, .5)
+        opacity: 0.5
     }
     25% {
-        background: #a9abad
+        opacity: 1
     }
     50% {
-        background: hsla(210, 2%, 67%, .5)
+        opacity: 0.5
     }
 }
 
 @-o-keyframes typer {
     0% {
-        background: hsla(210, 2%, 67%, .5)
+        opacity: 0.5
     }
     25% {
-        background: #a9abad
+        opacity: 1
     }
     50% {
-        background: hsla(210, 2%, 67%, .5)
+        opacity: 0.5
     }
 }
 
 @keyframes typer {
     0% {
-        background: hsla(210, 2%, 67%, .5)
+        opacity: 0.5
     }
     25% {
-        background: #a9abad
+        opacity: 1
     }
     50% {
-        background: hsla(210, 2%, 67%, .5)
+        opacity: 0.5
     }
 }
 

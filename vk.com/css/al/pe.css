@@ -17,12 +17,12 @@
     font-family: Lobster;
     font-style: normal;
     font-weight: 400;
-    src: local('Lobster'), url(//new.vk.com/images/filters/fonts/lobster.ttf) format('truetype')
+    src: local('Lobster'), url(/images/filters/fonts/lobster.ttf) format('truetype')
 }
 
 @font-face {
     font-family: ImpactPE;
-    src: url(//new.vk.com/images/filters/fonts/impact_pe.ttf) format('truetype')
+    src: url(/images/filters/fonts/impact_pe.ttf) format('truetype')
 }
 
 .pe_tabs_panel {

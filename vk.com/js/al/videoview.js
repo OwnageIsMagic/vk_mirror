@@ -2791,12 +2791,12 @@ window.VideoChat = {
     }
 }, window.VideoDonate = {
     DEFAULT_COMMENT_MAX_LENGTH: 300,
-    init: function(e, i, o, t) {
-        function a(e) {
-            e = parseJSON(e), e && "success" == e.status ? (VideoDonate.apiData = e.data, VideoDonate.initForm()) : n()
+    init: function(e, i, o, t, a) {
+        function n(e) {
+            e = parseJSON(e), e && "success" == e.status ? (VideoDonate.apiData = e.data, VideoDonate.initForm()) : d()
         }
 
-        function n() {
+        function d() {
             curBox()
                 .hide(), showFastBox({
                     title: getLang("global_error")
@@ -2805,8 +2805,9 @@ window.VideoChat = {
         VideoDonate.params = {
             prefilled: i,
             videoId: o,
-            votesHash: t
-        }, ajax.plainpost(e, "", a, n, !0)
+            votesHash: t,
+            referrer: a
+        }, ajax.plainpost(e, "", n, d, !0)
     },
     initForm: function() {
         var e = VideoDonate.apiData,
@@ -2905,7 +2906,7 @@ window.VideoChat = {
         if (r.length > VideoDonate.COMMENT_MAX_LENGTH) return VideoDonate.showInputError("video_donate_comment"), !1;
         var s = {
             step: "basic",
-            referrer: "vk",
+            referrer: VideoDonate.params.referrer,
             currency: "RUB",
             name: t,
             amount: a,
@@ -3010,7 +3011,7 @@ window.VideoChat = {
         if (!/^.+@.+\..+$/.test(r)) return VideoDonate.showInputError("video_donate_email"), !1;
         var s = {
             step: "billing",
-            referrer: "vk",
+            referrer: VideoDonate.params.referrer,
             name: val("video_donate_name"),
             amount: floatval(val("video_donate_amount")),
             currency: "RUB",

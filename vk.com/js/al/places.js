@@ -121,7 +121,7 @@ var Places = {
             }, {
                 onDone: function(o) {
                     ge("place_map_other") && (ge("place_map_other")
-                        .innerHTML = o)
+                        .innerHTML = o, window.tooltips && tooltips.destroyAll())
                 }
             }), n(o.points, e)
         }
