@@ -1017,6 +1017,15 @@ function statlogsValueEvent(statName, value, key1, key2, key3) {
     });
 }
 
+function onLoaded(fn) {
+    if (vk.loaded) {
+        fn();
+    } else {
+        addEvent(window, 'load', fn);
+    }
+}
+
+
 /* Ajax */
 
 function serializeForm(form) {
@@ -2449,6 +2458,47 @@ function checkKeyboardEvent(e) {
 
     if (offsetX < 0 || offsetX > size[0] || offsetY < 0 || offsetY > size[1]) return true;
     return (Math.abs(e.pageX - xy[0] - size[0] / 2) < 1 && Math.abs(e.pageY - xy[1] - size[1] / 2) < 1);
+}
+
+function setWorkerTimeout(cb, delay) {
+    if (window.Worker && window.Blob) {
+        var scriptBlob = new Blob([
+            " \
+      var timeout; \
+      onmessage = function(e) { \
+        clearTimeout(timeout); \
+        if (e.data == 'start') { \
+          timeout = setTimeout(function() { postMessage({}); }, " +
+            delay + "); \
+        } \
+      } \
+    "
+        ]);
+
+        try {
+            var worker = new Worker(window.URL.createObjectURL(scriptBlob));
+
+            worker.onmessage = function() {
+                worker.terminate();
+                cb();
+            }
+            worker.postMessage('start');
+        } catch (e) {
+            worker = false;
+        }
+
+        return worker;
+    } else {
+        return setTimeout(cb, delay)
+    }
+}
+
+function clearWorkerTimeout(worker) {
+    if (isNumeric(worker)) {
+        clearTimeout(worker);
+    } else {
+        worker.terminate();
+    }
 }
 
 /* Templates */
@@ -4883,6 +4933,10 @@ function getCaretBoundingRect(node) {
         bottom: rectCaret.bottom - rectNode.top
     };
 };
+
+function hasAccessibilityMode() {
+    return !!(window.vk && vk.a11y);
+}
 
 /* UI Placeholder */
 

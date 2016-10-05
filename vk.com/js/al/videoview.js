@@ -133,7 +133,7 @@ var Videoview = {
                     vid: i,
                     type: o,
                     event: t
-                })
+                }, {})
             },
             onVideoResolutionChanged: function(e, i, o, t) {
                 window.mvcur && mvcur.mvData && (mvcur.mvData.resolution = t)
