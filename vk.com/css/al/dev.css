@@ -2588,3 +2588,43 @@ input.dev_wrong_val {
     background-color: #e7e8ec;
     margin-top: -0.5px
 }
+
+.dev_widgets_row {
+    padding: 27px 20px;
+    border-top: 1px solid #e7e8ec
+}
+
+.dev_widgets_row_cont {
+    margin-left: 96px
+}
+
+.dev_widgets_row_title {
+    font-size: 16px;
+    line-height: 19px;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.dev_widgets_row_descr {
+    margin-top: 7px;
+    font-size: 14px;
+    line-height: 20px
+}
+
+.dev_widgets_row_icon {
+    width: 72px;
+    height: 72px;
+    margin-top: -3px
+}
+
+.dev_page_block_widgets {
+    padding: 29px 30px 21px
+}
+
+.dev_page_block_widgets .wk_header {
+    margin-bottom: 16px!important;
+    font-size: 24px;
+    line-height: 29px;
+    letter-spacing: 0.4px
+}

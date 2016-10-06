@@ -985,6 +985,7 @@ body.mac .im_stickerpack_fixed {
     bottom: 0;
     position: fixed;
     width: 550px;
+    max-width: 550px;
     padding: 16px 20px;
     box-sizing: border-box;
     font-size: 12.5px;
@@ -1051,6 +1052,7 @@ body.mac .im_stickerpack_fixed {
 .im-page.im-page_classic .im-page--header {
     position: fixed;
     width: 550px;
+    max-width: 550px;
     top: 102px;
     left: auto;
     margin-left: -1px;
@@ -5288,7 +5290,8 @@ body.sf .nim-dialog .nim-dialog--unread {
     position: fixed;
     top: 42px;
     margin-left: 565px;
-    width: 230px
+    width: 230px;
+    max-width: 230px
 }
 
 .im-right-menu.ui_rmenu .im-right-menu--count {
@@ -5765,4 +5768,37 @@ body.sf .nim-dialog .nim-dialog--unread {
     width: 100%;
     box-sizing: border-box;
     padding-right: 0
+}
+
+@-webkit-keyframes repaint {
+    0% {
+        width: 99.999%
+    }
+    to {
+        width: 100%
+    }
+}
+
+@-o-keyframes repaint {
+    0% {
+        width: 99.999%
+    }
+    to {
+        width: 100%
+    }
+}
+
+@keyframes repaint {
+    0% {
+        width: 99.999%
+    }
+    to {
+        width: 100%
+    }
+}
+
+.safari-repaint {
+    -webkit-animation: repaint 100ms;
+    -o-animation: repaint 100ms;
+    animation: repaint 100ms
 }
