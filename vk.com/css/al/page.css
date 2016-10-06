@@ -5790,8 +5790,12 @@ button.wall_block_app_btn {
 .page_media_place_img_wrap {
     display: inline-block;
     margin-bottom: 4px;
-    max-width: 337px;
+    max-width: 510px;
     overflow: hidden
+}
+
+.wl_post .page_media_place_img_wrap {
+    max-width: 607px
 }
 
 .page_media_place_img_wrap:before {

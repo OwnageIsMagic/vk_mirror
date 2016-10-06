@@ -73,8 +73,12 @@
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #42648b;
-    margin-right: 10px
+    color: #42648b
+}
+
+.wsubscribe_name,
+.wsubscribe_button .wsubscribe_name {
+    margin: 0 10px 0 0
 }
 
 .wsubscribe_do .pr {
