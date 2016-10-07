@@ -2064,6 +2064,7 @@ var GroupsEdit = {
     app: {
         btnName: null,
         privacy: null,
+        snippetType: null,
         initCatalog: function() {},
         initSettings: function() {
             GroupsEdit.app.privacy = new Dropdown(ge("groups_app_btn_privacy"), cur.btnPrivacy, {
@@ -2072,7 +2073,13 @@ var GroupsEdit = {
                 multiselect: !1,
                 selectedItems: cur.btnPrivacyVal,
                 onChange: function(e) {}
-            }), GroupsEdit.app.btnName = ge("group_app_btn_name")
+            }), GroupsEdit.app.btnName = ge("group_app_btn_name"), GroupsEdit.app.snippetType = new Dropdown(ge("groups_app_btn_snippet"), cur.snippetTypes, {
+                width: 300,
+                big: 1,
+                multiselect: !1,
+                selectedItems: cur.snippetType,
+                onChange: function(e) {}
+            })
         },
         show: function(e, t) {
             return cancelEvent(t), showApp(t, e, !0)
@@ -2115,7 +2122,8 @@ var GroupsEdit = {
                 id: cur.gid,
                 hash: cur.saveAppHash,
                 btn_name: val(GroupsEdit.app.btnName),
-                privacy: GroupsEdit.app.privacy.selectedItems()[0][0]
+                privacy: GroupsEdit.app.privacy.selectedItems()[0][0],
+                snippet_type: GroupsEdit.app.snippetType.selectedItems()[0][0]
             };
             ajax.post("groupsedit.php", e, {
                 onDone: function(e, t) {
