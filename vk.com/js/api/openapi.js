@@ -120,7 +120,7 @@
     // XDM object
     w.fastXDM = {
         _id: 0,
-        helperUrl: ((location.protocol === 'https:') ? 'https:' : 'http:') + '//vk.com/js/api/xdmHelper.js',
+        helperUrl: 'https://vk.com/js/api/xdmHelper.js',
 
         Server: function(methods, filter, options) {
             this.methods = methods || {};
@@ -535,9 +535,7 @@ VK.extend = function(target, source, overwrite) {
     return target;
 };
 
-if (VK._protocol !== 'https:') {
-    VK._protocol = ((location.protocol === 'https:') ? 'https:' : 'http:');
-}
+VK._protocol = 'https:';
 
 if (!VK.xdConnectionCallbacks) {
 
@@ -2251,14 +2249,14 @@ if (!VK.Widgets) {
             VK.Widgets.loading(obj, false);
             if (funcs.onReady) funcs.onReady();
             if (options.onReady) options.onReady();
-        }
+        };
         funcs.resize = function(e, cb) {
             obj.style.height = e + 'px';
             var el = document.getElementById('vkwidget' + widgetId);
             if (el) {
                 el.style.height = e + 'px';
             }
-        }
+        };
         funcs.resizeWidget = function(newWidth, newHeight) {
             newWidth = parseInt(newWidth);
             newHeight = parseInt(newHeight);
@@ -2276,12 +2274,12 @@ if (!VK.Widgets) {
                 }
             }
             if (options.onResizeWidget) options.onResizeWidget();
-        }
+        };
         funcs.updateVersion = function(ver) {
             if (ver > 1) {
                 VK.Api.attachScript('//vk.com/js/api/openapi_update.js?' + parseInt(ver));
             }
-        }
+        };
         rpc = VK.Widgets.RPC[widgetId] = new fastXDM.Server(funcs, function(origin) {
             if (!origin) return true;
             origin = origin.toLowerCase();

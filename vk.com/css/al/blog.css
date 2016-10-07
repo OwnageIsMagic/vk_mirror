@@ -262,12 +262,12 @@
 
 .blog_entry_author_name {
     font-size: 13px;
-    line-height: 15px
+    line-height: 15px;
+    color: #222
 }
 
-.blog_entry_author_name,
-.blog_entry_author_name a {
-    color: #222
+.blog_author_pos {
+    margin-left: 3px
 }
 
 .blog_entry_date {
@@ -562,6 +562,14 @@
 
 .blog_right_menu {
     margin-top: 25px
+}
+
+.blog_right_menu_nav {
+    max-width: 163px
+}
+
+.blog_right_menu_nav .left_menu_nav_wrap {
+    padding-top: 0px
 }
 
 .blog_links {
