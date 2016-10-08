@@ -2410,7 +2410,8 @@ a:hover .left_count_persist .left_void {
 .left_menu_more:after {
     display: inline-block;
     content: '';
-    background: url(/images/icons/menu_arrow.png) no-repeat right 0;
+    background: url(/images/icons/menu_arrow.png) no-repeat;
+    background-position: right 0;
     height: 5px;
     width: 13px;
     opacity: 0.65;
