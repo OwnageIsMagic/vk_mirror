@@ -1461,6 +1461,12 @@ var Feed = {
             hash: e,
             hide: t ? 1 : 0
         }), t && hide("top_feed_notification")
+    },
+    hide10YearsBlock: function(e) {
+        re("feed_vk10_years"), ajax.post("al_feed.php", {
+            act: "hide_vk10_years",
+            hash: e
+        })
     }
 };
 window.feed = Feed;

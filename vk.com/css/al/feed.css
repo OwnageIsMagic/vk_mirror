@@ -4,6 +4,7 @@
 
 .feed_filter_icon,
 .feed_lists_icon .ui_actions_menu_icons,
+.feed_vk10_years_header,
 .feedback_grouped_row_wrap .post_actions,
 .feedback_payment_thumb,
 .feedback_photo_icon,
@@ -1934,4 +1935,95 @@ div.feed_recom {
 
 .moder_blocks_info .ui_table {
     font-size: 12px
+}
+
+.feed_vk10_years {
+    text-align: center;
+    position: relative
+}
+
+.feed_vk10_years_header {
+    background-image: url(/images/landings/vk10_years/10_min.png);
+    width: 100%;
+    height: 230px
+}
+
+.feed_vk10_years_ava {
+    background: #fff;
+    padding: 6px;
+    border-radius: 9px;
+    margin: -151px auto 0px;
+    cursor: pointer;
+    height: 152px;
+    width: 152px;
+    box-sizing: border-box
+}
+
+.feed_vk10_years_ava_img {
+    width: 140px;
+    height: 140px;
+    border-radius: 3px;
+    vertical-align: top
+}
+
+.feed_vk10_years_title {
+    font-size: 23px;
+    line-height: 28px;
+    letter-spacing: 0.4px;
+    margin-top: 22px
+}
+
+.feed_vk10_years_caption {
+    color: #656565;
+    font-size: 14px;
+    line-height: 19px;
+    letter-spacing: -0.2px;
+    margin-top: 8px
+}
+
+.feed_vk10_years_sep_wrap {
+    padding: 0px 12px;
+    margin-top: 26px
+}
+
+.feed_vk10_years_sep {
+    height: 1px;
+    width: 100%;
+    background: #e7e8ec
+}
+
+.feed_vk10_years_btn {
+    font-size: 14px;
+    line-height: 16px;
+    letter-spacing: -0.2px;
+    display: block;
+    padding: 17px 0px;
+    -o-transition: background-color 150ms ease;
+    transition: background-color 150ms ease
+}
+
+.feed_vk10_years_btn:hover {
+    text-decoration: none;
+    background-color: #f5f7fa
+}
+
+.feed_vk10_years_hide {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    opacity: 0.3;
+    filter: alpha(opacity=30);
+    -o-transition: opacity 200ms ease;
+    transition: opacity 200ms ease;
+    cursor: pointer;
+    padding: 12px
+}
+
+.feed_vk10_years_hide:hover {
+    opacity: 0.5;
+    filter: alpha(opacity=50)
+}
+
+.feed_vk10_years_bottom_wrap:hover .feed_vk10_years_sep_wrap {
+    padding: 0px
 }

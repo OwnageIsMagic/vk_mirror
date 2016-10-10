@@ -8843,7 +8843,7 @@ function showInlineVideo(videoId, listId, options, ev, thumb) {
             var ap = window.ap;
             if (ap && ap.isPlaying()) {
                 ap.pause();
-                ap.pausedByVideo = 1;
+                ap.pausedByVideo = vkNow();
             }
         }
 

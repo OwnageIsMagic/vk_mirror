@@ -179,7 +179,7 @@ var Videoview = {
                 }
                 window.Notifier && setTimeout(function() {
                     Notifier.lcSend("video_start")
-                }, 0), window.ap && ap.isPlaying() && (ap.pause(), ap.pausedByVideo = 1)
+                }, 0), window.ap && ap.isPlaying() && (ap.pause(), ap.pausedByVideo = vkNow())
             },
             onVideoPlayStarted: function(e, i, o) {
                 var t = Videoview.getVideoModule(e + "_" + i),
@@ -644,19 +644,18 @@ var Videoview = {
             }, 5e3)), mvcur.mousemoved = !1
         },
         show: function(e, i, o, t) {
-            var a = window.ap;
-            a && a.isPlaying() && (a.pause(), a.pausedByVideo = 1), window.forcePauseAudio = !0, t && t.autoplay && Videoview.playerCallback.onVideoStreamPlaying(), debugLog(
-                "show video " + i);
-            var n = window.mvcur && mvcur.mvShown,
-                d = window.mvcur && mvcur.player;
-            if (n && (d && domPN(d.el) === ge("video_player") ? d.deinitVideo() : (val("mv_player_box", ""), hide("mv_player_box"), show("mv_progress_box"))), window.mvcur &&
+            window.ap && ap.isPlaying() && (ap.pause(), ap.pausedByVideo = vkNow()), window.forcePauseAudio = !0, t && t.autoplay && Videoview.playerCallback.onVideoStreamPlaying(),
+                debugLog("show video " + i);
+            var a = window.mvcur && mvcur.mvShown,
+                n = window.mvcur && mvcur.player;
+            if (a && (n && domPN(n.el) === ge("video_player") ? n.deinitVideo() : (val("mv_player_box", ""), hide("mv_player_box"), show("mv_progress_box"))), window.mvcur &&
                 clearInterval(mvcur.nextTimerUpdateInterval), window.mvcur && mvcur.minimized) {
                 if (!t.nomin) return mvcur.videoRaw = i, mvcur.options = t, mvcur.listId = o, mvcur.mvData = !1, t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) :
                     VideoPlaylist.removeBlock(), !0;
                 t.prevLoc && (mvcur.mvPrevLoc = t.prevLoc), debugLog("unminimizing in show"), Videoview.unminimize(!0, !1, !0)
             }
             if (t.queue && (debugLog("pushing in videoview.show"), layerQueue.push(), t.queue = !1), !t.noLocChange && nav.objLoc.z && 0 == nav.objLoc.z.indexOf("video") && (
-                    cur.mvHistoryBack = cur.mvHistoryBack || 1, cur.mvHistoryBack++), n || layerQueue.hide(), window.forcePauseAudio = !1, this.init(), mvcur.showTime = (new Date)
+                    cur.mvHistoryBack = cur.mvHistoryBack || 1, cur.mvHistoryBack++), a || layerQueue.hide(), window.forcePauseAudio = !1, this.init(), mvcur.showTime = (new Date)
                 .getTime(), removeEvent(window, "resize", Videoview.onResize), removeEvent(window, "focus blur", Videoview.onPageFocusChange), removeEvent(document,
                     "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
                 removeEvent(mvLayerWrap, "click", Videoview.onClick), addEvent(window, "resize", Videoview.onResize), addEvent(window, "focus blur", Videoview.onPageFocusChange),
@@ -666,7 +665,7 @@ var Videoview = {
                     layers.wrapshow(mvLayerWrap, .8), layers.fullhide = Videoview.hide
                 }, 0), mvcur.noLocChange = 0, t.ad_video && (t.hideInfo = 1, t.noLocChange = 1, mvcur.noLocChange = 1, mvcur.videoAds = 1), mvcur.noHistory = t.noLocChange ||
                 t.noHistory, mvcur.blackInterval = setInterval(Videoview.moveCheck, 18e4), mvcur.videoRaw = i, mvcur.options = t, mvcur.listId = o, mvcur.mvData = !1, mvcur.mvShown = !
-                0, mvcur.player = d, t.prevLoc ? mvcur.mvPrevLoc = t.prevLoc : setTimeout(function() {
+                0, mvcur.player = n, t.prevLoc ? mvcur.mvPrevLoc = t.prevLoc : setTimeout(function() {
                     var e = document.URL;
                     Videoview.setLocation(t.noLocChange), e == document.URL && (e = ""), setTimeout(window.comScoreUDM && comScoreUDM.pbind(locProtocol + "//" + locHost +
                         "/al_video.php?comscorekw=pageview_candidate", e), 10)
@@ -674,11 +673,11 @@ var Videoview = {
                     mvOldX: e.pageX,
                     mvOldY: e.pageY,
                     mvOldT: vkNow()
-                }), n ? (Videoview.disableLayerContent(), VideoChat.destroy()) : Videoview.buildLayerContent(), toggle("mv_info", !t.hideInfo), t.expandPlayer) {
+                }), a ? (Videoview.disableLayerContent(), VideoChat.destroy()) : Videoview.buildLayerContent(), toggle("mv_info", !t.hideInfo), t.expandPlayer) {
                 mvcur.player = t.expandPlayer, t.expandPlayer = 1;
-                var r = domClosest("video_box_wrap", mvcur.player.el);
+                var d = domClosest("video_box_wrap", mvcur.player.el);
                 ge("mv_player_box")
-                    .appendChild(r), hide("mv_progress_box"), show("mv_player_box"), mvcur.player.onExpanded()
+                    .appendChild(d), hide("mv_progress_box"), show("mv_player_box"), mvcur.player.onExpanded()
             }
             return t.playlistId ? Videoview.initPlaylistBlock(i, t.playlistId, t.catLoadMore) : VideoPlaylist.removeBlock(), Videoview.cleanUpStoredVSegs(), t.minimized &&
                 setTimeout(Videoview.minimize.bind(Videoview), 0), !1
@@ -763,9 +762,9 @@ var Videoview = {
                     }
                 }
                 cur.vSearchPos && delete cur.vSearchPos, cur.vSearchLastActionTime && (cur.vSearchLastActionTime = (new Date)
-                    .getTime()), mvcur.finished || Videoview.logViewedPercentage(), window.forcePauseAudio || (window.ap && !ap.isPlaying() && ap.pausedByVideo && (ap.play(),
-                    delete ap.pausedByVideo), window.Notifier && Notifier.lcSend("video_hide")), s ? hide(mvLayerWrap) : (layers.wraphide(mvLayerWrap), layers.fullhide = !
-                    1), window.tooltips && tooltips.destroyAll(cur.mvBox);
+                    .getTime()), mvcur.finished || Videoview.logViewedPercentage(), window.forcePauseAudio || (window.ap && !ap.isPlaying() && ap.pausedByVideo && (vkNow() -
+                    ap.pausedByVideo < 18e4 && ap.play(), delete ap.pausedByVideo), window.Notifier && Notifier.lcSend("video_hide")), s ? hide(mvLayerWrap) : (layers.wraphide(
+                    mvLayerWrap), layers.fullhide = !1), window.tooltips && tooltips.destroyAll(cur.mvBox);
                 var u = "mv_dark";
                 removeClass(mvLayerWrap, u), removeClass(layerBG, u), mvcur.mvShown = !1, removeEvent(window, "resize", Videoview.onResize), removeEvent(document,
                         "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
@@ -1888,9 +1887,9 @@ var Videoview = {
                     }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"), hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1,
                     removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
                 var t = "mv_dark";
-                return addClass(mvLayerWrap, t), addClass(layerBG, t),
-                    mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle("mvContainer", "mv_container"), mvcur.mvPlayer &&
-                    Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
+                return addClass(mvLayerWrap, t),
+                    addClass(layerBG, t), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle("mvContainer", "mv_container"),
+                    mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
                         width: "",
                         height: ""
                     }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,
