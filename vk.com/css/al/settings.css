@@ -561,7 +561,8 @@
 
 .settings_list_row .settings_label,
 .settings_list_row .settings_labeled_text {
-    padding-top: 2px
+    padding-top: 2px;
+    line-height: 16px
 }
 
 .settings_blacklist {
