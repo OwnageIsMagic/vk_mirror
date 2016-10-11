@@ -648,8 +648,8 @@ var WkView = {
                 var e = this[0],
                     r = this[1];
                 e && r && r.parentNode.replaceChild(e, r)
-            }), clearInterval(wkcur.updatesCheckInt), clearInterval(wkcur.timeUpdateInt), window.tooltips && tooltips.destroyAll(), delete cur.editing, void delete wkcur
-            .postInited) : !1
+            }), clearInterval(wkcur.updatesCheckInt), clearInterval(wkcur.timeUpdateInt), revertLastInlineVideo(), window.tooltips && tooltips.destroyAll(), delete cur
+            .editing, void delete wkcur.postInited) : !1
     },
     wallOnEdit: function(e, r) {
         wkcur.edit = !0, wkcur.editor = {
@@ -943,8 +943,7 @@ var WkView = {
         for (var r in ajaxCache) r.match(new RegExp("^\\/wkview.php\\#act=show", "")) && delete ajaxCache[r]
     },
     likesRemove: function(e) {
-        re("fans_fan_row" + e),
-            WkView.likesRecache(-1), WkView.onScroll(), domFC(ge("wk_likes_rows")) || nav.reload()
+        re("fans_fan_row" + e), WkView.likesRecache(-1), WkView.onScroll(), domFC(ge("wk_likes_rows")) || nav.reload()
     },
     historyInit: function() {
         addEvent(wkLayerWrap, "scroll", WkView.onScroll), addEvent(window, "resize", WkView.onResize), onBodyResize(), wkcur._hide.push(function() {
