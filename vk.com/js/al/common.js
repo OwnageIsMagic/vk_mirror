@@ -10044,7 +10044,7 @@ function mentionOver(el, opts) {
         checkLeft: true,
         reverseOffset: opts.reverseOffset || 112,
         dir: 'auto',
-        appendEl: domClosest('_im_mess_stack', el) || domClosest('rb_box_wrap', el) ||
+        appendEl: domClosest('_im_peer_history', el) || domClosest('rb_box_wrap', el) ||
             domClosest('wk_cont', el) || domClosest('scroll_fix_wrap', el)
     });
 }
@@ -10980,7 +10980,7 @@ function audioShowActionTooltip(btn) {
 
     if (gpeByClass('_im_mess_stack', btn)) {
         options.appendParentCls = '_im_mess_stack';
-        options.shift = [13, 10, 0];
+        options.shift = [7, 10, 0];
         options.noZIndex = true;
 
     } else if (gpeByClass('top_notify_wrap', btn)) {
