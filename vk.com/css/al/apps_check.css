@@ -514,6 +514,10 @@
     display: none
 }
 
+#apps_collection_rows+.no_rows {
+    margin-top: 20px
+}
+
 .apps_collection_label {
     font-size: 16px;
     color: #000;
