@@ -125,6 +125,7 @@
 .audio_page_player {
     background-color: #fafbfc;
     border-bottom: 1px solid #e7e8ec;
+    position: relative;
     box-sizing: border-box
 }
 

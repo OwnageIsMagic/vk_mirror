@@ -1,3 +1,4 @@
+#gtop_app_in_groups .gtop_image,
 .group_box_extra .info_icon_email,
 .group_box_extra .info_icon_phone,
 .group_box_row .group_box_delete,
@@ -401,6 +402,36 @@ a.groups_messages_block .ui_rmenu_count {
     text-align: center;
     background: #f7f7f7;
     padding: 8px
+}
+
+.gtop_complex_message {
+    padding: 20px
+}
+
+.gtop_complex_message .gtop_image {
+    margin: 0 15px 0 0;
+    width: 100px;
+    height: 100px;
+    float: left;
+    background-size: 97px 100px
+}
+
+.gtop_complex_message .gtop_content {
+    min-height: 100px
+}
+
+.gtop_complex_message .gtop_content .gtop_header {
+    font-size: 19px;
+    margin: 8px 0 5px;
+    color: #222;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.gtop_complex_message .gtop_content .gtop_message {
+    color: #505559;
+    padding: 0
 }
 
 .gtop_message {
@@ -847,4 +878,8 @@ a.groups_catalog_comm_title_link {
 .group_app_button button {
     padding-left: 24px;
     padding-right: 24px
+}
+
+#gtop_app_in_groups .gtop_image {
+    background: url(/images/message_money.png?1) no-repeat 0 0
 }

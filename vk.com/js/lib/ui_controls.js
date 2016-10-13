@@ -1446,7 +1446,7 @@ extend(UiControl.prototype, {
         if (t = intval(t), e = intval(e), extend(this.container.style, {
                 top: e + "px",
                 left: t + "px"
-            }), setStyle(this.rows, "width", "auto"), this.options.columnsCount && !browser.msie) {
+            }), setStyle(this.rows, "width", "auto"), this.options.columnsCount && (!browser.msie || browser.version >= 10)) {
             setStyle(this.rows, "columnCount", "auto"), setStyle(this.rows, "MozColumnCount", "auto"), setStyle(this.rows, "webkitColumnCount", "auto"), setStyle(this.rows,
                 "height", "auto");
             var i = geByTag("a", this.rows)

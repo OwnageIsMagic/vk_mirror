@@ -224,8 +224,8 @@ var AppsCheck = {
                     s = trim(val(a));
                 if (browser.opera_mobile || browser.safari_mobile || s) return;
                 hide("comm_answers" + o);
-                var r = ge("reply_link" + o);
-                r && (show(r), hide("replies_wrap" + o)), a.blur(), a.active || setStyle(a, {
+                var c = ge("reply_link" + o);
+                c && (show(c), hide("replies_wrap" + o)), a.blur(), a.active || setStyle(a, {
                     height: 14
                 }), a.phonblur && a.phonblur()
             }
@@ -237,10 +237,10 @@ var AppsCheck = {
         if (e.lastLen !== o.length || n) {
             var a = e.lastLen = o.length,
                 s = cur.options.max_post_len,
-                r = a - o.replace(/\n/g, "")
+                c = a - o.replace(/\n/g, "")
                 .length;
-            t = ge(t), a > s - 100 || r > 4 ? (show(t), a > s ? t.innerHTML = getLang("global_recommended_exceeded", a - s) : r > 4 ? t.innerHTML = getLang(
-                "global_recommended_lines", r - 4) : t.innerHTML = getLang("text_N_symbols_remain", s - a)) : hide(t)
+            t = ge(t), a > s - 100 || c > 4 ? (show(t), a > s ? t.innerHTML = getLang("global_recommended_exceeded", a - s) : c > 4 ? t.innerHTML = getLang(
+                "global_recommended_lines", c - 4) : t.innerHTML = getLang("text_N_symbols_remain", s - a)) : hide(t)
         }
     },
     sendReply: function(e) {
@@ -299,10 +299,10 @@ var AppsCheck = {
                     onHide: AppsCheck.finishCheck.bind(AppsCheck, e)
                 }, a, getLang("global_cancel"));
                 else {
-                    var s, r = window,
-                        c = document.documentElement;
-                    if (r.pageNode) {
-                        var i = Math.max(intval(r.innerHeight), intval(c.clientHeight)) - 200;
+                    var s, c = window,
+                        r = document.documentElement;
+                    if (c.pageNode) {
+                        var i = Math.max(intval(c.innerHeight), intval(r.clientHeight)) - 200;
                         s = Math.min(n, i)
                     } else s = n;
                     showFastBox({
@@ -597,13 +597,10 @@ var AppsCheck = {
                 width: null,
                 cursor: null
             });
-            var r = !t || !hasClass(a[s], "disabled");
-            r && o++, r ? a[s].removeAttribute("skipsort") : a[s].setAttribute("skipsort", 1)
+            var c = !t || !hasClass(a[s], "disabled");
+            c && o++, c ? a[s].removeAttribute("skipsort") : a[s].setAttribute("skipsort", 1)
         }
-        return o > 1 && sorter.init(n, {
-            onReorder: cur.reorderApps,
-            dh: 0
-        }), cur.onlyEnabled = t, e.innerHTML = t ? getLang("apps_all_collections") : getLang("apps_only_enabled_collections"), toggle("no_apps", !o), !1
+        return cur.onlyEnabled = t, e.innerHTML = t ? getLang("apps_all_collections") : getLang("apps_only_enabled_collections"), toggle("no_apps", !o), !1
     },
     deleteCollection: function(e, t) {
         return !showFastBox({
@@ -682,7 +679,7 @@ var AppsCheck = {
         }) : notaBene(cur.input)
     },
     actFeatured: function(e, t, n, o, a, s) {
-        var r = t.innerHTML;
+        var c = t.innerHTML;
         t.innerHTML = '<img src="/images/upload.gif" />', ajax.post("apps_check", {
             act: "a_" + e + "_featured",
             aid: n,
@@ -693,7 +690,7 @@ var AppsCheck = {
                     .innerHTML = e
             },
             onFail: function(e) {
-                return t.innerHTML = r, setTimeout(showFastBox(getLang("global_error"), e)
+                return t.innerHTML = c, setTimeout(showFastBox(getLang("global_error"), e)
                     .hide, __debugMode ? 3e4 : 3e3), !0
             }
         })

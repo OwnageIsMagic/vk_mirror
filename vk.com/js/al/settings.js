@@ -567,6 +567,18 @@ var Settings = {
             onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("cposts")
         })
     },
+    videostartCheck: function() {
+        clearTimeout(cur.videostartUpdateTO), cur.videostartUpdateTO = setTimeout(Settings.videostartSubmit, 200)
+    },
+    videostartSubmit: function() {
+        ajax.post("/al_settings.php", {
+            act: "a_change_autostart_video",
+            hash: cur.options.video_autostart_hash,
+            video_autostart: isChecked(ge("settings_video_autostart")) ? 1 : 0
+        }, {
+            onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("cposts")
+        })
+    },
     microblogCheck: function(e) {
         hasClass(ge("settings_" + e), "disabled") || (clearTimeout(cur.microblogUpdateTO), cur.microblogUpdateTO = setTimeout(Settings.microblogSubmit, 200))
     },
@@ -1160,7 +1172,7 @@ var Settings = {
                 }
             })) : (n ? (confirmText = getLang("settings_transfer_decline_confirm"), confirmBtn = getLang("settings_transfer_decline_btn")) : (confirmText = getLang(
             "settings_transfer_cancel_confirm"), confirmBtn = getLang("settings_transfer_cancel_btn")), void(cur.confirmBox = showFastBox(getLang(
-            "global_action_confirmation"), confirmText, confirmBtn, Settings.moneyTransferCancel.pbind(e, t, s, n, 1), getLang("global_cancel"))));
+            "global_action_confirmation"), confirmText, confirmBtn, Settings.moneyTransferCancel.pbind(e, t, s, n, 1), getLang("global_cancel"))))
     },
     moneyTransferRepeat: function(e, t) {
         return showBox("al_payments.php?act=money_transfer_box", {

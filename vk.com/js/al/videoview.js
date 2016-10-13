@@ -205,12 +205,17 @@ var Videoview = {
                 }, {
                     onDone: function(e) {}
                 });
+                if (cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i) {
+                    var s = vkNow() - cur.videoAutoplayStat.launched,
+                        v = cur.videoAutoplayStat.preloaded ? 1 : 0;
+                    statlogsValueEvent("video_autoplay_start", s, v)
+                }
                 if (void 0 !== r) {
-                    var s = Videoview.getMvData();
-                    switch (s.tns_monetized ? vkImage()
+                    var l = Videoview.getMvData();
+                    switch (l.tns_monetized ? vkImage()
                         .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + irand(1, 1e9) : vkImage()
-                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), s.kz && (vkImage()
-                            .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), s.l_type) {
+                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), l.kz && (vkImage()
+                            .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), l.l_type) {
                         case 1:
                             vkImage()
                                 .src =
@@ -847,7 +852,8 @@ var Videoview = {
             } else mvcur.mvPrevLoc ? nav.setLoc(mvcur.mvPrevLoc) : ("video" == nav.objLoc[0] || nav.objLoc[0].match(/^video-?\d+_\d+/)) && nav.setLoc({
                 0: "video"
             });
-            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)), delete mvcur.options.prevTitle), mvcur.noHistory = 1
+            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)),
+                delete mvcur.options.prevTitle), mvcur.noHistory = 1
         },
         highlightComment: function(e) {
             if (e = ge(e)) {
@@ -1884,12 +1890,12 @@ var Videoview = {
             if (mvcur.minimized) {
                 o || layerQueue.push(), i || (layerQueue.hide(), setTimeout(function() {
                         mvcur.noHistory = 1, layerQueue.noHistory(), layers.wrapshow(mvLayerWrap, .7), layers.fullhide = Videoview.hide
-                    }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"), hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1,
-                    removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
+                    }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"),
+                    hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1, removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap",
+                        mvLayerWrap);
                 var t = "mv_dark";
-                return addClass(mvLayerWrap, t),
-                    addClass(layerBG, t), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle("mvContainer", "mv_container"),
-                    mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
+                return addClass(mvLayerWrap, t), addClass(layerBG, t), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle(
+                        "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
                         width: "",
                         height: ""
                     }), Videoview.updateSize(), addEvent(window, "resize", Videoview.onResize), addEvent(document,

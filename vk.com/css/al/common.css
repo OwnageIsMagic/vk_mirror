@@ -6227,7 +6227,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_bottom {
-    margin-top: 15px
+    margin-top: 6px
 }
 
 .eltt.eltt_bottom:after,
@@ -6247,7 +6247,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_top {
-    margin-top: -15px
+    margin-top: -6px
 }
 
 .eltt.eltt_top:after,
@@ -6267,7 +6267,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_right {
-    margin-left: 15px
+    margin-left: 6px
 }
 
 .eltt.eltt_right:after,
@@ -6287,7 +6287,7 @@ button.ui_load_more_btn {
 }
 
 .eltt.eltt_left {
-    margin-left: -15px
+    margin-left: -6px
 }
 
 .eltt.eltt_left:after,
