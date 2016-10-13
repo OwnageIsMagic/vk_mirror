@@ -961,7 +961,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio",
     AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track",
     AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v3",
-    AudioPlayer.LISTEN_TIME = 10, AudioPlayer.DEFAULT_VOLUME = .8;
+    AudioPlayer.LISTEN_TIME = 10, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .8;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
         def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -1691,18 +1691,23 @@ AudioPlayer.tabIcons = {
             }.bind(this)), i()
         }.bind(this))
     }, AudioPlayer.prototype._adsPlayAd = function(t) {
-        this._adsIsAdReady() && (this._adman.onCompleted(function() {
-            this._adsReadyInfo = !1, this._adman = !1, this._adsSetCurrentDelay(0), this.notify(AudioPlayer.EVENT_PROGRESS, 0), this.notify(AudioPlayer.EVENT_AD_COMPLETED),
-                this._adPlaying = this._isPlaying = !1, t(), this._adsSendAdEvent("completed")
-        }.bind(this)), this._adman.onStarted(function() {
-            this.notify(AudioPlayer.EVENT_PROGRESS, 0), this.notify(AudioPlayer.EVENT_AD_STARTED), this._adman.setVolume(this.getVolume()), this._adsSendAdEvent(
-                "started")
-        }.bind(this)), this._adman.onTimeRemained(function(t) {
-            this._adsCurrentProgress = t.percent / 100, this.notify(AudioPlayer.EVENT_PROGRESS, t.percent / 100, t.duration)
-        }.bind(this)), this._isPlaying = !0, this._adPlaying = !0, this._adPaused = !1, this._adman.start("postroll"), this.notify(AudioPlayer.EVENT_PLAY), this.notify(
-            AudioPlayer.EVENT_PROGRESS, 0))
+        if (this._adsIsAdReady()) {
+            this._adman.onCompleted(function() {
+                this._adsReadyInfo = !1, this._adman = !1, this._adsSetCurrentDelay(0), this.notify(AudioPlayer.EVENT_PROGRESS, 0), this.notify(AudioPlayer.EVENT_AD_COMPLETED),
+                    this._adPlaying = this._isPlaying = !1, t(), this._adsSendAdEvent("completed")
+            }.bind(this)), this._adman.onStarted(function() {
+                this.notify(AudioPlayer.EVENT_PROGRESS, 0), this.notify(AudioPlayer.EVENT_AD_STARTED), this._adsUpdateVolume(), this._adsSendAdEvent("started")
+            }.bind(this));
+            var i = [.25, .5, .75];
+            this._adman.onTimeRemained(function(t) {
+                this._adsCurrentProgress = t.percent / 100, this.notify(AudioPlayer.EVENT_PROGRESS, t.percent / 100, t.duration), each(i, function(t, e) {
+                    return this._adsCurrentProgress >= e ? (i.shift(), this._adsSendAdEvent("progress_" + intval(100 * e)), !1) : void 0
+                }.bind(this))
+            }.bind(this)), this._isPlaying = !0, this._adPlaying = !0, this._adPaused = !1, this._adman.start("postroll"), this.notify(AudioPlayer.EVENT_PLAY), this.notify(
+                AudioPlayer.EVENT_PROGRESS, 0)
+        }
     }, AudioPlayer.prototype._adsUpdateVolume = function() {
-        this._adman && this._adman.setVolume(this.getVolume())
+        this._adman && this._adman.setVolume(this.getVolume() * AudioPlayer.AUDIO_ADS_VOLUME_COEFF)
     }, AudioPlayer.prototype._adsSendAdEvent = function(t) {
         ajax.post("al_audio.php", {
             act: "ad_event",
@@ -1820,8 +1825,7 @@ AudioPlayer.tabIcons = {
         this._player && this._player.stopAudio()
     }, AudioPlayerFlash.prototype._checkFlashLoaded = function() {
         var t = ge("player");
-        if (this._checks = this._checks || 0,
-            this._checks++, AudioUtils.debugLog("Flash element check", this._checks), this._checks > 10) {
+        if (this._checks = this._checks || 0, this._checks++, AudioUtils.debugLog("Flash element check", this._checks), this._checks > 10) {
             AudioUtils.debugLog("No Flash element found after some amount of checks"), this._player = !1;
             var i = this._onReady;
             return i && i(!1)
