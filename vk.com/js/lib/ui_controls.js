@@ -228,12 +228,14 @@ extend(UiControl.prototype, {
         },
         highlight: function(t, e) {
             t = -1 == e.indexOf(" ") ? t.split(" ") : [t];
-            var i = "",
-                s = parseLatin(e);
-            null !== s && (e = e + "|" + s);
-            var o = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + escapeRE(e) + "))(?![^<>]*>)(?![^&;]+;)", "gi");
-            for (var n in t) i += (n > 0 ? " " : "") + t[n].replace(o, "$2<em>$3</em>");
-            return i
+            var i = [escapeRE(e)],
+                s = parseLatin(e),
+                o = parseCyr(e),
+                n = "";
+            null !== s && i.push(escapeRE(s)), null !== o && i.push(escapeRE(o));
+            var h = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + i.join("|") + "))(?![^<>]*>)(?![^&;]+;)", "gi");
+            for (var l in t) n += (l > 0 ? " " : "") + t[l].replace(h, "$2<em>$3</em>");
+            return n
         },
         formatResult: function(t) {
             return t[1] + ("string" == typeof t[2] ? " <span>" + t[2] + "</span>" : "")
@@ -1660,8 +1662,8 @@ extend(UiControl.prototype, {
             h = {};
         for (i = 0; i < this.options.indexkeys.length; i++) e[this.options.indexkeys[i]] && (n += " " + e[this.options.indexkeys[i]].replace(this.options.delimeter,
                 " ")
-            .replace(/<[^>]*>/, ""));
-        for (n = trim(winToUtf(n)
+            .replace(/<[^>]*>/g, ""));
+        for (n += (parseLatin(n) || "") + (parseCyr(n) || ""), n = trim(winToUtf(n)
                 .toLowerCase())
             .split(/\s+/), i = 0; i < n.length; i++)
             for (s = 1; s <= this.options.chars; s++) o = n[i].substr(0, s), h[o] || (h[o] = 1, void 0 === this.storage.index[o] && (this.storage.index[o] = []), this.storage
@@ -1694,7 +1696,7 @@ extend(UiControl.prototype, {
             for (o = 0; o < e.options.indexkeys.length; o++) r += " " + h[e.options.indexkeys[o]].replace(e.options.delimeter, " ")
                 .replace("<b>", "")
                 .replace("</b>", "");
-            for (r = winToUtf(r)
+            for (r += (parseLatin(r) || "") + (parseCyr(r) || ""), r = winToUtf(r)
                 .toLowerCase(), o = 0; o < t.length; o++)
                 if (-1 == r.indexOf(" " + t[o])) {
                     l = !0;
@@ -1769,10 +1771,10 @@ window.inlineOnEvent || (window.inlineOnEvent = function(t) {
                     .replace("{nolabel}", this.options.cancelLabel)
                     .replace("{yeslabel}", this.options.confirmLabel) + "</table>") + "</table>"
             }), this.mainTable = geByClass("inlMainTable", this.container)[0], this.mainCell = geByClass("inlContent", this.mainTable)[0], this.contentTable =
-            geByClass("inlContentTable", this.mainCell)[0], setStyle(this.contentTable, "width", this.options.width), this.input = geByClass("inlInput", this.contentTable)[
-                0], this.buttonOkCell = geByClass("inlButtonOk", this.contentTable)[0],
-            this.buttonCancelCell = geByClass("inlButtonCancel", this.contentTable)[0], this.buttonOk = this.buttonOkCell.firstChild.firstChild, this.buttonCancel =
-            this.buttonCancelCell.firstChild.firstChild, this.container.appendChild(this.mainTable), this.mainCell.appendChild(this.contentTable)
+            geByClass("inlContentTable", this.mainCell)[0], setStyle(this.contentTable, "width", this.options.width),
+            this.input = geByClass("inlInput", this.contentTable)[0], this.buttonOkCell = geByClass("inlButtonOk", this.contentTable)[0], this.buttonCancelCell =
+            geByClass("inlButtonCancel", this.contentTable)[0], this.buttonOk = this.buttonOkCell.firstChild.firstChild, this.buttonCancel = this.buttonCancelCell.firstChild
+            .firstChild, this.container.appendChild(this.mainTable), this.mainCell.appendChild(this.contentTable)
     },
     initEvents: function() {
         var t = this;

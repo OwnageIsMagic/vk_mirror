@@ -1199,9 +1199,8 @@ AudioPlayer.tabIcons = {
         var t = window.Notifier;
         t && t.lcSend("audio_start");
         try {
-            var i = ge("video_player") || window.html5video || null;
-            i && i.playVideo && i.playVideo(!1)
-        } catch (e) {}
+            window.Videoview && Videoview.togglePlay(!1, !0)
+        } catch (i) {}
     }, AudioPlayer.prototype.showHQLabel = function(t) {
         var i = "_audio_show_hq_label";
         return void 0 === t ? !!ls.get(i) : (t = !!t, ls.set(i, t), AudioUtils.toggleAudioHQBodyClass(), t)

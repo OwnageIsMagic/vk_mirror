@@ -1664,13 +1664,13 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 #group_apps_wrapper #apps_catalog {
-    padding: 0 20px 7px
+    padding: 0 20px 7px 25px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row {
     border-bottom: 1px solid #e8e9ed;
     height: 52px;
-    padding: 13px 2px 10px
+    padding: 13px 0px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row:last-child {
@@ -1682,30 +1682,33 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_img {
-    width: 60px;
-    height: 60px;
-    float: left
+    margin-right: 14px;
+    width: 50px;
+    height: 50px;
+    float: left;
+    border-radius: 3px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, .5)
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_img .apps_catalog_row_img_img {
-    width: 60px;
-    height: 60px
+    width: 50px;
+    height: 50px;
+    border-radius: 3px
 }
 
-#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info {
-    margin: 0 64px
+#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_row_field {
+    margin-bottom: 2px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-height: 15px;
+    padding-right: 10px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_row_name {
-    margin-bottom: 2px;
     font-weight: bolder;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
-}
-
-#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_row_desc {
-    margin-bottom: 2px;
-    margin-top: 5px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_add,

@@ -1517,6 +1517,10 @@ var Dev = {
         cur.devMainSliderEl = geByClass1('dev_main_featured_banner');
 
         Dev.mainPageSliderStartRotation();
+
+        cur.destroy.push(function() {
+            Dev.mainPageSliderStopRotation();
+        });
     },
 
     mainPageSliderChange: function(pos, nav) {

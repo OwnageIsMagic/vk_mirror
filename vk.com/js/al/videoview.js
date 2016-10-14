@@ -411,13 +411,15 @@ var Videoview = {
                     i && i[e] && i[e](), mvcur.nextTimer && mvcur.nextTimer[e] && mvcur.nextTimer[e]()
                 }, 0))
         },
-        togglePlay: function(e) {
+        togglePlay: function(e, i) {
             if (ge("video_yt") && window.VideoYoutube) VideoYoutube.togglePlay(e);
             else if (window.mvcur && mvcur.player) mvcur.player.togglePlay(e);
-            else if (cur.videoInlinePlayer) cur.videoInlinePlayer.togglePlay(e);
-            else {
-                var i = ge("video_player") || window.html5video;
-                i && i === window.html5video ? i.playVideo(e, !0) : i && i.playVideo && i && i.playVideo(e)
+            else if (cur.videoInlinePlayer) {
+                var o = !e && i && cur.videoInlinePlayer.isFromAutoplay() && !cur.videoInlinePlayer.isTouchedByUser();
+                o || cur.videoInlinePlayer.togglePlay(e)
+            } else {
+                var t = ge("video_player") || window.html5video;
+                t && t === window.html5video ? t.playVideo(e, !0) : t && t.playVideo && t && t.playVideo(e)
             }
         },
         sendVideoAdStat: function(e, i, o) {
@@ -852,8 +854,7 @@ var Videoview = {
             } else mvcur.mvPrevLoc ? nav.setLoc(mvcur.mvPrevLoc) : ("video" == nav.objLoc[0] || nav.objLoc[0].match(/^video-?\d+_\d+/)) && nav.setLoc({
                 0: "video"
             });
-            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)),
-                delete mvcur.options.prevTitle), mvcur.noHistory = 1
+            mvcur.options.prevTitle && (window.document.title = replaceEntities(stripHTML(mvcur.options.prevTitle)), delete mvcur.options.prevTitle), mvcur.noHistory = 1
         },
         highlightComment: function(e) {
             if (e = ge(e)) {
@@ -1889,10 +1890,10 @@ var Videoview = {
         unminimize: function(e, i, o) {
             if (mvcur.minimized) {
                 o || layerQueue.push(), i || (layerQueue.hide(), setTimeout(function() {
-                        mvcur.noHistory = 1, layerQueue.noHistory(), layers.wrapshow(mvLayerWrap, .7), layers.fullhide = Videoview.hide
-                    }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"),
-                    hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1, removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap",
-                        mvLayerWrap);
+                        mvcur.noHistory = 1, layerQueue.noHistory(), layers.wrapshow(mvLayerWrap, .7),
+                            layers.fullhide = Videoview.hide
+                    }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"), hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1,
+                    removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
                 var t = "mv_dark";
                 return addClass(mvLayerWrap, t), addClass(layerBG, t), mvcur.needShowApprove && (mvcur.needShowApprove = !1, show("mv_approve")), Videoview.restoreStyle(
                         "mvContainer", "mv_container"), mvcur.mvPlayer && Videoview.restoreStyle("mvPlayer", mvcur.mvPlayer), setStyle("mv_player_box", {
