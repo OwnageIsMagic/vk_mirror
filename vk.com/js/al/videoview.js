@@ -181,41 +181,41 @@ var Videoview = {
                     Notifier.lcSend("video_start")
                 }, 0), window.ap && ap.isPlaying() && (ap.pause(), ap.pausedByVideo = vkNow())
             },
-            onVideoPlayStarted: function(e, i, o) {
-                var t = Videoview.getVideoModule(e + "_" + i),
-                    a = "";
+            onVideoPlayStarted: function(e, i, o, t) {
+                var a = Videoview.getVideoModule(e + "_" + i),
+                    n = "";
                 if (window.Video && Video.isInCatalog()) {
-                    var n = VideoPlaylist.getCurListId();
-                    n = n.replace("cat_", ""), a = Videocat.isTop3Playlist(n) ? "featured" : n
+                    var d = VideoPlaylist.getCurListId();
+                    d = d.replace("cat_", ""), n = Videocat.isTop3Playlist(d) ? "featured" : d
                 }
-                var d;
-                d = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
+                var r;
+                r = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
                     .playlistId ? "layer_with_playlist" : "layer", window.mvcur && mvcur.mvData && (mvcur.viewStartedTimestamp = (new Date)
                         .getTime());
-                var r = ajax.post("al_video.php", {
+                var s = ajax.post("al_video.php", {
                     act: "video_view_started",
                     oid: e,
                     vid: i,
                     hash: o,
                     quality: window.mvcur ? mvcur.mvData.resolution : 0,
-                    module: t,
-                    videocat: a,
+                    module: a,
+                    videocat: n,
                     inline: -1,
-                    player_view_type: d
+                    player_view_type: r
                 }, {
                     onDone: function(e) {}
                 });
                 if (cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i) {
-                    var s = vkNow() - cur.videoAutoplayStat.launched,
-                        v = cur.videoAutoplayStat.preloaded ? 1 : 0;
-                    statlogsValueEvent("video_autoplay_start", s, v)
+                    var v = vkNow() - cur.videoAutoplayStat.launched,
+                        l = cur.videoAutoplayStat.preloaded ? 1 : 0;
+                    statlogsValueEvent("video_autoplay_start", v, l, t)
                 }
-                if (void 0 !== r) {
-                    var l = Videoview.getMvData();
-                    switch (l.tns_monetized ? vkImage()
+                if (void 0 !== s) {
+                    var c = Videoview.getMvData();
+                    switch (c.tns_monetized ? vkImage()
                         .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + irand(1, 1e9) : vkImage()
-                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), l.kz && (vkImage()
-                            .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), l.l_type) {
+                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), c.kz && (vkImage()
+                            .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), c.l_type) {
                         case 1:
                             vkImage()
                                 .src =

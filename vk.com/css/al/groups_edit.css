@@ -1600,6 +1600,69 @@ a.group_ad_post_link.deleted.deleted:hover {
     color: #656565
 }
 
+#group_apps_wrapper #group_apps_edit .app_setting_header .app_settings_image {
+    width: 60px;
+    height: 60px;
+    padding-right: 3px
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .app_settings_image .app_settings_image_img {
+    border-radius: 3px;
+    width: 60px;
+    height: 60px
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info {
+    padding-top: 8px
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .app_settings_group,
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .app_settings_name {
+    margin-bottom: 4px
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .app_settings_name,
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .app_settings_name .app_settings_name_link {
+    font-weight: 700
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .app_settings_group_link {
+    color: #656565
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .apps_settings_go_link {
+    color: #2a5885
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .app_settings_info {
+    line-height: normal
+}
+
+#group_apps_wrapper .group_apps_doc {
+    padding: 15px 20px 17px
+}
+
+#group_apps_wrapper .ui_tabs_header {
+    background-color: #fff
+}
+
+#group_apps_wrapper .apps_footer {
+    height: 54px;
+    width: 100%;
+    line-height: 54px;
+    background: #fafbfc;
+    border-top: 1px solid #e7e8ec;
+    border-bottom: 1px solid #e7e8ec;
+    display: table;
+    box-sizing: border-box
+}
+
+#group_apps_wrapper .apps_footer .apps_footer_left {
+    text-align: center;
+    position: relative;
+    color: #828282
+}
+
 #group_apps_wrapper #apps_catalog {
     padding: 0 20px 7px
 }
@@ -1619,14 +1682,14 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_img {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     float: left
 }
 
-#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_img img {
-    width: 50px;
-    height: 50px
+#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_img .apps_catalog_row_img_img {
+    width: 60px;
+    height: 60px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info {
@@ -1635,11 +1698,14 @@ a.group_ad_post_link.deleted.deleted:hover {
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_row_name {
     margin-bottom: 2px;
-    font-weight: bolder
+    font-weight: bolder;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_row_desc {
-    margin-bottom: 2px
+    margin-bottom: 2px;
+    margin-top: 5px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_add,
@@ -1647,78 +1713,6 @@ a.group_ad_post_link.deleted.deleted:hover {
     float: right;
     height: 52px;
     line-height: 52px
-}
-
-#group_apps_wrapper .group_apps_doc {
-    padding: 15px 20px 17px
-}
-
-#group_apps_wrapper .ui_tabs_header {
-    background-color: #fff
-}
-
-#group_apps_wrapper .app_settings_image {
-    width: 60px;
-    height: 60px;
-    padding-right: 0
-}
-
-#group_apps_wrapper .app_settings_image img {
-    border-radius: 3px;
-    width: 60px;
-    height: 60px
-}
-
-#group_apps_wrapper .group_edit_app_info {
-    padding-top: 8px
-}
-
-#group_apps_wrapper .group_edit_app_info .app_settings_group,
-#group_apps_wrapper .group_edit_app_info .app_settings_name {
-    margin-bottom: 4px
-}
-
-#group_apps_wrapper .group_edit_app_info .app_settings_name,
-#group_apps_wrapper .group_edit_app_info .app_settings_name a {
-    font-weight: 700
-}
-
-#group_apps_wrapper .group_edit_app_info .app_settings_group a {
-    color: #656565
-}
-
-#group_apps_wrapper .group_edit_app_info .apps_settings_go a {
-    color: #2a5885
-}
-
-#group_apps_wrapper .group_edit_app_info .app_settings_info {
-    line-height: normal
-}
-
-#group_apps_wrapper #app_status_1 {
-    padding: 6px 0 8px
-}
-
-#group_apps_wrapper .apps_footer {
-    height: 54px;
-    line-height: 54px;
-    background: #fafbfc;
-    border-top: 1px solid #e7e8ec;
-    display: table;
-    box-sizing: border-box;
-    width: 100%
-}
-
-#group_apps_wrapper .apps_footer .apps_footer_left {
-    text-align: center;
-    position: relative;
-    color: #828282
-}
-
-#group_apps_wrapper .apps_footer .apps_footer_left>div {
-    position: absolute;
-    left: 0;
-    right: 0
 }
 
 .group_edit_community_widget_settings #community_widget_settings {

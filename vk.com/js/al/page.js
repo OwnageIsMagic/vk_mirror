@@ -1433,17 +1433,24 @@ var Page = {
             });
         },
 
-        initVideoAutoplay: function() {
-            var canPlayHls = window.MediaSource && MediaSource.isTypeSupported && MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"') && !browser.safari &&
-                !browser.vivaldi;
-            if (!canPlayHls || browser.mobile || cur.videoAutoplayScrollHandler || !window.preloadInlineVideo) {
+        initVideoAutoplay: function(canPlayMp4) {
+            if (browser.mobile || (browser.safari && vk.id != 19220683) || canPlayMp4 === false || cur.videoAutoplayScrollHandler || !window.preloadInlineVideo) {
                 return;
             }
 
+            if (isUndefined(canPlayMp4)) {
+                checkMp4(function(canPlay) {
+                    Page.initVideoAutoplay(canPlay);
+                });
+                return;
+            }
+
+            var canPlayHls = window.MediaSource && MediaSource.isTypeSupported && MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"') && !browser.safari &&
+                !browser.vivaldi;
             var fixedHeaderHeight = getSize('page_header')[1];
 
             var scrollHandler = debounce(function() {
-                if (layers.visible || window.mvcur && mvcur.mvShown) return;
+                if (layers.visible || window.mvcur && mvcur.mvShown || nav.objLoc.z) return;
 
                 var curPlayer = cur.videoInlinePlayer;
                 if (curPlayer && curPlayer.isFullscreen()) return;
@@ -1467,7 +1474,7 @@ var Page = {
                             Videoview.togglePlay(true);
                         }
                         return;
-                    } else {
+                    } else if (!curPlayer.isActiveLive()) {
                         Videoview.togglePlay(false);
                     }
                 }
@@ -1477,8 +1484,9 @@ var Page = {
 
                 while (index--) {
                     var thumb = thumbs[index];
-                    var isLoading = !!attr(thumb, 'data-loading');
-                    var isPlaying = !!attr(thumb, 'data-playing');
+                    if (!canPlayHls && domData(thumb, 'duration') > 5 * 60) continue;
+                    var isLoading = domData(thumb, 'data-loading');
+                    var isPlaying = domData(thumb, 'data-playing');
                     var rect = (isPlaying ? domNS(thumb) : thumb)
                         .getBoundingClientRect();
 
@@ -1532,13 +1540,13 @@ var Page = {
                 delete cur.videoAutoplayScrollHandler;
             });
 
-            stManager.add(['videoplayer.js', 'videoplayer.css']);
+            stManager.add(['videoplayer.js', 'videoplayer.css', 'hls.min.js'], function() {});
 
             function _getVideoParams(thumb) {
                 return {
-                    video: attr(thumb, 'data-video'),
-                    list: attr(thumb, 'data-list'),
-                    post_id: attr(domClosest('post', thumb), 'data-post-id'),
+                    video: domData(thumb, 'video'),
+                    list: domData(thumb, 'list'),
+                    post_id: domData(domClosest('post', thumb), 'post-id'),
                     autoplay: 1,
                     from_autoplay: 1
                 };

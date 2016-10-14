@@ -409,7 +409,7 @@ a.groups_messages_block .ui_rmenu_count {
 }
 
 .gtop_complex_message .gtop_image {
-    margin: 0 15px 0 0;
+    margin: 0 20px 0 0;
     width: 100px;
     height: 100px;
     float: left;
@@ -432,6 +432,10 @@ a.groups_messages_block .ui_rmenu_count {
 .gtop_complex_message .gtop_content .gtop_message {
     color: #505559;
     padding: 0
+}
+
+.gtop_complex_message .gtop_content .gtop_mesage_buttons .gtop_button {
+    height: 30px
 }
 
 .gtop_message {
@@ -880,6 +884,10 @@ a.groups_catalog_comm_title_link {
     padding-right: 24px
 }
 
+#gtop_app_in_groups.gtop_complex_message {
+    height: 100px
+}
+
 #gtop_app_in_groups .gtop_image {
-    background: url(/images/message_money.png?1) no-repeat 0 0
+    background: url(/images/community_apps_logo.png) no-repeat 0 0
 }
