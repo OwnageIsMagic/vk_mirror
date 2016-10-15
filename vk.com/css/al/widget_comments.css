@@ -495,7 +495,7 @@
 
 .wcomments_post.reply_box_open .reply_box_inner_wrap .reply_field,
 .wcomments_post.reply_box_open .reply_box_inner_wrap .reply_field~.placeholder .ph_input {
-    min-height: 34px;
+    min-height: 43px;
     height: auto;
     padding: 10px 14px 12px;
     border-radius: 2px;

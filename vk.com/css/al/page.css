@@ -2500,6 +2500,10 @@ a.page_media_link_desc {
     width: 10px
 }
 
+.box_body .media_preview .progress_x {
+    margin-top: 6px
+}
+
 #choose_video .item {
     display: block;
     position: relative;

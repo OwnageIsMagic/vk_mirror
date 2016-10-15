@@ -1686,8 +1686,7 @@ a.group_ad_post_link.deleted.deleted:hover {
     width: 50px;
     height: 50px;
     float: left;
-    border-radius: 3px;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, .5)
+    border-radius: 3px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_img .apps_catalog_row_img_img {

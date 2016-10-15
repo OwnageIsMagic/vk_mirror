@@ -76,8 +76,8 @@ Bugs = {
             for (var s in cur.tags) o.push(s);
             o.length && (t.tags = o.join(","))
         }
-        var i = "subscriptions" == cur.type ? 7 : 1;
-        return a != i && (t.status = "" + a), (t.q || t.tags) && "all" != nav.objLoc && "trending" != nav.objLoc.act && (nav.objLoc.act = "all"), nav.objLoc.act && (t.act =
+        var r = "subscriptions" == cur.type ? 7 : 1;
+        return a != r && (t.status = "" + a), (t.q || t.tags) && "all" != nav.objLoc && "trending" != nav.objLoc.act && (nav.objLoc.act = "all"), nav.objLoc.act && (t.act =
             nav.objLoc.act), t
     },
     sameParams: function(e) {
@@ -135,10 +135,10 @@ Bugs = {
             .replace(/\n\n\n+/g, "\n\n");
         if (e.lastLen !== o.length) {
             var s = e.lastLen = o.length,
-                i = s - o.replace(/\n/g, "")
+                r = s - o.replace(/\n/g, "")
                 .length;
-            a = ge(a), s > t - 100 || i > 10 ? (show(a), s > t ? a.innerHTML = getLang("global_recommended_exceeded", s - t) : i > 10 ? a.innerHTML = getLang(
-                "global_recommended_lines", i - 10) : a.innerHTML = getLang("text_N_symbols_remain", t - s)) : hide(a)
+            a = ge(a), s > t - 100 || r > 10 ? (show(a), s > t ? a.innerHTML = getLang("global_recommended_exceeded", s - t) : r > 10 ? a.innerHTML = getLang(
+                "global_recommended_lines", r - 10) : a.innerHTML = getLang("text_N_symbols_remain", t - s)) : hide(a)
         }
     },
     checkNewFields: function(e) {
@@ -166,12 +166,12 @@ Bugs = {
             a.length && (t.tags = a)
         }
         var s = [],
-            i = cur.bugsNewMedia.chosenMedias;
+            r = cur.bugsNewMedia.chosenMedias;
         if (s)
-            for (var o in i) {
-                var r = i[o],
-                    n = r[0],
-                    d = r[1];
+            for (var o in r) {
+                var i = r[o],
+                    n = i[0],
+                    d = i[1];
                 ("photo" == n || "doc" == n) && s.push(n + "," + d)
             }
         return s.length && (t.attachs = s), ajax.post("bugs", t, {
@@ -217,8 +217,8 @@ Bugs = {
             o = (e.fileName || e)
             .replace(/[&<>"']/g, ""),
             s = e.fileName ? a + "_" + e.fileName : e,
-            i = ge("upload" + s + "_progress_wrap");
-        i && hide(geByClass1("progress_x", i)), ajax.post("al_photos.php", extend({
+            r = ge("upload" + s + "_progress_wrap");
+        r && hide(geByClass1("progress_x", r)), ajax.post("al_photos.php", extend({
             act: "choose_uploaded_support"
         }, t), {
             onDone: function(e, t) {
@@ -231,15 +231,18 @@ Bugs = {
     },
     chooseDocUploaded: function(e, t) {
         var a = void 0 !== e.ind ? e.ind : e,
-            o = ((e.fileName || e)
-                .replace(/[&<>"']/g, ""), e.fileName ? a + "_" + e.fileName : e),
-            s = ge("upload" + o + "_progress_wrap");
-        s && hide(geByClass1("progress_x", s)), ajax.post("docs.php", extend({
+            o = (e.fileName || e)
+            .replace(/[&<>"']/g, ""),
+            s = e.fileName ? a + "_" + e.fileName : e,
+            r = ge("upload" + s + "_progress_wrap");
+        r && hide(geByClass1("progress_x", r)), ajax.post("docs.php", extend({
             act: "a_save_doc",
             from: "choose"
         }, t), {
-            onDone: function(e, t, a) {
-                re("upload" + o + "_progress_wrap"), cur.bugsNewMedia.chooseMedia("doc", e + "_" + t, a)
+            onDone: function(e, t, r) {
+                re("upload" + s + "_progress_wrap"), cur.bugsNewMedia.chooseMedia("doc", e + "_" + t, extend(r, {
+                    upload_ind: a + "_" + o
+                }))
             },
             onFail: Bugs.chooseFail.pbind(e)
         })
@@ -249,8 +252,8 @@ Bugs = {
             o = (e.fileName || e)
             .replace(/[&<>"']/g, "");
         if ("fileApi" == Upload.types[a] && !Upload.options[a].wiki_editor) {
-            var s, i = e.fileName ? a + "_" + e.fileName : e;
-            cur.imMedia ? (re("upload" + i + "_progress_wrap"), s = cur.imMedia.lnkId, cur.addMedia[s].unchooseMedia()) : cur.addMedia && (re("upload" + i +
+            var s, r = e.fileName ? a + "_" + e.fileName : e;
+            cur.imMedia ? (re("upload" + r + "_progress_wrap"), s = cur.imMedia.lnkId, cur.addMedia[s].unchooseMedia()) : cur.addMedia && (re("upload" + r +
                 "_progress_wrap"), s = (cur.attachMediaIndexes || {})[o], s && cur.addMedia[s].unchooseMedia())
         }
         topError("Upload failed", {
@@ -297,22 +300,22 @@ Bugs = {
                     if ("fileApi" == Upload.types[o]) {
                         var s = (cur.attachMediaIndexes || {})[o];
                         if (void 0 === s || s && cur.addMedia[s].chosenMedia || cur.imMedia) {
-                            var i = {
+                            var r = {
                                 loaded: t,
                                 total: a
                             };
-                            e.fileName && (i.fileName = e.fileName.replace(/[&<>"']/g, "")), cur.bugsNewMedia.showMediaProgress("photo", o, i)
+                            e.fileName && (r.fileName = e.fileName.replace(/[&<>"']/g, "")), cur.bugsNewMedia.showMediaProgress("photo", o, r)
                         }
                     } else if ("flash" == Upload.types[o]) {
                         if (!ge("form" + o + "_progress")) {
-                            for (var r = Upload.obj[o], n = getSize(r)[1], d = n / 2 + 10, u = r.firstChild; u;) 1 == u.nodeType && (u.id == "uploader" + o &&
+                            for (var i = Upload.obj[o], n = getSize(i)[1], d = n / 2 + 10, u = i.firstChild; u;) 1 == u.nodeType && (u.id == "uploader" + o &&
                                 browser.msie ? setStyle(u, {
                                     position: "relative",
                                     left: "-5000px"
                                 }) : setStyle(u, {
                                     visibility: "hidden"
                                 })), u = u.nextSibling;
-                            r.appendChild(ce("div", {
+                            i.appendChild(ce("div", {
                                 innerHTML: '<div class="bugs_progress_wrap">            <div id="form' + o +
                                     '_progress" class="bugs_progress" style="width: 0%;"></div>          </div></div>'
                             }, {
@@ -338,8 +341,7 @@ Bugs = {
                 clear: 1,
                 type: "photo",
                 max_attempts: 3,
-                file_input: curBox()
-                    .inp,
+                file_input: cur.uploadInput,
                 server: opts.server,
                 error: opts.default_error,
                 error_hash: opts.error_hash,
@@ -381,22 +383,22 @@ Bugs = {
                     if ("fileApi" == Upload.types[o]) {
                         var s = (cur.attachMediaIndexes || {})[o];
                         if (void 0 === s || s && cur.addMedia[s].chosenMedia || cur.imMedia) {
-                            var i = {
+                            var r = {
                                 loaded: t,
                                 total: a
                             };
-                            e.fileName && (i.fileName = e.fileName.replace(/[&<>"']/g, "")), cur.bugsNewMedia.showMediaProgress("doc", o, i)
+                            e.fileName && (r.fileName = e.fileName.replace(/[&<>"']/g, "")), cur.bugsNewMedia.showMediaProgress("doc", o, r)
                         }
                     } else if ("flash" == Upload.types[o]) {
                         if (!ge("form" + o + "_progress")) {
-                            for (var r = Upload.obj[o], n = getSize(r)[1], d = n / 2 + 10, u = r.firstChild; u;) 1 == u.nodeType && (u.id == "uploader" + o &&
+                            for (var i = Upload.obj[o], n = getSize(i)[1], d = n / 2 + 10, u = i.firstChild; u;) 1 == u.nodeType && (u.id == "uploader" + o &&
                                 browser.msie ? setStyle(u, {
                                     position: "relative",
                                     left: "-5000px"
                                 }) : setStyle(u, {
                                     visibility: "hidden"
                                 })), u = u.nextSibling;
-                            r.appendChild(ce("div", {
+                            i.appendChild(ce("div", {
                                 innerHTML: '<div class="bugs_progress_wrap">            <div id="form' + o +
                                     '_progress" class="bugs_progress" style="width: 0%;"></div>          </div></div>'
                             }, {
@@ -423,8 +425,7 @@ Bugs = {
                 clear: 1,
                 type: "photo",
                 max_attempts: 3,
-                file_input: curBox()
-                    .inp,
+                file_input: cur.uploadInput,
                 server: opts.server,
                 error: opts.default_error,
                 error_hash: opts.error_hash,
@@ -432,189 +433,44 @@ Bugs = {
             })
         }
     },
+    __photoMediaHandler: function(e) {
+        stManager.add("upload.js", function() {
+            e.photoCallback ? e.photoCallback() : e.oneClick ? ge("bugs_photo_input")
+                .click() : Bugs.addScreen(Bugs.initPhotoUpload.pbind("bas_add_data", {
+                    hideOnStart: !0
+                }))
+        })
+    },
+    __docMediaHandler: function(e) {
+        stManager.add("upload.js", function() {
+            e.docCallback ? e.docCallback() : e.oneClick ? ge("bugs_doc_input")
+                .click() : Bugs.addDoc(Bugs.initDocUpload.pbind("bas_add_data", {
+                    hideOnStart: !0
+                }))
+        })
+    },
     initAddMedia: function(e, t, a, o) {
-        var s, i = [],
-            r = {
-                photo: 3,
-                doc: -64
-            };
-        o = o || {}, each(a || [], function(e, t) {
-            if (t[1]) {
-                var a = !1;
-                switch (t[0]) {
-                    case "photo":
-                        a = function() {
-                            if (o.oneClick) {
-                                var e = ge("bug_photo_input"),
-                                    t = ge("bugs_view_comments") || curBox() && geByClass1("bugs_new_cont", curBox()
-                                        .bodyNode);
-                                e || (e = t.appendChild(ce("input", {
-                                    type: "file",
-                                    multiple: "true",
-                                    id: "bug_photo_input",
-                                    onchange: function() {
-                                        data(this, "changed", !0), curBox()
-                                            .inp = this, Bugs.initPhotoUpload("bas_upload")
-                                    }
-                                }))), e.click()
-                            } else Bugs.addScreen(Bugs.initPhotoUpload.pbind("bas_add_data", {
-                                hideOnStart: !0
-                            }))
-                        };
-                        break;
-                    case "doc":
-                        a = function() {
-                            if (o.oneClick) {
-                                var e = ge("bug_doc_input"),
-                                    t = ge("bugs_view_comments") || curBox() && geByClass1("bugs_new_cont", curBox()
-                                        .bodyNode);
-                                e || (e = t.appendChild(ce("input", {
-                                    type: "file",
-                                    multiple: "true",
-                                    id: "bug_doc_input",
-                                    onchange: function() {
-                                        data(this, "changed", !0), curBox()
-                                            .inp = this, Bugs.initDocUpload("bas_upload")
-                                    }
-                                }))), e.click()
-                            } else Bugs.addDoc(Bugs.initDocUpload.pbind("bas_add_data", {
-                                hideOnStart: !0
-                            }))
-                        }
-                }
-                var s = !1,
-                    n = "3px " + r[t[0]] + "px",
-                    d = !1;
-                t[1].replace(/\s/g, "&nbsp;");
-                i.push([t[0], t[1], n, a, d, s])
+        var s = new MediaSelector(e, t, a, extend(o, {
+            disabledTypes: ["share", "page"],
+            limit: o.limit || 10,
+            nocl: !0,
+            mediaHandlers: {
+                photo: Bugs.__photoMediaHandler,
+                doc: Bugs.__docMediaHandler
             }
-        });
-        var n = o.limit || 10,
-            d = initCustomMedia(e, i, {
-                onShow: function() {
-                    cur.chooseMedia = s.chooseMedia, cur.showMediaProgress = s.showMediaProgress, cur.attachCount = s.attachCount
-                },
-                onItemClick: function(e) {
-                    return s.attachCount() >= n ? (showFastBox(getLang("global_error"), getLang("attachments_limit", n)), !1) : !0
-                }
-            });
-        if (d) {
-            t = t || "media_preview";
-            var u, l, c, g = d.id,
-                p = ge(t);
-            val(p, '<div id="page_pics_preview' + g + '" class="page_pics_preview media_preview clear_fix"></div><div id="page_docs_preview' + g +
-                '" class="page_docs_preview media_preview clear_fix"></div><div id="page_progress_preview' + g +
-                '" class="page_progress_preview media_preview clear_fix"></div>');
-            var l = p.childNodes[0],
-                c = p.childNodes[1],
-                u = p.childNodes[2];
-            return removeClass(p, "media_preview"), addClass(p, "multi_media_preview"), s = {
-                _addMediaLink: e,
-                lnkId: g,
-                menu: d,
-                handlers: {},
-                chosenMedias: [],
-                _showAddMedia: function() {
-                    d.show()
-                },
-                _hideAddMedia: function(e) {
-                    d.hide(e)
-                },
-                chooseMedia: function(e, t, a, i, r) {
-                    if (s.onChange && s.onChange(e, t, a) === !1) return !1;
-                    if (s.attachCount() >= n && void 0 === a.upload_ind) return !1;
-                    var d, g = "",
-                        p = "",
-                        _ = !1;
-                    switch (e) {
-                        case "photo":
-                            isObject(a) || (a = {
-                                    thumb_m: a[0] || "",
-                                    thumb_s: a[1] || "",
-                                    list: a[2] || "",
-                                    view_opts: a[3] || "",
-                                    upload_ind: a.upload_ind || void 0
-                                }), vkImage()
-                                .src = a.thumb_s, d = o.nocl ? "" : " onclick=\"return Bugs.showPhoto('" + t + "', '" + a.list + "', " + a.view_opts.replace(/"/g,
-                                    "&quot;") + ');"', g = "<div " + d + ' class="fl_l page_preview_photo"><img class="page_preview_photo" src="' + a.thumb_s +
-                                '" /></div>', _ = !0;
-                            break;
-                        case "doc":
-                            if (!a.lang) return !1;
-                            a.thumb && a.thumb_s ? (g = '<a target="_blank" href="' + a.href + '" class="fl_l"><div class="page_preview_doc_photo"><img src="' + a.thumb_s +
-                                '" align="center"></div><div class="page_preview_doc_photo_hint">' + a.title + "</div></a>", _ = !0) : (g =
-                                '<a target="_blank" href="' + a.href + '" class="medadd_h medadd_h_doc inl_bl">' + a.lang.profile_choose_doc + "</a>", p =
-                                '<div class="medadd_c medadd_c_doc"><a target="_blank" href="' + a.href + '">' + a.title + "</a></div>")
-                    }
-                    var h = s.chosenMedias,
-                        f = h.length,
-                        b = "photos_list" == e ? se('<div class="page_preview_' + e + '_wrap" style="position: relative">' + g + '<div class="page_photos_count">' +
-                            t.split(",")
-                            .length + "</div></div>") : se('<div class="page_preview_' + e + '_wrap"' + (o.nocl ? ' style="cursor: default"' : "") + ">" + g +
-                            '<div class="page_media_x_wrap inl_bl" ' + (browser.msie ? "title" : "tootltip") + '="' + getLang("bugs_dont_attach") +
-                            '" onmouseover="if (browser.msie) return; showTooltip(this, {text: this.getAttribute(\'tootltip\'), shift: [13, 3, 3], black: 1})" onclick="cur.addMedia[' +
-                            s.lnkId + "].unchooseMedia(" + f + ')"><div class="page_media_x"></div></div>' + p + "</div>");
-                    return addClass(b, _ ? "fl_l" : "clear_fix"), void 0 !== a.upload_ind && re("upload" + a.upload_ind + "_progress_wrap"), (_ ? l : c)
-                        .appendChild(b), h.push([e, t, b, i]), toggle(l, l.childNodes.length > 0), toggle(c, c.childNodes.length > 0), toggle(u, u.childNodes.length >
-                            0), cur.fileApiUploadStarted || r === !0 || boxQueue.hideLast(), cur.lastPostMsg = !1, o.onMediaAdd && o.onMediaAdd(), void 0 !== a.upload_ind &&
-                        delete a.upload_ind, !1
-                },
-                unchooseMedia: function(e) {
-                    if (s.onChange && s.onChange(!1, e) === !1) return !1;
-                    if (void 0 === e) return void each(s.chosenMedias, function(e, t) {
-                        t && void 0 !== e && s.unchooseMedia(e)
-                    });
-                    var t, a = s.chosenMedias;
-                    a[e] && ((t = geByClass1("page_media_x_wrap", a[e][2], "div")) && t.tt && t.tt.el && t.tt.destroy(), re(a[e][2]), a[e] = !1), toggle(l, l.childNodes
-                        .length > 0), toggle(c, c.childNodes.length > 0), toggle(u, u.childNodes.length > 0), cur.lastPostMsg = !1, s.onChange && s.onChange(!1)
-                },
-                showMediaProgress: function(e, t, a) {
-                    if (s.onProgress && s.onProgress(e, t, a) === !1) return !1;
-                    var o = a.loaded / a.total,
-                        i = intval(100 * o),
-                        r = (a.fileName || a.name || "")
-                        .replace(/[&<>"']/g, ""),
-                        n = r ? t + "_" + r : t,
-                        d = r ? r.length > 33 ? r.substr(0, 30) + "..." : r : "",
-                        l = ge("upload" + n + "_progress");
-                    if (l)
-                        if (show(l), l.full) {
-                            var c = data(l, "tween"),
-                                p = intval(l.full * o);
-                            c && c.isTweening ? c.to.width = p : animate(l, {
-                                width: p + "px"
-                            }, 500)
-                        } else setStyle(l, {
-                            width: i + "%"
-                        });
-                    else {
-                        cur.attachMediaIndexes || (cur.attachMediaIndexes = {}), cur.attachMediaIndexes[n] = g;
-                        var _ = '<div class="fl_l"><div class="page_attach_progress_wrap" style="margin-top: 3px; margin-bottom: 4px;">  <div id="upload' + n +
-                            '_progress" class="page_attach_progress"></div></div></div></div>' + (d ? '<div class="attach_label fl_l">' + d + "</div>" : "") +
-                            '<div class="progress_x fl_l" onmouseover="animate(this, {opacity: 1}, 200); showTooltip(this, {text: \'' + getLang("bugs_dont_attach") +
-                            '\', shift: [6, 3, 3]})" onmouseout="animate(this, {opacity: 0.6}, 200);" onclick="Upload.terminateUpload(' + t + ", '" + (r || t) +
-                            "');\"></div>";
-                        u.appendChild(ce("div", {
-                            id: "upload" + n + "_progress_wrap",
-                            innerHTML: _,
-                            className: "clear_fix upload_" + t + "_progress"
-                        }, {
-                            marginTop: "6px"
-                        })), show(u), l = ge("upload" + n + "_progress"), l.full = !1, i ? setStyle(l, {
-                            width: l.full ? intval(l.full * o) + "px" : i + "%"
-                        }) : (setStyle(l, {
-                            width: "1px"
-                        }), hide(l))
-                    }
-                },
-                attachCount: function() {
-                    if (s.attachedCount) return s.attachedCount();
-                    if (!p) return 0;
-                    var e = l.childNodes.length + c.childNodes.length + u.childNodes.length;
-                    return e
-                }
-            }, cur.addMedia || (cur.addMedia = {}), cur.addMedia[g] = s, s
-        }
+        }));
+        return o.oneClick && (Bugs.__initOneClickMediaUpload("photo", o, Bugs.initPhotoUpload), Bugs.__initOneClickMediaUpload("doc", o, Bugs.initDocUpload)), s
+    },
+    __initOneClickMediaUpload: function(e, t, a) {
+        inputId = "bugs_" + e + "_input", inp = ge(inputId), wrap = ge("bugs_view_comments") || curBox() && geByClass1("bugs_new_cont", curBox()
+            .bodyNode), inp || wrap.appendChild(ce("input", {
+            type: "file",
+            multiple: "true",
+            id: inputId,
+            onchange: function() {
+                data(this, "changed", !0), cur.uploadInput = this, a("bas_upload", t)
+            }
+        }))
     },
     showMsg: function(e) {
         var t = ge("bugs_msg");
@@ -790,17 +646,17 @@ Bugs = {
         var a = geByClass1("bugs_update_text", ge("bug_update" + e)),
             o = "1px 0 0 -3px",
             s = "385px",
-            i = "8px";
-        return browser.mozilla ? o = "1px 0 0 -4px" : browser.opera ? o = "2px 0 0 -3px" : browser.msie && (i = "10px"), cur.editStarted = !0, ajax.post("bugs", {
+            r = "8px";
+        return browser.mozilla ? o = "1px 0 0 -4px" : browser.opera ? o = "2px 0 0 -3px" : browser.msie && (r = "10px"), cur.editStarted = !0, ajax.post("bugs", {
             act: "get_reply",
             id: e,
             hash: t
         }, {
-            onDone: function(r) {
+            onDone: function(i) {
                 delete cur.editStarted, a.parentNode.insertBefore(ce("div", {
                     id: "bug_update_edit" + e,
                     innerHTML: '<textarea class="bug_edit_update" id="bug_update' + e + 'edit" onkeydown="Bugs.saveReply(event, \'' + e + "', '" +
-                        t + '\')" style="width: ' + s + "; margin: " + o + ';">' + r + '</textarea><div style="margin: ' + i +
+                        t + '\')" style="width: ' + s + "; margin: " + o + ';">' + i + '</textarea><div style="margin: ' + r +
                         ' 0 8px -3px; height: 23px">  <div class="fl_l button_blue">    <button id="save_butn' + e +
                         '" onclick="Bugs.doSaveReply(\'' + e + "', '" + t + "')\">" + getLang("global_save") +
                         '</button>  </div>  <div class="fl_l button_gray" style="margin-left: 10px;">    <button id="cancel_butn' + e +
@@ -846,21 +702,6 @@ Bugs = {
             showProgress: lockButton.pbind(ge("save_butn" + e)),
             hideProgress: unlockButton.pbind(ge("save_butn" + e))
         })
-    },
-    showPhoto: function(e, t, a) {
-        var o = curBox();
-        cur.boxBackup = document.createDocumentFragment();
-        var s = o.bodyNode;
-        return cur.scrollTopBack = boxLayerWrap.scrollTop, a.onShow = function() {
-            for (; s.firstChild;) cur.boxBackup.appendChild(s.firstChild)
-        }, a.onHide = function() {
-            box = showFastBox("", ""), box.setOptions({
-                hideButtons: !0,
-                title: !1,
-                width: 500,
-                bodyStyle: "border: 0px; padding: 0px;"
-            }), box.bodyNode.appendChild(cur.boxBackup), box.setOptions({}), boxLayerWrap.scrollTop = cur.scrollTopBack
-        }, showPhoto(e, t, a)
     },
     selectTag: function(e, t) {
         return checkEvent(t) || "subscriptions" == cur.type ? !1 : (cur.tags = cur.tags || {}, cur.tags[e] = 1, addClass(ge("filter_tag" + e), "summary_tab_sel"),

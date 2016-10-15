@@ -422,9 +422,9 @@ a.groups_messages_block .ui_rmenu_count {
 
 .gtop_complex_message .gtop_content .gtop_header {
     font-size: 19px;
-    margin: 8px 0 5px;
+    margin: 9px 0 7px;
     color: #222;
-    font-weight: 500;
+    font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
 }

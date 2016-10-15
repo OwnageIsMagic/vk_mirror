@@ -144,7 +144,8 @@ var Feed = {
                     r += feed.pushEvent(this.split("<!>"), o + getSize("page_header_cont")[1])
                 });
                 var i = scrollGetY();
-                r && Math.abs(o - i) < 100 && scrollToY(i + r, 0, !1, !0), feed.updateTitle(), cur.gifAutoplayScrollHandler && cur.gifAutoplayScrollHandler()
+                r && Math.abs(o - i) < 100 && scrollToY(i + r, 0, !1, !0), feed.updateTitle(), cur.gifAutoplayScrollHandler && cur.gifAutoplayScrollHandler(), cur.videoAutoplayScrollHandler &&
+                    cur.videoAutoplayScrollHandler()
             }
         }
     },
@@ -275,22 +276,22 @@ var Feed = {
                     q = !1;
                 if (isVisible(j) && isVisible(R) && !isVisible("reply_link" + r)) {
                     var I = j.nextSibling,
-                        U = geByClass("new_reply", j, "div")
+                        A = geByClass("new_reply", j, "div")
                         .length + 1;
                     if (cur.wallMyOpened[r]) {
                         I && "replies_open" == I.className && re(I), q = !0;
-                        var A = geByClass1("wr_header", j, "a"),
+                        var U = geByClass1("wr_header", j, "a"),
                             V = geByClass("reply", j, "div")
                             .length + 1,
                             O = V;
-                        A && (O = intval(A.getAttribute("offs")
-                            .split("/")[1]) + 1), (O > 5 || O > V) && (A || j.insertBefore(A = ce("a", {
+                        U && (O = intval(U.getAttribute("offs")
+                            .split("/")[1]) + 1), (O > 5 || O > V) && (U || j.insertBefore(U = ce("a", {
                             className: "wr_header"
-                        }), j.firstChild), wall.updateRepliesHeader(r, A, V, O))
+                        }), j.firstChild), wall.updateRepliesHeader(r, U, V, O))
                     } else F = wall.updatePostImages(F), f = se(F), addClass(f, "new_reply"), I && "replies_open" == I.className || (I = ce("div", {
                         className: "replies_open",
                         onclick: wall.openNewComments.pbind(r)
-                    }), j.parentNode.insertBefore(I, j.nextSibling)), I.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, U)), I.newCnt = U
+                    }), j.parentNode.insertBefore(I, j.nextSibling)), I.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, A)), I.newCnt = A
                 } else re("reply_link" + r), show(R, j), q = !0;
                 r.split("_")[0] == vk.id && cur.feedUnreadCount++, f || (f = se(F)), j.appendChild(f), feed.needScrollPost(t, q ? f : I) && (c += i.offsetHeight - D), q &&
                     nodeUpdated(f), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
@@ -1026,8 +1027,8 @@ var Feed = {
             a = scrollGetY(),
             c = isVisible(i);
         return i ? (c ? n -= i.offsetHeight + intval(getStyle(e, "marginTop")) : (domPN(domPN(i)) || {})
-            .bits = 0, toggle(i, !c), val(r, c ? getLang("news_show_X_reposts", i.childNodes.length) : getLang("news_hide_reposts")), n && scrollToY(a + n + getSize(
-                "page_header")[1], 0), !1) : void(r && re(r.parentNode.parentNode))
+            .bits = 0, toggle(i, !c), val(r, c ? getLang("news_show_X_reposts", i.childNodes.length) : getLang("news_hide_reposts")),
+            n && scrollToY(a + n + getSize("page_header")[1], 0), !1) : void(r && re(r.parentNode.parentNode))
     },
     editHidden: function() {
         return showTabbedBox("al_settings.php", {

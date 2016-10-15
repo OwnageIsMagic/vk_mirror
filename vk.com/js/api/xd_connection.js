@@ -78,7 +78,7 @@
     // XDM object
     w.fastXDM = {
         _id: 0,
-        helperUrl: ((location.protocol === 'https:') ? 'https:' : 'http:') + '//vk.com/js/api/xdmHelper.js',
+        helperUrl: 'https://vk.com/js/api/xdmHelper.js',
 
         Server: function(methods, filter) {
             this.methods = methods || {};
@@ -472,7 +472,7 @@ VK.Modules = {
     load: function(name, callback, path) {
         if (!this.callbacks[name]) {
             this.callbacks[name] = [callback];
-            if (path == null) path = 'http://vk.com/js/api/modules/' + name + '.js';
+            if (path == null) path = 'https://vk.com/js/api/modules/' + name + '.js';
             VK.addScript(path);
         } else {
             this.callbacks[name].push(callback);
@@ -484,16 +484,8 @@ VK.showPortlet = function(opts) {
     VK.callMethod('showPortlet', opts)
 }
 
-if (VK._protocol !== 'https:') {
-    VK._protocol = ((location.protocol === 'https:') ? 'https:' : 'http:');
-}
-if (VK._protocol !== 'https:') {
-    VK.callMethod('getLocationProtocol', function(protocol) {
-        if (protocol === 'https:') {
-            VK._protocol = 'https:';
-        }
-    });
-}
+VK._protocol = 'https:';
+
 (function() {
     try {
         var scripts = document.getElementsByTagName('script');

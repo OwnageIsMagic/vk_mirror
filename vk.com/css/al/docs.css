@@ -426,3 +426,7 @@ a.docs_item_name {
     padding-top: 87px;
     background: url(/images/icons/attach_file.png) no-repeat center 0
 }
+
+#box_layer_wrap.box_layer_wrap--docs_upload {
+    z-index: 2000
+}

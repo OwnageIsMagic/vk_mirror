@@ -616,7 +616,7 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 
 .bas_box {
     position: relative;
-    padding: 14px 16px
+    padding: 20px 25px
 }
 
 .bas_box .dropbox_label {
@@ -625,8 +625,7 @@ body.dev #page_wrap .bugs_view_data .flat_button {
 
 #bas_add_data {
     margin: 15px auto;
-    text-align: center;
-    height: 25px
+    text-align: center
 }
 
 #bas_cancel_lnk {
@@ -648,6 +647,15 @@ body.dev #page_wrap .bugs_view_data .flat_button {
     height: 0px
 }
 
+.bas_warn_text {
+    margin-top: 25px;
+    font-size: 12.5px
+}
+
+.bas_about.info_msg {
+    margin: 0 0 25px
+}
+
 #bugs_error,
 #bugs_msg {
     margin: 25px 30px 0px
@@ -667,12 +675,6 @@ body.dev #page_wrap .bugs_view_data .flat_button {
     margin: 0px 5px;
     height: 57px;
     overflow: hidden
-}
-
-#bugs_screens_wrap .page_preview_doc_photo,
-#bugs_screens_wrap .page_preview_doc_photo img,
-.bugs_att_img {
-    width: 75px
 }
 
 #bugs_attachs .media_desc {
@@ -719,17 +721,6 @@ body.dev #page_wrap .bugs_view_data .flat_button {
     font-size: 0.81em
 }
 
-#bugs_screens_wrap .page_preview_doc_wrap {
-    height: 57px
-}
-
-#bugs_screens_wrap .page_preview_doc_photo_hint {
-    width: 69px;
-    padding: 1px 3px;
-    line-height: normal;
-    margin-top: -16px
-}
-
 .bugs_action {
     padding: 5px 10px;
     overflow: hidden;
@@ -755,12 +746,8 @@ body.dev #page_wrap .bugs_view_data .flat_button {
     padding: 20px 10px 1px
 }
 
-#bugs_attach {
-    padding: 3px 6px 0px 0px
-}
-
-#bug_doc_input,
-#bug_photo_input {
+#bugs_doc_input,
+#bugs_photo_input {
     visibility: hidden;
     width: 0px;
     height: 0px

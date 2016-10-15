@@ -131,7 +131,7 @@ var Docs = {
             })
         }
         var g = e[8],
-            f = " docs_icon_type" + d,
+            _ = " docs_icon_type" + d,
             h = rs(l ? cur.tpl.edit : cur.tpl.add, {
                 oid: a,
                 item_id: o
@@ -143,7 +143,7 @@ var Docs = {
             url: n,
             thumb: g,
             title: clean(s),
-            icon_class: f
+            icon_class: _
         }), rs(cur.tpl.item, {
             oid: a,
             item_id: o,
@@ -580,6 +580,12 @@ var Docs = {
             setStyle(cur.docsChooseDropbox, "height", Math.min(lastWindowHeight - c - t, o.bodyH - t))
         }
         return cancelEvent(e)
+    },
+    onDragEnter: function() {
+        addClass(cur.docsChooseWrap, "dropbox_over"), addClass("box_layer_wrap", "box_layer_wrap--docs_upload")
+    },
+    onDragOut: function() {
+        removeClass(cur.docsChooseWrap, "dropbox_over"), removeClass("box_layer_wrap", "box_layer_wrap--docs_upload")
     },
     _eof: 1
 };

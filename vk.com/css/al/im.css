@@ -1981,6 +1981,16 @@ body.mac .im_stickerpack_fixed {
     width: 320px
 }
 
+.im-page .im-page--error {
+    display: none;
+    cursor: pointer;
+    background: #fdf0f0;
+    border-radius: 2px;
+    border: solid 1px #f2cecf;
+    margin: 8px 20px 16px;
+    padding: 15px
+}
+
 .im-page .im-page--chat-body-wrap-inner_loading .pr {
     opacity: 1
 }
