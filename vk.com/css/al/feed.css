@@ -2027,3 +2027,7 @@ div.feed_recom {
 .feed_vk10_years_bottom_wrap:hover .feed_vk10_years_sep_wrap {
     padding: 0px
 }
+
+.feed_wall_reply_row .post_author {
+    padding-right: 0px
+}

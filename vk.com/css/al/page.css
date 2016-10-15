@@ -286,6 +286,10 @@
     display: none
 }
 
+.post_top_info_wall_reply_icon {
+    margin: 1px 0px -1px
+}
+
 .post_top_info_wall_reply_text {
     margin-left: 21px;
     line-height: 15px;
