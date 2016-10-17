@@ -1613,6 +1613,8 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 #group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info {
+    min-height: 60px;
+    margin-bottom: 0px;
     padding-top: 8px
 }
 

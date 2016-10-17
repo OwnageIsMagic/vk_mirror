@@ -22,7 +22,8 @@
 .wl_postreach_stat_comment_icon,
 .wl_postreach_stat_like_icon,
 .wl_postreach_stat_reach_icon,
-.wl_postreach_stat_share_icon {
+.wl_postreach_stat_share_icon,
+.wl_postreach_stat_video_icon {
     -ms-high-contrast-adjust: none
 }
 
@@ -788,7 +789,7 @@ div#wk_history_more_progress {
 }
 
 .wk_post_stats .wk_posts_stats_info {
-    background: #fafbfc;
+    background: #f7f8fa;
     padding: 9px 15px;
     border-bottom: 1px solid #e7e8ec;
     margin: -20px -25px 20px
@@ -817,7 +818,7 @@ div#wk_history_more_progress {
 }
 
 #wl_postreach_stat_body {
-    background: #fafbfc;
+    background: #f7f8fa;
     padding: 9px 15px;
     border-bottom: 1px solid #e7e8ec;
     margin: -20px -25px 20px
@@ -834,24 +835,28 @@ div#wk_history_more_progress {
 .wk_posts_stats_info_row .value,
 .wl_postreach_stat_bigtext {
     font-size: 24px;
+    letter-spacing: 0.4px;
     padding: 12px 0 13px
 }
 
 .wl_postreach_stat_smalltext {
     color: #0e0f11;
-    font-size: 1.2em;
+    font-size: 15px;
+    letter-spacing: -0.2px;
     font-weight: 700;
     height: 18px
 }
 
 .wk_posts_stats_info_row .description,
-.wl_postreach_stat_comment {
+.wl_postreach_stat_comment,
+.wl_postreach_stat_video_block_foot {
     font-size: 12.5px;
     color: #656565;
     overflow: hidden;
     text-overflow: ellipsis;
     line-height: 150%;
-    height: 36px
+    height: 36px;
+    margin-top: 2px
 }
 
 .wk_posts_stats_info_row,
@@ -861,9 +866,39 @@ div#wk_history_more_progress {
     box-sizing: border-box
 }
 
+.wl_postreach_stat_block.wide {
+    width: 100%
+}
+
 .wk_posts_stats_info_row .grey,
 .wl_postreach_stat_bigtext_gray {
     color: #939393
+}
+
+.wl_postreach_stat_video_wrap {
+    display: table;
+    width: 100%;
+    padding: 12px 0 13px;
+    padding-bottom: 0
+}
+
+.wl_postreach_stat_video_block {
+    display: table-cell;
+    max-width: 120px;
+    padding-right: 10px
+}
+
+.wl_postreach_stat_video_block:last-child {
+    padding-right: 0
+}
+
+.wl_postreach_stat_video_block_head {
+    font-size: 24px;
+    letter-spacing: 0.4px
+}
+
+.wl_postreach_stat_video_block_foot {
+    margin-top: 6px
 }
 
 .wk_posts_stats_info_row .comment,
@@ -890,13 +925,14 @@ div#wk_history_more_progress {
 .wl_postreach_stat_comment_icon,
 .wl_postreach_stat_like_icon,
 .wl_postreach_stat_reach_icon,
-.wl_postreach_stat_share_icon {
+.wl_postreach_stat_share_icon,
+.wl_postreach_stat_video_icon {
     display: inline-block;
     vertical-align: top;
     width: 22px;
     height: 22px;
     margin: 1px 6px -4px 0;
-    background: url(/images/icons/stats_icon.png?1) no-repeat 0 0
+    background: url(/images/icons/stats_icon.png?2) no-repeat 0 0
 }
 
 .wk_posts_stats_info_row .share .img,
@@ -907,6 +943,14 @@ div#wk_history_more_progress {
 .wk_posts_stats_info_row .comment .img,
 .wl_postreach_stat_comment_icon {
     background-position: left -60px
+}
+
+.wl_postreach_stat_video_icon {
+    width: 24px;
+    height: 24px;
+    margin-top: -3px;
+    margin-right: 9px;
+    background-position: left -118px
 }
 
 .wl_postreach_stat_reach_icon {
