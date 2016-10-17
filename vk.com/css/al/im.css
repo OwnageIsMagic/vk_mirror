@@ -5101,18 +5101,32 @@ body.sf .nim-dialog .nim-dialog--unread {
 .im-to-end {
     position: absolute;
     margin-top: -43px;
+    padding-bottom: 11px;
     cursor: pointer;
     box-sizing: border-box;
     left: 0;
     width: 100%;
-    display: none;
+    opacity: 0;
     color: #2a5885;
     font-size: 12.5px;
     z-index: 102;
-    text-align: center
+    text-align: center;
+    overflow: hidden;
+    -o-transition: 0.2s opacity;
+    transition: 0.2s opacity;
+    -o-transition-delay: 0.1s;
+    transition-delay: 0.1s
 }
 
 .im-to-end .im-to-end--label {
+    -webkit-transform: translateY(50px);
+    -ms-transform: translateY(50px);
+    -o-transform: translateY(50px);
+    transform: translateY(50px);
+    -o-transition: 0.2s transform;
+    transition: 0.2s transform;
+    -o-transition-delay: 0.1s;
+    transition-delay: 0.1s;
     position: relative;
     border: solid 1px #cfd9e1;
     padding: 8px 14px 8px 33px;
@@ -5128,6 +5142,23 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-to-end:hover .im-to-end--label {
     background-color: #f5f7fa
+}
+
+.im-to-end.im-to-end_shown {
+    opacity: 1
+}
+
+.im-to-end.im-to-end_shown .im-to-end--label {
+    -webkit-transform: translateY(0);
+    -ms-transform: translateY(0);
+    -o-transform: translateY(0);
+    transform: translateY(0)
+}
+
+.im-to-end.im-to-end_fast,
+.im-to-end.im-to-end_fast .im-to-end--label {
+    -o-transition: none!important;
+    transition: none!important
 }
 
 .im-to-end.im-to-end_loading .im-to-end--label {

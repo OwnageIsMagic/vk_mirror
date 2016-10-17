@@ -2065,6 +2065,11 @@ body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
     margin: 18px -20px 0
 }
 
+.apps_i_policy.no_margin_top {
+    margin-top: 0;
+    border-top: 0
+}
+
 .apps_i_group {
     position: relative;
     min-height: 40px
