@@ -702,8 +702,9 @@
             addClass(t, "ads_ads_preview_viewed");
             var s = scrollGetY(),
                 i = getXY(t)[1],
-                a = getSize(t)[1];
-            i + a > s + lastWindowHeight && scrollToY(i - (lastWindowHeight - a) / 2, 500)
+                a = getSize(t)[1],
+                d = vk.staticheader ? 0 : getSize("page_header_cont")[1];
+            (i + a > s + lastWindowHeight || s + d > i) && (a >= lastWindowHeight - d ? scrollToY(i - 10, 500) : scrollToY(i - (lastWindowHeight - a) / 2, 500))
         }
     }, AdsLight.overrideClickEvents = function(e, t, s) {
         function i(e) {

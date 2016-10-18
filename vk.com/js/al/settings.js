@@ -980,19 +980,19 @@ var Settings = {
     init: function() {
         cur.checkboxResultsTOs = {}, cur.module = "settings", cur.options.msg && Settings.showMsg(cur.options.msg), each({
             settings_status_default: getLang("settings_status_default_about"),
-            settings_no_wall_replies: getLang("settings_no_wall_replies_about")
+            settings_no_wall_replies: getLang("settings_no_wall_replies_about"),
+            settings_video_autoplay: getLang("settings_video_autoplay")
         }, function(e, t) {
-            ge(e)
-                .onmouseover = function() {
-                    showTooltip(this, {
-                        shift: [-20, 8, 8],
-                        dir: "auto",
-                        text: t,
-                        slide: 15,
-                        className: "settings_tt",
-                        hasover: 1
-                    })
-                }
+            e = ge(e), e && (e.onmouseover = function() {
+                showTooltip(this, {
+                    shift: [-20, 8, 8],
+                    dir: "auto",
+                    text: t,
+                    slide: 15,
+                    className: "settings_tt",
+                    hasover: 1
+                })
+            })
         });
         var e = ge("settings_pwd_tt_place");
         each([ge("settings_new_pwd"), ge("settings_confirm_pwd")], function() {
@@ -1167,8 +1167,9 @@ var Settings = {
                         "settings_transfer_status_cancelled"), void TopNotifier.invalidate())
                 },
                 onFail: function(e) {
-                    return removeClass(i, "settings_history_row_progress"), setTimeout(showFastBox(getLang("global_error"), e)
-                        .hide, 2e3), !0
+                    return removeClass(i, "settings_history_row_progress"),
+                        setTimeout(showFastBox(getLang("global_error"), e)
+                            .hide, 2e3), !0
                 }
             })) : (n ? (confirmText = getLang("settings_transfer_decline_confirm"), confirmBtn = getLang("settings_transfer_decline_btn")) : (confirmText = getLang(
             "settings_transfer_cancel_confirm"), confirmBtn = getLang("settings_transfer_cancel_btn")), void(cur.confirmBox = showFastBox(getLang(
