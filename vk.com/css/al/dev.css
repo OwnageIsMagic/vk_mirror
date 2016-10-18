@@ -2628,3 +2628,7 @@ input.dev_wrong_val {
     line-height: 29px;
     letter-spacing: 0.4px
 }
+
+.dev_page_cont .blog_entry {
+    margin-top: 20px
+}

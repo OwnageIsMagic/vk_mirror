@@ -43,6 +43,7 @@
 .page_microdata_logo_aliexpress,
 .page_microdata_logo_asos,
 .page_more_link.loading,
+.page_video_autoplay_tt_hide,
 .page_wall_search .page_reset_search,
 .page_wall_search .wall_search,
 .page_wm,
@@ -6300,4 +6301,56 @@ button.wall_block_app_btn {
 .videos_edit_main_album_description {
     margin-bottom: 10px;
     color: #656565
+}
+
+.eltt.page_video_autoplay_tt {
+    width: 280px;
+    padding: 11px 12px;
+    z-index: 110;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, .3), 0 0 1px 0 rgba(0, 20, 51, .4);
+    font-size: 13px;
+    line-height: 1.28
+}
+
+.eltt.page_video_autoplay_tt:before {
+    width: 14px;
+    height: 14px;
+    border: none;
+    border-bottom-left-radius: 3px;
+    background: #fff;
+    box-shadow: 0 0 1px 0 rgba(0, 20, 51, .4);
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    margin-right: -7px;
+    margin-top: -7px
+}
+
+.eltt.page_video_autoplay_tt:after {
+    height: 24px;
+    width: 12px;
+    border: none;
+    margin: 0;
+    margin-right: -12px;
+    margin-top: -12px;
+    background: #fff
+}
+
+.page_video_autoplay_tt_hide {
+    float: right;
+    height: 24px;
+    width: 24px;
+    margin: -3px -4px 0 0;
+    background: url(/images/icons/video_autoplay_tt_hide.png) no-repeat 50%;
+    -o-transition: opacity 0.2s;
+    transition: opacity 0.2s;
+    opacity: .7;
+    cursor: pointer
+}
+
+.page_video_autoplay_tt_hide:hover {
+    opacity: 1
 }

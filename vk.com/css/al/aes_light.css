@@ -1431,7 +1431,7 @@ a.ads_ad_box2:hover {
     max-height: 165px
 }
 
-.ads_ad_box.redesign .ads_ad_photo_box.big_image .ads_ad_photo {
+.ads_ad_box.redesign .ads_ad_photo_box.big_image.legacy .ads_ad_photo {
     margin-top: -14px
 }
 
@@ -1440,13 +1440,12 @@ a.ads_ad_box2:hover {
     max-height: 145px
 }
 
-.ads_ad_box.redesign .ads_ad_photo_box.promotion .ads_ad_photo {
-    margin-top: 0
-}
-
 .ads_ad_box.redesign .ads_ad_photo_box .ads_ad_photo {
     width: 145px;
-    max-width: 145px;
+    max-width: 145px
+}
+
+.ads_ad_box.redesign .ads_ad_photo_box.legacy .ads_ad_photo {
     margin-top: -10px
 }
 

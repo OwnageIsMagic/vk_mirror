@@ -260,11 +260,15 @@
 
 .ads_info_premoderation_request .ads_ad_box.app_in_news,
 .ads_info_premoderation_request .ads_ad_box.apps_only,
-.ads_info_premoderation_request .ads_ad_box.groups_only {
+.ads_info_premoderation_request .ads_ad_box.groups_only,
+.ads_info_premoderation_request .ads_ad_box.app_in_news.ver.repeat_ver.size_site.first,
+.ads_info_premoderation_request .ads_ad_box.apps_only.ver.repeat_ver.size_site.first,
+.ads_info_premoderation_request .ads_ad_box.groups_only.ver.repeat_ver.size_site.first {
     padding: 10px
 }
 
-.ads_info_premoderation_request .ads_ad_box.mobile {
+.ads_info_premoderation_request .ads_ad_box.mobile,
+.ads_info_premoderation_request .ads_ad_box.mobile.ver.repeat_ver.size_site.first {
     padding: 14px
 }
 
@@ -273,6 +277,30 @@
 }
 
 .ads_info_premoderation_request .ads_ad_box_border {
+    border-width: 1px
+}
+
+.ads_info_premoderation_request .ads_ad_box.redesign {
+    padding: 10px
+}
+
+.ads_info_premoderation_request .ads_ad_box.redesign .ads_ad_box_border {
+    background-color: #edeef0
+}
+
+.ads_info_premoderation_request .ads_ad_box.redesign .ads_ad_box_border.repeat_ver.first {
+    border-width: 1px
+}
+
+.ads_info_premoderation_request .ads_ad_box.redesign .ads_ad_box2.ver.repeat_ver.size_site {
+    margin: 0
+}
+
+.ads_info_premoderation_request .ads_ad_box.redesign.ver.repeat_ver.size_site.first {
+    padding: 10px
+}
+
+.ads_premoderation_requests .ads_ad_box_border {
     border-width: 1px
 }
 
@@ -379,11 +407,15 @@
 
 .ads_all_ads_box .ads_ad_box.app_in_news,
 .ads_all_ads_box .ads_ad_box.apps_only,
-.ads_all_ads_box .ads_ad_box.groups_only {
+.ads_all_ads_box .ads_ad_box.groups_only,
+.ads_all_ads_box .ads_ad_box.app_in_news.ver.repeat_ver.size_site.first,
+.ads_all_ads_box .ads_ad_box.apps_only.ver.repeat_ver.size_site.first,
+.ads_all_ads_box .ads_ad_box.groups_only.ver.repeat_ver.size_site.first {
     padding: 10px
 }
 
-.ads_all_ads_box .ads_ad_box.mobile {
+.ads_all_ads_box .ads_ad_box.mobile,
+.ads_all_ads_box .ads_ad_box.mobile.ver.repeat_ver.size_site.first {
     padding: 14px
 }
 
@@ -430,11 +462,15 @@
 
 .ads_premoderation_requests .ads_ad_box.app_in_news,
 .ads_premoderation_requests .ads_ad_box.apps_only,
-.ads_premoderation_requests .ads_ad_box.groups_only {
+.ads_premoderation_requests .ads_ad_box.groups_only,
+.ads_premoderation_requests .ads_ad_box.app_in_news.ver.repeat_ver.size_site.first,
+.ads_premoderation_requests .ads_ad_box.apps_only.ver.repeat_ver.size_site.first,
+.ads_premoderation_requests .ads_ad_box.groups_only.ver.repeat_ver.size_site.first {
     padding: 10px
 }
 
-.ads_premoderation_requests .ads_ad_box.mobile {
+.ads_premoderation_requests .ads_ad_box.mobile,
+.ads_premoderation_requests .ads_ad_box.mobile.ver.repeat_ver.size_site.first {
     padding: 14px
 }
 
@@ -873,15 +909,43 @@ table.ads_logs_info th {
 
 .ads_moder_history .ads_ad_box.app_in_news,
 .ads_moder_history .ads_ad_box.apps_only,
-.ads_moder_history .ads_ad_box.groups_only {
+.ads_moder_history .ads_ad_box.groups_only,
+.ads_moder_history .ads_ad_box.app_in_news.ver.repeat_ver.size_site.first,
+.ads_moder_history .ads_ad_box.apps_only.ver.repeat_ver.size_site.first,
+.ads_moder_history .ads_ad_box.groups_only.ver.repeat_ver.size_site.first {
     padding: 10px
 }
 
-.ads_moder_history .ads_ad_box.mobile {
+.ads_moder_history .ads_ad_box.mobile,
+.ads_moder_history .ads_ad_box.mobile.ver.repeat_ver.size_site.first {
     padding: 14px
 }
 
 .ads_moder_history .ads_ad_box_border {
+    border-width: 1px
+}
+
+.ads_moder_history .ads_ad_box.redesign {
+    padding: 10px
+}
+
+.ads_moder_history .ads_ad_box.redesign .ads_ad_box_border {
+    background-color: #edeef0
+}
+
+.ads_moder_history .ads_ad_box.redesign .ads_ad_box_border.repeat_ver.first {
+    border-width: 1px
+}
+
+.ads_moder_history .ads_ad_box.redesign .ads_ad_box2.ver.repeat_ver.size_site {
+    margin: 0
+}
+
+.ads_moder_history .ads_ad_box.redesign.ver.repeat_ver.size_site.first {
+    padding: 10px
+}
+
+.ads_premoderation_requests .ads_ad_box_border {
     border-width: 1px
 }
 

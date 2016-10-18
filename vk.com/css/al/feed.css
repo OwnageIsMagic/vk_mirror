@@ -1937,6 +1937,54 @@ div.feed_recom {
     font-size: 12px
 }
 
+.feed_blog_reminder {
+    padding: 10px 12px;
+    position: relative
+}
+
+.feed_blog_reminder:hover .feed_blog_reminder_hide {
+    opacity: 0.5
+}
+
+.feed_blog_reminder_icon {
+    width: 28px;
+    height: 28px
+}
+
+.feed_blog_reminder_cont {
+    margin-left: 36px;
+    line-height: 16px;
+    font-size: 12.5px
+}
+
+.feed_blog_reminder_title {
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.feed_blog_reminder_title a {
+    color: #000;
+    text-decoration: none!important
+}
+
+.feed_blog_reminder_hide {
+    position: absolute;
+    width: 8.4px;
+    height: 8.4px;
+    top: 4px;
+    right: 4px;
+    padding: 4px;
+    cursor: pointer;
+    opacity: 0;
+    -o-transition: opacity 200ms ease;
+    transition: opacity 200ms ease
+}
+
+.feed_blog_reminder_hide:hover {
+    opacity: 1!important
+}
+
 .feed_vk10_years {
     text-align: center;
     position: relative

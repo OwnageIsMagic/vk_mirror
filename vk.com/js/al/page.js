@@ -1508,6 +1508,7 @@ var Page = {
                                 launched: vkNow(),
                                 preloaded: _isPreloaded(params.video)
                             };
+                            Page.showVideoAutoplayTooltip(domPN(thumb));
                         }
                         preloadIndex = index + 1;
                         break;
@@ -1622,6 +1623,38 @@ var Page = {
                 delete cur.pinnedVideoPrevInViewport;
             };
             cur.pinnedVideoDestroyHandlers = destroyHandlers;
+        },
+
+        showVideoAutoplayTooltip: function(el) {
+            if (cur.videoAutoplayTooltip) {
+                cur.videoAutoplayTooltip.destroy();
+            }
+
+            var shown = ls.get('video_autoplay_tooltip_shown') || 0;
+            if (shown > 2 || cur.videoAutoplayTooltipShown) return;
+            ls.set('video_autoplay_tooltip_shown', shown + 1);
+            cur.videoAutoplayTooltipShown = 1;
+
+            setStyle(el, {
+                position: 'relative'
+            });
+
+            cur.videoAutoplayTooltip = new ElementTooltip(el, {
+                autoShow: false,
+                content: '<div class="page_video_autoplay_tt_hide" onclick="cur.closeVideoAutoplayTooltip();"></div>' + getLang('global_video_autoplay_hint'),
+                forceSide: 'right',
+                cls: 'page_video_autoplay_tt',
+                offset: [10, 0, 0],
+                onHide: function() {
+                    cur.videoAutoplayTooltip.destroy();
+                }
+            });
+            cur.videoAutoplayTooltip.show();
+
+            cur.closeVideoAutoplayTooltip = function() {
+                cur.videoAutoplayTooltip.destroy();
+                ls.set('video_autoplay_tooltip_shown', 999);
+            };
         },
 
         actionsDropdown: function(el, preloadClbk) {
@@ -2592,6 +2625,12 @@ var Wall = {
         extend(lsText, {
             txt: content
         });
+        if (ownerId < 0) {
+            extend(lsText, {
+                fromGroup: (hasClass(domClosest('_submit_post_box', ge('official')), 'as_group') ? 1 : 0),
+                signed: (isChecked('signed') ? 1 : 0)
+            });
+        }
         ls.set(Wall.ownerDraftKey(ownerId), lsText);
     },
     getOwnerDraft: function(ownerId) {
@@ -2600,7 +2639,10 @@ var Wall = {
         }
 
         var draft = ls.get(Wall.ownerDraftKey(ownerId)) || [];
-        return [draft.txt, draft.medias, true];
+        return [draft.txt, draft.medias, true, {
+            fromGroup: intval(draft.fromGroup),
+            signed: intval(draft.signed)
+        }];
     },
     saveOwnerDraftMedia: function(ownerId, type, id, object) {
         if (cur.options.no_draft) {
@@ -2775,6 +2817,9 @@ var Wall = {
         });
         if (data[2]) {
             wall.focusOnEnd();
+        }
+        if (data[3] !== undefined) {
+            wall.setReplyAsGroup(ge('official'), data[3]);
         }
     },
     initPostEditable: function(draft) {
@@ -3857,9 +3902,9 @@ var Wall = {
 
         if (replyAs) {
             var onBehalfGroup = isVisible(replyAs.parentNode) && replyOid < 0 && replyTo && replyTo.getAttribute('rid') === replyOid;
-            toggleClass(domClosest('_submit_post_box', replyAs), 'as_group', !!onBehalfGroup);
-            var ttChooser = data(replyAs, 'tt');
-            ttChooser && radiobtn(ttChooser.rdBtns[intval(onBehalfGroup)], intval(onBehalfGroup), ttChooser.rdBtnsGroup);
+            Wall.setReplyAsGroup(replyAs, {
+                fromGroup: onBehalfGroup
+            });
         }
 
         cur.onReplyFormSizeUpdate && cur.onReplyFormSizeUpdate();
@@ -6139,6 +6184,21 @@ var Wall = {
     },
     REPLY_RADIO_BTNS_GROUP: 'page_post_as',
     REPLY_RADIO_BTNS_GROUP_INDEX: 0,
+    setReplyAsGroup: function(el, opts) {
+        if (!el) {
+            return;
+        }
+
+        var wrap = domClosest('_submit_post_box', el),
+            signed = wrap && domByClass(wrap, '_signed_checkbox'),
+            ttChooser = data(el, 'tt');
+        toggleClass(wrap, 'as_group', !!opts.fromGroup);
+        ttChooser && radiobtn(ttChooser.rdBtns[intval(opts.fromGroup)], intval(opts.fromGroup), ttChooser.rdBtnsGroup);
+        if (signed) {
+            toggleClass(signed, 'shown', !!opts.fromGroup);
+            checkbox(signed, opts.signed);
+        }
+    },
     replyAsGroup: function(obj, btn, rdName) {
         if (hasClass(obj, 'disabled')) {
             return;
@@ -6164,6 +6224,10 @@ var Wall = {
         toggleClass(wrap, 'as_group', as == 'group');
         signed && toggleClass(signed, 'shown', as == 'group');
         obj.setAttribute('aria-label', getLang((as == 'group') ? 'wall_reply_as_group' : 'wall_reply_as_user'));
+
+        if (obj.id == 'official') {
+            Wall.postChanged(true);
+        }
     },
     replyAsGroupOver: function(obj, tt_user, tt_group) {
         if (!hasClass(obj, 'checkbox_official') || hasClass(obj, 'disabled')) return false;

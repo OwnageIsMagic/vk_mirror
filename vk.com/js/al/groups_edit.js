@@ -2092,10 +2092,10 @@ var GroupsEdit = {
                     app_id: e,
                     hash: t
                 };
-                ajax.post("groupsedit.php", s, {
+                GroupsEdit.hideMessage(), ajax.post("groupsedit.php", s, {
                     onDone: function(e, t, o) {
                         extend(cur, t), ge("group_apps_wrapper")
-                            .innerHTML = e, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(o)
+                            .innerHTML = e, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(o), GroupsEdit.invalidateBack()
                     },
                     showProgress: function() {
                         lockLink(o)
@@ -2125,9 +2125,9 @@ var GroupsEdit = {
                 privacy: GroupsEdit.app.privacy.selectedItems()[0][0],
                 snippet_type: GroupsEdit.app.snippetType.selectedItems()[0][0]
             };
-            ajax.post("groupsedit.php", e, {
+            GroupsEdit.hideMessage(), ajax.post("groupsedit.php", e, {
                 onDone: function(e, t) {
-                    return e ? GroupsEdit.showMessage(t) : GroupsEdit.showMessage(t, "error"), e
+                    return e ? (GroupsEdit.showMessage(t), GroupsEdit.invalidateBack()) : GroupsEdit.showMessage(t, "error"), e
                 },
                 showProgress: function() {
                     lockButton("group_app_save")
@@ -2144,10 +2144,10 @@ var GroupsEdit = {
                 id: cur.gid,
                 hash: cur.delAppHash
             };
-            ajax.post("groupsedit.php", t, {
+            GroupsEdit.hideMessage(), ajax.post("groupsedit.php", t, {
                 onDone: function(e, t, o) {
                     extend(cur, t), ge("group_apps_wrapper")
-                        .innerHTML = e, GroupsEdit.showMessage(o)
+                        .innerHTML = e, GroupsEdit.showMessage(o, "info"), GroupsEdit.invalidateBack()
                 },
                 showProgress: function() {
                     lockLink(e)
