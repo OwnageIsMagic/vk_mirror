@@ -4871,3 +4871,42 @@ td.apps_cat_new_h {
 .page_block_header_extra .apps_options_bar_right {
     font-size: 13px
 }
+
+.allow_message_from_community_confirm_box {
+    text-align: center
+}
+
+.allow_message_from_community_confirm_box img {
+    vertical-align: top;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    -moz-force-broken-image-icon: 0;
+    background-color: #fafbfc;
+    margin-bottom: 20px
+}
+
+.allow_message_from_community_confirm_box img:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100px;
+    height: 100px;
+    background-color: #fff
+}
+
+.allow_message_from_community_confirm_box img:after {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fafbfc;
+    background-image: url(/images/camera_100.png);
+    background-size: cover
+}

@@ -104,7 +104,8 @@ var Videocat = window.Videocat || {
             if (c) {
                 var r = c.dataset.video_id;
                 r && showInlineVideo(r, "", {
-                    autoplay: !0,
+                    autoplay: 1,
+                    module: "videocat",
                     addParams: {
                         from_autoplay: 1
                     }
@@ -305,10 +306,10 @@ var Videocat = window.Videocat || {
         });
         var _ = geByClass1("videocat_row_slider_btn_left", s),
             h = geByClass1("videocat_row_slider_btn_right", s),
-            f = 0 == l,
-            v = -(l - r) >= a.children.length;
-        if (toggleClass(_, "videocat_row_slider_hidden", f), toggleClass(h, "videocat_row_slider_hidden", v), i(f, _), i(v, h), f && Videocat.slideMouseLeave(_, "right"),
-            v && Videocat.slideMouseLeave(h, "left"), toggleClass(n, "videocat_slider_offseted", !f && !v), cur._slideTimeouts = cur._slideTimeouts || [], each(cur._slideTimeouts,
+            v = 0 == l,
+            f = -(l - r) >= a.children.length;
+        if (toggleClass(_, "videocat_row_slider_hidden", v), toggleClass(h, "videocat_row_slider_hidden", f), i(v, _), i(f, h), v && Videocat.slideMouseLeave(_, "right"),
+            f && Videocat.slideMouseLeave(h, "left"), toggleClass(n, "videocat_slider_offseted", !v && !f), cur._slideTimeouts = cur._slideTimeouts || [], each(cur._slideTimeouts,
                 function(e, o) {
                     clearTimeout(o)
                 }), each(geByClass("video_item", s), function(e) {

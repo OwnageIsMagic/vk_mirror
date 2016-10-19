@@ -379,6 +379,31 @@ var vkApp = function(t, e, i, s) {
                     })
                 }
             },
+            showAllowMessagesFromCommunityBox: function() {
+                if (!cur.allowMessagesFromCommunityBox) {
+                    cur.allowMessagesFromCommunityBox = !0, cur.onAllowMessagesFromCommunity = function() {
+                        cur.app.runCallback("onAllowMessagesFromCommunity")
+                    };
+                    var t = {
+                        act: "allow_messages_from_community_box",
+                        aid: e.aid
+                    };
+                    e.gid && (t.gid = e.gid);
+                    var i = showBox("apps", t, {
+                        params: {
+                            dark: 1,
+                            width: 550
+                        }
+                    });
+                    i.setOptions({
+                        onHide: function() {
+                            setTimeout(function() {
+                                cur.allowMessagesFromCommunityBox = !1
+                            }, 3e3)
+                        }
+                    })
+                }
+            },
             showInviteBox: function() {
                 Apps.showInviteBox(e.aid, e.hash)
             },
@@ -1184,9 +1209,9 @@ AppsSlider.prototype = {
                 l(null !== cur.appSsSlider.required ? cur.appSsSlider.required : cur.appSsSlider.current)
             }, onChange = function() {
                 cur.appSsSlider.slideNext ? addClass(t, "apps_i_slider_available") : removeClass(t, "apps_i_slider_available"), cur.appSsSlider.slidePrev ? addClass(e,
-                        "apps_i_slider_available") : removeClass(e, "apps_i_slider_available"),
-                    hasClass(cur.appSsSlider.slideCurrent, "apps_promo_video_slide") ? addClass(i, "apps_i_slider_video") : removeClass(i, "apps_i_slider_video"), cur.appSsSlider
-                    .slideNext ? removeClass(i, "apps_i_slider_run") : addClass(i, "apps_i_slider_run")
+                        "apps_i_slider_available") : removeClass(e, "apps_i_slider_available"), hasClass(cur.appSsSlider.slideCurrent, "apps_promo_video_slide") ?
+                    addClass(i, "apps_i_slider_video") : removeClass(i, "apps_i_slider_video"), cur.appSsSlider.slideNext ? removeClass(i, "apps_i_slider_run") :
+                    addClass(i, "apps_i_slider_run")
             }, cur.appSsSlider = new AppsSlider({
                 inner: ge("apps_i_slider_inner"),
                 outer: i,
@@ -2276,7 +2301,7 @@ AppsSlider.prototype = {
         cur.aSearch && uiSearch[t ? "showProgress" : "hideProgress"](cur.aSearch)
     },
     searchFocused: function() {
-        cur.aWrap && addClass(cur.aWrap, Apps.searchFocusedClass)
+        cur.aWrap && addClass(cur.aWrap, Apps.searchFocusedClass);
     },
     searchBlured: function() {
         cur.aWrap && removeClass(cur.aWrap, Apps.searchFocusedClass)
@@ -2286,8 +2311,8 @@ AppsSlider.prototype = {
     },
     switchLayout: function(t) {
         cur.aWrap && (removeClass(cur.aWrap, "apps_catalog_layout"), removeClass(cur.aWrap, "apps_list_layout"), removeClass(cur.aWrap, "apps_manage_layout"),
-            removeClass(cur.aWrap, "apps_settings_layout"), removeClass(cur.aWrap, "apps_apps_layout"), removeClass(cur.aWrap, "apps_page_layout"),
-            addClass(cur.aWrap, "apps_" + t + "_layout"))
+            removeClass(cur.aWrap, "apps_settings_layout"), removeClass(cur.aWrap, "apps_apps_layout"), removeClass(cur.aWrap, "apps_page_layout"), addClass(cur.aWrap,
+                "apps_" + t + "_layout"))
     },
     geTabBySection: function(t, e) {
         var i = ge("apps_tab_" + t + (e ? "_" + e : ""));

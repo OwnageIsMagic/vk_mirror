@@ -185,47 +185,41 @@ var Videoview = {
                 var a = Videoview.getVideoModule(e + "_" + i),
                     n = "";
                 if (window.Video && Video.isInCatalog()) {
-                    var d = VideoPlaylist.getCurListId();
-                    d = d.replace("cat_", ""), n = Videocat.isTop3Playlist(d) ? "featured" : d
+                    var d = (VideoPlaylist.getCurListId() || "")
+                        .replace("cat_", "");
+                    n = cur.videoInlinePlayer || Videocat.isTop3Playlist(d) ? "featured" : d
                 }
                 var r;
-                r = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
-                    .playlistId ? "layer_with_playlist" : "layer", window.mvcur && mvcur.mvData && (mvcur.viewStartedTimestamp = (new Date)
-                        .getTime());
-                var s = ajax.post("al_video.php", {
-                    act: "video_view_started",
-                    oid: e,
-                    vid: i,
-                    hash: o,
-                    quality: window.mvcur ? mvcur.mvData.resolution : 0,
-                    module: a,
-                    videocat: n,
-                    inline: -1,
-                    player_view_type: r
-                }, {
-                    onDone: function(e) {}
-                });
-                if (cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i) {
-                    var v = vkNow() - cur.videoAutoplayStat.launched,
-                        l = cur.videoAutoplayStat.preloaded ? 1 : 0;
-                    statlogsValueEvent("video_autoplay_start", v, l, t)
+                if (r = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur
+                    .options.playlistId ? "layer_with_playlist" : "layer", window.mvcur && mvcur.mvData && (mvcur.viewStartedTimestamp = (new Date)
+                        .getTime()), ajax.post("al_video.php?act=video_view_started", {
+                        oid: e,
+                        vid: i,
+                        hash: o,
+                        quality: window.mvcur ? mvcur.mvData.resolution : 0,
+                        module: a,
+                        videocat: n,
+                        inline: -1,
+                        player_view_type: r
+                    }, {}), cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i) {
+                    var s = vkNow() - cur.videoAutoplayStat.launched,
+                        v = cur.videoAutoplayStat.preloaded ? 1 : 0;
+                    statlogsValueEvent("video_autoplay_start", s, v, t)
                 }
-                if (void 0 !== s) {
-                    var c = Videoview.getMvData();
-                    switch (c.tns_monetized ? vkImage()
-                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + irand(1, 1e9) : vkImage()
-                        .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), c.kz && (vkImage()
-                            .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), c.l_type) {
-                        case 1:
-                            vkImage()
-                                .src =
-                                "//vk.com/rtrg?r=JQ6ueUeOxlSLb8IoA8ToayylOLgRkThaoFV0XVgG5qvS1x1xWrkfqAg73sYWJxwq9PXWucKtMS02J3CsGLZdmOMNj9dv9UCjDN4a3ShJZXcJFMhgfVwSoPWoxp*Y/LAFUnKz5*XBvDCQXeaygAqI*gY9gz*jWTXaOXyT2lSfIPY-";
-                            break;
-                        case 2:
-                            vkImage()
-                                .src =
-                                "//vk.com/rtrg?r=lD4OYmfC8ehvdc/8TL9AsAjM956qNaHyj20XV5mCNiTgYKQ6X*IXgwE8VbgqOf7rdbLJq7uCRBrdnFPTcUU2NjMgy8x4y6NWrYVwQMteNWh62XnLoNVZqobnsMMGm1OyTW09rhEkmiX5jqk3CI3JIIYbIbd8K7EC0ytQ4Kp4Kro-"
-                    }
+                var l = Videoview.getMvData();
+                switch (l.tns_monetized ? vkImage()
+                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + irand(1, 1e9) : vkImage()
+                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), l.kz && (vkImage()
+                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), l.l_type) {
+                    case 1:
+                        vkImage()
+                            .src =
+                            "//vk.com/rtrg?r=JQ6ueUeOxlSLb8IoA8ToayylOLgRkThaoFV0XVgG5qvS1x1xWrkfqAg73sYWJxwq9PXWucKtMS02J3CsGLZdmOMNj9dv9UCjDN4a3ShJZXcJFMhgfVwSoPWoxp*Y/LAFUnKz5*XBvDCQXeaygAqI*gY9gz*jWTXaOXyT2lSfIPY-";
+                        break;
+                    case 2:
+                        vkImage()
+                            .src =
+                            "//vk.com/rtrg?r=lD4OYmfC8ehvdc/8TL9AsAjM956qNaHyj20XV5mCNiTgYKQ6X*IXgwE8VbgqOf7rdbLJq7uCRBrdnFPTcUU2NjMgy8x4y6NWrYVwQMteNWh62XnLoNVZqobnsMMGm1OyTW09rhEkmiX5jqk3CI3JIIYbIbd8K7EC0ytQ4Kp4Kro-"
                 }
             },
             onVideoPlayFinished: function() {
