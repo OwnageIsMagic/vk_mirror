@@ -190,8 +190,8 @@ var Videoview = {
                     n = cur.videoInlinePlayer || Videocat.isTop3Playlist(d) ? "featured" : d
                 }
                 var r;
-                if (r = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur
-                    .options.playlistId ? "layer_with_playlist" : "layer", window.mvcur && mvcur.mvData && (mvcur.viewStartedTimestamp = (new Date)
+                r = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
+                    .playlistId ? "layer_with_playlist" : "layer", window.mvcur && mvcur.mvData && (mvcur.viewStartedTimestamp = (new Date)
                         .getTime()), ajax.post("al_video.php?act=video_view_started", {
                         oid: e,
                         vid: i,
@@ -201,16 +201,18 @@ var Videoview = {
                         videocat: n,
                         inline: -1,
                         player_view_type: r
-                    }, {}), cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i) {
-                    var s = vkNow() - cur.videoAutoplayStat.launched,
-                        v = cur.videoAutoplayStat.preloaded ? 1 : 0;
-                    statlogsValueEvent("video_autoplay_start", s, v, t)
-                }
-                var l = Videoview.getMvData();
-                switch (l.tns_monetized ? vkImage()
+                    }, {}), cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i && ajax.post(
+                        "al_video.php?act=autoplay_stat", {
+                            event: "start",
+                            start_time: vkNow() - cur.videoAutoplayStat.launched,
+                            preloaded: cur.videoAutoplayStat.preloaded ? 1 : 0,
+                            streaming_method: t
+                        }, {});
+                var s = Videoview.getMvData();
+                switch (s.tns_monetized ? vkImage()
                     .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + irand(1, 1e9) : vkImage()
-                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), l.kz && (vkImage()
-                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), l.l_type) {
+                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), s.kz && (vkImage()
+                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), s.l_type) {
                     case 1:
                         vkImage()
                             .src =

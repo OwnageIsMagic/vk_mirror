@@ -4031,6 +4031,47 @@ body.sf .nim-dialog .nim-dialog--unread {
     padding-left: 25px
 }
 
+.nim-dialog.nim-dialog_classic .nim-dialog--text-preview {
+    margin-top: -2px
+}
+
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted).nim-dialog_hovered.nim-dialog_unread-out .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted).nim-dialog_hovered.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted).nim-dialog_selected.nim-dialog_unread-out .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted).nim-dialog_selected.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic.nim-dialog_unread-out .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted).nim-dialog_unread.nim-dialog_classic.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted):hover.nim-dialog_unread-out .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic:not(.nim-dialog_deleted):hover.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--inner-text {
+    background: #e9edf2
+}
+
+.nim-dialog.nim-dialog_classic.nim-dialog_unread-out .nim-dialog--unread,
+.nim-dialog.nim-dialog_classic.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--unread {
+    display: none
+}
+
+.nim-dialog.nim-dialog_classic.nim-dialog_unread-out .nim-dialog--text-preview,
+.nim-dialog.nim-dialog_classic.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--text-preview {
+    max-width: 100%;
+    width: 100%
+}
+
+.nim-dialog.nim-dialog_classic.nim-dialog_unread-out .nim-dialog--inner-text,
+.nim-dialog.nim-dialog_classic.nim-dialog_unread-out.nim-dialog_muted .nim-dialog--inner-text {
+    background: #f0f2f5;
+    border-radius: 3px;
+    padding: 5px 0 5px 8px;
+    width: 403px;
+    box-sizing: border-box;
+    max-width: 403px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: top
+}
+
 .nim-dialog.nim-dialog_classic.nim-dialog_verified.nim-dialog_muted .nim-dialog--mute {
     margin-top: 2px
 }
@@ -4066,6 +4107,11 @@ body.sf .nim-dialog .nim-dialog--unread {
 .nim-dialog.nim-dialog_classic .nim-dialog--preview,
 .nim-dialog.nim-dialog_classic .nim-dialog--text-preview {
     font-size: 13px
+}
+
+.nim-dialog.nim-dialog_classic .nim-dialog--name {
+    margin-top: 3px;
+    margin-bottom: 7px
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--content {
@@ -4150,16 +4196,21 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .nim-dialog.nim-dialog_classic .nim-dialog--date {
     right: 15px;
-    top: 17px
+    top: 14px
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--close {
-    right: -5px
+    right: -5px;
+    margin-top: 4px
+}
+
+.nim-dialog.nim-dialog_classic .nim-dialog--markre {
+    margin-top: 23px
 }
 
 .nim-dialog.nim-dialog_classic .nim-dialog--unread {
     right: 15px;
-    bottom: 13px
+    bottom: 17px
 }
 
 .nim-dialog.nim-dialog_classic.nim-dialog_hovered .nim-dialog--date,
@@ -5298,8 +5349,8 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-prebody img {
     overflow: hidden;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     -moz-force-broken-image-icon: 0;
     background-color: #fafbfc
@@ -5316,8 +5367,8 @@ body.sf .nim-dialog .nim-dialog--unread {
     position: absolute;
     top: 0;
     left: 0;
-    width: 20px;
-    height: 20px
+    width: 25px;
+    height: 25px
 }
 
 .im-prebody img:after {

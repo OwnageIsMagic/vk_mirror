@@ -338,6 +338,10 @@
     margin-top: 10px!important
 }
 
+.blog_entry_text a b {
+    color: #2a5885
+}
+
 .blog_first_image_wrap {
     text-align: center;
     padding-bottom: 20px;

@@ -5,169 +5,204 @@ function appCallback(t) {
     }, 0), setTimeout(function(i) {
         return i.app.funcs[e].apply(i.app, t)
     }.pbind(cur), 0), !0) : !0
-}
-window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : ""),
-    function(t) {
-        function e() {
-            var t = "";
-            for (i = 0; i < 5; i++) t += Math.ceil(15 * Math.random())
-                .toString(16);
-            return t
-        }
+}! function(t) {
+    function e() {
+        for (var t = "", e = 0; 5 > e; e++) t += Math.ceil(15 * Math.random())
+            .toString(16);
+        return t
+    }
 
-        function s(t, e, i, o, a) {
-            t[e] ? i.apply(o) : (a = a || 0, 1e3 > a && setTimeout(function() {
-                s(t, e, i, o, a + 1)
-            }, 0))
-        }
+    function i(t, e, s, o, a) {
+        t[e] ? s.apply(o) : (a = a || 0, 1e3 > a && setTimeout(function() {
+            i(t, e, s, o, a + 1)
+        }, 0))
+    }
 
-        function o(e) {
-            setTimeout(function() {
-                var i = document.createElement("script");
-                i.type = "text/javascript", i.src = e || t.fastXDM.helperUrl, s(document, "body", function() {
-                    document.getElementsByTagName("HEAD")[0].appendChild(i)
-                })
-            }, 0)
-        }
-
-        function a(t, e) {
-            d.loaded ? t.apply(e, [d]) : p.push([e, t])
-        }
-
-        function n() {
-            if (d.loaded = !0, p.length > 0)
-                for (callback in p) p[callback][1].apply(p[callback][0], [d])
-        }
-
-        function r(t, e) {
-            a(function(s) {
-                var o = s.json.parse(t);
-                if (o[0]) {
-                    o[1] || (o[1] = []);
-                    for (i in o[1])
-                        if (o[1][i] && o[1][i]._func) {
-                            var a = o[1][i]._func;
-                            o[1][i] = function() {
-                                var t = Array.prototype.slice.call(arguments);
-                                t.unshift("_func" + a), e.callMethod.apply(e, t)
-                            }
-                        }
-                    setTimeout(function() {
-                        if (!e.methods[o[0]]) throw Error("fastXDM: Method " + o[0] + " is undefined");
-                        e.methods[o[0]].apply(e, o[1])
-                    }, 0)
-                }
+    function s(e) {
+        setTimeout(function() {
+            var s = document.createElement("script");
+            s.type = "text/javascript", s.src = e || t.fastXDM.helperUrl, i(document, "body", function() {
+                document.getElementsByTagName("HEAD")[0].appendChild(s)
             })
-        }
+        }, 0)
+    }
 
-        function c(t, e) {
-            for (var i in e) t[i] && "object" == typeof t[i] ? c(t[i], e[i]) : t[i] = e[i]
+    function o(t, e) {
+        var i;
+        switch (typeof t) {
+            case "string":
+                i = e ? t.replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;") : t.replace(/&#039;/g, "'")
+                    .replace(/&quot;/g, '"')
+                    .replace(/&gt;/g, ">")
+                    .replace(/&lt;/g, "<")
+                    .replace(/&amp;/g, "&");
+                break;
+            case "object":
+                if ("[object Array]" === Object.prototype.toString.apply(t)) {
+                    i = [];
+                    for (var s = 0, a = t.length; a > s; s++) i[s] = o(t[s], e)
+                } else {
+                    i = {};
+                    for (var n in t) Object.hasOwnProperty.call(t, n) && (i[n] = o(t[n], e))
+                }
+                break;
+            default:
+                i = t
         }
-        if (!t.fastXDM) {
-            var l = {},
-                p = [],
-                d = {};
-            t.fastXDM = {
-                    _id: 0,
-                    helperUrl: "http://userapi.com/js/api/xdmHelper.js",
-                    Server: function(i) {
-                        this.methods = i || {}, this.id = t.fastXDM._id++, this.key = e(), this.methods["%init%"] = this.methods.__fxdm_i = function() {
-                            t.fastXDM.run(this.id), this.methods.onInit && this.methods.onInit()
-                        }, this.frameName = "fXD" + this.key, this.server = !0, l[this.key] = [r, this]
-                    },
-                    Client: function(e) {
-                        if (this.methods = e || {}, this.id = t.fastXDM._id++, t.fastXDM.run(this.id), 0 != window.name.indexOf("fXD")) throw Error(
-                            "Wrong window.name property.");
-                        this.key = window.name.substr(3), this.caller = window.parent, l[this.key] = [r, this], this.client = !0, t.fastXDM.on("helper", function() {
-                            t.fastXDM.onClientStart(this)
-                        }, this), a(function(t) {
-                            t.send(this, t.json.stringify(["%init%"]));
-                            var e = this.methods;
-                            setTimeout(function() {
-                                e.onInit && e.onInit()
-                            }, 0)
-                        }, this)
-                    },
-                    onMessage: function(t) {
-                        if (!t.data || "string" != typeof t.data) return !1;
-                        var e = t.data.substr(0, 5);
-                        l[e] && l[e][0](t.data.substr(6), l[e][1])
-                    },
-                    setJSON: function(t) {
-                        d.json = t
-                    },
-                    getJSON: function(t) {
-                        return t ? void a(function(e) {
-                            t(e.json)
-                        }) : d.json
-                    },
-                    setEnv: function(t) {
-                        for (i in t) d[i] = t[i];
-                        n()
-                    },
-                    _q: {},
-                    on: function(t, e, i) {
-                        this._q[t] || (this._q[t] = []), -1 == this._q[t] ? e.apply(i) : this._q[t].push([e, i])
-                    },
-                    run: function(t) {
-                        if (this._q[t] && this._q[t].length > 0)
-                            for (i in this._q[t]) this._q[t][i][0].apply(this._q[t][i][1]);
-                        this._q[t] = -1
-                    },
-                    waitFor: s
-                }, t.fastXDM.Server.prototype.start = function(e, i) {
-                    if (e.contentWindow) this.caller = e.contentWindow, this.frame = e, t.fastXDM.on("helper", function() {
-                        t.fastXDM.onServerStart(this)
-                    }, this);
-                    else {
-                        var s = this;
-                        i = i || 0, 50 > i && setTimeout(function() {
-                            s.start.apply(s, [e, i + 1])
-                        }, 100)
-                    }
-                }, t.fastXDM.Server.prototype.destroy = function() {
-                    l && l.indexOf && l.splice(l.indexOf(this.key), 1)
-                }, t.fastXDM.Server.prototype.append = function(t, e, i) {
-                    var s = document.createElement("DIV");
-                    s.innerHTML = '<iframe name="' + this.frameName + '" ' + (i || "") + " />";
-                    var o = s.firstChild,
-                        a = this;
-                    return setTimeout(function() {
-                        o.frameBorder = "0", e && c(o, e), t.insertBefore(o, t.firstChild), a.start(o)
-                    }, 0), o
-                }, t.fastXDM.Client.prototype.callMethod = t.fastXDM.Server.prototype.callMethod = function() {
-                    var e = Array.prototype.slice.call(arguments),
-                        o = e.shift();
-                    for (i in e)
-                        if ("function" == typeof e[i]) {
-                            this.funcsCount = (this.funcsCount || 0) + 1;
-                            var n = e[i],
-                                r = "_func" + this.funcsCount;
-                            this.methods[r] = function() {
-                                n.apply(this, arguments), delete this.methods[r]
-                            }, e[i] = {
-                                _func: this.funcsCount
-                            }
+        return i
+    }
+
+    function a(t, e) {
+        d.loaded ? t.apply(e, [d]) : p.push([e, t])
+    }
+
+    function n() {
+        d.loaded = !0;
+        for (var t = 0, e = p.length; e > t; t++) p[t][1].apply(p[t][0], [d])
+    }
+
+    function r(t, e) {
+        a(function(i) {
+            var s = i.json.parse(t);
+            if (s[0]) {
+                s[1] || (s[1] = []);
+                for (var a = 0, n = s[1].length; n > a; a++)
+                    if (s[1][a] && s[1][a]._func) {
+                        var r = s[1][a]._func;
+                        s[1][a] = function() {
+                            var t = Array.prototype.slice.call(arguments);
+                            t.unshift("_func" + r), e.callMethod.apply(e, t)
                         }
-                    s(this, "caller", function() {
-                        t.fastXDM.on(this.id, function() {
-                            a(function(t) {
-                                t.send(this, t.json.stringify([o, e]))
-                            }, this)
+                    } else e.options.safe && (s[1][a] = o(s[1][a], !0));
+                setTimeout(function() {
+                    if (!e.methods[s[0]]) throw Error("fastXDM: Method " + s[0] + " is undefined");
+                    e.methods[s[0]].apply(e, s[1])
+                }, 0)
+            }
+        })
+    }
+
+    function c(t, e) {
+        for (var i in e) t[i] && "object" == typeof t[i] ? c(t[i], e[i]) : t[i] = e[i]
+    }
+    if (!t.fastXDM) {
+        var l = {},
+            p = [],
+            d = {};
+        t.fastXDM = {
+                _id: 0,
+                helperUrl: "https://vk.com/js/api/xdmHelper.js",
+                Server: function(i, s, o) {
+                    this.methods = i || {}, this.filter = s, this.options = o || {}, this.id = t.fastXDM._id++, this.key = e(), this.frameName = "fXD" + this.key, this.server = !
+                        0, this.methods["%init%"] = this.methods.__fxdm_i = function() {
+                            t.fastXDM.run(this.id), this.methods.onInit && this.methods.onInit()
+                        }, l[this.key] = [r, this]
+                },
+                Client: function(e, i) {
+                    if (this.methods = e || {}, this.options = i || {}, this.id = t.fastXDM._id++, this.client = !0, t.fastXDM.run(this.id), 0 !== window.name.indexOf("fXD"))
+                        throw Error("Wrong window.name property.");
+                    this.key = window.name.substr(3), this.caller = window.parent, l[this.key] = [r, this], t.fastXDM.on("helper", function() {
+                        t.fastXDM.onClientStart(this)
+                    }, this), a(function(t) {
+                        t.send(this, t.json.stringify(["%init%"]));
+                        var e = this.methods;
+                        setTimeout(function() {
+                            e.onInit && e.onInit()
+                        }, 0)
+                    }, this)
+                },
+                onMessage: function(t) {
+                    var e = t.data;
+                    if (!e) return !1;
+                    if ("string" != typeof e && !(e instanceof String)) return !1;
+                    var i = e.substr(0, 5);
+                    if (l[i]) {
+                        var s = l[i][1];
+                        !s || s.filter && !s.filter(t.origin) || l[i][0](e.substr(6), s)
+                    }
+                },
+                setJSON: function(t) {
+                    d.json = t
+                },
+                getJSON: function(t) {
+                    return t ? void a(function(e) {
+                        t(e.json)
+                    }) : d.json
+                },
+                setEnv: function(t) {
+                    for (var e in t) d[e] = t[e];
+                    n()
+                },
+                _q: {},
+                on: function(t, e, i) {
+                    this._q[t] || (this._q[t] = []), -1 == this._q[t] ? e.apply(i) : this._q[t].push([e, i])
+                },
+                run: function(t) {
+                    for (var e = (this._q[t] || [])
+                            .length, i = 0; e > i; i++) this._q[t][i][0].apply(this._q[t][i][1]);
+                    this._q[t] = -1
+                },
+                waitFor: i
+            }, t.fastXDM.Server.prototype.start = function(e, i) {
+                if (e.contentWindow) this.caller = e.contentWindow, this.frame = e, t.fastXDM.on("helper", function() {
+                    t.fastXDM.onServerStart(this)
+                }, this);
+                else {
+                    var s = this;
+                    i = i || 0, 50 > i && setTimeout(function() {
+                        s.start.apply(s, [e, i + 1])
+                    }, 100)
+                }
+            }, t.fastXDM.Server.prototype.destroy = function() {
+                delete l[this.key]
+            }, t.fastXDM.Server.prototype.append = function(t, e, i) {
+                var s = document.createElement("DIV");
+                s.innerHTML = '<iframe name="' + this.frameName + '" ' + (i || "") + "></iframe>";
+                var o = s.firstChild,
+                    a = this;
+                return setTimeout(function() {
+                    o.frameBorder = "0", e && c(o, e), t.insertBefore(o, t.firstChild), a.start(o)
+                }, 0), o
+            }, t.fastXDM.Client.prototype.callMethod = t.fastXDM.Server.prototype.callMethod = function() {
+                for (var e = Array.prototype.slice.call(arguments), s = e.shift(), n = 0, r = e.length; r > n; n++)
+                    if ("function" == typeof e[n]) {
+                        this.funcsCount = (this.funcsCount || 0) + 1;
+                        var c = e[n],
+                            l = "_func" + this.funcsCount;
+                        this.methods[l] = function() {
+                            c.apply(this, arguments), delete this.methods[l]
+                        }, e[n] = {
+                            _func: this.funcsCount
+                        }
+                    } else this.options.safe && (e[n] = o(e[n], !1));
+                i(this, "caller", function() {
+                    t.fastXDM.on(this.id, function() {
+                        a(function(t) {
+                            t.send(this, t.json.stringify([s, e]))
                         }, this)
                     }, this)
-                }, t.JSON && "object" == typeof t.JSON && t.JSON.parse && t.JSON.stringify && '{"a":[1,2,3]}' == t.JSON.stringify({
-                    a: [1, 2, 3]
-                })
-                .replace(/ /g, "") ? d.json = {
-                    parse: t.JSON.parse,
-                    stringify: t.JSON.stringify
-                } : t.fastXDM._needJSON = !0, t.postMessage ? (d.protocol = "p", d.send = function(t, e) {
-                    t.caller.postMessage(t.key + ":" + e, "*")
-                }, t.addEventListener ? t.addEventListener("message", t.fastXDM.onMessage, !1) : t.attachEvent("onmessage", t.fastXDM.onMessage), t.fastXDM._needJSON ? (t.fastXDM
-                    ._onlyJSON = !0, o()) : n()) : o()
-        }
-    }(window);
+                }, this)
+            }, t.JSON && "object" == typeof t.JSON && t.JSON.parse && t.JSON.stringify && '{"a":[1,2,3]}' === t.JSON.stringify({
+                a: [1, 2, 3]
+            })
+            .replace(/ /g, "") ? d.json = {
+                parse: t.JSON.parse,
+                stringify: t.JSON.stringify
+            } : t.fastXDM._needJSON = !0, t.postMessage ? (d.protocol = "p", d.send = function(t, e) {
+                var i = t.frame ? t.frame.contentWindow : t.caller;
+                if (i) try {
+                    i.postMessage(t.key + ":" + e, "*")
+                } catch (s) {
+                    window.postMessage.call(i, t.key + ":" + e, "*")
+                }
+            }, t.addEventListener ? t.addEventListener("message", t.fastXDM.onMessage, !1) : t.attachEvent("onmessage", t.fastXDM.onMessage), t.fastXDM._needJSON ? (t.fastXDM._onlyJSON = !
+                0, s()) : n()) : s()
+    }
+}(window), window._iconAdd || (window._iconAdd = window.devicePixelRatio >= 2 ? "_2x" : "");
 var vkApp = function(t, e, i, s) {
     if (i = i || {}, e = e || {}, window.parent && window.parent != window && !e.checking) return !1;
     var o = this;
@@ -1159,7 +1194,7 @@ AppsSlider.prototype = {
         val(e, t);
         var i = parseInt(getStyle(e, "line-height")),
             s = Math.ceil(getSize(e)[1] / i);
-        s > 7 && (setStyle(e, "height", 5 * i), val(e, t), removeClass(geByClass1("apps_i_description_show_more"), this.optionHiddenClass))
+        s > 7 && (setStyle(e, "height", 5 * i), val(e, t), removeClass(geByClass1("apps_i_description_show_more"), this.optionHiddenClass));
     },
     showFullDescription: function() {
         addClass(geByClass1("apps_i_description_show_more"), this.optionHiddenClass), setStyle(geByClass1("apps_i_description_content"), "height", "")
@@ -2267,7 +2302,7 @@ AppsSlider.prototype = {
             onDone: this.withFastBackCheck(function(e, i, s) {
                 t == this.searchValFix(cur.searchStr) && (this.isSection("catalog", "list") && (cur.searchStr && this.sliderStop(), this.switchLayout(
                     cur.searchStr ? "list" : cur.section), this.searchWriteToAddressBar()), this.backupListContent(!0), e && val(cur.lContent,
-                    e), val(cur.lPreload, i || ""), cur.loadMore = !!i, extend(cur, s), cur.loadMore && show(cur.lShowMoreButton), this.scrollCheck())
+                    e), val(cur.lPreload, i || ""), cur.loadMore = !!i, extend(cur, s), cur.loadMore && show(cur.lShowMoreButton), this.scrollCheck());
             }.bind(this)),
             showProgress: function() {
                 cur.isAppsLoading = !0, lockButton(cur.lShowMoreButton)
@@ -2301,7 +2336,7 @@ AppsSlider.prototype = {
         cur.aSearch && uiSearch[t ? "showProgress" : "hideProgress"](cur.aSearch)
     },
     searchFocused: function() {
-        cur.aWrap && addClass(cur.aWrap, Apps.searchFocusedClass);
+        cur.aWrap && addClass(cur.aWrap, Apps.searchFocusedClass)
     },
     searchBlured: function() {
         cur.aWrap && removeClass(cur.aWrap, Apps.searchFocusedClass)
