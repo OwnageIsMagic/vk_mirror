@@ -367,9 +367,29 @@ var Restore = {
         var r = ge("restore_roll_" + e);
         removeClass(r, "restore_roll_hidden"), addClass(r, "_restore_roll_active")
     },
+    checkIndependentRestore: function() {
+        if (cur.options && cur.options.can_restore_independently) {
+            var e = val("old_phone")
+                .replace(/[^0-9]/g, ""),
+                o = val("phone")
+                .replace(/[^0-9]/g, ""),
+                r = val("new_phone")
+                .replace(/[^0-9]/g, "");
+            return r ? void show("restore_back_link") : void(o && e == o && ajax.post("restore", {
+                act: "check_independent_restore_allowed",
+                phone: o,
+                hash: cur.options.fhash
+            }, {
+                onDone: function(e) {
+                    e && show("restore_back_link")
+                },
+                onFail: function() {}
+            }))
+        }
+    },
     changeFormStep: function(e, o) {
         if (Restore.checkRoll(e)) {
-            Restore.fillRollShort(e);
+            Restore.fillRollShort(e), "photo" == o && Restore.checkIndependentRestore();
             var r = ge("restore_roll_" + e);
             removeClass(r, "_restore_roll_active"), re("restore_roll_button_" + e);
             var t = ge("restore_roll_" + o);
@@ -411,7 +431,7 @@ var Restore = {
                 s = val("phone"),
                 n = geByClass1("_restore_roll_short_old_phone", r),
                 i = geByClass1("_restore_roll_short_new_phone", r);
-            n.innerHTML = t ? t : getLang("restore_phone_not_set"), i.innerHTML = s ? s : getLang("restore_phone_not_set")
+            n.innerHTML = t ? t : getLang("restore_phone_not_set"), i.innerHTML = s ? s : getLang("restore_phone_not_set"), Restore.checkIndependentRestore()
         } else if ("doc" == e || "photo" == e) {
             var a = geByClass1("_restore_roll_short_images", r),
                 l = geByClass1("_restore_roll_short_message", r);
