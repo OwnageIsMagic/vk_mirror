@@ -842,6 +842,18 @@ img {
     padding-right: 6px
 }
 
+.like_recommend_box .post_header {
+    padding-top: 0;
+    padding-left: 0;
+    padding-right: 0
+}
+
+.like_recommend_box .wall_text {
+    padding-bottom: 0;
+    padding-left: 0;
+    padding-right: 0
+}
+
 #like_users_cont .no_rows {
     margin: -25px -14px -5px
 }
@@ -954,6 +966,37 @@ img {
 .commHead a.moderLink {
     color: #a9b8cb!important;
     margin-left: 5px
+}
+
+.widgets_popup_box_body {
+    background: #edeef0
+}
+
+.widgets_popup_box_body #box_layer_bg,
+.widgets_popup_box_body #box_loader {
+    display: none!important
+}
+
+.widgets_popup_box_body #box_layer_wrap {
+    display: table
+}
+
+.widgets_popup_box_body #box_layer {
+    display: table-cell;
+    padding: 0;
+    vertical-align: middle;
+    text-align: center
+}
+
+.widgets_popup_box_body .popup_box_container {
+    margin-top: 0!important;
+    text-align: initial;
+    display: inline-block;
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
+}
+
+.widgets_popup_box_body .popup_box_container .box_layout {
+    margin-top: -1px
 }
 
 .inl_bl {

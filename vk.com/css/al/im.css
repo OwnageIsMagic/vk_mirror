@@ -1214,7 +1214,8 @@ body.mac .im_stickerpack_fixed {
 .im-page.im-page_classic .im-page--header-inner {
     border-radius: 2px 2px 0 0;
     background: #fff;
-    box-shadow: 0 0 0 1px #e3e4e8
+    box-shadow: 0 0 0 1px #e3e4e8;
+    border: none
 }
 
 .im-page.im-page_classic .im-page--peer-online_right {
@@ -1435,11 +1436,19 @@ body.mac .im_stickerpack_fixed {
 .im-page .im-page--top-date-bar-wrap {
     position: absolute;
     width: 594px;
-    top: 46px;
-    margin-top: -14px;
+    top: 52px;
     z-index: 101;
     text-align: center;
     pointer-events: none
+}
+
+.im-page .im-page--top-date-bar_visible .im-page--top-date-bar,
+.im-page .im-page--top-date-bar_visible .im-page--history-new-bar_days.im-page--date-bar-transition>span:before {
+    opacity: 1
+}
+
+.im-page .im-page--top-date-bar_visible .im-page--history-new-bar_days.im-page--date-bar-transition.im-page--date-bar-transition-inverse>span:before {
+    opacity: 0
 }
 
 .im-page .im-page--top-date-bar {
@@ -1447,32 +1456,33 @@ body.mac .im_stickerpack_fixed {
     color: #828282;
     overflow: hidden;
     display: inline-block;
-    position: relative
+    position: relative;
+    background: #fff;
+    border: 1px solid #cfd9e1;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1);
+    border-radius: 20px;
+    opacity: 0;
+    -o-transition: opacity 0.2s ease-out;
+    transition: opacity 0.2s ease-out;
+    line-height: 1.5;
+    padding: 3px 15px;
+    z-index: 2
 }
 
-.im-page .im-page--top-date-bar:before {
-    content: "";
-    display: block;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    top: 13px;
-    height: 1px;
-    background: #fff
-}
-
-.im-page .im-page--top-date-bar.im-page--top-date-bar_no-b:before {
+.im-page .im-page--top-date-bar.im-page--top-date-bar_no-b {
     display: none
 }
 
-.im-page .im-page--top-date-bar-inner {
-    line-height: 1.5;
-    padding: 3px 15px;
-    border-radius: 25px;
+.im-page .im-page--top-date-bar.im-page--date-bar-transition:not(im-page--date-bar-transition-inverse) {
+    background: none;
+    border: none;
+    box-shadow: none
+}
+
+.im-page .im-page--top-date-bar.im-page--date-bar-transition.im-page--date-bar-transition-inverse {
     background: #fff;
-    position: relative;
-    z-index: 2;
-    visibility: hidden
+    border: 1px solid #cfd9e1;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1)
 }
 
 .im-page .im-page--typing_vis {
@@ -1783,7 +1793,7 @@ body.mac .im_stickerpack_fixed {
     background: #fff;
     font-weight: 400;
     position: relative;
-    margin: 10px 43px;
+    margin: 0;
     border: none;
     padding: 0
 }
@@ -1816,7 +1826,23 @@ body.mac .im_stickerpack_fixed {
     border-radius: 20px;
     padding: 3px 15px;
     position: relative;
-    top: 7px
+    top: 7px;
+    margin: 10px 0
+}
+
+.im-page .im-page--history-new-bar_days>span:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 20px;
+    opacity: 0;
+    -o-transition: opacity 0.2s ease-out;
+    transition: opacity 0.2s ease-out;
+    border: 1px solid #cfd9e1;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1)
 }
 
 .im-page .im-page--history-new-bar_days:after,
@@ -1926,7 +1952,12 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--header-inner {
-    height: 45px
+    height: 45px;
+    width: 100%;
+    z-index: 102;
+    position: relative;
+    background: #fff;
+    border-bottom: solid 1px #e4e6e9
 }
 
 .im-page .im-page--chat-body {

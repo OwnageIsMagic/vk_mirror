@@ -177,7 +177,7 @@
             return a
         },
         _checkScroll: function(e) {
-            void 0 === e.scroll && (e.scroll = !1, stManager.add(["notifier.css", "notifier.js"], function() {
+            void 0 === e.scroll && (e.scroll = !1, stManager.add(["ui_common.css", "ui_common.js"], function() {
                 e.scroll = new Scrollbar(e.list, {
                     prefix: "fc_",
                     nomargin: !0,

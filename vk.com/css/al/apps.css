@@ -1875,10 +1875,6 @@ a.page_block_header:hover .apps_cat_header_link:after {
     display: none
 }
 
-body.widgets_popup_box_centered.widgets_popup_post_box .widgets_popup_box {
-    max-width: 560px
-}
-
 .apps_i_wrap {
     background: #fff;
     text-align: left;

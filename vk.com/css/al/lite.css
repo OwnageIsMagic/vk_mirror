@@ -219,7 +219,6 @@ body {
     font-size: 13px;
     font-family: -apple-system, BlinkMacSystemFont, Roboto, Open Sans, Helvetica Neue, sans-serif;
     line-height: 1.154;
-    letter-spacing: -0.1px;
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
     -moz-osx-font-smoothing: auto
@@ -1211,34 +1210,6 @@ body.mac .pr_bt {
 
 .delete_all .button_gray {
     margin: 0 10px
-}
-
-body.widgets_popup_box_centered {
-    width: 100%;
-    height: 100%;
-    background: #edeef0
-}
-
-body.widgets_popup_box_centered #page_wrap {
-    margin-top: -1px;
-    display: table;
-    width: 100%;
-    height: 100%
-}
-
-body.widgets_popup_box_centered .widgets_popup_box_wrap {
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center
-}
-
-body.widgets_popup_box_centered .widgets_popup_box {
-    display: inline-block;
-    width: 100%;
-    max-width: 450px;
-    text-align: left;
-    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
-    border-radius: 2px 2px 0 0
 }
 
 #layer_stl {
@@ -3680,6 +3651,22 @@ div.top_result_baloon a {
 .captcha_box_wrap .captcha_box_loader {
     margin: 10px -10px;
     vertical-align: top
+}
+
+.recaptcha .pr {
+    padding: 35px 0;
+    text-align: center
+}
+
+.recaptcha .pr_bt {
+    width: 8px;
+    height: 8px;
+    border-radius: 4px;
+    margin-right: 4px
+}
+
+.recaptcha .pr_bt:last-child {
+    margin-right: 0
 }
 
 .trnp {
