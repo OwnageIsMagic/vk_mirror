@@ -206,7 +206,8 @@ var Videoview = {
                             event: "start",
                             start_time: vkNow() - cur.videoAutoplayStat.launched,
                             preloaded: cur.videoAutoplayStat.preloaded ? 1 : 0,
-                            streaming_method: t
+                            streaming_method: t,
+                            module: Videoview.getVideoModule()
                         }, {});
                 var s = Videoview.getMvData();
                 switch (s.tns_monetized ? vkImage()

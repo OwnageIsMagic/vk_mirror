@@ -1462,6 +1462,9 @@ var Page = {
 
         initVideoAutoplay: function(noHlsMaxDuration, canPlayMp4) {
             if (browser.mobile || canPlayMp4 === false || cur.videoAutoplayScrollHandler) {
+                if (cur.module == 'feed' && !cur.videoAutoplayScrollHandler) {
+                    statlogsValueEvent('feed_init_video_autoplay', 'bad_browser');
+                }
                 return;
             }
 
@@ -1470,6 +1473,10 @@ var Page = {
                     Page.initVideoAutoplay(noHlsMaxDuration, canPlay);
                 });
                 return;
+            }
+
+            if (cur.module == 'feed') {
+                statlogsValueEvent('feed_init_video_autoplay', 'good_browser');
             }
 
             var canPlayHls = window.MediaSource && MediaSource.isTypeSupported && MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"') && !browser.safari &&
@@ -1491,7 +1498,6 @@ var Page = {
                 var activeSpace = Math.min(viewportHeight, 800);
                 var activeTop = viewportMiddle - activeSpace / 2;
                 var activeBottom = viewportMiddle + activeSpace / 2;
-                var scrollY = scrollGetY();
 
                 if (curPlayer) {
                     var isAutoplaying = curPlayer.isFromAutoplay() && !curPlayer.isTouchedByUser();
@@ -1577,8 +1583,6 @@ var Page = {
                 scrollHandler = null;
                 delete cur.videoAutoplayScrollHandler;
             });
-
-            stManager.add(['videoplayer.js', 'videoplayer.css', 'hls.min.js'], function() {});
 
             function _getVideoParams(thumb) {
                 return {

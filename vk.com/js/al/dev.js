@@ -94,7 +94,7 @@ var Dev = {
             wrap = ge('dev_page_wrap1'),
             block = wrap && geByClass1('dev_page_block', wrap) || wrap;
 
-        if (!left || !block || geByClass1('no_min_height', block)) return;
+        if (!left || !block || geByClass1('no_min_height', block) || hasClass(block.nextSibling, 'dev_page_block')) return;
 
         var leftSZ = getSize(left),
             wrapSZ = getSize(wrap),

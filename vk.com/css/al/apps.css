@@ -973,10 +973,14 @@ a.apps_header_progress:before {
 }
 
 .apps_cat_header_icon.apps_icon_new {
-    background-position: 0 -420px
+    background-position: 0 -616px
 }
 
 .apps_cat_header_icon.apps_icon_popular {
+    background-position: 0 -420px
+}
+
+.apps_cat_header_icon.apps_icon_bestsellers {
     background-position: 0 -308px
 }
 

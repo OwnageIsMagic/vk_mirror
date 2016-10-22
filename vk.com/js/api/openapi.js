@@ -2161,33 +2161,25 @@ if (!VK.Widgets) {
     VK.Widgets.AllowMessagesFromCommunity = function(objId, options, groupId) {
         groupId = parseInt(groupId, 10);
 
-        if (!options) {
-            options = {};
-        }
-
-        var height = ({
-            22: 22,
-            24: 24,
-            30: 30
-        })[parseInt(options.height, 10) || 24];
-
-        var key = '';
-        if (options.key) {
-            key = options.key.substr(0, 256);
-        }
-
-        if (!groupId || groupId < 0) {
-            throw Error('No group id passed');
-        }
+        if (!options) options = {};
+        if (!groupId || groupId < 0) throw Error('No group id passed');
 
         var params = {
-            height: height,
-            key: key,
-            group_id: groupId
-        };
+                height: ({
+                    22: 22,
+                    24: 24,
+                    30: 30
+                })[parseInt(options.height, 10) || 24],
+                key: options.key ? options.key.substr(0, 256) : '',
+                group_id: groupId
+            },
+            rpc;
 
         return VK.Widgets._constructor('widget_allow_messages_from_community.php', objId, options, params, {}, {
-            width: '100%'
+            startHeight: params.height,
+            height: params.height
+        }, function(o, i, r) {
+            rpc = r;
         });
     };
 

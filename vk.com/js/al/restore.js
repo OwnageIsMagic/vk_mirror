@@ -369,15 +369,14 @@ var Restore = {
     },
     checkIndependentRestore: function() {
         if (cur.options && cur.options.can_restore_independently) {
-            var e = val("old_phone")
-                .replace(/[^0-9]/g, ""),
-                o = val("phone")
-                .replace(/[^0-9]/g, ""),
-                r = val("new_phone")
+            var e = (val("old_phone")
+                    .replace(/[^0-9]/g, ""), val("phone")
+                    .replace(/[^0-9]/g, "")),
+                o = val("new_phone")
                 .replace(/[^0-9]/g, "");
-            return r ? void show("restore_back_link") : void(o && e == o && ajax.post("restore", {
+            return o ? void show("restore_back_link") : void(e && ajax.post("restore", {
                 act: "check_independent_restore_allowed",
-                phone: o,
+                phone: e,
                 hash: cur.options.fhash
             }, {
                 onDone: function(e) {
@@ -389,7 +388,7 @@ var Restore = {
     },
     changeFormStep: function(e, o) {
         if (Restore.checkRoll(e)) {
-            Restore.fillRollShort(e), "photo" == o && Restore.checkIndependentRestore();
+            Restore.fillRollShort(e);
             var r = ge("restore_roll_" + e);
             removeClass(r, "_restore_roll_active"), re("restore_roll_button_" + e);
             var t = ge("restore_roll_" + o);
