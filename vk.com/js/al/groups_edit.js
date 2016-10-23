@@ -2084,13 +2084,34 @@ var GroupsEdit = {
         show: function(e, t) {
             return cancelEvent(t), showApp(t, e, !0)
         },
+        switchTab: function(e, t, o) {
+            cancelEvent(o);
+            var r = gpeByClass("ui_tabs", t);
+            uiTabs.switchTab(t), ajax.post("/groupsedit.php", {
+                id: cur.gid,
+                act: e,
+                tab: 1
+            }, {
+                onDone: function(t) {
+                    ge("apps_catalog")
+                        .innerHTML = t, nav.objLoc.act = e, nav.setLoc(nav.objLoc), cur.cur_tab = e
+                },
+                showProgress: function() {
+                    uiTabs.showProgress(r)
+                },
+                hideProgress: function() {
+                    uiTabs.showProgress(r)
+                }
+            })
+        },
         attach: function(e, t, o, r) {
             if (!cur.show_alert || r) {
                 var s = {
                     act: "app_attach",
                     id: cur.gid,
                     app_id: e,
-                    hash: t
+                    hash: t,
+                    cur_tab: cur.cur_tab
                 };
                 GroupsEdit.hideMessage(), ajax.post("groupsedit.php", s, {
                     onDone: function(e, t, o) {
@@ -2142,7 +2163,8 @@ var GroupsEdit = {
                 act: "app_delete",
                 app_id: cur.appId,
                 id: cur.gid,
-                hash: cur.delAppHash
+                hash: cur.delAppHash,
+                cur_tab: cur.cur_tab
             };
             GroupsEdit.hideMessage(), ajax.post("groupsedit.php", t, {
                 onDone: function(e, t, o) {
