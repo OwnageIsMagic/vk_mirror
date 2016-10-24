@@ -1729,9 +1729,9 @@ AudioPlayer.tabIcons = {
         return !!this._adPaused
     }, AudioPlayer.prototype._adsPrepareAd = function(t, i) {
         function e(t) {
-            this._adsReadyInfo = t, this._adsSection = i, this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
+            this._adsReadyInfo = t, this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
         }
-        this._adsInitAdman(t, e.bind(this))
+        this._adsSection = i, this._adsInitAdman(t, e.bind(this))
     }, AudioPlayer.prototype._adsDeinit = function() {
         this._adman = null, this._adsReadyInfo = null, this._adsCurrentProgress = 0, this.notify(AudioPlayer.EVENT_AD_DEINITED)
     }, AudioPlayer.prototype._adsInitAdman = function(t, i) {
@@ -1752,7 +1752,7 @@ AudioPlayer.tabIcons = {
                 }
             }), this._adman.setDebug(!!__dev), this._adman.onReady(function() {
                 var t = this._adman.getBannersForSection("postroll");
-                t && t.length && i(t)
+                t && t.length ? i(t) : this._adsSendAdEvent("not_received")
             }.bind(this))
         }.bind(this))
     }, AudioPlayer.prototype._loadAdman = function(t, i, e) {
@@ -1948,10 +1948,10 @@ AudioPlayer.tabIcons = {
         t = Math.max(0, Math.min(1, t));
         var e = this._currentAudioEl,
             o = 0;
-        if (o = t < e.volume ? -.04 : .001, Math.abs(t - e.volume) <= .001) return this._setFadeVolumeInterval(), i && i();
+        if (o = t < e.volume ? -.06 : .001, Math.abs(t - e.volume) <= .001) return this._setFadeVolumeInterval(), i && i();
         var a = e.volume;
         this._setFadeVolumeInterval(function() {
-            o > 0 && (o *= 1.2), a += o;
+            o > 0 && (o *= 1.35), a += o;
             var e = !1;
             return (e = 0 > o ? t >= a : a >= t) ? (this.setVolume(t), this._setFadeVolumeInterval(), i && i()) : void this.setVolume(a)
         }.bind(this))
