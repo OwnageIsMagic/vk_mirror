@@ -2174,6 +2174,18 @@ var AppsEdit = {
             hash: e
         }), cancelEvent(t), !1
     },
+    hideWarning: function(e, t, a) {
+        ajax.post("editapp", {
+            act: "a_hide_warning",
+            app_id: cur.aid,
+            name: t,
+            hash: a
+        }, {
+            onDone: function() {
+                hide(geByClass1("app_edit_warning", "app_edit_warning_wrap"))
+            }
+        })
+    },
     _eof: 1
 };
 try {

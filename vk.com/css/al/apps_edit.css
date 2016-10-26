@@ -205,11 +205,32 @@
     display: none
 }
 
-#app_edit_error {
+#app_edit_error,
+.app_edit_warning {
     border: 1px solid #e89b88;
     background-color: #ffefe8;
     padding: 8px 11px;
     line-height: 160%
+}
+
+.app_edit_warning {
+    margin-bottom: 20px
+}
+
+.app_edit_warning .title {
+    font-weight: 500
+}
+
+.app_edit_warning .close {
+    height: 12px;
+    width: 12px;
+    background: svg('apps/warning_cancel.svg') 50% no-repeat;
+    opacity: 0
+}
+
+.app_edit_warning:hover .close {
+    opacity: 1;
+    cursor: pointer
 }
 
 .apps_edit_dld {
