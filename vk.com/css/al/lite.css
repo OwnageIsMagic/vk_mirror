@@ -2587,10 +2587,12 @@ h2.page_block_h2 {
     position: relative;
     overflow: hidden;
     height: 100%;
-    background: #000
+    background: #000;
+    background-size: cover;
+    background-position: 50%
 }
 
-.video_box_background {
+.video_box_msg_background {
     position: absolute;
     top: -10px;
     bottom: -10px;
@@ -2602,7 +2604,7 @@ h2.page_block_h2 {
     filter: blur(10px)
 }
 
-.video_box_cant_play {
+.video_box_msg_text {
     position: absolute;
     left: 50%;
     top: 50%;

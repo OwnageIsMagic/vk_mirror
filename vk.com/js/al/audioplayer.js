@@ -1199,7 +1199,7 @@ AudioPlayer.tabIcons = {
         var t = window.Notifier;
         t && t.lcSend("audio_start");
         try {
-            window.Videoview && Videoview.togglePlay(!1, !0)
+            window.Videoview && Videoview.togglePlay(!1)
         } catch (i) {}
     }, AudioPlayer.prototype.showHQLabel = function(t) {
         var i = "_audio_show_hq_label";
@@ -1736,6 +1736,22 @@ AudioPlayer.tabIcons = {
         this._adman = null, this._adsReadyInfo = null, this._adsCurrentProgress = 0, this.notify(AudioPlayer.EVENT_AD_DEINITED)
     }, AudioPlayer.prototype._adsInitAdman = function(t, i) {
         t = AudioUtils.asObject(t), this._loadAdman(function() {
+            var e = {
+                my: 101,
+                albums: 101,
+                user_list: 102,
+                groups: 103,
+                wall: 104,
+                news: 105,
+                im: 106,
+                recs: 107,
+                popular_audio: 108,
+                popular_genre: 108,
+                feed_audio: 109,
+                search: 110,
+                top_bands: 111,
+                friends: 112
+            };
             this._adman = new AdmanHTML, this._adman.init({
                 slot: 3514,
                 wrapper: se("<div></div>"),
@@ -1744,7 +1760,8 @@ AudioPlayer.tabIcons = {
                     vk_id: vk.id,
                     duration: t.duration,
                     content_id: t.id,
-                    preview: 1
+                    preview: 1,
+                    vk_catid: e[this._adsSection]
                 },
                 browser: {
                     adBlock: !1,

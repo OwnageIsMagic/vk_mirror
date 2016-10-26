@@ -107,7 +107,8 @@ var Videocat = window.Videocat || {
                     autoplay: 1,
                     module: "videocat",
                     addParams: {
-                        from_autoplay: 1
+                        from_autoplay: 1,
+                        show_title: 1
                     }
                 }, !1, c)
             }

@@ -1096,6 +1096,16 @@ body.mac .im_stickerpack_fixed {
     background-position: 0 -20px
 }
 
+.im-page.im-page_classic .im-page--history-new-bar:after,
+.im-page.im-page_classic .im-page--history-new-bar:before {
+    margin-left: 36px
+}
+
+.im-page.im-page_classic .im-page--history-new-bar:after {
+    margin-right: 36px;
+    margin-left: 0
+}
+
 .im-page.im-page_classic .im-page--dialogs {
     width: 100%;
     padding-bottom: 0;
@@ -1814,11 +1824,14 @@ body.mac .im_stickerpack_fixed {
     width: 50%;
     background: #e4e6e9;
     position: absolute;
-    top: 50%
+    top: 50%;
+    margin-left: 43px
 }
 
 .im-page .im-page--history-new-bar:after {
-    right: 0
+    right: 0;
+    margin-right: 43px;
+    margin-left: 0
 }
 
 .im-page .im-page--history-new-bar_days>span {

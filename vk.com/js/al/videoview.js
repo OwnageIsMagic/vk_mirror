@@ -181,39 +181,39 @@ var Videoview = {
                     Notifier.lcSend("video_start")
                 }, 0), window.ap && ap.isPlaying() && (ap.pause(), ap.pausedByVideo = vkNow())
             },
-            onVideoPlayStarted: function(e, i, o, t) {
-                var a = Videoview.getVideoModule(e + "_" + i),
-                    n = "";
+            onVideoPlayStarted: function(e, i, o, t, a) {
+                var n = Videoview.getVideoModule(e + "_" + i),
+                    d = "";
                 if (window.Video && Video.isInCatalog()) {
-                    var d = (VideoPlaylist.getCurListId() || "")
+                    var r = (VideoPlaylist.getCurListId() || "")
                         .replace("cat_", "");
-                    n = cur.videoInlinePlayer || Videocat.isTop3Playlist(d) ? "featured" : d
+                    d = cur.videoInlinePlayer || Videocat.isTop3Playlist(r) ? "featured" : r
                 }
-                var r;
-                r = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
+                var s;
+                s = cur.mvOpts && cur.mvOpts.inline || window.mvcur && mvcur.mvData && mvcur.mvData.inline ? "inline" : window.mvcur && window.mvcur.options && window.mvcur.options
                     .playlistId ? "layer_with_playlist" : "layer", window.mvcur && mvcur.mvData && (mvcur.viewStartedTimestamp = (new Date)
                         .getTime()), ajax.post("al_video.php?act=video_view_started", {
                         oid: e,
                         vid: i,
                         hash: o,
                         quality: window.mvcur ? mvcur.mvData.resolution : 0,
-                        module: a,
-                        videocat: n,
+                        module: n,
+                        videocat: d,
                         inline: -1,
-                        player_view_type: r
-                    }, {}), cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i && ajax.post(
-                        "al_video.php?act=autoplay_stat", {
-                            event: "start",
-                            start_time: vkNow() - cur.videoAutoplayStat.launched,
-                            preloaded: cur.videoAutoplayStat.preloaded ? 1 : 0,
-                            streaming_method: t,
-                            module: Videoview.getVideoModule()
-                        }, {});
-                var s = Videoview.getMvData();
-                switch (s.tns_monetized ? vkImage()
+                        player_view_type: s
+                    }, {}), cur.videoInlinePlayer && cur.videoInlinePlayer.isFromAutoplay() && cur.videoAutoplayStat && cur.videoAutoplayStat.video == e + "_" + i && !a &&
+                    ajax.post("al_video.php?act=autoplay_stat", {
+                        event: "start",
+                        start_time: vkNow() - cur.videoAutoplayStat.launched,
+                        preloaded: cur.videoAutoplayStat.preloaded ? 1 : 0,
+                        streaming_method: t,
+                        module: Videoview.getVideoModule()
+                    }, {});
+                var v = Videoview.getMvData();
+                switch (v.tns_monetized ? vkImage()
                     .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=pladform_videovk-playerstart/" + irand(1, 1e9) : vkImage()
-                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), s.kz && (vkImage()
-                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), s.l_type) {
+                    .src = "//www.tns-counter.ru/V13a****pladform_ru/ru/CP1251/tmsec=platform_videovk-playerstart/" + irand(1, 1e9), v.kz && (vkImage()
+                        .src = "//www.tns-counter.ru/V13a****vk_kz/ru/CP1251/tmsec=vkkz_videostart/" + irand(1, 1e9)), v.l_type) {
                     case 1:
                         vkImage()
                             .src =
@@ -410,13 +410,13 @@ var Videoview = {
         },
         togglePlay: function(e, i) {
             if (ge("video_yt") && window.VideoYoutube) VideoYoutube.togglePlay(e);
-            else if (window.mvcur && mvcur.player) mvcur.player.togglePlay(e);
-            else if (cur.videoInlinePlayer) {
-                var o = !e && i && cur.videoInlinePlayer.isFromAutoplay() && !cur.videoInlinePlayer.isTouchedByUser();
-                o || cur.videoInlinePlayer.togglePlay(e)
+            else if (window.mvcur && mvcur.player || cur.videoInlinePlayer) {
+                var o = window.mvcur && mvcur.player || cur.videoInlinePlayer,
+                    t = o.isFromAutoplay() && !o.isTouchedByUser();
+                (!t || i) && o.togglePlay(e)
             } else {
-                var t = ge("video_player") || window.html5video;
-                t && t === window.html5video ? t.playVideo(e, !0) : t && t.playVideo && t && t.playVideo(e)
+                var o = ge("video_player");
+                o && o.playVideo && o.playVideo(e)
             }
         },
         sendVideoAdStat: function(e, i, o) {
@@ -1419,8 +1419,8 @@ var Videoview = {
                 if (opt = opt || {}, addLangKeys(opt.lang, !0), cur.share_timehash = cur.share_timehash || opt.share_timehash, mvcur.post = opt.post, mvcur.maxReplyLength =
                     opt.maxReplyLength, mvcur.maxChatReplyLength = opt.maxChatReplyLength, mvcur.maxDescriptionLength = opt.maxDescriptionLength, mvcur.mvData = opt.mvData,
                     mvcur.videoRaw = opt.mvData.videoRaw, mvcur.commentsTpl = opt.commentsTpl, mvcur.mvMediaTypes = opt.media, mvcur.mvMediaShare = opt.share, mvcur.mvReplyNames =
-                    opt.names || {}, mvcur.rmedia_types = opt.rmedia_types, mvcur.adminLevel = opt.adminLevel, mvcur.chatMode = !!opt.chatMode, opt.queueData && (mvcur.queueKey =
-                        opt.queueData.key, mvcur.qversion = opt.qversion), mvcur.wallTpl = opt.wallTpl, opt.pl_list) {
+                    opt.names || {}, mvcur.rmedia_types = opt.rmedia_types, mvcur.adminLevel = opt.adminLevel, mvcur.chatMode = !!opt.chatMode, mvcur.finished = !1, mvcur.wallTpl =
+                    opt.wallTpl, opt.queueData && (mvcur.queueKey = opt.queueData.key, mvcur.qversion = opt.qversion), opt.pl_list) {
                     var lists = JSON.parse(opt.pl_list);
                     each(lists, function(e, i) {
                         VideoPlaylist.addList(i)
@@ -1431,10 +1431,17 @@ var Videoview = {
                 if (!mvcur.options.expandPlayer) {
                     var videoBoxWrap = domByClass(ge("mv_player_box"), "video_box_wrap");
                     opt.is_vk_player && !opt.is_flv && !opt.cantPlay && mvcur.player && domClosest("video_box_wrap", mvcur.player.el) === videoBoxWrap ? (attr(videoBoxWrap,
-                        "id", "video_box_wrap" + mvcur.videoRaw), needRemin = !1) : (mvcur.player && re(mvcur.player.el), val("mv_player_box", html)), hide(
-                        "mv_progress_box")
+                        "id", "video_box_wrap" + videoRaw), needRemin = !1) : (mvcur.player && re(mvcur.player.el), val("mv_player_box", html)), hide("mv_progress_box")
                 }
-                if (val("mv_info", desc), val("mv_service_btns", serviceBtns), mvcur.chatMode) {
+                if (val("mv_info", desc), val("mv_service_btns", serviceBtns), opt.player) {
+                    var container = domByClass(ge("mv_player_box"), "video_box_wrap");
+                    VideoInitializer.initPlayer(container, opt.player.type, opt.player.params)
+                }
+                if (js && eval("(function(){" + js + "})()"), opt.publishAction) {
+                    var publishAction = ge("mv_publish");
+                    val(publishAction, opt.publishAction), show(publishAction)
+                } else hide("mv_publish");
+                if (mvcur.chatMode) {
                     VideoPlaylist.removeBlock();
                     var chatBlock = se(opt.chatBlock);
                     ge("mv_main")
@@ -1443,11 +1450,7 @@ var Videoview = {
                 var rf = ge("reply_field" + mvcur.post);
                 if (rf && placeholderInit(rf, {
                         editable: 1
-                    }), mvcur.finished = !1, js && eval("(function(){" + js + "})()"), opt.publishAction) {
-                    var publishAction = ge("mv_publish");
-                    val(publishAction, opt.publishAction), show(publishAction)
-                } else hide("mv_publish");
-                if (Videoview.updateSize(), mvcur.minimized && needRemin && Videoview.minimizePlayer(), mvcur.statusVideo) {
+                    }), Videoview.updateSize(), mvcur.minimized && needRemin && Videoview.minimizePlayer(), mvcur.statusVideo) {
                     var statusCont = ge("like_count" + mvcur.mvData.videoRaw);
                     if (statusCont) {
                         var tt = statusCont.parentNode.tt;
@@ -1887,8 +1890,7 @@ var Videoview = {
         unminimize: function(e, i, o) {
             if (mvcur.minimized) {
                 o || layerQueue.push(), i || (layerQueue.hide(), setTimeout(function() {
-                        mvcur.noHistory = 1, layerQueue.noHistory(), layers.wrapshow(mvLayerWrap, .7),
-                            layers.fullhide = Videoview.hide
+                        mvcur.noHistory = 1, layerQueue.noHistory(), layers.wrapshow(mvLayerWrap, .7), layers.fullhide = Videoview.hide
                     }, 0)), Videoview.hidePlayer(!0), mvcur.controlsVisibility && show("mv_info"), hide("mv_min_header"), show("mv_top_controls"), mvcur.minimized = !1,
                     removeClass(mvLayerWrap, "mv_minimized"), Videoview.restoreStyle("mvLayerWrap", mvLayerWrap);
                 var t = "mv_dark";
@@ -3064,6 +3066,126 @@ window.VideoChat = {
     },
     onDestroy: function() {
         delete VideoDonate.params, delete VideoDonate.apiData, VideoDonate.currencyDropdown && (VideoDonate.currencyDropdown.destroy(), VideoDonate.currencyDropdown = null)
+    }
+}, window.VideoInitializer = {
+    initPlayer: function(e, i, o) {
+        hide(domByClass(e, "video_box_msg")), VideoInitializer[i].apply(VideoInitializer, [e].concat(o)), stManager.add("notifier.js", function() {
+            var e = Videoview.togglePlay.pbind(!1);
+            Notifier.addRecvClbk("audio_start", "video", e), Notifier.addRecvClbk("video_start", "video", e), Notifier.addRecvClbk("videocall_start", "video", e)
+        })
+    },
+    vk: function(e, i) {
+        var o = i.oid + "_" + i.vid;
+        if (i.vsegs) ls.remove("vsegs" + vk.id + "_" + o);
+        else {
+            var t = ls.get("vsegs" + vk.id + "_" + o);
+            t && t.ts && t.segments && vkNow() - t.ts < 864e5 && (i.vsegs = t.segments.replace(/[^0-9\,\|]/gi, ""))
+        }
+        onLoaded(function() {
+            checkMp4(function(o) {
+                if (o && i.no_flv || i.live) VideoInitializer.vkHtml5(e, i);
+                else {
+                    var t = "/swf/video.swf",
+                        a = {
+                            allowscriptaccess: "always"
+                        };
+                    VideoInitializer.flash(e, t, i, a)
+                }
+            })
+        })
+    },
+    vkHtml5: function(e, i) {
+        var o = window.mvLayer && mvLayer.contains(e),
+            t = o && mvcur.player && e.contains(mvcur.player.el);
+        t || val(e, "");
+        var a = ["videoplayer.js", "videoplayer.css"];
+        i.hls && a.push("hls.min.js"), i.live_candy && a.push("candy.min.js"), stManager.add(a, function() {
+            if (bodyNode.contains(e)) {
+                if (o && mvcur.player) {
+                    var a = mvcur.player;
+                    a.initVideo(i)
+                } else {
+                    var a = new VideoPlayer(i);
+                    o ? mvcur.player = a : i.video_ext ? cur.player = a : cur.videoInlinePlayer = a
+                }
+                if (!t) {
+                    var n = ce("div", {
+                        id: "video_player"
+                    });
+                    attr(n, "preventhide", 1), n.appendChild(a.el), e.appendChild(n)
+                }
+            }
+        })
+    },
+    youtube: function(e, i) {
+        var o = i.oid,
+            t = i.vid,
+            a = i.report_error_hash;
+        window.onYouTubeIframeAPIReady = function() {
+            var n = domByClass(e, "video_yt_player"),
+                d = new YT.Player(n, {
+                    events: {
+                        onError: function(e) {
+                            var i = [100, 101, 150];
+                            e.data && -1 != i.indexOf(e.data) && ajax.post("al_video.php?act=reparseDeletedYoutube", {
+                                vid: t,
+                                oid: o
+                            }), debugLog("YT player error", arguments), ajax.post("al_video.php?act=external_error", {
+                                oid: o,
+                                vid: t,
+                                hash: a
+                            })
+                        },
+                        onStateChange: function(e) {
+                            switch (e.data) {
+                                case YT.PlayerState.ENDED:
+                                    stManager.add(["videoview.js", "videoview.css"], function() {
+                                        var e = ge("video_yt");
+                                        Videoview.onExternalVideoEnded(e)
+                                    });
+                                    break;
+                                default:
+                                    ge("mv_external_finish") && Videoview.removeExternalVideoFinishBlock()
+                            }
+                        }
+                    }
+                });
+            stManager.add(["video_youtube.js", "video_youtube.css"], function() {
+                VideoYoutube.initStatOnly(d, i)
+            })
+        }, window.YT ? onYouTubeIframeAPIReady() : ! function(e) {
+            var i, o = geByTag1("script");
+            i = ce("script", {
+                async: !0,
+                src: "https://www.youtube.com/iframe_api"
+            }), o.parentNode.insertBefore(i, o)
+        }(document)
+    },
+    iframeOrFlash: function(e, i, o, t, a, n) {
+        t && !browser.flash ? val(e, '<iframe class="extra_player" type="text/html" width="100%" height="100%" src="' + t + '" frameborder="0" ' + a + "></iframe>") : (o =
+            extend({
+                stats: "",
+                from: "vk"
+            }, o), VideoInitializer.flash(e, i, o)), n && setTimeout(function() {
+            cur && cur.incViews && cur.incViews()
+        }, 100)
+    },
+    flash: function(e, i, o, t) {
+        if (browser.flash < 11) return void show(domByClass(e, "video_box_msg"));
+        var a = {
+            url: i,
+            id: "video_player",
+            width: "100%",
+            height: "100%",
+            preventhide: 1,
+            version: 11
+        };
+        t = extend({
+            allowfullscreen: !0,
+            allowscriptaccess: "never",
+            bgcolor: "#000000",
+            wmode: "opaque"
+        }, t), renderFlash(e, a, t, o)
     }
 };
 try {

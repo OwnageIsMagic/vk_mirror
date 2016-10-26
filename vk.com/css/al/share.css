@@ -142,13 +142,8 @@ html {
     padding-left: 0
 }
 
-.share_form_wrap .share_form_preview .medadd_c_linkcon {
-    padding: 6px 8px 6px 13px
-}
-
 .share_form_wrap .medadd_c_linkimg_container {
-    z-index: 1;
-    margin: 5px 10px 5px 0
+    z-index: 1
 }
 
 .share_form_wrap .checkbox_container {
@@ -165,25 +160,18 @@ html {
 
 .share_field_wrap {
     min-height: 13px;
+    max-height: none;
     cursor: pointer
 }
 
-.share_field_wrap.medadd_c_linkdsc,
-.share_field_wrap.medadd_c_linkhead {
-    padding-left: 0
-}
-
-.share_field_wrap.medadd_c_linkhead h4 {
-    border: 0;
-    padding: 0;
-    margin: 0
-}
-
 .share_field_wrap .share_field_edit {
-    background: url(/images/post_icon.png?4) 0 -41px;
+    background: url(/images/post_icon.png?5) 0 -41px;
     width: 12px;
     height: 10px;
-    margin: 1px 0 0 5px;
+    position: absolute;
+    right: 0px;
+    top: 20%;
+    display: block;
     opacity: 0;
     filter: alpha(opacity=0)
 }

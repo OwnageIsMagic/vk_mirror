@@ -7091,6 +7091,10 @@ window.Widgets = {
                 height: h
             });
             cur.mvOpts = opts && opts.mvData ? opts.mvData : false;
+            if (opts.player) {
+                var container = domByClass(videoWrap, 'video_box_wrap');
+                VideoInitializer.initPlayer(container, opts.player.type, opts.player.params);
+            }
             try {
                 eval('(function () {' + js + '})();');
             } catch (e) {}

@@ -995,3 +995,18 @@
 .video_album_edit_privacy_wrap .privacy_edit_wrap {
     margin-left: 5px
 }
+
+.video_upload_rules_info {
+    margin-bottom: 16px;
+    font-size: 12px
+}
+
+.video_upload_rules_info>ul {
+    padding-left: 20px;
+    margin: 10px 0;
+    line-height: 18px
+}
+
+.video_upload_rules_info li {
+    margin-bottom: 3px
+}

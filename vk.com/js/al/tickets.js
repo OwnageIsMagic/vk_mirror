@@ -667,11 +667,11 @@ Tickets = {
     },
     deleteTicket: function(e, t) {
         var a = showFastBox({
-            title: cur.lang.delete_title,
+            title: getLang("support_delete_title"),
             dark: !0,
             bodyStyle: "padding: 20px; line-height: 160%;",
             width: 430
-        }, cur.lang.delete_confirm, cur.lang["delete"], function() {
+        }, getLang("support_delete_confirm"), getLang("support_delete_button"), function() {
             ajax.post(cur.objLoc, {
                 act: "delete",
                 ticket_id: e,
@@ -1436,11 +1436,11 @@ Tickets = {
     },
     toggleDetailedForm: function(e) {
         var t = ge("tickets_title");
-        if (toggleClass(ge("tickets_content"), "detailed"), isVisible("tickets_detailed_form")) t.setAttribute("placeholder", cur.lang.placeholder_title), removeClass(ge(
-                "tickets_search_reset"), "shown"), e && ge("tickets_text")
+        if (toggleClass(ge("tickets_content"), "detailed"), isVisible("tickets_detailed_form")) t.setAttribute("placeholder", getLang("support_please_add_title")),
+            removeClass(ge("tickets_search_reset"), "shown"), e && ge("tickets_text")
             .focus();
         else {
-            t.setAttribute("placeholder", cur.lang.placeholder_default);
+            t.setAttribute("placeholder", getLang("support_title_msg"));
             var a = trim(ge("tickets_title")
                 .value);
             a && addClass(ge("tickets_search_reset"), "shown"), cur.toggleCanceled = !0, delete cur.toggled, Tickets.searchFAQ(a), t.focus()

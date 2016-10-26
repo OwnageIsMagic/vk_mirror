@@ -2115,7 +2115,7 @@ var GroupsEdit = {
                 };
                 GroupsEdit.hideMessage(), ajax.post("groupsedit.php", s, {
                     onDone: function(e, t, o) {
-                        extend(cur, t), ge("group_apps_wrapper")
+                        extend(cur, t), cur.show_alert = !0, ge("group_apps_wrapper")
                             .innerHTML = e, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(o), GroupsEdit.invalidateBack()
                     },
                     showProgress: function() {
@@ -2158,26 +2158,33 @@ var GroupsEdit = {
                 }
             })
         },
-        "delete": function(e) {
-            var t = {
-                act: "app_delete",
-                app_id: cur.appId,
-                id: cur.gid,
-                hash: cur.delAppHash,
-                cur_tab: cur.cur_tab
-            };
-            GroupsEdit.hideMessage(), ajax.post("groupsedit.php", t, {
-                onDone: function(e, t, o) {
-                    extend(cur, t), ge("group_apps_wrapper")
-                        .innerHTML = e, GroupsEdit.showMessage(o, "info"), GroupsEdit.invalidateBack()
-                },
-                showProgress: function() {
-                    lockLink(e)
-                },
-                hideProgress: function() {
-                    unlockLink(e)
-                }
-            })
+        "delete": function(e, t) {
+            if (t) {
+                var o = {
+                    act: "app_delete",
+                    app_id: cur.appId,
+                    id: cur.gid,
+                    hash: cur.delAppHash,
+                    cur_tab: cur.cur_tab
+                };
+                GroupsEdit.hideMessage(), ajax.post("groupsedit.php", o, {
+                    onDone: function(e, t, o) {
+                        extend(cur, t), ge("group_apps_wrapper")
+                            .innerHTML = e, GroupsEdit.showMessage(o, "info"), cur.show_alert = !1, GroupsEdit.invalidateBack()
+                    },
+                    showProgress: function() {
+                        lockLink(e)
+                    },
+                    hideProgress: function() {
+                        unlockLink(e)
+                    }
+                })
+            } else var r = getLang("groups_apps_delete_app_message_content", cur.appName),
+                s = showFastBox({
+                    title: getLang("groups_apps_delete_app_message_title")
+                }, r, getLang("groups_apps_delete_app_message_yes"), function() {
+                    s.hide(), GroupsEdit.app["delete"](e, !0)
+                }, getLang("global_cancel"))
         }
     },
     messageWidgetSettings: function(e) {
