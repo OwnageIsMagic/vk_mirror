@@ -1461,6 +1461,11 @@ h5.post_author {
     max-height: 1.4em
 }
 
+.wall_module a.page_media_link_title:hover,
+.wall_module span.page_media_link_title:hover {
+    text-decoration: none
+}
+
 .wall_module .im_msg_media_link a.page_media_link_title,
 .wall_module .im_msg_media_link span.page_media_link_title {
     display: -webkit-box;

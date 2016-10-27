@@ -1074,7 +1074,8 @@ input.dev_input_simular {
 .dev_main_blog_posts {
     list-style-type: disc;
     color: #b4c6d6;
-    padding-left: 15px
+    padding-left: 15px;
+    margin-top: 23px
 }
 
 .dev_main_blog_posts .dev_main_blog_post {

@@ -3584,7 +3584,7 @@ function domReady() {
     window.debuglogInit && debuglogInit();
     if (!vk.id && ls.checkVersion() && ls.get('last_reloaded')) {
         try {
-            var permanent = ['sound_notify_off'],
+            var permanent = ['sound_notify_off', 'im_ui_notify_off'],
                 lsData = {};
             each(permanent, function() {
                 var lsVal = ls.get(this);
