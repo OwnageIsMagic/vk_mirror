@@ -141,12 +141,12 @@ Tasks = {
         bid ? ajax.post(Tasks.address, query, {
             showProgress: b.showProgress,
             hideProgress: b.hideProgress,
-            onDone: function(e, t, s, o, n) {
+            onDone: function(e, t, s, o, a) {
                 ge("task_summary")
                     .innerHTML = e, ge("task_content")
                     .innerHTML = s, ge("task_actions")
                     .innerHTML = t, ge("task_images")
-                    .innerHTML = n, ge("task_comments")
+                    .innerHTML = a, ge("task_comments")
                     .innerHTML = o, curBox()
                     .hide()
             }
@@ -197,9 +197,7 @@ Tasks = {
                 showProgress: lockButton.pbind(s),
                 hideProgress: unlockButton.pbind(s),
                 onDone: function(e, t) {
-                    ge("task_summary")
-                        .innerHTML = e, ge("task_actions")
-                        .innerHTML = t, curBox()
+                    val("task_summary", e), val("task_actions", t), curBox()
                         .hide()
                 }
             })
@@ -207,21 +205,18 @@ Tasks = {
     },
     preview: function(e, t) {
         var s = ge("preview");
-        s.innerHTML = "", isVisible(s) ? hide(s) : (lockButton(e), ajax.post(this.address, {
+        val(s, ""), isVisible(s) ? hide(s) : (lockButton(e), ajax.post(this.address, {
             act: "preview",
             hash: t,
-            text: ge("desc")
-                .value
+            text: val("desc")
         }, {
             onDone: function(t) {
-                unlockButton(e), s.innerHTML = t, show(s)
+                unlockButton(e), val(s, t), show(s)
             }
         }))
     },
     addComment: function(e) {
-        show("tasks_loading");
-        var t = ge("task_reply_field")
-            .value;
+        var t = val("task_reply_field");
         t && ajax.post(this.address, {
             act: "add_comment",
             bid: cur.bug_id,
@@ -231,15 +226,14 @@ Tasks = {
             hash: e
         }, {
             onDone: function(e) {
-                ge("task_comments")
-                    .innerHTML = e, ge("task_reply_field")
-                    .value = "", delete cur.replyTo, ge("task_reply_field")
+                val("task_comments", e), val("task_reply_field", ""), delete cur.replyTo, ge("task_reply_field")
                     .blur(), autosizeSetup(ge("task_reply_field"), {
                         minHeight: 70,
                         maxHeight: 500
-                    }), ge("answer_to")
-                    .innerHTML = "", hide("tasks_loading")
-            }
+                    }), val("answer_to", ""), hide("tasks_loading")
+            },
+            showProgress: show.pbind("tasks_loading"),
+            hideProgress: hide.pbind("tasks_loading")
         })
     },
     replyViewComment: function(e, t) {
@@ -293,11 +287,11 @@ Tasks = {
                 hash: t
             }, {
                 onDone: function(t) {
-                    var s = geByClass1("tasks_comm_text", ge("comment" + e));
-                    s.innerHTML = t, show(geByClass1("date", ge("comment" + e))), delete cur.editing, delete cur.comments[e]
+                    var s = geByClass1("tasks_comm_text", "comment" + e);
+                    s.innerHTML = t, show(geByClass1("date", "comment" + e)), delete cur.editing, delete cur.comments[e]
                 },
-                showProgress: lockButton.pbind(ge("save_but" + e)),
-                hideProgress: unlockButton.pbind(ge("save_but" + e))
+                showProgress: lockButton.pbind("save_but" + e),
+                hideProgress: unlockButton.pbind("save_but" + e)
             }) : void ge("comment" + e + "edit")
             .focus()
     },
@@ -344,20 +338,20 @@ Tasks = {
             onDone: function(t, s) {
                 var o = ge("comments" + e);
                 if (!o) {
-                    var n = ce("div", {
+                    var a = ce("div", {
                         id: "comments" + e,
                         className: "tasks_comments_row"
                     });
                     ge("bug" + e)
-                        .parentNode.insertBefore(n, ge("bug" + e)
+                        .parentNode.insertBefore(a, ge("bug" + e)
                             .nextSibling), o = ge("comments" + e)
                 }
                 o.innerHTML = t, ge("com_links" + e)
                     .innerHTML = s;
-                var a = ge("reply_field" + e);
-                placeholderSetup(a), autosizeSetup(a, {
+                var n = ge("reply_field" + e);
+                placeholderSetup(n), autosizeSetup(n, {
                         minHeight: 30
-                    }), a.show = !0, setTimeout(Tasks.hideReplyBox.pbind(e), 0), hide("load_comm" + e), hide("com_links" + e), show("com_hide" + e),
+                    }), n.show = !0, setTimeout(Tasks.hideReplyBox.pbind(e), 0), hide("load_comm" + e), hide("com_links" + e), show("com_hide" + e),
                     isVisible(o) || slideToggle(o, 200)
             }
         })) : (cont = ge("comments" + e), slideToggle(cont, 200, function() {
@@ -452,15 +446,15 @@ Tasks = {
         var t = ge("right_column"),
             s = ge("filter_" + e),
             o = !0,
-            n = cur.typeMask,
-            a = cur.feedTypes[e];
+            a = cur.typeMask,
+            n = cur.feedTypes[e];
         each(geByClass("checked", t, "div"), function() {
             return this != s ? o = !1 : void 0
         }), o ? each([].slice.apply(geByClass("tasks_feed_filter", t, "div")), function() {
-            hasClass(this, "checked") || (addClass(this, "checked"), n |= 1 << cur.feedTypes[this.id.substr(7)])
+            hasClass(this, "checked") || (addClass(this, "checked"), a |= 1 << cur.feedTypes[this.id.substr(7)])
         }) : (each([].slice.apply(geByClass("checked", t, "div")), function() {
-            removeClass(this, "checked"), n &= ~(1 << cur.feedTypes[this.id.substr(7)])
-        }), addClass(ge("filter_" + e), "checked"), n |= 1 << a), cur.typeMask = n, setCookie("remixtasks_feed_filter", n, 100), Tasks.filterFeed()
+            removeClass(this, "checked"), a &= ~(1 << cur.feedTypes[this.id.substr(7)])
+        }), addClass(ge("filter_" + e), "checked"), a |= 1 << n), cur.typeMask = a, setCookie("remixtasks_feed_filter", a, 100), Tasks.filterFeed()
     },
     filterFeed: function() {
         ge("feed_wrap")
@@ -516,12 +510,12 @@ Tasks = {
         var t = ge("tasks_preview_img"),
             s = t.src,
             o = geByClass("_tasks_image", "task_images_wrap"),
-            n = [],
-            a = 0;
+            a = [],
+            n = 0;
         each(o, function(e, t) {
             var o = attr(t, "photo-big");
-            n.push(o), o == s && (a = e)
-        }), n.length < 2 || (a += 1, 0 > a ? a = n.length - 1 : a > n.length - 1 && (a = 0), Tasks.showPhoto(n[a]))
+            a.push(o), o == s && (n = e)
+        }), a.length < 2 || (n += 1, 0 > n ? n = a.length - 1 : n > a.length - 1 && (n = 0), Tasks.showPhoto(a[n]))
     },
     subscribe: function(e, t, s) {
         show("tasks_loading");
@@ -623,21 +617,21 @@ Tasks = {
     addScreenshotLink: function(e, t) {
         var s = ge("task_reply_field"),
             o = s.scrollTop,
-            n = 0,
-            a = s.selectionStart || "0" == s.selectionStart ? "ff" : document.selection ? "ie" : !1,
+            a = 0,
+            n = s.selectionStart || "0" == s.selectionStart ? "ff" : document.selection ? "ie" : !1,
             i = " [[screen" + e + "]]\n";
-        if ("ie" == a) {
+        if ("ie" == n) {
             s.focus();
             var r = document.selection.createRange();
-            r.moveStart("character", -s.value.length), n = r.text.length
-        } else "ff" == a && (n = s.selectionStart);
-        if (n += i.length, "ie" == a) {
+            r.moveStart("character", -s.value.length), a = r.text.length
+        } else "ff" == n && (a = s.selectionStart);
+        if (a += i.length, "ie" == n) {
             s.focus();
             var r = document.selection.createRange();
-            r.moveStart("character", -s.value.length), r.moveStart("character", n), r.moveEnd("character", 0), r.select()
-        } else "ff" == a && (s.selectionStart = n, s.selectionEnd = n, s.focus());
-        var c = s.value.substring(0, n - i.length),
-            d = s.value.substring(n - i.length, s.value.length);
+            r.moveStart("character", -s.value.length), r.moveStart("character", a), r.moveEnd("character", 0), r.select()
+        } else "ff" == n && (s.selectionStart = a, s.selectionEnd = a, s.focus());
+        var c = s.value.substring(0, a - i.length),
+            d = s.value.substring(a - i.length, s.value.length);
         s.value = c + i + d, s.scrollTop = o, cancelEvent(t)
     },
     addScreenshot: function() {
@@ -715,20 +709,20 @@ Tasks = {
                         .value), ge("task_closed_autoanswer_addressing_m") && (o.addressing_m = ge("task_closed_autoanswer_addressing_m")
                         .value), ge("task_closed_autoanswer_addressing_f") && (o.addressing_f = ge("task_closed_autoanswer_addressing_f")
                         .value);
-                    var n = [],
-                        a = cur.ticketsAutoMedia && cur.ticketsAutoMedia.chosenMedias;
-                    if (a)
-                        for (var i in a) {
-                            var r = a[i],
+                    var a = [],
+                        n = cur.ticketsAutoMedia && cur.ticketsAutoMedia.chosenMedias;
+                    if (n)
+                        for (var i in n) {
+                            var r = n[i],
                                 c = r[0],
                                 d = r[1];
-                            ("photo" == c || "doc" == c) && n.push(c + "," + d)
+                            ("photo" == c || "doc" == c) && a.push(c + "," + d)
                         }
-                    n.length && (o.attachs = n), ajax.post(Tasks.address, o, {
-                        onDone: function(s, o, n) {
+                    a.length && (o.attachs = a), ajax.post(Tasks.address, o, {
+                        onDone: function(s, o, a) {
                             return animate(ge("task_status_progress"), {
                                 width: o
-                            }, 200), s ? (t.showProgress(), void doChangeStatus(status, e, t)) : void setTimeout(sendReq.pbind(e, t, n), 100)
+                            }, 200), s ? (t.showProgress(), void doChangeStatus(status, e, t)) : void setTimeout(sendReq.pbind(e, t, a), 100)
                         },
                         onFail: function() {
                             t.hideProgress(), t.hide()
@@ -822,31 +816,21 @@ Tasks = {
                 bid: cur.bug_id,
                 hash: o
             }, {
-                onDone: function(t, s) {
-                    e.removeButtons(), e.addButton(getLang("global_close"), e.hide, "yes"), e.setOptions({
-                        title: t,
-                        width: "430px",
-                        bodyStyle: "padding: 15px;"
-                    }), e.content(s), setTimeout(function() {
-                        e.hide()
-                    }, 3e3)
+                onDone: function(t) {
+                    e.hide(), showDoneBox(t)
                 },
                 progress: e.progress
             })
         }
     },
     notifyUser: function(e, t) {
-        showBox(Tasks.address, {
+        ajax.post(Tasks.address, {
             act: "notify_users",
             ids: e,
             bid: cur.bug_id,
             hash: t
         }, {
-            params: {
-                width: "430px",
-                dark: 1,
-                bodyStyle: "padding: 20px; line-height: 160%;"
-            }
+            onDone: showDoneBox
         })
     },
     moveTask: function() {
@@ -919,13 +903,13 @@ Tasks = {
                 return e.keyCode == KEY.ENTER && __bq.count() ? (doUnbind(), !1) : void 0
             };
         browser.mobile || addEvent(document, "keydown", enterUnbind), cur.unbindBox = showFastBox({
-            title: cur.lang.delete_ticket_bind,
+            title: getLang("tasks_support_delete_title"),
             width: 430,
             dark: 1,
             onHide: function() {
                 removeEvent(document, "keydown", enterUnbind)
             }
-        }, cur.lang.delete_ticket_text, cur.lang["delete"], doUnbind, getLang("global_cancel"))
+        }, getLang("tasks_support_delete_text"), getLang("tasks_delete"), doUnbind, getLang("global_cancel"))
     },
     toggleRedesignTask: function(e, t, s) {
         var o = function(e) {
