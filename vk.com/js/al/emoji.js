@@ -2692,11 +2692,6 @@ if (!window.Emoji) {
             if (window.emojiStickersDisabled && window.emojiStickersDisabled[packId]) {
                 return true;
             }
-            if (packId == 82) {
-                return showWiki({
-                    w: 'vk2016'
-                }, false, ev);
-            }
             if (obj) {
                 var en = Emoji.isStickerPackEnabled(packId, Emoji.clickSticker.pbind(packId, obj, ev));
                 if (en === 0) {

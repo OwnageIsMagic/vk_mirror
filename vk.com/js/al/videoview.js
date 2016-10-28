@@ -2219,7 +2219,7 @@ var Videoview = {
         VIDEOS_LIMIT: 100,
         lists: {},
         blockTpl: '<div class="mv_playlist" id="video_mvpl" onmouseenter="VideoPlaylist.toggleHeaderButtons(this, true)" onmouseleave="VideoPlaylist.toggleHeaderButtons(this, false)">  <div class="mv_playlist_header clear_fix">    <div class="mv_playlist_header_buttons_wrap unshown">      <div id="mv_pl_autoplay" class="mv_playlist_header_btn %autoplayBtnClass%" onmouseover="VideoPlaylist.showAutoplayTooltip(this);" onclick="VideoPlaylist.toggleAutoplay(this)"><div class="mv_playlist_header_autoplay_icon"></div></div>      <div id="mv_pl_reverse" class="mv_playlist_header_btn _opaque" onmouseover="VideoPlaylist.showReverseTooltip(this);" onclick="VideoPlaylist.toggleReverse(this)"><div class="mv_playlist_header_reverse_icon"></div></div>    </div>    <div class="mv_playlist_header_title">%title%</div>  </div>  <div class="mv_playlist_list">    <div class="mv_playlist_list_cont">      %items%    </div>  </div></div>  ',
-        blockItemTpl: '<a class="mv_playlist_item %itemClass%" id="mv_playlist_video%vid%" onclick="return VideoPlaylist.showVideo(\'%vid%\');" data-vid="%vid%" href="/video%vid%">  <div class="mv_playlist_item_thumb" style="background-image: url(\'%thumb%\');">    <div class="mv_playlist_item_duration">%duration%</div>  </div>  <div class="mv_playlist_item_info">    <div class="mv_playlist_item_title">%title%</div>    <div class="mv_playlist_item_views">%views%</div>  </div></a>  ',
+        blockItemTpl: '<a class="mv_playlist_item %itemClass%" id="mv_playlist_video%vid%" onclick="return VideoPlaylist.showVideo(\'%vid%\', event);" data-vid="%vid%" href="/video%vid%">  <div class="mv_playlist_item_thumb" style="background-image: url(\'%thumb%\');">    <div class="mv_playlist_item_duration">%duration%</div>  </div>  <div class="mv_playlist_item_info">    <div class="mv_playlist_item_title">%title%</div>    <div class="mv_playlist_item_views">%views%</div>  </div></a>  ',
         toggleHeaderButtons: function(e, i) {
             toggleClass(domByClass(e, "mv_playlist_header_buttons_wrap"), "unshown", !i)
         },
@@ -2447,31 +2447,32 @@ var Videoview = {
                 i = VideoPlaylist.getVideoIndex();
             e && e.reversed && (i = e.list.length - i - 1), toggle("mv_pl_prev", !!e && i > 0), toggle("mv_pl_next", !!e && i < e.list.length - 1)
         },
-        showVideo: function(e) {
-            var i = VideoPlaylist.getCurList();
-            if (i) {
-                if (VideoPlaylist.saveScrollPos(), mvcur.options.params && "direct" == mvcur.options.params.module && mvcur.mvPrevLoc && Videoview.backLocation(), i.loaded &&
-                    i.loaded.vid == e) {
-                    var o = i.loaded;
-                    Videoview.show(null, e, o.listId, extend(o.options, {
-                        playlistId: i.id
-                    })), Videoview.showVideo.apply(Videoview, o.hubData);
-                    var t = mvcur.preloadStatsHashes ? mvcur.preloadStatsHashes[e] : "";
-                    t && ajax.post("/al_video.php", {
+        showVideo: function(e, i) {
+            if (i && checkEvent(i)) return !0;
+            var o = VideoPlaylist.getCurList();
+            if (o) {
+                if (VideoPlaylist.saveScrollPos(), mvcur.options.params && "direct" == mvcur.options.params.module && mvcur.mvPrevLoc && Videoview.backLocation(), o.loaded &&
+                    o.loaded.vid == e) {
+                    var t = o.loaded;
+                    Videoview.show(null, e, t.listId, extend(t.options, {
+                        playlistId: o.id
+                    })), Videoview.showVideo.apply(Videoview, t.hubData);
+                    var a = mvcur.preloadStatsHashes ? mvcur.preloadStatsHashes[e] : "";
+                    a && ajax.post("/al_video.php", {
                         act: "a_inc_preload_stats",
-                        stat_preload_hash: t
-                    }), i.loaded = !1
+                        stat_preload_hash: a
+                    }), o.loaded = !1
                 } else {
-                    var a = VideoPlaylist.getVideoIndex(e),
-                        n = i.reversed ? i.list.length - a : a,
-                        d = n < i.list.length - 1 ? 1 : 0,
-                        r = i.list[a][11];
-                    showVideo(e, r, {
+                    var n = VideoPlaylist.getVideoIndex(e),
+                        d = o.reversed ? o.list.length - n : n,
+                        r = d < o.list.length - 1 ? 1 : 0,
+                        s = o.list[n][11];
+                    showVideo(e, s, {
                         autoplay: 1,
-                        playlistId: i.id,
+                        playlistId: o.id,
                         addParams: {
                             force_no_repeat: 1,
-                            show_next: d
+                            show_next: r
                         },
                         module: Videoview.getVideoModule()
                     })

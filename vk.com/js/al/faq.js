@@ -8,16 +8,11 @@ FAQ = {
             section: val(e)
         } : {}
     },
-    switchSubTab: function(e, t, a) {
-        return checkEvent(a) || hasClass(e, "active") ? !1 : (each(geByClass("faq_subtab1", ge("faq_subtabs")), function(e, t) {
-            removeClass(t, "active")
-        }), addClass(e, "active"), show("faq_subtabs_progress"), nav.go(t, a))
-    },
     showMsg: function(e) {
         var t = ge("faq_msg");
         if (!t) {
             var a;
-            switch (cur.section) {
+            switch (cur.page) {
                 case "all":
                     a = cur.tlmd ? ge("tlmd_found_list") : ge("faq_list");
                     break;
@@ -41,7 +36,7 @@ FAQ = {
         var t = ge("faq_error");
         if (!t) {
             var a;
-            switch (cur.section) {
+            switch (cur.page) {
                 case "all":
                     a = ge("faq_list");
                     break;
@@ -72,8 +67,8 @@ FAQ = {
             d = 20 > r - l,
             _ = cur.filterLastPos || 0,
             c = cur.lastSt || 0,
-            f = getSize("page_header_cont")[1];
-        e > i && !d ? (addClass(s, "fixed"), a = t > l ? Math.min(f, t - l - n) : Math.max(Math.min(f, _ + c - e), t - l - n)) : (removeClass(s, "fixed"), a = 0), cur.filterLastPos =
+            u = getSize("page_header_cont")[1];
+        e > i && !d ? (addClass(s, "fixed"), a = t > l ? Math.min(u, t - l - n) : Math.max(Math.min(u, _ + c - e), t - l - n)) : (removeClass(s, "fixed"), a = 0), cur.filterLastPos =
             a, cur.lastSt = e, setStyle(s, {
                 top: a + "px"
             })
@@ -213,13 +208,13 @@ FAQ = {
                 .value.trim(), !n.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
         }
         if (ge("faq_optional_extra_field_add") && (!cur.sectionSelector || 0 == cur.sectionSelector.val() || 39 == cur.sectionSelector.val())) {
-            for (var c = {}, f = ge("faq_optional_extra_fields_list")
-                    .children, s = 0; s < f.length; s++) {
-                var u = f[s];
-                c["ef_" + s + "_type"] = data(u, "typeSelector")
-                    .val(), c["ef_" + s + "_title"] = geByClass1("faq_optional_extra_field__title", u)
-                    .value, c["ef_" + s + "_note"] = geByClass1("faq_optional_extra_field__note", u)
-                    .value, c["ef_" + s + "_required"] = data(u, "requiredSelector")
+            for (var c = {}, u = ge("faq_optional_extra_fields_list")
+                    .children, s = 0; s < u.length; s++) {
+                var f = u[s];
+                c["ef_" + s + "_type"] = data(f, "typeSelector")
+                    .val(), c["ef_" + s + "_title"] = geByClass1("faq_optional_extra_field__title", f)
+                    .value, c["ef_" + s + "_note"] = geByClass1("faq_optional_extra_field__note", f)
+                    .value, c["ef_" + s + "_required"] = data(f, "requiredSelector")
                     .val()
             }
             n = extend(n, c)
@@ -403,9 +398,9 @@ FAQ = {
     },
     deleteFAQ: function(e, t) {
         var a = showFastBox({
-            title: cur.lang.delete_title,
+            title: getLang("support_delete_title"),
             width: 430
-        }, cur.lang.delete_confirm, cur.lang["delete"], function() {
+        }, getLang("support_delete_confirm"), getLang("support_delete_button"), function() {
             ajax.post(nav.objLoc[0], {
                 act: "delete",
                 faq_id: e,
@@ -431,7 +426,7 @@ FAQ = {
             })) : removeClass(t, "detailed"), !1)
     },
     toggleRowPrevent: function(e, t) {
-        var a = gpeByClass("faq_inner_row", t);
+        var a = gpeByClass("talmud_inner_row", t);
         hasClass(a, "detailed") && e.target && "a" != e.target.tagName.toLowerCase() && cancelEvent(e)
     },
     setSearchString: function(e, t, a) {
@@ -466,7 +461,8 @@ FAQ = {
         var o = {
             act: "save_tiles",
             lang: t,
-            hash: a
+            hash: a,
+            section: cur.section
         };
         each(geByClass("faq_tiles_editor_tile__questions", ge("faq_tiles_editor__tiles")), function(e, t) {
             var a = [];
@@ -476,12 +472,8 @@ FAQ = {
             var i = t.id.replace("faq_tiles_editor_tile__questions", "");
             o["faq" + i] = a.join(",")
         }), ajax.post(nav.objLoc[0], o, {
-            showProgress: function() {
-                addClass(e, "flat_btn_lock")
-            },
-            hideProgress: function() {
-                removeClass(e, "flat_btn_lock")
-            }
+            showProgress: lockButton.pbind(e),
+            hideProgress: unlockButton.pbind(e)
         })
     },
     tilesShowSearch: function(e, t) {
@@ -522,18 +514,15 @@ FAQ = {
                 act: "save_sort",
                 lang: t,
                 category: a,
-                hash: o
+                hash: o,
+                section: cur.section
             },
             s = [];
         i || each(geByClass("faq_sort_editor_question", ge("faq_sort_editor__questions")), function(e, t) {
             s.push(t.id.replace("faq", ""))
         }), r.ids = s.join(","), ajax.post(nav.objLoc[0], r, {
-            showProgress: function() {
-                addClass(e, "flat_btn_lock")
-            },
-            hideProgress: function() {
-                removeClass(e, "flat_btn_lock")
-            }
+            showProgress: lockButton.pbind(e),
+            hideProgress: unlockButton.pbind(e)
         })
     },
     sortQuestionsReorder: function(e) {
@@ -661,6 +650,12 @@ FAQ = {
             o = geByClass1("tlmd_slide_brick", t);
         toggleClass(t, "tlmd_slide_opened"), a ? (hide(o), slideDown(geByClass1("tlmd_slide_content", t), 500)) : (slideUp(geByClass1("tlmd_slide_content", t), 300),
             setTimeout(show.pbind(o), 300))
+    },
+    goSectionTab: function(e, t) {
+        var a = geByClass1("ui_tab_sel", gpeByClass("ui_tabs", e));
+        return uiTabs.switchTab(e, {
+            noAnim: 1
+        }), addClass(a, "ui_tab_sel"), removeClass(gpeByClass("ui_tab_group", e), "ui_tab_group_sel"), nav.go(e, t), !1
     },
     _eof: 1
 };

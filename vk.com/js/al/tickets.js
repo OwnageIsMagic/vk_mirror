@@ -319,8 +319,7 @@ Tickets = {
         })
     },
     checkPayForm: function() {
-        if (void 0 === cur.payType) return cur.showErrorTT(ge("tickets_payment_type"), getLang("support_no_payment_type"), [-200, "show" == cur.section ? -103 : -113, 0]), !
-            1;
+        if (void 0 === cur.payType) return cur.showErrorTT(ge("tickets_payment_type"), getLang("support_no_payment_type"), [-200, "show" == cur.page ? -103 : -113, 0]), !1;
         switch (cur.payType) {
             case 0:
                 if (!cur.phone) return notaBene("tickets_number_from"), !1;
@@ -689,7 +688,7 @@ Tickets = {
         var t = ge("tickets_msg");
         if (!t) {
             var a;
-            switch (cur.section) {
+            switch (cur.page) {
                 case "show":
                     a = ge("tickets_reply_rows");
                     break;
@@ -712,7 +711,7 @@ Tickets = {
         var t = ge("tickets_error");
         if (!t) {
             var a;
-            switch (cur.section) {
+            switch (cur.page) {
                 case "show":
                     a = ge("tickets_reply_rows");
                     break;
@@ -1596,7 +1595,8 @@ Tickets = {
                     className: "tickets_suggests"
                 }), t.appendChild(a), hide(a)), ajax.post("support", {
                     act: "load_faq_suggests",
-                    q: e
+                    q: e,
+                    section: cur.section
                 }, {
                     cache: 1,
                     onDone: function(i) {

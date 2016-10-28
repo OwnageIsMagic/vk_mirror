@@ -626,7 +626,7 @@ body.mobfixed #mv_layer_wrap {
     width: 180px
 }
 
-.mv_comments_wrap {
+.mv_comments_block {
     line-height: 1.231
 }
 
@@ -1170,6 +1170,14 @@ embed#video_player {
     padding: 20px 60px 0;
     border-top: 1px solid #e7e8ec;
     font-size: 13px
+}
+
+#mv_comments_wrap+.mv_comments_restricted_msg {
+    margin-top: 0
+}
+
+#mv_comments:last-child {
+    margin-bottom: 10px
 }
 
 .mv_embed_privacy {
@@ -2160,6 +2168,10 @@ body.mac #mv_external_finish .mv_finish_suggestions_item {
     bottom: 40px;
     left: 0;
     right: 0
+}
+
+.mv_chat_messages_wrap:last-child {
+    bottom: 0
 }
 
 .mv_chat_messages {
