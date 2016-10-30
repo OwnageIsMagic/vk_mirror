@@ -3659,7 +3659,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 }
 
 .help_table_questions .help_table_question_sa .help_table_question__q {
-    padding: 0 0 16px;
+    padding: 6px 0 16px;
     font-size: 14px
 }
 
@@ -3676,7 +3676,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 }
 
 .help_table_questions .help_table_question_sa .help_table_question__ans {
-    padding: 0
+    padding: 0 0 8px
 }
 
 .help_table_question__m {
@@ -3856,29 +3856,15 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 }
 
 .help_table_categories {
+    padding: 0 0 25px;
     width: 250px;
     overflow: hidden;
-    padding: 0;
     vertical-align: top
 }
 
 .help_table_categories .page_block {
     box-shadow: none;
     margin-top: 0
-}
-
-.help_table_categories__cc {
-    color: #777;
-    cursor: pointer;
-    border-bottom: 1px dashed;
-    display: inline-block;
-    margin-left: 9px;
-    margin-top: 6px;
-    opacity: 0.3
-}
-
-.help_table_categories__cc:hover {
-    opacity: 1
 }
 
 .tickets_post_form__attach {

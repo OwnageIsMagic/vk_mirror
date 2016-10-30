@@ -59,7 +59,7 @@
 }
 
 .blog_cover_wrap {
-    width: 795px;
+    width: 705px;
     height: 60px;
     margin: 0px auto;
     background: #f7f8fa;
@@ -74,7 +74,7 @@
 }
 
 .blog_cover_wrap_selected {
-    height: 280px
+    height: 248px
 }
 
 .blog_cover_upload_str {

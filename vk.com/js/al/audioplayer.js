@@ -14,7 +14,7 @@ function AudioPlaylist(t, i, e) {
 
 function AudioPlayer() {
     if (this._currentAudio = !1, this._isPlaying = !1, this._prevPlaylist = null, this._currentPlaylist = null, this._playlists = [], this.subscribers = [], this._tasks = [], this
-        ._listened = {}, this._statusExport = {}, this._currentPlayingRows = [], this._allowPrefetchNext = !1, !vk.isBanned) {
+        ._playbackSent = {}, this._listened = {}, this._statusExport = {}, this._currentPlayingRows = [], this._allowPrefetchNext = !1, !vk.isBanned) {
         AudioUtils.debugLog("Player creation"), this._initImpl(), this._initEvents(), this._restoreVolumeState();
         var t = this;
         setTimeout(function() {
@@ -924,31 +924,26 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 this._repeatCurrent ? (this._implSeekImmediate(0), this._implPlay()) : (this._isPlaying = !1, this.notify(AudioPlayer.EVENT_PAUSE), this.notify(AudioPlayer.EVENT_ENDED),
                     this.playNext(!0))
             }.bind(this),
-            o = -1,
+            o = 0,
             a = {
                 onBufferUpdate: function(t) {
                     this.notify(AudioPlayer.EVENT_BUFFERED, t)
                 }.bind(this),
-                onSeeked: function() {
-                    o = -1
+                onSeeked: function() {},
+                onSeek: function() {},
+                onEnd: function() {
+                    o = 0, e()
                 },
-                onSeek: function() {
-                    o = -1
-                },
-                onEnd: e,
                 onFail: function() {
-                    e(!0)
+                    o = 0, e(!0)
                 },
                 onCanPlay: function() {
                     this.notify(AudioPlayer.EVENT_CAN_PLAY)
                 }.bind(this),
-                onProgressUpdate: function(t) {
-                    var i = this.getCurrentAudio();
-                    if (!this._muteProgressEvents && i) {
-                        var e = 0;
-                        o > 0 && (e = Math.max(0, t - o)), o = t, this.notify(AudioPlayer.EVENT_PROGRESS, t, i[AudioUtils.AUDIO_ITEM_INDEX_DURATION]), this._adsIsAdPlaying() ||
-                            this._adsIncCurrentDelay(i[AudioUtils.AUDIO_ITEM_INDEX_DURATION] * e)
-                    }
+                onProgressUpdate: function(t, i) {
+                    var e = this.getCurrentAudio();
+                    !this._muteProgressEvents && e && (this.notify(AudioPlayer.EVENT_PROGRESS, t, e[AudioUtils.AUDIO_ITEM_INDEX_DURATION], i), this._adsIsAdPlaying() || (this._adsIncCurrentDelay(
+                        i - o), o = i))
                 }.bind(this)
             };
         AudioUtils.debugLog("Implementation init"), AudioUtils.debugLog("param browser.flash", browser.flash), AudioUtils.debugLog("param force HTML5", !!t), AudioPlayerHTML5.isSupported() ||
@@ -961,7 +956,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio",
     AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track",
     AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v3",
-    AudioPlayer.LISTEN_TIME = 10, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .8;
+    AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
         def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -1403,14 +1398,14 @@ AudioPlayer.tabIcons = {
         this.subscribers = this.subscribers.filter(function(i) {
             return i.context != t
         })
-    }, AudioPlayer.prototype.notify = function(t, i, e) {
-        var o = this.getCurrentAudio();
+    }, AudioPlayer.prototype.notify = function(t, i, e, o) {
+        var a = this.getCurrentAudio();
         if (this._impl && (!this._muteProgressEvents || !inArray(t, [AudioPlayer.EVENT_BUFFERED, AudioPlayer.EVENT_PROGRESS]))) switch (inArray(t, [AudioPlayer.EVENT_PLAY,
             AudioPlayer.EVENT_PAUSE
         ]) && (this.subscribers = this.subscribers.filter(function(t) {
             return t.context instanceof Element ? bodyNode.contains(t.context) : !0
-        }), this.updateCurrentPlaying(!0)), each(this.subscribers || [], function(a, s) {
-            s.et == t && s.cb(o, i, e)
+        }), this.updateCurrentPlaying(!0)), each(this.subscribers || [], function(o, s) {
+            s.et == t && s.cb(a, i, e)
         }), t) {
             case AudioPlayer.EVENT_VOLUME:
                 this._lsSet(AudioPlayer.LS_VOLUME, this._userVolume);
@@ -1423,18 +1418,19 @@ AudioPlayer.tabIcons = {
                 break;
             case AudioPlayer.EVENT_PROGRESS:
                 if (!vk.widget && !this._adsIsAdPlaying()) {
-                    var a = this._impl.getCurrentProgress();
-                    this._lsSet(AudioPlayer.LS_PROGRESS, a);
-                    var s = i;
-                    if (s) {
-                        var l = o[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + o[AudioUtils.AUDIO_ITEM_INDEX_ID];
-                        !this._listened[l] && this._impl.getPlayedTime() >= AudioPlayer.LISTEN_TIME && (this._sendPlayback(), this._listened[l] = !0)
+                    var s = this._impl.getCurrentProgress();
+                    this._lsSet(AudioPlayer.LS_PROGRESS, s);
+                    var l = o;
+                    if (l) {
+                        var r = a[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + a[AudioUtils.AUDIO_ITEM_INDEX_ID];
+                        !this._playbackSent[r] && l >= AudioPlayer.PLAYBACK_EVENT_TIME && (this._sendPlayback(), this._playbackSent[r] = !0)
                     }
-                    if (this._allowPrefetchNext && a >= .8) {
-                        var r = this.getCurrentPlaylist(),
-                            u = r.getNextAudio(o);
-                        u && this._impl.isFullyLoaded() && (this._allowPrefetchNext = !1, this._prefetchAudio(u))
-                    }
+                    if (this._allowPrefetchNext && s >= .8) {
+                        var u = this.getCurrentPlaylist(),
+                            d = u.getNextAudio(a);
+                        d && this._impl.isFullyLoaded() && (this._allowPrefetchNext = !1, this._prefetchAudio(d))
+                    }!this._listened[r] && l / a[AudioUtils.AUDIO_ITEM_INDEX_DURATION] >= AudioPlayer.LISTENED_EVENT_TIME_COEFF && (this._sendListenedEvent(a), this._listened[
+                        r] = !0)
                 }
                 break;
             case AudioPlayer.EVENT_PAUSE:
@@ -1442,6 +1438,12 @@ AudioPlayer.tabIcons = {
                 break;
             case AudioPlayer.EVENT_ENDED:
         }
+    }, AudioPlayer.prototype._sendListenedEvent = function(t) {
+        t = AudioUtils.asObject(t), ajax.post("al_audio.php", {
+            act: "listened",
+            audio_owner_id: t.ownerId,
+            audio_id: t.id
+        })
     }, AudioPlayer.prototype._initPlaybackParams = function() {
         var t = this.getCurrentPlaylist();
         if (void 0 === t.getPlaybackParams()) {
@@ -1823,7 +1825,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayerFlash.prototype.setVolume = function(t) {
         this._player && this._player.setVolume && this._player.setVolume(t)
     }, AudioPlayerFlash.prototype.play = function() {
-        this._player && this._player.playAudio()
+        this._player && this._player.playAudio();
     }, AudioPlayerFlash.prototype.seek = function(t) {
         var i = (this._total || 0) * t;
         this._player && this._player.playAudio(i)
@@ -1883,8 +1885,8 @@ AudioPlayer.tabIcons = {
             t.length;
             1 == t.length && 0 == t.start(0) && t.end(0) == i.duration && (i._fullyLoaded = !0)
         }), this.opts.onProgressUpdate && addEvent(i, "timeupdate", function() {
-            e._currentAudioEl == i && e.opts.onProgressUpdate(e.getCurrentProgress())
-        }), this.opts.onEnd && addEvent(i, "ended", function() {
+            this._currentAudioEl == i && this.opts.onProgressUpdate(this.getCurrentProgress(), this.getPlayedTime())
+        }.bind(this)), this.opts.onEnd && addEvent(i, "ended", function() {
             e._currentAudioEl == i && e.opts.onEnd()
         }), this.opts.onSeeked && addEvent(i, "seeked", function() {
             e._currentAudioEl == i && e.opts.onSeeked()

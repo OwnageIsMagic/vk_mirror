@@ -1176,7 +1176,7 @@ embed#video_player {
     margin-top: 0
 }
 
-#mv_comments:last-child {
+#mv_comments_wrap:last-child {
     margin-bottom: 10px
 }
 

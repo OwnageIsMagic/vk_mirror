@@ -4522,7 +4522,8 @@ div.page_status_input {
     padding: 5px 24px 6px 9px;
     min-height: 28px;
     line-height: 14px;
-    outline: none
+    outline: none;
+    word-wrap: break-word
 }
 
 .page_status_editor .checkbox:before {

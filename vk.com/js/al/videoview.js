@@ -1807,7 +1807,7 @@ var Videoview = {
             4 & t && mvcur.minSize.wrap.t + a > mvcur.minSize.ch - mvcur.minSize.wrap.h && (a = mvcur.minSize.ch - mvcur.minSize.wrap.h - mvcur.minSize.wrap.t), 1 & t && mvcur
                 .minSize.wrap.t + a < 0 && (a = -mvcur.minSize.wrap.t), 2 & t && mvcur.minSize.wrap.l + n > mvcur.minSize.cw - mvcur.minSize.wrap.w - 14 && (n = mvcur.minSize.cw -
                     mvcur.minSize.wrap.w - mvcur.minSize.wrap.l - 14), 8 & t && mvcur.minSize.wrap.l + n < 0 && (n = -mvcur.minSize.wrap.l), 8 & t && (i = n, n = -n), 1 & t &&
-                (o = a, a = -a), mvcur.minSize.wrap.w + n < 250 && (n = 250 - mvcur.minSize.wrap.w, 8 & t && (i = -n)), mvcur.minSize.wrap.h + a < 200 && (a = 200 - mvcur.minSize
+                (o = a, a = -a), mvcur.minSize.wrap.w + n < 304 && (n = 304 - mvcur.minSize.wrap.w, 8 & t && (i = -n)), mvcur.minSize.wrap.h + a < 200 && (a = 200 - mvcur.minSize
                     .wrap.h, 1 & t && (o = -a));
             var d = Math.abs(n) + Math.abs(a),
                 r = mvcur.minSize.wrap.w + n;
@@ -1832,8 +1832,8 @@ var Videoview = {
             var i = "mv_dark";
             removeClass(mvLayerWrap, i), removeClass(layerBG, i), layers.fullhide = !1, mvcur.minSize && Videoview.enabledResize() && mvcur.minSize.wrap.w || (mvcur.minSize = {
                 wrap: {
-                    w: 300,
-                    h: 198
+                    w: 304,
+                    h: 200
                 }
             });
             var o = mvcur.minSize.wrap;
@@ -3099,24 +3099,27 @@ window.VideoChat = {
         var o = window.mvLayer && mvLayer.contains(e),
             t = o && mvcur.player && e.contains(mvcur.player.el);
         t || val(e, "");
-        var a = ["videoplayer.js", "videoplayer.css"];
-        i.hls && a.push("hls.min.js"), i.live_candy && a.push("candy.min.js"), stManager.add(a, function() {
-            if (bodyNode.contains(e)) {
-                if (o && mvcur.player) {
-                    var a = mvcur.player;
-                    a.initVideo(i)
-                } else {
-                    var a = new VideoPlayer(i);
-                    o ? mvcur.player = a : i.video_ext ? cur.player = a : cur.videoInlinePlayer = a
+        var a = new callHub(function() {
+                if (bodyNode.contains(e)) {
+                    if (o && mvcur.player) {
+                        var a = mvcur.player;
+                        a.initVideo(i)
+                    } else {
+                        var a = new VideoPlayer(i);
+                        o ? mvcur.player = a : i.video_ext ? cur.player = a : cur.videoInlinePlayer = a
+                    }
+                    if (!t) {
+                        var n = ce("div", {
+                            id: "video_player"
+                        });
+                        attr(n, "preventhide", 1), n.appendChild(a.el), e.appendChild(n)
+                    }
                 }
-                if (!t) {
-                    var n = ce("div", {
-                        id: "video_player"
-                    });
-                    attr(n, "preventhide", 1), n.appendChild(a.el), e.appendChild(n)
-                }
-            }
-        })
+            }, 2),
+            n = ["videoplayer.js", "videoplayer.css"];
+        i.hls && n.push("hls.min.js"), stManager.add(n, a.done.bind(a)), i.live_candy ? loadScript("https://hls.goodgame.ru/candy/candy.min.js", {
+            onLoad: a.done.bind(a)
+        }) : a.done()
     },
     youtube: function(e, i) {
         var o = i.oid,

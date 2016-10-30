@@ -1461,7 +1461,7 @@ var Page = {
             });
         },
 
-        initVideoAutoplay: function(noHlsMaxDuration, canPlayMp4) {
+        initVideoAutoplay: function(canPlayMp4) {
             if (browser.mobile || canPlayMp4 === false || cur.videoAutoplayScrollHandler) {
                 if (cur.module == 'feed') {
                     statlogsValueEvent('feed_init_video_autoplay', cur.videoAutoplayScrollHandler ? 'already_init' : 'bad_browser');
@@ -1471,7 +1471,7 @@ var Page = {
 
             if (isUndefined(canPlayMp4)) {
                 checkMp4(function(canPlay) {
-                    Page.initVideoAutoplay(noHlsMaxDuration, canPlay);
+                    Page.initVideoAutoplay(canPlay);
                 });
                 return;
             }
@@ -1482,6 +1482,7 @@ var Page = {
 
             var canPlayHls = window.MediaSource && MediaSource.isTypeSupported && MediaSource.isTypeSupported('video/mp4; codecs="avc1.42E01E,mp4a.40.2"') && !browser.safari &&
                 !browser.vivaldi;
+            var noHlsMaxDuration = 5 * 60;
             var fixedHeaderHeight = getSize('page_header')[1];
 
             var scrollHandler = debounce(function() {

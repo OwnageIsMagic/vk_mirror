@@ -107,9 +107,9 @@ Tickets = {
         if (r)
             for (var n in r) {
                 var c = r[n],
-                    l = c[0],
-                    d = c[1];
-                ("photo" == l || "doc" == l) && s.push(l + "," + d)
+                    d = c[0],
+                    l = c[1];
+                ("photo" == d || "doc" == d) && s.push(d + "," + l)
             }
         i || cur.descriptionNotNeeded || s.length || (notaBene("tickets_text", !1, !o), o = !1);
         var _ = Tickets.getBrowser(),
@@ -178,28 +178,28 @@ Tickets = {
             }
         if (!a && !i.length) return void notaBene("tickets_text");
         if (Tickets.checkPayForm()) {
-            var l = Tickets.getBrowser(),
-                d = extend({
+            var d = Tickets.getBrowser(),
+                l = extend({
                     act: "save",
                     title: t,
                     text: a,
                     hash: e,
                     attachs: i,
-                    browser: l
+                    browser: d
                 }, Tickets.getPayFields());
-            if (nav.objLoc.gid && (d.gid = nav.objLoc.gid), nav.objLoc.app_id && (d.app_id = nav.objLoc.app_id), nav.objLoc.union_id && (d.union_id = nav.objLoc.union_id),
+            if (nav.objLoc.gid && (l.gid = nav.objLoc.gid), nav.objLoc.app_id && (l.app_id = nav.objLoc.app_id), nav.objLoc.union_id && (l.union_id = nav.objLoc.union_id),
                 cur.samples && cur.samples.audio || ge("audio_checking")) {
-                d.audio_html = ge("audio_checking")
+                l.audio_html = ge("audio_checking")
                     .innerHTML;
                 var _ = (cur.samples || {})
                     .audio || "";
-                window.ag && window.sh && (d.audio_html = d.audio_html.replace(/_info/g, "vkontakte_info")), (window.dwnl_video || window.add_js) && (d.audio_html = d.audio_html
-                        .replace(/_info/g, "dwnl_info")), d.audio_orig = ce("div", {
+                window.ag && window.sh && (l.audio_html = l.audio_html.replace(/_info/g, "vkontakte_info")), (window.dwnl_video || window.add_js) && (l.audio_html = l.audio_html
+                        .replace(/_info/g, "dwnl_info")), l.audio_orig = ce("div", {
                         innerHTML: _.replace(/z9q2m/g, "audio")
                     })
                     .innerHTML
             }
-            "new_ads" == nav.objLoc.act && (d.section = 1), "new_pay" == nav.objLoc.act && (d.section = 16), ajax.post("support", d, {
+            "new_ads" == nav.objLoc.act && (l.section = 1), "new_pay" == nav.objLoc.act && (l.section = 16), ajax.post("support", l, {
                 onDone: function(e) {
                     showDoneBox(e)
                 },
@@ -230,11 +230,11 @@ Tickets = {
             if (cur.samples && cur.samples.audio || ge("audio_checking")) {
                 c.audio_html = ge("audio_checking")
                     .innerHTML;
-                var l = (cur.samples || {})
+                var d = (cur.samples || {})
                     .audio || "";
                 window.ag && window.sh && (c.audio_html = c.audio_html.replace(/_info/g, "vkontakte_info")), (window.dwnl_video || window.add_js) && (c.audio_html = c.audio_html
                         .replace(/_info/g, "dwnl_info")), c.audio_orig = ce("div", {
-                        innerHTML: l.replace(/z9q2m/g, "audio")
+                        innerHTML: d.replace(/z9q2m/g, "audio")
                     })
                     .innerHTML
             }
@@ -582,8 +582,8 @@ Tickets = {
             for (var r in s) {
                 var n = s[r],
                     c = n[0],
-                    l = n[1];
-                ("photo" == c || "doc" == c) && o.push(c + "," + l)
+                    d = n[1];
+                ("photo" == c || "doc" == c) && o.push(c + "," + d)
             }
         return i || o.length ? void ajax.post(cur.objLoc, {
             act: "edit_comment",
@@ -1012,13 +1012,13 @@ Tickets = {
                         }
                     } else if ("flash" == Upload.types[i]) {
                         if (!ge("form" + i + "_progress")) {
-                            for (var r = Upload.obj[i], n = getSize(r)[1], c = n / 2 + 10, l = r.firstChild; l;) 1 == l.nodeType && (l.id == "uploader" + i &&
-                                browser.msie ? setStyle(l, {
+                            for (var r = Upload.obj[i], n = getSize(r)[1], c = n / 2 + 10, d = r.firstChild; d;) 1 == d.nodeType && (d.id == "uploader" + i &&
+                                browser.msie ? setStyle(d, {
                                     position: "relative",
                                     left: "-5000px"
-                                }) : setStyle(l, {
+                                }) : setStyle(d, {
                                     visibility: "hidden"
-                                })), l = l.nextSibling;
+                                })), d = d.nextSibling;
                             r.appendChild(ce("div", {
                                 innerHTML: '<div class="tickets_progress_wrap">            <div id="form' + i +
                                     '_progress" class="tickets_progress" style="width: 0%;"></div>          </div></div>'
@@ -1027,9 +1027,9 @@ Tickets = {
                                 marginTop: -c + "px"
                             }))
                         }
-                        var d = intval(t / a * 100);
+                        var l = intval(t / a * 100);
                         setStyle(ge("form" + i + "_progress"), {
-                            width: d + "%"
+                            width: l + "%"
                         })
                     }
                 },
@@ -1109,13 +1109,13 @@ Tickets = {
                         }
                     } else if ("flash" == Upload.types[i]) {
                         if (!ge("form" + i + "_progress")) {
-                            for (var r = Upload.obj[i], n = getSize(r)[1], c = n / 2 + 10, l = r.firstChild; l;) 1 == l.nodeType && (l.id == "uploader" + i &&
-                                browser.msie ? setStyle(l, {
+                            for (var r = Upload.obj[i], n = getSize(r)[1], c = n / 2 + 10, d = r.firstChild; d;) 1 == d.nodeType && (d.id == "uploader" + i &&
+                                browser.msie ? setStyle(d, {
                                     position: "relative",
                                     left: "-5000px"
-                                }) : setStyle(l, {
+                                }) : setStyle(d, {
                                     visibility: "hidden"
-                                })), l = l.nextSibling;
+                                })), d = d.nextSibling;
                             r.appendChild(ce("div", {
                                 innerHTML: '<div class="tickets_progress_wrap">            <div id="form' + i +
                                     '_progress" class="tickets_progress" style="width: 0%;"></div>          </div></div>'
@@ -1124,9 +1124,9 @@ Tickets = {
                                 marginTop: -c + "px"
                             }))
                         }
-                        var d = intval(t / a * 100);
+                        var l = intval(t / a * 100);
                         setStyle(ge("form" + i + "_progress"), {
-                            width: d + "%"
+                            width: l + "%"
                         })
                     }
                 },
@@ -1158,15 +1158,15 @@ Tickets = {
             .replace(/[&<>"']/g, ""),
             n = r ? t + "_" + r : t,
             c = r ? r.length > 33 ? r.substr(0, 30) + "..." : r : "",
-            l = ge("upload" + n + "_progress");
-        if (l)
-            if (show(l), l.full) {
-                var d = a(l, "tween"),
-                    _ = intval(l.full * o);
-                d && d.isTweening ? d.to.width = _ : animate(l, {
+            d = ge("upload" + n + "_progress");
+        if (d)
+            if (show(d), d.full) {
+                var l = a(d, "tween"),
+                    _ = intval(d.full * o);
+                l && l.isTweening ? l.to.width = _ : animate(d, {
                     width: _ + "px"
                 }, 500)
-            } else setStyle(l, {
+            } else setStyle(d, {
                 width: s + "%"
             });
         else {
@@ -1180,11 +1180,11 @@ Tickets = {
                 id: "upload" + n + "_progress_wrap",
                 innerHTML: p,
                 className: "clear_fix upload_" + t + "_progress"
-            })), show(u), l = ge("upload" + n + "_progress"), l.full = !1, s ? setStyle(l, {
-                width: l.full ? intval(l.full * o) + "px" : s + "%"
-            }) : (setStyle(l, {
+            })), show(u), d = ge("upload" + n + "_progress"), d.full = !1, s ? setStyle(d, {
+                width: d.full ? intval(d.full * o) + "px" : s + "%"
+            }) : (setStyle(d, {
                 width: "1px"
-            }), hide(l))
+            }), hide(d))
         }
     },
     initExtraFieldUpload: function(el, params) {
@@ -1229,13 +1229,13 @@ Tickets = {
                         e.fileName && (s.fileName = e.fileName.replace(/[&<>"']/g, "")), Tickets.showExtraFieldProgress(fieldIndex, i, s, o)
                     } else if ("flash" == Upload.types[i]) {
                         if (!ge("form" + i + "_progress")) {
-                            for (var r = Upload.obj[i], n = getSize(r)[1], c = n / 2 + 10, l = r.firstChild; l;) 1 == l.nodeType && (l.id == "uploader" + i &&
-                                browser.msie ? setStyle(l, {
+                            for (var r = Upload.obj[i], n = getSize(r)[1], c = n / 2 + 10, d = r.firstChild; d;) 1 == d.nodeType && (d.id == "uploader" + i &&
+                                browser.msie ? setStyle(d, {
                                     position: "relative",
                                     left: "-5000px"
-                                }) : setStyle(l, {
+                                }) : setStyle(d, {
                                     visibility: "hidden"
-                                })), l = l.nextSibling;
+                                })), d = d.nextSibling;
                             r.appendChild(ce("div", {
                                 innerHTML: '<div class="tickets_progress_wrap">          <div id="form' + i +
                                     '_progress" class="tickets_progress" style="width: 0%;"></div>        </div></div>'
@@ -1244,9 +1244,9 @@ Tickets = {
                                 marginTop: -c + "px"
                             }))
                         }
-                        var d = intval(t / a * 100);
+                        var l = intval(t / a * 100);
                         setStyle(ge("form" + i + "_progress"), {
-                            width: d + "%"
+                            width: l + "%"
                         })
                     }
                 },
@@ -1660,17 +1660,6 @@ Tickets = {
     listSetTitle: function(e) {
         var t = ge("help_table_questions__title");
         e ? (show(t), t.innerHTML = e) : hide(t)
-    },
-    listOpenFAQs: function() {
-        hide(ge("help_tiles")), show(ge("help_faqs"));
-        var e = geByTag1("a", "tickets_tab_faqs");
-        e && uiTabs.switchTab(e)
-    },
-    listOpenTiles: function() {
-        return show(ge("help_tiles")), hide(ge("help_faqs")), addClass(ge("help_tab"), "active_link"), removeClass(ge("faqs_tab"), "active_link"), nav.setLoc({
-            0: "support",
-            act: "home"
-        }), Tickets.listClearSearchInput(), !1
     },
     tryAskQuestion: function(e) {
         var t = 2;
