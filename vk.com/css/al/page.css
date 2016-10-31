@@ -3721,14 +3721,11 @@ div.submit_post_field[contenteditable=true]>p {
 
 .submit_post_box .emoji_smile_wrap {
     top: 11px;
-    right: 16px
-}
-
-.submit_post_box .emoji_smile {
+    right: 16px;
     display: none
 }
 
-.reply_box_open .submit_post_box .emoji_smile {
+.reply_box_open .submit_post_box .emoji_smile_wrap {
     display: block
 }
 
