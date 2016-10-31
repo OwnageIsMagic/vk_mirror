@@ -29,6 +29,8 @@
 .page_actions_item_unfolded,
 .page_actions_subitem.checked,
 .page_avatar.no_avatar,
+.page_cover_action:before,
+.page_cover_image .ui_actions_menu_item:before,
 .page_fronly,
 .page_gif_add_icon,
 .page_gif_added .page_gif_add_icon,
@@ -78,6 +80,7 @@
 }
 
 .medadd_inline_editable_icon,
+.page_cover_menu,
 .page_media_money_transfer .page_media_money_decline_btn .button,
 .page_media_stickers_store .page_media_money_decline_btn .button,
 .wall_copy_more,
@@ -389,6 +392,14 @@
 
 .wall_fixed .post_header .ui_actions_menu {
     margin-top: -15px
+}
+
+.page_info_wrap:not(:empty)+.wall_fixed {
+    border-top: 1px solid #e7e8ec
+}
+
+.page_info_wrap:not(:empty)+.wall_fixed .post_header {
+    padding-top: 15px
 }
 
 .wall_fixed_label {
@@ -3721,11 +3732,14 @@ div.submit_post_field[contenteditable=true]>p {
 
 .submit_post_box .emoji_smile_wrap {
     top: 11px;
-    right: 16px;
+    right: 16px
+}
+
+.submit_post_box .emoji_smile {
     display: none
 }
 
-.reply_box_open .submit_post_box .emoji_smile_wrap {
+.reply_box_open .submit_post_box .emoji_smile {
     display: block
 }
 
@@ -4333,13 +4347,70 @@ h2.page_name {
     text-overflow: ellipsis
 }
 
-.page_top {
-    padding-bottom: 15px;
+.wide_column .page_top {
+    padding: 15px 20px;
     border-bottom: 1px solid #e7e8ec
 }
 
+.wide_column .page_top:last-child {
+    border-bottom: 0
+}
+
+.wide_column .page_top .page_info_wrap {
+    padding-top: 0
+}
+
+.wide_column .page_top+.page_block_h2 {
+    padding: 0 15px
+}
+
+.wide_column .page_top+.page_block_h2 .ui_tabs.page_info_tabs {
+    padding: 0
+}
+
+.wide_column .page_top+.page_block_h2 .ui_tabs.page_info_tabs li:first-child .ui_tab {
+    margin-left: 0
+}
+
+.wide_column .page_info_wrap .page_top {
+    padding: 0 0 15px
+}
+
+.wide_column .page_info_wrap .page_top:last-child {
+    padding-bottom: 0
+}
+
 .page_info_wrap {
-    padding: 15px 20px 20px
+    padding: 15px 20px
+}
+
+.page_top+.page_info_wrap {
+    padding-top: 0
+}
+
+.page_info_wrap:empty {
+    padding-bottom: 0
+}
+
+.page_info_wrap .wall_fixed {
+    margin: 0 -20px -15px;
+    display: none
+}
+
+.page_info_wrap.wall_post .wall_fixed {
+    display: block
+}
+
+.ui_tabs.page_info_tabs {
+    line-height: 19px;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    white-space: nowrap
+}
+
+.page_info_header_tabs {
+    overflow: hidden
 }
 
 .page_current_info {
@@ -4723,6 +4794,162 @@ textarea.page_poll_export_code {
     padding-top: 200px;
     text-align: center;
     background: url(/images/community_200.png?1) no-repeat 0 0
+}
+
+.page_cover {
+    height: 200px;
+    border-radius: 2px 2px 0 0;
+    background-position: 50%;
+    background-size: cover
+}
+
+.page_cover_actions {
+    float: right;
+    padding: 8px 5px
+}
+
+.page_cover_info {
+    padding: 12px 15px
+}
+
+.page_cover_info .page_top {
+    overflow: hidden;
+    padding: 2px 11px 5px 5px;
+    margin: 0 0 -5px
+}
+
+.page_cover_info .page_actions_wide {
+    float: left;
+    width: 203px;
+    height: 30px
+}
+
+.page_cover_info .page_actions_wrap {
+    width: 201px
+}
+
+.page_cover_info .post_img {
+    height: 46px;
+    width: 46px
+}
+
+.page_cover_info .group_send_msg,
+.page_cover_info .page_actions>.flat_button {
+    float: left;
+    width: 157px;
+    margin-right: 10px
+}
+
+.page_cover_info .page_status_editor {
+    left: 47px;
+    right: 239px
+}
+
+.page_cover_image {
+    position: relative;
+    float: left;
+    height: 46px;
+    width: 46px;
+    margin-right: 7px
+}
+
+.page_cover_image .ui_actions_menu_wrap {
+    position: absolute;
+    top: 15px;
+    left: 0
+}
+
+.page_cover_image .ui_actions_menu_icons {
+    height: 46px;
+    width: 46px;
+    top: -15px;
+    left: 0;
+    background: none
+}
+
+.page_cover_image .ui_actions_menu {
+    left: -19px;
+    width: 218px
+}
+
+.page_cover_image .ui_actions_menu:after,
+.page_cover_image .ui_actions_menu:before {
+    right: auto;
+    left: 41px
+}
+
+.page_cover_image .ui_actions_menu_item {
+    padding-left: 35px
+}
+
+.page_cover_image .ui_actions_menu_item:before {
+    content: '';
+    display: block;
+    position: absolute;
+    opacity: 0.8;
+    filter: alpha(opacity=80);
+    top: 8px;
+    left: 9px;
+    height: 15px;
+    width: 15px;
+    background: url(/images/icons/edit_photo_icons_blue.png) no-repeat 0 1px
+}
+
+.page_cover_image .ui_actions_menu_item.crop:before {
+    background-position: 0 -16px
+}
+
+div.page_cover_image .ui_actions_menu_icons {
+    cursor: default
+}
+
+.page_cover_menu {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    opacity: 0;
+    filter: alpha(opacity=0)
+}
+
+.page_cover:hover .page_cover_menu {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.page_cover_action {
+    padding: 9px;
+    margin-left: 8px;
+    background: #1f1f1f;
+    background: rgba(31, 31, 31, .75);
+    border-radius: 3px;
+    float: right;
+    cursor: pointer
+}
+
+.page_cover_action:before {
+    content: '';
+    display: block;
+    height: 19px;
+    width: 19px;
+    background: url(/images/icons/cover_edit_icons.png) -9px -9px;
+    background: url(/images/svg_icons/groups/cover_add.svg) no-repeat 50% 50%;
+    opacity: 0.8;
+    filter: alpha(opacity=80)
+}
+
+.page_cover_action:hover:before {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.page_cover_action.edit:before {
+    background-image: url(/images/svg_icons/groups/cover_edit.svg)
+}
+
+.page_cover_action.delete:before {
+    background-image: url(/images/svg_icons/groups/cover_delete.svg)
 }
 
 .page_gif_large {

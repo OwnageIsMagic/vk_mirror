@@ -30,7 +30,7 @@ FAQ = {
                 className: "info_msg"
             }), a.firstChild)
         }
-        return re("faq_error"), t.innerHTML = e, !0
+        return re("faq_error"), val(t, e), !0
     },
     showError: function(e) {
         var t = ge("faq_error");

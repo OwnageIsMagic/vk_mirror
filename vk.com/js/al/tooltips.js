@@ -223,7 +223,9 @@ var tooltips = {
             });
             var a = domPN(t);
             a = e.appendEl ? e.appendEl : e.appendParentCls ? domClosest(e.appendParentCls, a) : domClosest("tt_w", a) || domClosest("tt_default", a) ||
-                domClosestPositioned(t), a || (a = bodyNode), a.appendChild(d);
+                domClosestPositioned(t, {
+                    noOverflow: !0
+                }), a || (a = bodyNode), a.appendChild(d);
             var p = extend({
                 el: t,
                 opts: o,

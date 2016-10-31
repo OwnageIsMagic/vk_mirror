@@ -27,9 +27,9 @@ var OwnerPhoto = {
     showError: function(o, e, r) {
         e.match(/^ERR_[A-Z0-9_]+(\:|$)/) || (e = 'ERR_CLIENT_BAD_ERROR: error "' + clean(e.toString()) + '"');
         var t, a = e.match(/^(ERR_[A-Z0-9_]+)(\:\s*|$)([\S\s]*)\s*$/),
-            n = a[1],
-            i = ge("owner_photo_error");
-        switch (n) {
+            i = a[1],
+            n = ge("owner_photo_error");
+        switch (i) {
             case "ERR_UPLOAD_FILE_NOT_SUPPORTED":
                 t = getLang("profile_oph_err_format");
                 break;
@@ -39,15 +39,25 @@ var OwnerPhoto = {
                     .replace("{/link}", "</a>");
                 break;
             case "ERR_UPLOAD_BAD_IMAGE_SIZE":
-                if (r) {
+                if ("wide" == r) {
                     t = getLang("profile_custom_snippet_photo_error_size")
                         .replace("{width}", "537")
                         .replace("{height}", "240");
                     break
                 }
+                if ("cover" == r) {
+                    t = getLang("groups_cover_photo_error_size")
+                        .replace("{width}", "795")
+                        .replace("{height}", "200");
+                    break
+                }
                 t = getLang("profile_oph_err_size")
                     .replace("{min}", "200")
                     .replace("{max}", '7<span class="num_delim"> </span>000');
+                break;
+            case "ERR_UPLOAD_BIG_IMAGE_SIZE":
+                t = getLang("groups_cover_big_error_size")
+                    .replace("{size}", "14000");
                 break;
             case "ERR_STORAGE_ENGINE_NOT_CONNECTED":
             case "ERR_STORAGE_ENGINE_SAVE_FAILED":
@@ -61,7 +71,7 @@ var OwnerPhoto = {
                     .replace("{/link}", "</a>")
         }
         t = t.replace("{sorry}", "<b>" + getLang("global_sorry_error") + "</b>") + '<br><a onclick="OwnerPhoto.detailsError(this);">' + getLang("global_error_details") +
-            '</a><div class="unshown">Error: ' + n + (a[3] ? ". Details: " + a[3] : ".") + "</div>", val(domFC(i), t), isVisible(i) || slideDown(i, 150), 1 == o && Upload.embed(
+            '</a><div class="unshown">Error: ' + i + (a[3] ? ". Details: " + a[3] : ".") + "</div>", val(domFC(n), t), isVisible(n) || slideDown(n, 150), 1 == o && Upload.embed(
                 cur.ownerPhotoUploadId)
     },
     detailsError: function(o) {
@@ -133,8 +143,8 @@ var OwnerPhoto = {
         var t = function(o, t) {
             if (isVisible(t)) {
                 var a = getXY(t),
-                    n = getSize(t);
-                e.push([a[0] - r[0], a[1] - r[1], n[0] + 2, n[1] + 2])
+                    i = getSize(t);
+                e.push([a[0] - r[0], a[1] - r[1], i[0] + 2, i[1] + 2])
             }
         };
         each(geByTag("button", o), t), each(geByClass("button", o), t), ge("flash_camera")
@@ -188,10 +198,12 @@ var OwnerPhoto = {
             },
             onUploadComplete: function(e, r, t) {
                 var a = parseJSON(r) || {};
-                if (a.error) OwnerPhoto.showError(1, a.error + (t || ""), o.wide);
-                else if (a.x_src && a.x_size && a.size) {
-                    var n = Upload.options[cur.ownerPhotoUploadId].base_url + "upload.php?act=owner_photo_edit&_query=" + encodeURIComponent(r) + "&_origin=" +
-                        encodeURIComponent(locProtocol + "//" + locHost);
+                if (a.error) {
+                    var i = o.wide ? "wide" : o.cover ? "cover" : "photo";
+                    OwnerPhoto.showError(1, a.error + (t || ""), i)
+                } else if (a.x_src && a.x_size && a.size) {
+                    var n = Upload.options[cur.ownerPhotoUploadId].base_url + "upload.php?act=" + (o.cover ? "owner_cover_crop" : "owner_photo_edit") +
+                        "&_query=" + encodeURIComponent(r) + "&_origin=" + encodeURIComponent(locProtocol + "//" + locHost);
                     removeClass("owner_photo_upload_return", "unshown"), OwnerPhoto.edit({
                         thumb: Upload.options[cur.ownerPhotoUploadId].static_url + a.x_src,
                         thumbSize: a.x_size,
@@ -199,29 +211,30 @@ var OwnerPhoto = {
                         uploadUrl: n,
                         square: o.square,
                         no_crop: o.no_crop,
-                        wide: o.wide
+                        wide: o.wide,
+                        cover: o.cover
                     })
                 } else {
-                    var i = r === !1 ? "[FALSE]" : null === r ? "[NULL]" : void 0 === r ? "[UNDEFINED]" : "&laquo;" + clean(r.toString()
+                    var h = r === !1 ? "[FALSE]" : null === r ? "[NULL]" : void 0 === r ? "[UNDEFINED]" : "&laquo;" + clean(r.toString()
                         .substr(0, 1024)) + "&raquo;";
-                    OwnerPhoto.showError(1, "ERR_CLIENT_BAD_RESPONSE: bad upload owner photo response, recv " + i)
+                    OwnerPhoto.showError(1, "ERR_CLIENT_BAD_RESPONSE: bad upload owner photo response, recv " + h)
                 }
             },
             onUploadProgress: function(o, e, r) {
                 if (!ge("form" + o + "_progress")) {
-                    for (var t = Upload.obj[o], a = getSize(t)[1], n = a / 2 + 10, i = t.firstChild; i;) 1 == i.nodeType && (i.id == "uploader" + o && browser.msie ?
-                        setStyle(i, {
+                    for (var t = Upload.obj[o], a = getSize(t)[1], i = a / 2 + 10, n = t.firstChild; n;) 1 == n.nodeType && (n.id == "uploader" + o && browser.msie ?
+                        setStyle(n, {
                             position: "relative",
                             left: "-5000px"
-                        }) : setStyle(i, {
+                        }) : setStyle(n, {
                             visibility: "hidden"
-                        })), i = i.nextSibling;
+                        })), n = n.nextSibling;
                     t.appendChild(ce("div", {
                         innerHTML: '<div class="upload_progress_wrap">            <div id="form' + o +
                             '_progress" class="upload_progress" style="width: 0%;"></div>          </div></div>'
                     }, {
-                        height: n + "px",
-                        marginTop: -n + "px"
+                        height: i + "px",
+                        marginTop: -i + "px"
                     }))
                 }
                 var h = intval(e / r * 100);
@@ -244,7 +257,10 @@ var OwnerPhoto = {
     },
     uploadReturn: function() {
         return cur.ownerPhotoEditTagger && (cur.ownerPhotoEditTagger.destroy(), cur.ownerPhotoEditTagger = !1), hide("owner_photo_error"), cur.cameraShotLoaded ? (cur.cameraShotLoaded = !
-            1, void this.cameraInit()) : (OwnerPhoto.showContent("upload"), val("owner_photo_thumb", ""), Upload.embed(cur.ownerPhotoUploadId), void cur.ownerPhotoBoxRefresh())
+            1, void this.cameraInit()) : (OwnerPhoto.showContent("upload"), curBox()
+            .setOptions({
+                width: 654
+            }), val("owner_photo_thumb", ""), Upload.embed(cur.ownerPhotoUploadId), void cur.ownerPhotoBoxRefresh())
     },
     edit: function(o) {
         o || curBox()
@@ -254,12 +270,19 @@ var OwnerPhoto = {
             t = r ? "width: " + r[0] + "px; height: " + r[1] + "px;" : "";
         o.size ? cur.ownerPhotoEditTimer = -1 : (clearTimeout(cur.ownerPhotoEditTimer), cur.ownerPhotoEditTimer = setTimeout(OwnerPhoto.editInit, 100), (cur.ownerPhotoOrigin =
                     vkImage())
-                .src = o.url), OwnerPhoto.showContent("edit"), setStyle(e, {
+                .src = o.url), OwnerPhoto.showContent("edit"), o.cover && curBox()
+            .setOptions({
+                width: 845
+            }), OwnerPhoto.canRotate() && o.rotation && addClass(e, "hidden");
+        var a = o && o.size && (o.size[0] < 795 || o.size[1] < 795),
+            i = domByClass(ge("owner_photo_edit"), "_owner_photo_rotate_desc");
+        setStyle(e, {
                 width: "",
                 height: ""
-            }), val(e, '<div id="owner_photo_rotate"><div style="' + t + 'margin: 0px auto;"><img class="owner_photo_img" id="owner_photo_img" src="' + o.thumb +
-                '" style="' + t + '" onload="OwnerPhoto.editInit();" /></div></div>'), cur.ownerPhotoThumb = ge("owner_photo_img"), cur.ownerPhotoEditOpts = o, cur.ownerPhotoRotation =
-            0, cur.ownerPhotoBoxRefresh(), setTimeout(cur.ownerPhotoBoxRefresh, 0)
+            }), toggleClass(e, "no_rotate", a), toggle(i, !a), val(e, '<div id="owner_photo_rotate"><div style="' + t +
+                'margin: 0px auto;"><img class="owner_photo_img" id="owner_photo_img" src="' + o.thumb + '" style="' + t +
+                '" onload="OwnerPhoto.editInit();" /></div></div>'), cur.ownerPhotoThumb = ge("owner_photo_img"), cur.ownerPhotoEditOpts = o, cur.ownerPhotoRotation = 0,
+            cur.ownerPhotoBoxRefresh(), setTimeout(cur.ownerPhotoBoxRefresh, 0)
     },
     editInit: function() {
         if (cur.ownerPhotoEditTimer) {
@@ -279,13 +302,13 @@ var OwnerPhoto = {
             t = ge("owner_photo_thumb");
         cur.ownerPhotoRotation = o = (e + o) % 4, e && removeClass(r, "owner_photo_rotate" + e), o && addClass(r, "owner_photo_rotate" + o);
         var a = cur.ownerPhotoEditOpts.thumbSize,
-            n = o % 2 * Math.floor((a[0] - a[1]) / 2);
-        t.style.margin = n + 20 + "px auto", setStyle(domLC(t), extend(vk.rtl ? {
-            left: n
+            i = o % 2 * Math.floor((a[0] - a[1]) / 2);
+        t.style.margin = i + 20 + "px auto", setStyle(domLC(t), extend(vk.rtl ? {
+            left: i
         } : {
-            right: n
+            right: i
         }, {
-            bottom: -n
+            bottom: -i
         }))
     },
     editTagger: function() {
@@ -293,14 +316,15 @@ var OwnerPhoto = {
             r = e.size,
             t = e.thumbSize,
             a = cur.oid && cur.oid < 0 ? .4 : .667,
-            n = e.square ? 1 : 1.5,
             i = e.square ? 1 : 1.5,
+            n = e.square ? 1 : 1.5,
             h = e.square ? 1 : a,
             c = h,
             s = 1,
             l = [Math.max(100, Math.ceil(200 * t[0] / r[0])), Math.max(100, Math.ceil(200 * t[1] / r[1]))];
-        if (e.wide && (c = 2.2375, s = 2.2375, l = [Math.max(100, Math.ceil(537 * t[0] / r[0])), Math.max(45, Math.ceil(240 * t[1] / r[1]))]), (t[0] < l[0] || t[1] < l[1]) &&
-            nav.reload(), e.rect ? e.strict ? o = {
+        if (e.wide ? (c = 2.2375, s = 2.2375, l = [Math.max(100, Math.ceil(537 * t[0] / r[0])), Math.max(45, Math.ceil(240 * t[1] / r[1]))]) : e.cover && (c = 3.975, s =
+                3.975, l = [Math.max(200, Math.ceil(795 * t[0] / r[0])), Math.max(50, Math.ceil(200 * t[1] / r[1]))]), (t[0] < l[0] || t[1] < l[1]) && nav.reload(), e.rect ?
+            e.strict ? o = {
                 left: Math.floor(e.rect[0] * t[0] / r[0]),
                 top: Math.floor(e.rect[1] * t[1] / r[1]),
                 width: Math.ceil(e.rect[2] * t[0] / r[0]),
@@ -310,41 +334,45 @@ var OwnerPhoto = {
                 top: Math.floor(e.rect[1] * t[1] / 100),
                 width: Math.ceil(e.rect[2] * t[0] / 100),
                 height: Math.ceil(e.rect[3] * t[1] / 100)
-            }, o.width < l[0] && (o.left = Math.max(0, o.left - Math.floor((l[0] - o.width) / 2)), o.width = l[0]), o.width * n > o.height && (o.width * n > t[1] ? o =
-                t[1] / n < l[0] ? {
+            }, o.width < l[0] && (o.left = Math.max(0, o.left - Math.floor((l[0] - o.width) / 2)), o.width = l[0]), o.width * i > o.height && (o.width * i > t[1] ? o =
+                t[1] / i < l[0] ? {
                     left: o.left + Math.floor((o.width - l[0]) / 2),
                     top: 0,
                     width: l[0],
                     height: t[1]
                 } : {
-                    left: o.left + Math.floor((o.width - t[1] / n) / 2),
+                    left: o.left + Math.floor((o.width - t[1] / i) / 2),
                     top: 0,
-                    width: Math.floor(t[1] / n),
+                    width: Math.floor(t[1] / i),
                     height: t[1]
-                } : (o.top = Math.max(0, o.top - Math.floor((o.width * n - o.height) / 4)), o.height = Math.ceil(o.width * n), o.top + o.height > t[1] && (o.top = t[1] -
-                    o.height))), o.height > o.width * i && (o.height > t[0] * i ? o = {
+                } : (o.top = Math.max(0, o.top - Math.floor((o.width * i - o.height) / 4)), o.height = Math.ceil(o.width * i), o.top + o.height > t[1] && (o.top = t[1] -
+                    o.height))), o.height > o.width * n && (o.height > t[0] * n ? o = {
                 left: 0,
-                top: o.top + Math.floor((o.height - t[0] * i) / 2),
+                top: o.top + Math.floor((o.height - t[0] * n) / 2),
                 width: t[0],
-                height: Math.floor(t[0] * i)
-            } : (o.left = Math.max(0, o.left - Math.floor((o.height / i - o.width) / 2)), o.width = Math.ceil(o.height / i), o.left + o.width > t[0] && (o.left = t[
+                height: Math.floor(t[0] * n)
+            } : (o.left = Math.max(0, o.left - Math.floor((o.height / n - o.width) / 2)), o.width = Math.ceil(o.height / n), o.left + o.width > t[0] && (o.left = t[
                 0] - o.width)))) : (e.wide ? t[1] >= t[0] / s ? (o = {
                 width: t[0] - 40
             }, o.height = Math.ceil(o.width / s)) : (o = {
                 height: t[1] - 40
+            }, o.width = Math.ceil(o.height * s)) : e.cover ? t[1] >= t[0] / s ? (o = {
+                width: t[0]
+            }, o.height = Math.ceil(o.width / s)) : (o = {
+                height: t[1]
             }, o.width = Math.ceil(o.height * s)) : o = {
                 width: Math.max(l[0], t[0] - 40),
                 height: Math.max(l[1], t[1] - 40)
-            }, !e.wide && o.width > o.height && (o.width = o.height), o.height > o.width * i && (o.height = Math.floor(o.width * i)), o.left = Math.floor((t[0] - o.width) /
-                2), o.top = Math.floor((t[1] - o.height) / 2)), cur.ownerPhotoEditTagger && cur.ownerPhotoEditTagger.destroy(), cur.ownerPhotoEditTagger = photoTagger(
-                "owner_photo_img", {
-                    minw: l[0],
-                    minh: l[1],
-                    mina: c,
-                    maxa: s,
-                    rect: o,
-                    zstart: 1e3
-                }), OwnerPhoto.canRotate()) {
+            }, !e.wide && !e.cover && o.width > o.height && (o.width = o.height), o.height > o.width * n && (o.height = Math.floor(o.width * n)), o.left = Math.floor((
+                t[0] - o.width) / 2), o.top = Math.floor((t[1] - o.height) / 2)), cur.ownerPhotoEditTagger && cur.ownerPhotoEditTagger.destroy(), cur.ownerPhotoEditTagger =
+            photoTagger("owner_photo_img", {
+                minw: l[0],
+                minh: l[1],
+                mina: c,
+                maxa: s,
+                rect: o,
+                zstart: 1e3
+            }), OwnerPhoto.canRotate()) {
             re("owner_photo_rotate_wrap");
             var p = ge("owner_photo_thumb");
             setStyle(p, {
@@ -355,7 +383,7 @@ var OwnerPhoto = {
                 height: t[1]
             }), p.appendChild(se(
                 '<div id="owner_photo_rotate_wrap" class="owner_photo_rotate_wrap"><div class="owner_photo_rotate_left" onclick="OwnerPhoto.rotate(3)"></div><div class="owner_photo_rotate_right" onclick="OwnerPhoto.rotate(1)"></div></div>'
-            ))
+            )), e.rotation && OwnerPhoto.rotate(e.rotation), removeClass(p, "hidden")
         }
     },
     editDone: function() {
@@ -364,17 +392,17 @@ var OwnerPhoto = {
             r = e.size[0] / e.thumbSize[0],
             t = e.size[1] / e.thumbSize[1],
             a = [Math.floor(o[0] * r), Math.floor(o[1] * t), Math.ceil(o[2] * r), Math.ceil(o[3] * t)],
-            n = cur.ownerPhotoEditOpts.uploadUrl + "&_full=" + encodeURIComponent(a.join(",")) + "&_rot=" + intval(cur.ownerPhotoRotation);
+            i = cur.ownerPhotoEditOpts.uploadUrl + "&_full=" + encodeURIComponent(a.join(",")) + "&_rot=" + intval(cur.ownerPhotoRotation);
         e.square || e.no_crop ? (lockButton("owner_photo_done_edit"), clearTimeout(cur.ownerPhotoCropTimer), cur.ownerPhotoCropTimer = setTimeout(OwnerPhoto.cropSuccess.pbind(!
             0, '{"error":"ERR_CLIENT_UPLOAD_TIMEOUT: no response on owner_photo_crop iframe request"}'), 1e4), stManager.add(["upload.js"], function() {
             var o = [0, 0, a[2]],
                 e = jsonpManager.reg(OwnerPhoto.cropSuccess.pbind(!0));
             utilsNode.appendChild(ce("iframe", {
-                src: n + "&_crop=" + o.join(",") + "&_jsonp=" + e + "&_origin=" + encodeURIComponent(locProtocol + "//" + locHost)
+                src: i + "&_crop=" + o.join(",") + "&_jsonp=" + e + "&_origin=" + encodeURIComponent(locProtocol + "//" + locHost)
             }))
         })) : (removeClass("owner_photo_edit_return", "unshown"), OwnerPhoto.crop({
-            uploadUrl: n,
-            thumb: n + "&_proxy=1",
+            uploadUrl: i,
+            thumb: i + "&_proxy=1",
             thumbSize: [200, intval(200 * a[3] / a[2])],
             size: [a[2], a[3]]
         }))
@@ -436,9 +464,9 @@ var OwnerPhoto = {
                 r = e.size[0] / e.thumbSize[0],
                 t = e.size[1] / e.thumbSize[1],
                 a = [Math.floor(o[0] * r), Math.floor(o[1] * t), Math.ceil(o[2] * r)],
-                n = jsonpManager.reg(OwnerPhoto.cropSuccess);
+                i = jsonpManager.reg(OwnerPhoto.cropSuccess);
             utilsNode.appendChild(ce("iframe", {
-                src: e.uploadUrl + "&_crop=" + a.join(",") + "&_jsonp=" + n + "&_origin=" + encodeURIComponent(locProtocol + "//" + locHost)
+                src: e.uploadUrl + "&_crop=" + a.join(",") + "&_jsonp=" + i + "&_origin=" + encodeURIComponent(locProtocol + "//" + locHost)
             }))
         })
     },
@@ -458,7 +486,8 @@ var OwnerPhoto = {
             };
             cur && cur.shareSetOwnPhoto && (a = cur.shareSetOwnPhoto), ajax.post("al_page.php", {
                 act: "owner_photo_save",
-                _query: e
+                _query: e,
+                from: cur.module
             }, {
                 onDone: a,
                 onFail: function(e) {

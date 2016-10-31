@@ -49,7 +49,7 @@
 }
 
 .owner_photo_additional {
-    font-size: 12.5px;
+    font-size: 12px;
     text-align: center;
     padding: 12px 25px 14px;
     background: #fafbfc;
@@ -90,6 +90,10 @@
     bottom: 0;
     position: absolute;
     z-index: 1900
+}
+
+.no_rotate .owner_photo_rotate_wrap {
+    display: none
 }
 
 .owner_photo_rotate_left,
@@ -193,4 +197,11 @@
     margin-top: -49px;
     padding-top: 20px;
     visibility: hidden
+}
+
+.owner_photo_cover .tag_frame_handle.e,
+.owner_photo_cover .tag_frame_handle.n,
+.owner_photo_cover .tag_frame_handle.s,
+.owner_photo_cover .tag_frame_handle.w {
+    display: none!important
 }

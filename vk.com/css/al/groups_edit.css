@@ -77,10 +77,22 @@ a.group_ad_post_stats {
     padding-top: 11px
 }
 
+.group_edit_field.group_edit_addr {
+    margin-bottom: 9px
+}
+
 .group_edit_labeled {
     line-height: 16px;
     padding: 6px 0 10px;
     overflow: hidden
+}
+
+.group_edit_labeled.cover_upload_label {
+    padding-bottom: 22px
+}
+
+.group_edit_labeled.obscene_wrap {
+    padding-bottom: 1px
 }
 
 .group_edit_labeled .idd_wrap .idd_selected_value {
@@ -113,11 +125,7 @@ a.group_ad_post_stats {
 
 .group_edit_row_sep {
     border-bottom: 1px solid #e7e8ec;
-    margin: 10px 0 15px
-}
-
-.group_edit_row_sep.blocks {
-    margin-bottom: 18px
+    margin: 12px 0 15px
 }
 
 .group_edit_rss {
@@ -1220,13 +1228,12 @@ a.group_ad_post_link.deleted.deleted:hover {
     margin-bottom: 10px
 }
 
-.tt_w.group_edit_obscene_words_hint {
-    width: 360px
+.group_edit_obscene_stopwords_wrap {
+    padding-bottom: 8px
 }
 
-.tt_w.group_edit_obscene_words_hint .tt_text {
-    line-height: 16px;
-    color: #000
+.tt_w.group_edit_obscene_words_hint {
+    width: 260px
 }
 
 .tt_w.group_edit_obscene_stopwords_hint {
@@ -1234,31 +1241,26 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 .tt_w.group_edit_obscene_stopwords_hint .listing {
-    padding-left: 10px;
-    margin-bottom: 8px
-}
-
-.tt_w.group_edit_obscene_stopwords_hint .listing li {
-    margin-bottom: 6px
-}
-
-.tt_w.group_edit_obscene_stopwords_hint .listing li:last-child {
-    margin-bottom: 0px
-}
-
-.tt_w.group_edit_obscene_stopwords_hint .tt_text {
-    color: #000;
-    line-height: 16px
+    padding-left: 15px;
+    margin: -5px 0 0
 }
 
 .group_activity_row_wrap {
     position: relative
 }
 
+.group_activity_row_wrap.group_l_row {
+    padding: 10px 0 12px
+}
+
+.group_activity_row_wrap .group_l_info {
+    padding-top: 3px
+}
+
 .group_activity_row_wrap .group_activity_delete_row {
     position: absolute;
-    top: 15px;
-    right: 0px
+    top: 11px;
+    right: 0
 }
 
 .group_activity_row_wrap:hover:last-child {
@@ -1291,7 +1293,7 @@ a.group_ad_post_link.deleted.deleted:hover {
 
 .group_activity_row_wrap .group_activity_content .group_activity_content_message {
     line-height: 140%;
-    padding: 5px 0 8px;
+    padding: 3px 0 4px;
     word-wrap: break-word
 }
 
@@ -1311,6 +1313,10 @@ a.group_ad_post_link.deleted.deleted:hover {
 
 .group_activity_row_wrap:last-child .group_activity_obscene_comment_wrap {
     border-bottom: none
+}
+
+.group_activity_row_empty {
+    display: none
 }
 
 .group_activity_more_link {
@@ -1717,6 +1723,10 @@ a.group_ad_post_link.deleted.deleted:hover {
     float: right;
     height: 52px;
     line-height: 52px
+}
+
+.group_edit_messages_details {
+    margin-top: 5px
 }
 
 .group_edit_community_widget_settings #community_widget_settings {

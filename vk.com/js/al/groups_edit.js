@@ -599,7 +599,6 @@ var GroupsEdit = {
                 .value),
             o = trim(ge("group_edit_addr")
                 .value);
-        if (e || (e = 0), !e && isChecked("group_obscene_stopwords")) return GroupsEdit.saveObsceneWords();
         if (!t) return notaBene(ge("group_edit_name"));
         if (!o) return GroupsEdit.nbAddr();
         var r = ge("group_sw"),
@@ -616,53 +615,109 @@ var GroupsEdit = {
                 rss: trim(ge("group_rss")
                     .value),
                 age_limits: radioval("group_age_limits"),
+                hash: cur.hash
+            };
+        0 == cur.cls || 2 == cur.cls ? (extend(s, GroupsEdit.getFields("access")), s.subject = cur.subjectDD.val(), 2 == cur.cls && extend(s, {
+            start_date: val("group_start_date"),
+            finish_date: isVisible("group_edit_finish_time") ? val("group_finish_date") : 0,
+            host: cur.hostDD ? cur.hostDD.val() : !1,
+            email: val("event_mail"),
+            phone: val("event_phone")
+        })) : 1 == cur.cls && extend(s, {
+            pcategory: cur.pcategoryDD.val(),
+            psubcategory: cur.psubcategoryDD.val(),
+            public_date: val("gedit_public_date")
+        }), ajax.post("groupsedit.php", s, {
+            onDone: function(e, t) {
+                return 0 > e ? GroupsEdit.nbAddr() : e === !1 ? notaBene(ge("group_edit_name")) : "edit_first" == nav.objLoc.act ? nav.go(nav.objLoc[0]) : (
+                    show("group_edit_msg"), scrollToTop(), t != o && (each(geByTag("a"), function() {
+                        this.href = this.href.replace(new RegExp("/" + t + "\\?", "g"), "/" + o + "?")
+                            .replace(new RegExp("/" + t + "$", "g"), "/" + o)
+                    }), nav.setLoc({
+                        0: o,
+                        act: "edit"
+                    }), globalHistoryDestroy(t), ge("group_edit_addr_print_text") && (o != "club" + cur.gid && o != "public" + cur.gid && o != "event" +
+                        cur.gid ? ge("group_edit_addr_print_text")
+                        .innerHTML = cur.lang.groups_print_text.replace("{link}", '<a href="/' + o + '?act=edit&amp;w=print">')
+                        .replace("{/link}", "</a>") : ge("group_edit_addr_print_text")
+                        .innerHTML = cur.lang.groups_print_no_domain_text.replace("{link}", '<span onclick="GroupsEdit.nbAddr()">')
+                        .replace("{/link}", "</span>"))), void globalHistoryDestroy(o))
+            },
+            showProgress: lockButton.pbind(e),
+            hideProgress: unlockButton.pbind(e)
+        })
+    },
+    saveSections: function() {
+        var e = {
+                act: "save_sections",
+                gid: cur.gid,
+                hash: cur.hash
+            },
+            t = ge("group_save");
+        0 == cur.cls || 2 == cur.cls ? extend(e, GroupsEdit.getFields("wall", "photos", "video", "audio", "docs", "topics", "wiki")) : 1 == cur.cls && each([
+            "enable_topics", "enable_photos", "enable_video", "enable_audio", "enable_links", "enable_events", "enable_places", "enable_contacts"
+        ], function(t, o) {
+            e[o] = isChecked(o)
+        }), cur.marketCountryDD && (1 == cur.cls ? e.enable_market = isChecked("enable_market") : extend(e, GroupsEdit.getFields("market")), (e.market || e.enable_market) &&
+            (extend(e, GroupsEdit.getFields("market_comments", "market_wiki")), e.market_country = cur.marketCountryDD.val(), isVisible("group_market_city_wrap") && (e
+                .market_city = cur.marketCityDD.val()), e.market_currency = cur.marketCurrencyDD.val(), e.market_contact = cur.marketContactDD.val())), ajax.post(
+            "groupsedit.php", e, {
+                onDone: function(e) {
+                    return -2 != e && -3 != e || isVisible("group_edit_market") || GroupsEdit.toggleMarketBlock(!0), -2 == e ? notaBene(domPN(ge(
+                        "group_market_country"))) : -3 == e ? notaBene(domPN(ge("group_market_contact"))) : (show("group_edit_msg"), scrollToTop(), void globalHistoryDestroy(
+                        nav.objLoc[0]))
+                },
+                showProgress: lockButton.pbind(t),
+                hideProgress: unlockButton.pbind(t)
+            })
+    },
+    saveComments: function() {
+        var e = {
+                gid: cur.gid,
+                act: "save_comments",
                 obscene_filter: isChecked("group_obcene_words"),
                 obscene_stopwords: isChecked("group_obscene_stopwords"),
+                Obscene_words: val("group_edit_obscene_stopwords"),
+                hash: cur.hash
+            },
+            t = ge("group_save");
+        1 == cur.cls && (e.enable_replies = isChecked("enable_replies")), ajax.post("/groupsedit.php", e, {
+            onDone: function(e, t) {
+                switch (e) {
+                    case -7:
+                        key = "obscene_word_wrong_chars";
+                        break;
+                    case -6:
+                        key = "obscene_word_too_short";
+                        break;
+                    default:
+                        key = "obscene_save_patterns_error"
+                }
+                return e ? 0 > e ? (words_field = ge("group_edit_obscene_stopwords"), notaBene(words_field, "warning")) : (show("group_edit_msg"), scrollToTop(),
+                    void globalHistoryDestroy(nav.objLoc[0])) : GroupsEdit.uShowMessage(getLang(key))
+            },
+            onFail: GroupsEdit.showMessage.pbind(getLang("global_unknown_error"), "error"),
+            showProgress: lockButton.pbind(t),
+            hideProgress: unlockButton.pbind(t)
+        })
+    },
+    saveMessages: function() {
+        var e = {
+                act: "save_messages",
+                gid: cur.gid,
                 first_message: trim(ge("group_edit_first_message")
                     .value),
                 hash: cur.hash
             },
-            a = ge("group_save");
-        0 == cur.cls || 2 == cur.cls ? (extend(s, GroupsEdit.getFields("wall", "photos", "video", "audio", "docs", "topics", "wiki", "access", "messages")), s.subject =
-            cur.subjectDD.val(), 2 == cur.cls && extend(s, {
-                start_date: val("group_start_date"),
-                finish_date: isVisible("group_edit_finish_time") ? val("group_finish_date") : 0,
-                host: cur.hostDD ? cur.hostDD.val() : !1,
-                email: val("event_mail"),
-                phone: val("event_phone")
-            })) : 1 == cur.cls && (extend(s, {
-            pcategory: cur.pcategoryDD.val(),
-            psubcategory: cur.psubcategoryDD.val(),
-            public_date: val("gedit_public_date")
-        }), each(["enable_replies", "enable_topics", "enable_photos", "enable_video", "enable_audio", "enable_links", "enable_events", "enable_places",
-            "enable_contacts"
-        ], function(e, t) {
-            s[t] = isChecked(t)
-        }), extend(s, GroupsEdit.getFields("messages"))), s.messages && (s.messages_widget_info = trim(val("messages_widget_info")), s.messages_widget_offline_info =
-            trim(val("messages_widget_offline_info")), s.messages_widget_domains = val("messages_widget_domains"), s.messages_widget_enable = hasClass(
-                "messages_widget_enable", "on") ? 1 : 0), cur.marketCountryDD && (1 == cur.cls ? s.enable_market = isChecked("enable_market") : extend(s, GroupsEdit.getFields(
-            "market")), (s.market || s.enable_market) && (extend(s, GroupsEdit.getFields("market_comments", "market_wiki")), s.market_country = cur.marketCountryDD
-            .val(), isVisible("group_market_city_wrap") && (s.market_city = cur.marketCityDD.val()), s.market_currency = cur.marketCurrencyDD.val(), s.market_contact =
-            cur.marketContactDD.val())), ajax.post("groupsedit.php", s, {
-            onDone: function(e, t) {
-                return -2 != e && -3 != e || isVisible("group_edit_market") || GroupsEdit.toggleMarketBlock(!0), -2 == e ? notaBene(domPN(ge(
-                    "group_market_country"))) : -3 == e ? notaBene(domPN(ge("group_market_contact"))) : 0 > e ? GroupsEdit.nbAddr() : e === !1 ? notaBene(
-                    ge("group_edit_name")) : "edit_first" == nav.objLoc.act ? nav.go(nav.objLoc[0]) : ((cur.g_wallDD.val() > 1 || cur.twitterVal ? show :
-                    hide)("group_edit_twitter"), show("group_edit_msg"), scrollToTop(), t != o && (each(geByTag("a"), function() {
-                    this.href = this.href.replace(new RegExp("/" + t + "\\?", "g"), "/" + o + "?")
-                        .replace(new RegExp("/" + t + "$", "g"), "/" + o)
-                }), nav.setLoc({
-                    0: o,
-                    act: "edit"
-                }), globalHistoryDestroy(t), ge("group_edit_addr_print_text") && (o != "club" + cur.gid && o != "public" + cur.gid && o != "event" +
-                    cur.gid ? ge("group_edit_addr_print_text")
-                    .innerHTML = cur.lang.groups_print_text.replace("{link}", '<a href="/' + o + '?act=edit&amp;w=print">')
-                    .replace("{/link}", "</a>") : ge("group_edit_addr_print_text")
-                    .innerHTML = cur.lang.groups_print_no_domain_text.replace("{link}", '<span onclick="GroupsEdit.nbAddr()">')
-                    .replace("{/link}", "</span>"))), void globalHistoryDestroy(o))
+            t = ge("group_save");
+        extend(e, GroupsEdit.getFields("messages")), e.messages && (e.messages_widget_info = trim(val("messages_widget_info")), e.messages_widget_offline_info = trim(val(
+            "messages_widget_offline_info")), e.messages_widget_domains = val("messages_widget_domains"), e.messages_widget_enable = hasClass(
+            "messages_widget_enable", "on") ? 1 : 0), ajax.post("groupsedit.php", e, {
+            onDone: function() {
+                show("group_edit_msg"), scrollToTop(), globalHistoryDestroy(nav.objLoc[0])
             },
-            showProgress: lockButton.pbind(a),
-            hideProgress: unlockButton.pbind(a)
+            showProgress: lockButton.pbind(t),
+            hideProgress: unlockButton.pbind(t)
         })
     },
     checkAddr: function(e) {
@@ -697,11 +752,11 @@ var GroupsEdit = {
             }
         })
     },
-    show: function(e) {
-        isVisible(e) || slideDown(e, 150)
+    show: function(e, t) {
+        isVisible(e) || slideDown(e, 150, t)
     },
-    hide: function(e) {
-        isVisible(e) && slideUp(e, 150)
+    hide: function(e, t) {
+        isVisible(e) && slideUp(e, 150, t)
     },
     checkNewLinesFirstMessage: function(e) {
         var t = e.value;
@@ -709,32 +764,30 @@ var GroupsEdit = {
             paramValue !== t && (e.value = paramValue)
     },
     init: function(e) {
-        autosizeSetup("group_edit_desc", {
-            minHeight: 68,
-            maxHeight: 600
-        }), cur.twitterVal = e.twitter, extend(cur, {
-            module: "groups_edit",
-            cls: e.cls,
-            group_first_message_max_length: e.group_first_message_max_length,
-            group_first_message_max_new_lines: e.group_first_message_max_new_lines
-        }), autosizeSetup("group_edit_first_message", {
-            minHeight: 68,
-            maxHeight: 600
-        });
-        var t = ge("group_edit_first_message");
-        if (addEvent(t, "keydown keyup keypress change paste cut drop input blur", GroupsEdit.checkNewLinesFirstMessage.pbind(t)), (0 == cur.cls || 2 == cur.cls) && (
-                extend(cur, {
-                    subjectDD: new Dropdown(ge("group_subject"), e.subjects, {
-                        width: 300,
-                        dark: !0,
-                        multiselect: !1,
-                        autocomplete: !0,
-                        introText: getLang("groups_start_typing_subject"),
-                        zeroPlaceholder: !0,
-                        noResult: "",
-                        placeholder: getLang("groups_choose_subject")
-                    })
-                }), e.subject && "0" != e.subject && cur.subjectDD.val(e.subject)), 1 == cur.cls) extend(cur, {
+        if (autosizeSetup("group_edit_desc", {
+                minHeight: 68,
+                maxHeight: 600
+            }), cur.twitterVal = e.twitter, extend(cur, {
+                module: "groups_edit",
+                cls: e.cls,
+                group_first_message_max_length: e.group_first_message_max_length,
+                group_first_message_max_new_lines: e.group_first_message_max_new_lines,
+                shareSetOwnPhoto: function(e, t) {
+                    return val(geByClass1("_cover_upload_label"), t), curBox() && curBox()
+                        .hide(), scrollToTop(), GroupsEdit.invalidateBack(), GroupsEdit.showMessage(e)
+                }
+            }), (0 == cur.cls || 2 == cur.cls) && (extend(cur, {
+                subjectDD: new Dropdown(ge("group_subject"), e.subjects, {
+                    width: 300,
+                    dark: !0,
+                    multiselect: !1,
+                    autocomplete: !0,
+                    introText: getLang("groups_start_typing_subject"),
+                    zeroPlaceholder: !0,
+                    noResult: "",
+                    placeholder: getLang("groups_choose_subject")
+                })
+            }), e.subject && "0" != e.subject && cur.subjectDD.val(e.subject)), 1 == cur.cls) extend(cur, {
             pcategoryDD: new Dropdown(ge("public_type"), e.pcategories, {
                 width: 300,
                 dark: !0,
@@ -774,17 +827,17 @@ var GroupsEdit = {
                 width: 150,
                 resfmt: "plain"
             });
-            var o = 282,
-                r = geByClass1("group_edit_at", ge("group_edit_start_time"));
-            o += r.offsetWidth;
-            var s = 300 - o,
-                a = Math.floor(s / 2),
-                i = s - a,
-                n = {
-                    paddingLeft: a + "px",
-                    paddingRight: i + "px"
+            var t = 282,
+                o = geByClass1("group_edit_at", ge("group_edit_start_time"));
+            t += o.offsetWidth;
+            var r = 300 - t,
+                s = Math.floor(r / 2),
+                a = r - s,
+                i = {
+                    paddingLeft: s + "px",
+                    paddingRight: a + "px"
                 };
-            setStyle(r, n), setStyle(geByClass1("group_edit_at", ge("group_edit_finish_time")), n), e.hosts && extend(cur, {
+            setStyle(o, i), setStyle(geByClass1("group_edit_at", ge("group_edit_finish_time")), i), e.hosts && extend(cur, {
                 hostDD: new Dropdown(ge("event_host"), e.hosts, {
                     width: 300,
                     dark: !0,
@@ -794,6 +847,12 @@ var GroupsEdit = {
                 })
             })
         }
+        cur.destroy.push(function(e) {
+            0 == e.cls ? e.subjectDD.destroy() : 1 == e.cls ? (e.pcategoryDD.destroy(), e.psubcategoryDD.destroy()) : 2 == e.cls && (e.subjectDD.destroy(), e.hostDD &&
+                e.hostDD.destroy())
+        }), placeholderSetup("group_rss")
+    },
+    initSections: function(e) {
         2 != cur.cls && e.marketCountries && (selectsData.setCountries(e.marketCountries), selectsData.setCities(e.marketCountry, e.marketCities), cur.marketCountryChange =
             function() {
                 var e = clone(cur.marketCountryDD.val_full()),
@@ -851,17 +910,25 @@ var GroupsEdit = {
                 noResult: "",
                 placeholder: getLang("groups_choose_market_contact")
             }), void 0 !== e.marketContact && cur.marketContactDD.val(e.marketContact)), cur.destroy.push(function(e) {
-            0 == e.cls ? e.subjectDD.destroy() : 1 == e.cls ? (e.pcategoryDD.destroy(), e.psubcategoryDD.destroy()) : 2 == e.cls && (e.subjectDD.destroy(), e.hostDD &&
-                e.hostDD.destroy()), e.marketCountryDD && (e.marketCountryDD.destroy(), e.marketCityDD.destroy(), e.marketCurrencyDD.destroy(), e.marketContactDD
-                .destroy())
-        }), placeholderSetup("group_rss");
-        var u = ge("messages_widget_domains");
-        u && (cur.messagesWidgetDomains = new TagsDD(u, {
+            e.marketCountryDD && (e.marketCountryDD.destroy(), e.marketCityDD.destroy(), e.marketCurrencyDD.destroy(), e.marketContactDD.destroy())
+        })
+    },
+    initMessages: function() {
+        var e = ge("messages_widget_domains");
+        e && (cur.messagesWidgetDomains = new TagsDD(e, {
             width: 300,
             search: 0,
             paddings: 1,
             placeholder: ""
-        }))
+        })), autosizeSetup("group_edit_first_message", {
+            minHeight: 68,
+            maxHeight: 600
+        });
+        var t = ge("group_edit_first_message"),
+            o = GroupsEdit.checkNewLinesFirstMessage.pbind(t);
+        addEvent(t, "keydown keyup keypress change paste cut drop input blur", o), cur.destroy.push(function(e) {
+            removeEvent(t, "keydown keyup keypress change paste cut drop input blur", o)
+        })
     },
     addBlacklist: function() {
         showBox("/groupsedit.php", {
@@ -983,7 +1050,7 @@ var GroupsEdit = {
                 }), boxQueue.hideAll()), 0 === t) return GroupsEdit.editBlacklist(o);
         if (t) {
             if (!o && ge("group_blb_error")) return val("group_blb_error", t), void show("group_blb_error_wrap");
-            GroupsEdit.showMessage(t)
+            GroupsEdit.showMessage(t);
         }
         if ("search" == nav.objLoc.act && "ban" == nav.objLoc.from && o) return nav.go(nav.objLoc[0] + "?act=blacklist", !1, {
             noback: !0
@@ -1534,7 +1601,7 @@ var GroupsEdit = {
         }, '<div class="group_edit_age_limits_box">' + getLang("groups_about_age_limits") + "</div>")
     },
     showAgeLimitsBlock: function() {
-        hide("group_edit_limits_link"), setTimeout(slideDown.pbind("group_edit_limits", 300), 20)
+        slideUp("group_edit_limits_link", 150), slideDown("group_edit_limits", 150)
     },
     showAddrTooltip: function(e) {
         return
@@ -1587,37 +1654,6 @@ var GroupsEdit = {
                 scrollTop: t,
                 transition: Fx.Transitions.linear
             }, 500, o)
-        })
-    },
-    saveObsceneWords: function() {
-        var e = val("group_edit_obscene_stopwords"),
-            t = ge("group_save"),
-            o = {
-                gid: cur.gid,
-                act: "save",
-                Obscene_words: e,
-                hash: cur.hash
-            },
-            r = function(e, t) {
-                switch (e) {
-                    case -7:
-                        key = "obscene_word_wrong_chars";
-                        break;
-                    case -6:
-                        key = "obscene_word_too_short";
-                        break;
-                    default:
-                        key = "obscene_save_patterns_error"
-                }
-                return e ? 0 > e ? (words_field = ge("group_edit_obscene_stopwords"), notaBene(words_field, "warning")) : void GroupsEdit.saveInfo(1) : GroupsEdit.uShowMessage(
-                    getLang(key))
-            },
-            s = GroupsEdit.showMessage.pbind(getLang("global_unknown_error"), "error");
-        ajax.post("/groupsedit.php", o, {
-            onDone: r,
-            onFail: s,
-            showProgress: lockButton.pbind(t),
-            hideProgress: unlockButton.pbind(t)
         })
     },
     deleteObscenePattern: function(e, t) {
@@ -1699,13 +1735,15 @@ var GroupsEdit = {
                 },
                 forcetodown: !0
             };
-        showTooltip(e, o)
+        showTooltip(e, o), e.onblur = function() {
+            e.tt && e.tt.hide && e.tt.hide()
+        }
     },
     enableObsceneStopWords: function(e) {
         var t = "group_edit_obscene_stopwords",
             o = "group_edit_obscene_stopwords_wrap",
             e = ge(e);
-        return isChecked(e.id) ? (show(o), elfocus(t)) : void hide(o)
+        return isChecked(e.id) ? (GroupsEdit.show(o, elfocus.pbind(t)), !1) : void GroupsEdit.hide(o)
     },
     setupObsceneFilter: function(e) {
         var t = Math.round(geByClass1("group_edit")

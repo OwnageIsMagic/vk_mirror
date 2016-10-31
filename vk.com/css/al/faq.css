@@ -237,6 +237,10 @@ h4.faq_question .faq_info {
     background: #fff
 }
 
+.faq_found_list .info_msg {
+    margin: 0 0 10px
+}
+
 .faq_mobile_settings,
 .faq_found_list .error,
 .faq_found_list .msg {

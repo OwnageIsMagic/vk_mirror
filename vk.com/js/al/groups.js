@@ -43,6 +43,10 @@ var Groups = {
             addClass(s, "group_age_disclaimer_box"), replaceClass(domFC(s), "fl_r", "fl_l"), disableButton(t.proceedButton, 1)
         }
     },
+    switchTab: function(o, e, n) {
+        return checkEvent(n) ? !0 : "wiki" == e && hasClass(o, "ui_tab_sel") ? nav.go(o, n) : (ge("page_info_wrap")
+            .className = "page_info_wrap " + e, uiTabs.switchTab(o))
+    },
     toggleFave: function(o, e, n, t) {
         void 0 != cur.toggleFaveAct && (n = cur.toggleFaveAct), ajax.post("fave.php", {
             act: n ? "a_add_group" : "a_delete_group",
@@ -176,27 +180,30 @@ var Groups = {
     },
     enter: function(o, e, n, t, a) {
         var s, i;
-        if (o = ge(o), "button" == o.tagName.toLowerCase()) s = lockButton.pbind(o), i = unlockButton.pbind(o);
+        if (o = ge(o), hasClass(o, "flat_button")) s = lockButton.pbind(o), i = unlockButton.pbind(o);
         else {
             if (o.firstChild && "progress" == o.firstChild.className) return;
             s = function() {
                 o.oldhtml = o.innerHTML, o.innerHTML = '<span class="progress" style="display: block"></span>'
             }, i = function() {
                 o.innerHTML = o.oldhtml
-            }, window.Page && hasClass(o, "page_actions_btn") && Page.actionsDropdownHide(domPS(o), 1)
+            }
         }
-        ajax.post("al_groups.php", {
+        window.Page && hasClass(o, "page_actions_btn") && Page.actionsDropdownHide(domPS(o), 1), ajax.post("al_groups.php", {
             act: "enter",
             gid: e,
             hash: n,
             context: t
         }, {
             onDone: function(o) {
-                return a ? a() : (ge("page_actions")
-                    .innerHTML = o, (o ? show : hide)("page_actions"), void nav.reload({
-                        noframe: !0,
-                        noscroll: !0
-                    }))
+                if (a) return a();
+                ge("page_actions")
+                    .innerHTML = o, (o ? show : hide)("page_actions");
+                var e = geByClass1("_groups_invite_block");
+                e && slideUp(e, 200), nav.reload({
+                    noframe: !0,
+                    noscroll: !0
+                })
             },
             onFail: function(o) {
                 return o ? (setTimeout(showFastBox({
@@ -219,26 +226,29 @@ var Groups = {
     },
     leave: function(o, e, n, t, a) {
         var s, i;
-        if (o = ge(o), "button" == o.tagName.toLowerCase()) s = lockButton.pbind(o), i = unlockButton.pbind(o);
+        if (o = ge(o), hasClass(o, "flat_button")) s = lockButton.pbind(o), i = unlockButton.pbind(o);
         else {
             if (o.firstChild && "progress" == o.firstChild.className) return;
             s = function() {
                 o.oldhtml = o.innerHTML, o.innerHTML = '<span class="progress" style="display: block"></span>'
             }, i = function() {
                 o.innerHTML = o.oldhtml
-            }, window.Page && hasClass(o, "page_actions_btn") && Page.actionsDropdownHide(domPS(o), 1)
+            }
         }
-        ajax.post("al_groups.php", {
+        window.Page && hasClass(o, "page_actions_btn") && Page.actionsDropdownHide(domPS(o), 1), ajax.post("al_groups.php", {
             act: "leave",
             gid: e,
             hash: n,
             context: t
         }, {
             onDone: function(o) {
-                return a ? a() : (ge("page_actions")
-                    .innerHTML = o, (o ? show : hide)("page_actions"), void nav.reload({
-                        noframe: !0
-                    }))
+                if (a) return a();
+                ge("page_actions")
+                    .innerHTML = o, (o ? show : hide)("page_actions");
+                var e = geByClass1("_groups_invite_block");
+                e && slideUp(e, 200), nav.reload({
+                    noframe: !0
+                })
             },
             showProgress: s,
             hideProgress: i

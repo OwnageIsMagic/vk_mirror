@@ -444,7 +444,7 @@
                     onChange: u
                 }),
                 _ = new Dropdown(ge(n + "_year_input"), m, {
-                    width: 70,
+                    width: 75,
                     dark: 1,
                     zeroPlaceholder: d.zeroPlaceholder,
                     onChange: u

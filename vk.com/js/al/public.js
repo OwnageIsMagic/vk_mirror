@@ -37,15 +37,14 @@ window["public"] = window.Public = {
             hideProgress: window.Page && Page.actionsDropdownUnlock.pbind(e)
         }), cancelEvent(n)
     },
-    switchHelpSteps: function(e) {
-        var o = ge("public_help_steps_module");
-        hasClass(o, "closed") ? removeClass(o, "closed") : addClass(o, "closed"), ajax.post("al_public.php", {
-            act: "a_switch_help_steps",
+    hideHelpStep: function(e, o, t, n) {
+        var a = domClosest("page_block", e);
+        return e && e.tt && e.tt.hide(), a && slideUp(a, 200, re.pbind(a)), ajax.post("/al_public.php", {
+            act: "a_hide_help_step",
             pid: cur.options.public_id,
-            hash: e
-        }, {
-            onDone: function() {}
-        })
+            step: o,
+            hash: t
+        }), n.cancelBubble = !0, cancelEvent(n)
     },
     showMapBox: function(e, o, t) {
         if (!window.showZeroZoneBox || !showZeroZoneBox("places", function() {

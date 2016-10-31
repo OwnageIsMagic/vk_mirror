@@ -4,8 +4,10 @@
 .group_box_row .group_box_delete,
 .group_box_row .group_box_edit,
 .group_box_row .group_box_progress,
+.group_closed_text,
 .group_contact_image_wrap,
 .group_contacts_list .group_box_image_wrap,
+.group_info_row:before,
 .group_places_list .group_box_image_wrap,
 .groups_actions_menu .groups_actions_icons,
 a.groups_messages_block:before {
@@ -27,39 +29,103 @@ a.groups_messages_block:before {
     display: none
 }
 
-.group_info {
+.group_info_block {
     line-height: 150%;
+    display: none
+}
+
+.page_info_wrap.info .group_info_block.info,
+.page_info_wrap.wiki .group_info_block.wiki {
+    display: block
+}
+
+.group_info_block.wiki {
+    overflow: hidden
+}
+
+.page_top+.page_info_wrap .group_info_block:first-child {
     padding: 14px 0 0
 }
 
-.group_info .label {
+.group_info_block .label {
     width: 165px;
     color: #828282
 }
 
-.group_info .labeled,
-.group_info .labeled_text {
+.group_info_block .labeled,
+.group_info_block .labeled_text {
     overflow: hidden
 }
 
-.group_info .block {
+.group_info_block .block {
     padding-top: 10px
 }
 
-.group_info .block:first-child {
+.group_info_block .block:first-child {
     padding-top: 0
 }
 
-.group_info .miniblock {
-    padding-top: 5px
+.group_info_block .closed_page {
+    margin-bottom: 0
 }
 
-.group_info .miniblock:first-child {
-    padding-top: 0
+.group_info_row {
+    padding-bottom: 8px;
+    padding-left: 24px
 }
 
-.group_wiki_wrap {
+.group_info_row:last-child {
+    padding-bottom: 0
+}
+
+.group_info_row:before {
+    display: block;
+    position: absolute;
+    content: '';
+    background: url(/images/icons/group_info_cons.png) no-repeat 0 0;
+    height: 15px;
+    width: 15px;
+    margin: 2px 0 0 -24px
+}
+
+.group_info_row.time:before {
+    background-position: 0 -20px
+}
+
+.group_info_row.soon:before {
+    background-position: 0 -40px
+}
+
+.group_info_row.address:before {
+    background-position: 0 -60px
+}
+
+.group_info_row.site:before {
+    background-position: 0 -96px
+}
+
+.group_info_row.date:before {
+    background-position: 0 -115px
+}
+
+.group_info_row.snapster:before {
+    background-position: 0 -134px
+}
+
+.group_wiki {
     overflow: hidden
+}
+
+.group_wiki .wk_text {
+    display: none;
+    padding-top: 10px;
+    word-wrap: break-word;
+    line-height: 150%
+}
+
+.group_wiki .wk_text.expanded {
+    padding: 10px 0 0;
+    width: auto
 }
 
 .group_wiki_hider {
@@ -86,13 +152,6 @@ a.groups_messages_block:before {
 
 .group_wiki_hider:hover span {
     visibility: visible
-}
-
-#group .group_wiki_wrap .wk_text {
-    display: none;
-    padding-top: 10px;
-    word-wrap: break-word;
-    line-height: 150%
 }
 
 .group_counters_wrap {
@@ -125,13 +184,86 @@ a.groups_messages_block:before {
     float: right
 }
 
-.groups_invite_btn {
+.flat_button.groups_invite_btn {
     margin-top: 12px
 }
 
-#group .group_wiki_wrap .wk_text.expanded {
-    padding: 10px 0 0;
-    width: auto
+.groups_invite_block {
+    padding: 12px 15px
+}
+
+.groups_invite_href {
+    float: left;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 12px
+}
+
+.groups_invite_href,
+.groups_invite_img {
+    width: 36px;
+    height: 36px
+}
+
+.groups_invite_actions {
+    float: right;
+    padding: 3px 0
+}
+
+.groups_invite_actions .flat_button {
+    width: auto;
+    float: left;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 10px
+}
+
+.groups_invite_text {
+    overflow: hidden;
+    padding-top: 10px
+}
+
+.groups_invite_text .mem_link {
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.group_friends {
+    padding: 7px;
+    font-size: 12px;
+    cursor: pointer
+}
+
+.group_friends_image {
+    float: right;
+    width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    border: 3px solid #fff;
+    background-size: cover;
+    margin-right: -10px
+}
+
+.group_friends_image:first-child {
+    margin-right: 0
+}
+
+.group_friends_text {
+    overflow: hidden;
+    padding: 0 8px;
+    line-height: 27px
+}
+
+.group_closed {
+    padding: 13px 15px;
+    font-size: 12.5px
+}
+
+.group_closed_text {
+    padding-left: 23px;
+    background: url(/images/icons/group_info_cons.png) no-repeat -2px -79px;
+    line-height: 15px
 }
 
 .groups_edit_board_row {
@@ -179,11 +311,24 @@ a.groups_messages_block:before {
 }
 
 .group_block_module {
-    padding: 5px 15px;
+    padding: 10px 15px;
     font-size: 12.5px;
-    background: #f1f1f1;
-    margin: 10px 0 0;
-    line-height: 160%
+    background: #f9f6e8;
+    line-height: 160%;
+    box-shadow: 0 0 0 1px #d3bb55
+}
+
+.group_block_module:first-child {
+    margin-top: 15px;
+    border-radius: 2px 2px 0 0
+}
+
+.group_block_module:last-child {
+    border-radius: 0 0 2px 2px
+}
+
+.group_block_module:last-child:first-child {
+    border-radius: 2px
 }
 
 .groups_box_textarea {
@@ -872,16 +1017,37 @@ a.groups_catalog_comm_title_link {
     text-decoration: none
 }
 
-.group_app_button {
-    border-top: 1px solid #e7e8ec;
-    border-radius: 0 0 2px 2px;
-    padding: 15px 0;
-    text-align: center
+a.group_app_button {
+    display: block;
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    padding: 10px 52px 10px 15px;
+    line-height: 28px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: #336bab
 }
 
-.group_app_button button {
-    padding-left: 24px;
-    padding-right: 24px
+a.group_app_button:hover {
+    text-decoration: none
+}
+
+a.group_app_button:hover:after {
+    background-color: #83a5d3
+}
+
+a.group_app_button:after {
+    display: block;
+    content: '';
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #648fc9 url('/images/svg_icons/groups/arrow_ne.svg') no-repeat 50% calc(50% - 1px)
 }
 
 #gtop_app_in_groups.gtop_complex_message {
