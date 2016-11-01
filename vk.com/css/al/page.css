@@ -243,7 +243,7 @@
 }
 
 .wall_module .reply_action {
-    background: url(/images/post_icon.png?5) no-repeat 1px -52px;
+    background: url(/images/post_icon.png?6) no-repeat 1px -52px;
     opacity: 0;
     filter: alpha(opacity=0);
     cursor: pointer;
@@ -688,7 +688,7 @@ h5.post_author {
 }
 
 .wall_module .like_icon {
-    background: url(/images/post_icon.png?5) no-repeat 0 -29px;
+    background: url(/images/post_icon.png?6) no-repeat 0 -29px;
     width: 12px;
     height: 10px;
     margin: 2px 0 0;
@@ -980,7 +980,7 @@ h5.post_author {
 }
 
 .wall_module .reply_to_title .reply_to_cancel {
-    background: url(/images/post_icon.png?5) no-repeat 1px -52px;
+    background: url(/images/post_icon.png?6) no-repeat 1px -52px;
     width: 13px;
     height: 13px;
     margin: 2px 0 0 3px;
@@ -3947,7 +3947,7 @@ div.submit_post_field[contenteditable=true]>p {
 
 .wall_module .post_like_icon,
 .wall_module .post_share_icon {
-    background: url(/images/post_icon.png?5) no-repeat 0 0;
+    background: url(/images/post_icon.png?6) no-repeat 0 0;
     display: inline-block;
     width: 16px;
     height: 13px;
@@ -5334,6 +5334,12 @@ div.page_cover_image .ui_actions_menu_icons {
     box-sizing: border-box
 }
 
+.share_url_error {
+    display: none;
+    margin: 0 0 15px;
+    line-height: 1.67
+}
+
 .share_url_input_comment {
     margin-top: 10px;
     color: #656565
@@ -6016,7 +6022,7 @@ div.medadd_c_linkprg {
     width: 12px;
     height: 10px;
     margin-top: -5px;
-    background: url(/images/post_icon.png?5) no-repeat;
+    background: url(/images/post_icon.png?6) no-repeat;
     opacity: 0;
     filter: alpha(opacity=0);
     background-position: left -41px

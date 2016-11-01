@@ -103,16 +103,14 @@ var Videoview = {
             onOpenInPopup: function(e, i, o) {
                 Videoview.sendPlayerStats(8, 0), showVideo(e, i, {
                     autoplay: 1,
-                    queue: 1,
                     addParams: {
                         t: o
                     }
                 })
             },
-            onExpandInline: function(e, i, o) {
+            onExpandInline: function(e, i) {
                 Videoview.sendPlayerStats(8, 0), showVideo(e, i, {
-                    queue: 1,
-                    expandPlayer: o
+                    expandPlayer: cur.videoInlinePlayer
                 })
             },
             onVideoAdEvent: function(e, i, o, t, a, n, d) {

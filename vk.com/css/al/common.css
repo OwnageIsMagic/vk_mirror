@@ -6006,6 +6006,7 @@ button.ui_load_more_btn {
 
 .audio_md_rows.audio_popular_rows .audio_row #remove_moder,
 .audio_md_rows .audio_row #edit_moder,
+.audio_recent_rows .audio_row #delete,
 .audio_row #next,
 .audio_row.audio_deleted #add,
 .audio_row.audio_deleted.audio_delete_all #delete,
@@ -6018,6 +6019,7 @@ button.ui_load_more_btn {
 }
 
 .audio_current_rows .audio_row.claimed,
+.audio_recent_rows .audio_row #edit,
 .audio_row.audio_deleted #delete,
 .audio_row.audio_deleted #next,
 .audio_row.audio_deleted #recom,

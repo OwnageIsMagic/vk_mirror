@@ -43,6 +43,11 @@ a.groups_messages_block:before {
     overflow: hidden
 }
 
+.group_info_block.info {
+    overflow: hidden;
+    word-wrap: break-word
+}
+
 .page_top+.page_info_wrap .group_info_block:first-child {
     padding: 14px 0 0
 }

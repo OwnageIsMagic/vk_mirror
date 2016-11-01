@@ -507,3 +507,15 @@
 .restore_response_image.restore_response_image_landscape {
     width: 75%
 }
+
+#restore_roll_back_link .request_result_msg {
+    display: block;
+    margin: 10px 0 0;
+    padding: 20px;
+    background: rgba(159, 180, 201, .1)
+}
+
+#restore_roll_back_link .request_result_msg .flat_button {
+    clear: both;
+    margin-top: 20px
+}
