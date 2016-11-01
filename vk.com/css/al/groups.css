@@ -43,6 +43,14 @@ a.groups_messages_block:before {
     overflow: hidden
 }
 
+.group_info_block.wiki .wk_edit_btn {
+    margin-bottom: 15px
+}
+
+.group_info_block.wiki .wk_edit_btn+.wk_text:empty {
+    margin-top: -15px
+}
+
 .group_info_block.info {
     overflow: hidden;
     word-wrap: break-word
@@ -115,48 +123,6 @@ a.groups_messages_block:before {
 
 .group_info_row.snapster:before {
     background-position: 0 -134px
-}
-
-.group_wiki {
-    overflow: hidden
-}
-
-.group_wiki .wk_text {
-    display: none;
-    padding-top: 10px;
-    word-wrap: break-word;
-    line-height: 150%
-}
-
-.group_wiki .wk_text.expanded {
-    padding: 10px 0 0;
-    width: auto
-}
-
-.group_wiki_hider {
-    display: block;
-    padding: 7px 0 8px 165px;
-    border-radius: 2px;
-    line-height: 1.154;
-    margin-top: 7px
-}
-
-.group_wiki_hider span {
-    padding: 0 10px;
-    visibility: hidden
-}
-
-.group_wiki_hider span:hover {
-    text-decoration: underline
-}
-
-.group_wiki_hider:hover {
-    text-decoration: none;
-    background: #f0f2f5
-}
-
-.group_wiki_hider:hover span {
-    visibility: visible
 }
 
 .group_counters_wrap {

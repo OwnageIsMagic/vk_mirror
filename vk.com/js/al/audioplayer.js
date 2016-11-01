@@ -1543,7 +1543,7 @@ AudioPlayer.tabIcons = {
         i.ownerId == vk.id && i.id && (e.id = i.id), cur.audioLoadTimings && (e.timings = cur.audioLoadTimings.join(","), cur.audioLoadTimings = []), e.overall_progress = Math.round(
             this._adsGetCurrentDelay()), ajax.post("al_audio.php", e, {
             onDone: function(t) {
-                t && t.need_play_ad && this._adsPrepareAd(i, t.section)
+                t && t.need_play_ad && "html5" == this._impl.type && this._adsPrepareAd(i, t.section)
             }.bind(this)
         })
     }, AudioPlayer.prototype.saveStateCurrentPlaylist = function() {
