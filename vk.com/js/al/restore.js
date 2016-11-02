@@ -184,6 +184,27 @@ var Restore = {
             }
         })
     },
+    tryToSubmitRequest: function() {
+        Restore.independency_cheched && Restore.submitRequest(), cur.options && cur.options.can_restore_independently || Restore.submitRequest(), Restore.independency_cheched = !
+            0;
+        var e = ge("login")
+            .value;
+        lockButton(ge("tryToSubmitBtn")), ajax.post("/restore", {
+            act: "check_independent_restore_allowed",
+            login: e,
+            hash: cur.options.fhash
+        }, {
+            onDone: function(e) {
+                e ? (show("restore_roll_back_link"), hide("try_to_submit_wrapper")) : Restore.fixClassicSubmitForm()
+            },
+            onFail: function() {
+                Restore.fixClassicSubmitForm()
+            }
+        })
+    },
+    fixClassicSubmitForm: function() {
+        hide("try_to_submit_wrapper"), hide("restore_roll_back_link"), show("about_old_password_wrapper"), show("submit_wrapper")
+    },
     submitRequest: function() {
         var e, o, r, t, n, s = ge("submitBtn"),
             i = cur.options.request_type;
@@ -367,30 +388,37 @@ var Restore = {
         var r = ge("restore_roll_" + e);
         removeClass(r, "restore_roll_hidden"), addClass(r, "_restore_roll_active")
     },
-    checkIndependentRestore: function() {
-        if (!cur.options || !cur.options.can_restore_independently) return void Restore.changeFormStep("phones", "photo");
-        var e = (val("old_phone")
+    checkIndependentRestore: function(e, o) {
+        if (!cur.options || !cur.options.can_restore_independently) return void o();
+        var r = (val("old_phone")
                 .replace(/[^0-9]/g, ""), val("phone")
                 .replace(/[^0-9]/g, "")),
-            o = val("new_phone")
+            t = val("new_phone")
             .replace(/[^0-9]/g, "");
-        return o ? void Restore.changeFormStep("phones", "back_link") : (e || Restore.changeFormStep("phones", "photo"), lockButton(geByClass1("flat_button", ge(
-            "restore_roll_button_phones"))), void ajax.post("restore", {
-            act: "check_independent_restore_allowed",
-            phone: e,
-            hash: cur.options.fhash
-        }, {
-            onDone: function(e) {
-                e ? Restore.changeFormStep("phones", "back_link") : Restore.changeFormStep("phones", "photo")
-            },
-            onFail: function() {
-                Restore.changeFormStep("phones", "photo")
-            }
-        }))
+        return t ? void e() : (r || Restore.changeFormStep("phones", "photo"), lockButton(geByClass1("flat_button", ge("restore_roll_button_phones"))), void ajax.post(
+            "restore", {
+                act: "check_independent_restore_allowed",
+                phone: r,
+                hash: cur.options.fhash
+            }, {
+                onDone: function(r) {
+                    r ? e() : o()
+                },
+                onFail: function() {
+                    o()
+                }
+            }))
+    },
+    _phoneIndependentRestoreSuccess: function() {
+        Restore.changeFormStep("phones", "back_link")
+    },
+    _phoneIndependentRestoreFail: function() {
+        Restore.changeFormStep("phones", "photo")
     },
     changeFormStep: function(e, o) {
         if (Restore.checkRoll(e)) {
-            if (Restore.fillRollShort(e), "phones" == e && "independency_check" == o) return Restore.checkIndependentRestore(), !1;
+            if (Restore.fillRollShort(e), "phones" == e && "independency_check" == o) return Restore.checkIndependentRestore(Restore._phoneIndependentRestoreSuccess,
+                Restore._phoneIndependentRestoreFail), !1;
             var r = ge("restore_roll_" + e);
             removeClass(r, "_restore_roll_active"), re("restore_roll_button_" + e);
             var t = ge("restore_roll_" + o);

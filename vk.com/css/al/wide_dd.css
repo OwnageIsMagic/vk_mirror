@@ -123,6 +123,7 @@ div.wdd.wdd_focused.wdd_toup {
     padding: 8px 12px;
     font-size: 12.5px;
     box-sizing: border-box;
+    line-height: 15px;
     min-height: 50px;
     _height: 50px
 }

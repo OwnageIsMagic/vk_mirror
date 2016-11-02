@@ -42,8 +42,9 @@ body.dev #new_ticket {
 }
 
 .tickets_new_wrap {
-    margin: 0px 50px;
-    padding: 35px 0 30px
+    margin: 0 auto;
+    padding: 35px 0 30px;
+    width: 695px
 }
 
 .tickets_new_wrap.tickets_new_wrap_nopad {

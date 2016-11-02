@@ -1385,7 +1385,7 @@ Tickets = {
             hash: a
         }), hide(geByClass1("help_table_question_rated_additional", o)), show(geByClass1("help_table_question__rated_final", o)), (2 == t || cur.isFaqTutorial) && (cur
             .askQuestion.permission ? Tickets.tryAskQuestion(function() {
-                Tickets.goToForm(e, "dislike")
+                Tickets.goToForm(e, "dislike", i)
             }) : cur.isFaqTutorial && 2 != t || (hide(geByClass1("help_table_question__rated_final__t", o)), show(geByClass1("help_table_question__rated_no_perm", o)))
         )
     },
@@ -1596,7 +1596,8 @@ Tickets = {
                 }), t.appendChild(a), hide(a)), ajax.post("support", {
                     act: "load_faq_suggests",
                     q: e,
-                    section: cur.section
+                    section: cur.section,
+                    union_id: nav.objLoc.union_id
                 }, {
                     cache: 1,
                     onDone: function(i) {
@@ -1617,20 +1618,23 @@ Tickets = {
         if (t = trim(t), t || "faqs" == nav.objLoc.act) {
             var a = {
                 0: cur.objLoc,
-                act: "faqs"
+                act: cur.faqsAct
             };
             t && (a.q = t), nav.go(a)
         }
     },
-    goToForm: function(e, t) {
-        var a = "";
-        if (e) a += "&id=" + e;
+    goToForm: function(e, t, a) {
+        var i = {
+            0: "support",
+            act: a
+        };
+        if (e) i.id = e;
         else {
-            var i = uiSearch.getFieldEl("faq_search_form"),
-                o = "";
-            i && (o = i.value.trim(), o && (a += "&title=" + encodeURIComponent(o)))
+            var o = uiSearch.getFieldEl("faq_search_form"),
+                s = "";
+            o && (s = o.value.trim(), s && (i.title = s))
         }
-        return t && (a += "&from=" + t), nav.go("support?act=new" + a), !1
+        return t && (i.from = t), nav.go(i), !1
     },
     listScrollToQuestion: function(e) {
         var t = null;

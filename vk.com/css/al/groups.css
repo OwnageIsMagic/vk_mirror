@@ -1028,3 +1028,7 @@ a.group_app_button:after {
 #gtop_app_in_groups .gtop_image {
     background: url(/images/community_apps_logo.png) no-repeat 0 0
 }
+
+.group_manage_row {
+    margin-bottom: 8px
+}
