@@ -244,8 +244,17 @@
     margin-bottom: 0
 }
 
-.videocat_row_ugc_popular .video_item,
-.videocat_row_trends .video_item {
+.videocat_row_ugc_popular .video_item {
+    height: auto
+}
+
+.videocat_row_ugc_popular_b {
+    margin-bottom: 0
+}
+
+.videocat_row_ugc_popular_b .video_item,
+.videocat_row_trends .video_item,
+.videocat_row_trends_b .video_item {
     height: auto
 }
 
