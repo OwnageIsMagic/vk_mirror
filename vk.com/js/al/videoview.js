@@ -330,6 +330,9 @@ var Videoview = {
             },
             onLiveViewersCountChange: function(e, i) {
                 window.mvcur && mvcur.mvShown && mvcur.videoRaw == e && Videoview.updateLiveViewersCount(i)
+            },
+            onAdPostStat: function(e, i) {
+                window.Wall && Wall.triggerAdPostStat(e, i)
             }
         },
         cleanUpStoredVSegs: function() {

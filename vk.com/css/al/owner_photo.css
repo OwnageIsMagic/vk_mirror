@@ -58,6 +58,10 @@
     border-radius: 0 0 2px 2px
 }
 
+.owner_photo_cover .owner_photo_additional {
+    display: none
+}
+
 .owner_photo_input_wrap {
     margin: 20px auto;
     text-align: center
@@ -204,4 +208,18 @@
 .owner_photo_cover .tag_frame_handle.s,
 .owner_photo_cover .tag_frame_handle.w {
     display: none!important
+}
+
+.owner_photo_cover .owner_photo_content {
+    padding-bottom: 25px
+}
+
+.owner_photo_cover .owner_photo_desc {
+    padding-bottom: 9px
+}
+
+.owner_photo_cover_image {
+    height: 102px;
+    margin: 44px 0 5px;
+    background: url(/images/svg_icons/groups/cover_advice.svg) no-repeat 50% 0
 }
