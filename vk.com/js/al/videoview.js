@@ -3082,7 +3082,7 @@ window.VideoChat = {
         }
         onLoaded(function() {
             checkMp4(function(o) {
-                if (o && i.no_flv || i.live) VideoInitializer.vkHtml5(e, i);
+                if (o && !i.is_flv || i.live) VideoInitializer.vkHtml5(e, i);
                 else {
                     var t = "/swf/video.swf",
                         a = {

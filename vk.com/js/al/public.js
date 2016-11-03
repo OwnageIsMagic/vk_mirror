@@ -140,8 +140,11 @@ window["public"] = window.Public = {
             pid: cur.options.public_id,
             hash: cur.options.enterHash
         }, {
-            onDone: function(actions, followers, js) {
-                val("page_actions", actions), Public.updateBlock("public_followers", followers), js && eval(js)
+            onDone: function(status, actions, followers, js) {
+                val("page_actions", status);
+                var actionsEl = geByClass1("_page_actions_container");
+                actionsEl && actions && domPN(actionsEl)
+                    .replaceChild(se(actions), actionsEl), Public.updateBlock("public_followers", followers), js && eval(js)
             },
             showProgress: sp,
             hideProgress: hp
@@ -163,8 +166,11 @@ window["public"] = window.Public = {
             pid: cur.options.public_id,
             hash: cur.options.enterHash
         }, {
-            onDone: function(actions, followers, js) {
-                val("page_actions", actions), Public.updateBlock("public_followers", followers), js && eval(js)
+            onDone: function(status, actions, followers, js) {
+                val("page_actions", status);
+                var actionsEl = geByClass1("_page_actions_container");
+                actionsEl && actions && domPN(actionsEl)
+                    .replaceChild(se(actions), actionsEl), Public.updateBlock("public_followers", followers), js && eval(js)
             },
             onFail: function(e) {
                 return e ? (showFastBox({

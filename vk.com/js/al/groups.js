@@ -178,6 +178,12 @@ var Groups = {
             }
         })
     },
+    updateActions: function(o, e, n) {
+        val("page_actions", o);
+        var t = geByClass1("_page_actions_container");
+        t && e && domPN(t)
+            .replaceChild(se(e), t), void 0 !== n && val("group_moder_info", n)
+    },
     enter: function(o, e, n, t, a) {
         var s, i;
         if (o = ge(o), hasClass(o, "flat_button")) s = lockButton.pbind(o), i = unlockButton.pbind(o);
@@ -195,12 +201,11 @@ var Groups = {
             hash: n,
             context: t
         }, {
-            onDone: function(o) {
+            onDone: function(o, e) {
                 if (a) return a();
-                ge("page_actions")
-                    .innerHTML = o, (o ? show : hide)("page_actions");
-                var e = geByClass1("_groups_invite_block");
-                e && slideUp(e, 200), nav.reload({
+                Groups.updateActions(o, e), toggle("page_actions", o);
+                var n = geByClass1("_groups_invite_block");
+                n && slideUp(n, 200), nav.reload({
                     noframe: !0,
                     noscroll: !0
                 })
@@ -241,12 +246,11 @@ var Groups = {
             hash: n,
             context: t
         }, {
-            onDone: function(o) {
+            onDone: function(o, e) {
                 if (a) return a();
-                ge("page_actions")
-                    .innerHTML = o, (o ? show : hide)("page_actions");
-                var e = geByClass1("_groups_invite_block");
-                e && slideUp(e, 200), nav.reload({
+                Groups.updateActions(o, e), toggle("page_actions", o);
+                var n = geByClass1("_groups_invite_block");
+                n && slideUp(n, 200), nav.reload({
                     noframe: !0
                 })
             },

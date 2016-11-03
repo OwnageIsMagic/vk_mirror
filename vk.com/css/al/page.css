@@ -4824,6 +4824,10 @@ textarea.page_poll_export_code {
     height: 30px
 }
 
+.page_cover_info .page_actions {
+    min-width: 203px
+}
+
 .page_cover_info .page_actions_wrap {
     width: 201px
 }
@@ -6534,7 +6538,8 @@ button.wall_block_app_btn {
     margin-top: 10px
 }
 
-.page_photo .module_body>.flat_button:first-child {
+.page_photo .module_body>.flat_button:first-child,
+.page_photo .page_actions_expanded:first-child {
     margin-top: 0
 }
 
