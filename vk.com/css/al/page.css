@@ -410,6 +410,10 @@
     display: inline
 }
 
+.page_info_wrap .post_fixed .wall_fixed_label {
+    display: none
+}
+
 .wall_module .dld {
     padding: 22px 25px;
     color: #939393
@@ -4421,6 +4425,10 @@ h2.page_name {
     display: block
 }
 
+.page_current_info:empty {
+    padding: 0
+}
+
 .no_current_info {
     color: #939393
 }
@@ -4847,6 +4855,10 @@ textarea.page_poll_export_code {
 .page_cover_info .page_status_editor {
     left: 47px;
     right: 239px
+}
+
+.page_cover_info h2.page_name:last-child {
+    line-height: 42px
 }
 
 .page_cover_image {
