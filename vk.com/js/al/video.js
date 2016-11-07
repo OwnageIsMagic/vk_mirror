@@ -833,12 +833,13 @@ var Video = {
             i.innerHTML = e
         }
     },
-    onVideoMove: function(e, o, i, t) {
+    onVideoMove: function(e, o, i, t, r) {
         return showBox("/al_video.php", {
             act: "video_playlists_box",
             target_id: cur.getOwnerId(),
             oid: i,
-            vid: t
+            vid: t,
+            hash: r
         }, {
             dark: 1
         }), cancelEvent(e)

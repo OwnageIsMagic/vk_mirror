@@ -4858,7 +4858,9 @@ textarea.page_poll_export_code {
 }
 
 .page_cover_info h2.page_name:last-child {
-    line-height: 42px
+    display: table-cell;
+    vertical-align: middle;
+    height: 42px
 }
 
 .page_cover_image {

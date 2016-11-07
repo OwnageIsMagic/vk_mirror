@@ -471,7 +471,8 @@ var Videoview = {
             showBox("al_video.php?act=add_playlist_box", {
                 oid: mvcur.mvData.oid,
                 vid: mvcur.mvData.vid,
-                only_private: onlyPrivate ? 1 : 0
+                only_private: onlyPrivate ? 1 : 0,
+                hash: mvcur.mvData.addedVideoHash
             }, {
                 params: {
                     dark: 1
