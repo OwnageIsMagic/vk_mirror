@@ -633,6 +633,7 @@ var Page = {
                 ls.set('posts_seen', seen);
                 ls.set('posts_seen_modules', modules);
                 ls.set('posts_extras', extras);
+                feed.longView.saveToLocalStorage();
             }
         },
         getPostModuleCode: function(module) {
@@ -713,6 +714,9 @@ var Page = {
             }
             if (!data.length) return;
             if (!vk.id) return Page.postsClear();
+
+            var longViewData = feed.longView.getDataForSeenRequest();
+            longViewData && data.push(longViewData);
 
             ajax.post('al_page.php', {
                 act: 'seen',
