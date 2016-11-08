@@ -17,6 +17,7 @@
 .chat_tab_close:after,
 .chat_tab_imgcont.online:after,
 .chats_sp,
+.emoji_cats_title_helper:after,
 .emoji_smile_icon,
 .emoji_sprite,
 .fc_chronicle_icon,
@@ -1748,6 +1749,59 @@ div.chat_tab_img {
     transition: all 200ms ease-in-out
 }
 
+.emoji_cat_title_helper {
+    width: 100%;
+    height: 30px;
+    position: relative;
+    z-index: 11
+}
+
+.emoji_cat_title {
+    color: #939393;
+    letter-spacing: 0.2px;
+    line-height: 14px;
+    padding: 10px 5px 6px;
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box
+}
+
+.emoji_cat_title_fix .emoji_cat_title,
+.emoji_cats_title_helper {
+    position: absolute;
+    top: 0px;
+    left: 0px
+}
+
+.emoji_cats_title_helper {
+    width: 100%;
+    box-sizing: border-box;
+    height: 30px;
+    z-index: 20;
+    padding: 0px 4px;
+    border-radius: 4px 4px 0px 0px;
+    pointer-events: none
+}
+
+.emoji_cats_title_helper .emoji_cat_title {
+    padding-bottom: 0px
+}
+
+.emoji_cats_title_helper:after {
+    content: '';
+    height: 10px;
+    width: 100%;
+    position: absolute;
+    bottom: -4px;
+    left: 0px;
+    background: url(/images/emoji_sprite.png?11) 0 -29px
+}
+
+.emoji_cats_title_helper:empty:after {
+    opacity: 0;
+    filter: alpha(opacity=0)
+}
+
 .emoji_smile_cont {
     display: inline-block;
     position: relative;
@@ -1805,7 +1859,7 @@ div.chat_tab_img {
 }
 
 .emoji_scroll {
-    padding: 2px 0px
+    padding: 0px 0px 2px
 }
 
 .emoji_tmp_textarea {
@@ -1900,12 +1954,16 @@ div.chat_tab_img {
 }
 
 .emoji_list_cont {
-    padding: 2px 4px
+    padding: 0px 4px 2px
 }
 
 .emoji_tab_icon {
     width: 18px;
     height: 19px
+}
+
+.emoji_stickers_spliter:first-child {
+    margin-top: 5px
 }
 
 .emoji_sticker_item {

@@ -8054,6 +8054,7 @@ function showWriteMessageBox(e, id) {
         cache: 1
     }, e);
     if (box) cancelEvent(e);
+    window.WriteBox && WriteBox.extractEmoji();
     return !box;
 }
 
@@ -10548,6 +10549,7 @@ function IframeLoader() {
             body.removeChild(getImg(i)
                 .parentNode);
         }
+        return img;
     }
 
     function abort() {
