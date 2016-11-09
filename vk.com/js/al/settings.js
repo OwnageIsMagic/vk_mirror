@@ -2,8 +2,8 @@ var Settings = {
     MAX_LEFT_GROUPS: 5,
     go: function(e, t) {
         var s = Settings.getsect(),
-            n = checkEvent(t);
-        return n === !1 && (s.className = "", e.parentNode.className = "active_link"), nav.go(e, t)
+            o = checkEvent(t);
+        return o === !1 && (s.className = "", e.parentNode.className = "active_link"), nav.go(e, t)
     },
     getsect: function() {
         for (var e = ge("settings_filters")
@@ -21,14 +21,14 @@ var Settings = {
     toggleBlock: function(e, t) {
         if (e && e.target) {
             var s = e.target;
-            n = hasClass(s, "settings_line") ? s : gpeByClass("settings_line", s)
+            o = hasClass(s, "settings_line") ? s : gpeByClass("settings_line", s)
         } else {
             e = ge(e);
             var s = geByClass1("settings_right_control", e),
-                n = hasClass(e, "settings_line") ? e : gpeByClass("settings_line", e)
+                o = hasClass(e, "settings_line") ? e : gpeByClass("settings_line", e)
         }
-        n && geByClass1("settings_change_block", n) && (!hasClass(n, "unfolded") || hasClass(s, "settings_right_control")) && (cur.changingSetting && cur.changingSetting !=
-            n && (removeClass(cur.changingSetting, "unfolded"), window.tooltips && tooltips.hideAll()), toggleClass(n, "unfolded"), cur.changingSetting = n, t &&
+        o && geByClass1("settings_change_block", o) && (!hasClass(o, "unfolded") || hasClass(s, "settings_right_control")) && (cur.changingSetting && cur.changingSetting !=
+            o && (removeClass(cur.changingSetting, "unfolded"), window.tooltips && tooltips.hideAll()), toggleClass(o, "unfolded"), cur.changingSetting = o, t &&
             elfocus(t))
     },
     savePrivacyKey: function(e) {
@@ -40,10 +40,10 @@ var Settings = {
         };
         if ("search_access" == e || "updates" == e) {
             if ("updates" == e) {
-                var n = Privacy.getValue(e);
-                if ("0" != n.substr(0, 1)) {
-                    var o = n.substr(2);
-                    o.length || (ge("privacy_header")
+                var o = Privacy.getValue(e);
+                if ("0" != o.substr(0, 1)) {
+                    var n = o.substr(2);
+                    n.length || (ge("privacy_header")
                         .innerHTML = ge("privacy_edit_updates")
                         .innerHTML = getLang("settings_updates_no_news"))
                 }
@@ -76,9 +76,9 @@ var Settings = {
     },
     moreSearchBoxLoaded: function(e, t, s) {
         cur.searchBoxParams.offset = t;
-        for (var n = cur.boxRows, o = ce("div", {
+        for (var o = cur.boxRows, n = ce("div", {
                 innerHTML: e
-            }); o.firstChild;) n.appendChild(o.firstChild);
+            }); n.firstChild;) o.appendChild(n.firstChild);
         toggle(cur.boxMoreLink, s), s && (cur.loading = 1, ajax.post(cur.searchBoxAddress, cur.searchBoxParams, {
             onDone: function() {
                 2 == cur.loading ? Settings.moreSearchBoxLoaded.apply(window, arguments) : cur.loading = !1
@@ -90,8 +90,8 @@ var Settings = {
         }))
     },
     moreSearchBox: function(e, t, s) {
-        var n = cur.boxMoreLink;
-        if ((e || isVisible(n) && !hasClass(n, "loading")) && (!e || s != cur.searchBoxParams.q)) {
+        var o = cur.boxMoreLink;
+        if ((e || isVisible(o) && !hasClass(o, "loading")) && (!e || s != cur.searchBoxParams.q)) {
             if (cur.loading) return void(cur.loading = 2);
             e && (cur.oldBoxParams = {
                 q: cur.searchBoxParams.q,
@@ -100,7 +100,7 @@ var Settings = {
                 q: s,
                 offset: 0
             })), ajax.post(cur.searchBoxAddress, cur.searchBoxParams, {
-                onDone: function(s, n, o, i) {
+                onDone: function(s, o, n, i) {
                     if (e) {
                         if (i) return extend(cur.searchBoxParams, cur.oldBoxParams), val(t, cur.oldBoxParams.q), void(cur.searchBoxFound && cur.searchBoxFound(
                             i));
@@ -113,10 +113,10 @@ var Settings = {
                     return cur.loading = 0, !0
                 },
                 showProgress: function() {
-                    cur.searchBoxParams.offset ? addClass(n, "loading") : uiSearch.showProgress(t)
+                    cur.searchBoxParams.offset ? addClass(o, "loading") : uiSearch.showProgress(t)
                 },
                 hideProgress: function() {
-                    uiSearch.hideProgress(t), removeClass(n, "loading")
+                    uiSearch.hideProgress(t), removeClass(o, "loading")
                 }
             })
         }
@@ -133,11 +133,11 @@ var Settings = {
         e && (e = e.toLowerCase());
         var t = ge("settings_bl_empty"),
             s = getLang("settings_blacklist_not_found_by_query"),
-            n = ge("settings_bl_list"),
-            o = geByClass("settings_bl_row", n),
+            o = ge("settings_bl_list"),
+            n = geByClass("settings_bl_row", o),
             i = 0;
-        for (var a in o) {
-            var r = o[a];
+        for (var a in n) {
+            var r = n[a];
             if (e) {
                 var c = geByClass1("settings_bl_name", r);
                 c = val(geByTag1("a", c))
@@ -160,14 +160,14 @@ var Settings = {
                 curBox()
                     .emit("success", s), curBox()
                     .hide();
-                var n = ge("settings_bl_summary");
-                e && -1 != e && n && (n.innerHTML = langNumeric(e, "%s", !0));
-                var o = ce("div", {
+                var o = ge("settings_bl_summary");
+                e && -1 != e && o && (o.innerHTML = langNumeric(e, "%s", !0));
+                var n = ce("div", {
                         innerHTML: t
                     })
                     .firstChild,
                     i = ge("settings_bl_list");
-                re(o.id), i && (i.insertBefore(o, i.firstChild), show("settings_bl_noempty"), hide("settings_bl_empty"), showMsg("settings_bl_result", s,
+                re(n.id), i && (i.insertBefore(n, i.firstChild), show("settings_bl_noempty"), hide("settings_bl_empty"), showMsg("settings_bl_result", s,
                     "ok_msg", !0))
             },
             onFail: function(e) {
@@ -197,9 +197,9 @@ var Settings = {
             hash: t,
             from: "settings"
         }, {
-            onDone: function(n) {
-                n && (ge("settings_bl_summary")
-                    .innerHTML = langNumeric(n, "%s", !0)), hide("settings_bl_label" + e), s.onclick = function() {
+            onDone: function(o) {
+                o && (ge("settings_bl_summary")
+                    .innerHTML = langNumeric(o, "%s", !0)), hide("settings_bl_label" + e), s.onclick = function() {
                     return Settings.delFromBl(e, t, s), !1
                 }, s.innerHTML = getLang("settings_remove")
             },
@@ -226,9 +226,9 @@ var Settings = {
             hash: t,
             from: "settings"
         }, {
-            onDone: function(n) {
+            onDone: function(o) {
                 ge("settings_bl_summary")
-                    .innerHTML = n ? langNumeric(n, "%s", !0) : "", setStyle("settings_bl_label" + e, "display", "inline"), s.onclick = function() {
+                    .innerHTML = o ? langNumeric(o, "%s", !0) : "", setStyle("settings_bl_label" + e, "display", "inline"), s.onclick = function() {
                         return Settings.addToBl(e, t, s), !1
                     }, s.innerHTML = getLang("settings_restore_blacklist")
             },
@@ -249,7 +249,7 @@ var Settings = {
         })
     },
     delTopFromBl: function(e, t, s) {
-        var n = ce("img", {
+        var o = ce("img", {
             src: "/images/upload.gif"
         });
         ajax.post("al_settings.php", {
@@ -261,16 +261,16 @@ var Settings = {
             onDone: function(s) {
                 s && (ge("settings_bl_summary")
                     .innerHTML = s ? langNumeric(s, "%s", !0) : ""), setStyle("settings_bl_label" + e, "display", "inline");
-                var n = geByTag1("a", geByClass1("settings_bl_action", ge("settings_bl_row" + e)));
-                n.onclick = function() {
-                    return Settings.addToBl(e, t, n), !1
-                }, n.innerHTML = getLang("settings_restore_blacklist"), hide("settings_bl_result")
+                var o = geByTag1("a", geByClass1("settings_bl_action", ge("settings_bl_row" + e)));
+                o.onclick = function() {
+                    return Settings.addToBl(e, t, o), !1
+                }, o.innerHTML = getLang("settings_restore_blacklist"), hide("settings_bl_result")
             },
             showProgress: function() {
-                s.parentNode.replaceChild(n, s)
+                s.parentNode.replaceChild(o, s)
             },
             hideProgress: function() {
-                n.parentNode.replaceChild(s, n)
+                o.parentNode.replaceChild(s, o)
             }
         })
     },
@@ -285,13 +285,13 @@ var Settings = {
         }), t.smsenabled = isChecked("smsenabled") ? 1 : 0, isChecked("daytime") ? (t.daytime_from = ge("daytime_from")
             .value, t.daytime_to = ge("daytime_to")
             .value) : (t.daytime_from = 0, t.daytime_to = 0), val("settings_notify_sms_result", ""), ajax.post("al_settings.php", t, {
-            onDone: function(t, s, n) {
-                unlockButton(e), s && n ? showFastBox({
+            onDone: function(t, s, o) {
+                unlockButton(e), s && o ? showFastBox({
                     title: t,
                     dark: 1,
                     bodyStyle: "padding: 20px; line-height: 160%;"
                 }, s, getLang("settings_subscribe_to_service_btn"), function() {
-                    window.open(n), curBox()
+                    window.open(o), curBox()
                         .hide()
                 }, getLang("box_cancel"), function() {
                     checkbox("smsenabled", 0), Settings.smsNotifyCheck(), Settings.saveSmsNotify(), curBox()
@@ -363,14 +363,14 @@ var Settings = {
     updateInstantSounds: function(e) {
         ls.set("sound_notify_off", isChecked(e) ? 0 : 1), uiPageBlock.showSaved(e)
     },
-    smsUnsubscribe: function(e, t, s, n) {
-        var o = '<a href="' + e.href + '">' + e.innerHTML + "</a>",
+    smsUnsubscribe: function(e, t, s, o) {
+        var n = '<a href="' + e.href + '">' + e.innerHTML + "</a>",
             i = 1;
         if (0 > t) {
-            i = n ? 3 : 2;
-            var a = n ? getLang("settings_confirm_unsubscribe_event_msg") : getLang("settings_confirm_unsubscribe_group_msg")
+            i = o ? 3 : 2;
+            var a = o ? getLang("settings_confirm_unsubscribe_event_msg") : getLang("settings_confirm_unsubscribe_group_msg")
         } else var a = getLang("settings_confirm_unsubscribe_fan_msg");
-        return a = a.replace("{name}", o), showFastBox({
+        return a = a.replace("{name}", n), showFastBox({
             title: getLang("settings_confirm_unsubscribe_title"),
             dark: 1,
             bodyStyle: "padding: 20px; line-height: 160%;"
@@ -437,34 +437,34 @@ var Settings = {
         var t = geByClass1("olist", e.bodyNode),
             s = geByClass1("summary_tabs", e.bodyNode);
         setStyle(s, "display", "inline-block");
-        var n = getSize(s)[0] + parseInt(getStyle(s, "marginLeft")) + parseInt(getStyle(s, "marginRight"));
-        n > 450 && e.setOptions({
-            width: Math.ceil(n)
+        var o = getSize(s)[0] + parseInt(getStyle(s, "marginLeft")) + parseInt(getStyle(s, "marginRight"));
+        o > 450 && e.setOptions({
+            width: Math.ceil(o)
         }), setStyle(s, "display", null), addEvent(t, "scroll", this.onMenuBoxScroll.pbind(e, t)), this.onMenuBoxScroll(e, t)
     },
     onMenuBoxScroll: function(e, t) {
         var s = domPN(e.bodyNode),
-            n = t.scrollHeight,
-            o = t.scrollTop,
+            o = t.scrollHeight,
+            n = t.scrollTop,
             i = t.offsetHeight || t.clientHeight;
-        toggleClass(s, "olist_topsh", o > 0), toggleClass(s, "olist_botsh", n > o + i)
+        toggleClass(s, "olist_topsh", n > 0), toggleClass(s, "olist_botsh", o > n + i)
     },
     updateMenuBoxCount: function(e) {
         var t = curBox(),
             s = cur.menuSettings[e] || {},
-            n = Settings.getAdminSelectShowCt(s),
-            o = "";
-        (1 == e || 2 == e) && (o = '<span class="settings_menu_box_counter">' + getLang("settings_admin_groups_left")
-            .replace("{count}", n)
-            .replace("{amt}", Settings.MAX_LEFT_GROUPS) + "</span>"), t.setControlsText(o)
+            o = Settings.getAdminSelectShowCt(s),
+            n = "";
+        (1 == e || 2 == e) && (n = '<span class="settings_menu_box_counter">' + getLang("settings_admin_groups_left")
+            .replace("{count}", o)
+            .replace("{amt}", Settings.MAX_LEFT_GROUPS) + "</span>"), t.setControlsText(n)
     },
     toggleMenuBoxRow: function(e, t, s) {
-        var n = cur.menuSettings[t] || {},
-            o = Settings.getAdminSelectShowCt(n),
-            i = n[s];
+        var o = cur.menuSettings[t] || {},
+            n = Settings.getAdminSelectShowCt(o),
+            i = o[s];
         return curBox()
-            .changed = !0, (1 == t || 2 == t) && (toggleClass(gpeByClass("olist_section", e), "settings_menu_rows_disabled", !i && o >= Settings.MAX_LEFT_GROUPS - 1), !i &&
-                o >= Settings.MAX_LEFT_GROUPS) ? !1 : (toggleClass(e, "olist_item_wrap_on", !i), n[s] = i ? 0 : 1, Settings.updateMenuBoxCount(t), !1)
+            .changed = !0, (1 == t || 2 == t) && (toggleClass(gpeByClass("olist_section", e), "settings_menu_rows_disabled", !i && n >= Settings.MAX_LEFT_GROUPS - 1), !i &&
+                n >= Settings.MAX_LEFT_GROUPS) ? !1 : (toggleClass(e, "olist_item_wrap_on", !i), o[s] = i ? 0 : 1, Settings.updateMenuBoxCount(t), !1)
     },
     switchMenuBoxSection: function(e, t) {
         var s = curBox();
@@ -474,7 +474,7 @@ var Settings = {
             .scrollTop = 0, Settings.updateMenuBoxCount(t)
     },
     saveMenu: function(e, t) {
-        for (var s = curBox(), n = [], o = [], i = [], a = [], r = {
+        for (var s = curBox(), o = [], n = [], i = [], a = [], r = {
                 hash: e,
                 act: "a_change_services"
             }, c = 0; 3 >= c; c++) {
@@ -482,10 +482,10 @@ var Settings = {
             each(l, function(e, t) {
                 switch (c) {
                     case 1:
-                        t && o.push(e);
+                        t && n.push(e);
                         break;
                     case 2:
-                        i.push(e), t && n.push(e);
+                        i.push(e), t && o.push(e);
                         break;
                     case 3:
                         t || a.push(e);
@@ -495,7 +495,7 @@ var Settings = {
                 }
             })
         }
-        i.length && (r.apps_all = i.join(","), r.apps_on = n.join(",")), r.groups_list = o.join(","), r.service_hidden = a.join(","), ajax.post("al_settings.php", r, {
+        i.length && (r.apps_all = i.join(","), r.apps_on = o.join(",")), r.groups_list = n.join(","), r.service_hidden = a.join(","), ajax.post("al_settings.php", r, {
             onDone: function(e) {
                 geByTag1("ol", ge("side_bar"))
                     .innerHTML = e, window.uiPageBlock && uiPageBlock.showSaved("settings_services"), s.hide(), window.Apps && Apps.updateAddToMenuAction()
@@ -575,6 +575,18 @@ var Settings = {
             act: "a_change_autostart_video",
             hash: cur.options.video_autostart_hash,
             video_autostart: isChecked(ge("settings_video_autostart")) ? 1 : 0
+        }, {
+            onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("cposts")
+        })
+    },
+    videoadsCheck: function() {
+        clearTimeout(cur.videoadsUpdateTO), cur.videoadsUpdateTO = setTimeout(Settings.videoadsSubmit, 200)
+    },
+    videoadsSubmit: function() {
+        ajax.post("/al_settings.php", {
+            act: "a_change_ads_video",
+            hash: cur.options.video_ads_hash,
+            video_ads: isChecked(ge("settings_video_ads")) ? 1 : 0
         }, {
             onDone: window.uiPageBlock && uiPageBlock.showSaved.pbind("cposts")
         })
@@ -669,13 +681,13 @@ var Settings = {
         }
     },
     OTPAuthClearTrusted: function(e, t, s) {
-        function n() {
+        function o() {
             if (!t && cur.options.otp_reset_hash) return cur.onReLoginDoneCallback = function() {
                 ge("settings_reset_sessions_link")
                     .parentNode.innerHTML = '<div class="settings_labeled_notice">' + getLang("setting_all_sessions_reset") + "</div>"
             }, Settings.resetAllSessions(e, '<input name="otp_reset_hash" value="' + cur.options.otp_reset_hash + '" type="hidden" />', e.getAttribute("complete"),
-                cur.options.logout_hash), void(o && o.hide());
-            var n = ce("img", {
+                cur.options.logout_hash), void(n && n.hide());
+            var o = ce("img", {
                     src: "/images/upload" + (window.devicePixelRatio >= 2 ? "_2x" : "") + ".gif"
                 }, {
                     width: 32
@@ -689,23 +701,23 @@ var Settings = {
             }, {
                 frame: i,
                 onDone: function(t) {
-                    o && o.hide(), e.parentNode.innerHTML = '<div class="settings_labeled_notice">' + e.getAttribute("complete") + "</div>"
+                    n && n.hide(), e.parentNode.innerHTML = '<div class="settings_labeled_notice">' + e.getAttribute("complete") + "</div>"
                 },
                 showProgress: function() {
-                    o ? o.showProgress() : e.parentNode.replaceChild(n, e)
+                    n ? n.showProgress() : e.parentNode.replaceChild(o, e)
                 },
                 hideProgress: function() {
-                    o ? o.hideProgress() : n.parentNode.replaceChild(e, n)
+                    n ? n.hideProgress() : o.parentNode.replaceChild(e, o)
                 }
             })
         }
-        var o = !1,
+        var n = !1,
             i = e.getAttribute("confirm");
-        i ? (i = i.split("<!!>"), o = showFastBox({
+        i ? (i = i.split("<!!>"), n = showFastBox({
             title: i[0],
             dark: 1,
             bodyStyle: "padding: 20px;"
-        }, i[1], i.length > 2 ? i[2] : getLang("box_yes"), n)) : n()
+        }, i[1], i.length > 2 ? i[2] : getLang("box_yes"), o)) : o()
     },
     OTPAppPasswords: function() {
         return showBox("al_settings.php", {
@@ -761,13 +773,13 @@ var Settings = {
     },
     passwordDone: function(e, t) {
         re(cur.pwchFrame), unlockButton(cur.pwchDestroy), cur.pwchFrame = !1;
-        var s, n = "settings_new_pwd";
+        var s, o = "settings_new_pwd";
         switch (e) {
             case 1:
                 s = "settings_cant_set_this_password";
                 break;
             case -2:
-                s = "settings_oldpwd_notcorr", n = "settings_old_pwd";
+                s = "settings_oldpwd_notcorr", o = "settings_old_pwd";
                 break;
             case 2:
                 return hide("settings_error_pwd"), val(geByClass1("settings_labeled_text", "chgpass"), getLang("settings_pass_update_just_now")), val("settings_old_pwd",
@@ -781,31 +793,31 @@ var Settings = {
             default:
                 s = "settings_cant_change_password"
         }
-        cur.pwchCaptchaBox && (cur.pwchCaptchaBox.hide(), cur.pwchCaptchaBox = !1), Settings.showError(getLang(s), "pwd"), notaBene(n)
+        cur.pwchCaptchaBox && (cur.pwchCaptchaBox.hide(), cur.pwchCaptchaBox = !1), Settings.showError(getLang(s), "pwd"), notaBene(o)
     },
     passwordSubmit: function(e, t, s) {
-        var n = val("settings_old_pwd"),
-            o = val("settings_new_pwd"),
+        var o = val("settings_old_pwd"),
+            n = val("settings_new_pwd"),
             i = val("settings_confirm_pwd"),
             a = ge("settings_pwd_tt_place")
             .tt;
         if (!cur.pwchFrame) {
-            if (!n) return void notaBene("settings_old_pwd");
-            if (!o) return void notaBene("settings_new_pwd");
+            if (!o) return void notaBene("settings_old_pwd");
+            if (!n) return void notaBene("settings_new_pwd");
             if (!i) return void notaBene("settings_confirm_pwd");
             if (a && a.hide({
                     fasthide: !0
-                }), o.match(/\s/)) return Settings.showError(getLang("settings_pwd_bad"), "pwd"), notaBene("settings_new_pwd"), void(a && setTimeout(a.show, 10));
-            if (o.length < 6) return Settings.showError(getLang("settings_pwd_bad"), "pwd"), notaBene("settings_new_pwd"), void(a && setTimeout(a.show, 10));
-            if (i != o) return Settings.showError(getLang("settings_newpwd_notcorr"), "pwd"), notaBene("settings_confirm_pwd"), void(a && setTimeout(a.show, 10));
+                }), n.match(/\s/)) return Settings.showError(getLang("settings_pwd_bad"), "pwd"), notaBene("settings_new_pwd"), void(a && setTimeout(a.show, 10));
+            if (n.length < 6) return Settings.showError(getLang("settings_pwd_bad"), "pwd"), notaBene("settings_new_pwd"), void(a && setTimeout(a.show, 10));
+            if (i != n) return Settings.showError(getLang("settings_newpwd_notcorr"), "pwd"), notaBene("settings_confirm_pwd"), void(a && setTimeout(a.show, 10));
             cur.pwchDestroy || cur.destroy.push(function(e) {
                 re(e.pwchFrame)
             }), cur.pwchDestroy = e, curBox() || lockButton(cur.pwchDestroy);
             var r = {
                 act: "changepass",
                 _origin: locProtocol + "//" + locHost,
-                pass: n,
-                new_pass: o
+                pass: o,
+                new_pass: n
             };
             t && s && (r.captcha_sid = t, r.captcha_key = s), r.phash = cur.options.phash, cur.pwchDone = Settings.passwordDone, cur.pwchFrame = utilsNode.appendChild(ce(
                 "iframe", {
@@ -822,18 +834,18 @@ var Settings = {
             if (!s) return void notaBene("settings_new_mail");
             lockButton(e)
         }
-        var n = {
+        var o = {
             act: "a_bind_mail",
             email: s,
             is_new: 1,
             hash: cur.options.mail_hash
         };
         return ge("settings_new_mail")
-            .blur(), hide("settings_error_mail"), ajax.post("al_settings.php", n, {
+            .blur(), hide("settings_error_mail"), ajax.post("al_settings.php", o, {
                 onDone: function(t, s) {
                     if (unlockButton(e), s) {
-                        var n = ge("chgmail");
-                        n.parentNode.replaceChild(se(s), n)
+                        var o = ge("chgmail");
+                        o.parentNode.replaceChild(se(s), o)
                     }
                     ge("settings_new_mail")
                         .value = "", showDoneBox(t, {
@@ -871,16 +883,16 @@ var Settings = {
         })
     },
     reset_sessions: !1,
-    resetAllSessions: function(e, t, s, n) {
+    resetAllSessions: function(e, t, s, o) {
         if (Settings.reset_sessions) return !1;
         Settings.reset_sessions = !0;
-        var o = bodyNode.appendChild(ce("div", {
+        var n = bodyNode.appendChild(ce("div", {
                 innerHTML: '<form action="' + vk.loginscheme + '://login.vk.com/" method="POST" target="reset_sessions_frame">  <input name="_origin" value="' + (
                         locProtocol + "//" + locHost) + '" type="hidden" />  <input name="role" value="al_frame" type="hidden" />  <input name="ip_h" value="' + vk
                     .ip_h + '" type="hidden" />  <input name="reset_hash" value="' + cur.options.reset_hash + '" type="hidden" />' + t +
                     '</form><iframe class="upload_frame" name="reset_sessions_frame"></iframe>'
             })),
-            i = o.firstChild,
+            i = n.firstChild,
             a = i.nextSibling,
             r = ce("img", {
                 src: "/images/upload" + (window.devicePixelRatio >= 2 ? "_2x" : "") + ".gif"
@@ -890,8 +902,8 @@ var Settings = {
         return window.onReLoginDone = function() {
                 try {
                     var t = a.contentWindow.location.href;
-                    if (t.match(/&hash=/) && !t.match(/&hash=[a-z0-9]+/)) return location.href = base_domain + "login.php?op=logout&hash=" + n, !1;
-                    re(o)
+                    if (t.match(/&hash=/) && !t.match(/&hash=[a-z0-9]+/)) return location.href = base_domain + "login.php?op=logout&hash=" + o, !1;
+                    re(n)
                 } catch (i) {
                     return
                 }
@@ -1092,8 +1104,8 @@ var Settings = {
             }
         }), !1
     },
-    deletePaymentMethod: function(e, t, s, n) {
-        if (!n) return void(cur.confirmBox = showFastBox({
+    deletePaymentMethod: function(e, t, s, o) {
+        if (!o) return void(cur.confirmBox = showFastBox({
             title: cur.lang.global_action_confirmation,
             dark: 1,
             forceNoBtn: 1,
@@ -1101,17 +1113,17 @@ var Settings = {
         }, cur.lang.settings_delete_payment_method_confirm, getLang("global_delete"), function() {
             Settings.deletePaymentMethod(e, t, s, !0)
         }, getLang("global_cancel")));
-        var o = e.parentNode;
+        var n = e.parentNode;
         return ajax.post("al_payments.php", {
             act: "a_del_instant_method",
             type: t,
             hash: s
         }, {
             onDone: function(e) {
-                o.innerHTML = e
+                n.innerHTML = e
             },
             onDone: function(e) {
-                return o.innerHTML = e, !0
+                return n.innerHTML = e, !0
             },
             showProgress: function() {
                 cur.confirmBox.showProgress()
@@ -1124,56 +1136,55 @@ var Settings = {
     showNextPaymentsHistory: function(e, t) {
         if (!buttonLocked(e)) {
             lockButton(e);
-            var s, n;
+            var s, o;
             return t ? (s = {
                 act: "a_transfer_history",
                 offset: cur.historyOffset
-            }, n = "settings_transfer_history") : (s = {
+            }, o = "settings_transfer_history") : (s = {
                 act: "a_votes_history",
                 offset: cur.historyOffset
-            }, n = "settings_votes_history"), ajax.post("al_settings.php", s, {
+            }, o = "settings_votes_history"), ajax.post("al_settings.php", s, {
                 onDone: function(t, s) {
-                    var o = ge(n)
+                    var n = ge(o)
                         .tBodies[0];
                     if (t)
                         if (unlockButton(e), cur.historyOffset += 100, browser.msie) {
                             var a = se("<table>" + t + "</table>"),
                                 r = geByTag("tr", a);
-                            for (i in r) 1 == r[i].nodeType && o.appendChild(r[i])
-                        } else o.insertAdjacentHTML("beforeEnd", t);
-                        (!t || s) && (addClass(o.lastChild, "settings_votes_history_last"), hide(e))
+                            for (i in r) 1 == r[i].nodeType && n.appendChild(r[i])
+                        } else n.insertAdjacentHTML("beforeEnd", t);
+                        (!t || s) && (addClass(n.lastChild, "settings_votes_history_last"), hide(e))
                 }
             }), !1
         }
     },
     switchPaymentsHistoryTab: function(e, t, s) {
         if (checkEvent(s)) return !0;
-        var n = clone(nav.objLoc);
-        return uiTabs.switchTab(e), "transfer" === t ? (hide("settings_votes_history_wrap"), show("settings_transfer_history_wrap"), n.section = t) : (hide(
-            "settings_transfer_history_wrap"), show("settings_votes_history_wrap"), delete n.section), nav.setLoc(n), !1
+        var o = clone(nav.objLoc);
+        return uiTabs.switchTab(e), "transfer" === t ? (hide("settings_votes_history_wrap"), show("settings_transfer_history_wrap"), o.section = t) : (hide(
+            "settings_transfer_history_wrap"), show("settings_votes_history_wrap"), delete o.section), nav.setLoc(o), !1
     },
-    moneyTransferCancel: function(e, t, s, n, o) {
+    moneyTransferCancel: function(e, t, s, o, n) {
         var i = domClosest("_row", e),
             a = geByClass1("_status", i);
-        return o ? (2 !== o && (addClass(i, "settings_history_row_progress"), cur.confirmBox && cur.confirmBox.hide()), void ajax.post(
+        return n ? (2 !== n && (addClass(i, "settings_history_row_progress"), cur.confirmBox && cur.confirmBox.hide()), void ajax.post(
             "al_payments.php?act=a_cancel_money_transfer", {
                 tx_id: t,
                 hash: s
             }, {
                 onDone: function(e, r) {
-                    return 0 === e ? (2 !== o && (val(a, getLang("settings_transfer_status_cancelling")), removeClass(a, "settings_transfer_receive")), void setTimeout(
-                        Settings.moneyTransferCancel.pbind(i, t, s, n, 2), 2e3)) : (removeClass(i, "settings_history_row_progress"), val(a, getLang(
-                        "settings_transfer_status_cancelled")), removeClass(a, "settings_transfer_receive"), addClass(a,
-                        "settings_transfer_status_cancelled"), void TopNotifier.invalidate())
+                    return 0 === e ? (2 !== n && (val(a, getLang("settings_transfer_status_cancelling")), removeClass(a, "settings_transfer_receive")), void setTimeout(
+                        Settings.moneyTransferCancel.pbind(i, t, s, o, 2), 2e3)) : (removeClass(i, "settings_history_row_progress"),
+                        val(a, getLang("settings_transfer_status_cancelled")), removeClass(a, "settings_transfer_receive"), addClass(a,
+                            "settings_transfer_status_cancelled"), void TopNotifier.invalidate())
                 },
                 onFail: function(e) {
-                    return removeClass(i, "settings_history_row_progress"),
-                        setTimeout(showFastBox(getLang("global_error"), e)
-                            .hide, 2e3), !0
+                    return removeClass(i, "settings_history_row_progress"), setTimeout(showFastBox(getLang("global_error"), e)
+                        .hide, 2e3), !0
                 }
-            })) : (n ? (confirmText = getLang("settings_transfer_decline_confirm"), confirmBtn = getLang("settings_transfer_decline_btn")) : (confirmText = getLang(
+            })) : (o ? (confirmText = getLang("settings_transfer_decline_confirm"), confirmBtn = getLang("settings_transfer_decline_btn")) : (confirmText = getLang(
             "settings_transfer_cancel_confirm"), confirmBtn = getLang("settings_transfer_cancel_btn")), void(cur.confirmBox = showFastBox(getLang(
-            "global_action_confirmation"), confirmText, confirmBtn, Settings.moneyTransferCancel.pbind(e, t, s, n, 1), getLang("global_cancel"))))
+            "global_action_confirmation"), confirmText, confirmBtn, Settings.moneyTransferCancel.pbind(e, t, s, o, 1), getLang("global_cancel"))))
     },
     moneyTransferRepeat: function(e, t) {
         return showBox("al_payments.php?act=money_transfer_box", {
@@ -1237,16 +1248,16 @@ var Settings = {
             var e = clean(cur.searchStr),
                 t = "",
                 s = cur.appsList[cur.curList] || [],
-                n = s.length;
+                o = s.length;
             if (s = this.filterApps(s.slice(cur.shownApps))
                 .slice(0, cur.defaultCount), s.length && cur.appTpl) {
-                var o = [];
+                var n = [];
                 each(s, function(e, t) {
-                    t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), o.push(cur.appTpl(t, e == s.length - 1, !1))
-                }.bind(this)), t = o.join("")
+                    t = clone(t), cur.selection && (t[3] = t[3].replace(cur.selection.re, cur.selection.val)), n.push(cur.appTpl(t, e == s.length - 1, !1))
+                }.bind(this)), t = n.join("")
             }
             if (cur.shownApps) t && cur.lContent.appendChild(cf(t));
-            else if (t) cur.lContent.innerHTML = t, cur.aSummaryCounter && (cur.aSummaryCounter.innerHTML = langNumeric(n, "%s", !0)), show("settings_apps_noempty"), hide(
+            else if (t) cur.lContent.innerHTML = t, cur.aSummaryCounter && (cur.aSummaryCounter.innerHTML = langNumeric(o, "%s", !0)), show("settings_apps_noempty"), hide(
                 cur.aEmptyCont);
             else {
                 var i = getLang("settings_apps_not_found_by_query")
@@ -1259,9 +1270,9 @@ var Settings = {
         }
     },
     filterApps: function(e) {
-        for (var t = e.length, s = [], n = 0; t > n; n++) {
-            var o = e[n];
-            cur.apps && cur.apps[o[0]] && !cur.apps[o[0]].deleted && s.push(o)
+        for (var t = e.length, s = [], o = 0; t > o; o++) {
+            var n = e[o];
+            cur.apps && cur.apps[n[0]] && !cur.apps[n[0]].deleted && s.push(n)
         }
         return s
     },
@@ -1293,11 +1304,11 @@ var Settings = {
             dark: 1
         })
     },
-    removeApp: function(e, t, s, n) {
-        if (n && cancelEvent(n), this.removingApp) return !1;
+    removeApp: function(e, t, s, o) {
+        if (o && cancelEvent(o), this.removingApp) return !1;
         if (this.isDelayedOnSilentLoad("removeApp" + e, this.removeApp.bind(this, e, t, s))) return !1;
         window.tooltips && tooltips.hideAll();
-        var o = ge("app" + e),
+        var n = ge("app" + e),
             i = "profile_settings",
             a = function() {
                 ajax.post("/al_apps.php", {
@@ -1309,14 +1320,14 @@ var Settings = {
                     onDone: function(t) {
                         window.appsListChanged = !0, cur.apps[e] && (cur.appsIndex.remove(cur.apps[e]), cur.apps[e].deleted = !0), cur.deletedApps[e] = {
                             from: i,
-                            html: o.innerHTML
-                        }, o && o.appendChild(cf(t.html)), addClass(o, "deleted")
+                            html: n.innerHTML
+                        }, n && n.appendChild(cf(t.html)), addClass(n, "deleted")
                     }.bind(this),
                     showProgress: function() {
-                        addClass(o, "loading"), this.removingApp = !0
+                        addClass(n, "loading"), this.removingApp = !0
                     }.bind(this),
                     hideProgress: function() {
-                        removeClass(o, "loading"), this.removingApp = !1
+                        removeClass(n, "loading"), this.removingApp = !1
                     }.bind(this)
                 })
             }.bind(this);
@@ -1345,13 +1356,13 @@ var Settings = {
             }.bind(this)
         }), !1
     },
-    ttCommon: function(e, t, s, n, o) {
-        return n && cancelEvent(n), s ? showTooltip(e, {
+    ttCommon: function(e, t, s, o, n) {
+        return o && cancelEvent(o), s ? showTooltip(e, {
             center: s,
-            shift: o || [0, 8, 8],
+            shift: n || [0, 8, 8],
             black: 1,
             text: t
-        }) : showTitle(e, t, o)
+        }) : showTitle(e, t, n)
     },
     scrollToSearch: function() {
         var e = ge("page_header_cont"),
@@ -1395,8 +1406,8 @@ var Settings = {
             }
         }), !1
     },
-    deleteValidateDevice: function(e, t, s, n) {
-        if (!n) return void(cur.confirmBox = showFastBox({
+    deleteValidateDevice: function(e, t, s, o) {
+        if (!o) return void(cur.confirmBox = showFastBox({
             title: cur.lang.global_action_confirmation,
             dark: 1,
             forceNoBtn: 1,
@@ -1404,17 +1415,17 @@ var Settings = {
         }, cur.lang.settings_delete_validate_device_confirm, getLang("global_delete"), function() {
             Settings.deleteValidateDevice(e, t, s, !0)
         }, getLang("global_cancel")));
-        var o = e.parentNode;
+        var n = e.parentNode;
         return ajax.post("al_settings.php", {
             act: "a_del_validate_device",
             i: t,
             hash: s
         }, {
             onDone: function(e) {
-                o.innerHTML = e
+                n.innerHTML = e
             },
             onDone: function(e) {
-                return o.innerHTML = e, !0
+                return n.innerHTML = e, !0
             },
             showProgress: function() {
                 cur.confirmBox.showProgress()
@@ -1439,14 +1450,14 @@ var Settings = {
     },
     notifySubscriptionToggle: function(e, t) {
         var s = e.id.match(/-?\d+/)[0],
-            n = !1;
+            o = !1;
         each(cur.subsOList.owners, function() {
-            return this[0] == s ? (n = this[4], !1) : void 0
+            return this[0] == s ? (o = this[4], !1) : void 0
         }), ajax.post("/al_wall.php", {
             act: "a_toggle_posts_subscription",
             subscribe: t ? 1 : 0,
             oid: s,
-            hash: n
+            hash: o
         }, {
             showProgress: addClass.pbind(e, "olist_item_loading"),
             hideProgress: removeClass.pbind(e, "olist_item_loading")
