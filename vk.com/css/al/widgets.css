@@ -998,35 +998,30 @@ img {
     vertical-align: top
 }
 
-.widgets_popup_box_body {
+.widgets_popup_box_body,
+.widgets_popup_box_body #box_layer_bg,
+.widgets_popup_box_body #box_loader {
     background: #edeef0
 }
 
-.widgets_popup_box_body #box_layer_bg,
-.widgets_popup_box_body #box_loader {
-    display: none!important
-}
-
-.widgets_popup_box_body #box_layer_wrap {
-    display: table
-}
-
 .widgets_popup_box_body #box_layer {
-    display: table-cell;
+    display: table;
+    margin: 0 auto;
     padding: 0;
-    vertical-align: middle;
-    text-align: center
+    height: 100%
 }
 
 .widgets_popup_box_body .popup_box_container {
-    margin-top: 0!important;
-    text-align: initial;
-    display: inline-block;
-    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
+    display: table-cell;
+    vertical-align: middle;
+    margin: 0!important;
+    padding: 0!important;
+    box-shadow: none
 }
 
 .widgets_popup_box_body .popup_box_container .box_layout {
-    margin-top: -1px
+    box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8;
+    vertical-align: initial
 }
 
 .inl_bl {

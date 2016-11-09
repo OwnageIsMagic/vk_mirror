@@ -901,7 +901,7 @@ extend(WkEditor.prototype, {
                 a = a.replace(this.re.trimSp, ""), "\n" != a.substr(-1) && (s = "\n"), i += "<center>", s = "</center>" + s;
                 break;
             case "BR":
-                s = "\n", 1 & t ? s += "<br/>" : 3 & t && (s = "<br/>" + s);
+                s = "\n", 1 & t && !cur.isBLogEditor ? s += "<br/>" : 3 & t && (s = "<br/>" + s);
                 break;
             case "B":
             case "STRONG":

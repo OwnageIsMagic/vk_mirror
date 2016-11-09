@@ -52,7 +52,24 @@ var ShareBox = {
                             if (!d || !d.selCount) return elfocus("like_club_inp");
                             for (var r in d.selected) a = intval(r.replace(/_$/, ""));
                         case 0:
-                            ajax.post("like.php", Wall.fixPostParams(extend(s, {
+                            vk.widget ? (window.allowCallback = function() {
+                                ajax.post("like.php", Wall.fixPostParams(extend(s, {
+                                    act: "a_do_publish",
+                                    from: "box",
+                                    to: a,
+                                    hash: cur.sbShareHash,
+                                    object: cur.sbObj,
+                                    list: cur.sbList,
+                                    ref: cur.section
+                                })), ShareBox.options()), cur.shareAction = "publish"
+                            }, Widgets.popupBoxOpen("like.php", {
+                                act: "a_allow_publish_box",
+                                to: a,
+                                object: cur.sbObj,
+                                list: cur.sbList
+                            }, "vk_allow", {
+                                height: 171
+                            })) : (ajax.post("like.php", Wall.fixPostParams(extend(s, {
                                 act: "a_do_publish",
                                 from: "box",
                                 to: a,
@@ -60,7 +77,7 @@ var ShareBox = {
                                 object: cur.sbObj,
                                 list: cur.sbList,
                                 ref: cur.section
-                            })), ShareBox.options()), cur.shareAction = "publish";
+                            })), ShareBox.options()), cur.shareAction = "publish");
                             break;
                         case 2:
                             var d = cur.wdd && cur.wdd.like_mail_dd,
@@ -230,18 +247,18 @@ var ShareBox = {
         if (i !== !0) switch (a) {
             case 0:
                 if (!cur.sbHidden) {
-                    var n = Fx.Transitions.easeOutCubic,
-                        t = 150,
+                    var t = Fx.Transitions.easeOutCubic,
+                        n = 150,
                         l = "ease-out";
                     cssAnim(cur.sbAva, extend({
                         opacity: 0
                     }, ShareBox.mrg(-26)), {
-                        duration: t,
-                        transition: n,
+                        duration: n,
+                        transition: t,
                         func: l
                     }, hide.pbind(cur.sbAva)), cssAnim(ge("dark_box_topic"), ShareBox.mrg(0), {
-                        duration: t,
-                        transition: n,
+                        duration: n,
+                        transition: t,
                         func: l
                     }), cur.sbHidden = !0
                 }

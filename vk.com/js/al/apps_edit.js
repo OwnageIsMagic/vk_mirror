@@ -893,7 +893,8 @@ var AppsEdit = {
                     }, '<div id="dev_result" onmousemove="Dev.resultMove(event.target);" onmouseout="Dev.resultMove(false);">' + a + "</div>")
                 },
                 onFail: function(e) {
-                    return setTimeout(showFastBox(getLang("global_error"), e)
+                    return e = '<pre style="white-space:normal;word-wrap:break-word;">' + clean(e.replace(/^<pre>|<\/pre>$/g, "")) + "</pre>", setTimeout(
+                        showFastBox(getLang("global_error"), e)
                         .hide, 2e3), !0
                 },
                 showProgress: function() {
