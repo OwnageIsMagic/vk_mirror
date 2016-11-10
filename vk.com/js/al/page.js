@@ -7048,7 +7048,7 @@ Composer = {
             return replacement;
         });
 
-        if (prefValue && !prefValue.match(/[\.\(\)\?\!\s\n\r \u00A0]$/)) {
+        if (!noAlias && prefValue && !prefValue.match(/[\.\(\)\?\!\s\n\r \u00A0]$/)) {
             suffValue = ' ' + suffValue;
         }
 

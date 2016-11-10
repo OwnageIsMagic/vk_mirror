@@ -1521,7 +1521,7 @@ Tickets = {
                             var r = e ? e : getLang("support_page_title");
                             vk.id || (r += " | " + getLang("global_vkontakte")), document.title = r
                         }
-                        t && (cur.faqRowsOpened = !1, removeClass(ge("faq_toggle_all"), "shown")), nav.setLoc(nav.objLoc)
+                        nav.setLoc(nav.objLoc)
                     }
                 }
             })

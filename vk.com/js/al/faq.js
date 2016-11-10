@@ -11,109 +11,80 @@ FAQ = {
     showMsg: function(e) {
         var t = ge("faq_msg");
         if (!t) {
-            var a;
+            var i;
             switch (cur.page) {
                 case "all":
-                    a = cur.tlmd ? ge("tlmd_found_list") : ge("faq_list");
+                    i = cur.tlmd ? ge("tlmd_found_list") : ge("faq_list");
                     break;
                 case "new":
-                    a = ge("faq_msg_p"), show("faq_msg_p");
+                    i = ge("faq_msg_p"), show("faq_msg_p");
                     break;
                 case "tiles":
-                    a = ge("faq_tiles_editor");
+                    i = ge("faq_tiles_editor");
                     break;
                 case "sort":
-                    a = ge("faq_sort_editor")
+                    i = ge("faq_sort_editor")
             }
-            t = a.insertBefore(ce("div", {
+            t = i.insertBefore(ce("div", {
                 id: "faq_msg",
                 className: "info_msg"
-            }), a.firstChild)
+            }), i.firstChild)
         }
         return re("faq_error"), val(t, e), !0
     },
     showError: function(e) {
         var t = ge("faq_error");
         if (!t) {
-            var a;
+            var i;
             switch (cur.page) {
                 case "all":
-                    a = ge("faq_list");
+                    i = ge("faq_list");
                     break;
                 case "new":
                 case "edit":
-                    a = ge("faq_msg_p"), show("faq_msg_p")
+                    i = ge("faq_msg_p"), show("faq_msg_p")
             }
-            t = a.insertBefore(ce("div", {
+            t = i.insertBefore(ce("div", {
                 id: "faq_error",
                 className: "error"
-            }), a.firstChild)
+            }), i.firstChild)
         }
         return re("faq_msg"), hide("faq_progress"), t.innerHTML = e, t.style.backgroundColor = "#FACEBB", animate(t, {
             backgroundColor: "#FFEFE8"
         }, 2e3), scrollToTop(200), !0
     },
-    handleTagsPos: function() {
-        if (!ge("faq_tags_td")) return !1;
-        var e = scrollGetY(),
-            t = window.lastWindowHeight || 0,
-            a = 0,
-            o = ge("faq_tags_td"),
-            i = getXY(o)[1],
-            r = getSize(o)[1],
-            s = ge("faq_tags"),
-            l = (getXY(s)[1], getSize(s)[1]),
-            n = Math.max(0, e + t - r - i),
-            d = 20 > r - l,
-            _ = cur.filterLastPos || 0,
-            c = cur.lastSt || 0,
-            u = getSize("page_header_cont")[1];
-        e > i && !d ? (addClass(s, "fixed"), a = t > l ? Math.min(u, t - l - n) : Math.max(Math.min(u, _ + c - e), t - l - n)) : (removeClass(s, "fixed"), a = 0), cur.filterLastPos =
-            a, cur.lastSt = e, setStyle(s, {
-                top: a + "px"
-            })
-    },
-    selectTag: function(e, t) {
-        cur.tagsDD.addTag("#" + e), scrollToTop()
-    },
-    toggleAllRows: function(e) {
-        cur.faqRowsOpened = !cur.faqRowsOpened, each(geByClass("faq_row", "tlmd_found_list"), setTimeout.pbind(function(e, t) {
-            var a = t.id.substr(7);
-            a && toggleClass(geByClass1("faq_inner_row", t), "detailed", cur.faqRowsOpened)
-        }, 0)), toggleClass(e, "shown")
-    },
-    checkTextLength: function(e, t, a) {
+    checkTextLength: function(e, t, i) {
         var o = trim(e.value)
             .replace(/\n\n\n+/g, "\n\n");
         if (e.lastLen !== o.length) {
-            var i = e.lastLen = o.length,
-                r = i - o.replace(/\n/g, "")
+            var a = e.lastLen = o.length,
+                r = a - o.replace(/\n/g, "")
                 .length;
-            a = ge(a), i > t - 100 || r > 10 ? (show(a), i > t ? a.innerHTML = getLang("global_recommended_exceeded", i - t) : r > 10 ? a.innerHTML = getLang(
-                "global_recommended_lines", r - 10) : a.innerHTML = getLang("text_N_symbols_remain", t - i)) : hide(a)
+            i = ge(i), a > t - 100 || r > 10 ? (show(i), a > t ? i.innerHTML = getLang("global_recommended_exceeded", a - t) : r > 10 ? i.innerHTML = getLang(
+                "global_recommended_lines", r - 10) : i.innerHTML = getLang("text_N_symbols_remain", t - a)) : hide(i)
         }
     },
     appendExtraField: function(e) {
         var t = ge("faq_optional_extra_fields_list"),
-            a = ge("faq_optional_extra_field_example");
+            i = ge("faq_optional_extra_field_example");
         if (t) {
-            for (var o = a.cloneNode(!0), i = 0; ge("faq_optional_extra_field_" + i);) i++;
-            o.id = "faq_optional_extra_field_" + i, t.appendChild(o);
+            for (var o = i.cloneNode(!0), a = 0; ge("faq_optional_extra_field_" + a);) a++;
+            o.id = "faq_optional_extra_field_" + a, t.appendChild(o);
             var r = geByClass1("faq_optional_extra_field_type__inp", o);
             r.id = o.id + "_type";
             var s = geByClass1("faq_optional_extra_field__title", o);
             s.id = o.id + "_title", placeholderSetup(s, {
                 back: !0
             });
-            var l = geByClass1("faq_optional_extra_field__note", o);
-            l.id = o.id + "_note", placeholderSetup(l, {
+            var n = geByClass1("faq_optional_extra_field__note", o);
+            n.id = o.id + "_note", placeholderSetup(n, {
                 back: !0
             });
-            var n = geByClass1("faq_optional_extra_field_required__inp", o);
-            n.id = o.id + "_required", t.children.length >= 10 && hide(e), FAQ.prepareExtraField(o, r, n, s, l)
+            var l = geByClass1("faq_optional_extra_field_required__inp", o);
+            l.id = o.id + "_required", t.children.length >= 10 && hide(e), FAQ.prepareExtraField(o, r, l, s, n)
         }
     },
-    prepareExtraField: function(e, t, a, o, i) {
+    prepareExtraField: function(e, t, i, o, a) {
         var r = new Dropdown(t, cur.selData.extra_field_types, {
             width: 191,
             introText: "",
@@ -124,10 +95,10 @@ FAQ = {
         });
         data(e, "typeSelector", r), placeholderSetup(o, {
             back: !0
-        }), placeholderSetup(i, {
+        }), placeholderSetup(a, {
             back: !0
         });
-        var s = new Dropdown(a, cur.selData.extra_field_required_types, {
+        var s = new Dropdown(i, cur.selData.extra_field_required_types, {
             width: 191,
             introText: "",
             noResult: "",
@@ -136,8 +107,8 @@ FAQ = {
             big: 1
         });
         data(e, "requiredSelector", s);
-        var l = geByClass1("faq_optional_extra_field__close", e);
-        addEvent(l, "click", FAQ.removeExtraField.pbind(e))
+        var n = geByClass1("faq_optional_extra_field__close", e);
+        addEvent(n, "click", FAQ.removeExtraField.pbind(e))
     },
     removeExtraField: function(e) {
         var t = data(e, "typeSelector");
@@ -147,29 +118,29 @@ FAQ = {
         for (var e = 0; 10 > e; e++) {
             var t = ge("faq_optional_extra_field_" + e);
             if (t) {
-                var a = data(t, "typeSelector"),
+                var i = data(t, "typeSelector"),
                     o = data(t, "requiredSelector");
-                a.destroy.bind(a)(), o.destroy.bind(o)()
+                i.destroy.bind(i)(), o.destroy.bind(o)()
             }
         }
     },
     saveFAQ: function(e) {
         var t = trim(val("faq_title")),
-            a = trim(val("faq_text")),
+            i = trim(val("faq_text")),
             o = trim(val("faq_keywords")),
-            i = trim(val("faq_description"));
+            a = trim(val("faq_description"));
         if (!t) return notaBene("faq_title");
         var r = [];
         if (cur.screens)
             for (var s in cur.screens) r.push(cur.screens[s][0]);
-        if (!a && !r.length) return notaBene("faq_text");
-        var l = cur.langsDD && cur.langsDD.val() || 0,
-            n = {
+        if (!i && !r.length) return notaBene("faq_text");
+        var n = cur.langsDD && cur.langsDD.val() || 0,
+            l = {
                 act: "save",
                 title: t,
-                text: a,
+                text: i,
                 keywords: o,
-                description: i,
+                description: a,
                 hash: e,
                 imgs: r,
                 faq_id: cur.id,
@@ -178,8 +149,8 @@ FAQ = {
                 server: trim(val("faq_server")),
                 id_mask: trim(val("faq_id_mask")),
                 cdn: trim(val("faq_cdn")),
-                language: l,
-                parent_id: l ? cur.parentId : 0,
+                language: n,
+                parent_id: n ? cur.parentId : 0,
                 about_phone: isChecked("faq_about_phone"),
                 about_profile: isChecked("faq_about_profile"),
                 about_group: isChecked("faq_about_group"),
@@ -188,24 +159,24 @@ FAQ = {
                 disable_have_question: isChecked("disable_have_question_faq")
             };
         if (cur.sectionSelector) {
-            if (n.section = intval(cur.sectionSelector.val()), 0 == n.section || 39 == n.section) {
-                var d = cur.desktopCategorySelector.val();
-                n.categories = d, n.spec_section = cur.specSectionSelector.val()
-            } else if (31 == n.section) {
-                var _ = cur.platformSelector.val();
-                if (!_) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
-                n.platforms = _;
-                var d = cur.categorySelector.val();
-                if (!d) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
-                n.categories = d
+            if (l.section = intval(cur.sectionSelector.val()), 0 == l.section || 39 == l.section) {
+                var _ = cur.desktopCategorySelector.val();
+                l.categories = _, l.spec_section = cur.specSectionSelector.val()
+            } else if (31 == l.section) {
+                var d = cur.platformSelector.val();
+                if (!d) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
+                l.platforms = d;
+                var _ = cur.categorySelector.val();
+                if (!_) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
+                l.categories = _
             }
-        } else ge("default_section") && (n.section = val("default_section"));
-        if (1 == n.section && (n.categories = cur.adsCategorySelector.val()), cur.actionButtonSelector && (n.action_id = intval(cur.actionButtonSelector.val()), 0 != n.action_id &&
-                (n.action_label = ge("faq_action_btn_label")
-                    .value.trim()), 7 == n.action_id)) {
-            if (!n.action_label) return elfocus("faq_action_btn_label"), notaBene("faq_action_btn_label");
-            if (n.action_url = ge("faq_action_btn_url")
-                .value.trim(), !n.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
+        } else ge("default_section") && (l.section = val("default_section"));
+        if (1 == l.section && (l.categories = cur.adsCategorySelector.val()), cur.actionButtonSelector && (l.action_id = intval(cur.actionButtonSelector.val()), 0 != l.action_id &&
+                (l.action_label = ge("faq_action_btn_label")
+                    .value.trim()), 7 == l.action_id)) {
+            if (!l.action_label) return elfocus("faq_action_btn_label"), notaBene("faq_action_btn_label");
+            if (l.action_url = ge("faq_action_btn_url")
+                .value.trim(), !l.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
         }
         if (ge("faq_optional_extra_field_add") && (!cur.sectionSelector || 0 == cur.sectionSelector.val() || 39 == cur.sectionSelector.val())) {
             for (var c = {}, u = ge("faq_optional_extra_fields_list")
@@ -217,19 +188,19 @@ FAQ = {
                     .value, c["ef_" + s + "_required"] = data(f, "requiredSelector")
                     .val()
             }
-            n = extend(n, c)
+            l = extend(l, c)
         }
-        if (ge("description_not_needed") && (n.descr_not_needed = isChecked("description_not_needed")), ge("description_placeholder_key") && (n.description_placeholder_key =
-                val("description_placeholder_key")), ge("description_tooltip_key") && (n.description_tooltip_key = val("description_tooltip_key")), cur.faqFromAllCheckbox &&
+        if (ge("description_not_needed") && (l.descr_not_needed = isChecked("description_not_needed")), ge("description_placeholder_key") && (l.description_placeholder_key =
+                val("description_placeholder_key")), ge("description_tooltip_key") && (l.description_tooltip_key = val("description_tooltip_key")), cur.faqFromAllCheckbox &&
             cur.faqFromCheckboxes) {
             var p = [],
                 g = cur.faqFromAllCheckbox.val();
             g ? p.push(g) : each(cur.faqFromCheckboxes, function(e, t) {
-                var a = t.val();
-                a && p.push(a)
-            }), n.from_list = p.join(",")
+                var i = t.val();
+                i && p.push(i)
+            }), l.from_list = p.join(",")
         }
-        ajax.post(nav.objLoc[0], n, {
+        ajax.post(nav.objLoc[0], l, {
             onFail: FAQ.showError,
             showProgress: lockButton.pbind(ge("faq_send")),
             hideProgress: unlockButton.pbind(ge("faq_send"))
@@ -250,14 +221,14 @@ FAQ = {
     },
     attachCount: function(e) {
         var t = ge("fis_preview" + (e ? "_edit" : "")),
-            a = ge("fis_prg_preview" + (e ? "_edit" : ""));
-        return t.childNodes.length + a.childNodes.length
+            i = ge("fis_prg_preview" + (e ? "_edit" : ""));
+        return t.childNodes.length + i.childNodes.length
     },
     unchoose: function(e, t) {
         re("fis_preview" + e), t ? delete cur.screensEdit[e] : delete cur.screens[e], toggle("fis_add_lnk" + (t ? "_edit" : ""), FAQ.attachCount(t) < 5)
     },
-    choose: function(e, t, a, o) {
-        var i = "",
+    choose: function(e, t, i, o) {
+        var a = "",
             r = ge("fis_preview" + (t ? "_edit" : ""));
         ge("fis_prg_preview" + (t ? "_edit" : ""));
         isObject(o) || (o = {
@@ -267,65 +238,65 @@ FAQ = {
                 view_opts: o[3] || "",
                 upload_ind: o.upload_ind || void 0
             }), vkImage()
-            .src = o.thumb_s, i = "<div onclick=\"return showPhoto('" + a + "', '" + o.list + "', " + o.view_opts.replace(/"/g, "&quot;") +
+            .src = o.thumb_s, a = "<div onclick=\"return showPhoto('" + i + "', '" + o.list + "', " + o.view_opts.replace(/"/g, "&quot;") +
             ');" class="fl_l fis_preview"><img class="fis_photo" src="' + o.thumb_s + '" /></div>';
         var s = ce("div", {
-                innerHTML: '<div id="fis_preview' + e + '" class="fis_preview_wrap">' + i + '<div class="fis_x fl_l" ' + (browser.msie ? "title" : "tooltip") + '="' +
+                innerHTML: '<div id="fis_preview' + e + '" class="fis_preview_wrap">' + a + '<div class="fis_x fl_l" ' + (browser.msie ? "title" : "tooltip") + '="' +
                     getLang("dont_attach") +
                     '" onmouseover="if (browser.msie) return; showTooltip(this, {text: this.getAttribute(\'tooltip\'), shift: [6, 3, 3]})" onclick="FAQ.unchoose(\'' +
                     e + "'" + (t ? ", 1" : "") + ')"></div></div>'
             })
             .firstChild;
-        addClass(s, "fl_l"), re("upload" + e + "_progress_wrap"), r.appendChild(s), t ? cur.screensEdit[e] = [a, s] : cur.screens[e] = [a, s], cur.fileApiUploadStarted ||
+        addClass(s, "fl_l"), re("upload" + e + "_progress_wrap"), r.appendChild(s), t ? cur.screensEdit[e] = [i, s] : cur.screens[e] = [i, s], cur.fileApiUploadStarted ||
             boxQueue.hideLast(), toggle("fis_add_lnk" + (t ? "_edit" : ""), FAQ.attachCount(t) < 5)
     },
     chooseUploaded: function(e, t) {
-        var a = void 0 !== e.ind ? e.ind : e,
-            o = (e.fileName ? e.fileName : e, e.fileName ? a + "_" + e.fileName : e);
+        var i = void 0 !== e.ind ? e.ind : e,
+            o = (e.fileName ? e.fileName : e, e.fileName ? i + "_" + e.fileName : e);
         if (ge("upload" + o + "_progress_wrap")) {
-            var i = geByClass1("fis_prg_x", ge("upload" + o + "_progress_wrap"));
-            i && hide(i)
+            var a = geByClass1("fis_prg_x", ge("upload" + o + "_progress_wrap"));
+            a && hide(a)
         }
         ajax.post("al_photos.php", extend({
             act: "choose_uploaded_support"
         }, t), {
-            onDone: FAQ.choose.pbind(o, Upload.options[a].forEdit),
+            onDone: FAQ.choose.pbind(o, Upload.options[i].forEdit),
             onFail: FAQ.chooseFail.pbind(e),
-            progress: "form" == Upload.types[a] && curBox() ? curBox()
+            progress: "form" == Upload.types[i] && curBox() ? curBox()
                 .progress : null
         })
     },
     chooseFail: function(e, t) {
-        var a = void 0 !== e.ind ? e.ind : e,
-            o = (e.fileName ? e.fileName : e, Upload.options[a].forEdit);
-        if ("fileApi" == Upload.types[a]) {
-            var i = e.fileName ? a + "_" + e.fileName : e;
-            re("upload" + i + "_progress_wrap"), FAQ.unchoose(i, o)
+        var i = void 0 !== e.ind ? e.ind : e,
+            o = (e.fileName ? e.fileName : e, Upload.options[i].forEdit);
+        if ("fileApi" == Upload.types[i]) {
+            var a = e.fileName ? i + "_" + e.fileName : e;
+            re("upload" + a + "_progress_wrap"), FAQ.unchoose(a, o)
         }
         curBox() && hide(curBox()
             .progress), topError("Upload failed", {
             dt: -1,
             type: 102,
-            url: (ge("file_uploader_form" + a) || {})
+            url: (ge("file_uploader_form" + i) || {})
                 .action
-        }), Upload.embed(a), toggle("fis_add_lnk" + (o ? "_edit" : ""), FAQ.attachCount(o) < 5)
+        }), Upload.embed(i), toggle("fis_add_lnk" + (o ? "_edit" : ""), FAQ.attachCount(o) < 5)
     },
     showScreenProgress: function(e, t) {
-        var a = Upload.options[e].forEdit,
-            o = ge("fis_prg_preview" + (a ? "_edit" : "")),
-            i = intval(t.loaded / t.total * 100),
+        var i = Upload.options[e].forEdit,
+            o = ge("fis_prg_preview" + (i ? "_edit" : "")),
+            a = intval(t.loaded / t.total * 100),
             r = t.fileName || t.name || "",
             s = r ? e + "_" + r : e,
-            l = r ? r.length > 33 ? r.substr(0, 30) + "..." : r : "";
+            n = r ? r.length > 33 ? r.substr(0, 30) + "..." : r : "";
         if (o) {
             if (ge("upload" + s + "_progress_wrap")) setStyle(ge("upload" + s + "_progress"), {
-                width: i + "%"
+                width: a + "%"
             }), show("upload" + s + "_progress");
             else {
-                var n = '<div class="fis_progress_wrap">  <div id="upload' + s + '_progress" class="fis_progress" style="width: ' + i + '%;"></div></div></div>',
-                    d = ce("div", {
+                var l = '<div class="fis_progress_wrap">  <div id="upload' + s + '_progress" class="fis_progress" style="width: ' + a + '%;"></div></div></div>',
+                    _ = ce("div", {
                         id: "upload" + s + "_progress_wrap",
-                        innerHTML: '<div class="fl_l">' + n + "</div>" + (l ? '<div class="fis_label fl_l">' + l + "</div>" : "") +
+                        innerHTML: '<div class="fl_l">' + l + "</div>" + (n ? '<div class="fis_label fl_l">' + n + "</div>" : "") +
                             '<div class="fis_prg_x fl_l" onmouseover="animate(this, {opacity: 1}, 200); showTooltip(this, {text: \'' + getLang("dont_attach") +
                             '\', shift: [6, 3, 3]})" onmouseout="animate(this, {opacity: 0.6}, 200);" onclick="Upload.terminateUpload(' + e + ", '" + (r || e) +
                             "');\"></div>",
@@ -333,7 +304,7 @@ FAQ = {
                     }, {
                         marginTop: "6px"
                     });
-                o.appendChild(d), show(o), toggle("fis_add_lnk" + (a ? "_edit" : ""), FAQ.attachCount(a) < 5), i || hide("upload" + s + "_progress")
+                o.appendChild(_), show(o), toggle("fis_add_lnk" + (i ? "_edit" : ""), FAQ.attachCount(i) < 5), a || hide("upload" + s + "_progress")
             }
             return !1
         }
@@ -351,11 +322,11 @@ FAQ = {
                 file_match: ".(gif|jpg|png)$",
                 lang: opts.lang,
                 onUploadStart: function(e, t) {
-                    var a = void 0 !== e.ind ? e.ind : e,
-                        o = Upload.options[a];
-                    "form" == Upload.types[a] && (curBox() && show(curBox()
+                    var i = void 0 !== e.ind ? e.ind : e,
+                        o = Upload.options[i];
+                    "form" == Upload.types[i] && (curBox() && show(curBox()
                             .progress), geByClass1("file", ge("fis_add_data"))
-                        .disabled = !0), "fileApi" == Upload.types[a] && (cur.notStarted && (curBox()
+                        .disabled = !0), "fileApi" == Upload.types[i] && (cur.notStarted && (curBox()
                         .hide(), delete cur.notStarted), o.multi_progress && this.onUploadProgress(e, 0, 0))
                 },
                 onUploadComplete: function(info, res) {
@@ -370,14 +341,14 @@ FAQ = {
                     var options = Upload.options[i];
                     FAQ.chooseUploaded(info, params)
                 },
-                onUploadProgress: function(e, t, a) {
+                onUploadProgress: function(e, t, i) {
                     var o = void 0 !== e.ind ? e.ind : e;
                     if ("fileApi" == Upload.types[o]) {
-                        var i = {
+                        var a = {
                             loaded: t,
-                            total: a
+                            total: i
                         };
-                        e.fileName && (i.fileName = e.fileName), FAQ.showScreenProgress(o, i)
+                        e.fileName && (a.fileName = e.fileName), FAQ.showScreenProgress(o, a)
                     }
                 },
                 onUploadError: FAQ.chooseFail,
@@ -397,7 +368,7 @@ FAQ = {
         }
     },
     deleteFAQ: function(e, t) {
-        var a = showFastBox({
+        var i = showFastBox({
             title: getLang("support_delete_title"),
             width: 430
         }, getLang("support_delete_confirm"), getLang("support_delete_button"), function() {
@@ -406,34 +377,24 @@ FAQ = {
                 faq_id: e,
                 hash: t
             }, {
-                progress: a.progress,
+                progress: i.progress,
                 onFail: function(e) {
-                    return a.hide(), FAQ.showError(e), !0
+                    return i.hide(), FAQ.showError(e), !0
                 }
             })
         }, getLang("global_cancel"));
         return !1
     },
-    toggleRow: function(e, t, a) {
-        return a.target || (a.target = a.srcElement || document), "a" == a.target.tagName.toLowerCase() ? !0 : (toggle("faq_short_text" + e, !isVisible("faq_short_text" +
-            e)), toggle("faq_full_text" + e, !isVisible("faq_full_text" + e)), isVisible("faq_full_text" + e) ? (addClass(t, "detailed"), cur.tlmd && ajax.post(nav
-            .objLoc[0], {
-                act: "faq_clicked",
-                faq_id: e,
-                hash: cur.faq_hash
-            }, {
-                cache: 1
-            })) : removeClass(t, "detailed"), !1)
+    toggleRow: function(e, t, i) {
+        return i.target || (i.target = i.srcElement || document), "a" == i.target.tagName.toLowerCase() ? !0 : (toggle("faq_short_text" + e, !isVisible("faq_short_text" +
+                e)), toggle("faq_full_text" + e, !isVisible("faq_full_text" + e)), isVisible("faq_full_text" + e) ? addClass(t, "detailed") : removeClass(t, "detailed"), !
+            1)
     },
-    toggleRowPrevent: function(e, t) {
-        var a = gpeByClass("talmud_inner_row", t);
-        hasClass(a, "detailed") && e.target && "a" != e.target.tagName.toLowerCase() && cancelEvent(e)
+    setSearchString: function(e, t, i) {
+        FAQ.updateSearchString(t, i, !0)
     },
-    setSearchString: function(e, t, a) {
-        FAQ.updateSearchString(t, a, !0)
-    },
-    updateSearchString: function(e, t, a) {
-        cur.prevSearch = cur.prevSearch || "", e = trim(e), (cur.prevSearch != e || !e || a) && (clearTimeout(cur.searchTimeout), a ? (cur.prevSearch = e, FAQ.updateSearch(
+    updateSearchString: function(e, t, i) {
+        cur.prevSearch = cur.prevSearch || "", e = trim(e), (cur.prevSearch != e || !e || i) && (clearTimeout(cur.searchTimeout), i ? (cur.prevSearch = e, FAQ.updateSearch(
             e)) : cur.searchTimeout = setTimeout(function() {
             cur.prevSearch = e, FAQ.updateSearch(e)
         }, 350))
@@ -446,31 +407,31 @@ FAQ = {
         var t = nav.objLoc;
         e ? t.q = e : delete t.q, isChecked("search_disabled") ? t.disabled = 1 : delete t.disabled, isChecked("search_expired") ? t.expired = 1 : delete t.expired,
             isChecked("search_with_action") ? t.with_action = 1 : delete t.with_action, isChecked("search_with_ef") ? t.with_ef = 1 : delete t.with_ef, nav.setLoc(t);
-        var a = extend({}, t);
-        a.act = "load_list", delete a[0], ajax.post(nav.objLoc[0], a, {
+        var i = extend({}, t);
+        i.act = "load_list", delete i[0], ajax.post(nav.objLoc[0], i, {
             showProgress: uiSearch.showProgress.pbind("faq_content_search__text"),
             hideProgress: uiSearch.hideProgress.pbind("faq_content_search__text"),
             onDone: function(e) {
                 var t = se(e),
-                    a = ge("faq_list");
-                a.parentNode.replaceChild(t, a)
+                    i = ge("faq_list");
+                i.parentNode.replaceChild(t, i)
             }
         })
     },
-    saveTilesTop: function(e, t, a) {
+    saveTilesTop: function(e, t, i) {
         var o = {
             act: "save_tiles",
             lang: t,
-            hash: a,
+            hash: i,
             section: cur.section
         };
         each(geByClass("faq_tiles_editor_tile__questions", ge("faq_tiles_editor__tiles")), function(e, t) {
-            var a = [];
+            var i = [];
             each(t.children, function(e, t) {
-                a.push(t.id.replace("faq_tiles_editor_tile_question", ""))
+                i.push(t.id.replace("faq_tiles_editor_tile_question", ""))
             });
-            var i = t.id.replace("faq_tiles_editor_tile__questions", "");
-            o["faq" + i] = a.join(",")
+            var a = t.id.replace("faq_tiles_editor_tile__questions", "");
+            o["faq" + a] = i.join(",")
         }), ajax.post(nav.objLoc[0], o, {
             showProgress: lockButton.pbind(e),
             hideProgress: unlockButton.pbind(e)
@@ -478,18 +439,18 @@ FAQ = {
     },
     tilesShowSearch: function(e, t) {
         hide(e.target);
-        var a = ge("faq_tiles_editor_tile_search__input" + t);
-        return show(a), geByClass1("selector_input", a)
+        var i = ge("faq_tiles_editor_tile_search__input" + t);
+        return show(i), geByClass1("selector_input", i)
             .focus(), !1
     },
     tilesQuestionRemove: function(e, t) {
-        var a = ge("faq_tiles_editor_tile_question" + e),
-            o = a.parentNode,
-            i = o.id.replace("faq_tiles_editor_tile__questions", "");
-        FAQ.tilesSorterDestroy(o), re(a), sorter.init(o, {}), o.hasChildNodes() || hide(o), geByClass("faq_tiles_editor_tile_question", o)
-            .length < cur.perCategoryLimit && show("faq_tiles_editor_tile_search" + i), t && t.stopPropagation()
+        var i = ge("faq_tiles_editor_tile_question" + e),
+            o = i.parentNode,
+            a = o.id.replace("faq_tiles_editor_tile__questions", "");
+        FAQ.tilesSorterDestroy(o), re(i), sorter.init(o, {}), o.hasChildNodes() || hide(o), geByClass("faq_tiles_editor_tile_question", o)
+            .length < cur.perCategoryLimit && show("faq_tiles_editor_tile_search" + a), t && t.stopPropagation()
     },
-    tilesQuestionAdd: function(e, t, a) {
+    tilesQuestionAdd: function(e, t, i) {
         if (t) {
             var o = ge("faq_tiles_editor_tile_question" + t);
             o && FAQ.tilesQuestionRemove(t);
@@ -497,10 +458,10 @@ FAQ = {
                 className: "faq_tiles_editor_tile_question",
                 id: "faq_tiles_editor_tile_question" + t
             });
-            o.innerHTML = '<span class="faq_tiles_editor_tile_question__title">' + a +
+            o.innerHTML = '<span class="faq_tiles_editor_tile_question__title">' + i +
                 '</span>    <span class="faq_tiles_editor_tile_question__remove" onclick="FAQ.tilesQuestionRemove(' + t + ', event);"></span>';
-            var i = ge("faq_tiles_editor_tile__questions" + e);
-            show(i), FAQ.tilesSorterDestroy(i), i.appendChild(o), sorter.init(i, {}), geByClass("faq_tiles_editor_tile_question", i)
+            var a = ge("faq_tiles_editor_tile__questions" + e);
+            show(a), FAQ.tilesSorterDestroy(a), a.appendChild(o), sorter.init(a, {}), geByClass("faq_tiles_editor_tile_question", a)
                 .length >= cur.perCategoryLimit && hide("faq_tiles_editor_tile_search" + e)
         }
     },
@@ -509,16 +470,16 @@ FAQ = {
             t.removeAttribute("style")
         })
     },
-    saveQuestionsSort: function(e, t, a, o, i) {
+    saveQuestionsSort: function(e, t, i, o, a) {
         var r = {
                 act: "save_sort",
                 lang: t,
-                category: a,
+                category: i,
                 hash: o,
                 section: cur.section
             },
             s = [];
-        i || each(geByClass("faq_sort_editor_question", ge("faq_sort_editor__questions")), function(e, t) {
+        a || each(geByClass("faq_sort_editor_question", ge("faq_sort_editor__questions")), function(e, t) {
             s.push(t.id.replace("faq", ""))
         }), r.ids = s.join(","), ajax.post(nav.objLoc[0], r, {
             showProgress: lockButton.pbind(e),
@@ -527,23 +488,23 @@ FAQ = {
     },
     sortQuestionsReorder: function(e) {
         var t = e.getAttribute("position"),
-            a = FAQ.sortQuestionsGetPosition(e);
-        t != a ? addClass(e, "faq_sort_editor_question_moved") : removeClass(e, "faq_sort_editor_question_moved"), each(geByClass("faq_sort_editor_question_moved", ge(
+            i = FAQ.sortQuestionsGetPosition(e);
+        t != i ? addClass(e, "faq_sort_editor_question_moved") : removeClass(e, "faq_sort_editor_question_moved"), each(geByClass("faq_sort_editor_question_moved", ge(
             "faq_sort_editor_question")), function(e, t) {
-            var a = t.getAttribute("position"),
+            var i = t.getAttribute("position"),
                 o = FAQ.sortQuestionsGetPosition(t);
-            a == o && removeClass(t, "faq_sort_editor_question_moved")
+            i == o && removeClass(t, "faq_sort_editor_question_moved")
         })
     },
     sortQuestionsGetPosition: function(e) {
-        for (var t = 0, a = e; a;) t++, a = a.previousSibling;
+        for (var t = 0, i = e; i;) t++, i = i.previousSibling;
         return Math.floor(t / 2) - 1
     },
-    saveDictionary: function(e, t, a) {
+    saveDictionary: function(e, t, i) {
         hide("faq_dictionary__submit_note"), ajax.post(nav.objLoc[0], {
             act: "dictionary_save",
             lang: t,
-            hash: a,
+            hash: i,
             beginning_words: val("faq_dictionary__beginning_words"),
             middle_words: val("faq_dictionary__middle_words")
         }, {
@@ -560,12 +521,12 @@ FAQ = {
             }
         })
     },
-    showHistory: function(e, t, a) {
+    showHistory: function(e, t, i) {
         return !showBox(nav.objLoc[0], {
             act: "show_history",
             id: e,
             faq_id: t,
-            hash: a
+            hash: i
         }, {
             params: {
                 bodyStyle: "padding: 0px",
@@ -576,12 +537,12 @@ FAQ = {
     updateFAQ: function(e, t) {
         clearTimeout(cur.faqTimeout), cur.faqTimeout = setTimeout(function() {
             var e = t.value,
-                a = trim(e),
-                o = a.split(" "),
-                i = ge("tickets_text");
-            e.length >= 70 && i && !i.value && !cur.flood && (isVisible("tickets_detailed_form") || FAQ.toggleDetailedForm(), t.value = "", i.focus(), i.value = e),
-                isVisible("tickets_detailed_form") || a == cur.searchStr && (o.length < 4 || 4 == o.length && " " != e[e.length - 1]) || (a ? addClass(ge(
-                        "tickets_search_reset"), "shown") : removeClass(ge("tickets_search_reset"), "shown"), cur.searchStr = a, clearTimeout(cur.searchFAQTimeout),
+                i = trim(e),
+                o = i.split(" "),
+                a = ge("tickets_text");
+            e.length >= 70 && a && !a.value && !cur.flood && (isVisible("tickets_detailed_form") || FAQ.toggleDetailedForm(), t.value = "", a.focus(), a.value = e),
+                isVisible("tickets_detailed_form") || i == cur.searchStr && (o.length < 4 || 4 == o.length && " " != e[e.length - 1]) || (i ? addClass(ge(
+                        "tickets_search_reset"), "shown") : removeClass(ge("tickets_search_reset"), "shown"), cur.searchStr = i, clearTimeout(cur.searchFAQTimeout),
                     cur.searchFAQTimeout = setTimeout(function() {
                         FAQ.searchFAQ(cur.searchStr)
                     }.bind(this), 300), browser.mobile || scrollToTop())
@@ -600,23 +561,23 @@ FAQ = {
             cur.showAll && (delete cur.showAll, t.show_all = 1, cur.from_ads && (t.from = "ads")), ajax.post("tlmd", t, {
                 cache: 1,
                 hideProgress: removeClass.pbind("tickets_search", "loading"),
-                onDone: function(t, a) {
+                onDone: function(t, i) {
                     var o = ge("tickets_title")
                         .value,
-                        i = trim(o)
+                        a = trim(o)
                         .split(" "),
-                        r = i.length > 4 || 4 == i.length && " " == o[o.length - 1];
+                        r = a.length > 4 || 4 == a.length && " " == o[o.length - 1];
                     if (t ? ge("tlmd_found_list")
                         .innerHTML = se(t)
-                        .innerHTML : (a && (ge("tickets_faq_button")
-                            .innerHTML = a), r && (cur.toggled = !0, FAQ.toggleDetailedForm())), cur.tlmd) {
+                        .innerHTML : (i && (ge("tickets_faq_button")
+                            .innerHTML = i), r && (cur.toggled = !0, FAQ.toggleDetailedForm())), cur.tlmd) {
                         if (e ? extend(nav.objLoc, {
                                 q: e
                             }) : delete nav.objLoc.q, "faq" == nav.objLoc.act) {
                             var s = e ? e : getLang("support_page_title");
                             vk.id || (s += " | " + getLang("global_vkontakte")), document.title = s
                         }
-                        t && (cur.faqRowsOpened = !1, removeClass(ge("faq_toggle_all"), "shown")), nav.setLoc(nav.objLoc)
+                        nav.setLoc(nav.objLoc)
                     }
                 }
             })
@@ -628,9 +589,9 @@ FAQ = {
             .focus();
         else {
             t.setAttribute("placeholder", cur.lang.placeholder_default);
-            var a = trim(ge("tickets_title")
+            var i = trim(ge("tickets_title")
                 .value);
-            a && addClass(ge("tickets_search_reset"), "shown"), cur.toggleCanceled = !0, delete cur.toggled, FAQ.searchFAQ(a), t.focus()
+            i && addClass(ge("tickets_search_reset"), "shown"), cur.toggleCanceled = !0, delete cur.toggled, FAQ.searchFAQ(i), t.focus()
         }
         placeholderSetup(ge("tickets_title"), {
             back: !0,
@@ -638,24 +599,17 @@ FAQ = {
         })
     },
     clearSearch: function(e, t) {
-        var a = ge("tickets_title");
+        var i = ge("tickets_title");
         setStyle(e, {
                 opacity: .6
-            }), a.value = "", ge("tickets_title")
-            .focus(), FAQ.updateFAQ(t, a)
-    },
-    slideToggle: function(e) {
-        var t = gpeByClass("tlmd_slide", e),
-            a = !hasClass(t, "tlmd_slide_opened"),
-            o = geByClass1("tlmd_slide_brick", t);
-        toggleClass(t, "tlmd_slide_opened"), a ? (hide(o), slideDown(geByClass1("tlmd_slide_content", t), 500)) : (slideUp(geByClass1("tlmd_slide_content", t), 300),
-            setTimeout(show.pbind(o), 300))
+            }), i.value = "", ge("tickets_title")
+            .focus(), FAQ.updateFAQ(t, i)
     },
     goSectionTab: function(e, t) {
-        var a = geByClass1("ui_tab_sel", gpeByClass("ui_tabs", e));
+        var i = geByClass1("ui_tab_sel", gpeByClass("ui_tabs", e));
         return uiTabs.switchTab(e, {
             noAnim: 1
-        }), addClass(a, "ui_tab_sel"), removeClass(gpeByClass("ui_tab_group", e), "ui_tab_group_sel"), nav.go(e, t), !1
+        }), addClass(i, "ui_tab_sel"), removeClass(gpeByClass("ui_tab_group", e), "ui_tab_group_sel"), nav.go(e, t), !1
     },
     _eof: 1
 };
