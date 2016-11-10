@@ -4608,6 +4608,10 @@ em.ts_clist_hl {
     background: #e7edf2
 }
 
+.ts_contact.active em.ts_clist_hl {
+    background: #dde6f0
+}
+
 .ts_contact_info {
     font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;

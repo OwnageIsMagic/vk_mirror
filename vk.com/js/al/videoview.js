@@ -2446,10 +2446,9 @@ var Videoview = {
                     }), o.loaded = !1
                 } else {
                     var n = VideoPlaylist.getVideoIndex(e),
-                        d = o.reversed ? o.list.length - n : n,
-                        r = d < o.list.length - 1 ? 1 : 0,
-                        s = o.list[n][11];
-                    showVideo(e, s, {
+                        d = o.reversed ? o.list.length - 1 - n : n,
+                        r = d < o.list.length - 1 ? 1 : 0;
+                    showVideo(e, "", {
                         autoplay: 1,
                         playlistId: o.id,
                         addParams: {
@@ -2480,11 +2479,11 @@ var Videoview = {
                 var o = VideoPlaylist._getNextVideoIndex(e);
                 if (-1 != o) {
                     var t = i.list[o],
-                        a = isArray(t) ? t[0] + "_" + t[1] : t.vid,
+                        a = isArray(t) ? t[VideoConstants.VIDEO_ITEM_INDEX_OWNER_ID] + "_" + t[VideoConstants.VIDEO_ITEM_INDEX_ID] : t.vid,
                         n = isArray(t) ? "" : t.hash;
                     if (i.queued != a && (!i.loaded || i.loaded.vid != a)) {
                         i.loaded = !1, i.queued = a;
-                        var d = o < i.list.length - 1 ? 1 : 0;
+                        var d = (i.reversed ? i.list.length - o : o) < i.list.length - 1 ? 1 : 0;
                         showVideo(a, n, {
                             hidden: function(e, o, t, a) {
                                 i.queued == a && (i.loaded = {

@@ -129,7 +129,7 @@ div.wdd.wdd_focused.wdd_toup {
 }
 
 .wddi_over {
-    background: #fafbfc
+    background: #f5f7fa
 }
 
 .wddi_thumb {
@@ -157,11 +157,11 @@ div.wdd.wdd_focused.wdd_toup {
 }
 
 .wddi_over .wddi_thumb.online:after {
-    border-color: #fafbfc
+    border-color: #f5f7fa
 }
 
 .wddi_over .wddi_thumb.online.mobile:after {
-    background-color: #fafbfc
+    background-color: #f5f7fa
 }
 
 .wddi_img {
@@ -244,6 +244,10 @@ div.wdd.wdd_focused.wdd_toup {
     background: #e7edf2;
     padding: 0;
     margin: 0
+}
+
+.wddi_over .wdd_hl {
+    background: #dde6f0
 }
 
 .wdd_imgs {

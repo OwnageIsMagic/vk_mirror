@@ -1642,6 +1642,24 @@ a.group_ad_post_link.deleted.deleted:hover {
     color: #2a5885
 }
 
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .apps_settings_go_link.copy_link {
+    margin-left: 12px;
+    margin-left: 7px
+}
+
+#group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .apps_settings_go_link.copy_link:before {
+    content: "\2022 ";
+    color: #b3b3b3;
+    font-size: 8px;
+    padding: 0 1px 2px;
+    text-decoration: none;
+    vertical-align: middle;
+    display: inline-block;
+    pointer-events: none;
+    position: relative;
+    left: -5px
+}
+
 #group_apps_wrapper #group_apps_edit .app_setting_header .group_edit_app_info .app_settings_info {
     line-height: normal
 }
@@ -1701,6 +1719,19 @@ a.group_ad_post_link.deleted.deleted:hover {
     width: 50px;
     height: 50px;
     border-radius: 3px
+}
+
+#group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_label_new {
+    display: inline-block;
+    padding: 2px 5px;
+    color: #fff;
+    background-color: #ee5d4a;
+    font-size: 11px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin-left: 13px;
+    border-radius: 8px
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_row_field {

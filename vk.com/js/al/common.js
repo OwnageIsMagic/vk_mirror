@@ -3945,7 +3945,7 @@ function requestBox(box, onDone, onFail) {
         onDestroy: onFail
     });
     box.onDone = function() {
-        onDone.apply(null, arguments);
+        if (onDone) onDone.apply(null, arguments);
     }
     return box;
 }
@@ -3965,6 +3965,7 @@ function validateMobileBox(opts) {
         act: 'validate_box',
         captcha: opts.acceptCaptcha ? 1 : '',
         skip_push: opts.skip_push ? opts.skip_push : '',
+        from: opts.from || '',
         hash: opts.hash
     }, {
         stat: ['uncommon.css']
@@ -6515,6 +6516,10 @@ function placeholderInit(id, opts) {
             }
             if (!v) {
                 v = geByTag('br', el)
+                    .length > 1;
+            }
+            if (!v) {
+                v = geByTag('p', el)
                     .length > 1;
             }
         } else {

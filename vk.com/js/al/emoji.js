@@ -578,7 +578,7 @@ if (!window.Emoji) {
                             while (prev && prev.nodeType == 3 && trim(prev.nodeValue) == '') {
                                 prev = prev.previousSibling;
                             }
-                            if (prev && !(prev.tagName && prev.tagName.match(contTag))) {
+                            if (prev && !(prev.tagName && (prev.tagName.match(contTag) || prev.tagName == 'BR'))) {
                                 str = '\n' + str;
                             }
 

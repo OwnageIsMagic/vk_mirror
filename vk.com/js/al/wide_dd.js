@@ -83,16 +83,16 @@
         },
         _indexItem: function(e, t, d) {
             var i, s, r, a = "",
-                o = e.opts.searchKeys,
-                n = {};
-            for (i = 0, r = o.length; r > i; ++i) a += " " + (d[o[i]] || "")
+                n = e.opts.searchKeys,
+                o = {};
+            for (i = 0, r = n.length; r > i; ++i) a += " " + (d[n[i]] || "")
                 .replace(e.opts.delimeter, " ")
                 .replace(/<[^>]*>/g, "");
             for (a += (parseLatin(a) || "") + (parseCyr(a) || ""), a = trim(a.toLowerCase())
                 .split(/\s+/), i = 0; i < a.length; i++)
                 for (s = 1; s <= e.opts.wholeIndex; s++) {
                     var l = a[i].substr(0, s);
-                    n[l] || (e.index[l] || (e.index[l] = []), e.index[l].push(t), n[l] = 1)
+                    o[l] || (e.index[l] || (e.index[l] = []), e.index[l].push(t), o[l] = 1)
                 }
         },
         _search: function(e, t) {
@@ -102,17 +102,17 @@
             if (t.length <= d && -1 == t.indexOf(" ")) return e.index[t] || [];
             t = t.split(" ");
             var i, s, r, a = 0,
-                o = "";
+                n = "";
             for (i = 0, s = t.length; s > i; ++i) {
-                var n = t[i].substr(0, d),
-                    l = e.index[n];
-                if ((!o || !l || l.length < a) && (a = l ? l.length : 0, o = n), !a) return []
+                var o = t[i].substr(0, d),
+                    l = e.index[o];
+                if ((!n || !l || l.length < a) && (a = l ? l.length : 0, n = o), !a) return []
             }
             var r = [],
                 c = e.opts.searchKeys,
                 u = c.length;
-            for (i = 0, s = e.index[o].length; s > i; ++i) {
-                for (var p = e.index[o][i], f = e.opts.items[p], _ = !1, v = "", h = 0; u > h; ++h) v += " " + (f[c[h]] || "")
+            for (i = 0, s = e.index[n].length; s > i; ++i) {
+                for (var p = e.index[n][i], f = e.opts.items[p], _ = !1, v = "", h = 0; u > h; ++h) v += " " + (f[c[h]] || "")
                     .replace(e.opts.delimeter, " ")
                     .replace(/<[^>]*>/g, "");
                 for (v += (parseLatin(v) || "") + (parseCyr(v) || ""), v = v.toLowerCase(), h = 0, u = t.length; u > h; ++h)
@@ -138,8 +138,8 @@
         _renderList: function(t, d, i, s) {
             var r = [],
                 a = 0,
-                o = t.lastQ,
-                n = e._highlight,
+                n = t.lastQ,
+                o = e._highlight,
                 l = t.opts.itemMark;
             t.outdated && (s = !1), s ? a = (t.list.__uiScroll__ ? t.list.__uiScroll__.content : t.list)
                 .childNodes.length : (t.shown = {}, a = 0);
@@ -155,14 +155,14 @@
                         m = p[3] ? '<b class="fl_l wddi_thumb' + h + '"><img class="wddi_img" src="' + (isArray(p[3]) ? "/images/community_" + (window.devicePixelRatio >=
                             2 ? 100 : 50) + ".png" : p[3]) + '" /></b>' : "";
                     a ? v = "wddi" : (v = "wddi_over", t.over = f);
-                    var x = o && n(p[1] || "", o) || p[1] || "",
-                        w = o && n(p[2] || "", o) || p[2] || "";
+                    var x = n && o(p[1] || "", n) || p[1] || "",
+                        w = n && o(p[2] || "", n) || p[2] || "";
                     r.push('<div class="' + v + '" onmousedown="WideDropdown.select(\'' + t.id + "', event)\" onmousemove=\"WideDropdown.over('" + t.id + "', '" + clean(f) +
                         '\')" id="wddi' + f + "_" + t.id + '" onclick="">  <div class="wddi_data">' + m + '    <div class="wddi_text">' + x +
                         '</div>    <div class="wddi_sub">' + w + "</div>  </div></div>"), ++a
                 }
             }
-            r = r.join(""), !a && i && (r = '<div class="wddi_no">' + (o ? t.opts.noResult : t.opts.introText) + "</div>"), s ? (t.list.__uiScroll__ ? t.list.__uiScroll__.content :
+            r = r.join(""), !a && i && (r = '<div class="wddi_no">' + (n ? t.opts.noResult : t.opts.introText) + "</div>"), s ? (t.list.__uiScroll__ ? t.list.__uiScroll__.content :
                     t.list)
                 .innerHTML += r : r ? (t.outdated = !1, (t.list.__uiScroll__ ? t.list.__uiScroll__.content : t.list)
                     .innerHTML = r) : t.outdated = !0, t.outdated || (t.list.style.height = a > 5 ? "242px" : "", e._showList(t), t.scroll && t.scroll.scrollTop(),
@@ -176,7 +176,7 @@
                 r = "";
             null !== i && d.push(escapeRE(i)), null !== s && d.push(escapeRE(s));
             var a = new RegExp("(?![^&;]+;)(?!<[^<>]*)((\\(*)(" + d.join("|") + "))(?![^<>]*>)(?![^&;]+;)", "gi");
-            for (var o in e) r += (o > 0 ? " " : "") + e[o].replace(a, '$2<span class="wdd_hl">$3</span>');
+            for (var n in e) r += (n > 0 ? " " : "") + e[n].replace(a, '$2<span class="wdd_hl">$3</span>');
             return r
         },
         _checkScroll: function(e) {
@@ -203,9 +203,9 @@
                 var i, s = 0,
                     r = [],
                     a = [],
-                    o = 0;
-                for (var n in e.selected) {
-                    var l = e.selected[n],
+                    n = 0;
+                for (var o in e.selected) {
+                    var l = e.selected[o],
                         c = l[3],
                         u = l[4],
                         p = l[5],
@@ -214,12 +214,12 @@
                         for (var d, _ = 0, v = c.length; v > _; ++_) d = clone(l), d[0] = f[_], d[3] = c[_], d[4] = u[_], d[5] = p[_], a.push(d);
                     else a.push(l)
                 }
-                o = a.length;
-                for (var n in a) {
-                    var h, i, m, x, w, l = a[n],
+                n = a.length;
+                for (var o in a) {
+                    var h, i, m, x, w, l = a[o],
                         c = l[3],
                         u = l[4];
-                    if (o > 3 ? (++s, h = "wdd_img_tiny " + (1 == s || 4 == s ? "fl_l" : "fl_r")) : h = 3 == o ? s++ ? "wdd_img_tiny fl_r" : "wdd_img_half fl_l" : 2 == o ?
+                    if (n > 3 ? (++s, h = "wdd_img_tiny " + (1 == s || 4 == s ? "fl_l" : "fl_r")) : h = 3 == n ? s++ ? "wdd_img_tiny fl_r" : "wdd_img_half fl_l" : 2 == n ?
                         "wdd_img_half " + (s++ ? "fl_r" : "fl_l") : "wdd_img_full", r.push(u ? '<a href="' + u + '" class="' + h + '">' : '<div class="' + h + '">'), r.push(
                             '<img class="wdd_img" src="' + c + '" />'), r.push(u ? "</a>" : "</div>"), s >= 4) break
                 }
@@ -280,7 +280,7 @@
                     className: "wdd_bubbles"
                 }), s.add), s.listWrap = t.insertBefore(ce("div", {
                     className: "wdd_lwrap",
-                    innerHTML: '<div class="wdd_list" onmousemove="WideDropdown.resetMoved()"></div>'
+                    innerHTML: '<div class="wdd_list"></div>'
                 }, {
                     display: "none",
                     width: d.width || getSize(t)[0]
@@ -344,30 +344,27 @@
                 items: i || []
             }), e._index(s), e._updateList(s, !0)
         },
-        resetMoved: function() {
-            this.moved = !0
-        },
         over: function(e, t, d) {
             var i = cur.wdd[e];
-            if (i.over != t && (this.moved || d)) {
+            if (i.over != t) {
                 i.over && replaceClass("wddi" + i.over + "_" + e, "wddi_over", "wddi"), i.over = t;
                 var s = ge("wddi" + i.over + "_" + e);
-                replaceClass(s, "wddi", "wddi_over"), d && i.scroll.scrollIntoView(s.firstElementChild || s), this.moved = !1
+                replaceClass(s, "wddi", "wddi_over"), d && i.scroll.scrollIntoView(s.firstElementChild || s)
             }
         },
         choose: function(t, d, i, s) {
             var r = cur.wdd[t],
                 a = i ? i[0] : r.over,
-                o = a + "_";
-            if (i || (i = r.shown[o]), void 0 !== a && i) {
+                n = a + "_";
+            if (i || (i = r.shown[n]), void 0 !== a && i) {
                 if (r.over = !1, r.opts.onItemSelect && r.opts.onItemSelect(i) === !1) return d && cancelEvent(d);
                 r.chosen = i, val(r.text, "INPUT" == r.text.tagName ? unclean(i[1]) : i[1]), r.text.style.color = "", r.text.blur(), e._textEvent({
                     target: r.text,
                     type: r.text.focused ? "focus" : "blur"
                 });
-                var n = r.opts.onChange && !s ? r.opts.onChange(1, a) : !0,
-                    l = 1 === n;
-                return 0 !== n && setTimeout(e._updateImgs.pbind(r, l), 0), d && cancelEvent(d)
+                var o = r.opts.onChange && !s ? r.opts.onChange(1, a) : !0,
+                    l = 1 === o;
+                return 0 !== o && setTimeout(e._updateImgs.pbind(r, l), 0), d && cancelEvent(d)
             }
         },
         select: function(t, d, i) {
@@ -387,9 +384,9 @@
                     target: s.text,
                     type: s.text.focused ? "focus" : "blur"
                 }), s.full ? (hide(s.add), s.arrow.style.visibility = "hidden") : e._updateList(s, !0);
-                var o = s.opts.onChange ? s.opts.onChange(1, r) : !0,
-                    n = 1 === o;
-                return 0 !== o && setTimeout(e._updateImgs.pbind(s, n), 0), d && cancelEvent(d)
+                var n = s.opts.onChange ? s.opts.onChange(1, r) : !0,
+                    o = 1 === n;
+                return 0 !== n && setTimeout(e._updateImgs.pbind(s, o), 0), d && cancelEvent(d)
             }
         },
         updimgs: function(t) {
@@ -412,9 +409,9 @@
                         delete s.selected[a], re("wddb" + a + t), s.selCount && --s.selCount, s.full = 0, s.arrow.style.visibility = "", s.text.blur(), s.selCount ? (show(
                             s.add), hide(s.text)) : (hide(s.add), show(s.text), e._updateTextInput(s)), e._updateList(s, !0)
                     }
-                    var o = s.opts.onChange ? s.opts.onChange(-1, d) : !0,
-                        n = 1 === o;
-                    return 0 !== o && setTimeout(e._updateImgs.pbind(s, n), 0), i ? cancelEvent(i) : void 0
+                    var n = s.opts.onChange ? s.opts.onChange(-1, d) : !0,
+                        o = 1 === n;
+                    return 0 !== n && setTimeout(e._updateImgs.pbind(s, o), 0), i ? cancelEvent(i) : void 0
                 }
                 if (i) return cancelEvent(i)
             }

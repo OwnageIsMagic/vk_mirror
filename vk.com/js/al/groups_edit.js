@@ -2144,6 +2144,22 @@ var GroupsEdit = {
                 }
             })
         },
+        copyLink: function(e) {
+            var t = function(e) {
+                var t = !1,
+                    o = ce("textarea", {
+                        value: e
+                    });
+                utilsNode.appendChild(o), o.select();
+                try {
+                    t = document.execCommand("copy")
+                } catch (r) {
+                    t = !1
+                }
+                return re(o), showDoneBox(getLang("groups_app_link_been_copied")), t
+            };
+            t(e)
+        },
         attach: function(e, t, o, r) {
             if (!cur.show_alert || r) {
                 var s = {

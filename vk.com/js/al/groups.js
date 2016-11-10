@@ -32,15 +32,15 @@ var Groups = {
                     '<br><div class="checkbox group_age_checkbox" onclick="checkbox(this); disableButton(curBox().proceedButton, !isChecked(this))"><div></div>' + getLang(
                         "groups_age_accepted") + "</div></div>");
             t.removeButtons();
-            var a = t.addButton(getLang("global_cancel"), n, "no", !0);
-            addClass(a, "group_age_disclaimer_close"), t.proceedButton = t.addButton(getLang("groups_age_approve"), function() {
+            var s = t.addButton(getLang("global_cancel"), n, "no", !0);
+            addClass(s, "group_age_disclaimer_close"), t.proceedButton = t.addButton(getLang("groups_age_approve"), function() {
                 e = !0, removeClass(ge("group"), "hidden"), t.hide(), o.age_disclaimer_hash ? ajax.post("al_groups.php", {
                     act: "a_set_user_age",
                     hash: o.age_disclaimer_hash
                 }) : setCookie("remixage18", 1), cur.zNavInfo && zNav(cur.zNavInfo.info, cur.zNavInfo.opts)
             }, "yes", !0);
-            var s = geByClass1("box_controls", domPN(t.bodyNode));
-            addClass(s, "group_age_disclaimer_box"), replaceClass(domFC(s), "fl_r", "fl_l"), disableButton(t.proceedButton, 1)
+            var a = geByClass1("box_controls", domPN(t.bodyNode));
+            addClass(a, "group_age_disclaimer_box"), replaceClass(domFC(a), "fl_r", "fl_l"), disableButton(t.proceedButton, 1)
         }
     },
     switchTab: function(o, e, n) {
@@ -80,7 +80,7 @@ var Groups = {
     },
     vote: function(o, e, n, t) {
         radiobtn(o, t, "vote_option" + n);
-        var a = hasClass(o.firstChild, "progress") ? o.firstChild : o.insertBefore(ce("span", {
+        var s = hasClass(o.firstChild, "progress") ? o.firstChild : o.insertBefore(ce("span", {
             className: "fl_r progress"
         }), o.firstChild);
         ajax.post("al_voting.php", {
@@ -91,7 +91,7 @@ var Groups = {
             hash: cur.polls[n].hash
         }, {
             onDone: Groups.votingUpdate,
-            progress: a
+            progress: s
         })
     },
     subscribe: function(o) {
@@ -132,6 +132,20 @@ var Groups = {
         }, {
             onDone: function(e) {
                 val(o, e), cur.options.ignored_news = !cur.options.ignored_news
+            },
+            showProgress: window.Page && Page.actionsDropdownLock.pbind(o),
+            hideProgress: window.Page && Page.actionsDropdownUnlock.pbind(o)
+        }), cancelEvent(n)
+    },
+    toggleLiveSubscription: function(o, e, n) {
+        ajax.post("al_video.php", {
+            act: cur.options.ignored_lives ? "a_subscribe_live" : "a_unsubscribe_live",
+            owner_id: cur.oid,
+            hash: e,
+            from: "group"
+        }, {
+            onDone: function(e) {
+                val(o, e), cur.options.ignored_lives = !cur.options.ignored_lives
             },
             showProgress: window.Page && Page.actionsDropdownLock.pbind(o),
             hideProgress: window.Page && Page.actionsDropdownUnlock.pbind(o)
@@ -184,12 +198,12 @@ var Groups = {
         t && e && domPN(t)
             .replaceChild(se(e), t), void 0 !== n && val("group_moder_info", n)
     },
-    enter: function(o, e, n, t, a) {
-        var s, i;
-        if (o = ge(o), hasClass(o, "flat_button")) s = lockButton.pbind(o), i = unlockButton.pbind(o);
+    enter: function(o, e, n, t, s) {
+        var a, i;
+        if (o = ge(o), hasClass(o, "flat_button")) a = lockButton.pbind(o), i = unlockButton.pbind(o);
         else {
             if (o.firstChild && "progress" == o.firstChild.className) return;
-            s = function() {
+            a = function() {
                 o.oldhtml = o.innerHTML, o.innerHTML = '<span class="progress" style="display: block"></span>'
             }, i = function() {
                 o.innerHTML = o.oldhtml
@@ -202,7 +216,7 @@ var Groups = {
             context: t
         }, {
             onDone: function(o, e) {
-                if (a) return a();
+                if (s) return s();
                 Groups.updateActions(o, e), toggle("page_actions", o);
                 var n = geByClass1("_groups_invite_block");
                 n && slideUp(n, 200), nav.reload({
@@ -217,24 +231,24 @@ var Groups = {
                     }, o)
                     .hide, 3e3), !0) : void 0
             },
-            showProgress: s,
+            showProgress: a,
             hideProgress: i
         })
     },
-    confirm: function(o, e, n, t, a) {
-        var s = showFastBox({
+    confirm: function(o, e, n, t, s) {
+        var a = showFastBox({
             title: getLang("global_warning"),
             bodyStyle: "padding: 20px; line-height: 160%;"
         }, getLang(o), getLang("group_leave_group"), function() {
-            s.hide(), Groups.leave(e, n, t, a)
+            a.hide(), Groups.leave(e, n, t, s)
         }, getLang("global_cancel"))
     },
-    leave: function(o, e, n, t, a) {
-        var s, i;
-        if (o = ge(o), hasClass(o, "flat_button")) s = lockButton.pbind(o), i = unlockButton.pbind(o);
+    leave: function(o, e, n, t, s) {
+        var a, i;
+        if (o = ge(o), hasClass(o, "flat_button")) a = lockButton.pbind(o), i = unlockButton.pbind(o);
         else {
             if (o.firstChild && "progress" == o.firstChild.className) return;
-            s = function() {
+            a = function() {
                 o.oldhtml = o.innerHTML, o.innerHTML = '<span class="progress" style="display: block"></span>'
             }, i = function() {
                 o.innerHTML = o.oldhtml
@@ -247,14 +261,14 @@ var Groups = {
             context: t
         }, {
             onDone: function(o, e) {
-                if (a) return a();
+                if (s) return s();
                 Groups.updateActions(o, e), toggle("page_actions", o);
                 var n = geByClass1("_groups_invite_block");
                 n && slideUp(n, 200), nav.reload({
                     noframe: !0
                 })
             },
-            showProgress: s,
+            showProgress: a,
             hideProgress: i
         })
     },
@@ -270,12 +284,12 @@ var Groups = {
             var e = ge("page_other_acts"); - 1 == o ? hide(e) : fadeOut(e, 200)
         }
     },
-    toggleTop: function(o, e, n, t, a) {
+    toggleTop: function(o, e, n, t, s) {
         ajax.post("al_groups.php", {
             act: "a_toggle_top",
             gid: e,
             hash: n,
-            nocis: a
+            nocis: s
         }, {
             onDone: function(e) {
                 o.innerHTML = e
@@ -302,8 +316,8 @@ var Groups = {
             var t = n ? getLang("groups_fast_menu_access_invert") : getLang("groups_fast_menu_access");
             val(o, t), o.setAttribute("data-value", n), "groups_list" == cur.module && window.GroupsList && GroupsList.updateGroupField(e, 11, n)
         }
-        var a = 1 ^ intval(o.getAttribute("data-value")),
-            s = hasClass(o, "page_actions_item") || hasClass(o, "ui_actions_menu_item");
+        var s = 1 ^ intval(o.getAttribute("data-value")),
+            a = hasClass(o, "page_actions_item") || hasClass(o, "ui_actions_menu_item");
         return ajax.post("al_settings.php", {
             act: "a_toggle_admin_fast",
             gid: e,
@@ -311,19 +325,19 @@ var Groups = {
             update_menu: 1
         }, {
             onDone: function(o, e) {
-                s && t(o), geByTag1("ol", ge("side_bar"))
+                a && t(o), geByTag1("ol", ge("side_bar"))
                     .innerHTML = e, window.Notifier && Notifier.resetCommConnection()
             },
             onFail: function(o) {
-                return s || t(0), "too_much_groups" !== o ? !1 : (showFastBox(getLang("global_error"), getLang("groups_left_menu_full", 5)), !0)
+                return a || t(0), "too_much_groups" !== o ? !1 : (showFastBox(getLang("global_error"), getLang("groups_left_menu_full", 5)), !0)
             }.bind(),
-            showProgress: s && function() {
+            showProgress: a && function() {
                 hasClass(o, "page_actions_item") ? window.Page && Page.actionsDropdownLock(o) : lockActionsMenuItem(o)
             },
-            hideProgress: s && function() {
+            hideProgress: a && function() {
                 hasClass(o, "page_actions_item") ? window.Page && Page.actionsDropdownUnlock(o) : unlockActionsMenuItem(o)
             }
-        }), s || t(a), !1
+        }), a || t(s), !1
     },
     showMapBox: function(o, e, n) {
         window.showZeroZoneBox && showZeroZoneBox("places", function() {
