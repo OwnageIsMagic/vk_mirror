@@ -56,7 +56,7 @@ function loadScript(t, i) {
     }
 }
 var AudioUtils = {
-    _v: 1,
+    _v: 2,
     AUDIO_ITEM_INDEX_ID: 0,
     AUDIO_ITEM_INDEX_OWNER_ID: 1,
     AUDIO_ITEM_INDEX_URL: 2,
