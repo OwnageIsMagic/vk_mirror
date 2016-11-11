@@ -743,6 +743,72 @@ body.mac .apps_featured_thumb .ads_ad_big_app_info_box {
     background-position: 0 0
 }
 
+.apps_block_narrow {
+    width: 390px;
+    display: inline-block
+}
+
+.apps_block_narrow+.apps_block_narrow {
+    margin-left: 15px
+}
+
+.apps_cat_line_row {
+    height: 42.5px;
+    margin: -8px 0 20px 20px;
+    padding: 19.5px 20px 0 60px;
+    position: relative;
+    border-top: 1px solid #e7e8ec
+}
+
+.apps_cat_line_row:first-child {
+    padding-top: 7.5px;
+    border-top: 0;
+    margin-top: 15px
+}
+
+.apps_cat_line_row:first-child .apps_cat_line_img {
+    top: 0
+}
+
+.apps_cat_line_row .app_link {
+    vertical-align: top;
+    max-width: 100%;
+    overflow: hidden;
+    display: inline-block;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+.apps_cat_line_row .apps_cat_line_img {
+    border-radius: 3px;
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    left: 0;
+    top: 12px
+}
+
+.apps_cat_line_row .apps_cat_line_info {
+    padding-top: 4px;
+    vertical-align: top
+}
+
+.app_best_line_sticker,
+.app_new_line_sticker {
+    color: #fff;
+    padding: 1px 4px 2px;
+    font-size: 11px;
+    border-radius: 2px
+}
+
+.app_new_line_sticker {
+    background: #63a6eb
+}
+
+.app_best_line_sticker {
+    background: #f66061
+}
+
 a.apps_header_progress {
     position: relative;
     pointer-events: none

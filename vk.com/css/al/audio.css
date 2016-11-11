@@ -42,6 +42,7 @@
     line-height: 1.154
 }
 
+.audio_layout,
 #ui_rmenu_audio_albums_list,
 #ui_rmenu_audio_albums_list .audio_album_item {
     position: relative
@@ -815,7 +816,7 @@ body.mac .audio_rows_header.fixed {
 }
 
 .audio_rows {
-    padding: 14px 9px
+    padding: 0 10px 14px
 }
 
 .audio_rows h3 {
@@ -2124,6 +2125,14 @@ body.mac .audio_rows_header.fixed {
 .audio_album_btns.in_progress .audio_album_btn,
 .ui_rmenu_loading .audio_album_btns {
     display: none
+}
+
+.audio_friends_list_wrap {
+    overflow: hidden
+}
+
+.audio_friends_list_wrap .ui_search.ui_search_new {
+    margin-bottom: 8px
 }
 
 .audio_friends_list {

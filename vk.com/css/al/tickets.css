@@ -3604,7 +3604,12 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 .help_table_not_found__query {
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    max-width: 500px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom
 }
 
 .help_table_not_found__btn {

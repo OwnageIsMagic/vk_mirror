@@ -12,6 +12,7 @@ var Video = {
     ALBUMS_PER_PAGE: 12,
     VIDEOS_PER_ROW: 3,
     PLAYLIST_OBJECT_ID_INDEX: 6,
+    SEARCH_KEEP_FILTERS_DELAY: 3e3,
     SEARCH_STATS_POSITION_FIELDS: ["oid", "vid", "clicked", "viewStarted", "viewedParts", "viewedSeconds"],
     getLoc: function() {
         return cur.curLoc ? cur.curLoc : (isEmpty(nav.objLoc) || !nav.objLoc[0] || 0 != nav.objLoc[0].indexOf("video")) && cur.section && inArray(cur.section, ["catalog",
@@ -36,16 +37,13 @@ var Video = {
                 .section);
         var e = Video._getCurrentSectionType();
         "catalog" == e ? (Videocat.init(), Video._preloadPage("all")) : (Video.initOwnerVideoPage(), vk.id == cur.getOwnerId() && -1 != Video.AVAILABLE_TABS.indexOf(e) &&
-                Video._preloadPage("catalog")), cur.curLoc = !1, cur.section = !1, Video.getLoc()
-            .q && (Video._prepareSearchFilters(Video.getLoc()), cur.searchText = Video.getLoc()
-                .q, val(cur.searchInputEl, cur.searchText), Video.doSearch(Video.getLoc()
-                    .q), Video._initScrollFixedSearch(!0)), cur.currentModule = function() {
-                return Video.isInSearch() ? "video_search" : Video.isInCatalog() ? "videocat" : Video.isInVideosList() ? cur.oid < 0 ? "community_videos" : cur.oid == vk.id ?
-                    "profile_own_videos" : "profile_videos" : cur.module
-            }, Video._initScroll(), addEvent(window, "beforeunload", function(e) {
-                var o = Video.getLoc();
-                return o[0].indexOf("video") >= 0 && o.q && Video.logSearchStats(), !0
-            }), Video._updateThumbsInView()
+            Video._preloadPage("catalog")), cur.curLoc = !1, cur.section = !1, cur.currentModule = function() {
+            return Video.isInSearch() ? "video_search" : Video.isInCatalog() ? "videocat" : Video.isInVideosList() ? cur.oid < 0 ? "community_videos" : cur.oid == vk.id ?
+                "profile_own_videos" : "profile_videos" : cur.module
+        }, Video._initScroll(), addEvent(window, "beforeunload", function(e) {
+            var o = Video.getLoc();
+            return o[0].indexOf("video") >= 0 && o.q && Video.logSearchStats(), !0
+        }), Video._updateThumbsInView()
     },
     _initScroll: function() {
         cur._ev_onScroll && removeEvent(window, "scroll", cur._ev_onScroll), addEvent(window, "scroll", cur._ev_onScroll = Video.onScroll), cur.destroy.push(function() {
@@ -94,7 +92,8 @@ var Video = {
     _switch: function(e, o) {
         var i = ge("video_content_" + o);
         if (!i && "undefined" == typeof cur._preloadedPages[o]) return cur._switchOnPagePreloaded = [e, o], !1;
-        if (Video.doSearch(""), val(cur.searchInputEl, ""), hide("video_content_" + e), toggle("videocat_other_blocks", "catalog" != e), i || ge("video_layout_contents")
+        if (Video.doSearch(""), Video.inputVal(cur.searchInputEl, ""), hide("video_content_" + e), toggle("videocat_other_blocks", "catalog" != e), i || ge(
+                "video_layout_contents")
             .appendChild(cur._preloadedPages[o]), show(i), "catalog" == e) Video.initOwnerVideoPage(), document.title = getLang("video_myvideos");
         else {
             var t = ge("videocat_other_blocks");
@@ -129,22 +128,23 @@ var Video = {
             }
             var v;
             if (d ? (nav.setLoc(i), v = Video._switch("catalog", "all")) : a && (nav.setLoc(i), v = Video._switch("all", "catalog")), v || l) return !0;
-            if (uiTabs.hideProgress("video_main_tabs"), "all" == e.section && delete i.section, c && (cur.videoLocBeforeSearch = o), s && (cur.videoSearchStr = "",
-                    cur.videoSearchFilters = {}, Video.doSearch(), cur.videoLocBeforeSearch && t.fromSearch)) {
+            if (uiTabs.hideProgress("video_main_tabs"), "all" == e.section && delete i.section, c && (cur.videoLocBeforeSearch = o), s && (cur.videoSearchFilters = {},
+                    Video.doSearch(), Video.inputVal(cur.searchInputEl, ""), cur.videoLocBeforeSearch && t.fromSearch)) {
                 var h = clone(cur.videoLocBeforeSearch);
                 return delete cur.videoLocBeforeSearch, nav.go(h), !1
             }
-            trim(val(cur.searchInputEl)) != trim(i.q || "") && val(cur.searchInputEl, trim(i.q || ""));
+            trim(val(cur.searchInputEl)) != trim(i.q || "");
             var g = i.section || "all";
-            if (i.q) Video.isInAlbum() || delete i.section, Video._prepareSearchFilters(i), cur.videoSearchStr = val(cur.searchInputEl), Video.doSearch();
+            if (i.q) Video.isInAlbum() || delete i.section, Video._prepareSearchFilters(i), t.fromSearch || Video.inputVal(cur.searchInputEl, i.q), t.fromSearch ||
+                t.globalQuery || (t.globalQuery = i.q), Video.doSearch(i.q, t.globalQuery);
             else {
                 if (-1 == Video.AVAILABLE_TABS.indexOf(g)) return !0;
                 if (Video.isInAlbum(o.section)) return nav.setLoc(i), !0;
                 each(Video.AVAILABLE_TABS, function(e, o) {
                     hide("video_subtab_pane_" + o)
                 }), show("video_subtab_pane_" + g), Video.updateEmptyPlaceholder(g);
-                var p = domFC(ge("video_tab_" + g));
-                p && uiTabs.switchTab(p, {
+                var V = domFC(ge("video_tab_" + g));
+                V && uiTabs.switchTab(V, {
                     noAnim: t.hist
                 });
                 geByClass1("video_tab_actions_wrap"), [geByClass1("_video_sort_dd_wrap"), geByClass1("divider")];
@@ -157,36 +157,27 @@ var Video = {
         })
     },
     initSearch: function() {
-        function e() {
-            cur.searchText = trim(val(cur.searchInputEl)), clearTimeout(cur._sto), cur._sto = setTimeout(function() {
-                if (!cur.searchText) {
-                    var e = {};
-                    each(Video.SEARCH_FILTERS, function(o, i) {
-                        e[i] = !1
-                    })
-                }
-                nav.change(extend({
-                    q: cur.searchText ? cur.searchText : !1
-                }, e), !1, {
-                    fromSearch: !0
+        function e(e, o) {
+            e = trim(e), o = isString(o) ? trim(o) : "";
+            var i = {};
+            e || (each(Video.SEARCH_FILTERS, function(e, o) {
+                i[o] = !1
+            }), cur.videoPrevSearchFilters = clone(cur.videoSearchFilters), setTimeout(function() {
+                delete cur.videoPrevSearchFilters
+            }, Video.SEARCH_KEEP_FILTERS_DELAY)), e && cur.videoPrevSearchFilters && (i = cur.videoPrevSearchFilters, delete cur.videoPrevSearchFilters), nav.change(
+                extend({
+                    q: e || !1
+                }, i), !1, {
+                    fromSearch: !0,
+                    globalQuery: o
                 })
-            }, cur.searchText ? 400 : 0)
         }
 
         function o() {
             var e = trim(val(cur.searchInputEl));
             e && (cur.vSearchInputBlurred = !0)
         }
-        if (Video.initFilters(), cur.searchInputEl = ge("video_search_input"), (Video.isInCatalog() || cur.getOwnerId() == vk.id) && new Suggester(cur.searchInputEl, {
-                section: "video",
-                sidePadding: "43px",
-                onSelect: function(e) {
-                    val(cur.searchInputEl, e[3])
-                },
-                onChoose: function(o) {
-                    val(cur.searchInputEl, o[3]), e()
-                }
-            }), cur.searchInputEl) {
+        if (cur.searchInputEl = ge("video_search_input"), cur.searchInputEl) {
             data(cur.searchInputEl, "opts")
                 .onChange = e, data(cur.searchInputEl, "opts")
                 .onBlur = o;
@@ -291,8 +282,8 @@ var Video = {
     },
     _setFilterSelector: function(e, o) {
         var i, t = cur["videoFilter_" + e];
-        return "Selector" == t.__className ? (void 0 === o && (o = t.options.defaultItems[0][0]), t.selectItem(o, !1), i = clone(t.selectedItems()[0]), i.push(i[0] == t.options
-            .defaultItems[0][0])) : hasClass(t, "checkbox") && (toggleClass(t, "on", !!o), i = [!!o, data(t, "title"), !o]), i
+        return t ? ("Selector" == t.__className ? (void 0 === o && (o = t.options.defaultItems[0][0]), t.selectItem(o, !1), i = clone(t.selectedItems()[0]), i.push(i[0] ==
+            t.options.defaultItems[0][0])) : hasClass(t, "checkbox") && (toggleClass(t, "on", !!o), i = [!!o, data(t, "title"), !o]), i) : !1
     },
     _onFiltersChanged: function() {
         var e = hasClass("video_fltr_hd", "on"),
@@ -312,21 +303,26 @@ var Video = {
     },
     initFilters: function() {
         var e = geByClass1("video_search_input");
-        e && (cur.videoFilter_len = new Dropdown(ge("video_fltr_len"), cur.lenFilters, {
-                big: 1,
-                zeroPlaceholder: !0,
-                onChange: Video._onFiltersChanged
-            }), cur.videoFilter_date = new Dropdown(ge("video_fltr_date"), cur.dateFilters, {
-                big: 1,
-                zeroPlaceholder: !0,
-                onChange: Video._onFiltersChanged
-            }), cur.videoFilter_order = new Dropdown(ge("video_fltr_order"), cur.orderFilters, {
-                big: 1,
-                zeroPlaceholder: !0,
-                onChange: Video._onFiltersChanged
-            }), cur.videoFilter_hd = ge("video_fltr_hd"), removeEvent(cur.videoFilter_hd, "click"), addEvent(cur.videoFilter_hd, "click", Video._onFiltersChanged),
-            data(cur.videoFilter_hd, "title", cur.lang.video_hd_checkbox), cur.videoFilter_notsafe = ge("video_fltr_notsafe"), removeEvent(cur.videoFilter_notsafe,
-                "click"), addEvent(cur.videoFilter_notsafe, "click", Video._onFiltersChanged), data(cur.videoFilter_notsafe, "title", cur.lang.video_filter_no_safe))
+        if (e) {
+            cur.videoFilter_len = new Dropdown(ge("video_fltr_len"), cur.lenFilters, {
+                    big: 1,
+                    zeroPlaceholder: !0,
+                    onChange: Video._onFiltersChanged
+                }), cur.videoFilter_date = new Dropdown(ge("video_fltr_date"), cur.dateFilters, {
+                    big: 1,
+                    zeroPlaceholder: !0,
+                    onChange: Video._onFiltersChanged
+                }), cur.videoFilter_order = new Dropdown(ge("video_fltr_order"), cur.orderFilters, {
+                    big: 1,
+                    zeroPlaceholder: !0,
+                    onChange: Video._onFiltersChanged
+                }), cur.videoFilter_hd = ge("video_fltr_hd"), removeEvent(cur.videoFilter_hd, "click"), addEvent(cur.videoFilter_hd, "click", Video._onFiltersChanged),
+                data(cur.videoFilter_hd, "title", cur.lang.video_hd_checkbox), cur.videoFilter_notsafe = ge("video_fltr_notsafe"), removeEvent(cur.videoFilter_notsafe,
+                    "click"), addEvent(cur.videoFilter_notsafe, "click", Video._onFiltersChanged), data(cur.videoFilter_notsafe, "title", cur.lang.video_filter_no_safe);
+            var o = Video.getLoc()
+                .q;
+            o && (Video._prepareSearchFilters(Video.getLoc()), cur.searchText = o, Video.inputVal(cur.searchInputEl, cur.searchText), Video.doSearch(o, o))
+        }
     },
     _isGeneralSection: function(e) {
         for (var o = 0; o < Video.AVAILABLE_TABS.length; o++)
@@ -415,27 +411,33 @@ var Video = {
         curBox() || (e ? (cur.prevVideoPageTitle || (cur.prevVideoPageTitle = document.title), document.title = getLang("video_title_search")
             .replace("{q}", e)) : cur.prevVideoPageTitle && (document.title = cur.prevVideoPageTitle))
     },
-    doSearch: function(e) {
+    inputVal: function(e, o) {
+        if (val(e) != o) {
+            val(e, o);
+            var i = gpeByClass("_wrap", e);
+            toggleClass(i, "ui_search_field_empty", !o)
+        }
+    },
+    doSearch: function(e, o) {
         if (cur.searchInputEl) {
-            var o = trim(e ? e : cur.videoSearchStr);
+            var i = cur.videoLocalSearchQuery = trim(e),
+                t = cur.videoGlobalSearchQuery = trim(o);
             each(Video.SEARCH_FILTERS, function(e, o) {
                 var i = Video._setFilterSelector(o, cur.videoSearchFilters[o]);
-                uiSearch.toggleFilter(cur.searchInputEl, o, i[1], !i[2])
-            });
-            var i = gpeByClass("_wrap", cur.searchInputEl);
-            toggleClass(i, "ui_search_field_empty", !o), cur.noEmptyLocalResults = Video.isInCatalog(), Video._toggleSearchProgress(!!o);
-            var t = [Video.VIDEO_SEARCH_TYPE, Video.ALBUM_SEARCH_TYPE, Video.VIDEO_GLOBAL_SEARCH_TYPE];
-            Video.isInSearch() && cur.noEmptyLocalResults && t.pop(), each(t, function(e, o) {
+                i && uiSearch.toggleFilter(cur.searchInputEl, o, i[1], !i[2])
+            }), cur.noEmptyLocalResults = Video.isInCatalog(), Video._toggleSearchProgress(!!i);
+            var r = [Video.VIDEO_SEARCH_TYPE, Video.ALBUM_SEARCH_TYPE, Video.VIDEO_GLOBAL_SEARCH_TYPE];
+            Video.isInSearch() && cur.noEmptyLocalResults && r.pop(), each(r, function(e, o) {
                     hide("video_subtab_pane_" + o)
-                }), hide("videocat_other_blocks"), o || Video._toggleSearchContent(!1), curBox() ? ge("box_layer_wrap")
+                }), toggle("videocat_other_blocks", Video.isInCatalog() && !e), i || Video._toggleSearchContent(!1), curBox() ? ge("box_layer_wrap")
                 .scrollTop = 0 : scrollToTop(1e3);
-            var r = Video.isInAlbum(),
-                d = r ? Video.getLoc()
+            var d = Video.isInAlbum(),
+                a = d ? Video.getLoc()
                 .section : "all";
-            Video._clearPendingAction(d), Video._updateSearchPageTitle(o), o && (Video._addPendingAction(d, function() {
-                var e = Video._searchLocally(o);
-                15 > e && Video._searchGlobally(o), Video._toggleSearchProgress(!1)
-            }), Video.loadSilent(d), Video._searchGlobally(o))
+            Video._clearPendingAction(a), Video._updateSearchPageTitle(i), i && (Video._addPendingAction(a, function() {
+                var e = Video._searchLocally(i);
+                15 > e && Video._searchGlobally(t), Video._toggleSearchProgress(!1)
+            }), Video.loadSilent(a), Video._searchGlobally(t))
         }
     },
     _toggleSearchProgress: function(e) {
@@ -451,48 +453,59 @@ var Video = {
         }), "$" + e.join("#")
     },
     _searchGlobally: function(e, o) {
-        o = intval(o);
-        var i = o > 0;
-        cur.globalSearchResults = cur.globalSearchResults || {};
-        var t = e + Video._buildFiltersSearchStr();
-        return !i && cur.globalSearchResults[t] ? void Video._showGlobalSearchResults(e) : void(cur.globalSearchInProgress != e && (cur.globalSearchInProgress = e, !i &&
-            Video._toggleSearchProgress(!0), ajax.post("/al_video.php", extend({
-                act: "search_video",
-                q: e,
-                offset: o || 0
-            }, cur.videoSearchFilters), {
-                onDone: function(o, r, d, a, n) {
-                    cur.globalSearchInProgress = !1, !i && Video._toggleSearchProgress(!1), cur.globalSearchResults[t] = cur.globalSearchResults[t] || {
-                        count: 0,
-                        list: [],
-                        realOffset: 0
-                    };
-                    var c = cur.globalSearchResults[t];
-                    c.done = c.done || !r.list || 0 == r.list.length;
-                    var s = c.list.length;
-                    if (!c.done) {
-                        for (var l = r.list[0], u = 0, _ = c.list.length - 1; _ >= 0; _--) {
-                            var v = c.list.length - _;
-                            if (v > 20) break;
-                            var h = c.list[_];
-                            if (l[0] == h[0] && l[1] == h[1]) {
-                                u = v;
-                                break
+        if (e) {
+            o = intval(o);
+            var i = o > 0;
+            cur.globalSearchResults = cur.globalSearchResults || {};
+            var t = e + Video._buildFiltersSearchStr();
+            return !i && cur.globalSearchResults[t] ? void Video._showGlobalSearchResults(e) : void(cur.globalSearchInProgress != e && (cur.globalSearchInProgress = e, !i &&
+                Video._toggleSearchProgress(!0), ajax.post("/al_video.php", extend({
+                    act: "search_video",
+                    q: e,
+                    offset: o || 0
+                }, cur.videoSearchFilters), {
+                    onDone: function(o, r, d, a, n, c) {
+                        cur.globalSearchInProgress = !1, !i && Video._toggleSearchProgress(!1), cur.globalSearchResults[t] = cur.globalSearchResults[t] ||
+                            {
+                                count: 0,
+                                countHash: r,
+                                list: [],
+                                realOffset: 0
+                            };
+                        var s = cur.globalSearchResults[t];
+                        s.done = s.done || !d.list || 0 == d.list.length;
+                        var l = s.list.length;
+                        if (!s.done) {
+                            for (var u = d.list[0], _ = 0, v = s.list.length - 1; v >= 0; v--) {
+                                var h = s.list.length - v;
+                                if (h > 20) break;
+                                var g = s.list[v];
+                                if (u[0] == g[0] && u[1] == g[1]) {
+                                    _ = h;
+                                    break
+                                }
                             }
-                        }
-                        c.count = parseInt(o), Array.prototype.push.apply(c.list, r.list.slice(u));
-                        var g = c.list.length % Video.VIDEOS_PER_ROW;
-                        o > Video.VIDEOS_PER_PAGE && g && c.list.length < c.count && (c.list.splice(-g, Video.VIDEOS_PER_ROW), n -= g), c.realOffset = n
-                    }(d || !c.done && c.list.length == s) && (c.done = !0), Video._showGlobalSearchResults(e, i)
-                }
-            })))
+                            s.count = parseInt(o), Array.prototype.push.apply(s.list, d.list.slice(_));
+                            var V = s.list.length % Video.VIDEOS_PER_ROW;
+                            o > Video.VIDEOS_PER_PAGE && V && s.list.length < s.count && (s.list.splice(-V, Video.VIDEOS_PER_ROW), c -= V), s.realOffset =
+                                c
+                        }(a || !s.done && s.list.length == l) && (s.done = !0), Video._showGlobalSearchResults(e, i)
+                    }
+                })))
+        }
     },
-    _toggleEmptySearchPlaceholder: function(e, o) {
-        var i = ge("video_empty_placeholder_search"),
-            t = cur.getOwnerId() < 0 ? "video_not_found_group" : "video_not_found_user";
-        cur.getOwnerId() == vk.id && (t = "video_not_found_yours"), Video.isInAlbum() && (t = "video_not_found_in_album"), Video.isInCatalog() && (t =
-                "video_not_found_globally"), i.innerHTML = getLang(t)
-            .replace("{searchText}", "<b>" + clean(o ? o.replace(/\$/g, "$$$$") : "") + "</b>"), toggle(i, e)
+    _toggleEmptySearchPlaceholder: function(e, o, i) {
+        var t = ge("video_empty_placeholder_search"),
+            r = cur.getOwnerId() < 0 ? "video_not_found_group" : "video_not_found_user";
+        if (cur.getOwnerId() == vk.id && (r = "video_not_found_yours"), Video.isInAlbum() && (r = "video_not_found_in_album"), Video.isInCatalog() && (r =
+                "video_not_found_globally"), o && (t.innerHTML = getLang(r)
+                .replace("{searchText}", "<b>" + clean(o.replace(/\$/g, "$$$$")) + "</b>")), toggle(t, e), i) {
+            var d = !0,
+                a = ge("video_layout_search");
+            each(domChildren(a), function() {
+                return isVisible(this) ? (d = !1, !1) : void 0
+            }), d && toggle(t, !0)
+        }
     },
     _toggleEmptyPlaceholder: function(e, o) {
         var i = ge("video_empty_placeholder_main");
@@ -515,8 +528,12 @@ var Video = {
             }
             r = langNumeric(o.count, r, !0), r = r.replace("{user}", cur.lang.video_owner_name_gen);
             var d = geByClass1("video_subtitle", ge("video_subtab_pane_" + e));
-            val(d, r), ge("video_" + e + "_list")
-                .innerHTML = "", cur.videoShowWindow && cur.videoShowWindow[i] && delete cur.videoShowWindow[i][e], Video.showMore(e)
+            val(d, r);
+            var a = e == Video.VIDEO_GLOBAL_SEARCH_TYPE ? cur.videoGlobalSearchQuery : cur.videoLocalSearchQuery;
+            a += Video._buildFiltersSearchStr(), cur._videoRenderedSearchResults = cur._videoRenderedSearchResults || {};
+            var n = cur._videoRenderedSearchResults;
+            n[e] != a && (n[e] = a, ge("video_" + e + "_list")
+                .innerHTML = "", cur.videoShowWindow && cur.videoShowWindow[i] && delete cur.videoShowWindow[i][e], Video.showMore(e))
         }
     },
     _showGlobalSearchResults: function(e, o) {
@@ -524,16 +541,17 @@ var Video = {
             t = cur.getOwnerId(),
             r = Video.isInAlbum() ? Video.getLoc()
             .section : "all",
-            d = cur.silentLoaded[t][r];
-        if (cur.searchText == e && d && cur.globalSearchResults[i] && cur.globalSearchResults[i].count >= 0) {
-            var a = cur.globalSearchResults[i];
+            d = !!cur.silentLoaded[t][r],
+            a = e == cur.videoGlobalSearchQuery || e == cur.videoLocalSearchQuery;
+        if (a && d && cur.globalSearchResults[i] && cur.globalSearchResults[i].count >= 0) {
+            var n = cur.globalSearchResults[i];
             cur.found[Video.VIDEO_GLOBAL_SEARCH_TYPE] = {
-                list: a.list,
-                count: a.count,
-                done: a.done,
-                realOffset: a.realOffset
-            }, cur.noEmptyLocalResults && (Video._toggleSearchContent(!0), 0 == a.count && Video._toggleEmptySearchPlaceholder(!0, e)), o || Video._showSearchResult(
-                Video.VIDEO_GLOBAL_SEARCH_TYPE), Video._callPendingAction(Video.VIDEO_GLOBAL_SEARCH_TYPE)
+                list: n.list,
+                count: n.count,
+                done: n.done,
+                realOffset: n.realOffset
+            }, cur.noEmptyLocalResults && (Video._toggleSearchContent(!0), 0 == n.count ? Video._toggleEmptySearchPlaceholder(!0, e) : Video._toggleEmptySearchPlaceholder(!
+                1)), o || Video._showSearchResult(Video.VIDEO_GLOBAL_SEARCH_TYPE), Video._callPendingAction(Video.VIDEO_GLOBAL_SEARCH_TYPE)
         }
     },
     _toggleSearchContent: function(e) {
@@ -561,8 +579,8 @@ var Video = {
             }, Video._showSearchResult(Video.VIDEO_SEARCH_TYPE)
         }
         var a = t.length + i.length;
-        return a ? (Video._toggleSearchContent(!0), Video._toggleEmptySearchPlaceholder(!1)) : cur.noEmptyLocalResults ? Video._toggleEmptySearchPlaceholder(!1) : (Video._toggleSearchContent(!
-            0), Video._toggleEmptySearchPlaceholder(!0, e)), i ? i.length : 0
+        return a ? (Video._toggleSearchContent(!0), Video._toggleEmptySearchPlaceholder(!1)) : cur.noEmptyLocalResults ? Video._toggleEmptySearchPlaceholder(!1, void 0, !0) :
+            (Video._toggleSearchContent(!0), Video._toggleEmptySearchPlaceholder(!0, e)), i ? i.length : 0
     },
     onItemEnter: function(e) {
         setTitle(e, e, e.innerHTML.replace(/<\/?em>/g, ""))
@@ -654,7 +672,7 @@ var Video = {
                         if (n = cur.found[e].list.length, c = cur.found[e].realOffset || n, s = cur.found[e].list.slice(a.offset, n), l = cur.found[e].done, !l && 0 == s.length)
                             return Video._addPendingAction(e, function() {
                                 Video.showMore(e, o)
-                            }), lockButton(o), void(cur.globalSearchInProgress || Video._searchGlobally(cur.searchText, c))
+                            }), lockButton(o), void(cur.globalSearchInProgress || Video._searchGlobally(cur.videoGlobalSearchQuery, c))
                     } else n = a.offset + Video.VIDEOS_PER_PAGE, s = cur.found[e].list.slice(a.offset, n), l = n >= cur.found[e].list.length;
                     Video.onMoreLoaded(o, e, s, n, l)
                 } else if ((r || -1 != Video.AVAILABLE_TABS.indexOf(e)) && cur.silentLoaded[d][e]) {
@@ -782,6 +800,13 @@ var Video = {
             cur.videoSorter ? e ? cur.videoSorter.disable() : cur.videoSorter.enable() : Video._createSorters()
         }))
     },
+    _saveHistoryAction: function(e, o) {
+        if (Video.isInSearch() && cur.videoGlobalSearchQuery) {
+            var i = cur.videoGlobalSearchQuery + Video._buildFiltersSearchStr(),
+                t = cur.globalSearchResults[i];
+            t && !cur.videoSearchFilters.notsafe && uiSearch.saveHistorySearch(this.searchInputEl, cur.videoGlobalSearchQuery, e, o, t.count, t.countHash)
+        }
+    },
     onVideoAdd: function(e, o, i, t, r) {
         var d = gpeByClass("_video_item", o),
             a = intval(toggleClass(d, "video_added")),
@@ -790,7 +815,7 @@ var Video = {
             playlist_id: -2
         } : {
             playlists: 0
-        }, ajax.post("/al_video.php", extend({
+        }, Video._saveHistoryAction(i, t), ajax.post("/al_video.php", extend({
             act: "a_add_to_playlist",
             oid: i,
             vid: t,
@@ -939,9 +964,7 @@ var Video = {
             .go("/videos?section=" + cur.videoChoosePrevSection)
     },
     initChooseBox: function(e, o, i, t, r) {
-        function d() {
-            setStyle(gpeByClass("popup_box_container", u.bodyNode))
-        }
+        function d() {}
 
         function a() {
             u.setOptions({
@@ -961,7 +984,8 @@ var Video = {
         function c() {
             u.setOptions({
                 title: '<div class="back" onclick="Video.chooseBoxBack();">' + getLang("video_choose_box_back_to_videos") + "</div>",
-                bodyStyle: "padding: 0"
+                bodyStyle: "padding: 0",
+                noRefreshCoords: 1
             }), d()
         }
 
@@ -1008,9 +1032,10 @@ var Video = {
                 _ = e.section ? e.section : "all";
             Video._prepareSearchFilters(i);
             var v = e.section ? "" : i.q || val(cur.searchInputEl);
-            if (v ? (trim(val(cur.searchInputEl)) != trim(v) && val(cur.searchInputEl, trim(v)), _ = "search", Video.doSearch(v), c(), Video._updateChooseFixedBottom()) :
-                (val(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS.indexOf(_)) n(), show("video_subtab_pane_" +
-                _), show(r), hide("albumPane"), s(), a(), cur.videoChoosePrevSection = _, "albums" != _ && Video.loadSilent(_), Video.updateEmptyPlaceholder(_);
+            if (v ? (trim(val(cur.searchInputEl)) != trim(v), _ = "search", t.fromSearch || t.globalQuery || (t.globalQuery = i.q), Video.doSearch(i.q, t.globalQuery),
+                    c(), Video._updateChooseFixedBottom()) : (Video.inputVal(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS
+                .indexOf(_)) n(), show("video_subtab_pane_" + _), show(r), hide("albumPane"), s(), a(), cur.videoChoosePrevSection = _, "albums" != _ && Video.loadSilent(
+                _), Video.updateEmptyPlaceholder(_);
             else if (_ && 0 == _.indexOf("album_")) {
                 var h = _.split("_")[1];
                 showGlobalPrg(ge("video_playlist_item_" + h), {
@@ -1029,7 +1054,7 @@ var Video = {
                 }), cur.videoChoosePrevSection = _, Video.loadSilent(_)
             }
             return l(), !1
-        }), cur.isCurrentVideoLayer = !0, Video.loadSilent(), a(), addEvent(ge("box_layer_wrap"), "scroll", Video.onScroll);
+        }), cur.isCurrentVideoLayer = !0, Video.loadSilent(), a();
         var v = boxLayerWrap.scrollTop;
         elfocus(geByClass1("_scroll_node", u.bodyNode)), boxLayerWrap.scrollTop = v, Video.initSearch(), s(), o || (cur.chooseVideoMedia = function(e, o, i) {
             var t = e;
@@ -1177,22 +1202,23 @@ var Video = {
                 .src = "//go.imgsmail.ru/vk?pxn=vic&qid=" + cur.popularQid + "&vid=" + o + "&p=" + g + "&t=0"
         }
         if (cur.videoSearchStats) {
-            var p = domClosest("video_item", t);
-            if (p && p.hasAttribute("data-search-pos")) {
-                cur.videoSearchPos = parseInt(p.getAttribute("data-search-pos")), cur.videoSearchPos > cur.videoSearchStats.lastSeenIndex && (cur.videoSearchStats.lastSeenElement =
-                    p, cur.videoSearchStats.lastSeenIndex = cur.videoSearchPos), cur.videoSearchStats.positions[cur.videoSearchPos] = extend({
+            var V = domClosest("video_item", t);
+            if (V && V.hasAttribute("data-search-pos")) {
+                cur.videoSearchPos = parseInt(V.getAttribute("data-search-pos")), cur.videoSearchPos > cur.videoSearchStats.lastSeenIndex && (cur.videoSearchStats.lastSeenElement =
+                    V, cur.videoSearchStats.lastSeenIndex = cur.videoSearchPos), cur.videoSearchStats.positions[cur.videoSearchPos] = extend({
                     clicked: 0
                 }, cur.videoSearchStats.positions[cur.videoSearchPos]), cur.videoSearchStats.positions[cur.videoSearchPos].clicked++;
-                var V = ++cur.videoSearchStats.clickNum,
-                    S = (new Date)
+                var S = ++cur.videoSearchStats.clickNum,
+                    p = (new Date)
                     .getTime() - cur.videoSearchStats.lastActionTime;
                 a.addParams = extend(a.addParams || {}, {
-                    click_num: V,
-                    click_time: S
+                    click_num: S,
+                    click_time: p
                 })
             }
         }
-        return showVideo(o, n, a, e)
+        var f = o.split("_");
+        return Video._saveHistoryAction(f[0], f[1]), showVideo(o, n, a, e)
     },
     isInVideosList: function() {
         var e = Video.getLoc();

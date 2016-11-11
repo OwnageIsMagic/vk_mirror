@@ -576,7 +576,8 @@
 
 #video_choose_box,
 #video_review_box {
-    line-height: 13px
+    line-height: 13px;
+    overflow: hidden
 }
 
 #video_choose_box.with_bottom_fixed,
@@ -808,6 +809,10 @@
     margin-top: 1px
 }
 
+.video_search_input.ui_search.ui_search_new {
+    margin: 20px 20px 10px
+}
+
 .video_search_input .ui_search_fltr {
     z-index: 999
 }
@@ -1009,4 +1014,8 @@
 
 .video_upload_rules_info li {
     margin-bottom: 3px
+}
+
+.video_search_filters_wrap {
+    padding: 20px
 }

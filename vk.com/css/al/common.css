@@ -4738,7 +4738,8 @@ em.highlight {
     height: 16px;
     border: none;
     vertical-align: -3px;
-    margin: 0 1px
+    margin: 0 1px;
+    display: inline-block
 }
 
 .emoji_css {
@@ -6183,7 +6184,7 @@ button.ui_load_more_btn {
     box-shadow: 0 1px 3px rgba(0, 0, 0, .1);
     opacity: 0;
     cursor: default;
-    z-index: 150;
+    z-index: 110;
     -webkit-perspective: 1000;
     -webkit-backface-visibility: hidden;
     -webkit-transform-style: preserve-3d;

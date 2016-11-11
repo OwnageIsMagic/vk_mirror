@@ -11,7 +11,7 @@ var Feed = {
                 r = o.trackingPosts,
                 i = o.viewedPosts,
                 n = [];
-            e && o.isAdPost(e) && !e.longViewed && -1 === r.indexOf(e) && r.push(e), each(r, function(e, r) {
+            e && o.isAdAutoplayVideoPost(e) && !e.longViewed && -1 === r.indexOf(e) && r.push(e), each(r, function(e, r) {
                 if (document.body.contains(r) || n.push(e), o.isElemViewable(r, o.PERCENT, t, s)) {
                     var a = Date.now();
                     r.longViewStartedAt ? a - r.longViewStartedAt >= o.DURATION_MS && (r.longViewed = !0, i.push(r), n.push(e)) : r.longViewStartedAt = Date.now()
@@ -20,9 +20,9 @@ var Feed = {
                 r.splice(t, 1)
             })
         },
-        isAdPost: function(e) {
+        isAdAutoplayVideoPost: function(e) {
             return domFC(e)
-                .hasAttribute("data-ad-view")
+                .hasAttribute("data-ad-video-autoplay")
         },
         isElemViewable: function(e, t, s, o) {
             var r = feed.longView.getHeaderHeight(),
@@ -55,7 +55,7 @@ var Feed = {
         getDataForSeenRequest: function() {
             var e = feed.longView,
                 t = e.getData();
-            return t.length ? (e.setData([]), "ad_" + t.join(",") + ":long_view") : null
+            return t.length ? (e.setData([]), "ad_" + t.join(",")) : null
         }
     },
     videoRecomsBlockHideCancel: function() {
@@ -1015,10 +1015,11 @@ var Feed = {
             list: "list" == cur.section && cur.list || 0
         }, {
             onDone: function(s) {
-                e ? val("post" + e, cur.feedEntriesHTML[e + "_ignored"]) : val("ignore_row" + t, s), each(geByClass("post", cur.rowsCont), function(e, s) {
-                    var o = this.id.match(/post((-?\d+)_(-?\d+)(_\d+)?)/);
-                    o && (!o[4] && o[2] == t || o[4] && o[3] == t) && show(this.parentNode)
-                })
+                e ? val("post" + e, cur.feedEntriesHTML[e + "_ignored"]) : val("ignore_row" + t, s),
+                    each(geByClass("post", cur.rowsCont), function(e, s) {
+                        var o = this.id.match(/post((-?\d+)_(-?\d+)(_\d+)?)/);
+                        o && (!o[4] && o[2] == t || o[4] && o[3] == t) && show(this.parentNode)
+                    })
             },
             showProgress: o && lockButton.pbind(o),
             hideProgress: o && unlockButton.pbind(o)
@@ -1222,10 +1223,13 @@ var Feed = {
                         .type)) {
                     for (postsUnseen = [], t = domPS(cur.topRow); t; t = domPS(t)) cur.topRow.offsetTop > n && (cur.topRow = t), t.unseen || (t.unseen = !0, postsUnseen.push(
                         Feed.postsGetRaws(t)));
-                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (feed.longView.process(t, n, i), s = a ? a : t.offsetTop, !(s >= n + i)); t = o) o = domNS(t),
-                        "feed_rows_next" == (o || {})
-                        .id && (o = null), a = o ? o.offsetTop : s + t.offsetHeight, n > a && o && (cur.topRow = o), r = t.bits || 0, r >= 3 || (r |= (s >= n && n + i > s ?
-                            1 : 0) | (a >= n && n + i > a ? 2 : 0), r && (t.bits = r, 3 == r && c.push(feed.postsGetRaws(t))));
+                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (feed.longView.process(t, n, i), s = a ? a : t.offsetTop, !(s >= n + i)); t = o)
+                        if (o = domNS(t), "feed_rows_next" == (o || {})
+                            .id && (o = null), a = o ? o.offsetTop : s + t.offsetHeight, n > a && o && (cur.topRow = o), r = t.bits || 0, !(r >= 3) && (r |= (s >= n && n +
+                                i > s ? 1 : 0) | (a >= n && n + i > a ? 2 : 0), r && (t.bits = r, 3 == r))) {
+                            if (feed.longView.isAdAutoplayVideoPost(t)) continue;
+                            c.push(feed.postsGetRaws(t))
+                        }
                     feed.longView.process(null, n, i), Page.postsSeen(c)
                 }
             }

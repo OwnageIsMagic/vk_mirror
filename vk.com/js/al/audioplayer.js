@@ -56,6 +56,7 @@ function loadScript(t, i) {
     }
 }
 var AudioUtils = {
+    _v: 1,
     AUDIO_ITEM_INDEX_ID: 0,
     AUDIO_ITEM_INDEX_OWNER_ID: 1,
     AUDIO_ITEM_INDEX_URL: 2,
@@ -200,7 +201,7 @@ var AudioUtils = {
                             removeClass(o, "added"), addClass(o, "canadd"), e(!1)
                         }
                     }), removeClass(o, "canadd"), addClass(o, "added"), A && (removeClass(A, "canadd"), addClass(A, "added")), getAudioPlayer()
-                    .notify(AudioPlayer.EVENT_ADDED, r.fullId)
+                    .notify(AudioPlayer.EVENT_ADDED, r.fullId), y && y.audioPageRef && y.audioPageRef.onUserAction(r, y)
             }
         }
     },
@@ -639,6 +640,9 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     }, AudioPlaylist.prototype.getTotalCount = function() {
         return this.getSelf()
             ._totalCount
+    }, AudioPlaylist.prototype.getTotalCountHash = function() {
+        return this.getSelf()
+            ._totalCountHash
     }, AudioPlaylist.prototype.isShuffled = function() {
         return !!this.getShuffle()
     }, AudioPlaylist.prototype.getShuffle = function() {
@@ -656,29 +660,20 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         this._unref(), this._hasMore = !0, this._list = [], this._items = [], this._feedOffset = this._feedFrom = 0, this._nextOffset = 0
     }, AudioPlaylist.prototype.shuffle = function(t) {
         if (this._unref(), this._shuffle = t, this._shuffle)
-            if (this.hasMore()) {
-                if (this._needSilentLoading()) return !1;
-                if (this.getType() == AudioPlaylist.TYPE_SEARCH) {
-                    if (this.getLocalFoundCount() > 1) {
-                        var i = this._list.splice(0, this.getLocalFoundCount());
-                        this._originalList = [].concat(i), shuffle(i), this._list = i.concat(this._list)
-                    }
-                } else {
-                    var e = getAudioPlayer()
-                        .getCurrentAudio();
-                    this.indexOfAudio(e) >= 0 && (this._audioToFirstPos = e), this.clean()
-                }
-            } else this._originalList = [].concat(this._list), shuffle(this._list), this._moveCurrentAudioAtFirstPosition();
-        else {
-            if (this._originalList) this.getType() == AudioPlaylist.TYPE_SEARCH ? (this._list.splice(0, this.getLocalFoundCount()), this._list = this._originalList.concat(this._list)) :
-                this._list = this._originalList;
-            else {
-                var e = getAudioPlayer()
-                    .getCurrentAudio();
-                this.indexOfAudio(e) >= 0 && (this._audioToFirstPos = e), this.clean()
+            if (this._needSilentLoading()) this.hasMore() || (this._originalList = [].concat(this._list), shuffle(this._list), this._moveCurrentAudioAtFirstPosition());
+            else if (this.getType() == AudioPlaylist.TYPE_SEARCH) {
+            if (this.getLocalFoundCount() > 1) {
+                var i = this._list.splice(0, this.getLocalFoundCount());
+                this._originalList = [].concat(i), shuffle(i), this._list = i.concat(this._list)
             }
-            delete this._shuffle, delete this._originalList
-        }
+        } else if (this.hasMore()) {
+            var e = getAudioPlayer()
+                .getCurrentAudio();
+            this.indexOfAudio(e) >= 0 && (this._audioToFirstPos = e), this.clean()
+        } else this._originalList = [].concat(this._list), shuffle(this._list), this._moveCurrentAudioAtFirstPosition();
+        else this._needSilentLoading() ? this._originalList && (this._list = this._originalList) : this.getType() == AudioPlaylist.TYPE_SEARCH ? this.getLocalFoundCount() > 1 && (
+            this._list.splice(0, this.getLocalFoundCount()), this._list = (this._originalList || [])
+            .concat(this._list)) : this.hasMore() ? this.clean() : this._list = this._originalList, delete this._shuffle, delete this._originalList, delete this._audioToFirstPos;
         return !0
     }, AudioPlaylist.prototype.isComplete = function() {
         return this.getSelf()
@@ -708,16 +703,16 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         var e = this.getSelf(); - 1 == i && isNumeric(e._nextAfterRemovedIndex) && (i = Math.max(0, e._nextAfterRemovedIndex - 1), delete e._nextAfterRemovedIndex);
         var o = 1;
         return i >= 0 && i + o < this.getAudiosCount() ? this.getAudioAt(i + o) : !1
-    }, AudioPlaylist.prototype.load = function(t, i) {
-        var e = void 0 === t,
-            o = this;
+    }, AudioPlaylist.prototype.load = function(t, i, e) {
+        e = e || void 0 === t;
+        var o = this;
         if (t = intval(t), this.getType() == AudioPlaylist.TYPE_SEARCH && void 0 === this.getLocalFoundCount()) {
             var a = getAudioPlayer()
                 .getPlaylist(AudioPlaylist.TYPE_ALBUM, this.getOwnerId(), AudioPlaylist.ALBUM_ALL);
             return void a.loadSilent(function() {
                 var e = o.getSearchParams();
-                a.search(e.q, function(e) {
-                    o.setLocalFoundCount(e.length), o.addAudio(e), o.load(t, i)
+                a.search(e, function(e) {
+                    o.setLocalFoundCount(e.length), o.addAudio(e), o.load(t, i, !0)
                 })
             })
         }
@@ -726,16 +721,15 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         if (!this.hasMore()) return i && i(this);
         if (this.getType() == AudioPlaylist.TYPE_ALBUM) return this.loadSilent(i);
         if (s - 20 > t) return i && i(this);
-        if (this._onDoneLoading = this._onDoneLoading || [], this._onDoneLoading.push(i), !this._loading) {
-            this._loading = !0;
-            var l = this.getSearchParams();
-            ajax.post("al_audio.php", {
+        var l = this.getSearchParams();
+        return this.getType() != AudioPlaylist.TYPE_SEARCH || l.globalQuery ? (this._onDoneLoading = this._onDoneLoading || [], this._onDoneLoading.push(i), this._loading || (this
+            ._loading = !0, ajax.post("al_audio.php", {
                 act: "a_load_section",
                 type: this.getType(),
                 owner_id: this.getOwnerId(),
                 album_id: this.getAlbumId(),
                 offset: this.getNextOffset(),
-                search_q: l ? l.q : null,
+                search_q: l ? l.globalQuery : null,
                 search_performer: l ? l.performer : null,
                 search_lyrics: l ? l.lyrics : null,
                 search_sort: l ? l.sort : null,
@@ -756,8 +750,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                         }), getAudioPlayer()
                         .saveStateCurrentPlaylist()
                 }
-            })
-        }
+            })), void 0) : i && i(this)
     }, AudioPlaylist.prototype.getLiveInfo = function() {
         var t = this.getSelf()
             ._live;
@@ -825,10 +818,10 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 for (var a = 0, s = t.items.length; s > a; a++) this._items.push(t.items[a])
             }
             var l = this;
-            each("blocks nextOffset hasMore isComplete title feedFrom feedOffset live searchParams totalCount band postId wallQuery wallType originalList shuffle".split(" "),
-                function(i, e) {
-                    void 0 !== t[e] && (l["_" + e] = t[e])
-                })
+            each("blocks nextOffset hasMore isComplete title feedFrom feedOffset live searchParams totalCount totalCountHash band postId wallQuery wallType originalList shuffle".split(
+                " "), function(i, e) {
+                void 0 !== t[e] && (l["_" + e] = t[e])
+            })
         }
     }, AudioPlaylist.prototype.moveAudio = function(t, i) {
         this._unref();
@@ -862,8 +855,13 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         } else t && t()
     }, AudioPlaylist.prototype.search = function(t, i) {
         var e = this.getSelf();
-        this._ensureIndex(function() {
-            return i(e._index ? e._index.search(t) : [])
+        isObject(t) || (t = {
+            q: t
+        }), this._ensureIndex(function() {
+            var o = e._index ? e._index.search(t.q) : [];
+            return o = o.filter(function(i) {
+                return t.lyrics ? !!intval(i[AudioUtils.AUDIO_ITEM_INDEX_LYRICS]) : !0
+            }), i(o)
         }.bind(this))
     }, AudioPlaylist.prototype.toString = function() {
         return this.getId()
@@ -900,6 +898,13 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                         .mergePlaylistData(e, t), delete e._silentLoading;
                     var i = e._onDoneLoading;
                     delete e._onDoneLoading, each(i || [], function(t, i) {
+                        i && i(e)
+                    })
+                },
+                onFail: function() {
+                    delete e._silentLoading;
+                    var t = e._onDoneLoading;
+                    delete e._onDoneLoading, each(t || [], function(t, i) {
                         i && i(e)
                     })
                 }
@@ -954,12 +959,12 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     }, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop", AudioPlayer.EVENT_UPDATE =
     "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED = "buffered", AudioPlayer.EVENT_PROGRESS =
     "progress", AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed",
-    AudioPlayer.EVENT_AD_READY = "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED =
-    "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio",
-    AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track",
-    AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v3",
-    AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME = .8,
-    AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
+    AudioPlayer.EVENT_AD_READY = "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit",
+    AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED = "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY =
+    "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_",
+    AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE =
+    "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v3", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME =
+    .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
         def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -1313,15 +1318,6 @@ AudioPlayer.tabIcons = {
         }))
     }, AudioPlayer.prototype.addPlaylist = function(t) {
         this.hasPlaylist(t.getId()) || this._playlists.push(t)
-    }, AudioPlayer.prototype.shufflePlaylist = function(t) {
-        if (t.shuffle = irand(1, 999), t.has_more)
-            if (AudioUtils.getPlaylistType(t) == AudioPlaylist.TYPE_SEARCH) {
-                if (t.localFoundTotal && intval(t.localFoundTotal) > 1) {
-                    var i = t.list.splice(0, t.localFoundTotal);
-                    t.original = [].concat(i), shuffle(i), t.list = i.concat(t.list)
-                }
-            } else t.list = [], t.offset = t.next_offset = 0;
-        else t.original = [].concat(t.list), shuffle(t.list), delete t.localFoundTotal, this.moveCurrentPlayingAtFirstPos(t)
     }, AudioPlayer.prototype.moveCurrentPlayingAtFirstPos = function(t) {
         var i = this.getCurrentAudio();
         if (i && -1 != this.getAudioPlaylistPosition(i, t)) {
@@ -1334,9 +1330,31 @@ AudioPlayer.tabIcons = {
                 }
             t.list.unshift(i)
         }
-    }, AudioPlayer.prototype.restoreShufflePlaylist = function(t) {
-        delete t.shuffle, (t.original || AudioUtils.isPaginatedPlaylist(t)) && (t.has_more ? AudioUtils.getPlaylistType(t) == AudioPlaylist.TYPE_SEARCH && t.localFoundTotal ? (t.list
-            .splice(0, t.localFoundTotal), t.list = t.original.concat(t.list)) : (t.list = [], t.offset = t.next_offset = 0) : t.list = t.original, delete t.original)
+    }, AudioPlayer.prototype._cleanUpPlaylists = function() {
+        for (var t = 0, i = -1, e = this._playlists.length - 1; e >= 0; e--) {
+            var o = this._playlists[e];
+            if (!o.isReference() && (t += o.getAudiosCount(), t > 4e3)) {
+                i = e;
+                break
+            }
+        }
+        if (-1 != i) {
+            i += 1;
+            for (var a = this._playlists.slice(0, i), s = this.getCurrentPlaylist(), l = [], e = 0; e < a.length; e++) {
+                var r = a[e];
+                if (s == r && (r = !1), r && !r.isReference())
+                    for (var u = i; u < this._playlists.length; u++) {
+                        var o = this._playlists[u];
+                        o.isReference() && o.getSelf() == r && (r = !1)
+                    }
+                r && l.push(e)
+            }
+            for (var e = 0; e < l.length; e++) {
+                var i = l[e];
+                this._playlists.splice(i, 1)
+            }
+            l.length && debugLog("AudioPlayer - " + l.length + " playlists removed")
+        }
     }, AudioPlayer.prototype.hasPlaylist = function(t, i, e) {
         var o;
         o = void 0 !== i && void 0 !== e ? t + "_" + i + "_" + e : t;
@@ -1385,7 +1403,10 @@ AudioPlayer.tabIcons = {
                 var r = s.indexOfAudio(l);
                 if (-1 == r) return;
                 var u = s.indexOfAudio(a); - 1 != u ? s.moveAudio(u, r + 1) : s.addAudio(o, r + 1)
-            } else s = AudioUtils.getContextPlaylist(e), this.play(o, s)
+            } else s = AudioUtils.getContextPlaylist(e), this.play(o, s);
+            var d = window.AudioPage && AudioPage(e),
+                n = d && d.getCurrentPlaylist();
+            n && n.audioPageRef && n.audioPageRef.onUserAction(a, n)
         }
         return cancelEvent(i)
     }, AudioPlayer.prototype._setTabIcon = function(t) {
@@ -1627,7 +1648,7 @@ AudioPlayer.tabIcons = {
         if (r) this.pause();
         else {
             var u = AudioUtils.getContextPlaylist(e);
-            this.play(a.fullId, u)
+            this.play(a.fullId, u), u.audioPageRef && u.audioPageRef.onUserAction(a, u)
         }
     }, AudioPlayer.prototype._onFailedUrl = function(t) {
         this.notify(AudioPlayer.EVENT_FAILED), this.isPlaying() && (this.pause(), this.playNext(!0, !0))
@@ -1639,7 +1660,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.play = function(t, i, e, o) {
         if (!cur.loggingOff) {
             if (!this._impl) return void AudioUtils.showNeedFlashBox();
-            (isObject(t) || isArray(t)) && (t = AudioUtils.asObject(t), t && (t = t.fullId));
+            this._cleanUpPlaylists(), (isObject(t) || isArray(t)) && (t = AudioUtils.asObject(t), t && (t = t.fullId));
             var a = AudioUtils.asObject(this._currentAudio),
                 s = this.getCurrentPlaylist();
             !t && a && (t = a.fullId);
@@ -1748,12 +1769,12 @@ AudioPlayer.tabIcons = {
         this._adman = null, this._adsReadyInfo = null, this._adsCurrentProgress = 0, this.notify(AudioPlayer.EVENT_AD_DEINITED)
     }, AudioPlayer.prototype._adsInitAdman = function(t, i) {
         t = AudioUtils.asObject(t), this._loadAdman(function() {
-            function e(t, i) {
+            function i(t, i) {
                 for (var e = (t >>> 0)
                         .toString(16), o = i.toString(16); o.length < 8;) o = "0" + o;
                 return e + o
             }
-            var o = {
+            var e, o = {
                 my: 101,
                 albums: 101,
                 user_list: 102,
@@ -1767,18 +1788,18 @@ AudioPlayer.tabIcons = {
                 feed_audio: 109,
                 search: 110,
                 top_bands: 111,
-                friends: 112
+                friends: 112,
+                other: 114
             };
-            this._adman = new AdmanHTML, this._adman.init({
+            e = browser.mac ? 6 : browser.iphone ? 2 : browser.android ? 1 : 3, this._adman = new AdmanHTML, this._adman.init({
                 slot: 3514,
                 wrapper: se("<div></div>"),
                 params: {
                     _SITEID: 276,
                     vk_id: vk.id,
                     duration: t.duration,
-                    content_id: e(t.ownerId, t.id),
-                    preview: 1,
-                    vk_catid: o[this._adsSection]
+                    content_id: i(t.ownerId, t.id),
+                    vk_catid: o[this._adsSection] || o.other
                 },
                 browser: {
                     adBlock: !1,
@@ -1786,7 +1807,7 @@ AudioPlayer.tabIcons = {
                 }
             }), this._adman.setDebug(!!__dev), this._adman.onReady(function() {
                 var t = this._adman.getBannersForSection("postroll");
-                t && t.length ? i(t) : this._adsSendAdEvent("not_received")
+                t && t.length && this._adman.start("postroll")
             }.bind(this))
         }.bind(this))
     }, AudioPlayer.prototype._loadAdman = function(t, i, e) {
@@ -1800,7 +1821,7 @@ AudioPlayer.tabIcons = {
         t.opts.onEnd && t.opts.onEnd()
     }, AudioPlayerFlash.onAudioProgressCallback = function(t, i) {
         var e = window._flashAudioInstance;
-        i && (e._total = i, e._currProgress = t / i, e.opts.onProgressUpdate && e.opts.onProgressUpdate(e._currProgress, t))
+        i && (e._total = i, e._currProgress = t / i, e.opts.onProgressUpdate && e.opts.onProgressUpdate(e._currProgress, t));
     }, AudioPlayerFlash.onAudioLoadProgressCallback = function(t, i) {
         var e = window._flashAudioInstance;
         e._currBuffered = t / i, e.opts.onBufferUpdate && e.opts.onBufferUpdate(e._currBuffered)

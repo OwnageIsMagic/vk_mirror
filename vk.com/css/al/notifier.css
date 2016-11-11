@@ -20,6 +20,9 @@
 .emoji_cats_title_helper:after,
 .emoji_smile_icon,
 .emoji_sprite,
+.emoji_sprite_0,
+.emoji_sprite_1,
+.emoji_sprite_2,
 .fc_chronicle_icon,
 .fc_contact_over:hover .fc_contact_status,
 .fc_msg_att_icon_doc,
@@ -57,6 +60,2334 @@ span.fc_contact_photo.online.mobile:after {
 
 .chat_tab_imgcont.online.mobile:after {
     background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%206%209%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%2362B245%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-136.000000%2C%20-209.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M136%2C210.506398%20C136%2C209.674437%20136.66503%2C209%20137.498576%2C209%20L140.501424%2C209%20C141.329065%2C209%20142%2C209.676463%20142%2C210.506398%20L142%2C216.493602%20C142%2C217.325563%20141.33497%2C218%20140.501424%2C218%20L137.498576%2C218%20C136.670935%2C218%20136%2C217.323537%20136%2C216.493602%20L136%2C210.506398%20Z%20M137%2C211%20L141%2C211%20L141%2C216%20L137%2C216%20L137%2C211%20Z%22%20id%3D%22mobile_s%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
+}
+
+.emoji_sprite_0 {
+    background-image: url(/images/emoji/sprites/sprite0.png)
+}
+
+.emoji_d83dde38 {
+    background-position: 0px 0px
+}
+
+.emoji_d83dde3e {
+    background-position: -18px 0px
+}
+
+.emoji_d83dde3b {
+    background-position: -36px 0px
+}
+
+.emoji_2601 {
+    background-position: -54px 0px
+}
+
+.emoji_263a {
+    background-position: -72px 0px
+}
+
+.emoji_26a0 {
+    background-position: -90px 0px
+}
+
+.emoji_26be {
+    background-position: -108px 0px
+}
+
+.emoji_26c4 {
+    background-position: -126px 0px
+}
+
+.emoji_26fd {
+    background-position: -144px 0px
+}
+
+.emoji_2709 {
+    background-position: -162px 0px
+}
+
+.emoji_270c {
+    background-position: -180px 0px
+}
+
+.emoji_270f {
+    background-position: -198px 0px
+}
+
+.emoji_2712 {
+    background-position: -216px 0px
+}
+
+.emoji_d83cdf02 {
+    background-position: -234px 0px
+}
+
+.emoji_d83cdf1d {
+    background-position: -252px 0px
+}
+
+.emoji_d83cdf32 {
+    background-position: -270px 0px
+}
+
+.emoji_d83cdf35 {
+    background-position: -288px 0px
+}
+
+.emoji_d83cdf38 {
+    background-position: -306px 0px
+}
+
+.emoji_d83cdf3b {
+    background-position: -324px 0px
+}
+
+.emoji_d83cdf3e {
+    background-position: -342px 0px
+}
+
+.emoji_d83cdf41 {
+    background-position: 0px -18px
+}
+
+.emoji_d83cdf44 {
+    background-position: -18px -18px
+}
+
+.emoji_d83cdf47 {
+    background-position: -36px -18px
+}
+
+.emoji_d83cdf4a {
+    background-position: -54px -18px
+}
+
+.emoji_d83cdf4d {
+    background-position: -72px -18px
+}
+
+.emoji_d83cdf50 {
+    background-position: -90px -18px
+}
+
+.emoji_d83cdf53 {
+    background-position: -108px -18px
+}
+
+.emoji_d83cdf56 {
+    background-position: -126px -18px
+}
+
+.emoji_d83cdf5c {
+    background-position: -144px -18px
+}
+
+.emoji_d83cdf5f {
+    background-position: -162px -18px
+}
+
+.emoji_d83cdf62 {
+    background-position: -180px -18px
+}
+
+.emoji_d83cdf65 {
+    background-position: -198px -18px
+}
+
+.emoji_d83cdf68 {
+    background-position: -216px -18px
+}
+
+.emoji_d83cdf6b {
+    background-position: -234px -18px
+}
+
+.emoji_d83cdf6e {
+    background-position: -252px -18px
+}
+
+.emoji_d83cdf71 {
+    background-position: -270px -18px
+}
+
+.emoji_d83cdf74 {
+    background-position: -288px -18px
+}
+
+.emoji_d83cdf77 {
+    background-position: -306px -18px
+}
+
+.emoji_d83cdf7a {
+    background-position: -324px -18px
+}
+
+.emoji_d83cdf80 {
+    background-position: -342px -18px
+}
+
+.emoji_d83cdf83 {
+    background-position: 0px -36px
+}
+
+.emoji_d83cdf89 {
+    background-position: -18px -36px
+}
+
+.emoji_d83cdf8c {
+    background-position: -36px -36px
+}
+
+.emoji_d83cdf8f {
+    background-position: -54px -36px
+}
+
+.emoji_d83cdf92 {
+    background-position: -72px -36px
+}
+
+.emoji_d83cdfa4 {
+    background-position: -90px -36px
+}
+
+.emoji_d83cdfa7 {
+    background-position: -108px -36px
+}
+
+.emoji_d83cdfaa {
+    background-position: -126px -36px
+}
+
+.emoji_d83cdfad {
+    background-position: -144px -36px
+}
+
+.emoji_d83cdfb0 {
+    background-position: -162px -36px
+}
+
+.emoji_d83cdfb3 {
+    background-position: -180px -36px
+}
+
+.emoji_d83cdfb9 {
+    background-position: -198px -36px
+}
+
+.emoji_d83cdfbf {
+    background-position: -216px -36px
+}
+
+.emoji_d83cdfc2 {
+    background-position: -234px -36px
+}
+
+.emoji_d83cdfc8 {
+    background-position: -252px -36px
+}
+
+.emoji_d83ddc01 {
+    background-position: -270px -36px
+}
+
+.emoji_d83ddc04 {
+    background-position: -288px -36px
+}
+
+.emoji_d83ddc07 {
+    background-position: -306px -36px
+}
+
+.emoji_d83ddc0a {
+    background-position: -324px -36px
+}
+
+.emoji_d83ddc0d {
+    background-position: -342px -36px
+}
+
+.emoji_d83ddc10 {
+    background-position: 0px -54px
+}
+
+.emoji_d83ddc13 {
+    background-position: -18px -54px
+}
+
+.emoji_d83ddc16 {
+    background-position: -36px -54px
+}
+
+.emoji_d83ddc19 {
+    background-position: -54px -54px
+}
+
+.emoji_d83ddc1c {
+    background-position: -72px -54px
+}
+
+.emoji_d83ddc1f {
+    background-position: -90px -54px
+}
+
+.emoji_d83ddc22 {
+    background-position: -108px -54px
+}
+
+.emoji_d83ddc25 {
+    background-position: -126px -54px
+}
+
+.emoji_d83ddc28 {
+    background-position: -144px -54px
+}
+
+.emoji_d83ddc2b {
+    background-position: -162px -54px
+}
+
+.emoji_d83ddc2e {
+    background-position: -180px -54px
+}
+
+.emoji_d83ddc31 {
+    background-position: -198px -54px
+}
+
+.emoji_d83ddc34 {
+    background-position: -216px -54px
+}
+
+.emoji_d83ddc37 {
+    background-position: -234px -54px
+}
+
+.emoji_d83ddc3a {
+    background-position: -252px -54px
+}
+
+.emoji_d83ddc3d {
+    background-position: -270px -54px
+}
+
+.emoji_d83ddc40 {
+    background-position: -288px -54px
+}
+
+.emoji_d83ddc43 {
+    background-position: -306px -54px
+}
+
+.emoji_d83ddc46 {
+    background-position: -324px -54px
+}
+
+.emoji_d83ddc4c {
+    background-position: -342px -54px
+}
+
+.emoji_d83ddc4f {
+    background-position: 0px -72px
+}
+
+.emoji_d83ddc52 {
+    background-position: -18px -72px
+}
+
+.emoji_d83ddc55 {
+    background-position: -36px -72px
+}
+
+.emoji_d83ddc58 {
+    background-position: -54px -72px
+}
+
+.emoji_d83ddc5b {
+    background-position: -72px -72px
+}
+
+.emoji_d83ddc5e {
+    background-position: -90px -72px
+}
+
+.emoji_d83ddc61 {
+    background-position: -108px -72px
+}
+
+.emoji_d83ddc67 {
+    background-position: -126px -72px
+}
+
+.emoji_d83ddc6a {
+    background-position: -144px -72px
+}
+
+.emoji_d83ddc6d {
+    background-position: -162px -72px
+}
+
+.emoji_d83ddc70 {
+    background-position: -180px -72px
+}
+
+.emoji_d83ddc73 {
+    background-position: -198px -72px
+}
+
+.emoji_d83ddc76 {
+    background-position: -216px -72px
+}
+
+.emoji_d83ddc79 {
+    background-position: -234px -72px
+}
+
+.emoji_d83ddc7c {
+    background-position: -252px -72px
+}
+
+.emoji_d83ddc7f {
+    background-position: -270px -72px
+}
+
+.emoji_d83ddc82 {
+    background-position: -288px -72px
+}
+
+.emoji_d83ddc85 {
+    background-position: -306px -72px
+}
+
+.emoji_d83ddc88 {
+    background-position: -324px -72px
+}
+
+.emoji_d83ddc8b {
+    background-position: -342px -72px
+}
+
+.emoji_d83ddc8e {
+    background-position: 0px -90px
+}
+
+.emoji_d83ddc91 {
+    background-position: -18px -90px
+}
+
+.emoji_d83ddc94 {
+    background-position: -36px -90px
+}
+
+.emoji_d83ddc97 {
+    background-position: -54px -90px
+}
+
+.emoji_d83ddc9a {
+    background-position: -72px -90px
+}
+
+.emoji_d83ddc9d {
+    background-position: -90px -90px
+}
+
+.emoji_d83ddca3 {
+    background-position: -108px -90px
+}
+
+.emoji_d83ddca6 {
+    background-position: -126px -90px
+}
+
+.emoji_d83ddca9 {
+    background-position: -144px -90px
+}
+
+.emoji_d83ddcac {
+    background-position: -162px -90px
+}
+
+.emoji_d83ddcb5 {
+    background-position: -180px -90px
+}
+
+.emoji_d83ddcb8 {
+    background-position: -198px -90px
+}
+
+.emoji_d83ddcbb {
+    background-position: -216px -90px
+}
+
+.emoji_d83ddcbe {
+    background-position: -234px -90px
+}
+
+.emoji_d83ddcc4 {
+    background-position: -252px -90px
+}
+
+.emoji_d83ddcc7 {
+    background-position: -270px -90px
+}
+
+.emoji_d83ddcca {
+    background-position: -288px -90px
+}
+
+.emoji_d83ddccd {
+    background-position: -306px -90px
+}
+
+.emoji_d83ddcd0 {
+    background-position: -324px -90px
+}
+
+.emoji_d83ddcd3 {
+    background-position: -342px -90px
+}
+
+.emoji_d83ddcd6 {
+    background-position: 0px -108px
+}
+
+.emoji_d83ddcd9 {
+    background-position: -18px -108px
+}
+
+.emoji_d83ddcdc {
+    background-position: -36px -108px
+}
+
+.emoji_d83ddcdf {
+    background-position: -54px -108px
+}
+
+.emoji_d83ddce2 {
+    background-position: -72px -108px
+}
+
+.emoji_d83ddcee {
+    background-position: -90px -108px
+}
+
+.emoji_d83ddcf1 {
+    background-position: -108px -108px
+}
+
+.emoji_d83ddcf7 {
+    background-position: -126px -108px
+}
+
+.emoji_d83ddcfa {
+    background-position: -144px -108px
+}
+
+.emoji_d83ddd06 {
+    background-position: -162px -108px
+}
+
+.emoji_d83ddd1e {
+    background-position: -180px -108px
+}
+
+.emoji_d83ddd27 {
+    background-position: -198px -108px
+}
+
+.emoji_d83ddd2a {
+    background-position: -216px -108px
+}
+
+.emoji_d83ddd2d {
+    background-position: -234px -108px
+}
+
+.emoji_d83dddff {
+    background-position: -252px -108px
+}
+
+.emoji_d83dde02 {
+    background-position: -270px -108px
+}
+
+.emoji_d83dde05 {
+    background-position: -288px -108px
+}
+
+.emoji_d83dde08 {
+    background-position: -306px -108px
+}
+
+.emoji_d83dde0b {
+    background-position: -324px -108px
+}
+
+.emoji_d83dde0e {
+    background-position: -342px -108px
+}
+
+.emoji_d83dde11 {
+    background-position: 0px -126px
+}
+
+.emoji_d83dde14 {
+    background-position: -18px -126px
+}
+
+.emoji_d83dde1a {
+    background-position: -36px -126px
+}
+
+.emoji_d83dde1d {
+    background-position: -54px -126px
+}
+
+.emoji_d83dde20 {
+    background-position: -72px -126px
+}
+
+.emoji_d83dde23 {
+    background-position: -90px -126px
+}
+
+.emoji_d83dde26 {
+    background-position: -108px -126px
+}
+
+.emoji_d83dde29 {
+    background-position: -126px -126px
+}
+
+.emoji_d83dde2c {
+    background-position: -144px -126px
+}
+
+.emoji_d83dde2f {
+    background-position: -162px -126px
+}
+
+.emoji_d83dde32 {
+    background-position: -180px -126px
+}
+
+.emoji_d83dde35 {
+    background-position: -198px -126px
+}
+
+.emoji_d83dde47 {
+    background-position: -216px -126px
+}
+
+.emoji_d83dde4a {
+    background-position: -234px -126px
+}
+
+.emoji_d83dde80 {
+    background-position: -252px -126px
+}
+
+.emoji_d83dde83 {
+    background-position: -270px -126px
+}
+
+.emoji_d83dde86 {
+    background-position: -288px -126px
+}
+
+.emoji_d83dde8c {
+    background-position: -306px -126px
+}
+
+.emoji_d83dde8f {
+    background-position: -324px -126px
+}
+
+.emoji_d83dde92 {
+    background-position: -342px -126px
+}
+
+.emoji_d83dde95 {
+    background-position: 0px -144px
+}
+
+.emoji_d83dde98 {
+    background-position: -18px -144px
+}
+
+.emoji_d83dde9b {
+    background-position: -36px -144px
+}
+
+.emoji_d83dde9e {
+    background-position: -54px -144px
+}
+
+.emoji_d83ddea1 {
+    background-position: -72px -144px
+}
+
+.emoji_d83ddea4 {
+    background-position: -90px -144px
+}
+
+.emoji_d83ddea7 {
+    background-position: -108px -144px
+}
+
+.emoji_d83ddeaa {
+    background-position: -126px -144px
+}
+
+.emoji_d83ddeb6 {
+    background-position: -144px -144px
+}
+
+.emoji_d83ddebf {
+    background-position: -162px -144px
+}
+
+.emoji_d83cdde9d83cddea {
+    background-position: -180px -144px
+}
+
+.emoji_d83cddecd83cdde7 {
+    background-position: -198px -144px
+}
+
+.emoji_d83cddefd83cddf5 {
+    background-position: -216px -144px
+}
+
+.emoji_d83dde17 {
+    background-position: -234px -144px
+}
+
+.emoji_d83edd11 {
+    background-position: -252px -144px
+}
+
+.emoji_d83edd17 {
+    background-position: -270px -144px
+}
+
+.emoji_d83dde44 {
+    background-position: -288px -144px
+}
+
+.emoji_d83edd14 {
+    background-position: -306px -144px
+}
+
+.emoji_d83dde41 {
+    background-position: -324px -144px
+}
+
+.emoji_d83ddc49 {
+    background-position: -342px -144px
+}
+
+.emoji_d83edd18d83cdffb {
+    background-position: 0px -162px
+}
+
+.emoji_d83cdde6d83cddfa {
+    background-position: -18px -162px
+}
+
+.emoji_d83cdde6d83cddf9 {
+    background-position: -36px -162px
+}
+
+.emoji_d83cddfbd83cddf3 {
+    background-position: -54px -162px
+}
+
+.emoji_d83cdde9d83cddf0 {
+    background-position: -72px -162px
+}
+
+.emoji_d83cddf2d83cddf4 {
+    background-position: -90px -162px
+}
+
+.emoji_d83cddf2d83cddfe {
+    background-position: -108px -162px
+}
+
+.emoji_d83cddf2d83cddfd {
+    background-position: -126px -162px
+}
+
+.emoji_d83cdde6d83cddea {
+    background-position: -144px -162px
+}
+
+.emoji_d83cddf5d83cddf1 {
+    background-position: -162px -162px
+}
+
+.emoji_d83cddf5d83cddf9 {
+    background-position: -180px -162px
+}
+
+.emoji_d83cddf5d83cddf7 {
+    background-position: -198px -162px
+}
+
+.emoji_d83cddf8d83cdde6 {
+    background-position: -216px -162px
+}
+
+.emoji_d83cddf8d83cddec {
+    background-position: -234px -162px
+}
+
+.emoji_d83cddf5d83cdded {
+    background-position: -252px -162px
+}
+
+.emoji_d83cddf8d83cddea {
+    background-position: -270px -162px
+}
+
+.emoji_sprite_1 {
+    background-image: url(/images/emoji/sprites/sprite1.png)
+}
+
+.emoji_d83dde39 {
+    background-position: 0px 0px
+}
+
+.emoji_d83dde3c {
+    background-position: -18px 0px
+}
+
+.emoji_d83dde3f {
+    background-position: -36px 0px
+}
+
+.emoji_260e {
+    background-position: -54px 0px
+}
+
+.emoji_261d {
+    background-position: -72px 0px
+}
+
+.emoji_26a1 {
+    background-position: -90px 0px
+}
+
+.emoji_26c5 {
+    background-position: -108px 0px
+}
+
+.emoji_26d4 {
+    background-position: -126px 0px
+}
+
+.emoji_26f5 {
+    background-position: -144px 0px
+}
+
+.emoji_270a {
+    background-position: -162px 0px
+}
+
+.emoji_2728 {
+    background-position: -180px 0px
+}
+
+.emoji_2764 {
+    background-position: -198px 0px
+}
+
+.emoji_d83cdccf {
+    background-position: -216px 0px
+}
+
+.emoji_d83cdd98 {
+    background-position: -234px 0px
+}
+
+.emoji_d83cdf1b {
+    background-position: -252px 0px
+}
+
+.emoji_d83cdf1e {
+    background-position: -270px 0px
+}
+
+.emoji_d83cdf30 {
+    background-position: -288px 0px
+}
+
+.emoji_d83cdf33 {
+    background-position: -306px 0px
+}
+
+.emoji_d83cdf39 {
+    background-position: -324px 0px
+}
+
+.emoji_d83cdf3c {
+    background-position: -342px 0px
+}
+
+.emoji_d83cdf3f {
+    background-position: 0px -18px
+}
+
+.emoji_d83cdf42 {
+    background-position: -18px -18px
+}
+
+.emoji_d83cdf45 {
+    background-position: -36px -18px
+}
+
+.emoji_d83cdf48 {
+    background-position: -54px -18px
+}
+
+.emoji_d83cdf4b {
+    background-position: -72px -18px
+}
+
+.emoji_d83cdf4e {
+    background-position: -90px -18px
+}
+
+.emoji_d83cdf51 {
+    background-position: -108px -18px
+}
+
+.emoji_d83cdf54 {
+    background-position: -126px -18px
+}
+
+.emoji_d83cdf57 {
+    background-position: -144px -18px
+}
+
+.emoji_d83cdf5a {
+    background-position: -162px -18px
+}
+
+.emoji_d83cdf5d {
+    background-position: -180px -18px
+}
+
+.emoji_d83cdf60 {
+    background-position: -198px -18px
+}
+
+.emoji_d83cdf63 {
+    background-position: -216px -18px
+}
+
+.emoji_d83cdf66 {
+    background-position: -234px -18px
+}
+
+.emoji_d83cdf69 {
+    background-position: -252px -18px
+}
+
+.emoji_d83cdf6c {
+    background-position: -270px -18px
+}
+
+.emoji_d83cdf6f {
+    background-position: -288px -18px
+}
+
+.emoji_d83cdf72 {
+    background-position: -306px -18px
+}
+
+.emoji_d83cdf75 {
+    background-position: -324px -18px
+}
+
+.emoji_d83cdf78 {
+    background-position: -342px -18px
+}
+
+.emoji_d83cdf7b {
+    background-position: 0px -36px
+}
+
+.emoji_d83cdf81 {
+    background-position: -18px -36px
+}
+
+.emoji_d83cdf84 {
+    background-position: -36px -36px
+}
+
+.emoji_d83cdf8a {
+    background-position: -54px -36px
+}
+
+.emoji_d83cdf8d {
+    background-position: -72px -36px
+}
+
+.emoji_d83cdf90 {
+    background-position: -90px -36px
+}
+
+.emoji_d83cdf93 {
+    background-position: -108px -36px
+}
+
+.emoji_d83cdfa8 {
+    background-position: -126px -36px
+}
+
+.emoji_d83cdfab {
+    background-position: -144px -36px
+}
+
+.emoji_d83cdfb1 {
+    background-position: -162px -36px
+}
+
+.emoji_d83cdfb4 {
+    background-position: -180px -36px
+}
+
+.emoji_d83cdfb7 {
+    background-position: -198px -36px
+}
+
+.emoji_d83cdfba {
+    background-position: -216px -36px
+}
+
+.emoji_d83cdfbd {
+    background-position: -234px -36px
+}
+
+.emoji_d83cdfc0 {
+    background-position: -252px -36px
+}
+
+.emoji_d83cdfc3 {
+    background-position: -270px -36px
+}
+
+.emoji_d83cdfc6 {
+    background-position: -288px -36px
+}
+
+.emoji_d83cdfc9 {
+    background-position: -306px -36px
+}
+
+.emoji_d83ddc02 {
+    background-position: -324px -36px
+}
+
+.emoji_d83ddc05 {
+    background-position: -342px -36px
+}
+
+.emoji_d83ddc08 {
+    background-position: 0px -54px
+}
+
+.emoji_d83ddc0b {
+    background-position: -18px -54px
+}
+
+.emoji_d83ddc0e {
+    background-position: -36px -54px
+}
+
+.emoji_d83ddc11 {
+    background-position: -54px -54px
+}
+
+.emoji_d83ddc14 {
+    background-position: -72px -54px
+}
+
+.emoji_d83ddc17 {
+    background-position: -90px -54px
+}
+
+.emoji_d83ddc1a {
+    background-position: -108px -54px
+}
+
+.emoji_d83ddc1d {
+    background-position: -126px -54px
+}
+
+.emoji_d83ddc20 {
+    background-position: -144px -54px
+}
+
+.emoji_d83ddc23 {
+    background-position: -162px -54px
+}
+
+.emoji_d83ddc26 {
+    background-position: -180px -54px
+}
+
+.emoji_d83ddc29 {
+    background-position: -198px -54px
+}
+
+.emoji_d83ddc2c {
+    background-position: -216px -54px
+}
+
+.emoji_d83ddc2f {
+    background-position: -234px -54px
+}
+
+.emoji_d83ddc32 {
+    background-position: -252px -54px
+}
+
+.emoji_d83ddc35 {
+    background-position: -270px -54px
+}
+
+.emoji_d83ddc38 {
+    background-position: -288px -54px
+}
+
+.emoji_d83ddc3b {
+    background-position: -306px -54px
+}
+
+.emoji_d83ddc3e {
+    background-position: -324px -54px
+}
+
+.emoji_d83ddc44 {
+    background-position: -342px -54px
+}
+
+.emoji_d83ddc47 {
+    background-position: 0px -72px
+}
+
+.emoji_d83ddc4a {
+    background-position: -18px -72px
+}
+
+.emoji_d83ddc4d {
+    background-position: -36px -72px
+}
+
+.emoji_d83ddc50 {
+    background-position: -54px -72px
+}
+
+.emoji_d83ddc53 {
+    background-position: -72px -72px
+}
+
+.emoji_d83ddc56 {
+    background-position: -90px -72px
+}
+
+.emoji_d83ddc59 {
+    background-position: -108px -72px
+}
+
+.emoji_d83ddc5c {
+    background-position: -126px -72px
+}
+
+.emoji_d83ddc5f {
+    background-position: -144px -72px
+}
+
+.emoji_d83ddc62 {
+    background-position: -162px -72px
+}
+
+.emoji_d83ddc68 {
+    background-position: -180px -72px
+}
+
+.emoji_d83ddc6b {
+    background-position: -198px -72px
+}
+
+.emoji_d83ddc6e {
+    background-position: -216px -72px
+}
+
+.emoji_d83ddc71 {
+    background-position: -234px -72px
+}
+
+.emoji_d83ddc74 {
+    background-position: -252px -72px
+}
+
+.emoji_d83ddc77 {
+    background-position: -270px -72px
+}
+
+.emoji_d83ddc7a {
+    background-position: -288px -72px
+}
+
+.emoji_d83ddc7d {
+    background-position: -306px -72px
+}
+
+.emoji_d83ddc80 {
+    background-position: -324px -72px
+}
+
+.emoji_d83ddc83 {
+    background-position: -342px -72px
+}
+
+.emoji_d83ddc86 {
+    background-position: 0px -90px
+}
+
+.emoji_d83ddc89 {
+    background-position: -18px -90px
+}
+
+.emoji_d83ddc8c {
+    background-position: -36px -90px
+}
+
+.emoji_d83ddc8f {
+    background-position: -54px -90px
+}
+
+.emoji_d83ddc92 {
+    background-position: -72px -90px
+}
+
+.emoji_d83ddc95 {
+    background-position: -90px -90px
+}
+
+.emoji_d83ddc98 {
+    background-position: -108px -90px
+}
+
+.emoji_d83ddc9b {
+    background-position: -126px -90px
+}
+
+.emoji_d83ddc9e {
+    background-position: -144px -90px
+}
+
+.emoji_d83ddca1 {
+    background-position: -162px -90px
+}
+
+.emoji_d83ddca7 {
+    background-position: -180px -90px
+}
+
+.emoji_d83ddcaa {
+    background-position: -198px -90px
+}
+
+.emoji_d83ddcad {
+    background-position: -216px -90px
+}
+
+.emoji_d83ddcb0 {
+    background-position: -234px -90px
+}
+
+.emoji_d83ddcb3 {
+    background-position: -252px -90px
+}
+
+.emoji_d83ddcb6 {
+    background-position: -270px -90px
+}
+
+.emoji_d83ddcbc {
+    background-position: -288px -90px
+}
+
+.emoji_d83ddcbf {
+    background-position: -306px -90px
+}
+
+.emoji_d83ddcc5 {
+    background-position: -324px -90px
+}
+
+.emoji_d83ddcc8 {
+    background-position: -342px -90px
+}
+
+.emoji_d83ddccb {
+    background-position: 0px -108px
+}
+
+.emoji_d83ddcce {
+    background-position: -18px -108px
+}
+
+.emoji_d83ddcd1 {
+    background-position: -36px -108px
+}
+
+.emoji_d83ddcd4 {
+    background-position: -54px -108px
+}
+
+.emoji_d83ddcd7 {
+    background-position: -72px -108px
+}
+
+.emoji_d83ddcda {
+    background-position: -90px -108px
+}
+
+.emoji_d83ddcdd {
+    background-position: -108px -108px
+}
+
+.emoji_d83ddce0 {
+    background-position: -126px -108px
+}
+
+.emoji_d83ddce6 {
+    background-position: -144px -108px
+}
+
+.emoji_d83ddcef {
+    background-position: -162px -108px
+}
+
+.emoji_d83ddcfb {
+    background-position: -180px -108px
+}
+
+.emoji_d83ddd16 {
+    background-position: -198px -108px
+}
+
+.emoji_d83ddd25 {
+    background-position: -216px -108px
+}
+
+.emoji_d83ddd28 {
+    background-position: -234px -108px
+}
+
+.emoji_d83ddd2b {
+    background-position: -252px -108px
+}
+
+.emoji_d83ddd2e {
+    background-position: -270px -108px
+}
+
+.emoji_d83ddd31 {
+    background-position: -288px -108px
+}
+
+.emoji_d83dde00 {
+    background-position: -306px -108px
+}
+
+.emoji_d83dde03 {
+    background-position: -324px -108px
+}
+
+.emoji_d83dde06 {
+    background-position: -342px -108px
+}
+
+.emoji_d83dde09 {
+    background-position: 0px -126px
+}
+
+.emoji_d83dde0c {
+    background-position: -18px -126px
+}
+
+.emoji_d83dde0f {
+    background-position: -36px -126px
+}
+
+.emoji_d83dde12 {
+    background-position: -54px -126px
+}
+
+.emoji_d83dde15 {
+    background-position: -72px -126px
+}
+
+.emoji_d83dde18 {
+    background-position: -90px -126px
+}
+
+.emoji_d83dde1b {
+    background-position: -108px -126px
+}
+
+.emoji_d83dde1e {
+    background-position: -126px -126px
+}
+
+.emoji_d83dde21 {
+    background-position: -144px -126px
+}
+
+.emoji_d83dde24 {
+    background-position: -162px -126px
+}
+
+.emoji_d83dde27 {
+    background-position: -180px -126px
+}
+
+.emoji_d83dde2a {
+    background-position: -198px -126px
+}
+
+.emoji_d83dde2d {
+    background-position: -216px -126px
+}
+
+.emoji_d83dde30 {
+    background-position: -234px -126px
+}
+
+.emoji_d83dde33 {
+    background-position: -252px -126px
+}
+
+.emoji_d83dde36 {
+    background-position: -270px -126px
+}
+
+.emoji_d83dde45 {
+    background-position: -288px -126px
+}
+
+.emoji_d83dde48 {
+    background-position: -306px -126px
+}
+
+.emoji_d83dde4b {
+    background-position: -324px -126px
+}
+
+.emoji_d83dde4e {
+    background-position: -342px -126px
+}
+
+.emoji_d83dde81 {
+    background-position: 0px -144px
+}
+
+.emoji_d83dde84 {
+    background-position: -18px -144px
+}
+
+.emoji_d83dde87 {
+    background-position: -36px -144px
+}
+
+.emoji_d83dde8a {
+    background-position: -54px -144px
+}
+
+.emoji_d83dde8d {
+    background-position: -72px -144px
+}
+
+.emoji_d83dde90 {
+    background-position: -90px -144px
+}
+
+.emoji_d83dde93 {
+    background-position: -108px -144px
+}
+
+.emoji_d83dde96 {
+    background-position: -126px -144px
+}
+
+.emoji_d83dde99 {
+    background-position: -144px -144px
+}
+
+.emoji_d83dde9c {
+    background-position: -162px -144px
+}
+
+.emoji_d83dde9f {
+    background-position: -180px -144px
+}
+
+.emoji_d83ddea8 {
+    background-position: -198px -144px
+}
+
+.emoji_d83ddeb4 {
+    background-position: -216px -144px
+}
+
+.emoji_d83ddebd {
+    background-position: -234px -144px
+}
+
+.emoji_d83ddec0 {
+    background-position: -252px -144px
+}
+
+.emoji_d83cddead83cddf8 {
+    background-position: -270px -144px
+}
+
+.emoji_d83cddf0d83cddf7 {
+    background-position: -288px -144px
+}
+
+.emoji_d83cddf0d83cddff {
+    background-position: -306px -144px
+}
+
+.emoji_d83cdde7d83cddfe {
+    background-position: -324px -144px
+}
+
+.emoji_d83dde42 {
+    background-position: -342px -144px
+}
+
+.emoji_d83edd12 {
+    background-position: 0px -162px
+}
+
+.emoji_d83edd15 {
+    background-position: -18px -162px
+}
+
+.emoji_d83ddd95d83cdffb {
+    background-position: -36px -162px
+}
+
+.emoji_270dd83cdffb {
+    background-position: -54px -162px
+}
+
+.emoji_d83cdde7d83cddea {
+    background-position: -72px -162px
+}
+
+.emoji_d83cdde7d83cddf7 {
+    background-position: -90px -162px
+}
+
+.emoji_d83cddedd83cddf0 {
+    background-position: -108px -162px
+}
+
+.emoji_d83cddf3d83cddf1 {
+    background-position: -126px -162px
+}
+
+.emoji_d83cddf3d83cddff {
+    background-position: -144px -162px
+}
+
+.emoji_d83cddf3d83cddf4 {
+    background-position: -162px -162px
+}
+
+.emoji_d83cddf9d83cddf7 {
+    background-position: -180px -162px
+}
+
+.emoji_d83cddffd83cdde6 {
+    background-position: -198px -162px
+}
+
+.emoji_sprite_2 {
+    background-image: url(/images/emoji/sprites/sprite2.png)
+}
+
+.emoji_d83dde01 {
+    background-position: 0px 0px
+}
+
+.emoji_d83dde13 {
+    background-position: -18px 0px
+}
+
+.emoji_d83dde19 {
+    background-position: -36px 0px
+}
+
+.emoji_d83dde3d {
+    background-position: -54px 0px
+}
+
+.emoji_d83dde40 {
+    background-position: -72px 0px
+}
+
+.emoji_d83dde3a {
+    background-position: -90px 0px
+}
+
+.emoji_23f0 {
+    background-position: -108px 0px
+}
+
+.emoji_23f3 {
+    background-position: -126px 0px
+}
+
+.emoji_2600 {
+    background-position: -144px 0px
+}
+
+.emoji_2615 {
+    background-position: -162px 0px
+}
+
+.emoji_267b {
+    background-position: -180px 0px
+}
+
+.emoji_26bd {
+    background-position: -198px 0px
+}
+
+.emoji_26ea {
+    background-position: -216px 0px
+}
+
+.emoji_26f3 {
+    background-position: -234px 0px
+}
+
+.emoji_2702 {
+    background-position: -252px 0px
+}
+
+.emoji_2708 {
+    background-position: -270px 0px
+}
+
+.emoji_270b {
+    background-position: -288px 0px
+}
+
+.emoji_d83cdc04 {
+    background-position: -306px 0px
+}
+
+.emoji_d83cdf0d {
+    background-position: -324px 0px
+}
+
+.emoji_d83cdf1f {
+    background-position: -342px 0px
+}
+
+.emoji_d83cdf31 {
+    background-position: 0px -18px
+}
+
+.emoji_d83cdf34 {
+    background-position: -18px -18px
+}
+
+.emoji_d83cdf37 {
+    background-position: -36px -18px
+}
+
+.emoji_d83cdf3a {
+    background-position: -54px -18px
+}
+
+.emoji_d83cdf3d {
+    background-position: -72px -18px
+}
+
+.emoji_d83cdf40 {
+    background-position: -90px -18px
+}
+
+.emoji_d83cdf43 {
+    background-position: -108px -18px
+}
+
+.emoji_d83cdf46 {
+    background-position: -126px -18px
+}
+
+.emoji_d83cdf49 {
+    background-position: -144px -18px
+}
+
+.emoji_d83cdf4c {
+    background-position: -162px -18px
+}
+
+.emoji_d83cdf4f {
+    background-position: -180px -18px
+}
+
+.emoji_d83cdf52 {
+    background-position: -198px -18px
+}
+
+.emoji_d83cdf55 {
+    background-position: -216px -18px
+}
+
+.emoji_d83cdf5b {
+    background-position: -234px -18px
+}
+
+.emoji_d83cdf5e {
+    background-position: -252px -18px
+}
+
+.emoji_d83cdf61 {
+    background-position: -270px -18px
+}
+
+.emoji_d83cdf64 {
+    background-position: -288px -18px
+}
+
+.emoji_d83cdf67 {
+    background-position: -306px -18px
+}
+
+.emoji_d83cdf6a {
+    background-position: -324px -18px
+}
+
+.emoji_d83cdf6d {
+    background-position: -342px -18px
+}
+
+.emoji_d83cdf70 {
+    background-position: 0px -36px
+}
+
+.emoji_d83cdf73 {
+    background-position: -18px -36px
+}
+
+.emoji_d83cdf76 {
+    background-position: -36px -36px
+}
+
+.emoji_d83cdf79 {
+    background-position: -54px -36px
+}
+
+.emoji_d83cdf7c {
+    background-position: -72px -36px
+}
+
+.emoji_d83cdf82 {
+    background-position: -90px -36px
+}
+
+.emoji_d83cdf85 {
+    background-position: -108px -36px
+}
+
+.emoji_d83cdf88 {
+    background-position: -126px -36px
+}
+
+.emoji_d83cdf8b {
+    background-position: -144px -36px
+}
+
+.emoji_d83cdf8e {
+    background-position: -162px -36px
+}
+
+.emoji_d83cdfa3 {
+    background-position: -180px -36px
+}
+
+.emoji_d83cdfa9 {
+    background-position: -198px -36px
+}
+
+.emoji_d83cdfac {
+    background-position: -216px -36px
+}
+
+.emoji_d83cdfaf {
+    background-position: -234px -36px
+}
+
+.emoji_d83cdfb2 {
+    background-position: -252px -36px
+}
+
+.emoji_d83cdfb8 {
+    background-position: -270px -36px
+}
+
+.emoji_d83cdfbb {
+    background-position: -288px -36px
+}
+
+.emoji_d83cdfbe {
+    background-position: -306px -36px
+}
+
+.emoji_d83cdfc1 {
+    background-position: -324px -36px
+}
+
+.emoji_d83cdfc4 {
+    background-position: -342px -36px
+}
+
+.emoji_d83cdfc7 {
+    background-position: 0px -54px
+}
+
+.emoji_d83cdfca {
+    background-position: -18px -54px
+}
+
+.emoji_d83ddc00 {
+    background-position: -36px -54px
+}
+
+.emoji_d83ddc03 {
+    background-position: -54px -54px
+}
+
+.emoji_d83ddc06 {
+    background-position: -72px -54px
+}
+
+.emoji_d83ddc09 {
+    background-position: -90px -54px
+}
+
+.emoji_d83ddc0c {
+    background-position: -108px -54px
+}
+
+.emoji_d83ddc0f {
+    background-position: -126px -54px
+}
+
+.emoji_d83ddc12 {
+    background-position: -144px -54px
+}
+
+.emoji_d83ddc15 {
+    background-position: -162px -54px
+}
+
+.emoji_d83ddc18 {
+    background-position: -180px -54px
+}
+
+.emoji_d83ddc1b {
+    background-position: -198px -54px
+}
+
+.emoji_d83ddc1e {
+    background-position: -216px -54px
+}
+
+.emoji_d83ddc21 {
+    background-position: -234px -54px
+}
+
+.emoji_d83ddc24 {
+    background-position: -252px -54px
+}
+
+.emoji_d83ddc27 {
+    background-position: -270px -54px
+}
+
+.emoji_d83ddc2a {
+    background-position: -288px -54px
+}
+
+.emoji_d83ddc2d {
+    background-position: -306px -54px
+}
+
+.emoji_d83ddc30 {
+    background-position: -324px -54px
+}
+
+.emoji_d83ddc33 {
+    background-position: -342px -54px
+}
+
+.emoji_d83ddc36 {
+    background-position: 0px -72px
+}
+
+.emoji_d83ddc39 {
+    background-position: -18px -72px
+}
+
+.emoji_d83ddc3c {
+    background-position: -36px -72px
+}
+
+.emoji_d83ddc42 {
+    background-position: -54px -72px
+}
+
+.emoji_d83ddc45 {
+    background-position: -72px -72px
+}
+
+.emoji_d83ddc48 {
+    background-position: -90px -72px
+}
+
+.emoji_d83ddc4b {
+    background-position: -108px -72px
+}
+
+.emoji_d83ddc4e {
+    background-position: -126px -72px
+}
+
+.emoji_d83ddc51 {
+    background-position: -144px -72px
+}
+
+.emoji_d83ddc54 {
+    background-position: -162px -72px
+}
+
+.emoji_d83ddc57 {
+    background-position: -180px -72px
+}
+
+.emoji_d83ddc5a {
+    background-position: -198px -72px
+}
+
+.emoji_d83ddc5d {
+    background-position: -216px -72px
+}
+
+.emoji_d83ddc60 {
+    background-position: -234px -72px
+}
+
+.emoji_d83ddc63 {
+    background-position: -252px -72px
+}
+
+.emoji_d83ddc66 {
+    background-position: -270px -72px
+}
+
+.emoji_d83ddc69 {
+    background-position: -288px -72px
+}
+
+.emoji_d83ddc6c {
+    background-position: -306px -72px
+}
+
+.emoji_d83ddc6f {
+    background-position: -324px -72px
+}
+
+.emoji_d83ddc72 {
+    background-position: -342px -72px
+}
+
+.emoji_d83ddc75 {
+    background-position: 0px -90px
+}
+
+.emoji_d83ddc78 {
+    background-position: -18px -90px
+}
+
+.emoji_d83ddc7b {
+    background-position: -36px -90px
+}
+
+.emoji_d83ddc7e {
+    background-position: -54px -90px
+}
+
+.emoji_d83ddc81 {
+    background-position: -72px -90px
+}
+
+.emoji_d83ddc84 {
+    background-position: -90px -90px
+}
+
+.emoji_d83ddc87 {
+    background-position: -108px -90px
+}
+
+.emoji_d83ddc8a {
+    background-position: -126px -90px
+}
+
+.emoji_d83ddc8d {
+    background-position: -144px -90px
+}
+
+.emoji_d83ddc90 {
+    background-position: -162px -90px
+}
+
+.emoji_d83ddc93 {
+    background-position: -180px -90px
+}
+
+.emoji_d83ddc96 {
+    background-position: -198px -90px
+}
+
+.emoji_d83ddc99 {
+    background-position: -216px -90px
+}
+
+.emoji_d83ddc9c {
+    background-position: -234px -90px
+}
+
+.emoji_d83ddc9f {
+    background-position: -252px -90px
+}
+
+.emoji_d83ddca5 {
+    background-position: -270px -90px
+}
+
+.emoji_d83ddca8 {
+    background-position: -288px -90px
+}
+
+.emoji_d83ddcb4 {
+    background-position: -306px -90px
+}
+
+.emoji_d83ddcb7 {
+    background-position: -324px -90px
+}
+
+.emoji_d83ddcba {
+    background-position: -342px -90px
+}
+
+.emoji_d83ddcbd {
+    background-position: 0px -108px
+}
+
+.emoji_d83ddcc9 {
+    background-position: -18px -108px
+}
+
+.emoji_d83ddccc {
+    background-position: -36px -108px
+}
+
+.emoji_d83ddcd2 {
+    background-position: -54px -108px
+}
+
+.emoji_d83ddcd5 {
+    background-position: -72px -108px
+}
+
+.emoji_d83ddcd8 {
+    background-position: -90px -108px
+}
+
+.emoji_d83ddce1 {
+    background-position: -108px -108px
+}
+
+.emoji_d83ddced {
+    background-position: -126px -108px
+}
+
+.emoji_d83ddcf0 {
+    background-position: -144px -108px
+}
+
+.emoji_d83ddcf9 {
+    background-position: -162px -108px
+}
+
+.emoji_d83ddcfc {
+    background-position: -180px -108px
+}
+
+.emoji_d83ddd0e {
+    background-position: -198px -108px
+}
+
+.emoji_d83ddd11 {
+    background-position: -216px -108px
+}
+
+.emoji_d83ddd14 {
+    background-position: -234px -108px
+}
+
+.emoji_d83ddd26 {
+    background-position: -252px -108px
+}
+
+.emoji_d83ddd29 {
+    background-position: -270px -108px
+}
+
+.emoji_d83ddd2c {
+    background-position: -288px -108px
+}
+
+.emoji_d83dde04 {
+    background-position: -306px -108px
+}
+
+.emoji_d83dde07 {
+    background-position: -324px -108px
+}
+
+.emoji_d83dde0a {
+    background-position: -342px -108px
+}
+
+.emoji_d83dde0d {
+    background-position: 0px -126px
+}
+
+.emoji_d83dde10 {
+    background-position: -18px -126px
+}
+
+.emoji_d83dde16 {
+    background-position: -36px -126px
+}
+
+.emoji_d83dde1c {
+    background-position: -54px -126px
+}
+
+.emoji_d83dde1f {
+    background-position: -72px -126px
+}
+
+.emoji_d83dde22 {
+    background-position: -90px -126px
+}
+
+.emoji_d83dde25 {
+    background-position: -108px -126px
+}
+
+.emoji_d83dde28 {
+    background-position: -126px -126px
+}
+
+.emoji_d83dde2b {
+    background-position: -144px -126px
+}
+
+.emoji_d83dde2e {
+    background-position: -162px -126px
+}
+
+.emoji_d83dde31 {
+    background-position: -180px -126px
+}
+
+.emoji_d83dde34 {
+    background-position: -198px -126px
+}
+
+.emoji_d83dde37 {
+    background-position: -216px -126px
+}
+
+.emoji_d83dde46 {
+    background-position: -234px -126px
+}
+
+.emoji_d83dde49 {
+    background-position: -252px -126px
+}
+
+.emoji_d83dde4c {
+    background-position: -270px -126px
+}
+
+.emoji_d83dde4f {
+    background-position: -288px -126px
+}
+
+.emoji_d83dde82 {
+    background-position: -306px -126px
+}
+
+.emoji_d83dde85 {
+    background-position: -324px -126px
+}
+
+.emoji_d83dde88 {
+    background-position: -342px -126px
+}
+
+.emoji_d83dde8e {
+    background-position: 0px -144px
+}
+
+.emoji_d83dde91 {
+    background-position: -18px -144px
+}
+
+.emoji_d83dde94 {
+    background-position: -36px -144px
+}
+
+.emoji_d83dde97 {
+    background-position: -54px -144px
+}
+
+.emoji_d83dde9a {
+    background-position: -72px -144px
+}
+
+.emoji_d83dde9d {
+    background-position: -90px -144px
+}
+
+.emoji_d83ddea0 {
+    background-position: -108px -144px
+}
+
+.emoji_d83ddea3 {
+    background-position: -126px -144px
+}
+
+.emoji_d83ddeac {
+    background-position: -144px -144px
+}
+
+.emoji_d83ddeb5 {
+    background-position: -162px -144px
+}
+
+.emoji_d83cdde8d83cddf3 {
+    background-position: -180px -144px
+}
+
+.emoji_d83cddebd83cddf7 {
+    background-position: -198px -144px
+}
+
+.emoji_d83cddeed83cddf9 {
+    background-position: -216px -144px
+}
+
+.emoji_d83cddf7d83cddfa {
+    background-position: -234px -144px
+}
+
+.emoji_d83cddfad83cddf8 {
+    background-position: -252px -144px
+}
+
+.emoji_d83cddfad83cdde6 {
+    background-position: -270px -144px
+}
+
+.emoji_d83dde43 {
+    background-position: -288px -144px
+}
+
+.emoji_d83edd13 {
+    background-position: -306px -144px
+}
+
+.emoji_2639 {
+    background-position: -324px -144px
+}
+
+.emoji_d83edd10 {
+    background-position: -342px -144px
+}
+
+.emoji_d83ddd90d83cdffb {
+    background-position: 0px -162px
+}
+
+.emoji_d83ddd96d83cdffb {
+    background-position: -18px -162px
+}
+
+.emoji_d83cddeed83cddf1 {
+    background-position: -36px -162px
+}
+
+.emoji_d83cddeed83cddf3 {
+    background-position: -54px -162px
+}
+
+.emoji_d83cddeed83cdde9 {
+    background-position: -72px -162px
+}
+
+.emoji_d83cddeed83cddea {
+    background-position: -90px -162px
+}
+
+.emoji_d83cdde8d83cdde6 {
+    background-position: -108px -162px
+}
+
+.emoji_d83cdde8d83cddf4 {
+    background-position: -126px -162px
+}
+
+.emoji_d83cddebd83cddee {
+    background-position: -144px -162px
+}
+
+.emoji_d83cdde8d83cddf1 {
+    background-position: -162px -162px
+}
+
+.emoji_d83cdde8d83cdded {
+    background-position: -180px -162px
 }
 
 #notifiers_wrap {
