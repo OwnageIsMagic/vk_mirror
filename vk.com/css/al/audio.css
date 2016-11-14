@@ -107,6 +107,11 @@
     display: none
 }
 
+.top_audio_layer .audio_search_input.ui_search_new {
+    padding-top: 15px;
+    margin: 0 15px 15px
+}
+
 .audio_layer_bottom {
     background-color: #fafbfc;
     height: 46px;

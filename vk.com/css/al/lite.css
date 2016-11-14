@@ -3679,7 +3679,8 @@ div.top_result_baloon a {
     height: 16px;
     border: none;
     vertical-align: -3px;
-    margin: 0 1px
+    margin: 0 1px;
+    display: inline-block
 }
 
 .emoji_css {

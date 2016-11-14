@@ -733,6 +733,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 search_performer: l ? l.performer : null,
                 search_lyrics: l ? l.lyrics : null,
                 search_sort: l ? l.sort : null,
+                search_history: l ? intval(l.fromHistory) : null,
                 feed_from: this.getFeedFrom(),
                 feed_offset: this.getFeedOffset(),
                 shuffle: this.getShuffle(),
@@ -959,12 +960,12 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     }, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop", AudioPlayer.EVENT_UPDATE =
     "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED = "buffered", AudioPlayer.EVENT_PROGRESS =
     "progress", AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed",
-    AudioPlayer.EVENT_AD_READY = "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit",
-    AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED = "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY =
-    "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_",
-    AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE =
-    "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v3", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME =
-    .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
+    AudioPlayer.EVENT_AD_READY = "ad_ready",
+    AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED = "ad_completed", AudioPlayer.EVENT_START_LOADING =
+    "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX +
+    "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS =
+    "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v3", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF =
+    .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
         def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -1485,9 +1486,10 @@ AudioPlayer.tabIcons = {
                     .replace("foreign", "");
                 intval(o) && (e.popular_genre = 1), e.top_audio = 1
             }
-            t.getType() == AudioPlaylist.TYPE_FEED && (e.feed_audio = 1), t.getType() == AudioPlaylist.TYPE_RECENT && (e.recent = 1), t.getType() == AudioPlaylist.TYPE_ALBUM && (t
-                .getAlbumId() == AudioPlaylist.ALBUM_ALL && t.isPopBand() && (e.top_bands = 1, e.friend = t.getOwnerId()), t.getAlbumId() != AudioPlaylist.ALBUM_ALL && (e.album =
-                    1), t.getOwnerId() > 0 && t.getOwnerId() != vk.id && (e.user_list = 1));
+            t.getType() == AudioPlaylist.TYPE_FEED && (e.feed_audio = 1), t.getType() == AudioPlaylist.TYPE_RECENT && (e.recent = 1), t.getType() == AudioPlaylist.TYPE_WALL && (e.wall =
+                1), t.getType() == AudioPlaylist.TYPE_TEMP && "feed" == t.getAlbumId() && (e.feed = 1), t.getType() == AudioPlaylist.TYPE_ALBUM && (t.getAlbumId() ==
+                AudioPlaylist.ALBUM_ALL && t.isPopBand() && (e.top_bands = 1, e.friend = t.getOwnerId()), t.getAlbumId() != AudioPlaylist.ALBUM_ALL && (e.album = 1), t.getOwnerId() >
+                0 && t.getOwnerId() != vk.id && (e.user_list = 1));
             var a = intval(t.getFriendId() || nav.objLoc.friend);
             t.getType() == AudioPlaylist.TYPE_ALBUM && a && (0 > a ? e.club = a : e.friend = a), "search" != cur.module || "audio" != nav.objLoc["c[section]"] || nav.objLoc["c[q]"] ||
                 (e.top = 1), (("groups" == cur.module || "public" == cur.module) && cur.oid == i.ownerId && cur.oid < 0 || cur.audioPage && cur.audioPage.options.oid == i.ownerId &&
@@ -1780,7 +1782,7 @@ AudioPlayer.tabIcons = {
                 user_list: 102,
                 groups: 103,
                 wall: 104,
-                news: 105,
+                newsfeed: 105,
                 im: 106,
                 recs: 107,
                 popular_audio: 108,
@@ -1821,7 +1823,7 @@ AudioPlayer.tabIcons = {
         t.opts.onEnd && t.opts.onEnd()
     }, AudioPlayerFlash.onAudioProgressCallback = function(t, i) {
         var e = window._flashAudioInstance;
-        i && (e._total = i, e._currProgress = t / i, e.opts.onProgressUpdate && e.opts.onProgressUpdate(e._currProgress, t));
+        i && (e._total = i, e._currProgress = t / i, e.opts.onProgressUpdate && e.opts.onProgressUpdate(e._currProgress, t))
     }, AudioPlayerFlash.onAudioLoadProgressCallback = function(t, i) {
         var e = window._flashAudioInstance;
         e._currBuffered = t / i, e.opts.onBufferUpdate && e.opts.onBufferUpdate(e._currBuffered)
