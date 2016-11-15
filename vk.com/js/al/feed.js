@@ -4,25 +4,23 @@ var Feed = {
         DURATION_MS: 1e3,
         headerHeight: null,
         trackingPosts: [],
-        viewedPosts: [],
-        data: [],
-        process: function(e, t, s) {
-            var o = feed.longView,
-                r = o.trackingPosts,
-                i = o.viewedPosts,
+        process: function(e, t, s, o) {
+            var r = feed.longView,
+                i = r.trackingPosts,
                 n = [];
-            e && o.isAdAutoplayVideoPost(e) && !e.longViewed && -1 === r.indexOf(e) && r.push(e), each(r, function(e, r) {
-                if (document.body.contains(r) || n.push(e), o.isElemViewable(r, o.PERCENT, t, s)) {
+            return e && r.isAdAutoplayVideoPost(e) && !e.longViewed && -1 === i.indexOf(e) && i.push(e), each(i, function(e, i) {
+                if (document.body.contains(i) || n.push(e), r.isElemViewable(i, r.PERCENT, t, s)) {
                     var a = Date.now();
-                    r.longViewStartedAt ? a - r.longViewStartedAt >= o.DURATION_MS && (r.longViewed = !0, i.push(r), n.push(e)) : r.longViewStartedAt = Date.now()
-                } else r.longViewStartedAt = null
+                    i.longViewStartedAt ? a - i.longViewStartedAt >= r.DURATION_MS && (i.longViewed = !0, n.push(e), o.push(feed.postsGetRaws(i))) : i.longViewStartedAt =
+                        Date.now()
+                } else i.longViewStartedAt = null
             }), each(n, function(e, t) {
-                r.splice(t, 1)
-            })
+                i.splice(t, 1)
+            }), o
         },
         isAdAutoplayVideoPost: function(e) {
-            return domFC(e)
-                .hasAttribute("data-ad-video-autoplay")
+            var t = e && domFC(e);
+            return t && t.hasAttribute("data-ad-video-autoplay")
         },
         isElemViewable: function(e, t, s, o) {
             var r = feed.longView.getHeaderHeight(),
@@ -37,25 +35,6 @@ var Feed = {
         getHeaderHeight: function() {
             return feed.longView.headerHeight || (feed.longView.headerHeight = ge("page_header")
                 .offsetHeight)
-        },
-        getData: function() {
-            return (ls.checkVersion() ? ls.get("posts_long_viewed_data") : feed.longView.data) || []
-        },
-        setData: function(e) {
-            ls.checkVersion() ? ls.set("posts_long_viewed_data", e) : feed.longView.seenData = e
-        },
-        saveToLocalStorage: function() {
-            var e = feed.longView,
-                t = e.getData();
-            each(e.viewedPosts, function(e, s) {
-                var o;
-                for (o in feed.postsGetRaws(s)) 0 === o.indexOf("ad_") && t.push("r" + o.split("_")[1])
-            }), e.viewedPosts = [], e.setData(t)
-        },
-        getDataForSeenRequest: function() {
-            var e = feed.longView,
-                t = e.getData();
-            return t.length ? (e.setData([]), "ad_" + t.join(",")) : null
         }
     },
     videoRecomsBlockHideCancel: function() {
@@ -327,18 +306,18 @@ var Feed = {
                 if (!i || cur.wallMyReplied[r] || ge("post" + e[3])) break;
                 var j = ge("replies" + r),
                     R = ge("replies_wrap" + r),
-                    D = i.offsetHeight,
+                    A = i.offsetHeight,
                     u = r.split("_")[0],
                     l = 0 > u ? 8 & a ? 2 : 2 & a ? 1 : 0 : 0,
-                    V = wall.getNewReplyHTML(e, l),
+                    D = wall.getNewReplyHTML(e, l),
                     f = !1,
-                    A = !1;
+                    V = !1;
                 if (isVisible(j) && isVisible(R) && !isVisible("reply_link" + r)) {
                     var F = j.nextSibling,
                         q = geByClass("new_reply", j, "div")
                         .length + 1;
                     if (cur.wallMyOpened[r]) {
-                        F && "replies_open" == F.className && re(F), A = !0;
+                        F && "replies_open" == F.className && re(F), V = !0;
                         var I = geByClass1("wr_header", j, "a"),
                             U = geByClass("reply", j, "div")
                             .length + 1,
@@ -347,12 +326,12 @@ var Feed = {
                             .split("/")[1]) + 1), (O > 5 || O > U) && (I || j.insertBefore(I = ce("a", {
                             className: "wr_header"
                         }), j.firstChild), wall.updateRepliesHeader(r, I, U, O))
-                    } else V = wall.updatePostImages(V), f = se(V), addClass(f, "new_reply"), F && "replies_open" == F.className || (F = ce("div", {
+                    } else D = wall.updatePostImages(D), f = se(D), addClass(f, "new_reply"), F && "replies_open" == F.className || (F = ce("div", {
                         className: "replies_open",
                         onclick: wall.openNewComments.pbind(r)
                     }), j.parentNode.insertBefore(F, j.nextSibling)), F.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, q)), F.newCnt = q
-                } else re("reply_link" + r), show(R, j), A = !0;
-                r.split("_")[0] == vk.id && cur.feedUnreadCount++, f || (f = se(V)), j.appendChild(f), feed.needScrollPost(t, A ? f : F) && (c += i.offsetHeight - D), A &&
+                } else re("reply_link" + r), show(R, j), V = !0;
+                r.split("_")[0] == vk.id && cur.feedUnreadCount++, f || (f = se(D)), j.appendChild(f), feed.needScrollPost(t, V ? f : F) && (c += i.offsetHeight - A), V &&
                     nodeUpdated(f), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
                 break;
             case "del_reply":
@@ -1015,11 +994,10 @@ var Feed = {
             list: "list" == cur.section && cur.list || 0
         }, {
             onDone: function(s) {
-                e ? val("post" + e, cur.feedEntriesHTML[e + "_ignored"]) : val("ignore_row" + t, s),
-                    each(geByClass("post", cur.rowsCont), function(e, s) {
-                        var o = this.id.match(/post((-?\d+)_(-?\d+)(_\d+)?)/);
-                        o && (!o[4] && o[2] == t || o[4] && o[3] == t) && show(this.parentNode)
-                    })
+                e ? val("post" + e, cur.feedEntriesHTML[e + "_ignored"]) : val("ignore_row" + t, s), each(geByClass("post", cur.rowsCont), function(e, s) {
+                    var o = this.id.match(/post((-?\d+)_(-?\d+)(_\d+)?)/);
+                    o && (!o[4] && o[2] == t || o[4] && o[3] == t) && show(this.parentNode)
+                })
             },
             showProgress: o && lockButton.pbind(o),
             hideProgress: o && unlockButton.pbind(o)
@@ -1223,14 +1201,14 @@ var Feed = {
                         .type)) {
                     for (postsUnseen = [], t = domPS(cur.topRow); t; t = domPS(t)) cur.topRow.offsetTop > n && (cur.topRow = t), t.unseen || (t.unseen = !0, postsUnseen.push(
                         Feed.postsGetRaws(t)));
-                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (feed.longView.process(t, n, i), s = a ? a : t.offsetTop, !(s >= n + i)); t = o)
+                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (c = feed.longView.process(t, n, i, c), s = a ? a : t.offsetTop, !(s >= n + i)); t = o)
                         if (o = domNS(t), "feed_rows_next" == (o || {})
                             .id && (o = null), a = o ? o.offsetTop : s + t.offsetHeight, n > a && o && (cur.topRow = o), r = t.bits || 0, !(r >= 3) && (r |= (s >= n && n +
                                 i > s ? 1 : 0) | (a >= n && n + i > a ? 2 : 0), r && (t.bits = r, 3 == r))) {
                             if (feed.longView.isAdAutoplayVideoPost(t)) continue;
                             c.push(feed.postsGetRaws(t))
                         }
-                    feed.longView.process(null, n, i), Page.postsSeen(c)
+                    c = feed.longView.process(null, n, i, c), Page.postsSeen(c)
                 }
             }
         }

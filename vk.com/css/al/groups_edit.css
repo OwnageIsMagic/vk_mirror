@@ -1722,8 +1722,8 @@ a.group_ad_post_link.deleted.deleted:hover {
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_label_new {
-    display: inline-block;
-    padding: 2px 5px;
+    display: inline;
+    padding: 4px 6px;
     color: #fff;
     background-color: #ee5d4a;
     font-size: 11px;
@@ -1731,7 +1731,7 @@ a.group_ad_post_link.deleted.deleted:hover {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin-left: 13px;
-    border-radius: 8px
+    border-radius: 100%
 }
 
 #group_apps_wrapper #apps_catalog .apps_catalog_row .apps_catalog_row_info .apps_catalog_row_field {
