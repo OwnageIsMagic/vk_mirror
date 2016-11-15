@@ -945,8 +945,6 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 onBufferUpdate: function(t) {
                     this.notify(AudioPlayer.EVENT_BUFFERED, t)
                 }.bind(this),
-                onSeeked: function() {},
-                onSeek: function() {},
                 onEnd: function() {
                     o = 0, e()
                 },
@@ -958,21 +956,21 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 }.bind(this),
                 onProgressUpdate: function(t, i) {
                     var e = this.getCurrentAudio();
-                    !this._muteProgressEvents && e && (this.notify(AudioPlayer.EVENT_PROGRESS, t, e[AudioUtils.AUDIO_ITEM_INDEX_DURATION], i), this._adsIsAdPlaying() || (this._adsIncCurrentDelay(
-                        i - o), o = i))
+                    !this._muteProgressEvents && e && (this.notify(AudioPlayer.EVENT_PROGRESS, t, e[AudioUtils.AUDIO_ITEM_INDEX_DURATION], i), this._adsIsAdPlaying() || (o =
+                        Math.min(o, i), this._adsIncCurrentDelay(i - o), o = i))
                 }.bind(this)
             };
         AudioUtils.debugLog("Implementation init"), AudioUtils.debugLog("param browser.flash", browser.flash), AudioUtils.debugLog("param force HTML5", !!t), AudioPlayerHTML5.isSupported() ||
             t ? (AudioUtils.debugLog("Initializing HTML5 impl"), this._impl = new AudioPlayerHTML5(a)) : browser.flash && (AudioUtils.debugLog("Initializing Flash impl"), this._impl =
                 new AudioPlayerFlash(a)), this._implSetVolume(0)
-    }, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop", AudioPlayer.EVENT_UPDATE =
-    "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED = "buffered", AudioPlayer.EVENT_PROGRESS =
-    "progress", AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange",
+    }, AudioPlayer.ADTEST = 1, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop",
+    AudioPlayer.EVENT_UPDATE = "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED =
+    "buffered", AudioPlayer.EVENT_PROGRESS = "progress", AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange",
     AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.EVENT_AD_READY = "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED =
     "ad_started", AudioPlayer.EVENT_AD_COMPLETED = "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER =
     "v10", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL =
     "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY =
-    "ads_current_delay_v3", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF =
+    "ads_current_delay_v4", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF =
     .7;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
@@ -1143,7 +1141,11 @@ AudioPlayer.tabIcons = {
                         e.seek(t)
                     }
                 });
-            e.isAdPlaying() && l.toggleAdState(!0), e.on(t, AudioPlayer.EVENT_AD_STARTED, function() {
+            e.isAdPlaying() && l.toggleAdState(!0), e.on(t, AudioPlayer.EVENT_AD_DEINITED, function() {
+                l.toggleAdMarker(!1)
+            }), e.on(t, AudioPlayer.EVENT_AD_READY, function() {
+                l.toggleAdMarker(!0)
+            }), e.on(t, AudioPlayer.EVENT_AD_STARTED, function() {
                 l.toggleAdMarker(!1), l.toggleAdState(!0), l.setBackValue(0)
             }), e.on(t, AudioPlayer.EVENT_AD_COMPLETED, function() {
                 l.toggleAdState(!1)
@@ -1571,12 +1573,12 @@ AudioPlayer.tabIcons = {
             }, t.getPlaybackParams() || {
                 other: 1
             });
-        i.ownerId == vk.id && i.id && (e.id = i.id), cur.audioLoadTimings && (e.timings = cur.audioLoadTimings.join(","), cur.audioLoadTimings = []), e.overall_progress = Math.round(
-            this._adsGetCurrentDelay()), ajax.post("al_audio.php", e, {
-            onDone: function(t) {
-                t && t.need_play_ad && "html5" == this._impl.type && this._adsPrepareAd(i, t.section)
-            }.bind(this)
-        })
+        i.ownerId == vk.id && i.id && (e.id = i.id), cur.audioLoadTimings && (e.timings = cur.audioLoadTimings.join(","), cur.audioLoadTimings = []), e.delay = Math.round(this._adsGetCurrentDelay()),
+            ajax.post("al_audio.php", e, {
+                onDone: function(t) {
+                    t && t.need_play_ad && "html5" == this._impl.type && this._adsPrepareAd(i, t.section)
+                }.bind(this)
+            })
     }, AudioPlayer.prototype.saveStateCurrentPlaylist = function() {
         if (!vk.widget) {
             var t = this.getCurrentPlaylist();
@@ -1676,7 +1678,8 @@ AudioPlayer.tabIcons = {
             !t && a && (t = a.fullId);
             var l = !1,
                 r = !1;
-            if (r = t && a && t == a.fullId, i ? s && (l = i == s.getSelf() || i == s) : (i = s, l = !0), this._adsIsAdPlaying() && (this._adsStillNeedToPlayNext = !1), r && l) {
+            if (r = t && a && t == a.fullId, i ? s && (l = i == s.getSelf() || i == s) : (i = s, l = !0), this._adsIsAdPlaying() && !r && (this._adsStillNeedToPlayNext = !1), r &&
+                l) {
                 if (this._adsIsAdPlaying()) this._adsResumeAd();
                 else if (!this.isPlaying()) {
                     this._isPlaying = !0, this._sendLCNotification(), this.notify(AudioPlayer.EVENT_PLAY), r || this.notify(AudioPlayer.EVENT_PROGRESS, 0);
@@ -1708,7 +1711,11 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.getCurrentAudio = function() {
         return this._currentAudio
     }, AudioPlayer.prototype.playNext = function(t, i) {
-        return i || !this._adsIsAdReady() || this._adsIsAdPlaying() ? void this._playNext(1, t) : (this.pause(), void this._adsPlayAdTask(t))
+        if (!i && this._adsIsAdReady() && !this._adsIsAdPlaying()) {
+            if (!AudioPlayer.ADTEST) return this.pause(), void this._adsPlayAdTask(t);
+            this._adman && this._adman.getBannersForSection("postroll") && this._adman.start("postroll")
+        }
+        this._playNext(1, t)
     }, AudioPlayer.prototype.playPrev = function() {
         this._playNext(-1)
     }, AudioPlayer.prototype._playNext = function(t, i) {
@@ -1735,8 +1742,8 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype._adsPlayAd = function(t) {
         if (this._adsIsAdReady()) {
             this._adman.onCompleted(function() {
-                this._adsReadyInfo = !1, this._adman = !1, this._adsSetCurrentDelay(0), this.notify(AudioPlayer.EVENT_PROGRESS, 0), this.notify(AudioPlayer.EVENT_AD_COMPLETED),
-                    this._adPlaying = this._isPlaying = !1, t(), this._adsSendAdEvent("completed")
+                this._adsReadyInfo = !1, this._adman = !1, this.notify(AudioPlayer.EVENT_PROGRESS, 0), this.notify(AudioPlayer.EVENT_AD_COMPLETED), this._adPlaying = this._isPlaying = !
+                    1, t(), this._adsSendAdEvent("completed")
             }.bind(this)), this._adman.onStarted(function() {
                 this.notify(AudioPlayer.EVENT_PROGRESS, 0), this.notify(AudioPlayer.EVENT_AD_STARTED), this._adsUpdateVolume(), this._adsSendAdEvent("started")
             }.bind(this));
@@ -1772,19 +1779,19 @@ AudioPlayer.tabIcons = {
         return !!this._adPaused
     }, AudioPlayer.prototype._adsPrepareAd = function(t, i) {
         function e(t) {
-            this._adsReadyInfo = t, this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
+            this._adsReadyInfo = t, AudioPlayer.ADTEST || this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
         }
         this._adsSection = i, this._adsInitAdman(t, e.bind(this))
     }, AudioPlayer.prototype._adsDeinit = function() {
         this._adman = null, this._adsReadyInfo = null, this._adsCurrentProgress = 0, this.notify(AudioPlayer.EVENT_AD_DEINITED)
     }, AudioPlayer.prototype._adsInitAdman = function(t, i) {
         t = AudioUtils.asObject(t), this._loadAdman(function() {
-            function i(t, i) {
+            function e(t, i) {
                 for (var e = (t >>> 0)
                         .toString(16), o = i.toString(16); o.length < 8;) o = "0" + o;
                 return e + o
             }
-            var e, o = {
+            var o, a = {
                 my: 101,
                 albums: 101,
                 user_list: 102,
@@ -1801,23 +1808,25 @@ AudioPlayer.tabIcons = {
                 friends: 112,
                 other: 114
             };
-            e = browser.mac ? 6 : browser.iphone ? 2 : browser.android ? 1 : 3, this._adman = new AdmanHTML, this._adman.init({
+            o = browser.mac ? 6 : browser.iphone ? 2 : browser.android ? 1 : 3, this._adman = new AdmanHTML;
+            var s = {
+                _SITEID: 276,
+                vk_id: vk.id,
+                duration: t.duration,
+                content_id: e(t.ownerId, t.id),
+                vk_catid: a[this._adsSection] || a.other
+            };
+            nav.objLoc.preview && (s.preview = intval(nav.objLoc.preview)), this._adman.init({
                 slot: 3514,
                 wrapper: se("<div></div>"),
-                params: {
-                    _SITEID: 276,
-                    vk_id: vk.id,
-                    duration: t.duration,
-                    content_id: i(t.ownerId, t.id),
-                    vk_catid: o[this._adsSection] || o.other
-                },
+                params: s,
                 browser: {
                     adBlock: !1,
                     mobile: !1
                 }
             }), this._adman.setDebug(!!__dev), this._adman.onReady(function() {
                 var t = this._adman.getBannersForSection("postroll");
-                t && t.length && this._adman.start("postroll")
+                t && t.length ? i(t) : this._adsSendAdEvent("not_received");
             }.bind(this))
         }.bind(this))
     }, AudioPlayer.prototype._loadAdman = function(t, i, e) {

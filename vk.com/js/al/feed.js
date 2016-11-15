@@ -225,12 +225,12 @@ var Feed = {
                     b = e[12],
                     C = "search" != n && (window._wf <= 0 || hasClass(cur.feedEls.wrap, "feed_has_new")),
                     k = !1,
-                    P = y;
+                    S = y;
                 if (C && (y = wall.updatePostImages(y)), b) {
                     if (cur.ignore_owners.length && inArray(intval(b), cur.ignore_owners)) break;
                     if (p = geByClass1("feed_reposts_wrap" + b, m, "div")) h = geByClass1("feed_reposts_first", p, "div")
                         .firstChild, _ = geByClass1("feed_reposts_group", p, "div"), g = geByClass1("feed_reposts_more_link", p, "a"), feed.needScrollPost(t, h) && (c -= h
-                            .offsetHeight + d(h)), h.parentNode.replaceChild(f = se(P), h), _.insertBefore(h, _.firstChild), isVisible(_) || val(g, getLang(
+                            .offsetHeight + d(h)), h.parentNode.replaceChild(f = se(S), h), _.insertBefore(h, _.firstChild), isVisible(_) || val(g, getLang(
                             "news_show_X_reposts", _.childNodes.length)), p = p.parentNode, m.firstChild != p && m.insertBefore(p, m.firstChild), feed.needScrollPost(t, p) &&
                         (c += p.offsetHeight + d(p)), p.bits = 0;
                     else if ((w = geByClass("feed_repost" + b, m, "div")) && w.length) {
@@ -241,9 +241,9 @@ var Feed = {
                             other: "",
                             label: getLang("news_show_X_reposts", w.length)
                         });
-                        var S = se('<div class="feed_row' + (C ? "_unshown" : "") + '">' + y + "</div>"),
+                        var P = se('<div class="feed_row' + (C ? "_unshown" : "") + '">' + y + "</div>"),
                             x = domFC(x);
-                        m.insertBefore(S, m.firstChild), !C && feed.needScrollPost(t, S) && (c += S.offsetHeight + d(S)), k = !0, p = S.firstChild, f = geByClass1(
+                        m.insertBefore(P, m.firstChild), !C && feed.needScrollPost(t, P) && (c += P.offsetHeight + d(P)), k = !0, p = P.firstChild, f = geByClass1(
                             "feed_reposts_first", p, "div"), _ = geByClass1("feed_reposts_group", p, "div"), each(clone(w), function() {
                             feed.needScrollPost(t, this) && (c -= this.offsetHeight + d(this)), re(this.parentNode), _.appendChild(this.firstChild)
                         })
@@ -306,18 +306,18 @@ var Feed = {
                 if (!i || cur.wallMyReplied[r] || ge("post" + e[3])) break;
                 var j = ge("replies" + r),
                     R = ge("replies_wrap" + r),
-                    A = i.offsetHeight,
+                    D = i.offsetHeight,
                     u = r.split("_")[0],
                     l = 0 > u ? 8 & a ? 2 : 2 & a ? 1 : 0 : 0,
-                    D = wall.getNewReplyHTML(e, l),
+                    A = wall.getNewReplyHTML(e, l),
                     f = !1,
-                    V = !1;
+                    F = !1;
                 if (isVisible(j) && isVisible(R) && !isVisible("reply_link" + r)) {
-                    var F = j.nextSibling,
+                    var V = j.nextSibling,
                         q = geByClass("new_reply", j, "div")
                         .length + 1;
                     if (cur.wallMyOpened[r]) {
-                        F && "replies_open" == F.className && re(F), V = !0;
+                        V && "replies_open" == V.className && re(V), F = !0;
                         var I = geByClass1("wr_header", j, "a"),
                             U = geByClass("reply", j, "div")
                             .length + 1,
@@ -326,12 +326,12 @@ var Feed = {
                             .split("/")[1]) + 1), (O > 5 || O > U) && (I || j.insertBefore(I = ce("a", {
                             className: "wr_header"
                         }), j.firstChild), wall.updateRepliesHeader(r, I, U, O))
-                    } else D = wall.updatePostImages(D), f = se(D), addClass(f, "new_reply"), F && "replies_open" == F.className || (F = ce("div", {
+                    } else A = wall.updatePostImages(A), f = se(A), addClass(f, "new_reply"), V && "replies_open" == V.className || (V = ce("div", {
                         className: "replies_open",
                         onclick: wall.openNewComments.pbind(r)
-                    }), j.parentNode.insertBefore(F, j.nextSibling)), F.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, q)), F.newCnt = q
-                } else re("reply_link" + r), show(R, j), V = !0;
-                r.split("_")[0] == vk.id && cur.feedUnreadCount++, f || (f = se(D)), j.appendChild(f), feed.needScrollPost(t, V ? f : F) && (c += i.offsetHeight - A), V &&
+                    }), j.parentNode.insertBefore(V, j.nextSibling)), V.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, q)), V.newCnt = q
+                } else re("reply_link" + r), show(R, j), F = !0;
+                r.split("_")[0] == vk.id && cur.feedUnreadCount++, f || (f = se(A)), j.appendChild(f), feed.needScrollPost(t, F ? f : V) && (c += i.offsetHeight - D), F &&
                     nodeUpdated(f), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
                 break;
             case "del_reply":
@@ -1201,14 +1201,10 @@ var Feed = {
                         .type)) {
                     for (postsUnseen = [], t = domPS(cur.topRow); t; t = domPS(t)) cur.topRow.offsetTop > n && (cur.topRow = t), t.unseen || (t.unseen = !0, postsUnseen.push(
                         Feed.postsGetRaws(t)));
-                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (c = feed.longView.process(t, n, i, c), s = a ? a : t.offsetTop, !(s >= n + i)); t = o)
-                        if (o = domNS(t), "feed_rows_next" == (o || {})
-                            .id && (o = null), a = o ? o.offsetTop : s + t.offsetHeight, n > a && o && (cur.topRow = o), r = t.bits || 0, !(r >= 3) && (r |= (s >= n && n +
-                                i > s ? 1 : 0) | (a >= n && n + i > a ? 2 : 0), r && (t.bits = r, 3 == r))) {
-                            if (feed.longView.isAdAutoplayVideoPost(t)) continue;
-                            c.push(feed.postsGetRaws(t))
-                        }
-                    c = feed.longView.process(null, n, i, c), Page.postsSeen(c)
+                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (s = a ? a : t.offsetTop, !(s >= n + i)); t = o) o = domNS(t), "feed_rows_next" == (o || {})
+                        .id && (o = null), a = o ? o.offsetTop : s + t.offsetHeight, n > a && o && (cur.topRow = o), r = t.bits || 0, r >= 3 || (r |= (s >= n && n + i > s ?
+                            1 : 0) | (a >= n && n + i > a ? 2 : 0), r && (t.bits = r, 3 == r && c.push(feed.postsGetRaws(t))));
+                    Page.postsSeen(c)
                 }
             }
         }

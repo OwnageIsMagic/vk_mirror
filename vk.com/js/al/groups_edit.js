@@ -2170,9 +2170,11 @@ var GroupsEdit = {
                     cur_tab: cur.cur_tab
                 };
                 GroupsEdit.hideMessage(), ajax.post("groupsedit.php", s, {
-                    onDone: function(e, t, o) {
-                        extend(cur, t), cur.show_alert = !0, ge("group_apps_wrapper")
-                            .innerHTML = e, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(o), GroupsEdit.invalidateBack()
+                    onDone: function(e, t, o, r) {
+                        extend(cur, o), cur.show_alert = !0, ge("group_apps_wrapper")
+                            .innerHTML = e, ge("apps_cat_add") ? ge("apps_cat_add")
+                            .innerHTML = t : ge("apps_cat_main")
+                            .parentNode.innerHTML += t, GroupsEdit.app.initSettings(), scrollToY(0), GroupsEdit.showMessage(r), GroupsEdit.invalidateBack()
                     },
                     showProgress: function() {
                         lockLink(o)
@@ -2226,7 +2228,7 @@ var GroupsEdit = {
                 GroupsEdit.hideMessage(), ajax.post("groupsedit.php", o, {
                     onDone: function(e, t, o) {
                         extend(cur, t), ge("group_apps_wrapper")
-                            .innerHTML = e, GroupsEdit.showMessage(o, "info"), cur.show_alert = !1, GroupsEdit.invalidateBack()
+                            .innerHTML = e, re("apps_cat_add"), GroupsEdit.showMessage(o, "info"), cur.show_alert = !1, GroupsEdit.invalidateBack()
                     },
                     showProgress: function() {
                         lockLink(e)

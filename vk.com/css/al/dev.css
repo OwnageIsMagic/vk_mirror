@@ -982,7 +982,6 @@ input.dev_input_simular {
 }
 
 .dev_main_featured .dev_main_featured_banner_slide_cont {
-    padding-top: 108px;
     box-sizing: border-box;
     text-align: center;
     width: 100%;
@@ -998,7 +997,23 @@ input.dev_input_simular {
 
 .dev_main_featured .dev_main_featured_banner_slide_title {
     font-size: 44px;
-    line-height: 53px
+    line-height: 53px;
+    position: relative;
+    display: inline-block;
+    padding-right: 56px;
+    color: #fff;
+    text-decoration: none!important
+}
+
+.dev_main_featured .dev_main_featured_banner_slide_title:after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2240%22%20height%3D%2240%22%20viewBox%3D%22503%2010%2040%2040%22%3E%0A%20%20%3Cg%20fill%3D%22none%22%3E%0A%20%20%20%20%3Cpath%20d%3D%22M503%2030C503%2019%20512%2010%20523%2010%20534%2010%20543%2019%20543%2030%20543%2041%20534%2050%20523%2050%20512%2050%20503%2041%20503%2030ZM520.1%2036.1C519.6%2036.7%20519.6%2037.4%20520.1%2037.9%20520.7%2038.4%20521.4%2038.4%20521.9%2037.9L528.4%2030.9C528.9%2030.4%20528.9%2029.6%20528.4%2029.1L521.9%2022.1C521.4%2021.6%20520.7%2021.6%20520.1%2022.1%20519.6%2022.6%20519.6%2023.3%20520.1%2023.9L525.8%2030%20520.1%2036.1Z%22%20fill%3D%22%23FFF%22%2F%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E");
+    margin-top: -20px
 }
 
 .dev_main_featured .dev_main_featured_banner_slide_caption {
@@ -1094,6 +1109,38 @@ input.dev_input_simular {
 
 .dev_main_featured .dev_main_featured_banners_bg_item.dev_main_featured_banners_bg_apps_platform {
     background-image: url('/images/dev/banners/banner_3.jpg')
+}
+
+.dev_main_featured .dev_main_featured_banners_buttons {
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 2
+}
+
+.dev_main_featured .dev_main_featured_banners_change_button {
+    color: #fff;
+    background: hsla(0, 0%, 100%, .2);
+    font-size: 13px;
+    line-height: 15px;
+    padding: 9px 20px 10px;
+    margin-left: 12px;
+    border-radius: 100px;
+    cursor: pointer;
+    display: inline-block;
+    -o-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out
+}
+
+.dev_main_featured .dev_main_featured_banners_change_button:first-child {
+    margin-left: 0px
+}
+
+.dev_main_featured .dev_main_featured_banners_change_button.active_slide {
+    background: #fff;
+    color: #000
 }
 
 .dev_main_featured .dev_main_featured_products {
