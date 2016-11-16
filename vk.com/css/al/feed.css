@@ -488,7 +488,10 @@
 }
 
 .feed_wrap .explain {
-    padding-left: 1px;
+    padding-left: 1px
+}
+
+.feed_updates .explain {
     color: #000
 }
 

@@ -182,7 +182,8 @@ var AudioUtils = {
                 }
             } else {
                 var f = gpeByClass("_post", t);
-                f && (h.post_id = domData(f, "post-id")), ajax.post("al_audio.php", h, {
+                f && (h.post_id = domData(f, "post-id")), h.h = vk.audioParams ? JSON.stringify(vk.audioParams) : "no", h.loc = JSON.stringify(nav.objLoc), h.vkid = vk.id ||
+                    "no", ajax.post("al_audio.php", h, {
                         onDone: function(t, i, o, s) {
                             if (t) {
                                 var u = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
@@ -442,7 +443,7 @@ var AudioUtils = {
             }
             o = o.concat(i([r]))
         } else if (r = domClosest("choose_audio_rows", t)) cur.chooseAudioPlaylist = e = new AudioPlaylist(AudioPlaylist.TYPE_TEMP, vk.id, irand(999, 99999)), o = [r];
-        else if (r = domClosest("_im_peer_history", t)) o = i(geByClass("_im_mess", r));
+        else if (r = domClosest("_im_peer_history", t)) o = i(geByClass("_im_mess", r)), s = "im_" + cur.peer;
         else if (r = domClosest("replies_list", t)) o = i(geByClass("wall_audio_rows", r));
         else if (r = domClosest("_bt_rows", t)) o = i(geByClass("_wall_audio_rows", r));
         else if (r = domClosest("_feed_rows", t)) o = i(geByClass("wall_text", r)), s = "feed";
@@ -965,13 +966,13 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 new AudioPlayerFlash(a)), this._implSetVolume(0)
     }, AudioPlayer.ADTEST = 1, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop",
     AudioPlayer.EVENT_UPDATE = "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED =
-    "buffered", AudioPlayer.EVENT_PROGRESS = "progress", AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange",
-    AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.EVENT_AD_READY = "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED =
-    "ad_started", AudioPlayer.EVENT_AD_COMPLETED = "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER =
-    "v10", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL =
-    "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY =
-    "ads_current_delay_v4", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF =
-    .7;
+    "buffered",
+    AudioPlayer.EVENT_PROGRESS = "progress", AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED =
+    "removed", AudioPlayer.EVENT_AD_READY = "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED =
+    "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio",
+    AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track",
+    AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v4",
+    AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
         def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -1501,10 +1502,11 @@ AudioPlayer.tabIcons = {
                 AudioPlaylist.ALBUM_ALL && t.isPopBand() && (e.top_bands = 1, e.friend = t.getOwnerId()), t.getAlbumId() != AudioPlaylist.ALBUM_ALL && (e.album = 1), t.getOwnerId() >
                 0 && t.getOwnerId() != vk.id && (e.user_list = 1));
             var a = intval(t.getFriendId() || nav.objLoc.friend);
-            t.getType() == AudioPlaylist.TYPE_ALBUM && a && (0 > a ? e.club = a : e.friend = a), "search" != cur.module || "audio" != nav.objLoc["c[section]"] || nav.objLoc["c[q]"] ||
-                (e.top = 1), (("groups" == cur.module || "public" == cur.module) && cur.oid == i.ownerId && cur.oid < 0 || cur.audioPage && cur.audioPage.options.oid == i.ownerId &&
-                    cur.audioPage.options.oid < 0) && (e.group = 1), (("audio" == cur.module || "feed" == cur.module) && nav.objLoc.q || "search" == cur.module && nav.objLoc[
-                    "c[q]"] || t.getType() == AudioPlaylist.TYPE_SEARCH) && (e.search = 1), e.search || "feed" != cur.module || (e.feed = 1), t.setPlaybackParams(e)
+            t.getType() == AudioPlaylist.TYPE_ALBUM && a && (0 > a ? e.club = a : e.friend = a), isString(t.getAlbumId()) && 0 == t.getAlbumId()
+                .indexOf("im_") && (e.im = 1), "search" != cur.module || "audio" != nav.objLoc["c[section]"] || nav.objLoc["c[q]"] || (e.top = 1), (("groups" == cur.module ||
+                    "public" == cur.module) && cur.oid == i.ownerId && cur.oid < 0 || cur.audioPage && cur.audioPage.options.oid == i.ownerId && cur.audioPage.options.oid < 0) &&
+                (e.group = 1), (("audio" == cur.module || "feed" == cur.module) && nav.objLoc.q || "search" == cur.module && nav.objLoc["c[q]"] || t.getType() == AudioPlaylist.TYPE_SEARCH) &&
+                (e.search = 1), e.search || "feed" != cur.module || (e.feed = 1), t.setPlaybackParams(e)
         }
     }, AudioPlayer.prototype.playLive = function(t, i) {
         var e = this.getPlaylist(AudioPlaylist.TYPE_LIVE, vk.id, data[0]);
@@ -1690,8 +1692,8 @@ AudioPlayer.tabIcons = {
                 var u = i.getAudio(t);
                 u && (this._listenedTime = this._prevProgress = 0, this._currentAudio = u, l || (this._currentPlaylist && (this._prevPlaylist = this._currentPlaylist, this._prevAudio =
                         this._currentAudio), this._currentPlaylist = new AudioPlaylist(i), this._initPlaybackParams(), this.notify(AudioPlayer.EVENT_PLAYLIST_CHANGED)), this._isPlaying = !
-                    0, this.updateCurrentPlaying(), this._adsIsAdPlaying() ? (this.notify(AudioPlayer.EVENT_PLAY, !0), this._adsResumeAd()) : (this._sendLCNotification(), this
-                        .notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this.notify(AudioPlayer.EVENT_PROGRESS, 0), this._muteProgressEvents = !0, this._implClearAllTasks(),
+                    0, this.updateCurrentPlaying(!0), this._adsIsAdPlaying() ? (this.notify(AudioPlayer.EVENT_PLAY, !0), this._adsResumeAd()) : (this._sendLCNotification(),
+                        this.notify(AudioPlayer.EVENT_PLAY, !0, intval(e), o), this.notify(AudioPlayer.EVENT_PROGRESS, 0), this._muteProgressEvents = !0, this._implClearAllTasks(),
                         o ? (this._implSetUrl(u), this._implPlay(), this._implSetVolume(this.getVolume())) : (this._implSetVolume(0, !0), this._implSetDelay(200), this._implSetUrl(
                             u), this._implPlay(), this._implSetVolume(this.getVolume()))))
             }
@@ -1826,7 +1828,7 @@ AudioPlayer.tabIcons = {
                 }
             }), this._adman.setDebug(!!__dev), this._adman.onReady(function() {
                 var t = this._adman.getBannersForSection("postroll");
-                t && t.length ? i(t) : this._adsSendAdEvent("not_received");
+                t && t.length ? i(t) : this._adsSendAdEvent("not_received")
             }.bind(this))
         }.bind(this))
     }, AudioPlayer.prototype._loadAdman = function(t, i, e) {

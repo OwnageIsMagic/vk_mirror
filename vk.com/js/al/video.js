@@ -1466,7 +1466,8 @@ var Video = {
             each(geByClass("_video_item_thumb"), function(r, d) {
                 if (domData(d, "thumb")) {
                     var a = domData(d, "ypos");
-                    if (a ? a = intval(a) : (a = getXY(d)[1], domData(d, "ypos", a)), o = o || getSize(d), a > t - o[1] - e && t + i + e > a) {
+                    if (a ? a = intval(a) : (a = getXY(d, "im" == cur.module)[1], domData(d, "ypos", a)), o = o || getSize(d), a > t - o[1] - e && t + i +
+                        e > a) {
                         var n = domData(d, "thumb");
                         domData(d, "thumb", null), setStyle(d, "background-image", "url('" + n + "')")
                     }
