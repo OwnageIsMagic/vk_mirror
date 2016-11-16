@@ -478,11 +478,22 @@
     color: #656565;
     text-align: right;
     box-sizing: border-box;
-    width: 90px
+    width: 110px
+}
+
+.apps_check_collection_photo {
+    width: 245px;
+    height: 135px;
+    border-radius: 3px
+}
+
+.apps_check_collection_photo_upload_btn {
+    width: 145px
 }
 
 .apps_check_collection_value {
-    margin-left: 100px
+    margin-left: 120px;
+    position: relative
 }
 
 .apps_check_collection_value .apps_collection_input {
@@ -621,6 +632,12 @@
 .apps_collection_info .apps_collection_info_value {
     display: block;
     margin-left: 75px
+}
+
+.apps_collection_info .apps_collection_photo {
+    position: absolute;
+    border-radius: 2px;
+    height: 60px
 }
 
 .apps_collection_info .apps_collection_info_label,

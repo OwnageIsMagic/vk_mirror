@@ -3514,7 +3514,8 @@ body.mac #layer_stl .fixed {
 
 .box_error {
     margin: 0 0 15px;
-    background: #ffefe9
+    background: #ffefe9;
+    word-wrap: break-word
 }
 
 .box_error,

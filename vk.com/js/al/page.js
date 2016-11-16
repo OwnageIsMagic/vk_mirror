@@ -3179,6 +3179,13 @@ var Wall = {
                                 return false;
                             }
                         }
+
+                        if (!share.title) {
+                            showError(getLang('global_share_title_required'));
+                            ret = true;
+                            return false;
+                        }
+
                         attachVal = (share.user_id && share.photo_id && !share.noPhoto) ? share.user_id + '_' + share.photo_id : '';
                         if (share.share_upload_failed && !attachVal) {
                             share.share_upload_failed = 0;
@@ -3195,8 +3202,8 @@ var Wall = {
                             return false;
                         }
                         if ((cur.options.share || {})
-                            .require_image && (!attachVal || !share.title)) {
-                            showError(!attachVal ? getLang('global_share_image_required') : getLang('global_share_title_required'));
+                            .require_image && !attachVal) {
+                            showError(getLang('global_share_image_required'));
                             ret = true;
                             return false;
                         }
@@ -7209,6 +7216,13 @@ Composer = {
                                 return false;
                             }
                         }
+
+                        if (!share.title) {
+                            showError(getLang('global_share_title_required'));
+                            params.delayed = true;
+                            return false;
+                        }
+
                         attachVal = (share.user_id && share.photo_id && !share.noPhoto) ? (share.user_id + '_' + share.photo_id) : '';
                         if (share.share_upload_failed && !attachVal) {
                             share.share_upload_failed = 0;
@@ -7226,8 +7240,8 @@ Composer = {
                             return false;
                         }
                         if ((cur.options.share || {})
-                            .require_image && (!attachVal || !share.title)) {
-                            showError(!attachVal ? getLang('global_share_image_required') : getLang('global_share_title_required'));
+                            .require_image && !attachVal) {
+                            showError(getLang('global_share_image_required'));
                             params.delayed = true;
                             return false;
                         }

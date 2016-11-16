@@ -30,42 +30,45 @@ var tooltips = {
                     isFunction(l) && (l = l()), void 0 !== l && 2 == l.length && l.push(l[1]);
                     var r = bodyNode.scrollTop || htmlNode.scrollTop || 0,
                         d = getSize(t),
-                        a = e[1] - d[1] - l[1] - n[1] < r,
-                        p = e[1] + o[1] + d[1] + l[2] - lastWindowHeight > r,
-                        c = e[1] - d[1] - l[1] - n[1] < 0;
-                    a && p ? i && c ? i = !1 : i || !p || c || (i = !0) : i && a ? i = !1 : i || !p || a || (i = !0);
-                    var h = opts.needLeft || (opts.black || opts.checkLeft) && window.lastWindowWidth && lastWindowWidth - (e[0] + (s ? o[0] + l[0] : d[0] -
+                        a = e[1] - d[1] - l[1] - n[1] - r,
+                        p = lastWindowHeight - (e[1] + o[1] + d[1] + l[2]) + r,
+                        c = 0 > a,
+                        h = 0 > p,
+                        u = 0 > a;
+                    c && h ? (a > p && a + r > 0 && (i = !0, u = !1), i && u ? i = !1 : i || !h || u || (i = !0)) : i && c ? i = !1 : i || !h || c || (i = !
+                        0);
+                    var v = opts.needLeft || (opts.black || opts.checkLeft) && window.lastWindowWidth && lastWindowWidth - (e[0] + (s ? o[0] + l[0] : d[0] -
                             l[0])) < 1,
-                        u = "";
-                    opts.forcetodown && (i = !1), opts.forcetoup && (i = !0), isNewTT ? (removeClass(t, "tt_up"), removeClass(t, "tt_down"), u = opts.dir &&
-                        inArray(opts.dir, ["up", "down", "left", "right"]) ? "tt_" + opts.dir : "tt_" + (i ? "down" : "up"), addClass(t, u),
-                        toggleClass(t, "toleft", !!h), d = getSize(t)) : (u = "toup" + (i ? 1 : ""), (i != opts.toup || h) && (u += h ? " toleft" : "",
-                        d = getSize(t)), t.firstChild.className = u, addClass(t, i ? "tt_toup" : ""));
-                    var v = getXY(domPN(t));
-                    e[0] -= v[0], e[1] -= v[1];
-                    var f = domPN(t);
+                        f = "";
+                    opts.forcetodown && (i = !1), opts.forcetoup && (i = !0), isNewTT ? (removeClass(t, "tt_up"), removeClass(t, "tt_down"), f = opts.dir &&
+                        inArray(opts.dir, ["up", "down", "left", "right"]) ? "tt_" + opts.dir : "tt_" + (i ? "down" : "up"), addClass(t, f),
+                        toggleClass(t, "toleft", !!v), d = getSize(t)) : (f = "toup" + (i ? 1 : ""), (i != opts.toup || v) && (f += v ? " toleft" : "",
+                        d = getSize(t)), t.firstChild.className = f, addClass(t, i ? "tt_toup" : ""));
+                    var w = getXY(domPN(t));
+                    e[0] -= w[0], e[1] -= w[1];
+                    var m = domPN(t);
                     if (el.tt.zIndexEls = [], !opts.noZIndex)
-                        for (; f && f != bodyNode && !hasClass(f, "scroll_fix");) {
-                            var w = intval(getStyle(f, "zIndex")),
-                                m = intval(f.ttCount);
-                            if (w && !m) break;
-                            setStyle(f, "zIndex", opts.zIndex || 100), el.tt.zIndexEls.push(f), f.ttCount = m + 1, f = domPN(f)
+                        for (; m && m != bodyNode && !hasClass(m, "scroll_fix");) {
+                            var g = intval(getStyle(m, "zIndex")),
+                                _ = intval(m.ttCount);
+                            if (g && !_) break;
+                            setStyle(m, "zIndex", opts.zIndex || 100), el.tt.zIndexEls.push(m), m.ttCount = _ + 1, m = domPN(m)
                         }
-                    var g;
-                    g = isNewTT ? !inArray(opts.dir, ["left", "right"]) || opts.forcetoup || opts.forcetodown ? i ? e[1] - (d[1] + l[1]) : e[1] + o[1] + l[
+                    var x;
+                    x = isNewTT ? !inArray(opts.dir, ["left", "right"]) || opts.forcetoup || opts.forcetodown ? i ? e[1] - (d[1] + l[1]) : e[1] + o[1] + l[
                         2] : e[1] - Math.floor(d[1] / 2) - l[1] : e[1] + (i ? -(d[1] + l[1]) : o[1] + l[2]);
-                    var _ = g + intval(opts.slide) * (i ? -1 : 1),
-                        x = e[0] + (s ? l[0] + o[0] - d[0] : i ? -l[0] : -(l[3] || l[0]));
-                    h && (x -= d[0] - (opts.reverseOffset || 39)), opts.center && (addClass(t, "tocenter"), d[0] != o[0] && (x -= s ? 0 : (d[0] - o[0]) / 2));
-                    var b = x + (s ? -1 : 1) * intval(opts.slideX);
-                    if (opts.showIfFit && (x + v[0] < 0 || x + v[0] + d[0] > lastWindowWidth || g + v[1] < 0 || g + v[1] + d[1] > lastWindowHeight)) return hide(
+                    var b = x + intval(opts.slide) * (i ? -1 : 1),
+                        y = e[0] + (s ? l[0] + o[0] - d[0] : i ? -l[0] : -(l[3] || l[0]));
+                    v && (y -= d[0] - (opts.reverseOffset || 39)), opts.center && (addClass(t, "tocenter"), d[0] != o[0] && (y -= s ? 0 : (d[0] - o[0]) / 2));
+                    var T = y + (s ? -1 : 1) * intval(opts.slideX);
+                    if (opts.showIfFit && (y + w[0] < 0 || y + w[0] + d[0] > lastWindowWidth || x + w[1] < 0 || x + w[1] + d[1] > lastWindowHeight)) return hide(
                         el.tt.container);
                     el.tt.showing = !0, setStyle(t, {
-                        top: _,
-                        left: b
+                        top: b,
+                        left: T
                     }), animate(t, {
-                        top: g,
-                        left: x,
+                        top: x,
+                        left: y,
                         opacity: 1
                     }, void 0 !== opts.showsp ? opts.showsp : 200, function() {
                         el.tt && el.tt.showing && (el.tt.showing = !1), opts.onShowEnd && opts.onShowEnd(), el.tt && (el.tt.shown = !0)

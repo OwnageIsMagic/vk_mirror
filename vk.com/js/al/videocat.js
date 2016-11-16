@@ -108,7 +108,8 @@ var Videocat = window.Videocat || {
                     module: "videocat",
                     addParams: {
                         from_autoplay: 1,
-                        show_title: 1
+                        show_title: 1,
+                        expand_on_click: 1
                     }
                 }, !1, c)
             }

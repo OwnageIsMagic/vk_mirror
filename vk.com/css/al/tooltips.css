@@ -1265,3 +1265,7 @@ div.own_reply_tt .content {
 .ban_reason_tt .login_blocked_reasons {
     margin-bottom: 0
 }
+
+.wall_tt .wall_module .wall_text .page_media_thumbed_link:last-child {
+    margin-bottom: 0px
+}

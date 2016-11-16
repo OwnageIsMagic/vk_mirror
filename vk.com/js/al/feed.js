@@ -3,22 +3,33 @@ var Feed = {
         PERCENT: .5,
         DURATION_MS: 1e3,
         headerHeight: null,
-        trackingPosts: [],
-        process: function(e, t, s, o) {
-            var r = feed.longView,
-                i = r.trackingPosts,
-                n = [];
-            return e && r.isAdAutoplayVideoPost(e) && !e.longViewed && -1 === i.indexOf(e) && i.push(e), each(i, function(e, i) {
-                if (document.body.contains(i) || n.push(e), r.isElemViewable(i, r.PERCENT, t, s)) {
-                    var a = Date.now();
-                    i.longViewStartedAt ? a - i.longViewStartedAt >= r.DURATION_MS && (i.longViewed = !0, n.push(e), o.push(feed.postsGetRaws(i))) : i.longViewStartedAt =
-                        Date.now()
-                } else i.longViewStartedAt = null
-            }), each(n, function(e, t) {
-                i.splice(t, 1)
-            }), o
+        tracking: [],
+        viewed: {},
+        registerElement: function(e) {
+            var t = feed.longView;
+            return e ? e.longViewTracking ? !0 : e.longViewRegistered ? !1 : (e.longViewRegistered = !0, e.longViewTracking = t.isAutoplayAd(e), e.longViewTracking ? (t.tracking
+                .push(e), !0) : !1) : !1
         },
-        isAdAutoplayVideoPost: function(e) {
+        process: function(e, t) {
+            var s = feed.longView,
+                o = s.tracking;
+            if (0 === o.length) return [];
+            var r = s.PERCENT,
+                i = s.DURATION_MS,
+                n = s.isElemViewable,
+                a = s.viewed,
+                c = [];
+            return each(o, function(s, o) {
+                var d = domFC(o)
+                    .id;
+                if (!a[d] && document.body.contains(o))
+                    if (n(o, r, e, t)) {
+                        var l = Date.now();
+                        o.longViewStartedAt ? l - o.longViewStartedAt >= i && (a[d] = !0, c.push(feed.postsGetRaws(o))) : o.longViewStartedAt = Date.now()
+                    } else o.longViewStartedAt = null
+            }), c
+        },
+        isAutoplayAd: function(e) {
             var t = e && domFC(e);
             return t && t.hasAttribute("data-ad-video-autoplay")
         },
@@ -225,12 +236,12 @@ var Feed = {
                     b = e[12],
                     C = "search" != n && (window._wf <= 0 || hasClass(cur.feedEls.wrap, "feed_has_new")),
                     k = !1,
-                    S = y;
+                    x = y;
                 if (C && (y = wall.updatePostImages(y)), b) {
                     if (cur.ignore_owners.length && inArray(intval(b), cur.ignore_owners)) break;
                     if (p = geByClass1("feed_reposts_wrap" + b, m, "div")) h = geByClass1("feed_reposts_first", p, "div")
                         .firstChild, _ = geByClass1("feed_reposts_group", p, "div"), g = geByClass1("feed_reposts_more_link", p, "a"), feed.needScrollPost(t, h) && (c -= h
-                            .offsetHeight + d(h)), h.parentNode.replaceChild(f = se(S), h), _.insertBefore(h, _.firstChild), isVisible(_) || val(g, getLang(
+                            .offsetHeight + d(h)), h.parentNode.replaceChild(f = se(x), h), _.insertBefore(h, _.firstChild), isVisible(_) || val(g, getLang(
                             "news_show_X_reposts", _.childNodes.length)), p = p.parentNode, m.firstChild != p && m.insertBefore(p, m.firstChild), feed.needScrollPost(t, p) &&
                         (c += p.offsetHeight + d(p)), p.bits = 0;
                     else if ((w = geByClass("feed_repost" + b, m, "div")) && w.length) {
@@ -242,7 +253,7 @@ var Feed = {
                             label: getLang("news_show_X_reposts", w.length)
                         });
                         var P = se('<div class="feed_row' + (C ? "_unshown" : "") + '">' + y + "</div>"),
-                            x = domFC(x);
+                            S = domFC(S);
                         m.insertBefore(P, m.firstChild), !C && feed.needScrollPost(t, P) && (c += P.offsetHeight + d(P)), k = !0, p = P.firstChild, f = geByClass1(
                             "feed_reposts_first", p, "div"), _ = geByClass1("feed_reposts_group", p, "div"), each(clone(w), function() {
                             feed.needScrollPost(t, this) && (c -= this.offsetHeight + d(this)), re(this.parentNode), _.appendChild(this.firstChild)
@@ -304,34 +315,34 @@ var Feed = {
                 break;
             case "new_reply":
                 if (!i || cur.wallMyReplied[r] || ge("post" + e[3])) break;
-                var j = ge("replies" + r),
-                    R = ge("replies_wrap" + r),
-                    D = i.offsetHeight,
+                var R = ge("replies" + r),
+                    j = ge("replies_wrap" + r),
+                    A = i.offsetHeight,
                     u = r.split("_")[0],
                     l = 0 > u ? 8 & a ? 2 : 2 & a ? 1 : 0 : 0,
-                    A = wall.getNewReplyHTML(e, l),
+                    F = wall.getNewReplyHTML(e, l),
                     f = !1,
-                    F = !1;
-                if (isVisible(j) && isVisible(R) && !isVisible("reply_link" + r)) {
-                    var V = j.nextSibling,
-                        q = geByClass("new_reply", j, "div")
+                    D = !1;
+                if (isVisible(R) && isVisible(j) && !isVisible("reply_link" + r)) {
+                    var V = R.nextSibling,
+                        q = geByClass("new_reply", R, "div")
                         .length + 1;
                     if (cur.wallMyOpened[r]) {
-                        V && "replies_open" == V.className && re(V), F = !0;
-                        var I = geByClass1("wr_header", j, "a"),
-                            U = geByClass("reply", j, "div")
+                        V && "replies_open" == V.className && re(V), D = !0;
+                        var I = geByClass1("wr_header", R, "a"),
+                            U = geByClass("reply", R, "div")
                             .length + 1,
                             O = U;
                         I && (O = intval(I.getAttribute("offs")
-                            .split("/")[1]) + 1), (O > 5 || O > U) && (I || j.insertBefore(I = ce("a", {
+                            .split("/")[1]) + 1), (O > 5 || O > U) && (I || R.insertBefore(I = ce("a", {
                             className: "wr_header"
-                        }), j.firstChild), wall.updateRepliesHeader(r, I, U, O))
-                    } else A = wall.updatePostImages(A), f = se(A), addClass(f, "new_reply"), V && "replies_open" == V.className || (V = ce("div", {
+                        }), R.firstChild), wall.updateRepliesHeader(r, I, U, O))
+                    } else F = wall.updatePostImages(F), f = se(F), addClass(f, "new_reply"), V && "replies_open" == V.className || (V = ce("div", {
                         className: "replies_open",
                         onclick: wall.openNewComments.pbind(r)
-                    }), j.parentNode.insertBefore(V, j.nextSibling)), V.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, q)), V.newCnt = q
-                } else re("reply_link" + r), show(R, j), F = !0;
-                r.split("_")[0] == vk.id && cur.feedUnreadCount++, f || (f = se(A)), j.appendChild(f), feed.needScrollPost(t, F ? f : V) && (c += i.offsetHeight - D), F &&
+                    }), R.parentNode.insertBefore(V, R.nextSibling)), V.innerHTML = getLang("wall_x_new_replies_more", Math.min(100, q)), V.newCnt = q
+                } else re("reply_link" + r), show(j, R), D = !0;
+                r.split("_")[0] == vk.id && cur.feedUnreadCount++, f || (f = se(F)), R.appendChild(f), feed.needScrollPost(t, D ? f : V) && (c += i.offsetHeight - A), D &&
                     nodeUpdated(f), Wall.repliesSideSetup(r), Wall.updateMentionsIndex();
                 break;
             case "del_reply":
@@ -652,8 +663,8 @@ var Feed = {
             i = (ge(r + "_type_filter"), cur.my_feed_types[r]),
             n = cur.feed_types[r];
         return "notifications" == r ? void feed.setNotifyFilter(e, t) : (i === !0 && (i = clone(n)), s = -1 != (o = indexOf(i, t)), s ? i.splice(o, 1) : (i.push(t), i.length ==
-            n.length && (i = !0)), checkbox(e), cur.my_feed_types[r] = i, feed.updateTypesCookie(), nav.go(nav.strLoc), void(cur.feedEls.rmenu && uiRightMenu.showProgress(
-            cur.feedEls.rmenu)))
+            n.length && (i = !0)), checkbox(e), cur.my_feed_types[r] = i, feed.updateTypesCookie(), Feed.setFiltersUpdatePage(), void(cur.feedEls.rmenu &&
+            uiRightMenu.showProgress(cur.feedEls.rmenu)))
     },
     setFilter: function(e, t) {
         var s = feed.getTypesSection(),
@@ -665,7 +676,21 @@ var Feed = {
             checkbox(this, !0)
         })) : (each(geByClass("_feed_filter_row", o, "div"), function() {
             checkbox(this, !1)
-        }), cur.my_feed_types[s] = [t], checkbox(e, !0)), feed.updateTypesCookie(), nav.go(nav.strLoc), cur.feedEls.rmenu && uiRightMenu.showProgress(cur.feedEls.rmenu))
+        }), cur.my_feed_types[s] = [t], checkbox(e, !0)), feed.updateTypesCookie(), Feed.setFiltersUpdatePage({
+            force_expand_filters: 1
+        }), cur.feedEls.rmenu && uiRightMenu.showProgress(cur.feedEls.rmenu))
+    },
+    setFiltersUpdatePage: function(e) {
+        e = e || {};
+        var t = nav.strLoc;
+        if ("updates" === cur.section) {
+            t.match(/\&filters\_expanded\=1/) || ge("updates_show_all_filters") && !e.force_expand_filters || (t += "&filters_expanded=1"), t = t.replace(
+                /\&filters\_shown\=([a-z\,]+)/, "");
+            for (var s = geByClass("_feed_filter_row", "feed_filters"), o = [], r = 0; r < s.length; r++) hasClass(s[r], "hide") || o.push(s[r].id.replace("filter_updates",
+                ""));
+            t += "&filters_shown=" + o.join(",")
+        }
+        nav.go(t)
     },
     setNotifyFilter: function(e, t) {
         checkbox(e), cur.notifyPrefs || (cur.notifyPrefs = {}), cur.notifyPrefs[t] = isChecked(e), clearTimeout(cur.saveNotifyPrefsTO), cur.saveNotifyPrefsTO = setTimeout(
@@ -802,13 +827,13 @@ var Feed = {
             toggle(o), toggleClass(s, "feedback_row_expanded", isVisible(o)), val(r, val(n)), val(n, i)
         }
     },
-    notifyPostTooltip: function(e, t, s) {
-        var o = (s || {})
+    notifyPostTooltip: function(e, t, s, o) {
+        var r = (s || {})
             .reply,
-            r = "al_wall.php";
+            i = "al_wall.php";
         t.indexOf("topic_comment") ? t = t.replace("wall_reply", "")
-            .replace("wall", "") : (r = "al_board.php", t = t.replace("topic_comment", "")), showTooltip(e, {
-                url: r,
+            .replace("wall", "") : (i = "al_board.php", t = t.replace("topic_comment", "")), o = o || {}, showTooltip(e, extend({
+                url: i,
                 params: extend({
                     act: "post_tt",
                     post: t,
@@ -816,14 +841,14 @@ var Feed = {
                     from: "feedback"
                 }, s || {}),
                 slide: 15,
-                shift: [!o || o % 2 ? 27 : 329, 6],
+                shift: [!r || r % 2 ? 27 : 329, 6],
                 ajaxdt: 100,
                 showdt: 400,
-                hidedt: 200,
+                hidedt: 800,
                 dir: "auto",
                 className: "rich wall_tt wall_module",
                 appendParentCls: "scroll_fix_wrap"
-            })
+            }, o))
     },
     notifyDelete: function(e, t, s, o, r, i) {
         r.tt && r.tt.el && r.tt.hide();
@@ -1189,22 +1214,23 @@ var Feed = {
         if (cur.idleManager && !cur.isFeedLoading && !cur.idleManager.isIdle && !cur.disableAutoMore) {
             var t = ge("show_more_link");
             if (isVisible(t)) {
-                var s, t, o, r, i = window.innerHeight || document.documentElement.clientHeight || bodyNode.clientHeight,
-                    n = scrollGetY(),
-                    a = 0,
-                    c = [];
-                if (n + i + 1e3 > t.offsetTop && feed.showMore(), (domPN(cur.topRow) != cur.rowsCont || "feed_rows_next" == (cur.topRow || {})
+                var s, t, o, r, i = feed.longView,
+                    n = window.innerHeight || document.documentElement.clientHeight || bodyNode.clientHeight,
+                    a = scrollGetY(),
+                    c = 0,
+                    d = [];
+                if (a + n + 1e3 > t.offsetTop && feed.showMore(), (domPN(cur.topRow) != cur.rowsCont || "feed_rows_next" == (cur.topRow || {})
                         .id) && (cur.topRow = domFC(cur.rowsCont)), !(!vk.id || !cur.topRow || "feed_rows_next" == cur.topRow.id || "news" != cur.section && "recommended" !=
                         cur.section && "search" != cur.section || ((window.curNotifier || {})
                             .idle_manager || {})
                         .is_idle && "init" != (e || {})
                         .type)) {
-                    for (postsUnseen = [], t = domPS(cur.topRow); t; t = domPS(t)) cur.topRow.offsetTop > n && (cur.topRow = t), t.unseen || (t.unseen = !0, postsUnseen.push(
+                    for (postsUnseen = [], t = domPS(cur.topRow); t; t = domPS(t)) cur.topRow.offsetTop > a && (cur.topRow = t), t.unseen || (t.unseen = !0, postsUnseen.push(
                         Feed.postsGetRaws(t)));
-                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (s = a ? a : t.offsetTop, !(s >= n + i)); t = o) o = domNS(t), "feed_rows_next" == (o || {})
-                        .id && (o = null), a = o ? o.offsetTop : s + t.offsetHeight, n > a && o && (cur.topRow = o), r = t.bits || 0, r >= 3 || (r |= (s >= n && n + i > s ?
-                            1 : 0) | (a >= n && n + i > a ? 2 : 0), r && (t.bits = r, 3 == r && c.push(feed.postsGetRaws(t))));
-                    Page.postsSeen(c)
+                    for (Page.postsUnseen(postsUnseen), t = cur.topRow; t && (s = c ? c : t.offsetTop, !(s >= a + n)); t = o) o = domNS(t), "feed_rows_next" == (o || {})
+                        .id && (o = null), c = o ? o.offsetTop : s + t.offsetHeight, a > c && o && (cur.topRow = o), i.registerElement(t) || (r = t.bits || 0, r >= 3 || (r |=
+                            (s >= a && a + n > s ? 1 : 0) | (c >= a && a + n > c ? 2 : 0), r && (t.bits = r, 3 == r && d.push(feed.postsGetRaws(t)))));
+                    d = d.concat(i.process(a, n)), Page.postsSeen(d)
                 }
             }
         }
@@ -1516,6 +1542,22 @@ var Feed = {
         }, {
             onDone: function() {}
         })
+    },
+    preloadVideos: function(e) {
+        function t(e) {
+            var t = new XMLHttpRequest;
+            t.open("GET", e), t.send()
+        }
+        e && cur.videoAutoplayScrollHandler && (cur.videoAutoplayPreloaded = cur.videoAutoplayPreloaded || {}, each(e, function(e, s) {
+            t(s.index_url), t(s.index_url.replace(/index-(.+).m3u8/, "seg-1-$1.ts")), cur.videoAutoplayPreloaded[s.video] = s.quality
+        }))
+    },
+    expandJoinedGroups: function(e, t) {
+        cancelEvent(t), show(geByClass1("feed_groups_hidden_list", e.parentNode)), re(e)
+    },
+    showAllFilters: function(e) {
+        re(e);
+        for (var t = geByClass("hide", e.parentNode), s = 0; s < t.length; s++) removeClass(t[s], "hide")
     }
 };
 window.feed = Feed;

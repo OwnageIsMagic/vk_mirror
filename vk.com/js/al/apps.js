@@ -2517,6 +2517,20 @@ AppsSlider.prototype = {
     },
     sliderStop: function() {
         cur.featuredSlider && (cur.featuredSlider.removeHandler(), cur.featuredSlider.slideshowStop())
+    },
+    collectionsLoadContent: function(t) {
+        return isVisible(t) && !buttonLocked(t) ? cur.collectionsOffset && cur.collectionsHasMore ? void ajax.post("al_apps.php", {
+            act: "a_collections_more",
+            offset: cur.collectionsOffset,
+            seed: cur.collectionsSeed
+        }, {
+            onDone: function(e, i, s) {
+                geByClass1("_apps_collections")
+                    .appendChild(cf(e)), (cur.collectionsHasMore = s) || hide(t), cur.collectionsOffset = i
+            },
+            showProgress: lockButton.pbind(t),
+            hideProgress: unlockButton.pbind(t)
+        }) : hide(t) : void 0
     }
 });
 try {

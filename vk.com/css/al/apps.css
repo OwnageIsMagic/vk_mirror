@@ -17,6 +17,7 @@
 .apps_edit_actions .icon,
 .apps_featured_next:before,
 .apps_featured_prev:before,
+.apps_header_progress:before,
 .apps_i_run_box,
 .apps_i_slider_next:before,
 .apps_i_slider_prev:before,
@@ -36,8 +37,7 @@
 .media-photo-thumb-background,
 .media-video-play,
 .media-video-thumb-background,
-.media-video-thumb-wrap-background,
-a.apps_header_progress:before {
+.media-video-thumb-wrap-background {
     -ms-high-contrast-adjust: none
 }
 
@@ -809,16 +809,16 @@ body.mac .apps_featured_thumb .ads_ad_big_app_info_box {
     background: #f66061
 }
 
-a.apps_header_progress {
+.apps_header_progress {
     position: relative;
     pointer-events: none
 }
 
-a.apps_header_progress .header_side_link {
+.apps_header_progress .header_side_link {
     display: none
 }
 
-a.apps_header_progress:before {
+.apps_header_progress:before {
     content: '';
     display: block;
     width: 16px;
@@ -1034,6 +1034,10 @@ a.apps_header_progress:before {
     pointer-events: none
 }
 
+.apps_cat_header_icon.apps_icon_collections {
+    background-position: 0 -644px
+}
+
 .apps_cat_header_icon.apps_icon_recommended {
     background-position: 0 -476px
 }
@@ -1134,6 +1138,27 @@ a.page_block_header:hover .apps_cat_header_link:after {
     -ms-transform: translateX(3px);
     -o-transform: translateX(3px);
     transform: translateX(3px)
+}
+
+.apps_collections_wrap {
+    margin-top: 5px;
+    margin-bottom: 20px
+}
+
+.apps_collections_row {
+    width: 245px;
+    height: 135px;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 10px;
+    margin-top: 10px;
+    vertical-align: top
+}
+
+.apps_collections_row img {
+    width: 245px;
+    height: height;
+    border-radius: 3px
 }
 
 .app_delete_row {

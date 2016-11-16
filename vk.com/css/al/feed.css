@@ -133,6 +133,39 @@
     margin-top: 0
 }
 
+.feed_filters_wrap .checkbox.hide,
+.feed_filters_hidden_types {
+    display: none
+}
+
+.feed_filters_hidden_types .checkbox:first-child {
+    margin-top: 11px
+}
+
+.feed_filters_show_types_btn {
+    font-size: 13px;
+    letter-spacing: -0.1px;
+    line-height: 15px;
+    font-weight: 600;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    margin: 11px 0px 0px 23px;
+    cursor: pointer;
+    color: #42648b;
+    opacity: 0.8;
+    filter: alpha(opacity=80)
+}
+
+.feed_filters_show_types_btn:hover {
+    opacity: 1;
+    -webkit-filter: none;
+    filter: none
+}
+
+.feed_filters_show_types_btn.hide {
+    display: none
+}
+
 .feed_updates .wall_module {
     margin: 0 20px
 }
@@ -180,6 +213,11 @@
 .feed_updates .wall_module .post_videos .page_post_sized_thumbs a.page_post_thumb_last_row,
 .feed_updates .wall_module .post_videos .page_post_sized_thumbs span.page_post_thumb_last_row {
     margin-bottom: 1px
+}
+
+.feed_updates .wall_module .post_photos .page_post_sized_thumbs,
+.feed_updates .wall_module .post_videos .page_post_sized_thumbs {
+    margin-top: 0px
 }
 
 .feed_updates .wall_module .post_photos .page_post_sized_thumbs {
@@ -450,7 +488,8 @@
 }
 
 .feed_wrap .explain {
-    padding-left: 1px
+    padding-left: 1px;
+    color: #000
 }
 
 .feed_wrap .feed_group_explain {
@@ -2077,6 +2116,100 @@ div.feed_recom {
     padding: 0px
 }
 
+.feed_update_row .post_author,
 .feed_wall_reply_row .post_author {
+    padding-right: 0px;
+    overflow: initial
+}
+
+.feed_update_row .feedback_rphoto,
+.feed_wall_reply_row .feedback_rphoto {
+    margin-right: 0px;
+    margin-top: -5px
+}
+
+.feed_added_friends_wrap .feedback_group_photo {
+    margin-bottom: 3px
+}
+
+.post.post_friends .post_header_info {
+    padding-top: 0px
+}
+
+.post.post_friends .post_author {
+    padding-top: 5px;
     padding-right: 0px
+}
+
+.post.post_friends .post_date:empty {
+    display: none
+}
+
+.post.post_friends .post_author .post_date {
+    display: block!important
+}
+
+.post.post_friends .wall_text:empty {
+    padding-top: 0px
+}
+
+.post.post_friends .mem_link {
+    font-weight: 500;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto
+}
+
+.feed_added_friends_image {
+    float: right!important;
+    margin-top: -5px;
+    margin-left: 10px
+}
+
+.feed_groups_hidden_list {
+    display: none
+}
+
+.feed_updates_market_with_more_btn .page_market_item {
+    margin-bottom: 10px
+}
+
+.feed_updates_market_with_more_btn .page_market_item:nth-child(4n) {
+    margin-left: 0px
+}
+
+.feed_updates_market_with_more_btn .feed_groups_hidden_list {
+    margin-bottom: -10px
+}
+
+.feed_groups_hidden_list_show_btn {
+    line-height: 17px;
+    color: #55677d;
+    font-size: 12.5px;
+    padding: 8px 0px 9px;
+    text-align: center;
+    background: #f0f2f5;
+    border-radius: 2px;
+    cursor: pointer;
+    display: block
+}
+
+.feed_groups_hidden_list_show_btn:hover {
+    text-decoration: none;
+    background: #e9ebf0
+}
+
+.post.post_groups .page_group_share {
+    margin: 0px 0px 15px
+}
+
+.post.post_groups .page_group_share:last-child {
+    margin-bottom: 0
+}
+
+.feed_update_row {
+    padding-bottom: 15px
+}
+
+.feed_update_row .post_author {
+    color: #000
 }
