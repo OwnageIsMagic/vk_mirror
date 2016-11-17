@@ -157,9 +157,10 @@
                     a ? v = "wddi" : (v = "wddi_over", t.over = f);
                     var x = n && o(p[1] || "", n) || p[1] || "",
                         w = n && o(p[2] || "", n) || p[2] || "";
-                    r.push('<div class="' + v + '" onmousedown="WideDropdown.select(\'' + t.id + "', event)\" onmousemove=\"WideDropdown.over('" + t.id + "', '" + clean(f) +
-                        '\')" id="wddi' + f + "_" + t.id + '" onclick="">  <div class="wddi_data">' + m + '    <div class="wddi_text">' + x +
-                        '</div>    <div class="wddi_sub">' + w + "</div>  </div></div>"), ++a
+                    r.push('<div class="' + v + '" onmousedown="WideDropdown.over(\'' + t.id + "', '" + clean(f) + "'); WideDropdown.select('" + t.id +
+                        "', event)\" onmousemove=\"WideDropdown.over('" + t.id + "', '" + clean(f) + '\')" id="wddi' + f + "_" + t.id +
+                        '" onclick="">  <div class="wddi_data">' + m + '    <div class="wddi_text">' + x + '</div>    <div class="wddi_sub">' + w +
+                        "</div>  </div></div>"), ++a
                 }
             }
             r = r.join(""), !a && i && (r = '<div class="wddi_no">' + (n ? t.opts.noResult : t.opts.introText) + "</div>"), s ? (t.list.__uiScroll__ ? t.list.__uiScroll__.content :

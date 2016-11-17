@@ -116,13 +116,15 @@ function appCallback(t) {
                     }, this)
                 },
                 onMessage: function(t) {
-                    var e = t.data;
-                    if (!e) return !1;
-                    if ("string" != typeof e && !(e instanceof String)) return !1;
-                    var i = e.substr(0, 5);
-                    if (l[i]) {
-                        var s = l[i][1];
-                        !s || s.filter && !s.filter(t.origin) || l[i][0](e.substr(6), s)
+                    var e = window.options && window.options.src ? window.options.src.substring(0, window.options.src.length - 1) : "";
+                    if (t.origin != document.origin && t.origin != e) return !1;
+                    var i = t.data;
+                    if (!i) return !1;
+                    if ("string" != typeof i && !(i instanceof String)) return !1;
+                    var s = i.substr(0, 5);
+                    if (l[s]) {
+                        var o = l[s][1];
+                        !o || o.filter && !o.filter(t.origin) || l[s][0](i.substr(6), o)
                     }
                 },
                 setJSON: function(t) {
@@ -1194,7 +1196,7 @@ AppsSlider.prototype = {
         val(e, t);
         var i = parseInt(getStyle(e, "line-height")),
             s = Math.ceil(getSize(e)[1] / i);
-        s > 7 && (setStyle(e, "height", 5 * i), val(e, t), removeClass(geByClass1("apps_i_description_show_more"), this.optionHiddenClass));
+        s > 7 && (setStyle(e, "height", 5 * i), val(e, t), removeClass(geByClass1("apps_i_description_show_more"), this.optionHiddenClass))
     },
     showFullDescription: function() {
         addClass(geByClass1("apps_i_description_show_more"), this.optionHiddenClass), setStyle(geByClass1("apps_i_description_content"), "height", "")
@@ -2301,8 +2303,9 @@ AppsSlider.prototype = {
             cache: t ? 0 : 1,
             onDone: this.withFastBackCheck(function(e, i, s) {
                 t == this.searchValFix(cur.searchStr) && (this.isSection("catalog", "list") && (cur.searchStr && this.sliderStop(), this.switchLayout(
-                    cur.searchStr ? "list" : cur.section), this.searchWriteToAddressBar()), this.backupListContent(!0), e && val(cur.lContent,
-                    e), val(cur.lPreload, i || ""), cur.loadMore = !!i, extend(cur, s), cur.loadMore && show(cur.lShowMoreButton), this.scrollCheck());
+                        cur.searchStr ? "list" : cur.section), this.searchWriteToAddressBar()), this.backupListContent(!0), e && val(cur.lContent,
+                        e),
+                    val(cur.lPreload, i || ""), cur.loadMore = !!i, extend(cur, s), cur.loadMore && show(cur.lShowMoreButton), this.scrollCheck())
             }.bind(this)),
             showProgress: function() {
                 cur.isAppsLoading = !0, lockButton(cur.lShowMoreButton)

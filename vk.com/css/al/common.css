@@ -300,6 +300,10 @@ img {
     color: transparent
 }
 
+img.emoji_css {
+    color: #000
+}
+
 form {
     margin: 0;
     padding: 0

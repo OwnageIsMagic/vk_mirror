@@ -69,7 +69,7 @@ var AudioUtils = {
     AUDIO_ITEM_INDEX_FLAGS: 10,
     AUDIO_ITEM_INDEX_CONTEXT: 11,
     AUDIO_ITEM_INDEX_EXTRA: 12,
-    AUDIO_ITEM_INDEX_ACT_HASH: 13,
+    AUDIO_ITEM_INDEX_HASHES: 13,
     AUDIO_ITEM_INLINED_BIT: 1,
     AUDIO_ITEM_CLAIMED_BIT: 16,
     AUDIO_ITEM_RECOMS_BIT: 64,
@@ -121,79 +121,72 @@ var AudioUtils = {
                 s = a && a.options.oid < 0 && a.options.canAudioAddToGroup,
                 l = s ? -a.options.oid : 0,
                 r = AudioUtils.getAudioFromEl(o, !0),
-                u = vk.audioParams.addHash,
-                d = vk.audioParams.deleteHash,
-                n = AudioUtils.getAddRestoreInfo(),
-                _ = n[r.fullId],
-                A = ge("audio_" + r.fullId);
-            A = A == o ? !1 : A;
-            var y = a && a.getCurrentPlaylist(),
-                h = (intval(r.isTop), intval(a && a.getCurrentPlaylist()
+                u = AudioUtils.getAddRestoreInfo(),
+                d = u[r.fullId],
+                n = ge("audio_" + r.fullId);
+            n = n == o ? !1 : n;
+            var _ = a && a.getCurrentPlaylist(),
+                A = (intval(r.isTop), intval(a && a.getCurrentPlaylist()
                     .getType() == AudioPlaylist.TYPE_SEARCH), {
                     act: "add",
                     gid: l,
                     oid: r.ownerId,
                     aid: r.id,
-                    hash: u
+                    hash: r.addHash
                 });
-            if (y) {
-                var p = y.getAlbumId();
-                switch (h.from = y.getType(), y.getType()) {
+            if (_) {
+                var y = _.getAlbumId();
+                switch (A.from = _.getType(), _.getType()) {
                     case AudioPlaylist.TYPE_RECOM:
-                        isString(p) && (0 == p.indexOf("album") && (h.recommendation_type = "album"), 0 == p.indexOf("audio") && (h.recommendation_type = "query"));
+                        isString(y) && (0 == y.indexOf("album") && (A.recommendation_type = "album"), 0 == y.indexOf("audio") && (A.recommendation_type = "query"));
                         break;
                     case AudioPlaylist.TYPE_POPULAR:
-                        h.top_genre = p;
+                        A.top_genre = y;
                         break;
                     case AudioPlaylist.TYPE_FEED:
                 }
             }
-            if (_) {
-                if ("recom_hidden" == _.state) a && (a.restoreRecommendation(o), e(!1));
-                else if ("deleted" == _.state) ajax.post("al_audio.php", {
-                    act: "restore_audio",
-                    oid: r.ownerId,
-                    aid: r.id,
-                    hash: u
+            if (d) "recom_hidden" == d.state ? a && (a.restoreRecommendation(o), e(!1)) : "deleted" == d.state ? (ajax.post("al_audio.php", {
+                act: "restore_audio",
+                oid: r.ownerId,
+                aid: r.id,
+                hash: r.editHash
+            }, {
+                onDone: function() {
+                    e(!1)
+                }
+            }), removeClass(o, "audio_deleted"), removeClass(o, "canadd"), addClass(o, "canedit"), delete cur._audioAddRestoreInfo[r.fullId]) : "added" == d.state && (
+                ajax.post("al_audio.php", {
+                    act: "delete_audio",
+                    oid: d.audio.ownerId,
+                    aid: d.audio.id,
+                    hash: d.audio.editHash
                 }, {
                     onDone: function() {
+                        if (a) {
+                            var t = getAudioPlayer()
+                                .getPlaylist(AudioPlaylist.TYPE_ALBUM, l ? -l : vk.id, AudioPlaylist.ALBUM_ALL);
+                            t.removeAudio(d.addedFullId)
+                        }
                         e(!1)
                     }
-                }), removeClass(o, "audio_deleted"), removeClass(o, "canadd"), addClass(o, "canedit"), delete cur._audioAddRestoreInfo[r.fullId];
-                else if ("added" == _.state) {
-                    var c = _.addedFullId.split("_");
-                    ajax.post("al_audio.php", {
-                            act: "delete_audio",
-                            oid: c[0],
-                            aid: c[1],
-                            hash: d
-                        }, {
-                            onDone: function() {
-                                if (a) {
-                                    var t = getAudioPlayer()
-                                        .getPlaylist(AudioPlaylist.TYPE_ALBUM, l ? -l : vk.id, AudioPlaylist.ALBUM_ALL);
-                                    t.removeAudio(_.addedFullId)
-                                }
-                                e(!1)
-                            }
-                        }), removeClass(o, "added"), addClass(o, "canadd"), A && (removeClass(A, "added"), addClass(A, "canadd")), delete cur._audioAddRestoreInfo[r.fullId],
-                        getAudioPlayer()
-                        .notify(AudioPlayer.EVENT_REMOVED, r.fullId, _.addedFullId)
-                }
-            } else {
-                var f = gpeByClass("_post", t);
-                f && (h.post_id = domData(f, "post-id")), h.h = vk.audioParams ? JSON.stringify(vk.audioParams) : "no", h.loc = JSON.stringify(nav.objLoc), h.vkid = vk.id ||
-                    "no", ajax.post("al_audio.php", h, {
-                        onDone: function(t, i, o, s) {
+                }), removeClass(o, "added"), addClass(o, "canadd"), n && (removeClass(n, "added"), addClass(n, "canadd")), delete cur._audioAddRestoreInfo[r.fullId],
+                getAudioPlayer()
+                .notify(AudioPlayer.EVENT_REMOVED, r.fullId, d.addedFullId));
+            else {
+                var h = gpeByClass("_post", t);
+                h && (A.post_id = domData(h, "post-id")), A.row = o ? o.innerHTML : "", ajax.post("al_audio.php", A, {
+                        onDone: function(t) {
                             if (t) {
-                                var u = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
-                                if (n[r.fullId] = {
+                                var i = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
+                                if (u[r.fullId] = {
                                         state: "added",
-                                        addedFullId: u
+                                        addedFullId: i,
+                                        audio: AudioUtils.asObject(t)
                                     }, a) {
-                                    var d = getAudioPlayer()
+                                    var o = getAudioPlayer()
                                         .getPlaylist(AudioPlaylist.TYPE_ALBUM, l ? -l : vk.id, AudioPlaylist.ALBUM_ALL);
-                                    d.addAudio(t, 0)
+                                    o.addAudio(t, 0)
                                 }
                             }
                             e(!1)
@@ -209,8 +202,8 @@ var AudioUtils = {
                                 })
                                 .show(), removeClass(o, "added"), addClass(o, "canadd"), e(!1), !0
                         }
-                    }), removeClass(o, "canadd"), addClass(o, "added"), A && (removeClass(A, "canadd"), addClass(A, "added")), getAudioPlayer()
-                    .notify(AudioPlayer.EVENT_ADDED, r.fullId), y && y.audioPageRef && y.audioPageRef.onUserAction(r, y)
+                    }), removeClass(o, "canadd"), addClass(o, "added"), n && (removeClass(n, "canadd"), addClass(n, "added")), getAudioPlayer()
+                    .notify(AudioPlayer.EVENT_ADDED, r.fullId), _ && _.audioPageRef && _.audioPageRef.onUserAction(r, _)
             }
         }
     },
@@ -385,9 +378,13 @@ var AudioUtils = {
         for (var i = 0, e = t.list.length; e > i; i++) t.list[i] = AudioUtils.prepareAudioForPlaylist(t.list[i])
     },
     asObject: function(t) {
-        return t ? isObject(t) ? t : "string" == typeof t ? {
+        if (!t) return null;
+        if (isObject(t)) return t;
+        if ("string" == typeof t) return {
             id: t
-        } : {
+        };
+        var i = t[AudioUtils.AUDIO_ITEM_INDEX_HASHES].split("/");
+        return {
             id: intval(t[AudioUtils.AUDIO_ITEM_INDEX_ID]),
             owner_id: intval(t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID]),
             ownerId: t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID],
@@ -401,8 +398,10 @@ var AudioUtils = {
             context: t[AudioUtils.AUDIO_ITEM_INDEX_CONTEXT],
             extra: t[AudioUtils.AUDIO_ITEM_INDEX_EXTRA],
             isTop: t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS] & AudioUtils.AUDIO_ITEM_TOP_BIT,
-            actHash: t[AudioUtils.AUDIO_ITEM_INDEX_ACT_HASH]
-        } : null
+            addHash: i[0],
+            editHash: i[1],
+            actionHash: i[2]
+        }
     },
     initDomPlaylist: function(t, i) {
         var e = (getAudioPlayer(), []);
@@ -474,8 +473,7 @@ var AudioUtils = {
             claim_id: e.moder_claim.claim,
             type: "audio",
             id: i.id,
-            owner_id: i.owner_id,
-            hash: i.actHash
+            owner_id: i.owner_id
         }, {
             onDone: function(i) {
                 var e = gpeByClass("audio_row", t);
@@ -494,7 +492,7 @@ var AudioUtils = {
             type: "audio",
             id: i.id,
             owner_id: i.owner_id,
-            hash: i.actHash
+            hash: i.actionHash
         }, {
             onDone: function(i) {
                 var e = gpeByClass("audio_row", t);
@@ -509,7 +507,7 @@ var AudioUtils = {
             act: "getUMARestrictions",
             id: i.id,
             owner_id: i.owner_id,
-            hash: i.actHash
+            hash: i.actionHash
         })
     }
 };
@@ -966,13 +964,13 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
                 new AudioPlayerFlash(a)), this._implSetVolume(0)
     }, AudioPlayer.ADTEST = 1, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop",
     AudioPlayer.EVENT_UPDATE = "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED =
-    "buffered",
-    AudioPlayer.EVENT_PROGRESS = "progress", AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED =
-    "removed", AudioPlayer.EVENT_AD_READY = "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED =
-    "ad_completed", AudioPlayer.EVENT_START_LOADING = "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v10", AudioPlayer.LS_KEY_PREFIX = "audio",
-    AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX + "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track",
-    AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS = "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v4",
-    AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF = .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
+    "buffered", AudioPlayer.EVENT_PROGRESS = "progress",
+    AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.EVENT_AD_READY =
+    "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED = "ad_completed", AudioPlayer.EVENT_START_LOADING =
+    "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v12", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX +
+    "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS =
+    "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v4", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF =
+    .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
         def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -1111,7 +1109,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype._addRowPlayer = function(t, i) {
         if (!geByClass1("_audio_inline_player", t)) {
             var e = this,
-                o = se(vk.audioParams.audioInlinePlayerTpl || getTemplate("audio_inline_player")),
+                o = se(vk.audioInlinePlayerTpl || getTemplate("audio_inline_player")),
                 a = geByClass1("_audio_player_wrap", t);
             a.appendChild(o);
             var s = new Slider(geByClass1("audio_inline_player_volume", o), {
@@ -1482,7 +1480,7 @@ AudioPlayer.tabIcons = {
                 audio_owner_id: e.ownerId,
                 audio_id: e.id,
                 listened: intval(i),
-                hash: e.actHash
+                hash: e.actionHash
             }), !i) {
             var i = this.getPlaylist(AudioPlaylist.TYPE_RECENT, vk.id);
             t = clone(t), t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS] &= ~AudioUtils.AUDIO_ITEM_RECOMS_BIT, i.addAudio(t, 0)
@@ -1560,7 +1558,7 @@ AudioPlayer.tabIcons = {
                 setTimeout(ajax.post.pbind("al_audio.php", {
                     act: "audio_status",
                     full_id: t.fullId,
-                    hash: vk.audioParams.addHash,
+                    hash: vk.statusExportHash,
                     top: intval(a && (a.top_audio || a.top))
                 }), 0), this.statusSent = t.id + "," + vkNow()
             }

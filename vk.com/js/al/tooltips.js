@@ -60,12 +60,12 @@ var tooltips = {
                     var b = x + intval(opts.slide) * (i ? -1 : 1),
                         y = e[0] + (s ? l[0] + o[0] - d[0] : i ? -l[0] : -(l[3] || l[0]));
                     v && (y -= d[0] - (opts.reverseOffset || 39)), opts.center && (addClass(t, "tocenter"), d[0] != o[0] && (y -= s ? 0 : (d[0] - o[0]) / 2));
-                    var T = y + (s ? -1 : 1) * intval(opts.slideX);
+                    var C = y + (s ? -1 : 1) * intval(opts.slideX);
                     if (opts.showIfFit && (y + w[0] < 0 || y + w[0] + d[0] > lastWindowWidth || x + w[1] < 0 || x + w[1] + d[1] > lastWindowHeight)) return hide(
                         el.tt.container);
                     el.tt.showing = !0, setStyle(t, {
                         top: b,
-                        left: T
+                        left: C
                     }), animate(t, {
                         top: x,
                         left: y,
@@ -225,10 +225,13 @@ var tooltips = {
                 display: "none"
             });
             var a = domPN(t);
-            a = e.appendEl ? e.appendEl : e.appendParentCls ? domClosest(e.appendParentCls, a) : domClosest("tt_w", a) || domClosest("tt_default", a) ||
-                domClosestPositioned(t, {
+            if (e.appendEl) a = e.appendEl;
+            else if (e.appendParentCls) a = domClosest(e.appendParentCls, a);
+            else if (a = domClosest("tt_w", a) || domClosest("tt_default", a), !a)
+                do a = domClosestPositioned(a || t, {
                     noOverflow: !0
-                }), a || (a = bodyNode), a.appendChild(d);
+                }); while (hasClass(a, "tt_noappend"));
+            a || (a = bodyNode), a.appendChild(d);
             var p = extend({
                 el: t,
                 opts: o,

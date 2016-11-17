@@ -35,44 +35,85 @@
     margin-bottom: 0
 }
 
-.new_faq {
-    padding: 25px 0
+.faq_ed {
+    padding: 25px 30px;
+    background: #f7f8fa
 }
 
-.new_faq__view {
-    opacity: 0.7;
-    position: absolute;
-    right: 20px;
-    top: 26px
+.faq_ed_block {
+    margin: 0 0 16px
 }
 
-.faq_envelope_wrap {
-    margin: 0 auto;
-    border: 1px solid #adbbca;
-    width: 640px
+.faq_ed_block .text {
+    width: 490px
 }
 
-.faq_envelope_wrap input {
-    padding: 5px 9px 6px;
-    line-height: 160%;
-    width: 368px
+.faq_ed_block .text.half_long {
+    width: 245px
 }
 
-.faq_envelope_wrap input.half_long {
-    width: 174px
+.faq_ed_block__top_bordered {
+    border-top: 1px solid #e4e6e9
 }
 
-.faq_envelope_wrap input,
-.faq_envelope_wrap textarea {
-    outline: none
+.faq_ed_block_from_list .checkbox {
+    padding: 4px 0
 }
 
-.faq_envelope {
-    border: 12px solid #dae2e8;
-    padding: 18px 20px;
-    background: #fff;
-    line-height: 160%;
-    position: relative
+.faq_ed_block_col {
+    box-sizing: border-box;
+    float: left;
+    padding-right: 10px;
+    vertical-align: top
+}
+
+.faq_ed_block_col:last-child {
+    padding-right: 0
+}
+
+.faq_ed_block_col25 {
+    width: 25%
+}
+
+.faq_ed_block_col50 {
+    width: 50%
+}
+
+.faq_ed_block_col75 {
+    width: 75%
+}
+
+.faq_ed_block_col33 {
+    width: 33%
+}
+
+.faq_ed_block_col67 {
+    width: 67%
+}
+
+.faq_ed_row_static {
+    line-height: 30px
+}
+
+.faq_ed_children {
+    color: #656565;
+    white-space: nowrap
+}
+
+.faq_ed_children__a {
+    display: inline-block;
+    max-width: 240px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: bottom
+}
+
+.faq_ed_warn {
+    padding-top: 4px
+}
+
+.faq_ed_warn:empty {
+    display: none
 }
 
 .faq_envelope_controls {
@@ -80,14 +121,14 @@
 }
 
 .faq_envelope_controls .secondary {
-    margin-left: 5px
+    margin-left: 8px
 }
 
 .faq_optional_label {
     float: left;
     padding: 6px 0 0;
     color: #656565;
-    width: 188px
+    width: 245px
 }
 
 .faq_optional_row {
@@ -95,7 +136,7 @@
 }
 
 .faq_optional_extra_fields {
-    width: 388px
+    width: 490px
 }
 
 .faq_optional_extra_field {
@@ -154,13 +195,23 @@
     margin-top: 6px
 }
 
+.faq_ed_controls.wke_pcont {
+    background: transparent
+}
+
+.faq_ed_controls .wke_controls {
+    border-bottom: 0 none;
+    padding: 0 0 5px;
+    background: transparent
+}
+
+.faq_ed textarea.wke_textarea {
+    border-width: 1px
+}
+
 .faq_checkboxes_block {
     float: left;
     padding: 6px 0 8px
-}
-
-.faq_checkboxes_row_block {
-    padding: 10px 0 4px
 }
 
 .faq_checkbox_row {
@@ -172,64 +223,92 @@
     padding-bottom: 0
 }
 
-#faq_source_link {
-    text-overflow: ellipsis;
-    max-width: 310px;
+.faq_checkbox_row .checkbox {
+    display: inline-block
+}
+
+.faq_ed_notify_translators {
+    float: left;
+    margin-left: 12px;
+    padding-top: 6px;
+    vertical-align: middle
+}
+
+.faq_source_link {
+    float: left;
+    padding: 7px 0px 8px;
+    max-width: 400px;
     overflow: hidden;
-    white-space: nowrap;
-    padding: 2px 0px 3px
+    text-overflow: ellipsis;
+    white-space: nowrap
 }
 
 .faq_ticket_unbind {
-    margin-top: 5px;
-    margin-left: 3px;
+    float: left;
+    margin: 9px 0 0 3px;
+    width: 14px;
+    height: 14px;
+    -o-transition: opacity 300ms linear;
+    transition: opacity 300ms linear;
     background: url("/images/hide_left.gif") no-repeat scroll 0px -1px #fff;
     cursor: pointer;
-    height: 14px;
-    width: 14px;
-    opacity: 0.5;
     clear: right;
-    filter: alpha(opacity=50)
+    opacity: 0.5
+}
+
+.faq_ticket_unbind:hover {
+    opacity: 1
 }
 
 .faq_no_source {
     color: #840
 }
 
-h4.faq_question {
-    border-bottom: none;
-    margin: 0px 0 4px;
-    padding: 10px 0px 4px;
-    font-size: 1.09em;
-    line-height: 1.27em
+.faq_question {
+    margin: 0 0 6px;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #42648b;
+    font-size: 12.5px
 }
 
-h4.faq_question .faq_info {
-    font-size: 0.9em;
-    color: #777
+.faq_ed_block_slidable .faq_question {
+    opacity: 0.8
 }
 
-.faq_envelope_form {
-    padding: 3px 0px 5px
+.faq_ed_block_slidable.faq_ed_block_unslided .faq_question {
+    color: #42648b;
+    opacity: 1
+}
+
+.faq_ed_block_slidable .faq_question:after {
+    content: "\2192"
+}
+
+.faq_ed_block_slidable.faq_ed_block_unslided .faq_question:after {
+    content: "\2193"
+}
+
+.faq_question__info {
+    font-weight: 400;
+    -webkit-font-smoothing: subpixel-antialiased;
+    -moz-osx-font-smoothing: auto;
+    font-size: 12.5px;
+    color: #656565
+}
+
+.faq_ed_block_label_slide {
+    border-bottom: 1px dotted;
+    cursor: pointer
 }
 
 #faq_description,
 #faq_keywords,
-#faq_text {
-    box-sizing: border-box;
-    width: 100%;
-    vertical-align: top;
-    margin-bottom: 15px;
-    padding: 5px 9px 6px
-}
-
-#faq_keywords,
-#faq_text {
-    height: 105px
-}
-
-#faq_description {
-    height: 40px
+#faq_text,
+#faq_title {
+    vertical-align: middle;
+    width: 100%
 }
 
 .faq_found_list {
@@ -241,7 +320,6 @@ h4.faq_question .faq_info {
     margin: 0 0 10px
 }
 
-.faq_mobile_settings,
 .faq_found_list .error,
 .faq_found_list .msg {
     margin-bottom: 15px
@@ -283,12 +361,6 @@ h4.faq_question .faq_info {
 
 #new_link {
     padding: 5px 0 3px
-}
-
-#faq_title {
-    box-sizing: border-box;
-    margin: 3px 0 20px;
-    width: 100%
 }
 
 .fis_box {
@@ -354,7 +426,7 @@ h4.faq_question .faq_info {
     filter: alpha(opacity=65)
 }
 
-.box_body .faq_envelope .fis_x {
+.box_body .faq_ed .fis_x {
     display: none
 }
 
@@ -477,16 +549,6 @@ h4.faq_question .faq_info {
 
 .faq_text {
     line-height: 160%
-}
-
-.faq_from_chb_list_other {
-    border-top: 1px solid #f2f4f6
-}
-
-.faq_from_chb_list_other__col {
-    display: inline-block;
-    vertical-align: top;
-    width: 50%
 }
 
 .new_faq_in_top {
@@ -620,15 +682,6 @@ h4.faq_question .faq_info {
     background: url('/images/faq_fixed.png') no-repeat 0px 0px;
     width: 32px;
     height: 32px
-}
-
-#faq_content {
-    background-color: #f7f7f7
-}
-
-#faq_content .tlmd_found_list {
-    padding: 15px;
-    background-color: #fff
 }
 
 #faq_content #tickets_search {

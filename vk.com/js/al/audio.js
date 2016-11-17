@@ -125,23 +125,19 @@ AudioPage.address = "audio", AudioPage.updateSearchHighlight = function(e) {
         for (var s in o) delete o[s];
         t = !1
     } else i = vk.id, o[i] = 1, t = !0;
-    this.ap.setStatusExportInfo(o);
-    var r = vk.audioParams.addHash;
-    if (r) {
-        i != vk.id && i || checkbox("currinfo_audio", this.ap.hasStatusExport()), this.updateStatusExportControls();
-        var d = this.ap.getCurrentAudio();
-        d && (a = AudioUtils.asObject(d)
-            .fullId);
-        var l = (this.ap.getCurrentPlaylist(), null);
-        ajax.post("al_audio.php", {
-            act: "toggle_status",
-            exp: intval(t),
-            oid: i,
-            hash: r,
-            id: a,
-            top: intval(l && (l.top_audio || l.top))
-        })
-    }
+    this.ap.setStatusExportInfo(o), i != vk.id && i || checkbox("currinfo_audio", this.ap.hasStatusExport()), this.updateStatusExportControls();
+    var r = this.ap.getCurrentAudio();
+    r && (a = AudioUtils.asObject(r)
+        .fullId);
+    var d = (this.ap.getCurrentPlaylist(), null);
+    ajax.post("al_audio.php", {
+        act: "toggle_status",
+        exp: intval(t),
+        oid: i,
+        hash: vk.statusExportHash,
+        id: a,
+        top: intval(d && (d.top_audio || d.top))
+    })
 }, AudioPage.prototype.playStatusAudio = function(e, i, t) {
     var a = gpeByClass("_audio_friend", t);
     this.ap.playLive(e, {
@@ -307,7 +303,7 @@ AudioPage.address = "audio", AudioPage.updateSearchHighlight = function(e) {
         act: "delete_audio",
         oid: o.ownerId,
         aid: o.id,
-        hash: o.actHash,
+        hash: o.editHash,
         top_moder: 1
     }), t && cancelEvent(t), !1
 }, AudioPage.prototype.showRecoms = function(e, i, t) {
@@ -426,23 +422,22 @@ AudioPage.address = "audio", AudioPage.updateSearchHighlight = function(e) {
                 act: "remove_listened",
                 audio_owner_id: d.ownerId,
                 audio_id: d.id,
-                hash: d.actHash
+                hash: d.actionHash
             }), s(!1), re(r);
             var n = AudioUtils.asObject(ap.getCurrentAudio());
             return d.id == n.id && d.ownerId == n.ownerId ? l._nextAfterRemovedIndex = l.indexOfAudio(d) : delete l._nextAfterRemovedIndex, l.removeAudio(d), this._updateEmptyPlaceholder(
                 l), cancelEvent(t)
         }
-        var u = vk.audioParams.deleteHash;
         cur._audioAddRestoreInfo = cur._audioAddRestoreInfo || {};
-        var _ = cur._audioAddRestoreInfo[d.fullId];
-        if (!hasClass(r, "audio_delete_all") || !_.deleteAll) {
+        var u = cur._audioAddRestoreInfo[d.fullId];
+        if (!hasClass(r, "audio_delete_all") || !u.deleteAll) {
             a ? re(r) : (addClass(r, "audio_deleted"), addClass(r, "canadd"), removeClass(r, "canedit"));
-            var h = this;
+            var _ = this;
             return ajax.post("al_audio.php", {
                 act: "delete_audio",
                 oid: d.ownerId,
                 aid: d.id,
-                hash: u,
+                hash: d.editHash,
                 restore: 1
             }, {
                 onDone: function(e, i) {
@@ -450,22 +445,22 @@ AudioPage.address = "audio", AudioPage.updateSearchHighlight = function(e) {
                         state: "deleted",
                         deleteAll: e,
                         deleteConfirmMsg: i
-                    }, a && h._deleteDeletedAudios()
+                    }, a && _._deleteDeletedAudios()
                 }
             }), cancelEvent(t)
         }
         showFastBox({
             title: getLang("audio_delete_all_title"),
             dark: 1
-        }, _.deleteConfirmMsg || "", getLang("global_delete"), function(e) {
+        }, u.deleteConfirmMsg || "", getLang("global_delete"), function(e) {
             var i = extend({
                 act: "delete_all"
-            }, _.deleteAll);
+            }, u.deleteAll);
             ajax.post("al_audio.php", i, {
                 showProgress: lockButton.pbind(e),
                 onDone: function() {
                     var e = getAudioPlayer()
-                        .getPlaylist(AudioPlaylist.TYPE_ALBUM, _.deleteAll.from_id, AudioPlaylist.ALBUM_ALL);
+                        .getPlaylist(AudioPlaylist.TYPE_ALBUM, u.deleteAll.from_id, AudioPlaylist.ALBUM_ALL);
                     getAudioPlayer()
                         .deletePlaylist(e), nav.reload()
                 }

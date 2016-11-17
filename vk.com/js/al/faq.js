@@ -8,30 +8,6 @@ FAQ = {
             section: val(e)
         } : {}
     },
-    showMsg: function(e) {
-        var t = ge("faq_msg");
-        if (!t) {
-            var i;
-            switch (cur.page) {
-                case "all":
-                    i = cur.tlmd ? ge("tlmd_found_list") : ge("faq_list");
-                    break;
-                case "new":
-                    i = ge("faq_msg_p"), show("faq_msg_p");
-                    break;
-                case "tiles":
-                    i = ge("faq_tiles_editor");
-                    break;
-                case "sort":
-                    i = ge("faq_sort_editor")
-            }
-            t = i.insertBefore(ce("div", {
-                id: "faq_msg",
-                className: "info_msg"
-            }), i.firstChild)
-        }
-        return re("faq_error"), val(t, e), !0
-    },
     showError: function(e) {
         var t = ge("faq_error");
         if (!t) {
@@ -124,97 +100,99 @@ FAQ = {
             }
         }
     },
-    saveFAQ: function(e) {
-        var t = trim(val("faq_title")),
-            i = trim(val("faq_text")),
-            o = trim(val("faq_keywords")),
-            a = trim(val("faq_description"));
-        if (!t) return notaBene("faq_title");
-        var r = [];
+    checkContentChanged: function() {
+        cur.faqText != val("faq_text") || cur.faqTitle != val("faq_title") ? show("faq_ed_notify_translators") : hide("faq_ed_notify_translators")
+    },
+    saveFAQ: function(e, t, i) {
+        var o = trim(val("faq_title")),
+            a = trim(val("faq_text")),
+            r = trim(val("faq_keywords")),
+            s = trim(val("faq_description"));
+        if (!o) return notaBene("faq_title");
+        var n = [];
         if (cur.screens)
-            for (var s in cur.screens) r.push(cur.screens[s][0]);
-        if (!i && !r.length) return notaBene("faq_text");
-        var n = cur.langsDD && cur.langsDD.val() || 0,
-            l = {
+            for (var l in cur.screens) n.push(cur.screens[l][0]);
+        if (!a && !n.length) return notaBene("faq_text");
+        var _ = cur.langsDD && cur.langsDD.val() || 0,
+            d = {
                 act: "save",
-                title: t,
-                text: i,
-                keywords: o,
-                description: a,
-                hash: e,
-                imgs: r,
+                title: o,
+                text: a,
+                keywords: r,
+                description: s,
+                hash: t,
+                imgs: n,
                 faq_id: cur.id,
                 fixed: isChecked("fix_faq"),
                 urgent: isChecked("urgent_faq"),
                 server: trim(val("faq_server")),
                 id_mask: trim(val("faq_id_mask")),
                 cdn: trim(val("faq_cdn")),
-                language: n,
-                parent_id: n ? cur.parentId : 0,
+                language: _,
+                parent_id: _ ? cur.parentId : 0,
                 about_phone: isChecked("faq_about_phone"),
                 about_profile: isChecked("faq_about_profile"),
                 about_group: isChecked("faq_about_group"),
                 about_email: isChecked("faq_about_email"),
                 hidden: isChecked("hidden_faq"),
-                disable_have_question: isChecked("disable_have_question_faq")
+                disable_have_question: isChecked("disable_have_question_faq"),
+                save_exit: i ? 1 : 0,
+                notify_translators: isChecked("faq_ed_notify_translators") ? 1 : 0,
+                is_wiki: isChecked("faq_is_wiki") ? 1 : 0
             };
         if (cur.sectionSelector) {
-            if (l.section = intval(cur.sectionSelector.val()), 0 == l.section || 39 == l.section) {
-                var _ = cur.desktopCategorySelector.val();
-                l.categories = _, l.spec_section = cur.specSectionSelector.val()
-            } else if (31 == l.section) {
-                var d = cur.platformSelector.val();
-                if (!d) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
-                l.platforms = d;
-                var _ = cur.categorySelector.val();
-                if (!_) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
-                l.categories = _
+            if (d.section = intval(cur.sectionSelector.val()), 0 == d.section || 39 == d.section) {
+                var c = cur.desktopCategorySelector.val();
+                d.categories = c, d.spec_section = cur.specSectionSelector.val()
+            } else if (31 == d.section) {
+                var u = cur.platformSelector.val();
+                if (!u) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
+                d.platforms = u;
+                var c = cur.categorySelector.val();
+                if (!c) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
+                d.categories = c
             }
-        } else ge("default_section") && (l.section = val("default_section"));
-        if (1 == l.section && (l.categories = cur.adsCategorySelector.val()), cur.actionButtonSelector && (l.action_id = intval(cur.actionButtonSelector.val()), 0 != l.action_id &&
-                (l.action_label = ge("faq_action_btn_label")
-                    .value.trim()), 7 == l.action_id)) {
-            if (!l.action_label) return elfocus("faq_action_btn_label"), notaBene("faq_action_btn_label");
-            if (l.action_url = ge("faq_action_btn_url")
-                .value.trim(), !l.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
+        } else ge("default_section") && (d.section = val("default_section"));
+        if (1 == d.section && (d.categories = cur.adsCategorySelector.val()), cur.actionButtonSelector && (d.action_id = intval(cur.actionButtonSelector.val()), 0 != d.action_id &&
+                (d.action_label = ge("faq_action_btn_label")
+                    .value.trim()), 7 == d.action_id)) {
+            if (!d.action_label) return elfocus("faq_action_btn_label"), notaBene("faq_action_btn_label");
+            if (d.action_url = ge("faq_action_btn_url")
+                .value.trim(), !d.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
         }
         if (ge("faq_optional_extra_field_add") && (!cur.sectionSelector || 0 == cur.sectionSelector.val() || 39 == cur.sectionSelector.val())) {
-            for (var c = {}, u = ge("faq_optional_extra_fields_list")
-                    .children, s = 0; s < u.length; s++) {
-                var f = u[s];
-                c["ef_" + s + "_type"] = data(f, "typeSelector")
-                    .val(), c["ef_" + s + "_title"] = geByClass1("faq_optional_extra_field__title", f)
-                    .value, c["ef_" + s + "_note"] = geByClass1("faq_optional_extra_field__note", f)
-                    .value, c["ef_" + s + "_required"] = data(f, "requiredSelector")
+            for (var f = {}, p = ge("faq_optional_extra_fields_list")
+                    .children, l = 0; l < p.length; l++) {
+                var g = p[l];
+                f["ef_" + l + "_type"] = data(g, "typeSelector")
+                    .val(), f["ef_" + l + "_title"] = geByClass1("faq_optional_extra_field__title", g)
+                    .value, f["ef_" + l + "_note"] = geByClass1("faq_optional_extra_field__note", g)
+                    .value, f["ef_" + l + "_required"] = data(g, "requiredSelector")
                     .val()
             }
-            l = extend(l, c)
+            d = extend(d, f)
         }
-        if (ge("description_not_needed") && (l.descr_not_needed = isChecked("description_not_needed")), ge("description_placeholder_key") && (l.description_placeholder_key =
-                val("description_placeholder_key")), ge("description_tooltip_key") && (l.description_tooltip_key = val("description_tooltip_key")), cur.faqFromAllCheckbox &&
-            cur.faqFromCheckboxes) {
-            var p = [],
-                g = cur.faqFromAllCheckbox.val();
-            g ? p.push(g) : each(cur.faqFromCheckboxes, function(e, t) {
-                var i = t.val();
-                i && p.push(i)
-            }), l.from_list = p.join(",")
-        }
-        ajax.post(nav.objLoc[0], l, {
+        ge("description_not_needed") && (d.descr_not_needed = isChecked("description_not_needed")), ge("description_placeholder_key") && (d.description_placeholder_key =
+            val("description_placeholder_key")), ge("description_tooltip_key") && (d.description_tooltip_key = val("description_tooltip_key"));
+        var h = [],
+            v = isChecked("faq_from_chb__all") ? "_all" : 0;
+        v ? h.push(v) : each(geByClass("checkbox", "faq_from_chb_list_other"), function(e, t) {
+            isChecked(t) && h.push(attr(t, "v"))
+        }), d.from_list = h.join(","), e || (e = ge("faq_send")), ajax.post(nav.objLoc[0], d, {
             onFail: FAQ.showError,
-            showProgress: lockButton.pbind(ge("faq_send")),
-            hideProgress: unlockButton.pbind(ge("faq_send"))
+            showProgress: lockButton.pbind(e),
+            hideProgress: unlockButton.pbind(e)
         })
     },
     toggleUrgent: function(e) {
-        checkbox(e), isChecked(e) ? slideDown("faq_from_chb_list", 300) : slideUp("faq_from_chb_list", 300)
+        checkbox(e), slideToggle("faq_urgent_details", 300, isChecked(e))
     },
     addScreen: function(e) {
         showFastBox({
                 title: getLang("support_adding_screen"),
                 width: 440,
                 bodyStyle: "padding: 0px"
-            }, '<div class="fis_box">  <div class="info_msg fis_about">' + getLang("support_screen_you_can") +
+            }, '<div class="fis_box">  <div class="info_msg fis_about msg_multiline">' + getLang("support_screen_you_can") +
             '</div>  <div id="fis_add_data"></div>  <div class="fis_warn_text">' + getLang("support_screen_warn") +
             '</div>  <div id="fis_dropbox" class="dropbox">    <div class="dropbox_wrap">      <div class="dropbox_area">' + getLang("drop_files_here") +
             "</div>    </div>  </div></div>  "), stManager.add("upload.js", FAQ.initUpload.pbind(e))
@@ -224,8 +202,9 @@ FAQ = {
             i = ge("fis_prg_preview" + (e ? "_edit" : ""));
         return t.childNodes.length + i.childNodes.length
     },
-    unchoose: function(e, t) {
-        re("fis_preview" + e), t ? delete cur.screensEdit[e] : delete cur.screens[e], toggle("fis_add_lnk" + (t ? "_edit" : ""), FAQ.attachCount(t) < 5)
+    unchoose: function(e, t, i) {
+        e && e.tt && tooltips && tooltips.destroy(e), re("fis_preview" + t), i ? delete cur.screensEdit[t] : delete cur.screens[t], toggle("fis_add_lnk" + (i ? "_edit" :
+            ""), FAQ.attachCount(i) < 5)
     },
     choose: function(e, t, i, o) {
         var a = "",
@@ -243,7 +222,7 @@ FAQ = {
         var s = ce("div", {
                 innerHTML: '<div id="fis_preview' + e + '" class="fis_preview_wrap">' + a + '<div class="fis_x fl_l" ' + (browser.msie ? "title" : "tooltip") + '="' +
                     getLang("dont_attach") +
-                    '" onmouseover="if (browser.msie) return; showTooltip(this, {text: this.getAttribute(\'tooltip\'), shift: [6, 3, 3]})" onclick="FAQ.unchoose(\'' +
+                    "\" onmouseover=\"if (browser.msie) return; showTooltip(this, {text: this.getAttribute('tooltip'), shift: [12, 5, 3], dir:'bottom', typeClass:'tt_black'})\" onclick=\"FAQ.unchoose(this, '" +
                     e + "'" + (t ? ", 1" : "") + ')"></div></div>'
             })
             .firstChild;
@@ -271,7 +250,7 @@ FAQ = {
             o = (e.fileName ? e.fileName : e, Upload.options[i].forEdit);
         if ("fileApi" == Upload.types[i]) {
             var a = e.fileName ? i + "_" + e.fileName : e;
-            re("upload" + a + "_progress_wrap"), FAQ.unchoose(a, o)
+            re("upload" + a + "_progress_wrap"), FAQ.unchoose(null, a, o)
         }
         curBox() && hide(curBox()
             .progress), topError("Upload failed", {
@@ -400,8 +379,7 @@ FAQ = {
         }, 350))
     },
     updateSearchCheckbox: function() {
-        FAQ.updateSearch(ge("faq_content_search__text")
-            .value.trim())
+        FAQ.updateSearch(trim(val("faq_content_search__text")))
     },
     updateSearch: function(e) {
         var t = nav.objLoc;
@@ -557,28 +535,20 @@ FAQ = {
             q: e,
             from: nav.objLoc.act
         };
-        nav.objLoc.gid && (t.gid = nav.objLoc.gid), nav.objLoc.app_id && (t.app_id = nav.objLoc.app_id), nav.objLoc.union_id && (t.union_id = nav.objLoc.union_id), cur.tlmd &&
-            cur.showAll && (delete cur.showAll, t.show_all = 1, cur.from_ads && (t.from = "ads")), ajax.post("tlmd", t, {
+        nav.objLoc.gid && (t.gid = nav.objLoc.gid), nav.objLoc.app_id && (t.app_id = nav.objLoc.app_id), nav.objLoc.union_id && (t.union_id = nav.objLoc.union_id), ajax.post(
+            "tlmd", t, {
                 cache: 1,
                 hideProgress: removeClass.pbind("tickets_search", "loading"),
-                onDone: function(t, i) {
-                    var o = ge("tickets_title")
+                onDone: function(e, t) {
+                    var i = ge("tickets_title")
                         .value,
-                        a = trim(o)
+                        o = trim(i)
                         .split(" "),
-                        r = a.length > 4 || 4 == a.length && " " == o[o.length - 1];
-                    if (t ? ge("tlmd_found_list")
-                        .innerHTML = se(t)
-                        .innerHTML : (i && (ge("tickets_faq_button")
-                            .innerHTML = i), r && (cur.toggled = !0, FAQ.toggleDetailedForm())), cur.tlmd) {
-                        if (e ? extend(nav.objLoc, {
-                                q: e
-                            }) : delete nav.objLoc.q, "faq" == nav.objLoc.act) {
-                            var s = e ? e : getLang("support_page_title");
-                            vk.id || (s += " | " + getLang("global_vkontakte")), document.title = s
-                        }
-                        nav.setLoc(nav.objLoc)
-                    }
+                        a = o.length > 4 || 4 == o.length && " " == i[i.length - 1];
+                    e ? ge("tlmd_found_list")
+                        .innerHTML = se(e)
+                        .innerHTML : (t && (ge("tickets_faq_button")
+                            .innerHTML = t), a && (cur.toggled = !0, FAQ.toggleDetailedForm()))
                 }
             })
     },
@@ -610,6 +580,14 @@ FAQ = {
         return uiTabs.switchTab(e, {
             noAnim: 1
         }), addClass(i, "ui_tab_sel"), removeClass(gpeByClass("ui_tab_group", e), "ui_tab_group_sel"), nav.go(e, t), !1
+    },
+    acUrl: function(e, t) {
+        return "faq?act=get_faq&section=" + e + (void 0 !== t ? "&ignore_id=" + t : "")
+    },
+    editorBlockToggle: function(e, t) {
+        var i = gpeByClass("_slide_block", e),
+            o = geByClass1("_slide_content", i);
+        slideToggle(o, 300, t), toggleClass(i, "faq_ed_block_unslided", t)
     },
     _eof: 1
 };

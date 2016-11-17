@@ -5539,6 +5539,9 @@ AdsTargetingEditor.prototype.init = function(options, editor, viewEditor, criter
             value: '',
             data: []
         },
+        geo_near: {
+            value: ''
+        }, // TODO
         tags: {
             value: ''
         }
@@ -6015,6 +6018,7 @@ AdsTargetingEditor.prototype.initUiCriterion = function(criterionName) {
             }.bind(this));
             break;
             // Inputs
+        case 'geo_near': // TODO: Proper control
         case 'tags':
             targetElem = ge(this.options.targetIdPrefix + criterionName);
             addEvent(targetElem, this.interestingEvents, function(event) {
@@ -6916,6 +6920,7 @@ AdsTargetingEditor.prototype.onUiEvent = function(criterionName, event) {
             this.hideGroupMore('interests');
             return false;
             break;
+        case 'geo_near': // TODO: Proper control
         case 'tags':
             var targetElem = ge(this.options.targetIdPrefix + criterionName);
             var criterionValueOriginal = targetElem.value;
