@@ -859,8 +859,7 @@ Tickets = {
     },
     chooseDocUploaded: function(e, t, a) {
         var i = void 0 !== e.ind ? e.ind : e,
-            o = ((e.fileName || e)
-                .replace(/[&<>"']/g, ""), e.fileName ? i + "_" + e.fileName : e),
+            o = e.fileName ? i + "_" + e.fileName : e,
             s = ge("upload" + o + "_progress_wrap");
         s && hide(geByClass1("progress_x", s)), ajax.post("docs.php", extend({
             act: "a_save_doc",
@@ -868,7 +867,9 @@ Tickets = {
             support_hash: cur.uploadDocData.support_hash
         }, t), {
             onDone: function(e, t, i) {
-                re("upload" + o + "_progress_wrap"), a.chooseMedia("doc", e + "_" + t, i)
+                re("upload" + o + "_progress_wrap");
+                var s = curBox();
+                s && (cur.preventBoxHide = !0), a.chooseMedia("doc", e + "_" + t, i), s && (cur.preventBoxHide = !1)
             },
             onFail: Tickets.chooseFail.pbind(a, e)
         })

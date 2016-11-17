@@ -1054,7 +1054,7 @@ var Video = {
                 }), cur.videoChoosePrevSection = _, Video.loadSilent(_)
             }
             return l(), !1
-        }), cur.isCurrentVideoLayer = !0, Video.loadSilent(), a();
+        }), cur.isCurrentVideoLayer = !0, Video.loadSilent(), a(), addEvent(ge("box_layer_wrap"), "scroll", Video.onScroll);
         var v = boxLayerWrap.scrollTop;
         elfocus(geByClass1("_scroll_node", u.bodyNode)), boxLayerWrap.scrollTop = v, Video.initSearch(), s(), o || (cur.chooseVideoMedia = function(e, o, i) {
             var t = e;
@@ -1458,22 +1458,21 @@ var Video = {
         }
     },
     _updateThumbsInView: function() {
-        var e = 400;
+        var e = 800;
         clearTimeout(this._updateThumbsInViewTO), this._updateThumbsInViewTO = setTimeout(function() {
             var o = null,
                 i = clientHeight(),
-                t = curBox() ? boxLayerWrap.scrollTop : scrollGetY();
+                t = scrollGetY();
             each(geByClass("_video_item_thumb"), function(r, d) {
                 if (domData(d, "thumb")) {
-                    var a = domData(d, "ypos");
-                    if (a ? a = intval(a) : (a = getXY(d, "im" == cur.module)[1], domData(d, "ypos", a)), o = o || getSize(d), a > t - o[1] - e && t + i +
-                        e > a) {
+                    var a = getXY(d, "im" == cur.module)[1];
+                    if (o = o || getSize(d), a > t - o[1] - e && t + i + e > a) {
                         var n = domData(d, "thumb");
                         domData(d, "thumb", null), setStyle(d, "background-image", "url('" + n + "')")
                     }
                 }
             })
-        })
+        }, 50)
     }
 };
 try {

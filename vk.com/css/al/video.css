@@ -682,7 +682,9 @@
 
 .video_choosebox_bottom.fixed {
     box-shadow: 0 -1px 3px 0 rgba(0, 0, 0, .06);
-    position: fixed!important
+    position: fixed!important;
+    -webkit-transform: translateZ(0px);
+    transform: translateZ(0px)
 }
 
 .video_thumb_actions {

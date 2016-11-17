@@ -1402,38 +1402,6 @@ body.dev a.tickets_rated {
     overflow: hidden
 }
 
-.tickets_preview_wrap .page_preview_doc_photo,
-.tickets_preview_wrap .page_preview_doc_photo img,
-.tr_att_img {
-    width: 100px;
-    display: block
-}
-
-.tickets_preview_wrap .page_pics_preview .page_preview_doc_wrap {
-    height: 57px
-}
-
-.page_preview_doc_wrap {
-    position: relative
-}
-
-.tickets_preview_wrap .page_preview_doc_photo_hint,
-.tr_doc_photo_hint {
-    box-sizing: border-box;
-    padding: 1px 3px;
-    width: 100px;
-    text-align: center;
-    color: #fff;
-    background: #000;
-    font-size: 12.5px;
-    margin-bottom: 5px;
-    background: rgba(0, 0, 0, .5);
-    position: absolute;
-    margin-top: -16px;
-    height: 16px;
-    line-height: 14px
-}
-
 .tr_video_hint {
     width: 75px;
     position: absolute;

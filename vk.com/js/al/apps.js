@@ -116,8 +116,11 @@ function appCallback(t) {
                     }, this)
                 },
                 onMessage: function(t) {
-                    var e = window.options && window.options.src ? window.options.src.substring(0, window.options.src.length - 1) : "";
-                    if (t.origin != document.origin && t.origin != e) return !1;
+                    if (t.origin != document.origin) {
+                        var e = cur.app && cur.app.options && cur.app.options.src ? cur.app.options.src : "";
+                        if (!e) return debugLog("Wrong app url"), !1;
+                        if (t.origin != e && t.origin + "/" != e.substring(0, t.origin.length + 1)) return debugLog("Skip message from " + t.origin), !1
+                    }
                     var i = t.data;
                     if (!i) return !1;
                     if ("string" != typeof i && !(i instanceof String)) return !1;
@@ -2302,10 +2305,10 @@ AppsSlider.prototype = {
         }, {
             cache: t ? 0 : 1,
             onDone: this.withFastBackCheck(function(e, i, s) {
-                t == this.searchValFix(cur.searchStr) && (this.isSection("catalog", "list") && (cur.searchStr && this.sliderStop(), this.switchLayout(
-                        cur.searchStr ? "list" : cur.section), this.searchWriteToAddressBar()), this.backupListContent(!0), e && val(cur.lContent,
-                        e),
-                    val(cur.lPreload, i || ""), cur.loadMore = !!i, extend(cur, s), cur.loadMore && show(cur.lShowMoreButton), this.scrollCheck())
+                t == this.searchValFix(cur.searchStr) && (this.isSection("catalog", "list") && (cur.searchStr && this.sliderStop(),
+                        this.switchLayout(cur.searchStr ? "list" : cur.section), this.searchWriteToAddressBar()), this.backupListContent(!0), e &&
+                    val(cur.lContent, e), val(cur.lPreload, i || ""), cur.loadMore = !!i, extend(cur, s), cur.loadMore && show(cur.lShowMoreButton),
+                    this.scrollCheck())
             }.bind(this)),
             showProgress: function() {
                 cur.isAppsLoading = !0, lockButton(cur.lShowMoreButton)

@@ -175,7 +175,7 @@ var AudioUtils = {
                 .notify(AudioPlayer.EVENT_REMOVED, r.fullId, d.addedFullId));
             else {
                 var h = gpeByClass("_post", t);
-                h && (A.post_id = domData(h, "post-id")), A.row = o ? o.innerHTML : "", ajax.post("al_audio.php", A, {
+                h && (A.post_id = domData(h, "post-id")), A.data = o ? domData(o, "audio") : "", ajax.post("al_audio.php", A, {
                         onDone: function(t) {
                             if (t) {
                                 var i = t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID] + "_" + t[AudioUtils.AUDIO_ITEM_INDEX_ID];
