@@ -36,7 +36,6 @@
 .left_hide_button,
 .left_menu_more:after,
 .left_settings_inner,
-.link_arrowed_bottom,
 .media-check-btn-icon,
 .media-photo-thumb-background,
 .media-video-play,
@@ -1278,7 +1277,7 @@ button.flat_btn_lock {
 }
 
 .link_arrowed_bottom {
-    background: url(/images/icons/profile_arrow.png) no-repeat;
+    background: url(/images/svg_icons/contour_arrow.svg) no-repeat;
     background-position: right 55%;
     padding-right: 13px
 }

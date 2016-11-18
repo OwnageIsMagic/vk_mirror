@@ -2,8 +2,6 @@
     display: none
 }
 
-#page_actions_item_lists,
-.checkbox_official:after,
 .checkbox_pic,
 .choose_more_btn.choose_loading,
 .current_app,
@@ -24,9 +22,6 @@
 .page_actions_btn.narrow.stats,
 .page_actions_cont.narrow .page_actions_header,
 .page_actions_cont.narrow .page_extra_actions_btn,
-.page_actions_dd_label,
-.page_actions_header_inner,
-.page_actions_item_unfolded,
 .page_actions_subitem.checked,
 .page_avatar.no_avatar,
 .page_cover_action:before,
@@ -3744,13 +3739,13 @@ div.submit_post_field[contenteditable=true]>p {
 .checkbox_official:after {
     content: " ";
     display: block;
-    width: 9px;
-    height: 6px;
+    width: 8px;
+    height: 4px;
     position: absolute;
-    left: 29px;
-    top: 10px;
+    left: 30px;
+    top: 11px;
     opacity: 0.7;
-    background-image: url(/images/icons/profile_arrow.png)
+    background-image: url(/images/svg_icons/contour_arrow.svg)
 }
 
 .checkbox_official:hover:after {
@@ -5671,8 +5666,7 @@ div.medadd_c_nofixed {
 }
 
 .medadd_c_link {
-    padding-bottom: 10px;
-    overflow: hidden
+    padding-bottom: 10px
 }
 
 .medadd_c_linkcon {
@@ -6072,11 +6066,27 @@ div.medadd_c_linkprg {
     padding-top: 8px;
     margin-left: 6px;
     display: inline-block;
-    vertical-align: middle
+    vertical-align: middle;
+    position: relative
+}
+
+.medadd_c_linkbtn .flat_button {
+    position: relative;
+    z-index: 2
+}
+
+.medadd_c_linkbtn .flat_button.active {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0
+}
+
+.medadd_c_linkbtn .page_actions_dd_label {
+    background-image: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%228%22%20height%3D%224%22%20viewBox%3D%22944%201152%208%204%22%3E%3Cpath%20d%3D%22M945.2%201152.2C944.9%201152%20944.5%201152%20944.3%201152.3%20944.1%201152.6%20944.1%201153%20944.4%201153.2L947.6%201155.8C947.8%201156%20948.2%201156%20948.4%201155.8L951.6%201153.2C951.9%201153%20951.9%201152.6%20951.7%201152.3%20951.5%201152%20951.1%201152%20950.8%201152.2L948%201154.5%20945.2%201152.2Z%22%20fill%3D%22%23ffffff%22%2F%3E%3C%2Fsvg%3E")
 }
 
 .medadd_c_linkbtn .wall_postlink_preview_btn_label {
-    text-align: left
+    text-align: left;
+    color: #fff
 }
 
 .medadd_c_linkbtn .wall_postlink_preview_btn_label .idd_selected_value {
@@ -6087,6 +6097,20 @@ div.medadd_c_linkprg {
     display: inline-block;
     vertical-align: middle;
     margin-right: 4px
+}
+
+.medadd_c_linkbtn_actions_wrap.page_actions_wrap {
+    min-width: 100%;
+    width: auto;
+    top: 100%;
+    right: 0;
+    margin-top: -1px;
+    z-index: 1;
+    border-top-right-radius: 0
+}
+
+.medadd_c_linkbtn_actions_wrap.page_actions_wrap .page_actions_inner {
+    border-top: 0
 }
 
 .medadd_c_linkaddr {
@@ -6514,8 +6538,8 @@ button.wall_block_app_btn {
 .page_actions_header_inner {
     color: #55677d;
     padding-right: 13px;
-    background: url(/images/icons/profile_arrow.png) no-repeat;
-    background-position: right 6px
+    background: url(/images/svg_icons/contour_arrow.svg) no-repeat;
+    background-position: right 7px
 }
 
 .page_actions_inner {
@@ -6579,10 +6603,10 @@ button.wall_block_app_btn {
 
 #page_actions_item_lists,
 .page_actions_item_unfolded {
-    background-image: url(/images/icons/profile_arrow.png);
+    background-image: url(/images/svg_icons/contour_arrow.svg);
     background-repeat: no-repeat;
-    border-right: 13px solid transparent;
-    background-position: right 11px
+    background-position: right 13px;
+    border-right: 13px solid transparent
 }
 
 .page_actions_item .progress {
