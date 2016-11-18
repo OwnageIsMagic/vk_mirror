@@ -3227,7 +3227,7 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
     font-weight: 700;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    margin: 0 0 14px;
+    padding: 0 0 4px;
     font-size: 13px;
     line-height: 16px
 }
@@ -3237,7 +3237,13 @@ ul.t0#tickets_tabs #extra_tab .tab_word {
 }
 
 .help_tile_alert__text {
+    padding: 7px 0 0;
     line-height: 16px
+}
+
+.help_tile_alert__date {
+    color: #939393;
+    font-size: 12px
 }
 
 .help_tile_alert__acts {

@@ -383,7 +383,8 @@ var AudioUtils = {
         if ("string" == typeof t) return {
             id: t
         };
-        var i = t[AudioUtils.AUDIO_ITEM_INDEX_HASHES].split("/");
+        var i = (t[AudioUtils.AUDIO_ITEM_INDEX_HASHES] || "")
+            .split("/");
         return {
             id: intval(t[AudioUtils.AUDIO_ITEM_INDEX_ID]),
             owner_id: intval(t[AudioUtils.AUDIO_ITEM_INDEX_OWNER_ID]),
@@ -398,9 +399,9 @@ var AudioUtils = {
             context: t[AudioUtils.AUDIO_ITEM_INDEX_CONTEXT],
             extra: t[AudioUtils.AUDIO_ITEM_INDEX_EXTRA],
             isTop: t[AudioUtils.AUDIO_ITEM_INDEX_FLAGS] & AudioUtils.AUDIO_ITEM_TOP_BIT,
-            addHash: i[0],
-            editHash: i[1],
-            actionHash: i[2]
+            addHash: i[0] || "",
+            editHash: i[1] || "",
+            actionHash: i[2] || ""
         }
     },
     initDomPlaylist: function(t, i) {
