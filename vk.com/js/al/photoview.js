@@ -1273,8 +1273,8 @@ var Photoview = {
             })), {
                 onDone: function(t, s) {
                     ++i.commcount, Photoview.receiveComms(r, a, t, s, !0), c || (v ? Composer.reset(v) : Emoji.val(p, "")), p.autosize && p.autosize.update(),
-                        browser.mobile ? Wall.hideEditReply(o) : (Emoji.editableFocus(p, !1, !0), Wall.cancelReplyTo(o, e)), re("reply_link" + o), cur.pvNarrowScrollbar &&
-                        cur.pvNarrowScrollbar.scrollBottom(), Photoview.updateRightBlock()
+                        browser.mobile ? Wall.hideEditReply(o) : (Emoji.editableFocus(p, !1, !0), Wall.cancelReplyTo(o, e)), re("reply_link" + o), Wall.hideEditPostReply(
+                            null, !0), cur.pvNarrowScrollbar && cur.pvNarrowScrollbar.scrollBottom(), Photoview.updateRightBlock()
                 },
                 showProgress: function() {
                     lockButton(n)

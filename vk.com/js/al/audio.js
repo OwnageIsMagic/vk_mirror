@@ -77,7 +77,7 @@ AudioPage.address = "audio", AudioPage.updateSearchHighlight = function(e) {
     }), addEvent(window.document, "keydown", this._audioSeekKeyEventHandler = function(i) {
         var t = getAudioPlayer();
         i.target && (inArray(i.target.tagName.toLowerCase(), ["input", "textarea"]) && "" != val(i.target) || hasClass(i.target, "fc_editable")) || t.isPlaying() &&
-            inArray(i.keyCode, [KEY.RIGHT, KEY.LEFT]) && (e() || t.seekCurrentAudio(i.keyCode == KEY.RIGHT))
+            inArray(i.keyCode, [KEY.RIGHT, KEY.LEFT]) && !i.ctrlKey && (e() || t.seekCurrentAudio(i.keyCode == KEY.RIGHT))
     }), cur.destroy.push(function() {
         i._deinitKeyEvents()
     })
