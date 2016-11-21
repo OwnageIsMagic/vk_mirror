@@ -1773,3 +1773,8 @@ a.group_ad_post_link.deleted.deleted:hover {
 .group_edit_community_widget_tt {
     width: 315px
 }
+
+#group_box_error_wrap {
+    display: none;
+    margin: 0 0 20px
+}

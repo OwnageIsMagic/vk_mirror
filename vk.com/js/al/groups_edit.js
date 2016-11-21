@@ -324,8 +324,9 @@ var GroupsEdit = {
                 n > 3 ? 6 > n && (f = '<a onclick="GroupsEdit.uMainAdmin()">' + getLang("Edit") + "</a>") : n > 0 ? f = '<a onclick="GroupsEdit.uEditAdmin(' + r + ')">' +
                     getLang("Edit") + "</a>" : !n && cur.opts.admin && (f = '<a onclick="GroupsEdit.uEditAdmin(' + r + ')">' + getLang("groups_members_appoint_manager") +
                         "</a>"), f && (c += '<div class="group_u_info_row">' + f + "</div>"), 0 > n ? d += '<a class="group_u_action" onclick="GroupsEdit.uAction(this, ' +
-                    r + ", '" + u + "', 0)\">" + getLang("groups_restore_member") + "</a>" : 0 >= n && (d += '<a class="group_u_action" onclick="GroupsEdit.uAction(this, ' +
-                        r + ", '" + u + "', -1)\">" + getLang("groups_members_delete") + "</a>");
+                    r + ", '" + u + "', 0)\">" + getLang("groups_restore_member") + "</a>" : 0 >= n ? d += '<a class="group_u_action" onclick="GroupsEdit.uAction(this, ' +
+                    r + ", '" + u + "', -1)\">" + getLang("groups_members_delete") + "</a>" : 5 > n && (d += '<a class="group_u_action" onclick="GroupsEdit.uRemoveAdmin(' +
+                        r + ')">' + getLang("groups_remove_manager") + "</a>");
                 break;
             case "declined":
                 d += 0 > n ? '<a class="group_u_action" onclick="GroupsEdit.uAction(this, ' + r + ", '" + u + "', 0)\">" + getLang("groups_restore_member") + "</a>" :
@@ -407,6 +408,59 @@ var GroupsEdit = {
                     }
                     n && GroupsEdit.uAction(!1, n[0], n[1], n[2])
                 }
+            },
+            showProgress: lockButton.pbind(o),
+            hideProgress: unlockButton.pbind(o)
+        })
+    },
+    uChangeMainAdmin: function(e, t) {
+        showFastBox({
+            title: getLang("groups_admin_warning_title")
+        }, cur.sureChangeAdmin, getLang("groups_change_admin"), function(o) {
+            ajax.post("/groupsedit.php", {
+                act: "change_main_admin",
+                id: cur.opts.id,
+                mid: e,
+                hash: t
+            }, {
+                onDone: function(t) {
+                    boxQueue.hideAll(!0), showDoneBox(t);
+                    var o = "search" == nav.objLoc.act && nav.objLoc.from && cur.gid;
+                    if (o) nav.reload();
+                    else {
+                        var r, s = cur.tab,
+                            a = "requests" == s || "declined" == s || "invites" == s ? [s] : ["members", "unsure", "admins"];
+                        a.length;
+                        for (r = 0; 3 > r; ++r) {
+                            var i, n, u, c = a[r],
+                                d = cur.opts.data[c];
+                            if (isArray(d))
+                                for (i = 0, n = d.length; n > i; ++i)(d[i][0] == e || d[i][0] == vk.id) && (cur.opts.data[c][i][6] = d[i][0] == e ? 6 :
+                                    3, (u = ge("group_u_" + c + d[i][0])) && domPN(u)
+                                    .replaceChild(se(GroupsEdit.uGenRow(c, cur.opts.data[c][i])), u))
+                        }
+                    }
+                },
+                onFail: function(e) {
+                    return e && (boxQueue.hideAll(!0), GroupsEdit.showMessage(e, !0)), !0
+                },
+                showProgress: lockButton.pbind(o),
+                hideProgress: unlockButton.pbind(o)
+            })
+        }, getLang("global_back"))
+    },
+    uCancelMainAdminChange: function(e, t, o) {
+        ajax.post("/groupsedit.php", {
+            act: "cancel_change_admin",
+            id: e,
+            hash: t
+        }, {
+            onDone: function(e) {
+                curBox()
+                    .hide(), showDoneBox(e), TopNotifier.invalidate()
+            },
+            onFail: function(e) {
+                return val("group_box_error", e), show("group_box_error_wrap"), !0
             },
             showProgress: lockButton.pbind(o),
             hideProgress: unlockButton.pbind(o)
@@ -1050,7 +1104,7 @@ var GroupsEdit = {
                 }), boxQueue.hideAll()), 0 === t) return GroupsEdit.editBlacklist(o);
         if (t) {
             if (!o && ge("group_blb_error")) return val("group_blb_error", t), void show("group_blb_error_wrap");
-            GroupsEdit.showMessage(t);
+            GroupsEdit.showMessage(t)
         }
         if ("search" == nav.objLoc.act && "ban" == nav.objLoc.from && o) return nav.go(nav.objLoc[0] + "?act=blacklist", !1, {
             noback: !0
@@ -2246,7 +2300,7 @@ var GroupsEdit = {
         }
     },
     messageWidgetSettings: function(e) {
-        hasClass(e, "on") ? slideDown("community_widget_settings", 300) : slideUp("community_widget_settings", 300)
+        hasClass(e, "on") ? slideDown("community_widget_settings", 300) : slideUp("community_widget_settings", 300);
     }
 };
 try {
