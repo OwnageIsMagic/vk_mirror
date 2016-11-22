@@ -4125,7 +4125,7 @@ div.chat_tab_img {
     position: absolute;
     bottom: -4px;
     left: 0px;
-    background: url(/images/emoji_sprite.png?11) 0 -29px
+    background: url(/images/emoji_sprite.png?12) 0 -29px
 }
 
 .emoji_cats_title_helper:empty:after {
@@ -4211,7 +4211,7 @@ div.chat_tab_img {
 
 .ui_scroll_default_theme.ui_scroll_emoji_theme>.ui_scroll_overflow>.ui_scroll_shadow_bottom,
 .ui_scroll_default_theme.ui_scroll_emoji_theme>.ui_scroll_overflow>.ui_scroll_shadow_top {
-    background: url(/images/emoji_sprite.png?11) 0 -29px;
+    background: url(/images/emoji_sprite.png?12) 0 -29px;
     box-shadow: none;
     height: 10px
 }
@@ -4221,7 +4221,7 @@ div.chat_tab_img {
 }
 
 .emoji_sprite {
-    background-image: url(/images/emoji_sprite.png?11);
+    background-image: url(/images/emoji_sprite.png?12);
     background-repeat: no-repeat
 }
 

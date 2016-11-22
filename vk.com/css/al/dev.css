@@ -3006,3 +3006,9 @@ input.dev_wrong_val {
 .dev_main_page #stl_left {
     display: none!important
 }
+
+.dev_admins_info,
+.dev_admins_info tr {
+    background-color: #fdf1d4!important;
+    border-color: #ffbd38!important
+}

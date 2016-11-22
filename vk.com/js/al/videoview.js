@@ -649,10 +649,10 @@ var Videoview = {
                     cur.mvHistoryBack = cur.mvHistoryBack || 1, cur.mvHistoryBack++), a || layerQueue.hide(), window.forcePauseAudio = !1, this.init(), mvcur.showTime = (new Date)
                 .getTime(), removeEvent(window, "resize", Videoview.onResize), removeEvent(window, "focus blur", Videoview.onPageFocusChange), removeEvent(document,
                     "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
-                removeEvent(mvLayerWrap, "click", Videoview.onClick), addEvent(window, "resize", Videoview.onResize), addEvent(window, "focus blur", Videoview.onPageFocusChange),
-                addEvent(document, "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown),
-                addEvent(mvLayerWrap, "click", Videoview.onClick), boxQueue.hideAll(), layers.wrapshow(mvLayerWrap, .8), layers.fullhide = Videoview.hide, mvcur.nextTimerUpdateInterval =
-                setInterval(Videoview.playerNextTimerUpdate, 1e3), setTimeout(function() {
+                addEvent(window, "resize", Videoview.onResize), addEvent(window, "focus blur", Videoview.onPageFocusChange), addEvent(document,
+                    "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), addEvent(document, "keydown", Videoview.onKeyDown), boxQueue.hideAll(),
+                layers.wrapshow(mvLayerWrap, .8), layers.fullhide = Videoview.hide, mvcur.nextTimerUpdateInterval = setInterval(Videoview.playerNextTimerUpdate, 1e3),
+                setTimeout(function() {
                     layers.wrapshow(mvLayerWrap, .8), layers.fullhide = Videoview.hide
                 }, 0), mvcur.noLocChange = 0, t.ad_video && (t.hideInfo = 1, t.noLocChange = 1, mvcur.noLocChange = 1, mvcur.videoAds = 1), mvcur.noHistory = t.noLocChange ||
                 t.noHistory, mvcur.blackInterval = setInterval(Videoview.moveCheck, 18e4), mvcur.videoRaw = i, mvcur.options = t, mvcur.listId = o, mvcur.mvData = !1, mvcur.mvShown = !
@@ -676,7 +676,7 @@ var Videoview = {
         buildLayerContent: function() {
             var e = "mv_dark";
             addClass(window.mvLayerWrap, e), addClass(window.layerBG, e), val(mvLayer,
-                '<div id="mv_container" class="scroll_fix_wrap">  <div id="mv_box">    <div id="mv_approve" style="display: none;"></div>    <div id="mv_publish" style="display: none;"></div>    <div class="mv_min_header">      <div class="mv_min_control" onmousedown="return Videoview.hide(false, true);" role="button" tabindex="0" aria-label="' +
+                '<div class="mv_layer_bg" onclick="Videoview.hide();"></div><div id="mv_container" class="scroll_fix_wrap">  <div id="mv_box">    <div id="mv_approve" style="display: none;"></div>    <div id="mv_publish" style="display: none;"></div>    <div class="mv_min_header">      <div class="mv_min_control" onmousedown="return Videoview.hide(false, true);" role="button" tabindex="0" aria-label="' +
                 getLang("global_close") +
                 '">        <div class="mv_min_control_close"></div>      </div>      <div class="mv_min_control" onclick="return Videoview.unminimize();">        <div class="mv_min_control_max"></div>      </div>      <div class="mv_min_title" id="mv_min_title"></div>    </div>    <div id="mv_main" class="mv_main">      <div class="mv_pl_prev_wrap">        <div class="mv_playlist_controls" id="mv_pl_prev" onclick="return VideoPlaylist.prevVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div class="mv_pl_next_wrap">        <div class="mv_playlist_controls" id="mv_pl_next" onclick="return VideoPlaylist.nextVideo()">          <div class="mv_playlist_controls_icon"></div>        </div>      </div>      <div id="mv_progress_box">' +
                 getProgressHtml() +
@@ -759,8 +759,7 @@ var Videoview = {
                 var u = "mv_dark";
                 removeClass(mvLayerWrap, u), removeClass(layerBG, u), mvcur.mvShown = !1, removeEvent(window, "resize", Videoview.onResize), removeEvent(document,
                         "webkitfullscreenchange mozfullscreenchange fullscreenchange", Videoview.onFullscreenChange), removeEvent(document, "keydown", Videoview.onKeyDown),
-                    removeEvent(mvLayerWrap, "click", Videoview.onClick), clearInterval(mvcur.nextTimerUpdateInterval), Videoview.removeExternalVideoFinishBlock(), Videoview.destroyPlayer(),
-                    val("mv_player_box", "");
+                    clearInterval(mvcur.nextTimerUpdateInterval), Videoview.removeExternalVideoFinishBlock(), Videoview.destroyPlayer(), val("mv_player_box", "");
                 VideoPlaylist.getBlock();
                 return s && isVisible(layerWrap) || (debugLog("pop from videoview.hide"), setTimeout(layerQueue.pop, 0)), mvcur.blackInterval && clearInterval(mvcur.blackInterval),
                     t && nav.objLoc.z ? (layerQueue.skipVideo = !0, delete nav.objLoc.z, nav.setLoc(nav.objLoc)) : mvcur.noLocChange || e === !0 || (2 === e ? nav.setLoc(hab.getLoc()) :
@@ -778,22 +777,11 @@ var Videoview = {
                 t = i.length;
             return t > o ? -1 : o > t ? 1 : i > e ? -1 : e > i ? 1 : 0
         },
-        onClick: function(e) {
-            (e.target == mvLayer || e.target == mvLayerWrap) && Videoview.hide()
-        },
         onKeyDown: function(e) {
             return e.returnValue === !1 ? !1 : e.keyCode == KEY.ESC ? (mvcur.mvEditing ? Videoview.cancelInline() : Videoview.hide(), cancelEvent(e)) : void 0
         },
         onResize: function() {
-            var e = lastWindowWidth,
-                i = lastWindowHeight,
-                o = sbWidth(),
-                t = e - o - 2 - 120 - 34 - 50,
-                a = i - 31 - 28 - 72;
-            t > 1280 ? t = 1280 : t > 807 && 907 > t ? t = 807 : 604 > t && (t = 604), 453 > a && (a = 453), mvcur.mvWidth = t, mvcur.mvHeight = a;
-            var n = !1,
-                d = mvcur.mvVeryBig;
-            mvcur.mvVeryBig = t > 1280 ? 2 : t > 807 ? 1 : !1, n = d != mvcur.mvVeryBig, Videoview.updateExternalVideoFinishBlock(), Videoview.updateReplyFormPos()
+            Videoview.updateExternalVideoFinishBlock(), Videoview.updateReplyFormPos()
         },
         onPageFocusChange: function() {
             setTimeout(Videoview.playerNextTimerUpdate, 10)
@@ -1776,8 +1764,8 @@ var Videoview = {
             else var i = 0,
                 o = 0;
             return mvcur.minSize.wrap.t + i > mvcur.minSize.ch - mvcur.minSize.wrap.h - 15 && (i = mvcur.minSize.ch - mvcur.minSize.wrap.h - mvcur.minSize.wrap.t), mvcur.minSize
-                .wrap.l + o > mvcur.minSize.cw - mvcur.minSize.wrap.w - 25 && (o = mvcur.minSize.cw - mvcur.minSize.wrap.w - mvcur.minSize.wrap.l - 14), mvcur.minSize.wrap.t +
-                i < 15 && (i = -mvcur.minSize.wrap.t), mvcur.minSize.wrap.l + o < 15 && (o = -mvcur.minSize.wrap.l), setStyle(mvLayerWrap, {
+                .wrap.l + o > mvcur.minSize.cw - mvcur.minSize.wrap.w - 15 && (o = mvcur.minSize.cw - mvcur.minSize.wrap.w - mvcur.minSize.wrap.l), mvcur.minSize.wrap.t + i <
+                15 && (i = -mvcur.minSize.wrap.t), mvcur.minSize.wrap.l + o < 15 && (o = -mvcur.minSize.wrap.l), setStyle(mvLayerWrap, {
                     top: mvcur.minSize.wrap.t + i + "px",
                     left: mvcur.minSize.wrap.l + o + "px"
                 }), mvcur.resizeDiff = Math.max(Math.abs(o), Math.max(Math.abs(i), mvcur.resizeDiff)), e ? cancelEvent(e) : !1
@@ -1791,22 +1779,20 @@ var Videoview = {
             4 & t && mvcur.minSize.wrap.t + a > mvcur.minSize.ch - mvcur.minSize.wrap.h && (a = mvcur.minSize.ch - mvcur.minSize.wrap.h - mvcur.minSize.wrap.t), 1 & t && mvcur
                 .minSize.wrap.t + a < 0 && (a = -mvcur.minSize.wrap.t), 2 & t && mvcur.minSize.wrap.l + n > mvcur.minSize.cw - mvcur.minSize.wrap.w - 14 && (n = mvcur.minSize.cw -
                     mvcur.minSize.wrap.w - mvcur.minSize.wrap.l - 14), 8 & t && mvcur.minSize.wrap.l + n < 0 && (n = -mvcur.minSize.wrap.l), 8 & t && (i = n, n = -n), 1 & t &&
-                (o = a, a = -a), mvcur.minSize.wrap.w + n < 304 && (n = 304 - mvcur.minSize.wrap.w, 8 & t && (i = -n)), mvcur.minSize.wrap.h + a < 200 && (a = 200 - mvcur.minSize
-                    .wrap.h, 1 & t && (o = -a));
+                (o = a, a = -a), mvcur.minSize.wrap.w + n < 307 && (n = 307 - mvcur.minSize.wrap.w, 8 & t && (i = -n)), mvcur.minSize.wrap.h + a < 200 && (a = 200 - mvcur.minSize
+                    .wrap.h, 1 & t && (o = -a)), setStyle(mvLayerWrap, {
+                    left: positive(mvcur.minSize.wrap.l + i) + "px",
+                    top: positive(mvcur.minSize.wrap.t + o) + "px",
+                    width: mvcur.minSize.wrap.w + n + "px",
+                    height: mvcur.minSize.wrap.h + a + "px"
+                }), setStyle(mvcur.mvPlayer, {
+                    width: mvcur.minSize.player.w + n + "px",
+                    height: mvcur.minSize.player.h + a + "px"
+                });
             var d = Math.abs(n) + Math.abs(a),
-                r = mvcur.minSize.wrap.w + n;
-            setStyle(mvLayerWrap, {
-                top: mvcur.minSize.wrap.t + o + "px",
-                left: positive(mvcur.minSize.wrap.l + i) + "px",
-                width: r + "px",
-                height: mvcur.minSize.wrap.h + a + "px"
-            });
-            var s = {
-                height: mvcur.minSize.player.h + a + "px",
-                width: mvcur.minSize.player.w + n + "px"
-            };
-            return setStyle(mvcur.mvPlayer, s), mvcur.resizeDiff = Math.max(d, mvcur.resizeDiff), mvcur.contSize = !1, Videoview.setTitle(r), Videoview.playerOnResize(),
-                Videoview.updateExternalVideoFinishBlock(), !1
+                r = mvcur.minSize.player.w + n;
+            return mvcur.resizeDiff = Math.max(d, mvcur.resizeDiff), mvcur.contSize = !1, Videoview.setTitle(r), Videoview.playerOnResize(), Videoview.updateExternalVideoFinishBlock(), !
+                1
         },
         minimize: function(e) {
             if (e && cancelEvent(e), mvcur.minimized) return !1;
@@ -1816,14 +1802,14 @@ var Videoview = {
             var i = "mv_dark";
             removeClass(mvLayerWrap, i), removeClass(layerBG, i), layers.fullhide = !1, mvcur.minSize && Videoview.enabledResize() && mvcur.minSize.wrap.w || (mvcur.minSize = {
                 wrap: {
-                    w: 304,
+                    w: 307,
                     h: 200
                 }
             });
             var o = mvcur.minSize.wrap;
             mvcur.minSize.player = {
                     w: o.w - 12,
-                    h: o.h - 36
+                    h: o.h - 34
                 }, Videoview.setStyle("mvContainer", "mv_container", {
                     left: "0px",
                     top: "0px"
@@ -2567,6 +2553,7 @@ var Videoview = {
     };
 window.VideoChat = {
     SCROLL_EDGE_BELOW_THRESHOLD: 20,
+    MAX_COMMENTS_NUM: 150,
     init: function(e, i) {
         VideoChat.block && VideoChat.destroy(), e && (VideoChat.block = e, VideoChat.options = extend({}, i), VideoChat.messagesWrap = domByClass(e,
                 "mv_chat_messages_wrap"), VideoChat.scroll = new uiScroll(domFC(VideoChat.messagesWrap), {
@@ -2574,7 +2561,6 @@ window.VideoChat = {
                 reversed: !0,
                 preserveEdgeBelow: !0,
                 preserveEdgeBelowThreshold: VideoChat.SCROLL_EDGE_BELOW_THRESHOLD,
-                stopScrollPropagation: !1,
                 theme: "videoview",
                 onupdate: VideoChat.onScrollUpdate
             }), this.scrollBottomBtnWrap = domByClass(e, "mv_chat_new_messages_btn_wrap"), VideoChat.replyForm = domByClass(e, "mv_chat_reply_form"), VideoChat.replyForm &&
@@ -2652,7 +2638,7 @@ window.VideoChat = {
         }));
         var l = psr(getTemplate("video_chat_message", {
             author_href: n,
-            author_photo: a,
+            author_photo: psr(a),
             author_name: t,
             message: d,
             video_owner_id: e,
@@ -2681,7 +2667,7 @@ window.VideoChat = {
             i.appendChild(e)
         });
         var o = i.childNodes;
-        o.length > 300 && VideoChat.scroll.updateAbove(function() {
+        o.length > VideoChat.MAX_COMMENTS_NUM && VideoChat.scroll.updateAbove(function() {
             re(o[0])
         }), !VideoChat.isHidden() && VideoChat.scroll.data.scrollBottom > 100 && VideoChat.toggleScrollBottomBtn(!0)
     },

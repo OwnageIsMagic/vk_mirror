@@ -921,6 +921,10 @@
     margin-top: 17px
 }
 
+.pv_comments .wall_module .reply .dld {
+    line-height: 20px
+}
+
 .pv_comments_summary {
     display: none;
     margin: 0;

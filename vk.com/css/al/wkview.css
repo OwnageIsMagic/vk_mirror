@@ -1150,3 +1150,9 @@ span#wk_posts_reach_tooltip_link {
     -webkit-filter: none;
     filter: none
 }
+
+.wk_wiki_body>iframe {
+    width: 100%;
+    height: 395px;
+    border: none
+}
