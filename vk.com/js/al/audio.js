@@ -1202,6 +1202,8 @@ AudioPage.address = "audio", AudioPage.updateSearchHighlight = function(e) {
             o._trackSlider.setBackValue(i)
         }), this.ap.on(this, AudioPlayer.EVENT_VOLUME, function(e, i) {
             o._volumeSlider.setValue(i)
+        }), this.ap.on(this, AudioPlayer.EVENT_ENDED, function() {
+            o._trackSlider.toggleLoading(!1)
         }), this.ap.on(this, AudioPlayer.EVENT_UPDATE, function(e, a) {
             e && i(e), this.ap.isAdPlaying() || e && a && (_.innerHTML = t(a, AudioUtils.asObject(e)
                 .duration))

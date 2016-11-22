@@ -101,7 +101,7 @@ var Videocat = window.Videocat || {
                 removeEvent(window, "scroll", cur._videocat_onScroll), addEvent(window, "scroll", cur._videocat_onScroll = Videocat._onScroll), cur.destroy.push(n), cur._back
                 .hide.push(n);
             var c = ge("videocat_inline_autoplay_id");
-            if (c) {
+            if (c && c.dataset) {
                 var r = c.dataset.video_id;
                 r && showInlineVideo(r, "", {
                     autoplay: 1,
