@@ -140,19 +140,17 @@ FAQ = {
                 notify_translators: isChecked("faq_ed_notify_translators") ? 1 : 0,
                 is_wiki: isChecked("faq_is_wiki") ? 1 : 0
             };
-        if (cur.sectionSelector) {
-            if (d.section = intval(cur.sectionSelector.val()), 0 == d.section || 39 == d.section) {
-                var c = cur.desktopCategorySelector.val();
-                d.categories = c, d.spec_section = cur.specSectionSelector.val()
-            } else if (31 == d.section) {
-                var u = cur.platformSelector.val();
-                if (!u) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
-                d.platforms = u;
-                var c = cur.categorySelector.val();
-                if (!c) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
-                d.categories = c
-            }
-        } else ge("default_section") && (d.section = val("default_section"));
+        if (d.section = intval(cur.sectionSelector.val()), 0 == d.section || 39 == d.section) {
+            var c = cur.desktopCategorySelector.val();
+            d.categories = c, d.spec_section = cur.specSectionSelector.val()
+        } else if (31 == d.section) {
+            var u = cur.platformSelector.val();
+            if (!u) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
+            d.platforms = u;
+            var c = cur.categorySelector.val();
+            if (!c) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
+            d.categories = c
+        }
         if (1 == d.section && (d.categories = cur.adsCategorySelector.val()), cur.actionButtonSelector && (d.action_id = intval(cur.actionButtonSelector.val()), 0 != d.action_id &&
                 (d.action_label = ge("faq_action_btn_label")
                     .value.trim()), 7 == d.action_id)) {
@@ -161,16 +159,16 @@ FAQ = {
                 .value.trim(), !d.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
         }
         if (ge("faq_optional_extra_field_add") && (!cur.sectionSelector || 0 == cur.sectionSelector.val() || 39 == cur.sectionSelector.val())) {
-            for (var f = {}, p = ge("faq_optional_extra_fields_list")
-                    .children, l = 0; l < p.length; l++) {
-                var g = p[l];
-                f["ef_" + l + "_type"] = data(g, "typeSelector")
-                    .val(), f["ef_" + l + "_title"] = geByClass1("faq_optional_extra_field__title", g)
-                    .value, f["ef_" + l + "_note"] = geByClass1("faq_optional_extra_field__note", g)
-                    .value, f["ef_" + l + "_required"] = data(g, "requiredSelector")
+            for (var p = {}, f = ge("faq_optional_extra_fields_list")
+                    .children, l = 0; l < f.length; l++) {
+                var g = f[l];
+                p["ef_" + l + "_type"] = data(g, "typeSelector")
+                    .val(), p["ef_" + l + "_title"] = geByClass1("faq_optional_extra_field__title", g)
+                    .value, p["ef_" + l + "_note"] = geByClass1("faq_optional_extra_field__note", g)
+                    .value, p["ef_" + l + "_required"] = data(g, "requiredSelector")
                     .val()
             }
-            d = extend(d, f)
+            d = extend(d, p)
         }
         ge("description_not_needed") && (d.descr_not_needed = isChecked("description_not_needed")), ge("description_placeholder_key") && (d.description_placeholder_key =
             val("description_placeholder_key")), ge("description_tooltip_key") && (d.description_tooltip_key = val("description_tooltip_key"));

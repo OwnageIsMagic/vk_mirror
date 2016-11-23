@@ -87,18 +87,18 @@ var tooltips = {
         return t.tt && (t.tt.shown = !1), (e || {})
             .fasthide ? (clearTimeout(t.hidetimer), clearTimeout(t.ttimer), t.hidetimer = 0, t.tt && t.tt.el && hide(t.tt.container), void tooltips.clearZindex(t)) : void(
                 t.hidetimer || (t.hidetimer = setTimeout(function() {
-                    if (t.hidetimer = 0, clearTimeout(t.ttimer), t.tt && "hide" != t.tt && (!t.tt.el || isVisible(t.tt.container))) {
-                        var o = extend(t.tt.opts ? clone(t.tt.opts) : {}, e || {});
-                        return t.tt.el ? void(t.ttimer = setTimeout(function() {
-                            o.hasover || setStyle(t.tt.container, {
-                                pointerEvents: "none"
-                            }), fadeOut(t.tt.container, void 0 !== o.showsp ? o.showsp : 200, function() {
-                                t.tt && t.tt.container && setStyle(t.tt.container, {
-                                    pointerEvents: "auto"
-                                }), tooltips.clearZindex(t)
-                            }), o.onHide && o.onHide()
-                        }, o.hidedt || 0)) : void(t.tt = "hide")
-                    }
+                    if (t.hidetimer = 0, clearTimeout(t.ttimer), !t.tt || "hide" == t.tt || t.tt.el && !isVisible(t.tt.container)) return t.tt && t.tt.el && hide(t
+                        .tt.container), void tooltips.clearZindex(t);
+                    var o = extend(t.tt.opts ? clone(t.tt.opts) : {}, e || {});
+                    return t.tt.el ? void(t.ttimer = setTimeout(function() {
+                        o.hasover || setStyle(t.tt.container, {
+                            pointerEvents: "none"
+                        }), fadeOut(t.tt.container, void 0 !== o.showsp ? o.showsp : 200, function() {
+                            t.tt && t.tt.container && setStyle(t.tt.container, {
+                                pointerEvents: "auto"
+                            }), tooltips.clearZindex(t)
+                        }), o.onHide && o.onHide()
+                    }, o.hidedt || 0)) : void(t.tt = "hide")
                 }, 1)))
     },
     hideAll: function() {

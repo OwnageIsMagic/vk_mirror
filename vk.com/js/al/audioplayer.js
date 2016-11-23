@@ -963,9 +963,9 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
         AudioUtils.debugLog("Implementation init"), AudioUtils.debugLog("param browser.flash", browser.flash), AudioUtils.debugLog("param force HTML5", !!t), AudioPlayerHTML5.isSupported() ||
             t ? (AudioUtils.debugLog("Initializing HTML5 impl"), this._impl = new AudioPlayerHTML5(a)) : browser.flash && (AudioUtils.debugLog("Initializing Flash impl"), this._impl =
                 new AudioPlayerFlash(a)), this._implSetVolume(0)
-    }, AudioPlayer.ADTEST = 1, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop",
-    AudioPlayer.EVENT_UPDATE = "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED =
-    "buffered", AudioPlayer.EVENT_PROGRESS = "progress",
+    }, AudioPlayer.EVENT_CURRENT_CHANGED = "curr", AudioPlayer.EVENT_PLAY = "start", AudioPlayer.EVENT_PAUSE = "pause", AudioPlayer.EVENT_STOP = "stop", AudioPlayer.EVENT_UPDATE =
+    "update", AudioPlayer.EVENT_LOADED = "loaded", AudioPlayer.EVENT_ENDED = "ended", AudioPlayer.EVENT_FAILED = "failed", AudioPlayer.EVENT_BUFFERED = "buffered", AudioPlayer.EVENT_PROGRESS =
+    "progress",
     AudioPlayer.EVENT_VOLUME = "volume", AudioPlayer.EVENT_PLAYLIST_CHANGED = "plchange", AudioPlayer.EVENT_ADDED = "added", AudioPlayer.EVENT_REMOVED = "removed", AudioPlayer.EVENT_AD_READY =
     "ad_ready", AudioPlayer.EVENT_AD_DEINITED = "ad_deinit", AudioPlayer.EVENT_AD_STARTED = "ad_started", AudioPlayer.EVENT_AD_COMPLETED = "ad_completed", AudioPlayer.EVENT_START_LOADING =
     "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v12", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX +
@@ -1712,11 +1712,7 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.getCurrentAudio = function() {
         return this._currentAudio
     }, AudioPlayer.prototype.playNext = function(t, i) {
-        if (!i && this._adsIsAdReady() && !this._adsIsAdPlaying()) {
-            if (!AudioPlayer.ADTEST) return this.pause(), void this._adsPlayAdTask(t);
-            this._adman && this._adman.getBannersForSection("postroll") && this._adman.start("postroll")
-        }
-        this._playNext(1, t)
+        return i || !this._adsIsAdReady() || this._adsIsAdPlaying() ? void this._playNext(1, t) : (this.pause(), void this._adsPlayAdTask(t))
     }, AudioPlayer.prototype.playPrev = function() {
         this._playNext(-1)
     }, AudioPlayer.prototype._playNext = function(t, i) {
@@ -1780,7 +1776,7 @@ AudioPlayer.tabIcons = {
         return !!this._adPaused
     }, AudioPlayer.prototype._adsPrepareAd = function(t, i) {
         function e(t) {
-            this._adsReadyInfo = t, AudioPlayer.ADTEST || this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
+            this._adsReadyInfo = t, this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
         }
         this._adsSection = i, this._adsInitAdman(t, e.bind(this))
     }, AudioPlayer.prototype._adsDeinit = function() {

@@ -17,7 +17,6 @@
 .im-chat-placeholder,
 .im-deselect:before,
 .im-dialog-select .im-dialog-select--btn,
-.im-fwd,
 .im-fwd .im-fwd--close,
 .im-member-item .im-member-item--kick-link,
 .im-mess .im-mess--check,
@@ -44,6 +43,9 @@
 .im-page.im-page_classic .im-page--back:before,
 .im-page.im-page_classic .im-page--gim-mute,
 .im-right-menu.ui_rmenu .im-right-menu--close:before,
+.im-send-btn.im-send-btn_audio.im-send-btn_loading:before,
+.im-send-btn.im-send-btn_loading:before,
+.im-send-btn.im-send-btn_send.im-send-btn_loading:before,
 .im-to-end .im-to-end--label,
 .im-to-end.im-to-end_loading .im-to-end--label:before,
 .im_chronicle_invite_android,
@@ -65,6 +67,7 @@
 .nim-dialog.nim-dialog_unread.nim-dialog_prep-injected.nim-dialog_muted .nim-dialog--mute,
 .nim-dialog.nim-dialog_verified .nim-dialog--verfifed,
 .nim-dialog.nim-dialog_verified.nim-dialog_selected .nim-dialog--verfifed,
+.nim-peer.nim-peer_smaller.online:after,
 .ui_actions_menu_item.im-action:before,
 .ui_multiselect_has_selection .ui_multiselect_remove {
     -ms-high-contrast-adjust: none
@@ -87,7 +90,8 @@
     transition: opacity 0.15s ease
 }
 
-.im-create .im-creation--item .olist_item_photo_wrap.online.mobile:after {
+.im-create .im-creation--item .olist_item_photo_wrap.online.mobile:after,
+.nim-peer.nim-peer_smaller.online.mobile:after {
     background-image: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%206%209%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Symbols%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22%238AC176%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22online%22%20transform%3D%22translate(-136.000000%2C%20-209.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M136%2C210.506398%20C136%2C209.674437%20136.66503%2C209%20137.498576%2C209%20L140.501424%2C209%20C141.329065%2C209%20142%2C209.676463%20142%2C210.506398%20L142%2C216.493602%20C142%2C217.325563%20141.33497%2C218%20140.501424%2C218%20L137.498576%2C218%20C136.670935%2C218%20136%2C217.323537%20136%2C216.493602%20L136%2C210.506398%20Z%20M137%2C211%20L141%2C211%20L141%2C216%20L137%2C216%20L137%2C211%20Z%22%20id%3D%22mobile_s%22%2F%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E")
 }
 
@@ -466,8 +470,9 @@ img.im_photo_thumb {
     border-color: #e3e7ef
 }
 
-.page_block .im_stickers_store_wrap .ui_tabs_fixed .ui_tabs {
-    top: 42px
+.page_block .im_stickers_store_wrap .ui_tabs_fixed {
+    top: 42px;
+    z-index: 119
 }
 
 .im_stickers_store_wrap .ui_tab_plain {
@@ -999,6 +1004,11 @@ body.mac .im_stickerpack_fixed {
     width: 100%
 }
 
+.im-page.im-page_classic .im-page--nav-photo {
+    margin-left: 2px;
+    margin-right: 7px
+}
+
 .im-page.im-page_classic .im-page--top-date-bar-wrap {
     z-index: 3
 }
@@ -1304,6 +1314,10 @@ body.mac .im_stickerpack_fixed {
     max-width: 542px;
     box-sizing: border-box;
     padding-right: 57px
+}
+
+.im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread:not(.im-mess_selected) {
+    max-width: 494px
 }
 
 .im-page.im-page_classic .im-mess:not(.im-mess_fwd).im-mess_unread {
@@ -1664,6 +1678,10 @@ body.mac .im_stickerpack_fixed {
     background: linear-gradient(270deg, #fff, #f5f7fa 20%)
 }
 
+.im-page a.im-page--back-button:hover .im-page--nav-photo {
+    border-color: #f5f7fa
+}
+
 .im-page .im-page--hisory_search-open .im-page--search-hist {
     display: block
 }
@@ -1702,12 +1720,23 @@ body.mac .im_stickerpack_fixed {
     display: none!important
 }
 
+.im-page .im-page--nav-photo {
+    display: inline-block;
+    vertical-align: middle;
+    margin-top: -20px;
+    margin-left: 10px;
+    margin-right: 13px;
+    top: 9px;
+    position: relative;
+    border-color: #fff
+}
+
 .im-page .im-page--history_empty-hist .im-page--chat-body {
     color: #939393
 }
 
-.im-page .im-page--history_empty-hist .ui_scroll_inner,
-.im-page .im-page--history_empty-hist .ui_scroll_outer {
+.im-page .im-page--history_empty-hist .im-page--chat-body-abs>.ui_scroll_overflow>.ui_scroll_outer,
+.im-page .im-page--history_empty-hist .im-page--chat-body-abs>.ui_scroll_overflow>.ui_scroll_outer>.ui_scroll_inner {
     height: 100%!important
 }
 
@@ -1756,11 +1785,13 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-page .im-page--history.im-page--history_loading {
-    position: relative
+    position: relative;
+    overflow: hidden
 }
 
 .im-page .im-page--history.im-page--history_loading .im-page-history-w {
-    display: none
+    height: 0;
+    opacity: 0
 }
 
 .im-page .im-page--history.im-page--history_loading:before {
@@ -1998,7 +2029,7 @@ body.mac .im_stickerpack_fixed {
     height: 100%
 }
 
-.im-page .im-page--chat-body-abs .ui_scroll_outer {
+.im-page .im-page--chat-body-abs>.ui_scroll_overflow>.ui_scroll_outer {
     max-height: 100%;
     height: auto;
     position: absolute;
@@ -2367,10 +2398,58 @@ body.mac .im_stickerpack_fixed {
     cursor: pointer
 }
 
+.mac.sf .im-chat-input .im-chat-input--textarea .placeholder {
+    top: 27px
+}
+
+.mac .im-chat-input .im-chat-input--overflowed .im-chat-input--attaches {
+    padding-right: 18px
+}
+
+.mac .im-chat-input .im-chat-input--overflowed .im-chat-input--fwd {
+    padding-right: 16px
+}
+
 .im-chat-input {
-    padding: 12px 33px 17px;
+    padding: 12px 0 0 10px;
     box-sizing: border-box;
-    border-top: solid 1px #e4e6e9
+    border-top: solid 1px #e4e6e9;
+    background: #fafbfc;
+    position: relative
+}
+
+.im-chat-input .im-chat-input--textarea_drag {
+    border-color: transparent!important
+}
+
+.im-chat-input .im-chat-input--overflowed .im-chat-input--scroll {
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: 450px
+}
+
+.im-chat-input .im-chat-input--overflowed .im-chat-input--attaches {
+    padding-right: 5px
+}
+
+.im-chat-input .im-chat-input--overflowed .im-chat-input--fwd {
+    padding-right: 3px
+}
+
+.im-chat-input .im-chat-input--overflowed .page_docs_preview,
+.im-chat-input .im-chat-input--overflowed .page_pics_preview,
+.im-chat-input .im-chat-input--overflowed .page_preview_audio_wrap {
+    z-index: 1
+}
+
+.im-chat-input .im-chat-input--overflowed .page_docs_preview .tt_black,
+.im-chat-input .im-chat-input--overflowed .page_pics_preview .tt_black,
+.im-chat-input .im-chat-input--overflowed .page_preview_audio_wrap .tt_black {
+    display: none!important
+}
+
+.im-chat-input .im-chat-input--attaches {
+    padding-right: 2px
 }
 
 .im-chat-input .nim-peer {
@@ -2378,26 +2457,64 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-chat-input .ms_items_more {
-    margin-top: -100px
+    bottom: 17px!important;
+    margin-right: 5px
+}
+
+.im-chat-input .emoji_tt_wrap.tt_down {
+    bottom: 40px
 }
 
 .im-chat-input .im-chat-input--txt-wrap {
     position: relative;
-    margin-top: -15px;
     cursor: text;
-    margin-bottom: 10px;
-    border-top: solid 15px transparent
+    margin-bottom: 12px;
+    background: #fff;
+    border-radius: 3px;
+    border: solid 1px #d3d9de;
+    padding: 0 0 0 11px
+}
+
+.im-chat-input .im-chat-input--smile-wrap {
+    top: auto;
+    bottom: 6px;
+    right: 14px
+}
+
+.im-chat-input .media_preview_has_medias {
+    border-bottom: none
+}
+
+.im-chat-input .im-chat-input--attach {
+    position: absolute;
+    z-index: 2;
+    overflow: hidden;
+    right: 46px;
+    bottom: 6px
+}
+
+.im-chat-input .im-chat-input--attach-label {
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22442%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22442%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M454%2029.5C452.6%2029.5%20451.5%2030.6%20451.5%2032%20451.5%2033.4%20452.6%2034.5%20454%2034.5%20455.4%2034.5%20456.5%2033.4%20456.5%2032%20456.5%2030.6%20455.4%2029.5%20454%2029.5L454%2029.5ZM459.5%2026C459.3%2026%20458.6%2025.7%20458.5%2025.5L458.1%2024.8C457.8%2024.4%20457.1%2024%20456.5%2024L451.5%2024C451%2024%20450.3%2024.4%20449.9%2024.8L449.5%2025.5C449.4%2025.7%20448.8%2026%20448.5%2026L446.8%2026C445.9%2026%20445%2026.6%20445%2027.5L445%2037.2C445%2038.1%20445.9%2039%20446.8%2039L461.2%2039C462.1%2039%20463%2038.1%20463%2037.2L463%2027.5C463%2026.6%20462.1%2026%20461.2%2026L459.5%2026ZM450%2032C450%2029.8%20451.8%2028%20454%2028%20456.2%2028%20458%2029.8%20458%2032%20458%2034.2%20456.2%2036%20454%2036%20451.8%2036%20450%2034.2%20450%2032ZM460.5%2029C460.2%2029%20460%2028.8%20460%2028.5%20460%2028.2%20460.2%2028%20460.5%2028%20460.8%2028%20461%2028.2%20461%2028.5%20461%2028.8%20460.8%2029%20460.5%2029L460.5%2029Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+    width: 24px;
+    height: 24px;
+    opacity: 0.7;
+    cursor: pointer;
+    display: block
+}
+
+.im-chat-input .im-chat-input--attach-label:hover {
+    opacity: 1
+}
+
+.im-chat-input .im-chat-input--attach-file {
+    display: none
 }
 
 .im-chat-input .im-chat-input--textarea {
-    width: 405px;
+    width: 470px;
     float: left;
-    margin: 0 14px;
+    margin: 0 7px 0 58px;
     position: relative
-}
-
-.im-chat-input .im-chat-input--textarea.im-chat-input--textarea_has-attaches .im-chat-input--attaches {
-    margin-bottom: 15px
 }
 
 .im-chat-input .im-chat-input--textarea .ms_items_more_wrap {
@@ -2410,31 +2527,41 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-chat-input .im-chat-input--textarea .im-chat-input--attaches {
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 350px
+    margin-top: 10px
 }
 
 .im-chat-input .im-chat-input--textarea .multi_media_preview {
-    margin-left: -15px;
-    margin-right: -15px;
-    padding-left: 15px;
-    padding-right: 15px;
     margin-bottom: 0
 }
 
-.im-chat-input .im-chat-input--textarea .multi_media_preview .page_preview_audio_wrap {
-    width: 390px!important
+.im-chat-input .im-chat-input--textarea .multi_media_preview .page_progress_preview {
+    margin-bottom: 12px
 }
 
-.im-chat-input .im-chat-input--textarea .multi_media_preview .page_preview_audio_wrap .tt_black {
-    display: none!important
+.im-chat-input .im-chat-input--textarea .multi_media_preview .page_preview_doc_wrap {
+    max-width: 100%
+}
+
+.im-chat-input .im-chat-input--textarea .multi_media_preview .page_progress_preview:empty {
+    margin-bottom: 0
+}
+
+.im-chat-input .im-chat-input--textarea .multi_media_preview .medadd_c_link {
+    max-width: 100%
+}
+
+.im-chat-input .im-chat-input--textarea .multi_media_preview div[style*="display: block"]:last-child {
+    padding-bottom: 0
+}
+
+.im-chat-input .im-chat-input--textarea .multi_media_preview .page_preview_audio_wrap {
+    max-width: 100%
 }
 
 .im-chat-input .im-chat-input--textarea .placeholder {
     position: absolute;
-    top: 24px;
-    left: -2px;
+    top: 28px;
+    left: 9px;
     width: 100%
 }
 
@@ -2444,7 +2571,7 @@ body.mac .im_stickerpack_fixed {
 
 .im-chat-input .im-chat-input--error {
     display: none;
-    padding: 15px 36px 15px 48px;
+    padding: 15px 36px 15px 82px;
     height: 80px;
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
@@ -2473,21 +2600,19 @@ body.mac .im_stickerpack_fixed {
 
 .im-chat-input .im-chat-input--text {
     outline: 0;
-    min-height: 55px;
+    min-height: 36px;
     width: 100%;
     resize: none;
-    padding-left: 0;
-    padding-right: 25px;
+    padding: 9px 72px 10px 0;
     max-height: 200px;
     overflow-y: auto;
     overflow-x: hidden;
-    line-height: 16px;
-    padding-top: 6px;
+    border-radius: 3px;
+    line-height: 17px;
     margin-bottom: 0;
     word-wrap: break-word;
     box-sizing: border-box;
     border: none;
-    border-bottom: solid 1px #e4e6e9;
     -o-transition: border-bottom-color 0.3s linear;
     transition: border-bottom-color 0.3s linear;
     -webkit-font-smoothing: subpixel-antialiase
@@ -2514,7 +2639,9 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-chat-input .im-chat-input--selector {
-    float: left
+    position: absolute;
+    left: -45px;
+    bottom: 11px
 }
 
 .im-chat-input .im-chat-input--selector .media_selector {
@@ -2523,7 +2650,15 @@ body.mac .im_stickerpack_fixed {
 }
 
 .im-chat-input .im-chat-input--selector .ms_items_more_helper {
-    margin-right: -22px
+    margin-right: -8px;
+    margin-top: -10px
+}
+
+.im-chat-input .im-chat-input--send {
+    margin-top: -1px;
+    bottom: -4px;
+    right: -51px;
+    position: absolute
 }
 
 .im-chat-input.im-chat-input_shadowed {
@@ -2535,6 +2670,10 @@ body.mac .im_stickerpack_fixed {
     padding-bottom: 0;
     position: relative;
     background: #fafbfc
+}
+
+.im-chat-input.im-chat-input_error .im-chat-input--send {
+    display: none
 }
 
 .im-chat-input.im-chat-input_error .im-chat-input--error {
@@ -2550,27 +2689,29 @@ body.mac .im_stickerpack_fixed {
 
 .im-chat-input.im-chat-input_classic {
     padding-left: 26px;
-    padding-right: 26px;
+    padding-right: 0px;
     border-top: 0;
     border-radius: 0 0 2px 2px;
     box-shadow: 0 1px 0 0 #d7d8db, 0 0 0 1px #e3e4e8
 }
 
 .im-chat-input.im-chat-input_classic .im-chat-input--error {
-    padding-left: 58px
-}
-
-.im-chat-input.im-chat-input_classic .multi_media_preview .page_docs_preview,
-.im-chat-input.im-chat-input_classic .multi_media_preview .page_preview_audio_wrap {
-    width: 355px!important
+    padding-left: 92px
 }
 
 .im-chat-input.im-chat-input_classic .im-chat-input--textarea {
-    width: 378px
+    width: 435px;
+    margin: 0 7px 0 33px
 }
 
 .im-chat-input.im-chat-input_classic .im-chat-input--rcemoji {
     margin-right: 10px
+}
+
+.im-chat-input--tt:after,
+.im-chat-input--tt:before {
+    left: auto!important;
+    right: 37px
 }
 
 .im-mess-stack {
@@ -3202,7 +3343,7 @@ body.mac .im_stickerpack_fixed {
 
 .im-mess:hover .im-mess--check {
     display: block;
-    opacity: 0.5
+    opacity: 0.6
 }
 
 .im-mess:hover .im-mess--fav {
@@ -3418,6 +3559,157 @@ body.mac .im_stickerpack_fixed {
     height: 36px
 }
 
+.nim-peer.nim-peer_smaller {
+    width: 30px;
+    height: 30px
+}
+
+.nim-peer.nim-peer_smaller .im_grid>img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    -moz-force-broken-image-icon: 0;
+    background-color: #fafbfc;
+    background-color: inherit
+}
+
+.nim-peer.nim-peer_smaller .im_grid>img:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background-color: inherit
+}
+
+.nim-peer.nim-peer_smaller .im_grid>img:after {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fafbfc;
+    background-image: url(/images/camera_100.png);
+    background-size: cover
+}
+
+.nim-peer.nim-peer_smaller.online:after {
+    bottom: 0;
+    right: 0;
+    border: 2px solid #fff;
+    height: 6px;
+    width: 6px
+}
+
+.nim-peer.nim-peer_smaller.online.mobile:after {
+    bottom: -1px;
+    right: 0;
+    background-color: #fff;
+    height: 9px;
+    width: 6px
+}
+
+.nim-peer.nim-peer_smaller.online:after {
+    border-color: inherit
+}
+
+.nim-peer.nim-peer_smaller .nim-peer--photo {
+    background-color: inherit;
+    overflow: hidden;
+    margin-left: -2px;
+    margin-bottom: -1px
+}
+
+.nim-peer.nim-peer_smaller .nim-peer--photo .im_grid>img,
+.nim-peer.nim-peer_smaller .nim-peer--photo>img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    -moz-force-broken-image-icon: 0;
+    background-color: #fafbfc;
+    background-color: inherit
+}
+
+.nim-peer.nim-peer_smaller .nim-peer--photo .im_grid>img:before,
+.nim-peer.nim-peer_smaller .nim-peer--photo>img:before {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 30px;
+    height: 30px;
+    background-color: inherit
+}
+
+.nim-peer.nim-peer_smaller .nim-peer--photo .im_grid>img:after,
+.nim-peer.nim-peer_smaller .nim-peer--photo>img:after {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #fafbfc;
+    background-image: url(/images/camera_100.png);
+    background-size: cover
+}
+
+.nim-peer.nim-peer_smaller .nim-peer--photo_hidden {
+    visibility: hidden
+}
+
+.nim-peer.nim-peer_smaller img {
+    width: 30px;
+    height: 30px;
+    display: block
+}
+
+.nim-peer.nim-peer_smaller .dialogs_inline_chatter img {
+    border-radius: 0
+}
+
+.nim-peer.nim-peer_smaller .im_grid img,
+.nim-peer.nim-peer_smaller .nim-peer--photo>img {
+    margin-left: 2px;
+    margin-bottom: 1px
+}
+
+.nim-peer.nim-peer_smaller .im_grid>.dialogs_inline_chatter {
+    overflow: hidden;
+    width: 15px;
+    height: 14.5px;
+    margin-left: 1px;
+    margin-bottom: 1px
+}
+
+.nim-peer.nim-peer_smaller .im_grid>.dialogs_inline_chatter img {
+    margin-left: -6.5px;
+    margin-top: -7.5px
+}
+
+.nim-peer.nim-peer_smaller .im_grid>.dialogs_inline_chatter_half {
+    width: 15px;
+    height: 30px;
+    border-radius: 0
+}
+
+.nim-peer.nim-peer_smaller .im_grid>.dialogs_inline_chatter_half img {
+    margin-top: 0
+}
+
+.nim-peer.nim-peer_smaller img {
+    width: 30px;
+    height: 30px
+}
+
 .nim-dialog {
     height: 63px;
     box-sizing: border-box;
@@ -3589,7 +3881,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     position: absolute;
     display: none;
     right: 0;
-    opacity: 0.5;
+    opacity: 0.6;
     width: 12px;
     height: 12px;
     z-index: 1;
@@ -3615,7 +3907,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     background: url(/images/icons/im_actions.png?4) 0 -389px;
     position: absolute;
     right: -10px;
-    opacity: 0.5;
+    opacity: 0.6;
     width: 21px;
     height: 16px;
     z-index: 1;
@@ -4395,9 +4687,8 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-fwd {
     position: relative;
-    display: inline-block;
-    padding-left: 19px;
-    background: url(/images/icons/fwd_msg_icon.png) no-repeat left 3px
+    padding-left: 10px;
+    border-left: solid 2px #c4d2e1
 }
 
 .im-fwd .im-fwd--messages {
@@ -4410,7 +4701,14 @@ body.sf .nim-dialog .nim-dialog--unread {
     padding: 0;
     line-height: 1;
     font-size: 12.5px;
-    margin-top: 2px;
+    margin-top: 6px;
+    color: #818d99;
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: top;
     display: block
 }
 
@@ -4421,25 +4719,40 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-fwd .im-fwd--title {
     font-size: 12.5px;
-    font-weight: 500;
+    font-weight: 700;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #42648b
+}
+
+.im-fwd .im-fwd--date {
+    color: #818d99;
+    margin-left: 8px;
+    font-weight: 400;
     -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto
+    -moz-osx-font-smoothing: auto;
+    font-size: 12px;
+    opacity: 0.7
 }
 
 .im-fwd .im-fwd--close {
-    background: url(/images/icons/box_acts.png) no-repeat 0 -14px;
+    background: url(/images/attach_icons.png?3) no-repeat 0 0;
     display: block;
     position: absolute;
-    right: -20px;
-    opacity: 0.5;
-    margin-top: -13px;
-    width: 14px;
-    height: 14px
+    right: 2px;
+    opacity: 0.6;
+    margin-top: -5px;
+    width: 10px;
+    height: 10px
 }
 
 .im-fwd .im-fwd--close:hover {
     opacity: 1;
     cursor: pointer
+}
+
+.im-fwd.im-fwd_msg .im-fwd--messages {
+    color: #000
 }
 
 .ui_actions_menu_item.im-action {
@@ -5210,6 +5523,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     overflow: hidden;
     -o-transition: 0.2s opacity;
     transition: 0.2s opacity;
+    pointer-events: none;
     -o-transition-delay: 0.1s;
     transition-delay: 0.1s
 }
@@ -5241,7 +5555,8 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-to-end.im-to-end_shown {
-    opacity: 1
+    opacity: 1;
+    pointer-events: auto
 }
 
 .im-to-end.im-to-end_shown .im-to-end--label {
@@ -5287,6 +5602,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .im-dropbox {
     bottom: 0;
+    left: 0;
     right: 0;
     background: #fff;
     color: #2a5885;
@@ -5300,11 +5616,12 @@ body.sf .nim-dialog .nim-dialog--unread {
     width: 100%;
     height: 100%;
     position: absolute;
-    top: 0;
-    left: 0
+    top: 0
 }
 
 .im-dropbox .im-dropbox--inner {
+    border-radius: 3px;
+    left: -1px;
     display: table;
     border: 1px dashed #a9bbcf
 }
@@ -5603,10 +5920,6 @@ body.sf .nim-dialog .nim-dialog--unread {
     background: url(/images/message_money.png?1) no-repeat 0 0
 }
 
-.im-chat-input--textarea._voice_field_wrap .im-chat-input--text {
-    padding-right: 50px
-}
-
 .im-audio-message-btn {
     display: none;
     border: none;
@@ -5615,7 +5928,7 @@ body.sf .nim-dialog .nim-dialog--unread {
     position: absolute;
     top: 0;
     right: 25px;
-    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2015%22%20width%3D%2210px%22%20height%3D%2215px%22%3E%0A%20%20%20%20%3Cpath%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill-rule%3D%22evenodd%22%20transform%3D%22translate(-342.000000%2C%20-1)%22%20fill%3D%22%238DA2BB%22%20d%3D%22M348%2C13.9023689%20C350.278737%2C13.4389622%20352%2C11.4236928%20352%2C9.00782579%20L352%2C6.0026086%20L350.5%2C6.0026086%20L350.5%2C9.0044172%20C350.5%2C10.9349743%20348.929063%2C12.5%20347%2C12.5%20C345.067003%2C12.5%20343.5%2C10.9239682%20343.5%2C9.0044172%20L343.5%2C6.0026086%20L342%2C6.0026086%20L342%2C9.00782579%20C342%2C11.4160157%20343.71776%2C13.4378631%20346%2C13.9023145%20L346%2C16%20L348%2C16%20L348%2C13.9023689%20Z%20M345%2C2.99961498%20C345%2C1.89525812%20345.88773%2C1%20347%2C1%20C348.104569%2C1%20349%2C1.88743329%20349%2C2.99961498%20L349%2C9.00038502%20C349%2C10.1047419%20348.11227%2C11%20347%2C11%20C345.895431%2C11%20345%2C10.1125667%20345%2C9.00038502%20L345%2C2.99961498%20Z%22%20id%3D%22microphone%22%2F%3E%0A%3C%2Fsvg%3E") no-repeat 50%;
+    background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") no-repeat 50%;
     z-index: 4;
     opacity: 0.7;
     cursor: pointer
@@ -5626,8 +5939,9 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-audio-message-input {
+    background: #fafbfc;
     display: none;
-    padding: 42px 54px 46px 52px;
+    padding: 13px 6px 13px 10px;
     position: relative;
     box-sizing: border-box;
     border-top: solid 1px #e4e6e9
@@ -5651,7 +5965,6 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-audio-message-input button {
-    border-radius: 50%;
     outline: none;
     border: none;
     display: block;
@@ -5663,30 +5976,42 @@ body.sf .nim-dialog .nim-dialog--unread {
     overflow: hidden;
     height: 36px;
     border-radius: 18px;
-    background-color: #e8edf4;
+    background-color: #b1bbc8;
     padding: 6px 14px 6px 6px;
     box-sizing: border-box
 }
 
+.im-audio-message-input .audio-msg-track .audio-msg-track--btn {
+    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2011%22%20width%3D%2210px%22%20height%3D%2211px%22%3E%0A%20%20%20%20%3Cpolygon%20stroke%3D%22%23b1bbc8%22%20fill%3D%22%23b1bbc8%22%20style%3D%22stroke-linecap%3A%20round%3B%20stroke-linejoin%3A%20round%3B%22%20points%3D%222.5%200.5%202.5%209.5%209.5%205%22%20transform%3D%22%22%2F%3E%0A%3C%2Fsvg%3E") #fff no-repeat 50%
+}
+
+.im-audio-message-input .audio-msg-track.audio-msg-track_playing .audio-msg-track--btn,
 .im-audio-message-input .audio-msg-track.audio-msg-track_recording .audio-msg-track--btn {
-    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2010%22%20width%3D%2210px%22%20height%3D%2210px%22%3E%0A%20%20%20%20%3Crect%20x%3D%221%22%20y%3D%221%22%20width%3D%228%22%20height%3D%228%22%20rx%3D%221%22%20ry%3D%221%22%20fill%3D%22%23fff%22%2F%3E%0A%3C%2Fsvg%3E") #e2593e no-repeat 50%
+    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2010%2011%22%20width%3D%2210px%22%20height%3D%2211px%22%3E%0A%20%20%20%20%3Crect%20x%3D%221.5%22%20y%3D%221%22%20rx%3D%220.5%22%20ry%3D%220.5%22%20width%3D%222%22%20height%3D%229%22%20fill%3D%22%23b1bbc8%22%20stroke%3D%22%23b1bbc8%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%226.5%22%20y%3D%221%22%20rx%3D%220.5%22%20ry%3D%220.5%22%20width%3D%222%22%20height%3D%229%22%20fill%3D%22%23b1bbc8%22%20stroke%3D%22%23b1bbc8%22%2F%3E%0A%3C%2Fsvg%3E") #fff no-repeat 50%
+}
+
+.im-audio-message-input .audio-msg-track.audio-msg-track_recording .audio-msg-track--btn {
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%2262%200%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Cpath%20d%3D%22M74%2024C80.6%2024%2086%2018.6%2086%2012%2086%205.4%2080.6%200%2074%200%2067.4%200%2062%205.4%2062%2012%2062%2018.6%2067.4%2024%2074%2024Z%22%20fill%3D%22%23FFF%22%2F%3E%3Crect%20x%3D%2270%22%20y%3D%228%22%20width%3D%228%22%20height%3D%228%22%20rx%3D%221%22%20fill%3D%22%23E2593E%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") #fff no-repeat 50%
 }
 
 .im-audio-message-input .audio-msg-track .audio-msg-track--duration {
-    color: #777e8c;
-    opacity: 0.7
+    color: #fff
 }
 
 .im-audio-message-input .audio-msg-track .audio-msg-track--wave-wrapper .audio-msg-track--wave {
-    width: 313px
+    width: 399px
+}
+
+.im-audio-message-input .audio-msg-track .audio-msg-track--wave-wrapper .audio-msg-track--wave path {
+    stroke: #fff
 }
 
 .im-audio-message-input .im-audio-message-send-wrapper {
-    width: 36px;
-    height: 36px;
     border-radius: 50%;
-    background: #5779a1;
-    margin-left: 12px;
+    margin-left: 6px;
+    margin-top: -8px;
+    position: relative;
+    top: 4px;
     text-align: center;
     float: right
 }
@@ -5695,22 +6020,10 @@ body.sf .nim-dialog .nim-dialog--unread {
     margin-top: 16px
 }
 
-.im-audio-message-input .im-audio-message--send-btn {
-    width: 36px;
-    height: 36px;
-    background: url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2015%2016%22%20width%3D%2215px%22%20height%3D%2216px%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23fff%22%20transform%3D%22translate(-11%20-10)%22%20d%3D%22m13.982%2019.436c-0.558%201.416-1.349%203.517-1.625%204.695-0.443%201.89-0.765%202.315%200.885%201.417s9.638-5.347%2011.42-6.335c2.323-1.289%202.354-1.188-0.125-2.557-1.888-1.042-9.782-5.375-11.295-6.225-1.513-0.8511-1.328-0.4728-0.885%201.417%200.276%201.18%201.07%203.274%201.628%204.681l6.894%201.429-6.897%201.478z%22%2F%3E%0A%3C%2Fsvg%3E") 50% no-repeat;
-    background-size: 17px
-}
-
-.im-audio-message-input .im-audio-message--send-btn:hover {
-    background-color: #6888ad
-}
-
 .im-audio-message-input .im-audio-message--cancel-btn {
     margin: 6px 12px 0 6px;
-    opacity: 0.5;
-    background: #93a3bc url("data:image/svg+xml,%3Csvg%20version%3D%221.0%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2012%2012%22%20width%3D%2212px%22%20height%3D%2212px%22%20style%3D%22%22%3E%0A%20%20%20%20%3Cpath%20style%3D%22stroke-width%3A2.5px%3Bstroke%3A%23fff%3Bstroke-linecap%3Around%3Bstroke-linejoin%3Around%3B%22%20d%3D%22M2%2C2L10%2C10ZM10%2C2L2%2C10Z%22%2F%3E%0A%3C%2Fsvg%3E") 50% no-repeat;
-    background-size: 12px;
+    opacity: 0.7;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%2216%2020%2024%2024%22%20version%3D%221.1%22%20style%3D%22stroke%3A%23b1bbc8%3B%22%3E%0A%20%20%3Cg%20style%3D%22fill-rule%3Aevenodd%3Bfill%3Anone%3Bstroke-width%3A1.5%3Bstroke%3Anone%22%3E%0A%20%20%20%20%3Crect%20x%3D%2216%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%20opacity%3D%220.4%22%2F%3E%0A%20%20%20%20%3Cg%20style%3D%22stroke-linecap%3Around%3Bstroke-width%3A2.5%3Bstroke%3A%23828A99%22%3E%0A%20%20%20%20%20%20%3Cpath%20d%3D%22M22.5%2026.5L33.5%2037.5%22%2F%3E%3Cpath%20d%3D%22M33.5%2026.5L22.5%2037.5%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat;
     width: 24px;
     height: 24px;
     float: left
@@ -5727,7 +6040,7 @@ body.sf .nim-dialog .nim-dialog--unread {
 }
 
 .im-audio-message-input.im-chat-input_classic .audio-msg-track--wave-wrapper .audio-msg-track--wave {
-    width: 264px
+    width: 357px
 }
 
 .box_body .audio-msg-track .audio-msg-track--wave-wrapper .audio-msg-track--wave {
@@ -5736,6 +6049,200 @@ body.sf .nim-dialog .nim-dialog--unread {
 
 .box_body .im-mess_spam .audio-msg-track .audio-msg-track--wave-wrapper .audio-msg-track--wave {
     width: 335px
+}
+
+.im-send-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22493%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22493%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M499.3%2033.6C498.7%2035.2%20497.8%2037.6%20497.5%2038.9%20497%2041%20496.7%2041.5%20498.5%2040.5%20500.3%2039.5%20509%2034.5%20511%2033.4%20513.5%2031.9%20513.5%2032%20510.8%2030.5%20508.8%2029.3%20500.1%2024.4%20498.5%2023.5%20496.8%2022.5%20497%2023%20497.5%2025.1%20497.8%2026.4%20498.7%2028.8%20499.3%2030.3L506.8%2032%20499.3%2033.6Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 50% no-repeat;
+    padding: 20px;
+    cursor: pointer;
+    display: block;
+    opacity: 0.7
+}
+
+.im-send-btn.im-send-btn_audio.im-send-btn_loading,
+.im-send-btn.im-send-btn_loading,
+.im-send-btn.im-send-btn_send.im-send-btn_loading {
+    background: none;
+    pointer-events: none;
+    opacity: 1
+}
+
+.im-send-btn.im-send-btn_audio.im-send-btn_loading:before,
+.im-send-btn.im-send-btn_loading:before,
+.im-send-btn.im-send-btn_send.im-send-btn_loading:before {
+    content: "";
+    position: absolute;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    -webkit-animation-name: round_spinner;
+    -o-animation-name: round_spinner;
+    animation-name: round_spinner;
+    -webkit-animation-duration: 700ms;
+    -o-animation-duration: 700ms;
+    animation-duration: 700ms;
+    -webkit-animation-iteration-count: infinite;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+    -o-animation-timing-function: linear;
+    animation-timing-function: linear;
+    background-image: url(/images/icons/round_spinner.png);
+    z-index: 100;
+    display: block;
+    top: 50%;
+    left: 50%;
+    margin: -8px 0 0 -8px
+}
+
+.im-send-btn.im-send-btn_audio {
+    background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat;
+    background-size: 14px 20px
+}
+
+.im-send-btn:hover {
+    opacity: 1
+}
+
+@-webkit-keyframes im-send-btn {
+    0% {
+        background-size: 24px 24px
+    }
+    0%,
+    49% {
+        background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22493%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22493%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M499.3%2033.6C498.7%2035.2%20497.8%2037.6%20497.5%2038.9%20497%2041%20496.7%2041.5%20498.5%2040.5%20500.3%2039.5%20509%2034.5%20511%2033.4%20513.5%2031.9%20513.5%2032%20510.8%2030.5%20508.8%2029.3%20500.1%2024.4%20498.5%2023.5%20496.8%2022.5%20497%2023%20497.5%2025.1%20497.8%2026.4%20498.7%2028.8%20499.3%2030.3L506.8%2032%20499.3%2033.6Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 50% no-repeat
+    }
+    49% {
+        background-size: 8px 8px
+    }
+    50% {
+        background-size: 4.62px 6.6px
+    }
+    50%,
+    to {
+        background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat
+    }
+    to {
+        background-size: 14px 20px
+    }
+}
+
+@-o-keyframes im-send-btn {
+    0% {
+        background-size: 24px 24px
+    }
+    0%,
+    49% {
+        background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22493%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22493%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M499.3%2033.6C498.7%2035.2%20497.8%2037.6%20497.5%2038.9%20497%2041%20496.7%2041.5%20498.5%2040.5%20500.3%2039.5%20509%2034.5%20511%2033.4%20513.5%2031.9%20513.5%2032%20510.8%2030.5%20508.8%2029.3%20500.1%2024.4%20498.5%2023.5%20496.8%2022.5%20497%2023%20497.5%2025.1%20497.8%2026.4%20498.7%2028.8%20499.3%2030.3L506.8%2032%20499.3%2033.6Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 50% no-repeat
+    }
+    49% {
+        background-size: 8px 8px
+    }
+    50% {
+        background-size: 4.62px 6.6px
+    }
+    50%,
+    to {
+        background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat
+    }
+    to {
+        background-size: 14px 20px
+    }
+}
+
+@keyframes im-send-btn {
+    0% {
+        background-size: 24px 24px
+    }
+    0%,
+    49% {
+        background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22493%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22493%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M499.3%2033.6C498.7%2035.2%20497.8%2037.6%20497.5%2038.9%20497%2041%20496.7%2041.5%20498.5%2040.5%20500.3%2039.5%20509%2034.5%20511%2033.4%20513.5%2031.9%20513.5%2032%20510.8%2030.5%20508.8%2029.3%20500.1%2024.4%20498.5%2023.5%20496.8%2022.5%20497%2023%20497.5%2025.1%20497.8%2026.4%20498.7%2028.8%20499.3%2030.3L506.8%2032%20499.3%2033.6Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 50% no-repeat
+    }
+    49% {
+        background-size: 8px 8px
+    }
+    50% {
+        background-size: 4.62px 6.6px
+    }
+    50%,
+    to {
+        background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat
+    }
+    to {
+        background-size: 14px 20px
+    }
+}
+
+@-webkit-keyframes im-send-btn-back {
+    0% {
+        background-size: 14px 20px
+    }
+    0%,
+    49% {
+        background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat
+    }
+    49% {
+        background-size: 4.62px 6.6px
+    }
+    50% {
+        background-size: 8px 8px
+    }
+    50%,
+    to {
+        background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22493%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22493%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M499.3%2033.6C498.7%2035.2%20497.8%2037.6%20497.5%2038.9%20497%2041%20496.7%2041.5%20498.5%2040.5%20500.3%2039.5%20509%2034.5%20511%2033.4%20513.5%2031.9%20513.5%2032%20510.8%2030.5%20508.8%2029.3%20500.1%2024.4%20498.5%2023.5%20496.8%2022.5%20497%2023%20497.5%2025.1%20497.8%2026.4%20498.7%2028.8%20499.3%2030.3L506.8%2032%20499.3%2033.6Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 50% no-repeat
+    }
+    to {
+        background-size: 24px 24px
+    }
+}
+
+@-o-keyframes im-send-btn-back {
+    0% {
+        background-size: 14px 20px
+    }
+    0%,
+    49% {
+        background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat
+    }
+    49% {
+        background-size: 4.62px 6.6px
+    }
+    50% {
+        background-size: 8px 8px
+    }
+    50%,
+    to {
+        background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22493%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22493%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M499.3%2033.6C498.7%2035.2%20497.8%2037.6%20497.5%2038.9%20497%2041%20496.7%2041.5%20498.5%2040.5%20500.3%2039.5%20509%2034.5%20511%2033.4%20513.5%2031.9%20513.5%2032%20510.8%2030.5%20508.8%2029.3%20500.1%2024.4%20498.5%2023.5%20496.8%2022.5%20497%2023%20497.5%2025.1%20497.8%2026.4%20498.7%2028.8%20499.3%2030.3L506.8%2032%20499.3%2033.6Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 50% no-repeat
+    }
+    to {
+        background-size: 24px 24px
+    }
+}
+
+@keyframes im-send-btn-back {
+    0% {
+        background-size: 14px 20px
+    }
+    0%,
+    49% {
+        background: url("data:image/svg+xml,%3Csvg%20width%3D%22100%25%22%20height%3D%22100%25%22%20viewBox%3D%220%200%2014%2020%22%20version%3D%221.1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20xmlns%3Axlink%3D%22http%3A%2F%2Fwww.w3.org%2F1999%2Fxlink%22%3E%0A%20%20%20%20%3Cg%20id%3D%22Page-1%22%20stroke%3D%22none%22%20stroke-width%3D%221%22%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%0A%20%20%20%20%20%20%20%20%3Cg%20id%3D%22inputGrey1%22%20transform%3D%22translate(-840.000000%2C%20-726.000000)%22%20fill%3D%22%23828A99%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22Group-8-Copy%22%20transform%3D%22translate(325.000000%2C%20704.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%20id%3D%22send-copy%22%20transform%3D%22translate(510.000000%2C%2020.000000)%22%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M13%2C18.9289308%20C16.3866359%2C18.4434152%2019%2C15.5291408%2019%2C12.0065834%20L19%2C10.4993169%20L19%2C11.0026086%20L17.2999973%2C11.0026086%20L17.2999973%2C11.9944476%20C17.2999973%2C14.5818315%2015.4451811%2C16.7366318%2013%2C17.2053875%20L13%2C17%20L11%2C17%20L11%2C17.2058382%20C8.55099326%2C16.738378%206.69999695%2C14.5857754%206.69999695%2C11.9944476%20L6.69999695%2C11.0026086%20L5%2C11.0026086%20L5%2C10.4993169%20L5%2C12.0065834%20C5%2C15.520231%207.60770586%2C18.4427345%2011%2C18.9289578%20L11%2C22%20L13%2C22%20L13%2C18.9289308%20Z%20M9%2C4.99878564%20C9%2C3.34260206%2010.3465171%2C2%2012%2C2%20C13.6568542%2C2%2015%2C3.34226429%2015%2C4.99878564%20L15%2C12.0012144%20C15%2C13.6573979%2013.6534829%2C15%2012%2C15%20C10.3431458%2C15%209%2C13.6577357%209%2C12.0012144%20L9%2C4.99878564%20Z%22%20id%3D%22microphone%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E") 50% no-repeat
+    }
+    49% {
+        background-size: 4.62px 6.6px
+    }
+    50% {
+        background-size: 8px 8px
+    }
+    50%,
+    to {
+        background: url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%22493%2020%2024%2024%22%3E%3Cdesc%3E%20Created%20with%20Sketch.%3C%2Fdesc%3E%3Cg%20fill%3D%22none%22%3E%3Crect%20x%3D%22493%22%20y%3D%2220%22%20width%3D%2224%22%20height%3D%2224%22%2F%3E%3Cpath%20d%3D%22M499.3%2033.6C498.7%2035.2%20497.8%2037.6%20497.5%2038.9%20497%2041%20496.7%2041.5%20498.5%2040.5%20500.3%2039.5%20509%2034.5%20511%2033.4%20513.5%2031.9%20513.5%2032%20510.8%2030.5%20508.8%2029.3%20500.1%2024.4%20498.5%2023.5%20496.8%2022.5%20497%2023%20497.5%2025.1%20497.8%2026.4%20498.7%2028.8%20499.3%2030.3L506.8%2032%20499.3%2033.6Z%22%20fill%3D%22%23828A99%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E") 50% no-repeat
+    }
+    to {
+        background-size: 24px 24px
+    }
 }
 
 .im_rc_emojibtn {
