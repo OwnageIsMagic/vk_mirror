@@ -1183,7 +1183,7 @@ AudioPage.address = "audio", AudioPage.updateSearchHighlight = function(e) {
         }.bind(this)), this.ap.on(this, AudioPlayer.EVENT_AD_STARTED, function() {
             this._trackSlider.toggleAdMarker(!1), this._trackSlider.toggleAdState(!0), this._trackSlider.setBackValue(0)
         }.bind(this)), this.ap.on(this, AudioPlayer.EVENT_AD_COMPLETED, function() {
-            this._trackSlider.toggleAdState(!1)
+            this._trackSlider.toggleAdMarker(!1), this._trackSlider.toggleAdState(!1)
         }.bind(this)), this.ap.on(this, AudioPlayer.EVENT_START_LOADING, function() {
             o._trackSlider.toggleLoading(!0)
         }), this.ap.on(this, AudioPlayer.EVENT_CAN_PLAY, function() {

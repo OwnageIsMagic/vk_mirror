@@ -1033,7 +1033,7 @@ var Video = {
                 _ = e.section ? e.section : "all";
             Video._prepareSearchFilters(i);
             var v = e.section ? "" : i.q || val(cur.searchInputEl);
-            if (v ? (trim(val(cur.searchInputEl)) != trim(v), _ = "search", t.fromSearch || t.globalQuery || (t.globalQuery = i.q), Video.doSearch(i.q, t.globalQuery),
+            if (v ? (trim(val(cur.searchInputEl)) != trim(v), _ = "search", t.fromSearch || t.globalQuery || (t.globalQuery = v), Video.doSearch(v, t.globalQuery),
                     c(), Video._updateChooseFixedBottom()) : (Video.inputVal(cur.searchInputEl, ""), Video.doSearch("")), cur.videoForcedSection = _, -1 != Video.AVAILABLE_TABS
                 .indexOf(_)) n(), show("video_subtab_pane_" + _), show(r), hide("albumPane"), s(), a(), cur.videoChoosePrevSection = _, "albums" != _ && Video.loadSilent(
                 _), Video.updateEmptyPlaceholder(_);

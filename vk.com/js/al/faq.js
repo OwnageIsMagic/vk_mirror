@@ -113,11 +113,9 @@ FAQ = {
         if (cur.screens)
             for (var l in cur.screens) n.push(cur.screens[l][0]);
         if (!a && !n.length) return notaBene("faq_text");
-        var _ = cur.langsDD && cur.langsDD.val() || 0,
-            d = {
+        for (var _ = cur.langsDD && cur.langsDD.val() || 0, d = {
                 act: "save",
                 title: o,
-                text: a,
                 keywords: r,
                 description: s,
                 hash: t,
@@ -139,17 +137,17 @@ FAQ = {
                 save_exit: i ? 1 : 0,
                 notify_translators: isChecked("faq_ed_notify_translators") ? 1 : 0,
                 is_wiki: isChecked("faq_is_wiki") ? 1 : 0
-            };
+            }, c = a, u = ""; c;) d["text" + u] = c.substring(0, 4e3), c = c.substring(4e3), u = "" === u ? "1" : parseInt(a) + 1;
         if (d.section = intval(cur.sectionSelector.val()), 0 == d.section || 39 == d.section) {
-            var c = cur.desktopCategorySelector.val();
-            d.categories = c, d.spec_section = cur.specSectionSelector.val()
+            var p = cur.desktopCategorySelector.val();
+            d.categories = p, d.spec_section = cur.specSectionSelector.val()
         } else if (31 == d.section) {
-            var u = cur.platformSelector.val();
-            if (!u) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
-            d.platforms = u;
-            var c = cur.categorySelector.val();
-            if (!c) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
-            d.categories = c
+            var f = cur.platformSelector.val();
+            if (!f) return elfocus(cur.platformSelector.input), notaBene(cur.platformSelector.selector);
+            d.platforms = f;
+            var p = cur.categorySelector.val();
+            if (!p) return elfocus(cur.categorySelector.input), notaBene(cur.categorySelector.selector);
+            d.categories = p
         }
         if (1 == d.section && (d.categories = cur.adsCategorySelector.val()), cur.actionButtonSelector && (d.action_id = intval(cur.actionButtonSelector.val()), 0 != d.action_id &&
                 (d.action_label = ge("faq_action_btn_label")
@@ -159,25 +157,24 @@ FAQ = {
                 .value.trim(), !d.action_url) return elfocus("faq_action_btn_url"), notaBene("faq_action_btn_url")
         }
         if (ge("faq_optional_extra_field_add") && (!cur.sectionSelector || 0 == cur.sectionSelector.val() || 39 == cur.sectionSelector.val())) {
-            for (var p = {}, f = ge("faq_optional_extra_fields_list")
-                    .children, l = 0; l < f.length; l++) {
-                var g = f[l];
-                p["ef_" + l + "_type"] = data(g, "typeSelector")
-                    .val(), p["ef_" + l + "_title"] = geByClass1("faq_optional_extra_field__title", g)
-                    .value, p["ef_" + l + "_note"] = geByClass1("faq_optional_extra_field__note", g)
-                    .value, p["ef_" + l + "_required"] = data(g, "requiredSelector")
+            for (var g = {}, h = ge("faq_optional_extra_fields_list")
+                    .children, l = 0; l < h.length; l++) {
+                var v = h[l];
+                g["ef_" + l + "_type"] = data(v, "typeSelector")
+                    .val(), g["ef_" + l + "_title"] = geByClass1("faq_optional_extra_field__title", v)
+                    .value, g["ef_" + l + "_note"] = geByClass1("faq_optional_extra_field__note", v)
+                    .value, g["ef_" + l + "_required"] = data(v, "requiredSelector")
                     .val()
             }
-            d = extend(d, p)
+            d = extend(d, g)
         }
         ge("description_not_needed") && (d.descr_not_needed = isChecked("description_not_needed")), ge("description_placeholder_key") && (d.description_placeholder_key =
             val("description_placeholder_key")), ge("description_tooltip_key") && (d.description_tooltip_key = val("description_tooltip_key"));
-        var h = [],
-            v = isChecked("faq_from_chb__all") ? "_all" : 0;
-        v ? h.push(v) : each(geByClass("checkbox", "faq_from_chb_list_other"), function(e, t) {
-            isChecked(t) && h.push(attr(t, "v"))
-        }), d.from_list = h.join(","), e || (e = ge("faq_send")), ajax.post(nav.objLoc[0], d, {
-            onFail: FAQ.showError,
+        var m = [],
+            q = isChecked("faq_from_chb__all") ? "_all" : 0;
+        q ? m.push(q) : each(geByClass("checkbox", "faq_from_chb_list_other"), function(e, t) {
+            isChecked(t) && m.push(attr(t, "v"))
+        }), d.from_list = m.join(","), e || (e = ge("faq_send")), ajax.post(nav.objLoc[0], d, {
             showProgress: lockButton.pbind(e),
             hideProgress: unlockButton.pbind(e)
         })

@@ -56,7 +56,7 @@ function loadScript(t, i) {
     }
 }
 var AudioUtils = {
-    _v: 2,
+    _v: 4,
     AUDIO_ITEM_INDEX_ID: 0,
     AUDIO_ITEM_INDEX_OWNER_ID: 1,
     AUDIO_ITEM_INDEX_URL: 2,
@@ -971,7 +971,7 @@ TopAudioPlayer.TITLE_CHANGE_ANIM_SPEED = 190, TopAudioPlayer.init = function() {
     "start_load", AudioPlayer.EVENT_CAN_PLAY = "actual_start", AudioPlayer.LS_VER = "v12", AudioPlayer.LS_KEY_PREFIX = "audio", AudioPlayer.LS_PREFIX = AudioPlayer.LS_KEY_PREFIX +
     "_" + AudioPlayer.LS_VER + "_", AudioPlayer.LS_VOLUME = "vol", AudioPlayer.LS_PL = "pl", AudioPlayer.LS_TRACK = "track", AudioPlayer.LS_SAVED = "saved", AudioPlayer.LS_PROGRESS =
     "progress", AudioPlayer.LS_DURATION_TYPE = "dur_type", AudioPlayer.LS_ADS_CURRENT_DELAY = "ads_current_delay_v4", AudioPlayer.PLAYBACK_EVENT_TIME = 10, AudioPlayer.LISTENED_EVENT_TIME_COEFF =
-    .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7;
+    .6, AudioPlayer.DEFAULT_VOLUME = .8, AudioPlayer.AUDIO_ADS_VOLUME_COEFF = .7, AudioPlayer.ADTEST = 1;
 var audioIconSuffix = window.devicePixelRatio >= 2 ? "_2x" : "";
 AudioPlayer.tabIcons = {
         def: "/images/icons/favicons/fav_logo" + audioIconSuffix + ".ico",
@@ -1712,7 +1712,11 @@ AudioPlayer.tabIcons = {
     }, AudioPlayer.prototype.getCurrentAudio = function() {
         return this._currentAudio
     }, AudioPlayer.prototype.playNext = function(t, i) {
-        return i || !this._adsIsAdReady() || this._adsIsAdPlaying() ? void this._playNext(1, t) : (this.pause(), void this._adsPlayAdTask(t))
+        if (!i && this._adsIsAdReady() && !this._adsIsAdPlaying()) {
+            if (!AudioPlayer.ADTEST) return this.pause(), void this._adsPlayAdTask(t);
+            this._adman && this._adman.getBannersForSection("postroll") && this._adman.start("postroll")
+        }
+        this._playNext(1, t)
     }, AudioPlayer.prototype.playPrev = function() {
         this._playNext(-1)
     }, AudioPlayer.prototype._playNext = function(t, i) {
@@ -1776,7 +1780,7 @@ AudioPlayer.tabIcons = {
         return !!this._adPaused
     }, AudioPlayer.prototype._adsPrepareAd = function(t, i) {
         function e(t) {
-            this._adsReadyInfo = t, this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
+            this._adsReadyInfo = t, AudioPlayer.ADTEST || this.notify(AudioPlayer.EVENT_AD_READY), this._adsSendAdEvent("received")
         }
         this._adsSection = i, this._adsInitAdman(t, e.bind(this))
     }, AudioPlayer.prototype._adsDeinit = function() {
